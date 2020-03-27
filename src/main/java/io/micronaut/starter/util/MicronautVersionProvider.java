@@ -22,7 +22,7 @@ import picocli.CommandLine.IVersionProvider;
  * @author Remko Popma
  * @version 1.0
  */
-public class MicronautStarterVersionProvider implements IVersionProvider {
+public class MicronautVersionProvider implements IVersionProvider {
 
     public String[] getVersion() {
         return new String[] {

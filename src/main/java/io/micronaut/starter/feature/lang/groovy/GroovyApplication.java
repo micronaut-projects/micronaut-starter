@@ -26,7 +26,7 @@ public class GroovyApplication implements ApplicationFeature {
     @Override
     public void apply(CommandContext commandContext) {
         commandContext.addTemplate("application", new RockerTemplate("src/main/groovy/{packagePath}/Application.groovy",
-                application.template(commandContext.getProject().getPackageName(), null, null)));
+                application.template(commandContext.getProject(), commandContext.getFeatures())));
     }
 
     protected String getPath() {

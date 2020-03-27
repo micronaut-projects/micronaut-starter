@@ -1,6 +1,5 @@
 package io.micronaut.starter.command;
 
-import com.fizzed.rocker.Rocker;
 import io.micronaut.starter.BaseCommand;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
@@ -9,6 +8,7 @@ import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
@@ -51,9 +51,10 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
 
         Project project = NameUtils.parse(name);
 
+        AvailableFeatures availableFeatures = new CreateAppFeatures();
         List<Feature> features = new ArrayList<>(8);
         for (String name: this.features) {
-            Feature feature = CreateAppFeatures.get(name);
+            Feature feature = availableFeatures.findFeature(name).orElse(null);
             if (feature != null) {
                 features.add(feature);
             } else {
@@ -88,6 +89,12 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
         }
 
         CommandContext commandContext = new CommandContext(featureContext, project);
+        commandContext.addTemplate("micronautCli",
+                new RockerTemplate("micronaut-cli.yml",
+                        cli.template(commandContext.getLanguage(),
+                            commandContext.getTestFramework(),
+                            commandContext.getProject(),
+                            commandContext.getFeatures())));
 
         for (Feature feature: featureContext.getFeatures()) {
             feature.apply(commandContext);
@@ -124,30 +131,10 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
         return builder.toString();
     }
 
-    public static class CreateAppFeatures extends AllFeatures {
+    public static class CreateAppFeatures extends AvailableFeatures {
 
-        private static Predicate<Feature> SUPPORTS = (feature) -> feature.supports(CreateAppCommand.NAME);
-
-        @Override
-        protected Stream<Feature> apply(Stream<Feature> stream) {
-            return doApply(stream);
-        }
-
-        private static Stream<Feature> doApply(Stream<Feature> stream) {
-            return stream.filter(SUPPORTS);
-        }
-
-        public static Feature get(String name) {
-            Feature feature = AllFeatures.get(name);
-            if (feature != null && SUPPORTS.test(feature)) {
-                return feature;
-            } else {
-                return null;
-            }
-        }
-
-        public static Stream<Feature> stream() {
-            return doApply(AllFeatures.list().stream());
+        public CreateAppFeatures() {
+            super(() -> "create-app");
         }
     }
 }

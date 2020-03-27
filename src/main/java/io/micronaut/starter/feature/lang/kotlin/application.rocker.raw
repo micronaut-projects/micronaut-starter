@@ -1,17 +1,27 @@
-@args (String packageName, RockerContent imports, RockerContent annotations)
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
 
-package @packageName
+@args (Project project, Features features)
+
+package @project.getPackageName()
 
 import io.micronaut.runtime.Micronaut
-@?imports
+@if (features.contains("swagger")) {
+import io.swagger.v3.oas.annotations.*
+import io.swagger.v3.oas.annotations.info.*
 
-@?annotations
+@@OpenAPIDefinition(
+    info = @@Info(
+            title = "@project.getAppName()",
+            version = "0.0"
+    )
+)}
 object Application {
 
     @@JvmStatic
     fun main(args: Array<String>) {
         Micronaut.build()
-                .packages("@packageName")
+                .packages("@project.getPackageName()")
                 .mainClass(Application.javaClass)
                 .start()
     }

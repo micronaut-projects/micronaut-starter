@@ -1,5 +1,7 @@
 package io.micronaut.starter;
 
+import io.micronaut.starter.util.MicronautVersionProvider;
+import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
 /**
@@ -17,7 +19,8 @@ import picocli.CommandLine.Option;
  * @author Remko Popma
  * @version 1.0
  */
-public class CommonOptionsMixin extends HelpOptionsMixin {
+@CommandLine.Command(mixinStandardHelpOptions = true, versionProvider = MicronautVersionProvider.class)
+public class CommonOptionsMixin {
 
     @Option(names = {"-x", "--stacktrace"}, defaultValue = "false", description = "Show full stack trace when exceptions occur.")
     public boolean showStacktrace;
