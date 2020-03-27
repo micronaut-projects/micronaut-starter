@@ -1,0 +1,18 @@
+@args (String packageName, RockerContent imports, RockerContent annotations)
+
+package @packageName
+
+import io.micronaut.runtime.Micronaut
+@?imports
+
+@?annotations
+object Application {
+
+    @@JvmStatic
+    fun main(args: Array<String>) {
+        Micronaut.build()
+                .packages("@packageName")
+                .mainClass(Application.javaClass)
+                .start()
+    }
+}

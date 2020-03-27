@@ -1,0 +1,15 @@
+@args (String packageName, RockerContent imports, RockerContent annotations)
+
+package @packageName
+
+import io.micronaut.runtime.Micronaut
+import groovy.transform.CompileStatic
+@?imports
+
+@?annotations
+@@CompileStatic
+class Application {
+    static void main(String[] args) {
+        Micronaut.run(Application)
+    }
+}

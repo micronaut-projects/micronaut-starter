@@ -1,0 +1,86 @@
+plugins {
+    id "java-library"
+    id "application"
+    id "groovy"
+    id "com.fizzed.rocker" version "1.2.3"
+}
+
+group 'io.micronaut.starter'
+version '1.0.0.BUILD-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+
+dependencies {
+    api "info.picocli:picocli:4.2.0"
+    api "info.picocli:picocli-shell-jline3:4.2.0"
+    //annotationProcessor 'info.picocli:picocli-codegen:4.2.0'
+    api "com.fizzed:rocker-runtime:1.2.3"
+    implementation "org.fusesource.jansi:jansi:1.15"
+
+    testCompile("org.codehaus.groovy:groovy:3.0.2")
+    testImplementation("com.fizzed:rocker-runtime:1.2.3")
+    testImplementation("org.spockframework:spock-core:2.0-M2-groovy-3.0") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+}
+
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+mainClassName = "io.micronaut.starter.MicronautStarter"
+
+jar {
+    manifest {
+        attributes "Main-Class": "io.micronaut.starter.MicronautStarter",
+                "Implementation-Version": project.version
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir('src/main/java')
+        }
+    }
+}
+
+rocker {
+    // (All settings are shown with their defaults)
+    //
+    // Skips building templates all together
+    skip false
+    // Base directory for generated java sources, actual target is sub directory
+    // with the name of the source set. The value is passed through project.file().
+    outputBaseDirectory = "$buildDir/generated-src/rocker"
+    // Base directory for the directory where the hot reload feature
+    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
+    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
+    // The actual target is a sub directory with the name of the source set.
+    // The value is passed through project.file().
+    classBaseDirectory = "$buildDir/classes"
+    failOnError true
+    skipTouch true
+    // must not be empty when skipTouch is equal to false
+    touchFile ""
+    javaVersion '1.8'
+    extendsClass null
+    extendsModelClass null
+    optimize null
+    discardLogicWhitespace = true
+    targetCharset null
+    suffixRegex null
+    postProcessing null
+    markAsGenerated null
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}

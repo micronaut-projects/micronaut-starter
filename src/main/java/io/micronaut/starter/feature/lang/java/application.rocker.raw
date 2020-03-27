@@ -1,0 +1,14 @@
+@args (String packageName, RockerContent imports, RockerContent annotations)
+
+package @packageName;
+
+import io.micronaut.runtime.Micronaut;
+@?imports
+
+@?annotations
+public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.run(Application.class);
+    }
+}

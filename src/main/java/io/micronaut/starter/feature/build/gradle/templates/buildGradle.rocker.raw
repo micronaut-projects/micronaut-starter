@@ -1,0 +1,132 @@
+@import io.micronaut.starter.options.Language
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
+
+@args (
+Language language,
+TestFramework testFramework,
+Project project,
+Features features
+)
+
+plugins {
+@if (language.isJava()) {
+    id "net.ltgt.apt-eclipse" version "0.21"
+}
+@if (language.isKotlin()) {
+    id "org.jetbrains.kotlin.jvm" version "@language.getFeature().getVersion()"
+    id "org.jetbrains.kotlin.kapt" version "@language.getFeature().getVersion()"
+    id "org.jetbrains.kotlin.plugin.allopen" version "@language.getFeature().getVersion()"
+}
+@if (language.isGroovy() || testFramework.isSpock()) {
+    id "groovy"
+}
+@if (features.application() != null) {
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "application"
+}
+}
+
+version "0.1"
+group "@project.getPackageName()"
+
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+}
+
+dependencies {
+    @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(language)
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+@if (language.isGroovy()) {
+    implementation "io.micronaut:micronaut-runtime-groovy"
+}
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut:micronaut-runtime"
+@if (features.contains("annotation-api")) {
+    implementation "javax.annotation:javax.annotation-api"
+}
+    implementation "io.micronaut:micronaut-http-server-netty"
+    implementation "io.micronaut:micronaut-http-client"
+@if (features.contains("swagger")) {
+    implementation "io.swagger.core.v3:swagger-annotations"
+}
+@if (features.contains("jdbc-dbcp")) {
+    implementation "io.micronaut.configuration:micronaut-jdbc-dbcp"
+}
+@if (features.contains("jdbc-tomcat")) {
+    implementation "io.micronaut.configuration:micronaut-jdbc-tomcat"
+}
+@if (features.contains("jdbc-hikari")) {
+    implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
+}
+@if (language.isKotlin()) {
+    runtimeOnly "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
+}
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+    runtimeOnly "com.h2database:h2"
+}
+
+    @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(testFramework)}
+
+test.classpath += configurations.developmentOnly
+
+@if (features.application() != null) {
+mainClassName = "@features.application().mainClassName(project)"
+}
+
+@if (testFramework.isJunit() || testFramework.isKotlinTest()) {
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+}
+
+@if (language.isJava()) {
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+    options.compilerArgs.add('-parameters')
+}
+} else if (language.isKotlin()) {
+allOpen {
+	annotation("io.micronaut.aop.Around")
+}
+
+compileKotlin {
+	kotlinOptions {
+	    jvmTarget = '@Language.java.getFeature().getVersion()'
+	    //Will retain parameter names for Java reflection
+	    javaParameters = true
+	}
+}
+
+compileTestKotlin {
+	kotlinOptions {
+	    jvmTarget = '@Language.java.getFeature().getVersion()'
+	    javaParameters = true
+	}
+}
+} else if (language.isGroovy()) {
+tasks.withType(GroovyCompile) {
+    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
+}
+}
+
+@if (features.application() != null) {
+shadowJar {
+    mergeServiceFiles()
+}
+
+tasks.withType(JavaExec) {
+    classpath += configurations.developmentOnly
+    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+}
+}

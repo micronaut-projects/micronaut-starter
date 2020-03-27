@@ -1,0 +1,7 @@
+@import java.util.Map;
+
+@args (Map<String, String> properties)
+
+@for ((key, item) : properties) {
+@key=@item
+}

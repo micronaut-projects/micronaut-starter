@@ -1,0 +1,19 @@
+@import io.micronaut.starter.options.Language
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
+
+
+@args (
+Language language,
+TestFramework testFramework,
+Project project,
+Features features
+)
+
+profile: app
+defaultPackage: @project.getPackageName()
+---
+testFramework: @testFramework.name()
+sourceLanguage: @language.name()
+features: @features.toString()

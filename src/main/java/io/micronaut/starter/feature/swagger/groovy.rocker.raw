@@ -1,0 +1,15 @@
+@import io.micronaut.starter.Project
+
+@args (Project project)
+
+@imports => {
+import io.swagger.v3.oas.annotations.*
+import io.swagger.v3.oas.annotations.info.*}
+@annotation => {
+@@OpenAPIDefinition(
+    info = @@Info(
+            title = "@project.getAppName()",
+            version = "0.0"
+    )
+)}
+@io.micronaut.starter.feature.lang.groovy.application.template(project.getPackageName(), imports, annotation)
