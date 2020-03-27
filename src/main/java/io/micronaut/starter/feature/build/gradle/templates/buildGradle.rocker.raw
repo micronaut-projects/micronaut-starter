@@ -44,12 +44,17 @@ configurations {
 dependencies {
     @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(language)
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-@if (language.isGroovy()) {
-    implementation "io.micronaut:micronaut-runtime-groovy"
-}
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"
+@if (language.isKotlin()) {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+}
+@if (language.isGroovy()) {
+    implementation "io.micronaut:micronaut-runtime-groovy"
+} else {
     implementation "io.micronaut:micronaut-runtime"
+}
 @if (features.contains("annotation-api")) {
     implementation "javax.annotation:javax.annotation-api"
 }
@@ -81,15 +86,15 @@ test.classpath += configurations.developmentOnly
 
 @if (features.application() != null) {
 mainClassName = "@features.application().mainClassName(project)"
-}
 
+}
 @if (testFramework.isJunit() || testFramework.isKotlinTest()) {
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
 }
-}
 
+}
 @if (language.isJava()) {
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"

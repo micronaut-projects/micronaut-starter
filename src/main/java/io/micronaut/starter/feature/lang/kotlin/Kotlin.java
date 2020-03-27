@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.lang.kotlin;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.LanguageFeature;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 public class Kotlin implements LanguageFeature {
@@ -24,7 +25,7 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-
+        commandContext.getProjectProperties().put("kotlinVersion", getVersion());
     }
 
     @Override

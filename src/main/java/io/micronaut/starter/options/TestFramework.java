@@ -1,8 +1,8 @@
 package io.micronaut.starter.options;
 
-import io.micronaut.starter.feature.Junit;
-import io.micronaut.starter.feature.KotlinTest;
-import io.micronaut.starter.feature.Spock;
+import io.micronaut.starter.feature.test.Junit;
+import io.micronaut.starter.feature.test.KotlinTest;
+import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.feature.TestFeature;
 
 public enum TestFramework {

@@ -25,6 +25,8 @@ public class KotlinApplication implements ApplicationFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
+        ApplicationFeature.super.apply(commandContext);
+
         commandContext.addTemplate("application", new RockerTemplate(getPath(),
                 application.template(commandContext.getProject(), commandContext.getFeatures())));
     }

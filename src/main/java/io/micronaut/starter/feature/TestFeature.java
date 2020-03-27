@@ -19,5 +19,8 @@ public interface TestFeature extends Feature {
             props.put("maven-surefire-plugin.version", "2.22.2");
             props.put("maven-failsafe-plugin.version", "2.22.2");
         }
+        doApply(commandContext);
     }
+
+    void doApply(CommandContext commandContext);
 }
