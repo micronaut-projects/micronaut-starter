@@ -17,6 +17,7 @@ import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import picocli.shell.jline3.PicocliCommands;
+import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.io.PrintWriter;
 import java.nio.file.Path;
@@ -39,7 +40,6 @@ import java.util.Arrays;
 public class MicronautStarter extends BaseCommand {
 
     public static void main(String[] args) {
-        MicronautStarter starter = new MicronautStarter();
         CommandLine commandLine = createCommandLine();
         if (args.length == 0) {
             startInteractiveConsole(commandLine);
@@ -66,27 +66,15 @@ public class MicronautStarter extends BaseCommand {
     static void startInteractiveConsole(CommandLine cmd) {
         AnsiConsole.systemInstall();
         try {
-            // set up JLine built-in commands
-            Path workDir = Paths.get("");
-            Builtins builtins = new Builtins(workDir, null, null);
-            builtins.rename(org.jline.builtins.Builtins.Command.TTOP, "top");
-            builtins.alias("zle", "widget");
-            builtins.alias("bindkey", "keymap");
-            SystemCompleter systemCompleter = builtins.compileCompleters();
             // set up picocli commands
-            PicocliCommands picocliCommands = new PicocliCommands(workDir, cmd);
-            systemCompleter.add(picocliCommands.compileCompleters());
-            systemCompleter.compile();
+            PicocliJLineCompleter picocliCommands = new PicocliJLineCompleter(cmd.getCommandSpec());
             Terminal terminal = TerminalBuilder.terminal();
             LineReader reader = LineReaderBuilder.builder()
                     .terminal(terminal)
-                    .completer(systemCompleter)
+                    .completer(picocliCommands)
                     .parser(new DefaultParser())
                     .variable(LineReader.LIST_MAX, 50)   // max tab completion candidates
                     .build();
-            builtins.setLineReader(reader);
-            DescriptionGenerator descriptionGenerator = new DescriptionGenerator(builtins, picocliCommands);
-            new TailTipWidgets(reader, descriptionGenerator::commandDescription, 5, TipType.COMPLETER);
 
             String prompt = CommandLine.Help.Ansi.AUTO.string("@|blue mn> |@ ");
             String rightPrompt = null;
@@ -104,15 +92,7 @@ public class MicronautStarter extends BaseCommand {
                     }
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
-                    String command = Parser.getCommand(pl.word());
-                    if (builtins.hasCommand(command)) {
-                        builtins.execute(command, Arrays.copyOfRange(arguments, 1, arguments.length)
-                                , System.in, System.out, System.err);
-                    } else {
-                        createCommandLine().execute(arguments);
-                    }
-                } catch (HelpException e) {
-                   // HelpException.highlight(e.getMessage(), HelpException.defaultStyle()).print(terminal);
+                    createCommandLine().execute(arguments);
                 } catch (UserInterruptException | EndOfFileException e) {
                     return;
                 } catch (Exception e) {
