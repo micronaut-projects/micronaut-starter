@@ -1,9 +1,12 @@
 package io.micronaut.starter.feature;
 
+import io.micronaut.context.BeanContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.jdbc.Dbcp;
 import io.micronaut.starter.feature.jdbc.Hikari;
 import io.micronaut.starter.feature.jdbc.Tomcat;
+import io.micronaut.starter.feature.logging.Log4j2;
+import io.micronaut.starter.feature.logging.Logback;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,10 +18,13 @@ public abstract class AvailableFeatures implements Iterable<String> {
 
     static {
         FEATURES = new HashMap<>(16);
-        add(new Dbcp());
-        add(new Hikari());
-        add(new Tomcat());
-        add(new Swagger());
+        BeanContext ctx = BeanContext.run();
+        ctx.getBeansOfType(Feature.class).forEach(AvailableFeatures::add);
+        ctx.close();
+    }
+
+    public MicronautCommand getCommand() {
+        return command;
     }
 
     private final MicronautCommand command;
@@ -40,22 +46,29 @@ public abstract class AvailableFeatures implements Iterable<String> {
 
     @Override
     public Iterator<String> iterator() {
-        Stream<Feature> stream = FEATURES.values().stream();
-
-        return stream
-                .filter(Feature::isVisible)
-                .filter(feature -> feature.supports(command.getName()))
+        return getFeatures()
                 .map(Feature::getName)
                 .iterator();
     }
 
     public Optional<Feature> findFeature(String name) {
+        return findFeature(name, false);
+    }
+
+    public Optional<Feature> findFeature(String name, boolean ignoreVisibility) {
         Feature feature = FEATURES.get(name);
         if (feature != null) {
-            if (feature.isVisible() && feature.supports(command.getName())) {
+            if ((ignoreVisibility || feature.isVisible()) && feature.supports(command.getName())) {
                 return Optional.of(feature);
             }
         }
         return Optional.empty();
+    }
+
+    public Stream<Feature> getFeatures() {
+        Stream<Feature> stream = FEATURES.values().stream();
+        return stream
+                .filter(Feature::isVisible)
+                .filter(feature -> feature.supports(command.getName()));
     }
 }

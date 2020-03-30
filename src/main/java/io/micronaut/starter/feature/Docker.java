@@ -1,19 +1,25 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.util.VersionInfo;
 
+import javax.inject.Singleton;
 import java.util.List;
 
-public class AnnotationApi implements Feature, DefaultFeature {
+@Singleton
+public class Docker implements DefaultFeature {
 
     @Override
     public String getName() {
-        return "annotation-api";
+        return "docker";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public boolean shouldApply(MicronautCommand micronautCommand, List<Feature> selectedFeatures) {
-        return VersionInfo.getJavaVersion() >= 9;
+        return false;
     }
 }

@@ -1,5 +1,6 @@
-package io.micronaut.starter;
+package io.micronaut.starter.command;
 
+import io.micronaut.starter.CommonOptionsMixin;
 import picocli.CommandLine;
 
 public class BaseCommand {
@@ -22,11 +23,11 @@ public class BaseCommand {
         spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red | Warning|@ " + message));
     }
 
-    protected boolean showStacktrace() {
+    public boolean showStacktrace() {
         return commonOptions.showStacktrace;
     }
 
-    protected boolean verbose() {
+    public boolean verbose() {
         return commonOptions.verbose;
     }
 }

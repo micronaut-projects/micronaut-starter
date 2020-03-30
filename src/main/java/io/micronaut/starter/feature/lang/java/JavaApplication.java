@@ -6,6 +6,9 @@ import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class JavaApplication implements ApplicationFeature {
 
     @Override

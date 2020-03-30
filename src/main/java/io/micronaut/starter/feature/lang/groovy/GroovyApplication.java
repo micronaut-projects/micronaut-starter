@@ -8,6 +8,9 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class GroovyApplication implements ApplicationFeature {
 
     @Override

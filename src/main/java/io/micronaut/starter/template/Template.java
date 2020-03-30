@@ -8,5 +8,9 @@ public interface Template {
 
     String getPath();
 
+    default boolean isBinary() {
+        return false;
+    }
+
     void write(OutputStream outputStream) throws IOException;
 }

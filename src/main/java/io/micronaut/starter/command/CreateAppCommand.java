@@ -1,6 +1,5 @@
 package io.micronaut.starter.command;
 
-import io.micronaut.starter.BaseCommand;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -10,16 +9,17 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
+import io.micronaut.starter.template.YamlTemplate;
 import io.micronaut.starter.util.NameUtils;
+import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @CommandLine.Command(name = CreateAppCommand.NAME, description = "Creates an application")
@@ -48,59 +48,61 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-
         Project project = NameUtils.parse(name);
 
+        OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
+
+        generate(project, outputHandler);
+
+        out("created " + name);
+        return 0;
+    }
+
+    public void generate(OutputHandler outputHandler) throws IOException {
+        generate(NameUtils.parse(name), outputHandler);
+    }
+
+    public void generate(Project project, OutputHandler outputHandler) throws IOException {
+        if (project == null) {
+            project = NameUtils.parse(name);
+        }
+
         AvailableFeatures availableFeatures = new CreateAppFeatures();
-        List<Feature> features = new ArrayList<>(8);
+        final List<Feature> features = new ArrayList<>(8);
         for (String name: this.features) {
             Feature feature = availableFeatures.findFeature(name).orElse(null);
             if (feature != null) {
                 features.add(feature);
             } else {
-                err("The requested feature does not exist: " + name);
-                return 1;
+                throw new IllegalArgumentException("The requested feature does not exist: " + name);
             }
         }
 
-        features.add(new AnnotationApi());
+        availableFeatures.getFeatures()
+                .filter(f -> f instanceof DefaultFeature)
+                .filter(f -> ((DefaultFeature) f).shouldApply(availableFeatures.getCommand(), features))
+                .forEach(features::add);
 
-        FeatureContext featureContext = new FeatureContext(lang, test, build);
+        FeatureContext featureContext = new FeatureContext(lang, test, build, availableFeatures, features);
 
-        featureContext.processSelectedFeatures(features);
+        featureContext.processSelectedFeatures();
 
-        features = featureContext.getFeatures();
+        List<Feature> featureList = featureContext.getFeatures();
 
-        Set<Class<?>> oneOfFeatures = features.stream()
-                .filter(feature -> feature instanceof OneOfFeature)
-                .map(OneOfFeature.class::cast)
-                .map(OneOfFeature::getFeatureClass)
-                .collect(Collectors.toSet());
-
-        for (Class<?> featureClass: oneOfFeatures) {
-            List<String> matches = features.stream()
-                    .filter(feature -> featureClass.isAssignableFrom(feature.getClass()))
-                    .map(Feature::getName)
-                    .collect(Collectors.toList());
-            if (matches.size() > 1) {
-                err(String.format("There can only be one of the following features selected: %s", matches));
-                return 1;
-            }
-        }
+        validateOneOf(featureList);
 
         CommandContext commandContext = new CommandContext(featureContext, project);
+        commandContext.getConfiguration().put("micronaut.application.name", project.getAppName());
         commandContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(commandContext.getLanguage(),
-                            commandContext.getTestFramework(),
-                            commandContext.getProject(),
-                            commandContext.getFeatures())));
+                                commandContext.getTestFramework(),
+                                commandContext.getProject(),
+                                commandContext.getFeatures())));
 
         for (Feature feature: featureContext.getFeatures()) {
             feature.apply(commandContext);
         }
-
-        OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
 
         Map<String, String> replacements = project.getProperties();
 
@@ -108,12 +110,9 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
             String path = replaceVariables(template.getPath(), replacements);
             outputHandler.write(path, template);
         }
-
-        out("created " + name);
-        return 0;
     }
 
-    String replaceVariables(String path, Map<String, String> replacements) {
+    private String replaceVariables(String path, Map<String, String> replacements) {
         Pattern pattern = Pattern.compile("\\{(.+?)\\}");
         Matcher matcher = pattern.matcher(path);
         StringBuilder builder = new StringBuilder();
@@ -129,6 +128,24 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
         }
         builder.append(path.substring(i));
         return builder.toString();
+    }
+
+    private void validateOneOf(List<Feature> featureList) {
+        Set<Class<?>> oneOfFeatures = featureList.stream()
+                .filter(feature -> feature instanceof OneOfFeature)
+                .map(OneOfFeature.class::cast)
+                .map(OneOfFeature::getFeatureClass)
+                .collect(Collectors.toSet());
+
+        for (Class<?> featureClass: oneOfFeatures) {
+            List<String> matches = featureList.stream()
+                    .filter(feature -> featureClass.isAssignableFrom(feature.getClass()))
+                    .map(Feature::getName)
+                    .collect(Collectors.toList());
+            if (matches.size() > 1) {
+                throw new IllegalArgumentException(String.format("There can only be one of the following features selected: %s", matches));
+            }
+        }
     }
 
     public static class CreateAppFeatures extends AvailableFeatures {

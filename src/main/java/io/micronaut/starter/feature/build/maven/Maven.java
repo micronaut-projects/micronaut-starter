@@ -1,12 +1,16 @@
 package io.micronaut.starter.feature.build.maven;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.BuildFeature;
+import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.template.BinaryTemplate;
+import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class Maven implements BuildFeature {
 
     private static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
@@ -23,14 +27,12 @@ public class Maven implements BuildFeature {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
         commandContext.addTemplate("mavenWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource("maven/" + WRAPPER_JAR)));
-        commandContext.addTemplate("mavenWrapperProperties", new BinaryTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
-        commandContext.addTemplate("mavenWrapperDownloader", new BinaryTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
-        commandContext.addTemplate("mavenWrapper", new BinaryTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
-        commandContext.addTemplate("mavenWrapperBat", new BinaryTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
+        commandContext.addTemplate("mavenWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
+        commandContext.addTemplate("mavenWrapperDownloader", new URLTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
+        commandContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
+        commandContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
 
         commandContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
-                commandContext.getLanguage(),
-                commandContext.getTestFramework(),
                 commandContext.getProject(),
                 commandContext.getFeatures(),
                 commandContext.getProjectProperties()

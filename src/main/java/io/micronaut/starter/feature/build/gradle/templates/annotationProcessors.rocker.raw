@@ -1,14 +1,18 @@
-@import io.micronaut.starter.options.Language
 @import io.micronaut.starter.feature.Features
 
 @args (
-Language language
+Features features
 )
 
-    @language.getGradleScope() platform("io.micronaut:micronaut-bom:$micronautVersion")
-@if (language.isJava() || language.isKotlin()) {
-    @language.getGradleScope() "io.micronaut:micronaut-inject-java"
-    @language.getGradleScope() "io.micronaut:micronaut-validation"
-} else if (language.isGroovy()) {
-    @language.getGradleScope() "io.micronaut:micronaut-inject-groovy"
+@if (features.language().isJava()) {
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-validation"
+} else if (features.language().isKotlin()) {
+    kapt platform("io.micronaut:micronaut-bom:$micronautVersion")
+    kapt "io.micronaut:micronaut-inject-java"
+    kapt "io.micronaut:micronaut-validation"
+} else if (features.language().isGroovy()) {
+    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    compileOnly "io.micronaut:micronaut-inject-groovy"
 }

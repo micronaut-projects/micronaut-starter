@@ -5,6 +5,7 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Feature {
 
@@ -28,6 +29,10 @@ public interface Feature {
 
     default boolean isVisible() {
         return true;
+    }
+
+    default Optional<Language> getRequiredLanguage() {
+        return Optional.empty();
     }
 
 }

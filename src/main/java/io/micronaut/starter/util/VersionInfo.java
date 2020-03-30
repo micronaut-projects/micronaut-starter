@@ -8,23 +8,7 @@ import java.util.Properties;
 public class VersionInfo {
 
     public static String getVersion() {
-        Package pkg = MicronautStarter.class.getPackage();
-        if (pkg != null) {
-            String version = pkg.getImplementationVersion();
-
-            if (version == null || version.trim().isEmpty()) {
-                Properties prop = new Properties();
-                try {
-                    prop.load(MicronautStarter.class.getClassLoader().getResourceAsStream("META-INF/MANIFEST.MF"));
-                    version = prop.getProperty("Implementation-Version");
-                } catch (IOException ignored) {
-                }
-            }
-            if (version != null) {
-                return version;
-            }
-        }
-        return "null";
+        return "2.0.0.M1";
     }
 
     public static int getJavaVersion() {

@@ -1,12 +1,9 @@
-@import io.micronaut.starter.options.Language
-@import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
 @import java.util.Map
+@import io.micronaut.starter.util.VersionInfo
 
 @args (
-Language language,
-TestFramework testFramework,
 Project project,
 Features features,
 Map<String, String> properties
@@ -20,7 +17,7 @@ Map<String, String> properties
   <version>0.1</version>
 
   <properties>
-    <jdk.version>@Language.java.getFeature().getVersion()</jdk.version>
+    <jdk.version>@VersionInfo.getJdkVersion()</jdk.version>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -60,17 +57,42 @@ Map<String, String> properties
       <artifactId>micronaut-validation</artifactId>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@if (features.contains("netty-server")) {
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server-netty</artifactId>
       <scope>compile</scope>
     </dependency>
-@if (language.isKotlin()) {
+}
+@if (features.contains("jetty-server")) {
+    <dependency>
+      <groupId>io.micronaut.servlet</groupId>
+      <artifactId>micronaut-http-server-jetty</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("undertow-server")) {
+    <dependency>
+      <groupId>io.micronaut.servlet</groupId>
+      <artifactId>micronaut-http-server-undertow</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("tomcat-server")) {
+    <dependency>
+      <groupId>io.micronaut.servlet</groupId>
+      <artifactId>micronaut-http-server-tomcat</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("http-client")) {
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.language().isKotlin()) {
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -84,7 +106,7 @@ Map<String, String> properties
       <scope>compile</scope>
     </dependency>
 }
-@if (language.isGroovy()) {
+@if (features.language().isGroovy()) {
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-runtime-groovy</artifactId>
@@ -104,13 +126,70 @@ Map<String, String> properties
       <scope>compile</scope>
     </dependency>
 }
+@if (features.contains("swagger")) {
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("jdbc-dbcp")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-jdbc-dbcp</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("jdbc-tomcat")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-jdbc-tomcat</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("jdbc-hikari")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("log4j2")) {
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.12.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.12.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.12.1</version>
+      <scope>runtime</scope>
+    </dependency>
+}
+@if (features.contains("logback")) {
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
       <scope>runtime</scope>
     </dependency>
-@if (language.isKotlin()) {
+}
+@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+}
+@if (features.language().isKotlin()) {
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-kotlin</artifactId>
@@ -118,7 +197,7 @@ Map<String, String> properties
       <scope>runtime</scope>
     </dependency>
 }
-@if (testFramework.isJunit()) {
+@if (features.testFramework().isJunit()) {
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -134,7 +213,7 @@ Map<String, String> properties
       <artifactId>micronaut-test-junit5</artifactId>
       <scope>test</scope>
     </dependency>
-} else if (testFramework.isKotlinTest()) {
+} else if (features.testFramework().isKotlinTest()) {
     <dependency>
       <groupId>io.micronaut.test</groupId>
       <artifactId>micronaut-test-kotlintest</artifactId>
@@ -152,7 +231,7 @@ Map<String, String> properties
       <version>3.3.2</version>
       <scope>test</scope>
     </dependency>
-} else if (testFramework.isSpock()) {
+} else if (features.testFramework().isSpock()) {
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
@@ -215,14 +294,14 @@ Map<String, String> properties
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>${maven-surefire-plugin.version}</version>
-@if (testFramework.isJunit() || testFramework.isSpock()) {
+@if (features.testFramework().isJunit() || features.testFramework().isSpock()) {
         <configuration>
           <detail>true</detail>
           <includes>
             <include>%regex[.*]</include>
           </includes>
         </configuration>
-} else if (testFramework.isKotlinTest()) {
+} else if (features.testFramework().isKotlinTest()) {
         <configuration>
           <includes>
             <include>**/*Spec.*</include>
@@ -251,7 +330,7 @@ Map<String, String> properties
           </execution>
         </executions>
       </plugin>
-@if (language.isJava()) {
+@if (features.language().isJava()) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -294,7 +373,7 @@ Map<String, String> properties
           </execution>
         </executions>
       </plugin>
-} else if (language.isKotlin()) {
+} else if (features.language().isKotlin()) {
       <plugin>
         <artifactId>kotlin-maven-plugin</artifactId>
         <groupId>org.jetbrains.kotlin</groupId>
@@ -417,7 +496,7 @@ Map<String, String> properties
         </executions>
       </plugin>
 }
-@if (language.isGroovy() || testFramework.isSpock()) {
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
       <plugin>
         <groupId>org.codehaus.gmavenplus</groupId>
         <artifactId>gmavenplus-plugin</artifactId>
@@ -438,7 +517,7 @@ Map<String, String> properties
         </executions>
       </plugin>
 }
-@if (language.isGroovy()) {
+@if (features.language().isGroovy()) {
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
@@ -470,7 +549,7 @@ Map<String, String> properties
 }
     </plugins>
   </build>
-@if (language.isGroovy() || testFramework.isSpock()) {
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
   <pluginRepositories>
     <pluginRepository>
       <id>bintray</id>

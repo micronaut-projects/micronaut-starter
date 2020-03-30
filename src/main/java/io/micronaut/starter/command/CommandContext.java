@@ -1,15 +1,12 @@
 package io.micronaut.starter.command;
 
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.BinaryTemplate;
-import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
 
@@ -40,7 +37,6 @@ public class CommandContext {
         } else if (buildTool == BuildTool.maven) {
             projectProperties.put("micronaut.version", micronautVersion);
         }
-
     }
 
     public void addTemplate(String name, Template template) {

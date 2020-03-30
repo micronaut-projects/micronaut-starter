@@ -1,25 +1,23 @@
-@import io.micronaut.starter.options.Language
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.util.VersionInfo
 
 @args (
-Language language,
-TestFramework testFramework,
 Project project,
 Features features
 )
 
 plugins {
-@if (language.isJava()) {
+@if (features.language().isJava()) {
     id "net.ltgt.apt-eclipse" version "0.21"
 }
-@if (language.isKotlin()) {
-    id "org.jetbrains.kotlin.jvm" version "@language.getFeature().getVersion()"
-    id "org.jetbrains.kotlin.kapt" version "@language.getFeature().getVersion()"
-    id "org.jetbrains.kotlin.plugin.allopen" version "@language.getFeature().getVersion()"
+@if (features.language().isKotlin()) {
+    id "org.jetbrains.kotlin.jvm" version "@features.language().getVersion()"
+    id "org.jetbrains.kotlin.kapt" version "@features.language().getVersion()"
+    id "org.jetbrains.kotlin.plugin.allopen" version "@features.language().getVersion()"
 }
-@if (language.isGroovy() || testFramework.isSpock()) {
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
     id "groovy"
 }
 @if (features.application() != null) {
@@ -42,15 +40,15 @@ configurations {
 }
 
 dependencies {
-    @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(language)
+    @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"
-@if (language.isKotlin()) {
+@if (features.language().isKotlin()) {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
 }
-@if (language.isGroovy()) {
+@if (features.language().isGroovy()) {
     implementation "io.micronaut:micronaut-runtime-groovy"
 } else {
     implementation "io.micronaut:micronaut-runtime"
@@ -58,8 +56,21 @@ dependencies {
 @if (features.contains("annotation-api")) {
     implementation "javax.annotation:javax.annotation-api"
 }
+@if (features.contains("netty-server")) {
     implementation "io.micronaut:micronaut-http-server-netty"
+}
+@if (features.contains("jetty-server")) {
+    implementation "io.micronaut.servlet:micronaut-http-server-jetty"
+}
+@if (features.contains("undertow-server")) {
+    implementation "io.micronaut.servlet:micronaut-http-server-undertow"
+}
+@if (features.contains("tomcat-server")) {
+    implementation "io.micronaut.servlet:micronaut-http-server-tomcat"
+}
+@if (features.contains("http-client")) {
     implementation "io.micronaut:micronaut-http-client"
+}
 @if (features.contains("swagger")) {
     implementation "io.swagger.core.v3:swagger-annotations"
 }
@@ -72,15 +83,22 @@ dependencies {
 @if (features.contains("jdbc-hikari")) {
     implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
 }
-@if (language.isKotlin()) {
+@if (features.contains("log4j2")) {
+    implementation "org.apache.logging.log4j:log4j-core:2.12.1"
+    runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
+    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
+}
+@if (features.contains("logback")) {
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+}
+@if (features.language().isKotlin()) {
     runtimeOnly "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
 }
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
 @if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
     runtimeOnly "com.h2database:h2"
 }
 
-    @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(testFramework)}
+    @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.testFramework())}
 
 test.classpath += configurations.developmentOnly
 
@@ -88,26 +106,26 @@ test.classpath += configurations.developmentOnly
 mainClassName = "@features.application().mainClassName(project)"
 
 }
-@if (testFramework.isJunit() || testFramework.isKotlinTest()) {
+@if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
 }
 
 }
-@if (language.isJava()) {
+@if (features.language().isJava()) {
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }
-} else if (language.isKotlin()) {
+} else if (features.language().isKotlin()) {
 allOpen {
 	annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
 	kotlinOptions {
-	    jvmTarget = '@Language.java.getFeature().getVersion()'
+	    jvmTarget = '@VersionInfo.getJdkVersion()'
 	    //Will retain parameter names for Java reflection
 	    javaParameters = true
 	}
@@ -115,11 +133,11 @@ compileKotlin {
 
 compileTestKotlin {
 	kotlinOptions {
-	    jvmTarget = '@Language.java.getFeature().getVersion()'
+	    jvmTarget = '@VersionInfo.getJdkVersion()'
 	    javaParameters = true
 	}
 }
-} else if (language.isGroovy()) {
+} else if (features.language().isGroovy()) {
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }

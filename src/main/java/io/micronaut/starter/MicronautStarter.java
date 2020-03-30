@@ -1,13 +1,8 @@
 package io.micronaut.starter;
 
+import io.micronaut.starter.command.BaseCommand;
 import io.micronaut.starter.command.CreateAppCommand;
 import picocli.CommandLine;
-import org.fusesource.jansi.AnsiConsole;
-import org.jline.reader.*;
-import org.jline.reader.impl.DefaultParser;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
