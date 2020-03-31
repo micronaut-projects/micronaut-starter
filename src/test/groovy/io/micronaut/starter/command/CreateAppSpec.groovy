@@ -2,19 +2,18 @@ package io.micronaut.starter.command
 
 import io.micronaut.starter.OutputHandler
 import io.micronaut.starter.io.FileSystemOutputHandler
-import org.codehaus.groovy.runtime.ProcessGroovyMethods
-import spock.lang.Specification
+import spock.lang.Unroll
 import spock.util.concurrent.PollingConditions
 
 import java.nio.file.Files
-import java.nio.file.Path
 
 class CreateAppSpec extends CommandSpec {
 
-    void "test basic create-app"() {
+    @Unroll
+    void 'test basic create-app for lang=#lang'() {
         when:
         File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = new CreateAppCommand(name: "foo")
+        CreateAppCommand command = new CreateAppCommand(name: "foo", lang: lang)
         OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
         command.generate(outputHandler)
 
@@ -22,16 +21,19 @@ class CreateAppSpec extends CommandSpec {
         Process process = executeGradleCommand("run", dir)
         process.consumeProcessOutputStream(baos)
 
-        PollingConditions conditions = new PollingConditions(timeout: 20, initialDelay: 3, delay: 1, factor: 1)
+        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
 
         then:
         conditions.eventually {
-            process.consumeProcessOutputStream()
+            process.consumeProcessOutputStream(baos)
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
         cleanup:
         process.destroy()
+
+        where:
+        lang << ['java', 'groovy', 'kotlin', null]
     }
 
 }

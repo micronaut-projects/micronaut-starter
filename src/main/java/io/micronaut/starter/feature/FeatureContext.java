@@ -5,9 +5,17 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -135,7 +143,7 @@ public class FeatureContext {
             if (requiredLanguage != null && requiredLanguage != language) {
                 throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s but %s was the selected language.", requiredLanguages.get(requiredLanguage), requiredLanguage, language));
             } else {
-                language = requiredLanguage;
+                language = requiredLanguage != null ? requiredLanguage : language;
             }
         }
         return language;
