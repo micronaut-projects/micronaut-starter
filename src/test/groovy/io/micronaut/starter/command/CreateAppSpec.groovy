@@ -9,7 +9,7 @@ import spock.util.concurrent.PollingConditions
 import java.nio.file.Files
 import java.nio.file.Path
 
-class CreateAppSpec extends Specification {
+class CreateAppSpec extends CommandSpec {
 
     void "test basic create-app"() {
         when:
@@ -19,13 +19,14 @@ class CreateAppSpec extends Specification {
         command.generate(outputHandler)
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = "./gradlew run".execute(["JAVA_HOME=${System.getenv("JAVA_HOME")}"], dir)
+        Process process = executeGradleCommand("run", dir)
         process.consumeProcessOutputStream(baos)
 
         PollingConditions conditions = new PollingConditions(timeout: 20, initialDelay: 3, delay: 1, factor: 1)
 
         then:
         conditions.eventually {
+            process.consumeProcessOutputStream()
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
