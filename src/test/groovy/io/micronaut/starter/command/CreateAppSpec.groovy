@@ -25,7 +25,6 @@ class CreateAppSpec extends CommandSpec {
 
         then:
         conditions.eventually {
-            process.consumeProcessOutputStream(baos)
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
