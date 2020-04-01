@@ -106,6 +106,20 @@ Map<String, String> properties
       <scope>compile</scope>
     </dependency>
 }
+@if (features.contains("graal-native-image")) {
+    <dependency>
+      <groupId>org.graalvm.nativeimage</groupId>
+      <artifactId>svm</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    @if (features.language().isGroovy()) {
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-graal</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    }
+}
 @if (features.language().isGroovy()) {
     <dependency>
       <groupId>io.micronaut</groupId>
@@ -340,6 +354,13 @@ Map<String, String> properties
             <arg>-parameters</arg>
           </compilerArgs>
           <annotationProcessorPaths>
+@if (features.contains("graal-native-image")) {
+                <path>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-graal</artifactId>
+                    <version>${micronaut.version}</version>
+                </path>
+}
                 <path>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -363,9 +384,21 @@ Map<String, String> properties
                 <arg>-parameters</arg>
               </compilerArgs>
               <annotationProcessorPaths>
+@if (features.contains("graal-native-image")) {
+                <path>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-graal</artifactId>
+                    <version>${micronaut.version}</version>
+                </path>
+}
                 <path>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
+                  <version>${micronaut.version}</version>
+                </path>
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-validation</artifactId>
                   <version>${micronaut.version}</version>
                 </path>
               </annotationProcessorPaths>
@@ -398,6 +431,13 @@ Map<String, String> properties
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+@if (features.contains("graal-native-image")) {
+                  <annotationProcessorPath>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-graal</artifactId>
+                    <version>${micronaut.version}</version>
+                  </annotationProcessorPath>
+}
                   <annotationProcessorPath>
                     <groupId>io.micronaut</groupId>
                     <artifactId>micronaut-inject-java</artifactId>
@@ -432,9 +472,21 @@ Map<String, String> properties
                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+@if (features.contains("graal-native-image")) {
+                  <annotationProcessorPath>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-graal</artifactId>
+                    <version>${micronaut.version}</version>
+                  </annotationProcessorPath>
+}
                   <annotationProcessorPath>
                     <groupId>io.micronaut</groupId>
                     <artifactId>micronaut-inject-java</artifactId>
+                    <version>${micronaut.version}</version>
+                  </annotationProcessorPath>
+                  <annotationProcessorPath>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-validation</artifactId>
                     <version>${micronaut.version}</version>
                   </annotationProcessorPath>
               </annotationProcessorPaths>

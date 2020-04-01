@@ -19,7 +19,7 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(commandContext.getProject())));
+        commandContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(commandContext.getProject(), commandContext.getBuildTool())));
         commandContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(commandContext.getProject()), true));
 
         commandContext.addTemplate("nativeImageProperties",
