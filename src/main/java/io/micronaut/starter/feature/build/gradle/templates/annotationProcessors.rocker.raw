@@ -16,3 +16,12 @@ Features features
     compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     compileOnly "io.micronaut:micronaut-inject-groovy"
 }
+@if (features.contains("graal-native-image")) {
+    @if (features.language().isJava()) {
+    annotationProcessor "io.micronaut:micronaut-graal"
+    } else if (features.language().isKotlin()) {
+    kapt "io.micronaut:micronaut-graal"
+    } else if (features.language().isGroovy()) {
+    compileOnly "io.micronaut:micronaut-graal"
+    }
+}
