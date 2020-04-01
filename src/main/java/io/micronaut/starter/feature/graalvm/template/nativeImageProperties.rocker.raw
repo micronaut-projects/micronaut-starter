@@ -1,0 +1,11 @@
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
+
+@args (
+Project project,
+Features features
+)
+
+Args = -H:IncludeResources=logback.xml|application.yml|bootstrap.yml \
+       -H:Name=@project.getAppName() \
+       -H:Class=@features.application().mainClassName(project)

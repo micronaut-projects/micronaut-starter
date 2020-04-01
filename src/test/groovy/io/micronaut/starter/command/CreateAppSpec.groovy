@@ -35,4 +35,30 @@ class CreateAppSpec extends CommandSpec {
         lang << ['java', 'groovy', 'kotlin', null]
     }
 
+    @Unroll
+    void 'test create-app with feature=graal-native-image for lang=#lang'() {
+        when:
+        File dir = Files.createTempDirectory("foo").toFile()
+        CreateAppCommand command = new CreateAppCommand(name: "example.micronaut.foo", features: ['graal-native-image'], lang: lang)
+        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
+        command.generate(outputHandler)
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        Process process = executeGradleCommand("run", dir)
+        process.consumeProcessOutputStream(baos)
+
+        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+
+        then:
+        conditions.eventually {
+            new String(baos.toByteArray()).contains("Startup completed")
+        }
+
+        cleanup:
+        process.destroy()
+
+        where:
+        lang << ['java', 'groovy', 'kotlin']
+    }
+
 }
