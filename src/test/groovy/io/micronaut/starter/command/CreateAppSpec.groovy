@@ -13,7 +13,7 @@ class CreateAppSpec extends CommandSpec {
     void 'test basic create-app for lang=#lang'() {
         when:
         File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = new CreateAppCommand(name: "foo", lang: lang)
+        CreateAppCommand command = new CreateAppCommand(name: "example.micronaut.foo", lang: lang)
         OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
         command.generate(outputHandler)
 
