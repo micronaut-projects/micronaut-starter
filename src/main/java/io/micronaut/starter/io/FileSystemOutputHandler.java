@@ -45,7 +45,7 @@ public class FileSystemOutputHandler implements OutputHandler {
             contents.write(os);
         }
 
-        if (contents instanceof URLTemplate && ((URLTemplate) contents).isExecutable()) {
+        if (contents.isExecutable()) {
             if (!targetFile.setExecutable(true, true)) {
                 command.warning("Failed to set " + path + " to be executable");
             }

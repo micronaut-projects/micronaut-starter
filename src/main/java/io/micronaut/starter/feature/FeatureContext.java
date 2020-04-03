@@ -7,7 +7,6 @@ import io.micronaut.starter.options.TestFramework;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -140,7 +139,7 @@ public class FeatureContext {
             if (requiredLanguage != null && requiredLanguage != language) {
                 throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s but %s was the selected language.", requiredLanguages.get(requiredLanguage), requiredLanguage, language));
             } else {
-                language = requiredLanguage;
+                language = requiredLanguage != null ? requiredLanguage : language;
             }
         }
         return language;

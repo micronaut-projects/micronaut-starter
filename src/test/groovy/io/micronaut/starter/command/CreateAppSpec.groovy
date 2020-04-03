@@ -3,20 +3,21 @@ package io.micronaut.starter.command
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.OutputHandler
 import io.micronaut.starter.io.FileSystemOutputHandler
-import org.codehaus.groovy.runtime.ProcessGroovyMethods
-import spock.lang.Specification
+import spock.lang.Unroll
 import spock.util.concurrent.PollingConditions
 
 import java.nio.file.Files
 
 class CreateAppSpec extends CommandSpec {
 
-    void "test basic create-app"() {
+    @Unroll
+    void 'test basic create-app for lang=#lang'() {
         when:
         BeanContext beanContext = BeanContext.run()
         File dir = Files.createTempDirectory("foo").toFile()
         CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = "foo"
+        command.name = "example.micronaut.foo"
+        command.lang = lang
         OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
         command.generate(outputHandler)
 
@@ -24,7 +25,7 @@ class CreateAppSpec extends CommandSpec {
         Process process = executeGradleCommand("run", dir)
         process.consumeProcessOutputStream(baos)
 
-        PollingConditions conditions = new PollingConditions(timeout: 20, initialDelay: 3, delay: 1, factor: 1)
+        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
 
         then:
         conditions.eventually {
@@ -34,6 +35,40 @@ class CreateAppSpec extends CommandSpec {
         cleanup:
         process.destroy()
         beanContext.close()
+
+        where:
+        lang << ['java', 'groovy', 'kotlin', null]
+    }
+
+    @Unroll
+    void 'test create-app with feature=graal-native-image for lang=#lang'() {
+        when:
+        BeanContext beanContext = BeanContext.run()
+        File dir = Files.createTempDirectory("foo").toFile()
+        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
+        command.name = "example.micronaut.foo"
+        command.lang = lang
+        command.features = ['graal-native-image']
+        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
+        command.generate(outputHandler)
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        Process process = executeGradleCommand("run", dir)
+        process.consumeProcessOutputStream(baos)
+
+        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+
+        then:
+        conditions.eventually {
+            new String(baos.toByteArray()).contains("Startup completed")
+        }
+
+        cleanup:
+        process.destroy()
+        beanContext.close()
+
+        where:
+        lang << ['java', 'groovy', 'kotlin']
     }
 
 }

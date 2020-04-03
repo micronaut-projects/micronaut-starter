@@ -40,7 +40,13 @@ configurations {
 }
 
 dependencies {
-    @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
+@io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
+@if (features.contains("graal-native-image")) {
+    @if (!features.language().isGroovy()) {
+    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    }
+    compileOnly "org.graalvm.nativeimage:svm"
+}
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"

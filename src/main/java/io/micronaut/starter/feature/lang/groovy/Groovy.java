@@ -5,6 +5,9 @@ import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.options.TestFramework;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class Groovy implements LanguageFeature {
 
     private final GroovyApplication groovyApplication;
