@@ -1,10 +1,9 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface Feature {
@@ -23,7 +22,7 @@ public interface Feature {
 
     }
 
-    default boolean supports(String command) {
+    default boolean supports(MicronautCommand command) {
         return true;
     }
 

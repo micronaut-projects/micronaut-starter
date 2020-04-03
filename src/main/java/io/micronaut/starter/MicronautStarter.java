@@ -1,9 +1,12 @@
 package io.micronaut.starter;
 
+import io.micronaut.context.BeanContext;
+import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.command.BaseCommand;
 import io.micronaut.starter.command.CreateAppCommand;
 import picocli.CommandLine;
 
+import javax.inject.Singleton;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 
@@ -21,6 +24,7 @@ import java.util.function.BiFunction;
         subcommands = {
                 CreateAppCommand.class
         })
+@Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     private static final BiFunction<Throwable, CommandLine, Integer> exceptionHandler = (e, commandLine) -> {
@@ -34,15 +38,34 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            new InteractiveShell(MicronautStarter::createCommandLine, exceptionHandler).start();
+            new InteractiveShell(createCommandLine(), MicronautStarter::execute, exceptionHandler).start();
         } else {
-            System.exit(createCommandLine().execute(args));
+            System.exit(execute(args));
         }
     }
 
     static CommandLine createCommandLine() {
-        MicronautStarter starter = new MicronautStarter();
-        CommandLine commandLine = new CommandLine(starter);
+        try (BeanContext beanContext = BeanContext.run()) {
+            return createCommandLine(beanContext);
+        }
+    }
+
+    static int execute(String[] args) {
+        try (BeanContext beanContext = BeanContext.run()) {
+            return createCommandLine(beanContext).execute(args);
+        }
+    }
+
+    private static CommandLine createCommandLine(BeanContext beanContext) {
+        MicronautStarter starter = beanContext.getBean(MicronautStarter.class);
+        CommandLine commandLine = new CommandLine(starter, new CommandLine.IFactory() {
+            CommandLine.IFactory defaultFactory = CommandLine.defaultFactory();
+
+            @Override
+            public <K> K create(Class<K> cls) throws Exception {
+                return beanContext.findOrInstantiateBean(cls).orElse(defaultFactory.create(cls));
+            }
+        });
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> exceptionHandler.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
         return commandLine;

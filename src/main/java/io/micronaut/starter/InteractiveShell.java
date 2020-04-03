@@ -9,24 +9,27 @@ import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class InteractiveShell {
 
-    private final Supplier<CommandLine> commandLine;
+    private final CommandLine commandLine;
+    private final Consumer<String[]> executor;
     private final BiFunction<Throwable, CommandLine, Integer> onError;
 
-    InteractiveShell(Supplier<CommandLine> commandLine,
+    InteractiveShell(CommandLine commandLine,
+                     Consumer<String[]> executor,
                      BiFunction<Throwable, CommandLine, Integer> onError) {
         this.commandLine = commandLine;
+        this.executor = executor;
         this.onError = onError;
     }
 
     void start() {
-        CommandLine cmd = commandLine.get();
         AnsiConsole.systemInstall();
         try {
-            PicocliJLineCompleter picocliCommands = new PicocliJLineCompleter(cmd.getCommandSpec());
+            PicocliJLineCompleter picocliCommands = new PicocliJLineCompleter(commandLine.getCommandSpec());
             Terminal terminal = TerminalBuilder.terminal();
             LineReader reader = LineReaderBuilder.builder()
                     .terminal(terminal)
@@ -51,13 +54,13 @@ public class InteractiveShell {
                     }
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
-                    commandLine.get().execute(arguments);
+                    executor.accept(arguments);
                 } catch (UserInterruptException | EndOfFileException e) {
                     return;
                 }
             }
         } catch (Throwable t) {
-            onError.apply(t, cmd);
+            onError.apply(t, commandLine);
         } finally {
             AnsiConsole.systemUninstall();
         }

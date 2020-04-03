@@ -51,4 +51,9 @@ public class FileSystemOutputHandler implements OutputHandler {
             }
         }
     }
+
+    @Override
+    public void close() throws IOException {
+
+    }
 }

@@ -28,8 +28,13 @@ public class FeatureContext {
                           AvailableFeatures availableFeatures,
                           List<Feature> selectedFeatures) {
         this.selectedFeatures = selectedFeatures;
-
-        this.language = calculateLanguage(language, selectedFeatures);
+        if (language == null) {
+            language = Language.infer(selectedFeatures);
+        }
+        if (language == null) {
+            language = Language.java;
+        }
+        this.language = language;
         availableFeatures.findFeature(this.language.name(), true).ifPresent(features::add);
 
         if (buildTool == null) {

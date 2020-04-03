@@ -1,6 +1,5 @@
 package io.micronaut.starter.command;
 
-public interface MicronautCommand {
-
-    String getName();
+public enum MicronautCommand {
+    CREATE_APP
 }

@@ -10,7 +10,6 @@ import io.micronaut.starter.feature.lang.kotlin.KotlinApplication
 import io.micronaut.starter.feature.test.Junit
 import io.micronaut.starter.feature.test.KotlinTest
 import io.micronaut.starter.feature.test.Spock
-import io.micronaut.starter.options.Language
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Specification
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle

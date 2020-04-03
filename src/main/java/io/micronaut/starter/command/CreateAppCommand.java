@@ -1,5 +1,6 @@
 package io.micronaut.starter.command;
 
+import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -9,11 +10,11 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
-import io.micronaut.starter.template.YamlTemplate;
 import io.micronaut.starter.util.NameUtils;
-import org.yaml.snakeyaml.Yaml;
+import io.micronaut.starter.feature.validation.FeatureValidator;
 import picocli.CommandLine;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -23,9 +24,13 @@ import java.util.stream.Collectors;
 
 
 @CommandLine.Command(name = CreateAppCommand.NAME, description = "Creates an application")
+@Prototype
 public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
 
     public static final String NAME = "create-app";
+
+    private final CreateAppFeatures createAppFeatures;
+    private final FeatureValidator featureValidator;
 
     @CommandLine.Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
     String name;
@@ -45,6 +50,10 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CreateAppFeatures.class)
     List<String> features = new ArrayList<>();
 
+    public CreateAppCommand(CreateAppFeatures createAppFeatures, FeatureValidator featureValidator) {
+        this.createAppFeatures = createAppFeatures;
+        this.featureValidator = featureValidator;
+    }
 
     @Override
     public Integer call() throws Exception {
@@ -67,10 +76,9 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
             project = NameUtils.parse(name);
         }
 
-        AvailableFeatures availableFeatures = new CreateAppFeatures();
         final List<Feature> features = new ArrayList<>(8);
         for (String name: this.features) {
-            Feature feature = availableFeatures.findFeature(name).orElse(null);
+            Feature feature = createAppFeatures.findFeature(name).orElse(null);
             if (feature != null) {
                 features.add(feature);
             } else {
@@ -78,18 +86,20 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
             }
         }
 
-        availableFeatures.getFeatures()
+        createAppFeatures.getFeatures()
                 .filter(f -> f instanceof DefaultFeature)
-                .filter(f -> ((DefaultFeature) f).shouldApply(availableFeatures.getCommand(), features))
+                .filter(f -> ((DefaultFeature) f).shouldApply(MicronautCommand.CREATE_APP, lang, features))
                 .forEach(features::add);
 
-        FeatureContext featureContext = new FeatureContext(lang, test, build, availableFeatures, features);
+        featureValidator.validate(lang, features);
+
+        FeatureContext featureContext = new FeatureContext(lang, test, build, createAppFeatures, features);
 
         featureContext.processSelectedFeatures();
 
         List<Feature> featureList = featureContext.getFeatures();
 
-        validateOneOf(featureList);
+        featureValidator.validate(lang, featureList);
 
         CommandContext commandContext = new CommandContext(featureContext, project);
         commandContext.getConfiguration().put("micronaut.application.name", project.getAppName());
@@ -110,6 +120,8 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
             String path = replaceVariables(template.getPath(), replacements);
             outputHandler.write(path, template);
         }
+
+        outputHandler.close();
     }
 
     private String replaceVariables(String path, Map<String, String> replacements) {
@@ -130,28 +142,13 @@ public class CreateAppCommand extends BaseCommand implements Callable<Integer> {
         return builder.toString();
     }
 
-    private void validateOneOf(List<Feature> featureList) {
-        Set<Class<?>> oneOfFeatures = featureList.stream()
-                .filter(feature -> feature instanceof OneOfFeature)
-                .map(OneOfFeature.class::cast)
-                .map(OneOfFeature::getFeatureClass)
-                .collect(Collectors.toSet());
-
-        for (Class<?> featureClass: oneOfFeatures) {
-            List<String> matches = featureList.stream()
-                    .filter(feature -> featureClass.isAssignableFrom(feature.getClass()))
-                    .map(Feature::getName)
-                    .collect(Collectors.toList());
-            if (matches.size() > 1) {
-                throw new IllegalArgumentException(String.format("There can only be one of the following features selected: %s", matches));
-            }
-        }
-    }
-
+    @Singleton
     public static class CreateAppFeatures extends AvailableFeatures {
 
-        public CreateAppFeatures() {
-            super(() -> "create-app");
+        public CreateAppFeatures(List<Feature> features) {
+            super(features.stream()
+                    .filter(f -> f.supports(MicronautCommand.CREATE_APP))
+                    .collect(Collectors.toList()));
         }
     }
 }

@@ -3,9 +3,8 @@ package io.micronaut.starter.feature.lang.groovy;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.CreateAppCommand;
+import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.ApplicationFeature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -24,8 +23,8 @@ public class GroovyApplication implements ApplicationFeature {
     }
 
     @Override
-    public boolean supports(String command) {
-        return command.equals(CreateAppCommand.NAME);
+    public boolean supports(MicronautCommand command) {
+        return command == MicronautCommand.CREATE_APP;
     }
 
     @Override

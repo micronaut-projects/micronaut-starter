@@ -25,7 +25,6 @@ dependencies {
     implementation "org.yaml:snakeyaml:1.26"
 
     testCompile("org.codehaus.groovy:groovy:3.0.2")
-    testImplementation("com.fizzed:rocker-runtime:1.2.3")
     testImplementation("org.spockframework:spock-core:2.0-M2-groovy-3.0") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }

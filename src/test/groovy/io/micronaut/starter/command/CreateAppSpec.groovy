@@ -1,5 +1,6 @@
 package io.micronaut.starter.command
 
+import io.micronaut.context.BeanContext
 import io.micronaut.starter.OutputHandler
 import io.micronaut.starter.io.FileSystemOutputHandler
 import org.codehaus.groovy.runtime.ProcessGroovyMethods
@@ -7,14 +8,15 @@ import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
 import java.nio.file.Files
-import java.nio.file.Path
 
 class CreateAppSpec extends CommandSpec {
 
     void "test basic create-app"() {
         when:
+        BeanContext beanContext = BeanContext.run()
         File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = new CreateAppCommand(name: "foo")
+        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
+        command.name = "foo"
         OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
         command.generate(outputHandler)
 
@@ -26,12 +28,12 @@ class CreateAppSpec extends CommandSpec {
 
         then:
         conditions.eventually {
-            process.consumeProcessOutputStream()
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
         cleanup:
         process.destroy()
+        beanContext.close()
     }
 
 }
