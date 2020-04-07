@@ -1,20 +1,22 @@
 package io.micronaut.starter.feature.lang.groovy;
 
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
 public class Groovy implements LanguageFeature {
 
-    private final GroovyApplication groovyApplication;
     private final Spock spock;
+    private final List<GroovyApplicationFeature> applicationFeatures;
 
-    public Groovy(GroovyApplication groovyApplication, Spock spock) {
-        this.groovyApplication = groovyApplication;
+    public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
+        this.applicationFeatures = applicationFeatures;
         this.spock = spock;
     }
 
@@ -29,7 +31,10 @@ public class Groovy implements LanguageFeature {
             featureContext.setTestFramework(TestFramework.spock, spock);
         }
         if (!featureContext.hasApplicationFeature()) {
-            featureContext.addFeature(groovyApplication);
+            applicationFeatures.stream()
+                    .filter(f -> f.supports(featureContext.getCommand()))
+                    .findFirst()
+                    .ifPresent(featureContext::addFeature);
         }
     }
 

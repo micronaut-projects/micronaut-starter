@@ -25,3 +25,12 @@ Features features
     compileOnly "io.micronaut:micronaut-graal"
     }
 }
+@if (features.contains("picocli")) {
+    @if (features.language().isJava()) {
+    annotationProcessor "io.micronaut.configuration:micronaut-picocli"
+    } else if (features.language().isKotlin()) {
+    kapt "io.micronaut.configuration:micronaut-picocli"
+    } else if (features.language().isGroovy()) {
+    compileOnly "io.micronaut.configuration:micronaut-picocli"
+    }
+}

@@ -5,12 +5,13 @@ import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.JavaApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class JavaApplication implements ApplicationFeature {
+public class JavaApplication implements JavaApplicationFeature {
 
     @Override
     public String mainClassName(Project project) {
@@ -29,7 +30,7 @@ public class JavaApplication implements ApplicationFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        ApplicationFeature.super.apply(commandContext);
+        JavaApplicationFeature.super.apply(commandContext);
 
         commandContext.addTemplate("application", new RockerTemplate(getPath(),
                 application.template(commandContext.getProject(), commandContext.getFeatures())));

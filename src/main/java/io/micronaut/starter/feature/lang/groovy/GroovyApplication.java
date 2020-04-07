@@ -5,12 +5,13 @@ import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class GroovyApplication implements ApplicationFeature {
+public class GroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public String mainClassName(Project project) {
@@ -29,7 +30,7 @@ public class GroovyApplication implements ApplicationFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        ApplicationFeature.super.apply(commandContext);
+        GroovyApplicationFeature.super.apply(commandContext);
 
         commandContext.addTemplate("application", new RockerTemplate("src/main/groovy/{packagePath}/Application.groovy",
                 application.template(commandContext.getProject(), commandContext.getFeatures())));

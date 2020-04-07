@@ -59,6 +59,10 @@ dependencies {
 } else {
     implementation "io.micronaut:micronaut-runtime"
 }
+@if (features.contains("picocli")) {
+    implementation "info.picocli:picocli"
+    implementation "io.micronaut.configuration:micronaut-picocli"
+}
 @if (features.contains("annotation-api")) {
     implementation "javax.annotation:javax.annotation-api"
 }
@@ -79,6 +83,66 @@ dependencies {
 }
 @if (features.contains("swagger")) {
     implementation "io.swagger.core.v3:swagger-annotations"
+}
+@if (features.contains("management")) {
+    implementation "io.micronaut:micronaut-management"
+}
+@if (features.contains("micrometer")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-core"
+}
+@if (features.contains("micrometer-appoptics")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-appoptics"
+}
+@if (features.contains("micrometer-atlas")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-atlas"
+}
+@if (features.contains("micrometer-cloudwatch")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-cloudwatch"
+}
+@if (features.contains("micrometer-datadog")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-datadog"
+}
+@if (features.contains("micrometer-dynatrace")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-dynatrace"
+}
+@if (features.contains("micrometer-elastic")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-elastic"
+}
+@if (features.contains("micrometer-ganglia")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-ganglia"
+}
+@if (features.contains("micrometer-graphite")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-graphite"
+}
+@if (features.contains("micrometer-humio")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-humio"
+}
+@if (features.contains("micrometer-influx")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-influx"
+}
+@if (features.contains("micrometer-jmx")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-jmx"
+}
+@if (features.contains("micrometer-kairos")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-kairos"
+}
+@if (features.contains("micrometer-new-relic")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-new-relic"
+}
+@if (features.contains("micrometer-prometheus")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-prometheus"
+}
+@if (features.contains("micrometer-signalfx")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-signalfx"
+}
+@if (features.contains("micrometer-stackdriver")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-stackdriver"
+}
+@if (features.contains("micrometer-statsd")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-statsd"
+}
+@if (features.contains("micrometer-wavefront")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-wavefront"
 }
 @if (features.contains("jdbc-dbcp")) {
     implementation "io.micronaut.configuration:micronaut-jdbc-dbcp"
@@ -156,6 +220,6 @@ shadowJar {
 
 tasks.withType(JavaExec) {
     classpath += configurations.developmentOnly
-    jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote'@if (features.contains("springloaded")) {, '-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar'})
 }
 }

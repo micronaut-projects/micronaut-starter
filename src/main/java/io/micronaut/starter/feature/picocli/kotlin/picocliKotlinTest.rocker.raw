@@ -1,0 +1,36 @@
+@import io.micronaut.starter.Project
+
+@args (Project project)
+
+package @project.getPackageName();
+
+import io.kotlintest.matchers.string.shouldContain
+import io.kotlintest.specs.BehaviorSpec
+import io.micronaut.configuration.picocli.PicocliRunner
+import io.micronaut.context.ApplicationContext
+import io.micronaut.context.env.Environment
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
+
+class @project.getClassName()CommandSpec: BehaviorSpec({
+
+    given("@project.getAppName()") {
+        val ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)
+
+        `when`("invocation with -v") {
+            val baos = ByteArrayOutputStream()
+            System.setOut(PrintStream(baos))
+
+            val args = arrayOf("-v")
+            PicocliRunner.run(TempCommand::class.java, ctx, *args)
+
+            then("should display greeting") {
+                baos.toString() shouldContain "Hi!"
+            }
+        }
+
+        `when`("other") {
+            // add more tests...
+        }
+    }
+})

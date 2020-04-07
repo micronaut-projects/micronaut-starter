@@ -1,0 +1,34 @@
+@import io.micronaut.starter.Project
+
+@args (Project project)
+
+package @project.getPackageName()
+
+import io.micronaut.configuration.picocli.PicocliRunner
+import io.micronaut.context.ApplicationContext
+
+import picocli.CommandLine
+import picocli.CommandLine.Command
+import picocli.CommandLine.Option
+import picocli.CommandLine.Parameters
+
+@@Command(name = "@project.getAppName()", description = ["..."],
+        mixinStandardHelpOptions = true)
+class @project.getClassName()Command : Runnable {
+
+    @@Option(names = ["-v", "--verbose"], description = ["..."])
+    private var verbose : Boolean = false
+
+    override fun run() {
+        // business logic here
+        if (verbose) {
+            println("Hi!")
+        }
+    }
+
+    companion object {
+        @@JvmStatic fun main(args: Array<String>) {
+            PicocliRunner.run(@project.getClassName()Command::class.java, *args)
+        }
+    }
+}

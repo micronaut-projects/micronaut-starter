@@ -133,6 +133,18 @@ Map<String, String> properties
       <scope>compile</scope>
     </dependency>
 }
+@if (features.contains("picocli")) {
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-picocli</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
 @if (features.contains("annotation-api")) {
     <dependency>
       <groupId>javax.annotation</groupId>
@@ -144,6 +156,153 @@ Map<String, String> properties
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("management")) {
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-management</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-appoptics")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-appoptics</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-atlas")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-atlas</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-azure-monitor")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-azure-monitor</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-cloudwatch")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-cloudwatch</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-datadog")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-datadog</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-dynatrace")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-dynatrace</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-elastic")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-elastic</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-ganglia")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-ganglia</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-graphite")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-graphite</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-humio")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-humio</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-influx")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-influx</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-jmx")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-jmx</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-kairos")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-kairos</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-new-relic")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-new-relic</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-prometheus")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-signalfx")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-signalfx</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-stackdriver")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-stackdriver</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-statsd")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-statsd</artifactId>
+      <scope>compile</scope>
+    </dependency>
+}
+@if (features.contains("micrometer-wavefront")) {
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-micrometer-registry-wavefront</artifactId>
       <scope>compile</scope>
     </dependency>
 }
@@ -301,6 +460,10 @@ Map<String, String> properties
             <argument>-XX:TieredStopAtLevel=1</argument>
             <argument>-Dcom.sun.management.jmxremote</argument>
             <argument>${exec.mainClass}</argument>
+@if (features.contains("springloaded")) {
+            <argument>-noverify</argument>
+            <argument>-javaagent:agent/springloaded-1.2.8.RELEASE.jar</argument>
+}
           </arguments>
         </configuration>
       </plugin>}
@@ -354,23 +517,30 @@ Map<String, String> properties
             <arg>-parameters</arg>
           </compilerArgs>
           <annotationProcessorPaths>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-inject-java</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-validation</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
 @if (features.contains("graal-native-image")) {
-                <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
-                </path>
+            <path>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-graal</artifactId>
+                <version>${micronaut.version}</version>
+            </path>
 }
-                <path>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>${micronaut.version}</version>
-                </path>
-                <path>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
-                </path>
+@if (features.contains("picocli")) {
+            <path>
+                <groupId>io.micronaut.configuration</groupId>
+                <artifactId>micronaut-picocli</artifactId>
+                <version>${micronaut.picocli.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -384,13 +554,6 @@ Map<String, String> properties
                 <arg>-parameters</arg>
               </compilerArgs>
               <annotationProcessorPaths>
-@if (features.contains("graal-native-image")) {
-                <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
-                </path>
-}
                 <path>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -401,6 +564,20 @@ Map<String, String> properties
                   <artifactId>micronaut-validation</artifactId>
                   <version>${micronaut.version}</version>
                 </path>
+@if (features.contains("graal-native-image")) {
+                <path>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-graal</artifactId>
+                    <version>${micronaut.version}</version>
+                </path>
+}
+@if (features.contains("picocli")) {
+                <path>
+                    <groupId>io.micronaut.configuration</groupId>
+                    <artifactId>micronaut-picocli</artifactId>
+                    <version>${micronaut.picocli.version}</version>
+                </path>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -431,23 +608,31 @@ Map<String, String> properties
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject-java</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-validation</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
 @if (features.contains("graal-native-image")) {
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-graal</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
 }
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-inject-java</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-validation</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
+@if (features.contains("picocli")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.configuration</groupId>
+                    <artifactId>micronaut-picocli</artifactId>
+                    <version>${micronaut.picocli.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -472,23 +657,30 @@ Map<String, String> properties
                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-inject-java</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-validation</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
 @if (features.contains("graal-native-image")) {
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-graal</artifactId>
+                  <version>${micronaut.version}</version>
+                </annotationProcessorPath>
 }
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-inject-java</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
-                  <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-validation</artifactId>
-                    <version>${micronaut.version}</version>
-                  </annotationProcessorPath>
+@if (features.contains("picocli")) {
+                <annotationProcessorPath>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-picocli</artifactId>
+                  <version>${micronaut.picocli.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>

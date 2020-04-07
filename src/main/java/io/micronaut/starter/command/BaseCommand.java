@@ -3,7 +3,7 @@ package io.micronaut.starter.command;
 import io.micronaut.starter.CommonOptionsMixin;
 import picocli.CommandLine;
 
-public class BaseCommand {
+public class BaseCommand implements ConsoleOutput {
 
     @CommandLine.Spec
     protected CommandLine.Model.CommandSpec spec;

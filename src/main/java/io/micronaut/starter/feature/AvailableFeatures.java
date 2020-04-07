@@ -1,5 +1,7 @@
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.command.MicronautCommand;
+
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -39,4 +41,5 @@ public abstract class AvailableFeatures implements Iterable<String> {
         Stream<Feature> stream = features.values().stream();
         return stream.filter(Feature::isVisible);
     }
+
 }

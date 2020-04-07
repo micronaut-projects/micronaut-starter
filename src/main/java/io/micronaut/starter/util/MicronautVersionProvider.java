@@ -2,6 +2,8 @@ package io.micronaut.starter.util;
 
 import picocli.CommandLine.IVersionProvider;
 
+import javax.inject.Singleton;
+
 /**
  * Generates version information. Example usage:
  * <pre>
@@ -22,6 +24,7 @@ import picocli.CommandLine.IVersionProvider;
  * @author Remko Popma
  * @version 1.0
  */
+@Singleton
 public class MicronautVersionProvider implements IVersionProvider {
 
     public String[] getVersion() {

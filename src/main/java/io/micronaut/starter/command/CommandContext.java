@@ -20,12 +20,14 @@ public class CommandContext {
     private final Map<String, String> projectProperties = new LinkedHashMap<>();
     private final Map<String, Object> configuration = new LinkedHashMap<>();
     private final Map<String, Template> templates = new LinkedHashMap<>();
+    private final MicronautCommand command;
     private final Features features;
     private final Language language;
     private final TestFramework testFramework;
     private final BuildTool buildTool;
 
     public CommandContext(FeatureContext featureContext, Project project) {
+        this.command = featureContext.getCommand();
         this.project = project;
         this.features = new Features(featureContext.getFeatures());
         this.language = featureContext.getLanguage();
@@ -75,4 +77,7 @@ public class CommandContext {
         return project;
     }
 
+    public MicronautCommand getCommand() {
+        return command;
+    }
 }
