@@ -19,7 +19,7 @@ class @project.getClassName()CommandSpec extends Specification {
 
     @@Shared @@AutoCleanup ApplicationContext ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)
 
-    void "test @project.getAppName() with command line option"() {
+    void "test @project.getName() with command line option"() {
         given:
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         System.setOut(new PrintStream(baos))

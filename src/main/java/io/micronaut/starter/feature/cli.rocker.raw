@@ -2,18 +2,19 @@
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.command.MicronautCommand
 
 
 @args (
 Language language,
 TestFramework testFramework,
 Project project,
-Features features
+Features features,
+MicronautCommand command
 )
 
-profile: app
+command: @command.name()
 defaultPackage: @project.getPackageName()
----
 testFramework: @testFramework.name()
 sourceLanguage: @language.name()
 features: @features.toString()

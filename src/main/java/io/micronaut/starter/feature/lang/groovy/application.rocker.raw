@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.info.*
 
 @@OpenAPIDefinition(
     info = @@Info(
-            title = "@project.getAppName()",
+            title = "@project.getName()",
             version = "0.0"
     )
 )}

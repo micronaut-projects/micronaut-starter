@@ -20,7 +20,8 @@ public class CreateCliCommand extends CreateCommand {
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CreateCliFeatures.class)
     List<String> features = new ArrayList<>();
 
-    public CreateCliCommand(CreateCliFeatures createCliFeatures, FeatureValidator featureValidator) {
+    public CreateCliCommand(CreateCliFeatures createCliFeatures,
+                            FeatureValidator featureValidator) {
         super(createCliFeatures, featureValidator, MicronautCommand.CREATE_CLI);
     }
 

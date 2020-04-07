@@ -7,5 +7,5 @@ Features features
 )
 
 Args = -H:IncludeResources=logback.xml|application.yml|bootstrap.yml \
-       -H:Name=@project.getAppName() \
+       -H:Name=@project.getName() \
        -H:Class=@features.application().mainClassName(project)

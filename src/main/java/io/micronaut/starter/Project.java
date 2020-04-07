@@ -10,16 +10,16 @@ public class Project {
     private final String className;
     private final String naturalName;
     private final String propertyName;
-    private final String appName;
+    private final String name;
 
 
-    public Project(String packageName, String packagePath, String className, String naturalName, String propertyName, String appName) {
+    public Project(String packageName, String packagePath, String className, String naturalName, String propertyName, String name) {
         this.packageName = packageName;
         this.packagePath = packagePath;
         this.className = className;
         this.naturalName = naturalName;
         this.propertyName = propertyName;
-        this.appName = appName;
+        this.name = name;
     }
 
     public String getPackageName() {
@@ -42,8 +42,8 @@ public class Project {
         return propertyName;
     }
 
-    public String getAppName() {
-        return appName;
+    public String getName() {
+        return name;
     }
 
     public Map<String, String> getProperties() {
@@ -53,7 +53,7 @@ public class Project {
         properties.put("className", className);
         properties.put("naturalName", naturalName);
         properties.put("propertyName", propertyName);
-        properties.put("appName", appName);
+        properties.put("name", name);
         return properties;
     }
 }

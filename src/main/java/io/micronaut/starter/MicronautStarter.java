@@ -2,12 +2,21 @@ package io.micronaut.starter;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.inject.BeanDefinition;
 import io.micronaut.starter.command.BaseCommand;
+import io.micronaut.starter.command.CodeGenCommand;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.CreateCliCommand;
+import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
 import javax.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
@@ -76,11 +85,41 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         });
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> exceptionHandler.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
+
+        try {
+            CodeGenConfig codeGenConfig = loadConfig();
+            if (codeGenConfig != null) {
+                beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
+                        .map(BeanDefinition::getBeanType)
+                        .map(bt -> beanContext.createBean(bt, codeGenConfig))
+                        .filter(CodeGenCommand::applies)
+                        .forEach(commandLine::addSubcommand);
+            }
+        } catch (IOException e) {
+        }
+
         return commandLine;
     }
 
     @Override
     public Integer call() throws Exception {
         throw new CommandLine.ParameterException(spec.commandLine(), "No command specified");
+    }
+
+    private static CodeGenConfig loadConfig() throws IOException {
+        File micronautCli = new File("micronaut-cli.yml");
+        if (micronautCli.exists()) {
+            Yaml yaml = new Yaml();
+            try (InputStream inputStream = Files.newInputStream(micronautCli.toPath())) {
+                Map<String, Object> map = yaml.load(inputStream);
+                BeanIntrospection<CodeGenConfig> introspection = BeanIntrospection.getIntrospection(CodeGenConfig.class);
+                CodeGenConfig codeGenConfig = introspection.instantiate();
+                introspection.getBeanProperties().forEach(bp -> {
+                    bp.convertAndSet(codeGenConfig, map.get(bp.getName()));
+                });
+                return codeGenConfig;
+            }
+        }
+        return null;
     }
 }

@@ -3,7 +3,7 @@ package io.micronaut.starter.io;
 import io.micronaut.starter.command.BaseCommand;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.template.Template;
 
 import java.io.*;
@@ -13,16 +13,16 @@ import java.nio.file.Paths;
 
 public class FileSystemOutputHandler implements OutputHandler {
 
-    private final BaseCommand command;
+    private final ConsoleOutput console;
     File applicationDirectory;
 
-    public FileSystemOutputHandler(Project project, boolean inplace, BaseCommand command) throws IOException {
-        this.command = command;
+    public FileSystemOutputHandler(Project project, boolean inplace, ConsoleOutput console) throws IOException {
+        this.console = console;
         File baseDirectory = new File(".").getCanonicalFile();
         if (inplace) {
             applicationDirectory = baseDirectory;
         } else {
-            Path applicationPath = Paths.get(baseDirectory.getPath(), project.getAppName());
+            Path applicationPath = Paths.get(baseDirectory.getPath(), project.getName());
             applicationDirectory = applicationPath.toAbsolutePath().normalize().toFile();
         }
         if (applicationDirectory.exists() && !inplace) {
@@ -30,8 +30,8 @@ public class FileSystemOutputHandler implements OutputHandler {
         }
     }
 
-    public FileSystemOutputHandler(File directory, BaseCommand command) throws IOException {
-        this.command = command;
+    public FileSystemOutputHandler(File directory, ConsoleOutput console) throws IOException {
+        this.console = console;
         this.applicationDirectory = directory;
     }
 
@@ -47,7 +47,7 @@ public class FileSystemOutputHandler implements OutputHandler {
 
         if (contents.isExecutable()) {
             if (!targetFile.setExecutable(true, true)) {
-                command.warning("Failed to set " + path + " to be executable");
+                console.warning("Failed to set " + path + " to be executable");
             }
         }
     }

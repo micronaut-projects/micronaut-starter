@@ -14,7 +14,7 @@ import java.io.PrintStream
 
 class @project.getClassName()CommandSpec: BehaviorSpec({
 
-    given("@project.getAppName()") {
+    given("@project.getName()") {
         val ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)
 
         `when`("invocation with -v") {
@@ -22,7 +22,7 @@ class @project.getClassName()CommandSpec: BehaviorSpec({
             System.setOut(PrintStream(baos))
 
             val args = arrayOf("-v")
-            PicocliRunner.run(TempCommand::class.java, ctx, *args)
+            PicocliRunner.run(@project.getClassName()Command::class.java, ctx, *args)
 
             then("should display greeting") {
                 baos.toString() shouldContain "Hi!"

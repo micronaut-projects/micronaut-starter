@@ -2,4 +2,4 @@
 
 @args (Project project)
 
-rootProject.name="@project.getAppName()"
+rootProject.name="@project.getName()"

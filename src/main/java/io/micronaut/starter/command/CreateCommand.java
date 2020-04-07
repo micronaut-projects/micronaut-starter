@@ -1,5 +1,6 @@
 package io.micronaut.starter.command;
 
+import io.micronaut.context.BeanContext;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -10,16 +11,14 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
+import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
 
@@ -69,10 +68,6 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws IOException {
-        if (project == null) {
-            project = NameUtils.parse(name);
-        }
-
         final List<Feature> features = new ArrayList<>(8);
         for (String name: getSelectedFeatures()) {
             Feature feature = availableFeatures.findFeature(name).orElse(null);
@@ -99,43 +94,25 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         featureValidator.validate(lang, featureList);
 
         CommandContext commandContext = new CommandContext(featureContext, project);
-        commandContext.getConfiguration().put("micronaut.application.name", project.getAppName());
+        commandContext.getConfiguration().put("micronaut.application.name", project.getName());
         commandContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(commandContext.getLanguage(),
                                 commandContext.getTestFramework(),
                                 commandContext.getProject(),
-                                commandContext.getFeatures())));
+                                commandContext.getFeatures(),
+                                commandContext.getCommand())));
 
         for (Feature feature: featureList) {
             feature.apply(commandContext);
         }
 
-        Map<String, String> replacements = project.getProperties();
+        TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler);
 
         for (Template template: commandContext.getTemplates().values()) {
-            String path = replaceVariables(template.getPath(), replacements);
-            outputHandler.write(path, template);
+            templateRenderer.render(template);
         }
 
-        outputHandler.close();
-    }
-
-    private String replaceVariables(String path, Map<String, String> replacements) {
-        Pattern pattern = Pattern.compile("\\{(.+?)\\}");
-        Matcher matcher = pattern.matcher(path);
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
-        while (matcher.find()) {
-            String replacement = replacements.get(matcher.group(1));
-            builder.append(path, i, matcher.start());
-            if (replacement == null)
-                builder.append(matcher.group(0));
-            else
-                builder.append(replacement);
-            i = matcher.end();
-        }
-        builder.append(path.substring(i));
-        return builder.toString();
+        templateRenderer.close();
     }
 }

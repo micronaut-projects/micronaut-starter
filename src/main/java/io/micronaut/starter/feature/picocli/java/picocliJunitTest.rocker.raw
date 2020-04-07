@@ -25,7 +25,7 @@ public class @project.getClassName()CommandTest {
             String[] args = new String[] { "-v" };
             PicocliRunner.run(@project.getClassName()Command.class, ctx, args);
 
-            // @project.getAppName()
+            // @project.getName()
             assertTrue(baos.toString().contains("Hi!"));
         }
     }

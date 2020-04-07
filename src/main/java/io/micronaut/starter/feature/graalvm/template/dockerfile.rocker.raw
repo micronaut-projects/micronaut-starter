@@ -11,17 +11,17 @@ FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
 #FROM oracle/graalvm-ce:20.0.0-java11 as graalvm
 RUN gu install native-image
 
-COPY . /home/app/@project.getAppName()
-WORKDIR /home/app/@project.getAppName()
+COPY . /home/app/@project.getName()
+WORKDIR /home/app/@project.getName()
 
 @if (buildTool.equals(BuildTool.gradle)) {
-RUN native-image --no-server -cp build/libs/@project.getAppName()-*-all.jar
+RUN native-image --no-server -cp build/libs/@project.getName()-*-all.jar
 } else {
-RUN native-image --no-server -cp target/@project.getAppName()-*.jar
+RUN native-image --no-server -cp target/@project.getName()-*.jar
 }
 
 FROM frolvlad/alpine-glibc
 RUN apk update && apk add libstdc++
 EXPOSE 8080
-COPY --from=graalvm /home/app/@project.getAppName()/@project.getAppName() /app/@project.getAppName()
-ENTRYPOINT ["/app/@project.getAppName()"]
+COPY --from=graalvm /home/app/@project.getName()/@project.getName() /app/@project.getName()
+ENTRYPOINT ["/app/@project.getName()"]

@@ -5,8 +5,11 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalNativeImage
+import io.micronaut.starter.feature.test.Spock
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Specification
 
@@ -29,7 +32,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
 
     void "test annotation processor dependencies"() {
         when:
-        String template = annotationProcessors.template(buildJavaWithFeatures()).render().toString()
+        String template = annotationProcessors.template(buildWithFeatures(Language.java)).render().toString()
 
         then:
         template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -37,7 +40,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('annotationProcessor "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(buildKotlinWithFeatures()).render().toString()
+        template = annotationProcessors.template(buildWithFeatures(Language.kotlin)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -45,16 +48,31 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('kapt "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(buildGroovyWithFeatures()).render().toString()
+        template = annotationProcessors.template(buildWithFeatures(Language.groovy)).render().toString()
 
         then:
         template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')
         template.contains('compileOnly "io.micronaut:micronaut-inject-groovy"')
     }
 
+    void "test testing dependencies"() {
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java)).render().toString()
+
+        then:
+        template.contains("""
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+    testImplementation platform("io.micronaut:micronaut-bom:\$micronautVersion")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "io.micronaut.test:micronaut-test-junit5"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+""")
+    }
+
     void 'test graal-native-image feature'() {
         when:
-        String template = buildGradle.template(buildProject(), buildJavaWithFeatures(new GraalNativeImage())).render().toString()
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, new GraalNativeImage())).render().toString()
 
         then:
         template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -63,7 +81,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), buildKotlinWithFeatures(new GraalNativeImage())).render().toString()
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, new GraalNativeImage())).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -72,7 +90,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), buildGroovyWithFeatures(new GraalNativeImage())).render().toString()
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, new GraalNativeImage())).render().toString()
 
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1

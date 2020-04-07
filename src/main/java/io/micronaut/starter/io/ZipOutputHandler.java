@@ -21,7 +21,7 @@ public class ZipOutputHandler implements OutputHandler {
     public ZipOutputHandler(Project project, BaseCommand command) throws IOException {
         this.command = command;
         File baseDirectory = new File(".").getCanonicalFile();
-        Path zipPath = Paths.get(baseDirectory.getPath(), project.getAppName() + ".zip");
+        Path zipPath = Paths.get(baseDirectory.getPath(), project.getName() + ".zip");
         File zip = zipPath.toAbsolutePath().normalize().toFile();
         if (zip.exists()) {
             throw new IllegalArgumentException("Cannot create the project because the target zip file already exists");

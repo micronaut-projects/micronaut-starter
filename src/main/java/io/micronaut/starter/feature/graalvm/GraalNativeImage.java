@@ -23,7 +23,7 @@ public class GraalNativeImage implements Feature {
         commandContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(commandContext.getProject()), true));
 
         commandContext.addTemplate("nativeImageProperties",
-                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{appName}-application/native-image.properties",
+                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties",
                         nativeImageProperties.template(commandContext.getProject(), commandContext.getFeatures())
                 )
         );

@@ -30,8 +30,12 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
     public void apply(CommandContext commandContext) {
         JavaApplicationFeature.super.apply(commandContext);
 
-        commandContext.addTemplate("application", new RockerTemplate(getPath(),
-                picocliApplication.template(commandContext.getProject())));
+        commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
+    }
+
+    public RockerTemplate getTemplate(Project project) {
+        return new RockerTemplate(getPath(),
+                picocliApplication.template(project));
     }
 
     protected String getPath() {
