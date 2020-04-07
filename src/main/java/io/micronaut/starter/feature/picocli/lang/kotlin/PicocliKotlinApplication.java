@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.picocli.kotlin;
+package io.micronaut.starter.feature.picocli.lang.kotlin;
 
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
@@ -30,8 +30,12 @@ public class PicocliKotlinApplication implements KotlinApplicationFeature {
     public void apply(CommandContext commandContext) {
         KotlinApplicationFeature.super.apply(commandContext);
 
-        commandContext.addTemplate("application", new RockerTemplate(getPath(),
-                picocliApplication.template(commandContext.getProject())));
+        commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
+    }
+
+    public RockerTemplate getTemplate(Project project) {
+        return new RockerTemplate(getPath(),
+                picocliApplication.template(project));
     }
 
     protected String getPath() {

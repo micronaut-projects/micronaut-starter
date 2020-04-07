@@ -76,7 +76,7 @@ rocker {
     discardLogicWhitespace = true
     targetCharset null
     suffixRegex null
-    postProcessing null
+    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
     markAsGenerated null
 }
 

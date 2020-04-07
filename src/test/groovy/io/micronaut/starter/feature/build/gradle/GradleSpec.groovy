@@ -55,7 +55,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('compileOnly "io.micronaut:micronaut-inject-groovy"')
     }
 
-    void "test testing dependencies"() {
+    void "test junit with different languages"() {
         when:
         String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java)).render().toString()
 
@@ -68,6 +68,33 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
     testImplementation "io.micronaut.test:micronaut-test-junit5"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 """)
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, TestFramework.junit)).render().toString()
+
+        then:
+        template.contains("""
+    testImplementation platform("io.micronaut:micronaut-bom:\$micronautVersion")
+    testImplementation "io.micronaut:micronaut-inject-groovy"
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "io.micronaut.test:micronaut-test-junit5"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+""")
+        !template.contains("testAnnotationProcessor")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, TestFramework.junit)).render().toString()
+
+        then:
+        template.contains("""
+    kaptTest platform("io.micronaut:micronaut-bom:\$micronautVersion")
+    kaptTest "io.micronaut:micronaut-inject-java"
+    testImplementation platform("io.micronaut:micronaut-bom:\$micronautVersion")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "io.micronaut.test:micronaut-test-junit5"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+""")
+        !template.contains("testAnnotationProcessor")
     }
 
     void 'test graal-native-image feature'() {

@@ -32,5 +32,7 @@ class @project.getClassName()CommandSpec: BehaviorSpec({
         `when`("other") {
             // add more tests...
         }
+
+        ctx.close()
     }
 })

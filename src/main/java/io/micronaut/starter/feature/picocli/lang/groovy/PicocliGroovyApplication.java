@@ -1,15 +1,15 @@
-package io.micronaut.starter.feature.picocli.java;
+package io.micronaut.starter.feature.picocli.lang.groovy;
 
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.JavaApplicationFeature;
+import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class PicocliJavaApplication implements JavaApplicationFeature {
+public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public String mainClassName(Project project) {
@@ -28,7 +28,7 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        JavaApplicationFeature.super.apply(commandContext);
+        GroovyApplicationFeature.super.apply(commandContext);
 
         commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
     }
@@ -39,6 +39,6 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
     }
 
     protected String getPath() {
-        return "src/main/java/{packagePath}/{className}Command.java";
+        return "src/main/groovy/{packagePath}/{className}Command.groovy";
     }
 }

@@ -8,10 +8,10 @@ TestFeature testFeature
 
 @if (testFeature.isJunit()) {
 @if (language.isJava()) {
-testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
 } else if (language.isKotlin()) {
-kaptTest platform("io.micronaut:micronaut-bom:$micronautVersion")
+    kaptTest platform("io.micronaut:micronaut-bom:$micronautVersion")
     kaptTest "io.micronaut:micronaut-inject-java"
 }
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")

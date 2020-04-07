@@ -15,7 +15,8 @@ import io.swagger.v3.oas.annotations.info.*
             title = "@project.getName()",
             version = "0.0"
     )
-)}
+)
+}
 object Application {
 
     @@JvmStatic

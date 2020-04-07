@@ -1,0 +1,6 @@
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation "com.fizzed:rocker-compiler:1.2.3"
+}
