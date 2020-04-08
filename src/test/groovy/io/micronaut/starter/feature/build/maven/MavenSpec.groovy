@@ -5,6 +5,9 @@ import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.starter.feature.jdbc.Dbcp
 import io.micronaut.starter.feature.jdbc.Hikari
 import io.micronaut.starter.feature.jdbc.Tomcat
+import io.micronaut.starter.feature.server.Jetty
+import io.micronaut.starter.feature.server.Netty
+import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
@@ -91,5 +94,33 @@ class MavenSpec extends Specification implements ProjectFixture, FeatureFixture 
 
         where:
         micrometerFeature << buildMicrometerFeatures().iterator()
+    }
+
+    @Unroll
+    void 'test server feature #serverFeature.name'() {
+        when:
+        String template = pom.template(buildProject(), buildWithFeatures(Language.java, serverFeature), [:]).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = pom.template(buildProject(), buildWithFeatures(Language.kotlin, serverFeature), [:]).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = pom.template(buildProject(), buildWithFeatures(Language.groovy, serverFeature), [:]).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        where:
+        serverFeature                                    | dependency
+        new Netty()                                      | '<artifactId>micronaut-http-server-netty</artifactId>'
+        new Jetty()                                      | '<artifactId>micronaut-http-server-jetty</artifactId>'
+        new io.micronaut.starter.feature.server.Tomcat() | '<artifactId>micronaut-http-server-tomcat</artifactId>'
+        new Undertow()                                   | '<artifactId>micronaut-http-server-undertow</artifactId>'
     }
 }

@@ -8,6 +8,9 @@ import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.starter.feature.jdbc.Dbcp
 import io.micronaut.starter.feature.jdbc.Hikari
 import io.micronaut.starter.feature.jdbc.Tomcat
+import io.micronaut.starter.feature.server.Jetty
+import io.micronaut.starter.feature.server.Netty
+import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
@@ -176,4 +179,33 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         where:
         micrometerFeature << buildMicrometerFeatures().iterator()
     }
+
+    @Unroll
+    void 'test server feature #serverFeature.name'() {
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        where:
+        serverFeature                                    | dependency
+        new Netty()                                      | 'implementation "io.micronaut:micronaut-http-server-netty"'
+        new Jetty()                                      | 'implementation "io.micronaut.servlet:micronaut-http-server-jetty"'
+        new io.micronaut.starter.feature.server.Tomcat() | 'implementation "io.micronaut.servlet:micronaut-http-server-tomcat"'
+        new Undertow()                                   | 'implementation "io.micronaut.servlet:micronaut-http-server-undertow"'
+    }
+
 }
