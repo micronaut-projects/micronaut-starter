@@ -31,7 +31,7 @@ class CommandSpec extends Specification {
     }
 
     PollingConditions getDefaultPollingConditions() {
-        new PollingConditions(timeout: 40, initialDelay: 3, delay: 1, factor: 1)
+        new PollingConditions(timeout: 120, initialDelay: 3, delay: 1, factor: 1)
     }
 
     void testOutputContains(String value) {
