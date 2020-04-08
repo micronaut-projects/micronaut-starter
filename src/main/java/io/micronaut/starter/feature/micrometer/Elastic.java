@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.other.Management;
@@ -21,20 +21,20 @@ import io.micronaut.starter.feature.other.Management;
 import javax.inject.Singleton;
 
 @Singleton
-public class Humio extends MicrometerFeature {
+public class Elastic extends MicrometerFeature {
 
-    public Humio(Core core, Management management) {
+    public Elastic(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getName() {
-        return "micrometer-humio";
+        return "micrometer-elastic";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
     }
 }

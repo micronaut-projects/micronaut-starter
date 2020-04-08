@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.other.Management;
@@ -21,22 +21,21 @@ import io.micronaut.starter.feature.other.Management;
 import javax.inject.Singleton;
 
 @Singleton
-public class Graphite extends MicrometerFeature {
+public class Wavefront extends MicrometerFeature {
 
-    public Graphite(Core core, Management management) {
+    public Wavefront(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getName() {
-        return "micrometer-graphite";
+        return "micrometer-wavefront";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.apiToken", "${WAVEFRONT_API_TOKEN}");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.step", "PT1M");
     }
 }

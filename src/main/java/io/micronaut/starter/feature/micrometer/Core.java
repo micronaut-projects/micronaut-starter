@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.other.Management;
+import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Elastic extends MicrometerFeature {
-
-    public Elastic(Core core, Management management) {
-        super(core, management);
-    }
+public class Core implements Feature {
 
     @Override
     public String getName() {
-        return "micrometer-elastic";
+        return "micrometer";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
+        commandContext.getConfiguration().put("micronaut.metrics.enabled", true);
     }
 }

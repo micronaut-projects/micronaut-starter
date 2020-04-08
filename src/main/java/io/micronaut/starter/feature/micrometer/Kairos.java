@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.other.Management;
@@ -21,21 +21,20 @@ import io.micronaut.starter.feature.other.Management;
 import javax.inject.Singleton;
 
 @Singleton
-public class Wavefront extends MicrometerFeature {
+public class Kairos extends MicrometerFeature {
 
-    public Wavefront(Core core, Management management) {
+    public Kairos(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getName() {
-        return "micrometer-wavefront";
+        return "micrometer-kairos";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.apiToken", "${WAVEFRONT_API_TOKEN}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.step", "PT1M");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.step", "PT1M");
     }
 }
