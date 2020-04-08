@@ -9,7 +9,7 @@ class CommandSpecListener extends AbstractGlobalExtension {
 
     @Override
     void visitSpec(SpecInfo specInfo) {
-        specInfo.addSetupInterceptor(interceptor -> {
+       /* specInfo.addSetupInterceptor(interceptor -> {
             if (interceptor.instance instanceof CommandSpec) {
                 interceptor.spec.addListener(new AbstractRunListener() {
                     @Override
@@ -20,6 +20,6 @@ class CommandSpecListener extends AbstractGlobalExtension {
                     }
                 })
             }
-        })
+        })*/
     }
 }
