@@ -1,0 +1,29 @@
+name: Release Notes
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+  issues:
+    types: [closed,reopened]
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/release-notes.yml"
+jobs:
+  release_notes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: micronaut-projects/github-actions/release-notes@master
+        id: release_notes
+      - name: Create Release
+        id: create_release
+        uses:  micronaut-projects/create-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.release_notes.outputs.next_version }}
+          release_name: Micronaut Starter ${{ steps.release_notes.outputs.next_version }}
+          bodyFromFile: CHANGELOG.md
+          draft: true
