@@ -14,9 +14,9 @@ class CommandSpecListener extends AbstractGlobalExtension {
                 interceptor.spec.addListener(new AbstractRunListener() {
                     @Override
                     void error(ErrorInfo error) {
-                        System.err.println("Output from command:")
+                        System.err.println("Output from command (last 20 lines):")
                         System.err.println("--------------------------------------------------")
-                        System.err.println(((CommandSpec) interceptor.instance).baos.toString())
+                        System.err.println(((CommandSpec) interceptor.instance).baos.toString().readLines().takeRight(20))
                     }
                 })
             }

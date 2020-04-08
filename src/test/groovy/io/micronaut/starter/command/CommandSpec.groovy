@@ -31,12 +31,13 @@ class CommandSpec extends Specification {
     }
 
     PollingConditions getDefaultPollingConditions() {
-        new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        new PollingConditions(timeout: 40, initialDelay: 3, delay: 1, factor: 1)
     }
 
     void testOutputContains(String value) {
         defaultPollingConditions.eventually {
-            assert new String(baos.toByteArray()).contains(value)
+            assert !baos.toString().contains("Fail")
+            assert baos.toString().contains(value)
         }
     }
 
