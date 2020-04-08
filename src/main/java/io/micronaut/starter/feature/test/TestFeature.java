@@ -4,6 +4,7 @@ import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.TestFramework;
 
 import java.util.Map;
 
@@ -31,15 +32,17 @@ public interface TestFeature extends Feature {
 
     void doApply(CommandContext commandContext);
 
+    TestFramework getTestFramework();
+
     default boolean isJunit() {
-        return false;
+        return getTestFramework() == TestFramework.junit;
     }
 
     default boolean isSpock() {
-        return false;
+        return getTestFramework() == TestFramework.spock;
     }
 
     default boolean isKotlinTest() {
-        return false;
+        return getTestFramework() == TestFramework.kotlintest;
     }
 }

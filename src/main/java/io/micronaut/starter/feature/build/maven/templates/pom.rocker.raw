@@ -2,6 +2,7 @@
 @import io.micronaut.starter.feature.Features
 @import java.util.Map
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.feature.build.maven.templates.dependency
 
 @args (
 Project project,
@@ -47,363 +48,142 @@ Map<String, String> properties
   </dependencyManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-inject</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-validation</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-inject", "compile", null)
+@dependency.template("io.micronaut", "micronaut-validation", "compile", null)
 @if (features.contains("netty-server")) {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-server-netty</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
 }
 @if (features.contains("jetty-server")) {
-    <dependency>
-      <groupId>io.micronaut.servlet</groupId>
-      <artifactId>micronaut-http-server-jetty</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.servlet", "micronaut-http-server-jetty", "compile", null)
 }
 @if (features.contains("undertow-server")) {
-    <dependency>
-      <groupId>io.micronaut.servlet</groupId>
-      <artifactId>micronaut-http-server-undertow</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.servlet", "micronaut-http-server-undertow", "compile", null)
 }
 @if (features.contains("tomcat-server")) {
-    <dependency>
-      <groupId>io.micronaut.servlet</groupId>
-      <artifactId>micronaut-http-server-tomcat</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "compile", null)
 }
 @if (features.contains("http-client")) {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-http-client</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-http-client", "compile", null)
 }
 @if (features.language().isKotlin()) {
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jdk8</artifactId>
-      <version>${kotlinVersion}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-reflect</artifactId>
-      <version>${kotlinVersion}</version>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
+@dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
 }
 @if (features.contains("graal-native-image")) {
-    <dependency>
-      <groupId>org.graalvm.nativeimage</groupId>
-      <artifactId>svm</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    @if (features.language().isGroovy()) {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-graal</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    }
+@dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
+@if (features.language().isGroovy()) {
+@dependency.template("io.micronaut", "micronaut-graal", "compile", null)
+}
 }
 @if (features.language().isGroovy()) {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-runtime-groovy</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-runtime-groovy", "compile", null)
 } else {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-runtime</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-runtime", "compile", null)
 }
 @if (features.contains("picocli")) {
-    <dependency>
-      <groupId>info.picocli</groupId>
-      <artifactId>picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-picocli</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("info.picocli", "picocli", "compile", null)
+@dependency.template("io.micronaut.configuration", "micronaut-picocli", "compile", null)
 }
 @if (features.contains("annotation-api")) {
-    <dependency>
-      <groupId>javax.annotation</groupId>
-      <artifactId>javax.annotation-api</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
 }
 @if (features.contains("swagger")) {
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
 }
 @if (features.contains("management")) {
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-management</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut", "micronaut-management", "compile", null)
 }
 @if (features.contains("micrometer")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-core", "compile", null)
 }
 @if (features.contains("micrometer-appoptics")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-appoptics</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-appoptics", "compile", null)
 }
 @if (features.contains("micrometer-atlas")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-atlas</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-atlas", "compile", null)
 }
 @if (features.contains("micrometer-azure-monitor")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-azure-monitor</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-azure-monitor", "compile", null)
 }
 @if (features.contains("micrometer-cloudwatch")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-cloudwatch</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-cloudwatch", "compile", null)
 }
 @if (features.contains("micrometer-datadog")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-datadog</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-datadog", "compile", null)
 }
 @if (features.contains("micrometer-dynatrace")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-dynatrace</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-dynatrace", "compile", null)
 }
 @if (features.contains("micrometer-elastic")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-elastic</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-elastic", "compile", null)
 }
 @if (features.contains("micrometer-ganglia")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-ganglia</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-ganglia", "compile", null)
 }
 @if (features.contains("micrometer-graphite")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-graphite</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-graphite", "compile", null)
 }
 @if (features.contains("micrometer-humio")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-humio</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-humio", "compile", null)
 }
 @if (features.contains("micrometer-influx")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-influx</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-influx", "compile", null)
 }
 @if (features.contains("micrometer-jmx")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-jmx</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-jmx", "compile", null)
 }
 @if (features.contains("micrometer-kairos")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-kairos</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-kairos", "compile", null)
 }
 @if (features.contains("micrometer-new-relic")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-new-relic</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-new-relic", "compile", null)
 }
 @if (features.contains("micrometer-prometheus")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-prometheus</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-prometheus", "compile", null)
 }
 @if (features.contains("micrometer-signalfx")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-signalfx</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-signalfx", "compile", null)
 }
 @if (features.contains("micrometer-stackdriver")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-stackdriver</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-stackdriver", "compile", null)
 }
 @if (features.contains("micrometer-statsd")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-statsd</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-statsd", "compile", null)
 }
 @if (features.contains("micrometer-wavefront")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-micrometer-registry-wavefront</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-wavefront", "compile", null)
 }
 @if (features.contains("jdbc-dbcp")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-jdbc-dbcp</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-jdbc-dbcp", "compile", null)
 }
 @if (features.contains("jdbc-tomcat")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-jdbc-tomcat</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-jdbc-tomcat", "compile", null)
 }
 @if (features.contains("jdbc-hikari")) {
-    <dependency>
-      <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-jdbc-hikari</artifactId>
-      <scope>compile</scope>
-    </dependency>
+@dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "compile", null)
 }
 @if (features.contains("log4j2")) {
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.12.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.12.1</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.12.1</version>
-      <scope>runtime</scope>
-    </dependency>
+@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
+@dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
+@dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtime", "2.12.1")
 }
 @if (features.contains("logback")) {
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.2.3</version>
-      <scope>runtime</scope>
-    </dependency>
+@dependency.template("ch.qos.logback", "logback-classic", "runtime", "1.2.3")
 }
 @if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
+@dependency.template("com.h2database", "h2", "runtime", null)
 }
 @if (features.language().isKotlin()) {
-    <dependency>
-      <groupId>com.fasterxml.jackson.module</groupId>
-      <artifactId>jackson-module-kotlin</artifactId>
-      <version>2.9.8</version>
-      <scope>runtime</scope>
-    </dependency>
+@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", "2.9.8")
 }
 @if (features.testFramework().isJunit()) {
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-junit5</artifactId>
-      <scope>test</scope>
-    </dependency>
+@dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
+@dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
+@dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
 } else if (features.testFramework().isKotlinTest()) {
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-kotlintest</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.mockk</groupId>
-      <artifactId>mockk</artifactId>
-      <version>1.9.3</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.kotlintest</groupId>
-      <artifactId>kotlintest-runner-junit5</artifactId>
-      <version>3.3.2</version>
-      <scope>test</scope>
-    </dependency>
+@dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "test", null)
+@dependency.template("io.mockk", "mockk", "test", "1.9.3")
+@dependency.template("io.kotlintest", "kotlintest-runner-junit5", "test", "3.3.2")
 } else if (features.testFramework().isSpock()) {
     <dependency>
       <groupId>org.spockframework</groupId>
@@ -416,11 +196,7 @@ Map<String, String> properties
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>io.micronaut.test</groupId>
-      <artifactId>micronaut-test-spock</artifactId>
-      <scope>test</scope>
-    </dependency>
+@dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
   </dependencies>
   <build>
@@ -459,10 +235,13 @@ Map<String, String> properties
             <classpath/>
             <argument>-XX:TieredStopAtLevel=1</argument>
             <argument>-Dcom.sun.management.jmxremote</argument>
-            <argument>${exec.mainClass}</argument>
 @if (features.contains("springloaded")) {
             <argument>-noverify</argument>
             <argument>-javaagent:agent/springloaded-1.2.8.RELEASE.jar</argument>
+}
+            <argument>${exec.mainClass}</argument>
+@if (features.contains("picocli")) {
+            <argument>${args}</argument>
 }
           </arguments>
         </configuration>

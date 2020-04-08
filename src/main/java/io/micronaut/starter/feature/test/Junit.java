@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
@@ -20,7 +21,7 @@ public class Junit implements TestFeature {
     }
 
     @Override
-    public boolean isJunit() {
-        return true;
+    public TestFramework getTestFramework() {
+        return TestFramework.junit;
     }
 }

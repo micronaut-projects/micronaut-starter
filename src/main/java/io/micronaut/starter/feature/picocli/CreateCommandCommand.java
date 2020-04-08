@@ -29,7 +29,6 @@ public class CreateCommandCommand extends CodeGenCommand {
     private final PicocliJunit junit;
     private final PicocliSpock spock;
     private final PicocliKotlinTest kotlinTest;
-    private final Picocli picocli;
 
     @CommandLine.Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
     String name;
@@ -40,14 +39,12 @@ public class CreateCommandCommand extends CodeGenCommand {
                                 PicocliKotlinApplication kotlinApplication,
                                 PicocliJunit junit,
                                 PicocliSpock spock,
-                                PicocliKotlinTest kotlinTest,
-                                Picocli picocli) {
+                                PicocliKotlinTest kotlinTest) {
         super(config);
         this.javaApplication = javaApplication;
         this.junit = junit;
         this.spock = spock;
         this.kotlinTest = kotlinTest;
-        this.picocli = picocli;
         this.groovyApplication = groovyApplication;
         this.kotlinApplication = kotlinApplication;
     }

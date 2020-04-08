@@ -1,0 +1,10 @@
+@args(String groupId, String artifactId, String scope, String version)
+
+    <dependency>
+      <groupId>@groupId</groupId>
+      <artifactId>@artifactId</artifactId>
+      <scope>@scope</scope>
+@if (version != null) {
+      <version>@version</version>
+}
+    </dependency>

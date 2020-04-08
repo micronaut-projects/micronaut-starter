@@ -5,6 +5,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.JavaApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Junit;
+import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.VersionInfo;
 
@@ -36,10 +37,12 @@ public class Java implements LanguageFeature {
     }
 
     @Override
+    public TestFeature getDefaultTestFeature() {
+        return junit;
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getTestFramework() == null) {
-            featureContext.setTestFramework(TestFramework.junit, junit);
-        }
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
                     .filter(f -> f.supports(featureContext.getCommand()))

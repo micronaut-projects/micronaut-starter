@@ -3,6 +3,7 @@ package io.micronaut.starter.command
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.OutputHandler
 import io.micronaut.starter.io.FileSystemOutputHandler
+import io.micronaut.starter.options.BuildTool
 import spock.lang.Unroll
 import spock.util.concurrent.PollingConditions
 
@@ -41,19 +42,19 @@ class CreateAppSpec extends CommandSpec {
     }
 
     @Unroll
-    void 'test create-app with feature=graal-native-image for lang=#lang'() {
+    void 'test basic create-app for lang=#lang and maven'() {
         when:
         BeanContext beanContext = BeanContext.run()
         File dir = Files.createTempDirectory("foo").toFile()
         CreateAppCommand command = beanContext.getBean(CreateAppCommand)
         command.name = "example.micronaut.foo"
         command.lang = lang
-        command.features = ['graal-native-image']
+        command.build = BuildTool.maven
         OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
         command.generate(outputHandler)
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("run", dir)
+        Process process = executeMavenCommand("compile exec:exec", dir)
         process.consumeProcessOutputStream(baos)
 
         PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
@@ -68,7 +69,7 @@ class CreateAppSpec extends CommandSpec {
         beanContext.close()
 
         where:
-        lang << ['java', 'groovy', 'kotlin']
+        lang << ['java', 'groovy', 'kotlin', null]
     }
 
 }

@@ -11,7 +11,7 @@ public interface Feature {
     String getName();
 
     default int getOrder() {
-        return 0;
+        return FeaturePhase.DEFAULT.getOrder();
     }
 
     default void processSelectedFeatures(FeatureContext featureContext) {

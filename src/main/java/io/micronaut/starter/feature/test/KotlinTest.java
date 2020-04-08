@@ -3,18 +3,13 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.picocli.Picocli;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class KotlinTest implements TestFeature {
-
-    private final Picocli picocli;
-
-    public KotlinTest(Picocli picocli) {
-        this.picocli = picocli;
-    }
 
     @Override
     public String getName() {
@@ -31,7 +26,7 @@ public class KotlinTest implements TestFeature {
     }
 
     @Override
-    public boolean isKotlinTest() {
-        return true;
+    public TestFramework getTestFramework() {
+        return TestFramework.kotlintest;
     }
 }

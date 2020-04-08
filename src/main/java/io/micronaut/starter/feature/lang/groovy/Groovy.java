@@ -4,6 +4,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
+import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
@@ -27,9 +28,6 @@ public class Groovy implements LanguageFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getTestFramework() == null) {
-            featureContext.setTestFramework(TestFramework.spock, spock);
-        }
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
                     .filter(f -> f.supports(featureContext.getCommand()))
@@ -41,6 +39,11 @@ public class Groovy implements LanguageFeature {
     @Override
     public String getVersion() {
         return null;
+    }
+
+    @Override
+    public TestFeature getDefaultTestFeature() {
+        return spock;
     }
 
     @Override

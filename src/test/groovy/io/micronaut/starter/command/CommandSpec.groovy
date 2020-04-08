@@ -17,4 +17,15 @@ class CommandSpec extends Specification {
         gradle.toString().execute(["JAVA_HOME=${System.getenv("JAVA_HOME")}"], dir)
     }
 
+    Process executeMavenCommand(String command, File dir) {
+        StringBuilder gradle = new StringBuilder()
+        if (OperatingSystem.current.isWindows()) {
+            gradle.append("mvnw.bat")
+        } else {
+            gradle.append("./mvnw")
+        }
+        gradle.append(" ").append(command)
+
+        gradle.toString().execute(["JAVA_HOME=${System.getenv("JAVA_HOME")}"], dir)
+    }
 }

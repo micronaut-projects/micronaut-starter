@@ -2,6 +2,7 @@ package io.micronaut.starter.feature;
 
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -39,7 +40,12 @@ public class FeatureContext {
             language = Language.java;
         }
         this.language = language;
-        availableFeatures.findFeature(this.language.name(), true).ifPresent(features::add);
+        LanguageFeature languageFeature =  availableFeatures.findFeature(this.language.name(), true)
+                .filter(LanguageFeature.class::isInstance)
+                .map(LanguageFeature.class::cast)
+                .orElseThrow(() -> new IllegalArgumentException("No language feature found!"));
+
+        features.add(languageFeature);
 
         if (buildTool == null) {
             buildTool = BuildTool.gradle;
@@ -48,12 +54,16 @@ public class FeatureContext {
         availableFeatures.findFeature(this.buildTool.name(), true)
                 .ifPresent(features::add);
 
-        if (testFramework != null) {
-            TestFeature testFeature = availableFeatures.findFeature(testFramework.name(), true)
+        TestFeature testFeature;
+        if (testFramework == null) {
+            testFeature = languageFeature.getDefaultTestFeature();
+        } else {
+            testFeature = availableFeatures.findFeature(testFramework.name(), true)
                     .map(TestFeature.class::cast)
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test feature found for test framework [%s]", testFramework.name())));
-            setTestFramework(testFramework, testFeature);
         }
+        setTestFramework(testFeature.getTestFramework());
+        features.add(testFeature);
     }
 
     public void processSelectedFeatures() {
@@ -100,9 +110,8 @@ public class FeatureContext {
         return buildTool;
     }
 
-    public void setTestFramework(TestFramework testFramework, TestFeature testFeature) {
+    public void setTestFramework(TestFramework testFramework) {
         this.testFramework = testFramework;
-        addFeature(testFeature);
     }
 
     public boolean hasApplicationFeature() {
