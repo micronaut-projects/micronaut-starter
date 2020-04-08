@@ -154,8 +154,5 @@ checkstyle {
 
 checkstyleTest.enabled = false
 
-//FIXME
-checkstyleMain.enabled = false
-
 //apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v$micronautDocsVersion/gradle/docs.gradle"
 apply from: file('gradle/license.gradle')

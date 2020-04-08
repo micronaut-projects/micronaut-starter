@@ -17,9 +17,7 @@ package io.micronaut.starter.feature.lang.kotlin;
 
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.KotlinApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 

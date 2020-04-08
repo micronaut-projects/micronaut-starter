@@ -68,7 +68,7 @@ public class YamlTemplate implements Template {
                     }
                     Object next = finalMap.get(keys[i]);
                     if (next instanceof Map) {
-                        finalMap = ((Map<String,Object>) next);
+                        finalMap = ((Map<String, Object>) next);
                     }
                 }
                 finalMap.put(keys[keys.length - 1], value);

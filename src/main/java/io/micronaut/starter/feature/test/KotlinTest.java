@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.picocli.Picocli;
 import io.micronaut.starter.template.URLTemplate;
 

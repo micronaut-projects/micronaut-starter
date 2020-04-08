@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.lang;
 
-import io.micronaut.context.annotation.DefaultScope;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 

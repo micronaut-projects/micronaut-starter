@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.feature.logging.template.log4j2;
+import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 

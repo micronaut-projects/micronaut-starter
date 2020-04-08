@@ -17,7 +17,8 @@ package io.micronaut.starter.command;
 
 
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.starter.feature.*;
+import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import picocli.CommandLine;
 

@@ -19,7 +19,6 @@ import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.OneOfFeature;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 public interface JdbcFeature extends OneOfFeature {
 

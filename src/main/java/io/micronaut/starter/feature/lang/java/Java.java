@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
-import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.JavaApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;

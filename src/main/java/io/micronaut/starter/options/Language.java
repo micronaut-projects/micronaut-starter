@@ -17,7 +17,8 @@ package io.micronaut.starter.options;
 
 import io.micronaut.starter.feature.Feature;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public enum Language {
     java,

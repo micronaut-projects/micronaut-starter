@@ -20,8 +20,8 @@ import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.template.BinaryTemplate;
-import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
 

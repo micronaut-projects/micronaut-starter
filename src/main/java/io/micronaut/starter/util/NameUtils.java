@@ -21,7 +21,15 @@ import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class NameUtils {
+public final class NameUtils {
+
+    private static final String PROPERTY_SET_PREFIX = "set";
+    private static final String PROPERTY_GET_PREFIX = "get";
+
+    private static final Pattern SERVICE_ID_REGEX = Pattern.compile("[\\p{javaLowerCase}\\d-]+");
+
+    private NameUtils() {
+    }
 
     public static Project parse(String name) throws IllegalArgumentException {
         String packageName;
@@ -64,15 +72,6 @@ public class NameUtils {
             throw new IllegalArgumentException("Cannot create a valid package name for [" + appName + "]. Please specify a name that is also a valid Java package.");
         }
         return packageName;
-    }
-
-
-    private static final String PROPERTY_SET_PREFIX = "set";
-    private static final String PROPERTY_GET_PREFIX = "get";
-
-    private static final Pattern SERVICE_ID_REGEX = Pattern.compile("[\\p{javaLowerCase}\\d-]+");
-
-    private NameUtils() {
     }
 
     /**

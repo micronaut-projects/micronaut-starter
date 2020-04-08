@@ -17,11 +17,13 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.build.BuildFeature;
-import io.micronaut.starter.template.BinaryTemplate;
-import io.micronaut.starter.template.URLTemplate;
-import io.micronaut.starter.feature.build.gradle.templates.*;
 import io.micronaut.starter.feature.build.gitignore;
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
+import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
+import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
+import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
 

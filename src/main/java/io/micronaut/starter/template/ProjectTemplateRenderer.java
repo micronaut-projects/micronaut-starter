@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.context.annotation.Parameter;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 
@@ -58,10 +57,11 @@ public class ProjectTemplateRenderer implements TemplateRenderer {
         while (matcher.find()) {
             String replacement = replacements.get(matcher.group(1));
             builder.append(path, i, matcher.start());
-            if (replacement == null)
+            if (replacement == null) {
                 builder.append(matcher.group(0));
-            else
+            } else {
                 builder.append(replacement);
+            }
             i = matcher.end();
         }
         builder.append(path.substring(i));

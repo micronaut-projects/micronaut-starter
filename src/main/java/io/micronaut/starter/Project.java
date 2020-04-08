@@ -27,7 +27,6 @@ public class Project {
     private final String propertyName;
     private final String name;
 
-
     public Project(String packageName, String packagePath, String className, String naturalName, String propertyName, String name) {
         this.packageName = packageName;
         this.packagePath = packagePath;

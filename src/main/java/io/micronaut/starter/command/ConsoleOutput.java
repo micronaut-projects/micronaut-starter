@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.command;
 
-import picocli.CommandLine;
-
 public interface ConsoleOutput {
 
     void out(String message);

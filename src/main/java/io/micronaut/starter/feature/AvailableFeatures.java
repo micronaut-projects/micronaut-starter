@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.command.MicronautCommand;
-
 import java.util.*;
 import java.util.stream.Stream;
 

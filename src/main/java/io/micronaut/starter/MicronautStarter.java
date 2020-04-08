@@ -26,7 +26,6 @@ import io.micronaut.starter.command.CreateCliCommand;
 import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
-import javax.inject.Singleton;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +34,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
-
 
 @CommandLine.Command(name = "mn", description = {
         "Micronaut CLI command line interface for generating projects and services.",
@@ -54,7 +52,7 @@ import java.util.function.BiFunction;
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
-    private static final BiFunction<Throwable, CommandLine, Integer> exceptionHandler = (e, commandLine) -> {
+    private static final BiFunction<Throwable, CommandLine, Integer> EXCEPTION_HANDLER = (e, commandLine) -> {
         BaseCommand command = commandLine.getCommand();
         command.err(e.getMessage());
         if (command.showStacktrace()) {
@@ -65,7 +63,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            new InteractiveShell(createCommandLine(), MicronautStarter::execute, exceptionHandler).start();
+            new InteractiveShell(createCommandLine(), MicronautStarter::execute, EXCEPTION_HANDLER).start();
         } else {
             System.exit(execute(args));
         }
@@ -98,7 +96,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
                 }
             }
         });
-        commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> exceptionHandler.apply(ex, commandLine1));
+        commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
 
         try {

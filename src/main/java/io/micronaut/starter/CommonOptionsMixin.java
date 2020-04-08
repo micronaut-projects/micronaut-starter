@@ -35,6 +35,7 @@ import picocli.CommandLine.Option;
  * @version 1.0
  */
 @CommandLine.Command(mixinStandardHelpOptions = true, versionProvider = MicronautVersionProvider.class)
+@SuppressWarnings("checkstyle:VisibilityModifier")
 public class CommonOptionsMixin {
 
     @Option(names = {"-x", "--stacktrace"}, defaultValue = "false", description = "Show full stack trace when exceptions occur.")

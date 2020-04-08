@@ -15,20 +15,13 @@
  */
 package io.micronaut.starter.command;
 
-import io.micronaut.core.async.SupplierUtil;
-import io.micronaut.core.beans.BeanIntrospection;
-import io.micronaut.core.beans.BeanIntrospector;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.CodeGenConfig;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.io.FileSystemOutputHandler;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
-import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
 import javax.annotation.Nullable;
@@ -38,10 +31,11 @@ import java.util.concurrent.Callable;
 
 public abstract class CodeGenCommand extends BaseCommand implements Callable<Integer> {
 
+    protected final CodeGenConfig config;
+
     @CommandLine.Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
     boolean overwrite;
 
-    protected final CodeGenConfig config;
     private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
 
     public CodeGenCommand(CodeGenConfig config) {

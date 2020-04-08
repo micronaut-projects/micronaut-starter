@@ -22,10 +22,10 @@ import io.micronaut.starter.feature.other.Management;
 
 public abstract class MicrometerFeature implements OneOfFeature {
 
+    protected final String EXPORT_PREFIX = "micronaut.metrics.export";
+
     private final Core core;
     private final Management management;
-
-    protected final String EXPORT_PREFIX = "micronaut.metrics.export";
 
     public MicrometerFeature(Core core, Management management) {
         this.core = core;

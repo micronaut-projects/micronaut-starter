@@ -15,11 +15,6 @@
  */
 package io.micronaut.starter.util;
 
-import io.micronaut.starter.MicronautStarter;
-
-import java.io.IOException;
-import java.util.Properties;
-
 public class VersionInfo {
 
     public static String getVersion() {

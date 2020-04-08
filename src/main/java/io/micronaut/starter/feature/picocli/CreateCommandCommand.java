@@ -38,6 +38,9 @@ import java.util.function.Consumer;
 @Prototype
 public class CreateCommandCommand extends CodeGenCommand {
 
+    @CommandLine.Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
+    String name;
+
     private final PicocliJavaApplication javaApplication;
     private final PicocliGroovyApplication groovyApplication;
     private final PicocliKotlinApplication kotlinApplication;
@@ -45,9 +48,6 @@ public class CreateCommandCommand extends CodeGenCommand {
     private final PicocliSpock spock;
     private final PicocliKotlinTest kotlinTest;
     private final Picocli picocli;
-
-    @CommandLine.Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
-    String name;
 
     public CreateCommandCommand(@Parameter CodeGenConfig config,
                                 PicocliJavaApplication javaApplication,

@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.command;
 
-import io.micronaut.context.BeanContext;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -39,7 +38,6 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     protected final AvailableFeatures availableFeatures;
     protected final FeatureValidator featureValidator;
-    private final MicronautCommand command;
 
     @CommandLine.Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
     String name;
@@ -55,6 +53,8 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
+
+    private final MicronautCommand command;
 
     public CreateCommand(AvailableFeatures availableFeatures,
                          FeatureValidator featureValidator,

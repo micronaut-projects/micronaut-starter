@@ -26,14 +26,14 @@ public enum FeaturePhase {
     HIGH(600),
     HIGHEST(700);
 
-    public int getOrder() {
-        return order;
-    }
-
     private final int order;
 
     FeaturePhase(int order) {
         this.order = order;
+    }
+
+    public int getOrder() {
+        return order;
     }
 
 }

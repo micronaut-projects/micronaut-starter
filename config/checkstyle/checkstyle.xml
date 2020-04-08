@@ -182,6 +182,7 @@
         <!-- See http://checkstyle.sf.net/config_design.html -->
         <module name="DesignForExtension">
             <property name="ignoredAnnotations" value="Override"/>
+            <property name="severity" value="ignore"/>
         </module>
         <module name="FinalClass"/>
         <module name="VisibilityModifier">

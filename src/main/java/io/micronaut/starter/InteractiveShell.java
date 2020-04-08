@@ -25,7 +25,6 @@ import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class InteractiveShell {
 

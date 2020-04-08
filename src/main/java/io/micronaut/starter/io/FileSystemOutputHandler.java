@@ -15,21 +15,22 @@
  */
 package io.micronaut.starter.io;
 
-import io.micronaut.starter.command.BaseCommand;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.template.Template;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileSystemOutputHandler implements OutputHandler {
 
-    private final ConsoleOutput console;
     File applicationDirectory;
+    private final ConsoleOutput console;
 
     public FileSystemOutputHandler(Project project, boolean inplace, ConsoleOutput console) throws IOException {
         this.console = console;
