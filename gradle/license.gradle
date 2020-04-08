@@ -17,5 +17,7 @@ license {
     exclude '**/*.json'
     exclude '**/build-info.properties'
     exclude '**/git.properties'
-    exclude '**/othergit.properties'
+    exclude '**/.gitkeep'
+    exclude '**/*.rocker.raw'
+    exclude "/src/main/resources/**/*"
 }
