@@ -149,4 +149,31 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         where:
         jdbcFeature << [new Dbcp(), new Hikari(), new Tomcat()]
     }
+
+    @Unroll
+    void 'test micrometer feature #micrometerFeature.name'() {
+        given:
+        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
+
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        where:
+        micrometerFeature << buildMicrometerFeatures().iterator()
+    }
 }

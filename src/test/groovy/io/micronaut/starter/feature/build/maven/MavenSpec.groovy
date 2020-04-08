@@ -65,4 +65,31 @@ class MavenSpec extends Specification implements ProjectFixture, FeatureFixture 
         where:
         jdbcFeature << [new Dbcp(), new Hikari(), new Tomcat()]
     }
+
+    @Unroll
+    void 'test micrometer feature #micrometerFeature.name'() {
+        given:
+        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
+
+        when:
+        String template = pom.template(buildProject(), buildWithFeatures(Language.java, micrometerFeature), [:]).render().toString()
+
+        then:
+        template.contains("<artifactId>${dependency}</artifactId>")
+
+        when:
+        template = pom.template(buildProject(), buildWithFeatures(Language.kotlin, micrometerFeature), [:]).render().toString()
+
+        then:
+        template.contains("<artifactId>${dependency}</artifactId>")
+
+        when:
+        template = pom.template(buildProject(), buildWithFeatures(Language.groovy, micrometerFeature), [:]).render().toString()
+
+        then:
+        template.contains("<artifactId>${dependency}</artifactId>")
+
+        where:
+        micrometerFeature << buildMicrometerFeatures().iterator()
+    }
 }

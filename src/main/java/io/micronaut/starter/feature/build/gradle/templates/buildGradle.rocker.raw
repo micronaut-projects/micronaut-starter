@@ -96,6 +96,9 @@ dependencies {
 @if (features.contains("micrometer-atlas")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-registry-atlas"
 }
+@if (features.contains("micrometer-azure-monitor")) {
+    implementation "io.micronaut.configuration:micronaut-micrometer-registry-azure-monitor"
+}
 @if (features.contains("micrometer-cloudwatch")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-registry-cloudwatch"
 }
