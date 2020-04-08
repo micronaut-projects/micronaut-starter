@@ -5,11 +5,15 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalNativeImage
+import io.micronaut.starter.feature.jdbc.Dbcp
+import io.micronaut.starter.feature.jdbc.Hikari
+import io.micronaut.starter.feature.jdbc.Tomcat
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class GradleSpec extends Specification implements ProjectFixture, FeatureFixture {
 
@@ -120,5 +124,29 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
+    }
+
+    @Unroll
+    void 'test jdbc feature #jdbcFeature.name'() {
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        where:
+        jdbcFeature << [new Dbcp(), new Hikari(), new Tomcat()]
     }
 }
