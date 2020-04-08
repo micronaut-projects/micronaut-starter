@@ -136,7 +136,7 @@ rocker {
 tasks.withType(Test) {
     useJUnitPlatform()
     testLogging {
-        events [TestLogEvent.STANDARD_ERROR]
+        events([TestLogEvent.STANDARD_ERROR])
         exceptionFormat = 'full'
     }
 }
