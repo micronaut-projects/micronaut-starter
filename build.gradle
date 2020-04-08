@@ -131,7 +131,9 @@ rocker {
 
 tasks.withType(Test) {
     useJUnitPlatform()
-    showStandardStreams = true
+    testLogging {
+        showStandardStreams = true
+    }
 }
 
 //groovydoc {
