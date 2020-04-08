@@ -5,18 +5,16 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalNativeImage
-import io.micronaut.starter.feature.test.Spock
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
 import spock.lang.Specification
 
 class GradleSpec extends Specification implements ProjectFixture, FeatureFixture {
 
     void "test settings.gradle"() {
-        String template = settingsGradle.template(NameUtils.parse("abc.foo")).render().toString()
+        String template = settingsGradle.template(buildProject()).render().toString()
 
         expect:
         template.contains('rootProject.name="foo"')
