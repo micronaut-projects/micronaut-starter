@@ -4,6 +4,7 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.fixture.CommandFixture
 import spock.lang.AutoCleanup
 import spock.lang.Unroll
+import spock.util.concurrent.PollingConditions
 
 class CreateAppSpec extends CommandSpec implements CommandFixture {
 
@@ -19,7 +20,8 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         Process process = executeGradleCommand('run')
 
         then:
-        pollingConditions.eventually {
+        PollingConditions conditions = defaultPollingConditions
+        conditions.eventually {
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
@@ -40,7 +42,8 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         Process process = executeGradleCommand('run')
 
         then:
-        pollingConditions.eventually {
+        PollingConditions conditions = defaultPollingConditions
+        conditions.eventually {
             new String(baos.toByteArray()).contains("Startup completed")
         }
 

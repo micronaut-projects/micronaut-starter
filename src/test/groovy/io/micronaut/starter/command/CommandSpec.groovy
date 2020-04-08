@@ -26,7 +26,7 @@ class CommandSpec extends Specification {
         process
     }
 
-    PollingConditions getPollingConditions() {
+    PollingConditions getDefaultPollingConditions() {
         new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
     }
 
