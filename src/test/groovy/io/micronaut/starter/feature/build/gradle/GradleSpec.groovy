@@ -5,18 +5,23 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.feature.graalvm.GraalNativeImage
-import io.micronaut.starter.feature.test.Spock
+import io.micronaut.starter.feature.jdbc.Dbcp
+import io.micronaut.starter.feature.jdbc.Hikari
+import io.micronaut.starter.feature.jdbc.Tomcat
+import io.micronaut.starter.feature.server.Jetty
+import io.micronaut.starter.feature.server.Netty
+import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class GradleSpec extends Specification implements ProjectFixture, FeatureFixture {
 
     void "test settings.gradle"() {
-        String template = settingsGradle.template(NameUtils.parse("abc.foo")).render().toString()
+        String template = settingsGradle.template(buildProject()).render().toString()
 
         expect:
         template.contains('rootProject.name="foo"')
@@ -123,4 +128,84 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
     }
+
+    @Unroll
+    void 'test jdbc feature #jdbcFeature.name'() {
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, jdbcFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+
+        where:
+        jdbcFeature << [new Dbcp(), new Hikari(), new Tomcat()]
+    }
+
+    @Unroll
+    void 'test micrometer feature #micrometerFeature.name'() {
+        given:
+        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
+
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, micrometerFeature)).render().toString()
+
+        then:
+        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+
+        where:
+        micrometerFeature << buildMicrometerFeatures().iterator()
+    }
+
+    @Unroll
+    void 'test server feature #serverFeature.name'() {
+        when:
+        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        when:
+        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, serverFeature)).render().toString()
+
+        then:
+        template.contains(dependency)
+
+        where:
+        serverFeature                                    | dependency
+        new Netty()                                      | 'implementation "io.micronaut:micronaut-http-server-netty"'
+        new Jetty()                                      | 'implementation "io.micronaut.servlet:micronaut-http-server-jetty"'
+        new io.micronaut.starter.feature.server.Tomcat() | 'implementation "io.micronaut.servlet:micronaut-http-server-tomcat"'
+        new Undertow()                                   | 'implementation "io.micronaut.servlet:micronaut-http-server-undertow"'
+    }
+
 }

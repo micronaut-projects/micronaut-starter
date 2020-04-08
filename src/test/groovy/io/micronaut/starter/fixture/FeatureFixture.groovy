@@ -9,6 +9,27 @@ import io.micronaut.starter.feature.lang.java.Java
 import io.micronaut.starter.feature.lang.java.JavaApplication
 import io.micronaut.starter.feature.lang.kotlin.Kotlin
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplication
+import io.micronaut.starter.feature.micrometer.AppOptics
+import io.micronaut.starter.feature.micrometer.Atlas
+import io.micronaut.starter.feature.micrometer.AzureMonitor
+import io.micronaut.starter.feature.micrometer.CloudWatch
+import io.micronaut.starter.feature.micrometer.Core
+import io.micronaut.starter.feature.micrometer.DataDog
+import io.micronaut.starter.feature.micrometer.Dynatrace
+import io.micronaut.starter.feature.micrometer.Elastic
+import io.micronaut.starter.feature.micrometer.Ganglia
+import io.micronaut.starter.feature.micrometer.Graphite
+import io.micronaut.starter.feature.micrometer.Humio
+import io.micronaut.starter.feature.micrometer.Influx
+import io.micronaut.starter.feature.micrometer.Jmx
+import io.micronaut.starter.feature.micrometer.Kairos
+import io.micronaut.starter.feature.micrometer.NewRelic
+import io.micronaut.starter.feature.micrometer.Prometheus
+import io.micronaut.starter.feature.micrometer.Signalfx
+import io.micronaut.starter.feature.micrometer.Stackdriver
+import io.micronaut.starter.feature.micrometer.Statsd
+import io.micronaut.starter.feature.micrometer.Wavefront
+import io.micronaut.starter.feature.other.Management
 import io.micronaut.starter.feature.test.Junit
 import io.micronaut.starter.feature.test.KotlinTest
 import io.micronaut.starter.feature.test.Spock
@@ -62,6 +83,18 @@ trait FeatureFixture {
 
     private Features build(LanguageFeature languageFeature, TestFeature testFeature, Feature... features) {
         new Features([languageFeature, testFeature] + features.toList())
+    }
+
+    List<Features> buildMicrometerFeatures() {
+        Feature core = new Core()
+        Feature management = new Management()
+        [
+            new AppOptics(core, management), new Atlas(core, management), new AzureMonitor(core, management), new CloudWatch(core, management),
+            new DataDog(core, management), new Dynatrace(core, management), new Elastic(core, management), new Ganglia(core, management),
+            new Graphite(core, management), new Humio(core, management), new Influx(core, management), new Jmx(core, management),
+            new Kairos(core, management), new NewRelic(core, management), new Prometheus(core, management), new Signalfx(core, management),
+            new Stackdriver(core, management), new Statsd(core, management), new Wavefront(core, management)
+        ] as List<Features>
     }
 
 }

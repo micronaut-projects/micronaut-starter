@@ -1,75 +1,52 @@
 package io.micronaut.starter.command
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.OutputHandler
-import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.fixture.CommandFixture
+import io.micronaut.starter.options.Language
+import spock.lang.AutoCleanup
 import spock.lang.Unroll
 import spock.util.concurrent.PollingConditions
 
-import java.nio.file.Files
+class CreateAppSpec extends CommandSpec implements CommandFixture {
 
-class CreateAppSpec extends CommandSpec {
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     @Unroll
     void 'test basic create-app for lang=#lang'() {
+        given:
+        runCreateAppCommand(lang)
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("run", dir)
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeGradleCommand('run')
 
         then:
-        conditions.eventually {
-            new String(baos.toByteArray()).contains("Startup completed")
-        }
+        testOutputContains("Startup completed")
 
         cleanup:
         process.destroy()
-        beanContext.close()
 
         where:
-        lang << ['java', 'groovy', 'kotlin', null]
+        lang << [Language.java, Language.groovy, Language.kotlin, null]
     }
 
     @Unroll
     void 'test basic create-app for lang=#lang and maven'() {
+        given:
+        runCreateAppCommand(lang, BuildTool.maven)
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        command.build = BuildTool.maven
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeMavenCommand("compile exec:exec", dir)
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeMavenCommand("compile exec:exec")
 
         then:
-        conditions.eventually {
-            new String(baos.toByteArray()).contains("Startup completed")
-        }
+        testOutputContains("Startup completed")
 
         cleanup:
         process.destroy()
-        beanContext.close()
 
         where:
-        lang << ['java', 'groovy', 'kotlin', null]
+        lang << [Language.java, Language.groovy, Language.kotlin, null]
     }
 
 }

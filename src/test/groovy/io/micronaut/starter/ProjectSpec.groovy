@@ -15,14 +15,14 @@ class ProjectSpec extends Specification {
         project.naturalName == result
 
         where:
-        name         | result
-        "aName"      | "A Name"
-        "name"       | "Name"
-        "firstName"  | "First Name"
-        "URL"        | "URL"
-        "localURL"   | "Local URL"
-        "URLLocal"   | "URL Local"
-        "aURLLocal"  | "A URL Local"
+        name                           | result
+        "aName"                        | "A Name"
+        "name"                         | "Name"
+        "firstName"                    | "First Name"
+        "URL"                          | "URL"
+        "localURL"                     | "Local URL"
+        "URLLocal"                     | "URL Local"
+        "aURLLocal"                    | "A URL Local"
         "MyDomainClass"                | "My Domain Class"
         "com.myco.myapp.MyDomainClass" | "My Domain Class"
     }

@@ -1,20 +1,36 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.io;
 
-import io.micronaut.starter.command.BaseCommand;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.template.Template;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileSystemOutputHandler implements OutputHandler {
 
-    private final ConsoleOutput console;
     File applicationDirectory;
+    private final ConsoleOutput console;
 
     public FileSystemOutputHandler(Project project, boolean inplace, ConsoleOutput console) throws IOException {
         this.console = console;

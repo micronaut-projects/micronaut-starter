@@ -1,19 +1,27 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.command;
 
-import io.micronaut.core.async.SupplierUtil;
-import io.micronaut.core.beans.BeanIntrospection;
-import io.micronaut.core.beans.BeanIntrospector;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.CodeGenConfig;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.io.FileSystemOutputHandler;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
-import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
 import javax.annotation.Nullable;
@@ -23,10 +31,11 @@ import java.util.concurrent.Callable;
 
 public abstract class CodeGenCommand extends BaseCommand implements Callable<Integer> {
 
+    protected final CodeGenConfig config;
+
     @CommandLine.Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
     boolean overwrite;
 
-    protected final CodeGenConfig config;
     private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
 
     public CodeGenCommand(CodeGenConfig config) {
