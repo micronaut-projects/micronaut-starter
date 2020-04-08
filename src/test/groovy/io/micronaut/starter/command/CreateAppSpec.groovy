@@ -1,40 +1,31 @@
 package io.micronaut.starter.command
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.OutputHandler
-import io.micronaut.starter.io.FileSystemOutputHandler
+import io.micronaut.starter.fixture.CommandFixture
+import spock.lang.AutoCleanup
 import spock.lang.Unroll
-import spock.util.concurrent.PollingConditions
 
-import java.nio.file.Files
+class CreateAppSpec extends CommandSpec implements CommandFixture {
 
-class CreateAppSpec extends CommandSpec {
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     @Unroll
     void 'test basic create-app for lang=#lang'() {
+        given:
+        runCreateAppCommand(lang)
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("run", dir)
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeGradleCommand('run')
 
         then:
-        conditions.eventually {
+        pollingConditions.eventually {
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
         cleanup:
         process.destroy()
-        beanContext.close()
+        dir.deleteDir()
 
         where:
         lang << ['java', 'groovy', 'kotlin', null]
@@ -42,30 +33,20 @@ class CreateAppSpec extends CommandSpec {
 
     @Unroll
     void 'test create-app with feature=graal-native-image for lang=#lang'() {
+        given:
+        runCreateAppCommand(lang, ['graal-native-image'])
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        command.features = ['graal-native-image']
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("run", dir)
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeGradleCommand('run')
 
         then:
-        conditions.eventually {
+        pollingConditions.eventually {
             new String(baos.toByteArray()).contains("Startup completed")
         }
 
         cleanup:
         process.destroy()
-        beanContext.close()
+        dir.deleteDir()
 
         where:
         lang << ['java', 'groovy', 'kotlin']

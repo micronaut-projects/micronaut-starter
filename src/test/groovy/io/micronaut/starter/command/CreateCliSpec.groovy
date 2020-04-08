@@ -1,43 +1,31 @@
-package io.micronaut.starter.command;
+package io.micronaut.starter.command
 
-import io.micronaut.context.BeanContext;
-import io.micronaut.starter.OutputHandler;
-import io.micronaut.starter.io.FileSystemOutputHandler;
-import spock.lang.Unroll;
-import spock.util.concurrent.PollingConditions;
+import io.micronaut.context.BeanContext
+import io.micronaut.starter.fixture.CommandFixture
+import spock.lang.AutoCleanup
+import spock.lang.Unroll
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.nio.file.Files;
+class CreateCliSpec extends CommandSpec implements CommandFixture {
 
-class CreateCliSpec extends CommandSpec {
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     @Unroll
     void 'test basic create-cli-app for lang=#lang'() {
+        given:
+        runCreateCliCommand(lang)
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateCliCommand command = beanContext.getBean(CreateCliCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("run --args=\"-v\"", dir)
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeGradleCommand('run --args="-v"')
 
         then:
-        conditions.eventually {
+        pollingConditions.eventually {
             new String(baos.toByteArray()).contains("Hi")
         }
 
         cleanup:
         process.destroy()
-        beanContext.close()
-        dir.delete()
+        dir.deleteDir()
 
         where:
         lang << ['java', 'groovy', 'kotlin', null]
@@ -45,31 +33,20 @@ class CreateCliSpec extends CommandSpec {
 
     @Unroll
     void 'test basic create-cli-app test for lang=#lang'() {
+        given:
+        runCreateCliCommand(lang)
+
         when:
-        BeanContext beanContext = BeanContext.run()
-        File dir = Files.createTempDirectory("foo").toFile()
-        CreateCliCommand command = beanContext.getBean(CreateCliCommand)
-        command.name = "example.micronaut.foo"
-        command.lang = lang
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        Process process = executeGradleCommand("test", dir)
-
-        process.consumeProcessOutputStream(baos)
-
-        PollingConditions conditions = new PollingConditions(timeout: 30, initialDelay: 3, delay: 1, factor: 1)
+        Process process = executeGradleCommand('test')
 
         then:
-        conditions.eventually {
+        pollingConditions.eventually {
             new String(baos.toByteArray()).contains("BUILD SUCCESSFUL")
         }
 
         cleanup:
         process.destroy()
-        beanContext.close()
-        dir.delete()
+        dir.deleteDir()
 
         where:
         lang << ['java', 'groovy', 'kotlin', null]
