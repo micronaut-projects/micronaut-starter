@@ -15,11 +15,15 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
@@ -64,5 +68,10 @@ public class Groovy implements LanguageFeature {
     @Override
     public boolean isGroovy() {
         return true;
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return language == Language.groovy;
     }
 }

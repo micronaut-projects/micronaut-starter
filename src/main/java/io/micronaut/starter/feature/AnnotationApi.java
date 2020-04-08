@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
@@ -31,7 +33,7 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, List<Feature> selectedFeatures) {
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
         return VersionInfo.getJavaVersion() >= 9;
     }
 }

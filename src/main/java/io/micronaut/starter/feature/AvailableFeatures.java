@@ -55,4 +55,8 @@ public abstract class AvailableFeatures implements Iterable<String> {
         return stream.filter(Feature::isVisible);
     }
 
+    public Stream<Feature> getAllFeatures() {
+        return features.values().stream();
+    }
+
 }

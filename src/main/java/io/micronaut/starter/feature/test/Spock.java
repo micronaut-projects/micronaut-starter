@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -38,5 +39,10 @@ public class Spock implements TestFeature {
     @Override
     public TestFramework getTestFramework() {
         return TestFramework.spock;
+    }
+
+    @Override
+    public Language getDefaultLanguage() {
+        return Language.groovy;
     }
 }

@@ -1,20 +1,28 @@
 package io.micronaut.starter.feature.build.maven
 
+import io.micronaut.context.BeanContext
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.starter.feature.jdbc.Dbcp
 import io.micronaut.starter.feature.jdbc.Hikari
 import io.micronaut.starter.feature.jdbc.Tomcat
+import io.micronaut.starter.feature.micrometer.MicrometerFeature
 import io.micronaut.starter.feature.server.Jetty
 import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class MavenSpec extends Specification implements ProjectFixture, FeatureFixture {
+
+    @Shared
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     void 'test graal-native-image feature'() {
         when:
@@ -93,7 +101,7 @@ class MavenSpec extends Specification implements ProjectFixture, FeatureFixture 
         template.contains("<artifactId>${dependency}</artifactId>")
 
         where:
-        micrometerFeature << buildMicrometerFeatures().iterator()
+        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
     }
 
     @Unroll

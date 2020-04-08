@@ -17,7 +17,6 @@ package io.micronaut.starter.feature;
 
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -43,41 +42,21 @@ public class FeatureContext {
                           TestFramework testFramework,
                           BuildTool buildTool,
                           MicronautCommand command,
-                          AvailableFeatures availableFeatures,
                           List<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
-        if (language == null) {
-            language = Language.infer(selectedFeatures);
-        }
-        if (language == null) {
-            language = Language.java;
-        }
         this.language = language;
-        LanguageFeature languageFeature =  availableFeatures.findFeature(this.language.name(), true)
-                .filter(LanguageFeature.class::isInstance)
-                .map(LanguageFeature.class::cast)
-                .orElseThrow(() -> new IllegalArgumentException("No language feature found!"));
-
-        features.add(languageFeature);
-
-        if (buildTool == null) {
-            buildTool = BuildTool.gradle;
-        }
         this.buildTool = buildTool;
-        availableFeatures.findFeature(this.buildTool.name(), true)
-                .ifPresent(features::add);
 
-        TestFeature testFeature;
         if (testFramework == null) {
-            testFeature = languageFeature.getDefaultTestFeature();
-        } else {
-            testFeature = availableFeatures.findFeature(testFramework.name(), true)
+            testFramework = selectedFeatures.stream()
+                    .filter(TestFeature.class::isInstance)
                     .map(TestFeature.class::cast)
-                    .orElseThrow(() -> new IllegalArgumentException(String.format("No test feature found for test framework [%s]", testFramework.name())));
+                    .map(TestFeature::getTestFramework)
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
         }
-        setTestFramework(testFeature.getTestFramework());
-        features.add(testFeature);
+        setTestFramework(testFramework);
     }
 
     public void processSelectedFeatures() {

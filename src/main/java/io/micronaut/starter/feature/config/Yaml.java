@@ -20,7 +20,9 @@ import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.YamlTemplate;
 
 import javax.inject.Singleton;
@@ -30,7 +32,7 @@ import java.util.List;
 public class Yaml implements ConfigurationFeature, DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, List<Feature> selectedFeatures) {
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
     }
 

@@ -37,6 +37,8 @@ import io.micronaut.starter.feature.test.TestFeature
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
+import java.beans.beancontext.BeanContext
+
 trait FeatureFixture {
 
     Java buildJavaFeature() {
@@ -83,18 +85,6 @@ trait FeatureFixture {
 
     private Features build(LanguageFeature languageFeature, TestFeature testFeature, Feature... features) {
         new Features([languageFeature, testFeature] + features.toList())
-    }
-
-    List<Features> buildMicrometerFeatures() {
-        Feature core = new Core()
-        Feature management = new Management()
-        [
-            new AppOptics(core, management), new Atlas(core, management), new AzureMonitor(core, management), new CloudWatch(core, management),
-            new DataDog(core, management), new Dynatrace(core, management), new Elastic(core, management), new Ganglia(core, management),
-            new Graphite(core, management), new Humio(core, management), new Influx(core, management), new Jmx(core, management),
-            new Kairos(core, management), new NewRelic(core, management), new Prometheus(core, management), new Signalfx(core, management),
-            new Stackdriver(core, management), new Statsd(core, management), new Wavefront(core, management)
-        ] as List<Features>
     }
 
 }

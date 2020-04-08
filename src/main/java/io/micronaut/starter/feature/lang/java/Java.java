@@ -15,11 +15,15 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.JavaApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.VersionInfo;
 
@@ -68,5 +72,10 @@ public class Java implements LanguageFeature {
     @Override
     public boolean isJava() {
         return true;
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return language == Language.java;
     }
 }

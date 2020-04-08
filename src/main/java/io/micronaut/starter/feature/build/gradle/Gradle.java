@@ -16,16 +16,22 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
 public class Gradle implements BuildFeature {
@@ -54,5 +60,13 @@ public class Gradle implements BuildFeature {
         commandContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         commandContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(commandContext.getProjectProperties())));
         commandContext.addTemplate("gradleSettings", new RockerTemplate("settings.gradle", settingsGradle.template(commandContext.getProject())));
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand,
+                               Language language,
+                               TestFramework testFramework, BuildTool buildTool,
+                               List<Feature> selectedFeatures) {
+        return buildTool == BuildTool.gradle;
     }
 }

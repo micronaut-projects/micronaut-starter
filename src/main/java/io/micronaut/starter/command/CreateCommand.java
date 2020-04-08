@@ -30,7 +30,6 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -54,13 +53,16 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
 
+    private final FeatureContextFactory featureContextFactory;
     private final MicronautCommand command;
 
     public CreateCommand(AvailableFeatures availableFeatures,
                          FeatureValidator featureValidator,
+                         FeatureContextFactory featureContextFactory,
                          MicronautCommand command) {
         this.availableFeatures = availableFeatures;
         this.featureValidator = featureValidator;
+        this.featureContextFactory = featureContextFactory;
         this.command = command;
     }
 
@@ -83,24 +85,8 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws IOException {
-        final List<Feature> features = new ArrayList<>(8);
-        for (String name: getSelectedFeatures()) {
-            Feature feature = availableFeatures.findFeature(name).orElse(null);
-            if (feature != null) {
-                features.add(feature);
-            } else {
-                throw new IllegalArgumentException("The requested feature does not exist: " + name);
-            }
-        }
 
-        availableFeatures.getFeatures()
-                .filter(f -> f instanceof DefaultFeature)
-                .filter(f -> ((DefaultFeature) f).shouldApply(command, lang, features))
-                .forEach(features::add);
-
-        featureValidator.validate(lang, features);
-
-        FeatureContext featureContext = new FeatureContext(lang, test, build, command, availableFeatures, features);
+        FeatureContext featureContext = featureContextFactory.build(availableFeatures, getSelectedFeatures(), command, lang, build, test);
 
         featureContext.processSelectedFeatures();
 

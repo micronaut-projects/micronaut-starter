@@ -15,10 +15,10 @@
  */
 package io.micronaut.starter.feature.build;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
 
-public interface BuildFeature extends Feature {
+public interface BuildFeature extends DefaultFeature {
 
     @Override
     default boolean isVisible() {

@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build.gradle
 
+import io.micronaut.context.BeanContext
 import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
@@ -8,6 +9,7 @@ import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.starter.feature.jdbc.Dbcp
 import io.micronaut.starter.feature.jdbc.Hikari
 import io.micronaut.starter.feature.jdbc.Tomcat
+import io.micronaut.starter.feature.micrometer.MicrometerFeature
 import io.micronaut.starter.feature.server.Jetty
 import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.Undertow
@@ -15,10 +17,16 @@ import io.micronaut.starter.fixture.FeatureFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class GradleSpec extends Specification implements ProjectFixture, FeatureFixture {
+
+    @Shared
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     void "test settings.gradle"() {
         String template = settingsGradle.template(buildProject()).render().toString()
@@ -177,7 +185,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
 
         where:
-        micrometerFeature << buildMicrometerFeatures().iterator()
+        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
     }
 
     @Unroll

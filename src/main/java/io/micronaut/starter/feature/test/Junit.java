@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -39,4 +40,10 @@ public class Junit implements TestFeature {
     public TestFramework getTestFramework() {
         return TestFramework.junit;
     }
+
+    @Override
+    public Language getDefaultLanguage() {
+        return Language.java;
+    }
+
 }
