@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.other.Management;
@@ -21,22 +21,21 @@ import io.micronaut.starter.feature.other.Management;
 import javax.inject.Singleton;
 
 @Singleton
-public class NewRelic extends MicrometerFeature {
+public class AzureMonitor extends MicrometerFeature {
 
-    public NewRelic(Core core, Management management) {
+    public AzureMonitor(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getName() {
-        return "micrometer-new-relic";
+        return "micrometer-azure-monitor";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.apiKey", "${NEWRELIC_API_KEY}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.step", "PT1M");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
     }
 }

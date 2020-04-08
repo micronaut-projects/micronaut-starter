@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.metricometer;
+package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Core implements Feature {
+public class Humio extends MicrometerFeature {
 
-    @Override
-    public String getName() {
-        return "micrometer";
+    public Humio(Core core, Management management) {
+        super(core, management);
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    public String getName() {
+        return "micrometer-humio";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("micronaut.metrics.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
+        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
     }
 }
