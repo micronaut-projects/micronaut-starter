@@ -36,7 +36,6 @@ class CommandSpec extends Specification {
 
     void testOutputContains(String value) {
         defaultPollingConditions.eventually {
-            assert !baos.toString().contains("Fail")
             assert baos.toString().contains(value)
         }
     }
