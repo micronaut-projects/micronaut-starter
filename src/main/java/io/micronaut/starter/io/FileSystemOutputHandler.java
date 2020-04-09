@@ -52,6 +52,11 @@ public class FileSystemOutputHandler implements OutputHandler {
     }
 
     @Override
+    public boolean exists(String path) {
+        return new File(applicationDirectory, path).exists();
+    }
+
+    @Override
     public void write(String path, Template contents) throws IOException {
         File targetFile = new File(applicationDirectory, path);
         targetFile.getParentFile().mkdirs();

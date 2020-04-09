@@ -24,9 +24,11 @@ import java.util.function.Consumer;
 
 public interface TemplateRenderer extends Closeable {
 
-    void render(Template template) throws IOException;
+    default RenderResult render(Template template) throws IOException {
+        return render(template, false);
+    }
 
-    void render(Template template, Consumer<String> onSuccess) throws IOException;
+    RenderResult render(Template template, boolean force) throws IOException;
 
     static TemplateRenderer create(Project project, OutputHandler outputHandler) {
         return new ProjectTemplateRenderer(project, outputHandler);

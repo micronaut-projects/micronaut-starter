@@ -35,17 +35,16 @@ public class ProjectTemplateRenderer implements TemplateRenderer {
         this.outputHandler = outputHandler;
     }
 
-    @Override
-    public void render(Template template) throws IOException {
+    public RenderResult render(Template template, boolean force) {
         String path = replaceVariables(template.getPath(), replacements);
-        outputHandler.write(path, template);
-    }
-
-    public void render(Template template, Consumer<String> onSuccess) throws IOException {
-        String path = replaceVariables(template.getPath(), replacements);
-        outputHandler.write(path, template);
-        if (onSuccess != null) {
-            onSuccess.accept(path);
+        if (outputHandler.exists(path) && !force) {
+            return RenderResult.skipped(path);
+        }
+        try {
+            outputHandler.write(path, template);
+            return RenderResult.success(path);
+        } catch (IOException e) {
+            return RenderResult.error(path, e);
         }
     }
 

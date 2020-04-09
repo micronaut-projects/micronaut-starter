@@ -34,7 +34,7 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
     protected final CodeGenConfig config;
 
     @CommandLine.Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
-    boolean overwrite;
+    protected boolean overwrite;
 
     private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
 

@@ -29,6 +29,7 @@ import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
@@ -75,30 +76,41 @@ public class CreateCommandCommand extends CodeGenCommand {
         Project project = getProject(name, config);
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
+        RenderResult renderResult = null;
         if (config.getSourceLanguage() == Language.java) {
-            templateRenderer.render(javaApplication.getTemplate(project), (path) -> {
-                out("Rendered command to " + path);
-            });
+            renderResult = templateRenderer.render(javaApplication.getTemplate(project), overwrite);
         } else if (config.getSourceLanguage() == Language.groovy) {
-            templateRenderer.render(groovyApplication.getTemplate(project), (path) -> {
-                out("Rendered command to " + path);
-            });
+            renderResult = templateRenderer.render(groovyApplication.getTemplate(project), overwrite);
         } else if (config.getSourceLanguage() == Language.kotlin) {
-            templateRenderer.render(kotlinApplication.getTemplate(project), (path) -> {
-                out("Rendered command to " + path);
-            });
+            renderResult = templateRenderer.render(kotlinApplication.getTemplate(project), overwrite);
         }
 
-        Consumer<String> testOutput = (path) -> {
-            out("Rendered command test to " + path);
-        };
+        if (renderResult != null) {
+            if (renderResult.isSuccess()) {
+                out("Rendered command to " + renderResult.getPath());
+            } else if (renderResult.isSkipped()) {
+                warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
+            } else if (renderResult.getError() != null) {
+                throw renderResult.getError();
+            }
+        }
 
         if (config.getTestFramework() == TestFramework.junit) {
-            templateRenderer.render(junit.getTemplate(config.getSourceLanguage(), project), testOutput);
+            renderResult = templateRenderer.render(junit.getTemplate(config.getSourceLanguage(), project), overwrite);
         } else if (config.getTestFramework() == TestFramework.spock) {
-            templateRenderer.render(spock.getTemplate(project), testOutput);
+            renderResult = templateRenderer.render(spock.getTemplate(project), overwrite);
         } else if (config.getTestFramework() == TestFramework.kotlintest) {
-            templateRenderer.render(kotlinTest.getTemplate(project), testOutput);
+            renderResult = templateRenderer.render(kotlinTest.getTemplate(project), overwrite);
+        }
+
+        if (renderResult != null) {
+            if (renderResult.isSuccess()) {
+                out("Rendered command test to " + renderResult.getPath());
+            } else if (renderResult.isSkipped()) {
+                warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
+            } else if (renderResult.getError() != null) {
+                throw renderResult.getError();
+            }
         }
 
         return 0;

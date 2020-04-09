@@ -22,6 +22,8 @@ import java.io.IOException;
 
 public interface OutputHandler extends Closeable {
 
+    boolean exists(String path);
+
     void write(String path, Template contents) throws IOException;
 
 }

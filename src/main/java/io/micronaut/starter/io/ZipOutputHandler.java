@@ -31,10 +31,8 @@ import java.util.zip.ZipOutputStream;
 public class ZipOutputHandler implements OutputHandler {
 
     ZipOutputStream zipOutputStream;
-    private final BaseCommand command;
 
-    public ZipOutputHandler(Project project, BaseCommand command) throws IOException {
-        this.command = command;
+    public ZipOutputHandler(Project project) throws IOException {
         File baseDirectory = new File(".").getCanonicalFile();
         Path zipPath = Paths.get(baseDirectory.getPath(), project.getName() + ".zip");
         File zip = zipPath.toAbsolutePath().normalize().toFile();
@@ -43,6 +41,11 @@ public class ZipOutputHandler implements OutputHandler {
         }
         zip.createNewFile();
         zipOutputStream = new ZipOutputStream(Files.newOutputStream(zip.toPath()));
+    }
+
+    @Override
+    public boolean exists(String path) {
+        return false;
     }
 
     @Override
@@ -55,6 +58,7 @@ public class ZipOutputHandler implements OutputHandler {
 
     @Override
     public void close() throws IOException {
+        zipOutputStream.finish();
         zipOutputStream.close();
     }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.command;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
@@ -24,13 +25,13 @@ import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -71,6 +72,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @Override
     public Integer call() throws Exception {
+        if (StringUtils.isEmpty(name)) {
+            throw new IllegalArgumentException("Please specify a name for the project");
+        }
+
         Project project = NameUtils.parse(name);
 
         OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
@@ -81,11 +86,11 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         return 0;
     }
 
-    public void generate(OutputHandler outputHandler) throws IOException {
+    public void generate(OutputHandler outputHandler) throws Exception {
         generate(NameUtils.parse(name), outputHandler);
     }
 
-    public void generate(Project project, OutputHandler outputHandler) throws IOException {
+    public void generate(Project project, OutputHandler outputHandler) throws Exception {
 
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, lang, build, test);
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
@@ -104,7 +109,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler);
 
         for (Template template: commandContext.getTemplates().values()) {
-            templateRenderer.render(template);
+            RenderResult renderResult = templateRenderer.render(template);
+            if (renderResult.getError() != null) {
+                throw renderResult.getError();
+            }
         }
 
         templateRenderer.close();
