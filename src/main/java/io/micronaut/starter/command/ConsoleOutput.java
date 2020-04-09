@@ -17,16 +17,6 @@ package io.micronaut.starter.command;
 
 public interface ConsoleOutput {
 
-    void out(String message);
-
-    void err(String message);
-
-    void warning(String message);
-
-    boolean showStacktrace();
-
-    boolean verbose();
-
     ConsoleOutput NOOP = new ConsoleOutput() {
         @Override
         public void out(String message) { }
@@ -47,4 +37,14 @@ public interface ConsoleOutput {
             return false;
         }
     };
+
+    void out(String message);
+
+    void err(String message);
+
+    void warning(String message);
+
+    boolean showStacktrace();
+
+    boolean verbose();
 }

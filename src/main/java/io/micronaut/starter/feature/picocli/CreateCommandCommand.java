@@ -33,8 +33,6 @@ import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-import java.util.function.Consumer;
-
 @CommandLine.Command(name = "create-command", description = "Creates a CLI command")
 @Prototype
 public class CreateCommandCommand extends CodeGenCommand {

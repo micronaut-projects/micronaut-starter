@@ -20,7 +20,6 @@ import io.micronaut.starter.Project;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

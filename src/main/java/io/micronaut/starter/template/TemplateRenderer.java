@@ -20,7 +20,6 @@ import io.micronaut.starter.Project;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.function.Consumer;
 
 public interface TemplateRenderer extends Closeable {
 
