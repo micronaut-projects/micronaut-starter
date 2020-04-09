@@ -96,7 +96,7 @@ class MicrometerSpec extends Specification implements ProjectFixture, ContextFix
     }
 
     @Unroll
-    void 'test micrometer configuration for feature=#micrometerFeature.name'() {
+    void 'test micrometer configuration for feature=#micrometerFeature'() {
         when:
         CommandContext commandContext = buildCommandContext([micrometerFeature])
 
