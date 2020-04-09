@@ -27,7 +27,7 @@ public interface ConsoleOutput {
 
     boolean verbose();
 
-    static final ConsoleOutput NOOP = new ConsoleOutput() {
+    ConsoleOutput NOOP = new ConsoleOutput() {
         @Override
         public void out(String message) { }
 

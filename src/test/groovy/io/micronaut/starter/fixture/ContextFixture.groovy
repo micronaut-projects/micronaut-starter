@@ -19,20 +19,12 @@ trait ContextFixture {
 
     abstract BeanContext getBeanContext()
 
-    FeatureContext buildAndProcess(List<String> features,
-                                   Language language = Language.java,
-                                   TestFramework testFramework = TestFramework.junit,
-                                   BuildTool buildTool = BuildTool.gradle) {
-        FeatureContext featureContext = buildFeatureContext(features, new Options(language, testFramework, buildTool))
-        featureContext.processSelectedFeatures()
-        featureContext
-    }
-
     Features getFeatures(List<String> features,
                          Language language = Language.java,
                          TestFramework testFramework = TestFramework.junit,
                          BuildTool buildTool = BuildTool.gradle) {
-        FeatureContext featureContext = buildAndProcess(features, language, testFramework, buildTool)
+        FeatureContext featureContext = buildFeatureContext(features, new Options(language, testFramework, buildTool))
+        featureContext.processSelectedFeatures()
         List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
         return new Features(finalFeatures)

@@ -15,10 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.other.Management;
 
 public abstract class MicrometerFeature implements Feature {

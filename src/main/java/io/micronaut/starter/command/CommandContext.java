@@ -15,11 +15,9 @@
  */
 package io.micronaut.starter.command;
 
-
 import io.micronaut.starter.Options;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;

@@ -1,7 +1,5 @@
 package io.micronaut.starter;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.command.MicronautCommand;
