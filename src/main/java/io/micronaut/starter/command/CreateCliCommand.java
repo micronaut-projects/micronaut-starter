@@ -19,7 +19,7 @@ package io.micronaut.starter.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContextFactory;
+import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import picocli.CommandLine;
 
@@ -39,8 +39,8 @@ public class CreateCliCommand extends CreateCommand {
 
     public CreateCliCommand(CreateCliFeatures createCliFeatures,
                             FeatureValidator featureValidator,
-                            FeatureContextFactory featureContextFactory) {
-        super(createCliFeatures, featureValidator, featureContextFactory, MicronautCommand.CREATE_CLI);
+                            ContextFactory contextFactory) {
+        super(createCliFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_CLI);
     }
 
     @Override

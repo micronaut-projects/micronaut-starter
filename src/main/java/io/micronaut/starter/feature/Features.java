@@ -57,4 +57,7 @@ public class Features extends ArrayList<String> {
         return testFeature;
     }
 
+    public List<Feature> getFeatures() {
+        return featureList;
+    }
 }

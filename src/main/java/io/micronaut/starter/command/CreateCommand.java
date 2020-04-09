@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.command;
 
+import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -53,16 +54,16 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
 
-    private final FeatureContextFactory featureContextFactory;
+    private final ContextFactory contextFactory;
     private final MicronautCommand command;
 
     public CreateCommand(AvailableFeatures availableFeatures,
                          FeatureValidator featureValidator,
-                         FeatureContextFactory featureContextFactory,
+                         ContextFactory contextFactory,
                          MicronautCommand command) {
         this.availableFeatures = availableFeatures;
         this.featureValidator = featureValidator;
-        this.featureContextFactory = featureContextFactory;
+        this.contextFactory = contextFactory;
         this.command = command;
     }
 
@@ -86,15 +87,9 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     public void generate(Project project, OutputHandler outputHandler) throws IOException {
 
-        FeatureContext featureContext = featureContextFactory.build(availableFeatures, getSelectedFeatures(), command, lang, build, test);
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, lang, build, test);
+        CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
-        featureContext.processSelectedFeatures();
-
-        List<Feature> featureList = featureContext.getFinalFeatures(this);
-
-        featureValidator.validate(lang, featureList);
-
-        CommandContext commandContext = new CommandContext(featureContext, project);
         commandContext.getConfiguration().put("micronaut.application.name", project.getName());
         commandContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
@@ -104,9 +99,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
                                 commandContext.getFeatures(),
                                 commandContext.getCommand())));
 
-        for (Feature feature: featureList) {
-            feature.apply(commandContext);
-        }
+        commandContext.applyFeatures();
 
         TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler);
 

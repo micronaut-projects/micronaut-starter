@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
@@ -15,7 +16,7 @@ class FeatureValidatorSpec extends Specification {
 
     void "test feature conflicts with language selection"() {
         when:
-        featureValidator.validate(Language.java, [new Feature() {
+        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
             String name = "test-feature"
             Optional<Language> requiredLanguage = Optional.of(Language.groovy)
         }])
@@ -27,7 +28,7 @@ class FeatureValidatorSpec extends Specification {
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validate(Language.java, [new Feature() {
+        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
             String name = "groovy-feature"
             Optional<Language> requiredLanguage = Optional.of(Language.groovy)
         }, new Feature() {
@@ -44,7 +45,7 @@ class FeatureValidatorSpec extends Specification {
 
     void "test one of"() {
         when:
-        featureValidator.validate(Language.java, [new OneOfFeature() {
+        featureValidator.validate(new Options(Language.java, null, null), [new OneOfFeature() {
             String name = "a"
             Class<?> featureClass = Object.class
         }, new OneOfFeature() {

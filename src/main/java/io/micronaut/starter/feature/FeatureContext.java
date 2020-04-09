@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.command.ConsoleOutput;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.test.TestFeature;
@@ -29,11 +30,9 @@ import static java.util.stream.Collectors.toList;
 
 public class FeatureContext {
 
-    private final Language language;
     private final MicronautCommand command;
     private final List<Feature> selectedFeatures;
-    private TestFramework testFramework;
-    private final BuildTool buildTool;
+    private final Options options;
     private final List<Feature> features = new ArrayList<>();
     private List<FeaturePredicate> exclusions = new ArrayList<>();
     private ListIterator<Feature> iterator;
@@ -45,9 +44,6 @@ public class FeatureContext {
                           List<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
-        this.language = language;
-        this.buildTool = buildTool;
-
         if (testFramework == null) {
             testFramework = selectedFeatures.stream()
                     .filter(TestFeature.class::isInstance)
@@ -56,7 +52,7 @@ public class FeatureContext {
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
         }
-        setTestFramework(testFramework);
+        this.options = new Options(language, testFramework, buildTool);
     }
 
     public void processSelectedFeatures() {
@@ -92,19 +88,19 @@ public class FeatureContext {
     }
 
     public Language getLanguage() {
-        return language;
+        return options.getLanguage();
     }
 
     public TestFramework getTestFramework() {
-        return testFramework;
+        return options.getTestFramework();
     }
 
     public BuildTool getBuildTool() {
-        return buildTool;
+        return options.getBuildTool();
     }
 
-    public void setTestFramework(TestFramework testFramework) {
-        this.testFramework = testFramework;
+    public Options getOptions() {
+        return options;
     }
 
     public boolean hasApplicationFeature() {
@@ -123,5 +119,11 @@ public class FeatureContext {
 
     public MicronautCommand getCommand() {
         return command;
+    }
+
+    public boolean isPresent(Class<? extends Feature> feature) {
+        return features.stream()
+                .map(Feature::getClass)
+                .anyMatch(feature::isAssignableFrom);
     }
 }

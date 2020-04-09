@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.validation;
 
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.starter.Options;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -32,9 +32,9 @@ public class CompositeFeatureValidator implements FeatureValidator {
         this.featureValidators = featureValidators;
     }
 
-    public void validate(Language language, List<Feature> features) {
+    public void validate(Options options, List<Feature> features) {
         for (FeatureValidator featureValidator: featureValidators) {
-            featureValidator.validate(language, features);
+            featureValidator.validate(options, features);
         }
     }
 }

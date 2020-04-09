@@ -16,11 +16,12 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.other.Management;
 
-public abstract class MicrometerFeature implements OneOfFeature {
+public abstract class MicrometerFeature implements Feature {
 
     protected final String EXPORT_PREFIX = "micronaut.metrics.export";
 
@@ -33,19 +34,12 @@ public abstract class MicrometerFeature implements OneOfFeature {
     }
 
     @Override
-    public Class<?> getFeatureClass() {
-        return MicrometerFeature.class;
-    }
-
-    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(core);
-        if (featureContext.getFeatures().stream().noneMatch(f -> f instanceof Management)) {
+        if (!featureContext.isPresent(Core.class)) {
+            featureContext.addFeature(core);
+        }
+        if (!featureContext.isPresent(Management.class)) {
             featureContext.addFeature(management);
         }
-    }
-
-    protected void addExportEnabled(CommandContext ctx, String registry, boolean enabled) {
-        ctx.getConfiguration().put("micronaut.metrics.export." + registry + ".enabled", enabled);
     }
 }

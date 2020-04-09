@@ -9,11 +9,10 @@ import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.starter.feature.jdbc.Dbcp
 import io.micronaut.starter.feature.jdbc.Hikari
 import io.micronaut.starter.feature.jdbc.Tomcat
-import io.micronaut.starter.feature.micrometer.MicrometerFeature
 import io.micronaut.starter.feature.server.Jetty
 import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.Undertow
-import io.micronaut.starter.fixture.FeatureFixture
+import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -22,7 +21,7 @@ import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class GradleSpec extends Specification implements ProjectFixture, FeatureFixture {
+class GradleSpec extends Specification implements ProjectFixture, ContextFixture {
 
     @Shared
     @AutoCleanup
@@ -45,7 +44,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
 
     void "test annotation processor dependencies"() {
         when:
-        String template = annotationProcessors.template(buildWithFeatures(Language.java)).render().toString()
+        String template = annotationProcessors.template(getFeatures([])).render().toString()
 
         then:
         template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -53,7 +52,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('annotationProcessor "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(buildWithFeatures(Language.kotlin)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.kotlin)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -61,7 +60,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('kapt "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(buildWithFeatures(Language.groovy)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.groovy)).render().toString()
 
         then:
         template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -70,7 +69,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
 
     void "test junit with different languages"() {
         when:
-        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java)).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures([])).render().toString()
 
         then:
         template.contains("""
@@ -83,7 +82,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
 """)
 
         when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.groovy, TestFramework.junit)).render().toString()
 
         then:
         template.contains("""
@@ -96,7 +95,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         !template.contains("testAnnotationProcessor")
 
         when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.junit)).render().toString()
 
         then:
         template.contains("""
@@ -112,7 +111,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
 
     void 'test graal-native-image feature'() {
         when:
-        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, new GraalNativeImage())).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"])).render().toString()
 
         then:
         template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -121,7 +120,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, new GraalNativeImage())).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -130,7 +129,7 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, new GraalNativeImage())).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy)).render().toString()
 
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
@@ -140,80 +139,29 @@ class GradleSpec extends Specification implements ProjectFixture, FeatureFixture
     @Unroll
     void 'test jdbc feature #jdbcFeature.name'() {
         when:
-        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, jdbcFeature)).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures([jdbcFeature])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, jdbcFeature)).render().toString()
-
-        then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, jdbcFeature)).render().toString()
-
-        then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature.name}\"")
+        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature}\"")
 
         where:
-        jdbcFeature << [new Dbcp(), new Hikari(), new Tomcat()]
-    }
-
-    @Unroll
-    void 'test micrometer feature #micrometerFeature.name'() {
-        given:
-        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
-
-        when:
-        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, micrometerFeature)).render().toString()
-
-        then:
-        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, micrometerFeature)).render().toString()
-
-        then:
-        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, micrometerFeature)).render().toString()
-
-        then:
-        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
-
-        where:
-        micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
+        jdbcFeature << ["jdbc-dbcp", "jdbc-hikari", "jdbc-tomcat"]
     }
 
     @Unroll
     void 'test server feature #serverFeature.name'() {
         when:
-        String template = buildGradle.template(buildProject(), buildWithFeatures(Language.java, serverFeature)).render().toString()
-
-        then:
-        template.contains(dependency)
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.kotlin, serverFeature)).render().toString()
-
-        then:
-        template.contains(dependency)
-
-        when:
-        template = buildGradle.template(buildProject(), buildWithFeatures(Language.groovy, serverFeature)).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures([serverFeature])).render().toString()
 
         then:
         template.contains(dependency)
 
         where:
-        serverFeature                                    | dependency
-        new Netty()                                      | 'implementation "io.micronaut:micronaut-http-server-netty"'
-        new Jetty()                                      | 'implementation "io.micronaut.servlet:micronaut-http-server-jetty"'
-        new io.micronaut.starter.feature.server.Tomcat() | 'implementation "io.micronaut.servlet:micronaut-http-server-tomcat"'
-        new Undertow()                                   | 'implementation "io.micronaut.servlet:micronaut-http-server-undertow"'
+        serverFeature          | dependency
+        "netty-server"         | 'implementation "io.micronaut:micronaut-http-server-netty"'
+        "jetty-server"         | 'implementation "io.micronaut.servlet:micronaut-http-server-jetty"'
+        "tomcat-server"        | 'implementation "io.micronaut.servlet:micronaut-http-server-tomcat"'
+        "undertow-server"      | 'implementation "io.micronaut.servlet:micronaut-http-server-undertow"'
     }
 
 }

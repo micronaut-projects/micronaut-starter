@@ -16,7 +16,9 @@
 package io.micronaut.starter.command;
 
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.Project;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.options.BuildTool;
@@ -27,6 +29,7 @@ import io.micronaut.starter.util.VersionInfo;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommandContext {
@@ -37,21 +40,20 @@ public class CommandContext {
     private final Map<String, Template> templates = new LinkedHashMap<>();
     private final MicronautCommand command;
     private final Features features;
-    private final Language language;
-    private final TestFramework testFramework;
-    private final BuildTool buildTool;
+    private final Options options;
 
-    public CommandContext(FeatureContext featureContext, Project project) {
-        this.command = featureContext.getCommand();
+    public CommandContext(Project project,
+                          MicronautCommand command,
+                          Options options,
+                          List<Feature> features) {
+        this.command = command;
         this.project = project;
-        this.features = new Features(featureContext.getFeatures());
-        this.language = featureContext.getLanguage();
-        this.testFramework = featureContext.getTestFramework();
-        this.buildTool = featureContext.getBuildTool();
+        this.features = new Features(features);
+        this.options = options;
         String micronautVersion = VersionInfo.getVersion();
-        if (buildTool == BuildTool.gradle) {
+        if (options.getBuildTool() == BuildTool.gradle) {
             projectProperties.put("micronautVersion", micronautVersion);
-        } else if (buildTool == BuildTool.maven) {
+        } else if (options.getBuildTool() == BuildTool.maven) {
             projectProperties.put("micronaut.version", micronautVersion);
         }
     }
@@ -72,20 +74,16 @@ public class CommandContext {
         return Collections.unmodifiableMap(templates);
     }
 
-    public Features getFeatures() {
-        return features;
-    }
-
     public Language getLanguage() {
-        return language;
+        return options.getLanguage();
     }
 
     public TestFramework getTestFramework() {
-        return testFramework;
+        return options.getTestFramework();
     }
 
     public BuildTool getBuildTool() {
-        return buildTool;
+        return options.getBuildTool();
     }
 
     public Project getProject() {
@@ -94,5 +92,15 @@ public class CommandContext {
 
     public MicronautCommand getCommand() {
         return command;
+    }
+
+    public Features getFeatures() {
+        return features;
+    }
+
+    public void applyFeatures() {
+        for (Feature feature: features.getFeatures()) {
+            feature.apply(this);
+        }
     }
 }

@@ -18,7 +18,7 @@ package io.micronaut.starter.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContextFactory;
+import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import picocli.CommandLine;
 
@@ -38,8 +38,8 @@ public class CreateAppCommand extends CreateCommand {
 
     public CreateAppCommand(CreateAppFeatures createAppFeatures,
                             FeatureValidator featureValidator,
-                            FeatureContextFactory featureContextFactory) {
-        super(createAppFeatures, featureValidator, featureContextFactory, MicronautCommand.CREATE_APP);
+                            ContextFactory contextFactory) {
+        super(createAppFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_APP);
     }
 
     @Override

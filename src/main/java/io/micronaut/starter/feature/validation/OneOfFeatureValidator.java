@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.OneOfFeature;
-import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class OneOfFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validate(Language language, List<Feature> features) {
+    public void validate(Options options, List<Feature> features) {
         Set<Class<?>> oneOfFeatures = features.stream()
                 .filter(feature -> feature instanceof OneOfFeature)
                 .map(OneOfFeature.class::cast)
