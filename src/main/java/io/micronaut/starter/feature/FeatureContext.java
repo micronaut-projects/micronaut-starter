@@ -61,7 +61,6 @@ public class FeatureContext {
         this.iterator = this.features.listIterator();
         while (iterator.hasNext()) {
             Feature feature = iterator.next();
-            System.out.println("processing " + feature.getName());
             feature.processSelectedFeatures(this);
         }
         this.iterator = null;
@@ -113,7 +112,6 @@ public class FeatureContext {
         } else {
             features.add(feature);
         }
-        System.out.println("processing " + feature.getName());
         feature.processSelectedFeatures(this);
     }
 

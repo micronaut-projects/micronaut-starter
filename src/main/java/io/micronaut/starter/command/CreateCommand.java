@@ -17,6 +17,7 @@ package io.micronaut.starter.command;
 
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.ContextFactory;
+import io.micronaut.starter.Options;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
@@ -55,6 +56,9 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
 
+    @CommandLine.Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
+    boolean listFeatures;
+
     private final ContextFactory contextFactory;
     private final MicronautCommand command;
 
@@ -72,6 +76,12 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @Override
     public Integer call() throws Exception {
+
+        if (listFeatures) {
+            new ListFeatures(availableFeatures, new Options(lang, test, build), command, contextFactory).output(this);
+            return 0;
+        }
+
         if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Please specify a name for the project");
         }
@@ -91,7 +101,6 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, lang, build, test);
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
