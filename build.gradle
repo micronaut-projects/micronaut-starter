@@ -7,6 +7,8 @@ buildscript {
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath "io.spring.nohttp:nohttp-gradle:0.0.4.RELEASE"
         classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
+        classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
     }
 }
 
@@ -25,10 +27,6 @@ subprojects { Project subproject ->
         maven { url "https://repo.grails.org/grails/core" }
     }
 
-    if (subproject.name.contains('example') || subproject.name.startsWith('benchmark')) {
-        return
-    }
-
     version project.projectVersion
     group "io.micronaut.starter"
     ext {
@@ -43,8 +41,8 @@ subprojects { Project subproject ->
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
 
+    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
 
     jar {
         manifest {
@@ -68,8 +66,8 @@ subprojects { Project subproject ->
             System.out.flush()
         }
 
-        reports.html.enabled = !System.getenv("TRAVIS")
-        reports.junitXml.enabled = !System.getenv("TRAVIS")
+        reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
+        reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
     }
 
     dependencies {
@@ -88,15 +86,13 @@ subprojects { Project subproject ->
         }
     }
 
-    task allDeps(type: DependencyReportTask) {}
-
     checkstyle {
         toolVersion = 8.16
         configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 
         // Per submodule
-        maxErrors = 1
-        maxWarnings = 10
+        maxErrors = 0
+        maxWarnings = 5
 
         showViolations = true
     }
@@ -109,7 +105,7 @@ subprojects { Project subproject ->
         }
     }
 
-    tasks.withType(JavaCompile){
+    tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
         options.compilerArgs.add('-parameters')
     }
