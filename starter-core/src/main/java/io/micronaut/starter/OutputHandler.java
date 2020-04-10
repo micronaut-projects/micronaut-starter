@@ -26,4 +26,6 @@ public interface OutputHandler extends Closeable {
 
     void write(String path, Template contents) throws IOException;
 
+    String getOutputLocation();
+
 }

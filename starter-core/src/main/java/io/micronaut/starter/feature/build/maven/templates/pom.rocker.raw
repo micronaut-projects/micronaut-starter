@@ -176,6 +176,12 @@ List<Property> properties
 @if (features.contains("jdbc-hikari")) {
 @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "compile", null)
 }
+@if (features.contains("data-jdbc")) {
+@dependency.template("io.micronaut.data", "micronaut-data-jdbc", "compile", null)
+}
+@if (features.contains("data-jpa")) {
+@dependency.template("io.micronaut.data", "micronaut-data-jpa", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -338,6 +344,13 @@ List<Property> properties
                 <version>${micronaut.picocli.version}</version>
             </path>
 }
+@if (features.contains("data")) {
+            <path>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-data-processor</artifactId>
+                <version>${micronaut.data.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -373,6 +386,13 @@ List<Property> properties
                     <groupId>io.micronaut.configuration</groupId>
                     <artifactId>micronaut-picocli</artifactId>
                     <version>${micronaut.picocli.version}</version>
+                </path>
+}
+@if (features.contains("data")) {
+                <path>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-data-processor</artifactId>
+                    <version>${micronaut.data.version}</version>
                 </path>
 }
               </annotationProcessorPaths>
@@ -430,6 +450,13 @@ List<Property> properties
                     <version>${micronaut.picocli.version}</version>
                 </annotationProcessorPath>
 }
+@if (features.contains("data")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-data-processor</artifactId>
+                    <version>${micronaut.data.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -476,6 +503,13 @@ List<Property> properties
                   <groupId>io.micronaut.configuration</groupId>
                   <artifactId>micronaut-picocli</artifactId>
                   <version>${micronaut.picocli.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("data")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut</groupId>
+                    <artifactId>micronaut-data-processor</artifactId>
+                    <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>

@@ -92,7 +92,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
         generate(project, outputHandler);
 
-        out("created " + name);
+        out("@|blue ||@ Application created at " + outputHandler.getOutputLocation());
         return 0;
     }
 

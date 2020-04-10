@@ -18,3 +18,6 @@ Features features
 @if (features.contains("picocli")) {
 @annotationProcessor.template(features.language(), "\"io.micronaut.configuration:micronaut-picocli\"")
 }
+@if (features.contains("data")) {
+@annotationProcessor.template(features.language(), "\"io.micronaut.data:micronaut-data-processor\"")
+}
