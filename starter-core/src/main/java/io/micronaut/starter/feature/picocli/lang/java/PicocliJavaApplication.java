@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.picocli.lang.java;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.JavaApplicationFeature;
+import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;

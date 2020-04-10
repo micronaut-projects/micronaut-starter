@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -30,6 +32,11 @@ public class AnnotationApi implements Feature, DefaultFeature {
     @Override
     public String getName() {
         return "annotation-api";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 
     @Override

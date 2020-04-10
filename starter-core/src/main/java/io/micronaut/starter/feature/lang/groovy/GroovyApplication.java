@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.lang.groovy;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;

@@ -116,9 +116,9 @@ class GradleSpec extends Specification implements ProjectFixture, ContextFixture
         !template.contains("testAnnotationProcessor")
     }
 
-    void 'test graal-native-image feature'() {
+    void 'test graalvm feature'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"])).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures(["graalvm"])).render().toString()
 
         then:
         template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -127,7 +127,7 @@ class GradleSpec extends Specification implements ProjectFixture, ContextFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.kotlin)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -136,7 +136,7 @@ class GradleSpec extends Specification implements ProjectFixture, ContextFixture
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.groovy)).render().toString()
 
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1

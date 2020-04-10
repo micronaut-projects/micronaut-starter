@@ -77,7 +77,7 @@ List<Property> properties
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
 }
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
 @dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "compile", null)
@@ -324,7 +324,7 @@ List<Property> properties
               <artifactId>micronaut-validation</artifactId>
               <version>${micronaut.version}</version>
             </path>
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
             <path>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-graal</artifactId>
@@ -361,7 +361,7 @@ List<Property> properties
                   <artifactId>micronaut-validation</artifactId>
                   <version>${micronaut.version}</version>
                 </path>
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
                 <path>
                     <groupId>io.micronaut</groupId>
                     <artifactId>micronaut-graal</artifactId>
@@ -416,7 +416,7 @@ List<Property> properties
                   <artifactId>micronaut-validation</artifactId>
                   <version>${micronaut.version}</version>
                 </annotationProcessorPath>
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
@@ -464,7 +464,7 @@ List<Property> properties
                   <artifactId>micronaut-validation</artifactId>
                   <version>${micronaut.version}</version>
                 </annotationProcessorPath>
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>

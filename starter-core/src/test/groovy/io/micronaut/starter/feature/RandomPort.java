@@ -13,13 +13,18 @@ import java.util.List;
 public class RandomPort implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_APP;
+    public String getName() {
+        return "random-port";
     }
 
     @Override
-    public String getName() {
-        return "random-port";
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return micronautCommand == MicronautCommand.CREATE_APP;
     }
 
     @Override

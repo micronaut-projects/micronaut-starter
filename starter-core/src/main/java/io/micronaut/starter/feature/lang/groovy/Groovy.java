@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.lang.groovy;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.GroovyApplicationFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.feature.test.TestFeature;

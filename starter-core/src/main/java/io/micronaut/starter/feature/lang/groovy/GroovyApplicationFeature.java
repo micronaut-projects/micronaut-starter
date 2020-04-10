@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.lang.groovy;
 
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.ApplicationFeature;
 
-import javax.inject.Singleton;
-
-@Singleton
-public class Swagger implements Feature {
-
-    @Override
-    public String getName() {
-        return "swagger";
-    }
-
-    @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP;
-    }
+public interface GroovyApplicationFeature extends ApplicationFeature {
 }

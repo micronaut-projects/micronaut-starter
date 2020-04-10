@@ -33,6 +33,11 @@ public class AppOptics extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ AppOptics reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.apiToken", "${APPOPTICS_API_TOKEN}");

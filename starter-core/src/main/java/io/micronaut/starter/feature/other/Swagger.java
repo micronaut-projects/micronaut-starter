@@ -13,7 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.other;
 
-public interface KotlinApplicationFeature extends ApplicationFeature {
+import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.Feature;
+
+import javax.inject.Singleton;
+
+@Singleton
+public class Swagger implements Feature {
+
+    @Override
+    public String getName() {
+        return "swagger";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for Swagger (OpenAPI)";
+    }
+
+    @Override
+    public boolean supports(MicronautCommand command) {
+        return command == MicronautCommand.CREATE_APP;
+    }
 }

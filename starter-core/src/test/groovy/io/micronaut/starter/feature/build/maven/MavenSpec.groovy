@@ -16,9 +16,9 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
 
-    void 'test graal-native-image feature'() {
+    void 'test graalvm feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(["graal-native-image"]), []).render().toString()
+        String template = pom.template(buildProject(), getFeatures(["graalvm"]), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')
@@ -27,7 +27,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
         template.contains('<artifactId>micronaut-graal</artifactId>')
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.kotlin), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')
@@ -36,7 +36,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
         template.contains('<artifactId>micronaut-graal</artifactId>')
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.groovy), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')

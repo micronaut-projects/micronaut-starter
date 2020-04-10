@@ -33,6 +33,11 @@ public class Atlas extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Atlas reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.uri", "http://localhost:7101/api/v1/publish");

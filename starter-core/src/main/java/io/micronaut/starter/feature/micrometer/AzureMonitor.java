@@ -33,6 +33,11 @@ public class AzureMonitor extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Azure Monitor reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");

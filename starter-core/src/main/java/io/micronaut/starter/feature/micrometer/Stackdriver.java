@@ -33,6 +33,11 @@ public class Stackdriver extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Stackdriver reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.projectId", "${STACKDRIVER_PROJECT_ID}");

@@ -32,13 +32,18 @@ import java.util.List;
 public class Yaml implements ConfigurationFeature, DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
+    public String getName() {
+        return "yaml";
     }
 
     @Override
-    public String getName() {
-        return "yaml";
+    public String getDescription() {
+        return "Creates a YAML configuration file";
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
     }
 
     @Override

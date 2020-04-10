@@ -24,4 +24,9 @@ public class Jetty implements ServerFeature {
     public String getName() {
         return "jetty-server";
     }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for a Jetty server";
+    }
 }

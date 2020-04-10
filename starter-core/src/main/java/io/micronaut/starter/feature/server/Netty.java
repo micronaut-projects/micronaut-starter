@@ -34,6 +34,11 @@ public class Netty implements ServerFeature, DefaultFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for a Netty server";
+    }
+
+    @Override
     public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
         return micronautCommand == MicronautCommand.CREATE_APP &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature);

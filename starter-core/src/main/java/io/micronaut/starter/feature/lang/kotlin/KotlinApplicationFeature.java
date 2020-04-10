@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.lang.kotlin;
 
-public interface GroovyApplicationFeature extends ApplicationFeature {
+import io.micronaut.starter.feature.ApplicationFeature;
+
+public interface KotlinApplicationFeature extends ApplicationFeature {
 }

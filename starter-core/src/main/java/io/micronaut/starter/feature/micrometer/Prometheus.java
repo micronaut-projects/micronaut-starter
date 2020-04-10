@@ -33,6 +33,11 @@ public class Prometheus extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Prometheus reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.descriptions", true);

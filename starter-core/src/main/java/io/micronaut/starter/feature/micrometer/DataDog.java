@@ -33,6 +33,11 @@ public class DataDog extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Datadog reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.apiKey", "${DATADOG_APIKEY}");

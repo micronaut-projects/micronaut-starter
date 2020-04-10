@@ -33,6 +33,11 @@ public class Elastic extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Elastic reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");

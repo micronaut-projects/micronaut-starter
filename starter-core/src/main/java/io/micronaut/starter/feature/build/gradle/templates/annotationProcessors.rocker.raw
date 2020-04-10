@@ -12,7 +12,7 @@ Features features
 } else if (features.language().isGroovy()) {
 @annotationProcessor.template(features.language(), "\"io.micronaut:micronaut-inject-groovy\"")
 }
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
 @annotationProcessor.template(features.language(), "\"io.micronaut:micronaut-graal\"")
 }
 @if (features.contains("picocli")) {

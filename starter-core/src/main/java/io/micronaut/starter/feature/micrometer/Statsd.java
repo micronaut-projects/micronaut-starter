@@ -33,6 +33,11 @@ public class Statsd extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Statsd reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.flavor", "datadog");

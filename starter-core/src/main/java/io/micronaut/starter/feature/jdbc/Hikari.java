@@ -25,4 +25,9 @@ public class Hikari implements JdbcFeature {
         return "jdbc-hikari";
     }
 
+    @Override
+    public String getDescription() {
+        return "Configures SQL DataSource instances using Hikari Connection Pool";
+    }
+
 }

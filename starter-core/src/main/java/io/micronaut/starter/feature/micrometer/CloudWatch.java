@@ -33,6 +33,11 @@ public class CloudWatch extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ AWS Cloudwatch reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".cloudwatch.enabled", true);
     }

@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -24,15 +26,20 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class HttpClient implements DefaultFeature {
-
-    @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_APP;
-    }
+public class Docker implements DefaultFeature {
 
     @Override
     public String getName() {
-        return "http-client";
+        return "docker";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return false;
     }
 }

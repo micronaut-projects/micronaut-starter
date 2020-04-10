@@ -33,6 +33,11 @@ public class Ganglia extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Ganglia reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".ganglia.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".ganglia.protocolVersion", 3.1);
