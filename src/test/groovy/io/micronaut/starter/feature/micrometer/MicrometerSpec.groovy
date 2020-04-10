@@ -54,7 +54,7 @@ class MicrometerSpec extends Specification implements ProjectFixture, ContextFix
         Features features = getFeatures([micrometerFeature.name], null, null, BuildTool.maven)
 
         when:
-        String template = pom.template(buildProject(), features, [:]).render().toString()
+        String template = pom.template(buildProject(), features, []).render().toString()
 
         then:
         template.contains("""
@@ -72,7 +72,7 @@ class MicrometerSpec extends Specification implements ProjectFixture, ContextFix
     void "test maven micrometer multiple features"() {
         when:
         Features features = getFeatures(["micrometer-atlas", "micrometer-influx"], null, null, BuildTool.maven)
-        String template = pom.template(buildProject(), features, [:]).render().toString()
+        String template = pom.template(buildProject(), features, []).render().toString()
 
         then:
         template.contains("""

@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.build.gradle
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.build.Property
 import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
@@ -35,7 +36,13 @@ class GradleSpec extends Specification implements ProjectFixture, ContextFixture
     }
 
     void "test gradle.properties"() {
-        String template = gradleProperties.template([name: "Sally", age: "30"]).render().toString()
+        String template = gradleProperties.template([new Property() {
+            String key = "name"
+            String value = "Sally"
+        }, new Property() {
+            String key = "age"
+            String value = "30"
+        }]).render().toString()
 
         expect:
         template.contains('name=Sally')

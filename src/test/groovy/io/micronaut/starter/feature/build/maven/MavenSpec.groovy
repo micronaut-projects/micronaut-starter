@@ -18,7 +18,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
 
     void 'test graal-native-image feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(["graal-native-image"]), [:]).render().toString()
+        String template = pom.template(buildProject(), getFeatures(["graal-native-image"]), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')
@@ -27,7 +27,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
         template.contains('<artifactId>micronaut-graal</artifactId>')
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')
@@ -36,7 +36,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
         template.contains('<artifactId>micronaut-graal</artifactId>')
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy), []).render().toString()
 
         then:
         template.contains('<groupId>org.graalvm.nativeimage</groupId>')
@@ -48,19 +48,19 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
     @Unroll
     void 'test jdbc feature #jdbcFeature.name'() {
         when:
-        String template = pom.template(buildProject(), getFeatures([jdbcFeature]), [:]).render().toString()
+        String template = pom.template(buildProject(), getFeatures([jdbcFeature]), []).render().toString()
 
         then:
         template.contains("<artifactId>micronaut-${jdbcFeature}</artifactId>")
 
         when:
-        template = pom.template(buildProject(), getFeatures([jdbcFeature], Language.kotlin), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures([jdbcFeature], Language.kotlin), []).render().toString()
 
         then:
         template.contains("<artifactId>micronaut-${jdbcFeature}</artifactId>")
 
         when:
-        template = pom.template(buildProject(), getFeatures([jdbcFeature], Language.groovy), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures([jdbcFeature], Language.groovy), []).render().toString()
 
         then:
         template.contains("<artifactId>micronaut-${jdbcFeature}</artifactId>")
@@ -72,19 +72,19 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
     @Unroll
     void 'test server feature #serverFeature.name'() {
         when:
-        String template = pom.template(buildProject(), getFeatures([serverFeature]), [:]).render().toString()
+        String template = pom.template(buildProject(), getFeatures([serverFeature]), []).render().toString()
 
         then:
         template.contains(dependency)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.kotlin), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.kotlin), []).render().toString()
 
         then:
         template.contains(dependency)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.groovy), [:]).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.groovy), []).render().toString()
 
         then:
         template.contains(dependency)
