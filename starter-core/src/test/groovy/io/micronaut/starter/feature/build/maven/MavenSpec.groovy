@@ -46,7 +46,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
     }
 
     @Unroll
-    void 'test jdbc feature #jdbcFeature.name'() {
+    void 'test jdbc feature #jdbcFeature'() {
         when:
         String template = pom.template(buildProject(), getFeatures([jdbcFeature]), [:]).render().toString()
 
@@ -70,7 +70,7 @@ class MavenSpec extends Specification implements ProjectFixture, ContextFixture 
     }
 
     @Unroll
-    void 'test server feature #serverFeature.name'() {
+    void 'test server feature #serverFeature'() {
         when:
         String template = pom.template(buildProject(), getFeatures([serverFeature]), [:]).render().toString()
 
