@@ -1,7 +1,12 @@
-@import java.util.Map;
+@import io.micronaut.starter.build.Property
+@import java.util.List
 
-@args (Map<String, String> properties)
+@args (List<Property> properties)
 
-@for ((key, item) : properties) {
-@key=@item
+@for (Property prop : properties) {
+@if (prop.isComment()) {
+#@prop.getComment()
+} else {
+@prop.getKey()=@prop.getValue()
+}
 }

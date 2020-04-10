@@ -56,7 +56,7 @@ public class Maven implements BuildFeature {
         commandContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
                 commandContext.getProject(),
                 commandContext.getFeatures(),
-                commandContext.getProjectProperties()
+                commandContext.getBuildProperties().getProperties()
         )));
         commandContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
     }

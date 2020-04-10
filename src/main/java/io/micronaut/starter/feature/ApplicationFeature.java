@@ -31,7 +31,7 @@ public interface ApplicationFeature extends Feature {
     @Override
     default void apply(CommandContext commandContext) {
         if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getProjectProperties().put("exec.mainClass", mainClassName(commandContext.getProject()));
+            commandContext.getBuildProperties().put("exec.mainClass", mainClassName(commandContext.getProject()));
         }
     }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
@@ -26,13 +26,18 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Springloaded implements Feature {
+public class Springloaded implements ReloadingFeature {
 
     private static final String JAR_NAME = "springloaded-1.2.8.RELEASE.jar";
 
     @Override
     public String getName() {
         return "springloaded";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for class reloading with Spring-Loaded";
     }
 
     @Override

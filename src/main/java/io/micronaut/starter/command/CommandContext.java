@@ -24,16 +24,14 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
+import io.micronaut.starter.build.BuildProperties;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CommandContext {
 
     private final Project project;
-    private final Map<String, String> projectProperties = new LinkedHashMap<>();
+    private final BuildProperties buildProperties = new BuildProperties();
     private final Map<String, Object> configuration = new LinkedHashMap<>();
     private final Map<String, Template> templates = new LinkedHashMap<>();
     private final MicronautCommand command;
@@ -50,9 +48,9 @@ public class CommandContext {
         this.options = options;
         String micronautVersion = VersionInfo.getVersion();
         if (options.getBuildTool() == BuildTool.gradle) {
-            projectProperties.put("micronautVersion", micronautVersion);
+            buildProperties.put("micronautVersion", micronautVersion);
         } else if (options.getBuildTool() == BuildTool.maven) {
-            projectProperties.put("micronaut.version", micronautVersion);
+            buildProperties.put("micronaut.version", micronautVersion);
         }
     }
 
@@ -60,8 +58,8 @@ public class CommandContext {
         templates.put(name, template);
     }
 
-    public Map<String, String> getProjectProperties() {
-        return projectProperties;
+    public BuildProperties getBuildProperties() {
+        return buildProperties;
     }
 
     public Map<String, Object> getConfiguration() {

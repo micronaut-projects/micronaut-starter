@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -42,7 +43,7 @@ public interface TestFeature extends DefaultFeature {
     @Override
     default void apply(CommandContext commandContext) {
         if (commandContext.getBuildTool() == BuildTool.maven) {
-            Map<String, String> props = commandContext.getProjectProperties();
+            BuildProperties props = commandContext.getBuildProperties();
             props.put("maven-surefire-plugin.version", "2.22.2");
             props.put("maven-failsafe-plugin.version", "2.22.2");
         }

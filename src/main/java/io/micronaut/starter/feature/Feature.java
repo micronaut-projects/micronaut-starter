@@ -25,6 +25,10 @@ public interface Feature {
 
     String getName();
 
+    default String getDescription() {
+        return null;
+    }
+
     default int getOrder() {
         return FeaturePhase.DEFAULT.getOrder();
     }

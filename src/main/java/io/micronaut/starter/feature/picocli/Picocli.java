@@ -67,7 +67,7 @@ public class Picocli implements DefaultFeature {
     @Override
     public void apply(CommandContext commandContext) {
         if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getProjectProperties().put("micronaut.picocli.version", "1.2.1");
+            commandContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
         }
     }
 }

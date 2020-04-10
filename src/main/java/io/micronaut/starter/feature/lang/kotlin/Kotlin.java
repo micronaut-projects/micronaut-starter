@@ -58,7 +58,7 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getProjectProperties().put("kotlinVersion", getVersion());
+        commandContext.getBuildProperties().put("kotlinVersion", getVersion());
     }
 
     @Override

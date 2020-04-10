@@ -20,6 +20,9 @@ plugins {
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
     id "groovy"
 }
+@if (features.contains("jrebel")) {
+    id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
+}
 @if (features.application() != null) {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
@@ -147,6 +150,12 @@ dependencies {
 @if (features.contains("micrometer-wavefront")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-registry-wavefront"
 }
+@if (features.contains("flyway")) {
+    implementation "io.micronaut.configuration:micronaut-flyway"
+}
+@if (features.contains("liquibase")) {
+    implementation "io.micronaut.configuration:micronaut-liquibase"
+}
 @if (features.contains("jdbc-dbcp")) {
     implementation "io.micronaut.configuration:micronaut-jdbc-dbcp"
 }
@@ -222,8 +231,20 @@ shadowJar {
     mergeServiceFiles()
 }
 
+@if (features.contains("jrebel")) {
+run.dependsOn(generateRebel)
+}
+
 tasks.withType(JavaExec) {
     classpath += configurations.developmentOnly
-    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote'@if (features.contains("springloaded")) {, '-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar'})
+    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+@if (features.contains("springloaded")) {
+    jvmArgs('-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar')
+}
+@if (features.contains("jrebel")) {
+    if (project.hasProperty('rebelAgent')) {
+        jvmArgs(rebelAgent)
+    }
+}
 }
 }

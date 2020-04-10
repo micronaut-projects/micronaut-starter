@@ -70,9 +70,9 @@ public class ListFeatures {
         for (Feature feature: allFeatures) {
             if (defaultFeatures.contains(feature)) {
                 String name = feature.getName() + " (+)";
-                consoleOutput.out("@|blue   " + String.format("%1$-" + width + "s", name) + "description" + "|@");
+                consoleOutput.out("@|blue   " + String.format("%1$-" + width + "s", name) + feature.getDescription() + "|@");
             } else {
-                consoleOutput.out("  " + String.format("%1$-" + width + "s", feature.getName()) + "description");
+                consoleOutput.out("  " + String.format("%1$-" + width + "s", feature.getName()) + feature.getDescription());
             }
         }
     }

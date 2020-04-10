@@ -58,7 +58,7 @@ public class Gradle implements BuildFeature {
                 commandContext.getFeatures()
         )));
         commandContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
-        commandContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(commandContext.getProjectProperties())));
+        commandContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(commandContext.getBuildProperties().getProperties())));
         commandContext.addTemplate("gradleSettings", new RockerTemplate("settings.gradle", settingsGradle.template(commandContext.getProject())));
     }
 

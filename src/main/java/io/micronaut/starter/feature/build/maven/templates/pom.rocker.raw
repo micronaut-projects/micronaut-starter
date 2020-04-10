@@ -1,13 +1,14 @@
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
-@import java.util.Map
+@import java.util.List
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.build.Property
 
 @args (
 Project project,
 Features features,
-Map<String, String> properties
+List<Property> properties
 )
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -23,8 +24,15 @@ Map<String, String> properties
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+@for (Property prop : properties) {
+@if (prop.isComment()) {
+    <!--@prop.getComment()-->
+} else {
+    <@prop.getKey()>@prop.getValue()</@prop.getKey()>
+}
+}
     @for ((key, item) : properties) {
-    <@key>@item</@key>
+
     }
   </properties>
 
@@ -153,6 +161,12 @@ Map<String, String> properties
 @if (features.contains("micrometer-wavefront")) {
 @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-wavefront", "compile", null)
 }
+@if (features.contains("flyway")) {
+@dependency.template("io.micronaut.configuration", "micronaut-flyway", "compile", null)
+}
+@if (features.contains("liquibase")) {
+@dependency.template("io.micronaut.configuration", "micronaut-liquibase", "compile", null)
+}
 @if (features.contains("jdbc-dbcp")) {
 @dependency.template("io.micronaut.configuration", "micronaut-jdbc-dbcp", "compile", null)
 }
@@ -239,13 +253,17 @@ Map<String, String> properties
             <argument>-noverify</argument>
             <argument>-javaagent:agent/springloaded-1.2.8.RELEASE.jar</argument>
 }
+@if (features.contains("jrebel")) {
+            <argument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</argument>
+}
             <argument>${exec.mainClass}</argument>
 @if (features.contains("picocli")) {
             <argument>${args}</argument>
 }
           </arguments>
         </configuration>
-      </plugin>}
+      </plugin>
+}
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -566,6 +584,22 @@ Map<String, String> properties
                 </property>
               </properties>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.contains("jrebel")) {
+      <plugin>
+        <groupId>org.zeroturnaround</groupId>
+        <artifactId>jrebel-maven-plugin</artifactId>
+        <version>1.1.8</version>
+        <executions>
+          <execution>
+            <id>generate-rebel-xml</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
