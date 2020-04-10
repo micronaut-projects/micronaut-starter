@@ -26,7 +26,6 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import java.util.List;
-import java.util.Map;
 
 public interface TestFeature extends DefaultFeature {
 
