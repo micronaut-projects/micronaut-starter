@@ -1,186 +1,128 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.api.tasks.testing.logging.TestLogging
-import org.gradle.api.tasks.testing.logging.TestLoggingContainer
-
 buildscript {
-    ext {
-        micronautDocsVersion = "1.0.22"
-        micronautVersion = "1.3.3"
-        picocliVersion = "4.2.0"
-    }
     repositories {
-        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
         classpath "org.grails:grails-docs:$grailsVersion"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
-        classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
-        classpath 'com.adarshr:gradle-test-logger-plugin:2.0.0'
-//        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
-//        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
+        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
+        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
+        classpath "io.spring.nohttp:nohttp-gradle:0.0.4.RELEASE"
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
     }
 }
 
 plugins {
-    id "java-library"
-    id "application"
-    id "groovy"
-    id "com.fizzed.rocker" version "1.2.3"
     id 'com.github.hierynomus.license' version '0.15.0' apply false
 }
-
-group 'io.micronaut.starter'
-version project.projectVersion
 
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v1.1.5/publishing.gradle"
+version project.projectVersion
 
-jar {
-    manifest {
-        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-        attributes('Implementation-Version': projectVersion)
-        attributes('Implementation-Title': title)
-    }
-}
-
-bintray.publish = true
-
-//configurations {
-//    documentation {
-//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-//            String group = details.requested.group
-//            if(group == 'org.codehaus.groovy') {
-//                details.useVersion(groovyVersion)
-//            }
-//        }
-//    }
-//}
-
-dependencies {
-    annotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
-    api "info.picocli:picocli:${picocliVersion}"
-    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
-    api "com.fizzed:rocker-runtime:1.2.3"
-    api "io.micronaut:micronaut-inject:${micronautVersion}"
-    runtime "org.slf4j:slf4j-nop:1.7.30"
-    implementation "org.fusesource.jansi:jansi:1.15"
-    implementation "org.yaml:snakeyaml:1.26"
-
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
-    testCompile("org.codehaus.groovy:groovy:3.0.2")
-    testImplementation("org.spockframework:spock-core:2.0-M2-groovy-3.0") {
-        exclude group: "org.codehaus.groovy", module: "groovy-all"
+subprojects { Project subproject ->
+    repositories {
+        maven { url "https://repo.grails.org/grails/core" }
     }
 
-//    documentation "org.codehaus.groovy:groovy-templates:$groovyVersion"
-//    documentation "org.codehaus.groovy:groovy-dateutil:$groovyVersion"
-}
-
-mainClassName = "io.micronaut.starter.MicronautStarter"
-
-jar {
-    manifest {
-        attributes "Main-Class": "io.micronaut.starter.MicronautStarter",
-                "Implementation-Version": project.version
+    if (subproject.name.contains('example') || subproject.name.startsWith('benchmark')) {
+        return
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
 
-sourceSets {
-    main {
-        rocker {
-            srcDir('src/main/java')
+    version project.projectVersion
+    group "io.micronaut.starter"
+    ext {
+        isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
+    }
+
+    apply plugin:"groovy"
+    apply plugin:"java-library"
+    apply plugin: 'idea'
+    apply plugin: 'checkstyle'
+    apply from: rootProject.file('gradle/license.gradle')
+
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
+
+
+    jar {
+        manifest {
+            attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+            attributes('Implementation-Version': projectVersion)
+            attributes('Implementation-Title': title)
         }
     }
-}
 
-rocker {
-    // (All settings are shown with their defaults)
-    //
-    // Skips building templates all together
-    skip false
-    // Base directory for generated java sources, actual target is sub directory
-    // with the name of the source set. The value is passed through project.file().
-    outputBaseDirectory = "$buildDir/generated-src/rocker"
-    // Base directory for the directory where the hot reload feature
-    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
-    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
-    // The actual target is a sub directory with the name of the source set.
-    // The value is passed through project.file().
-    classBaseDirectory = "$buildDir/classes"
-    failOnError true
-    skipTouch true
-    // must not be empty when skipTouch is equal to false
-    touchFile ""
-    javaVersion '1.8'
-    extendsClass null
-    extendsModelClass null
-    optimize null
-    discardLogicWhitespace = true
-    targetCharset null
-    suffixRegex null
-    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-    markAsGenerated null
-}
+    bintray.publish = true
 
-tasks.withType(Test) {
-    useJUnitPlatform()
-    testLogging {
-        events TestLogEvent.STANDARD_ERROR
-        exceptionFormat = 'full'
+    tasks.withType(Test) {
+        jvmArgs '-Duser.country=US'
+        jvmArgs '-Duser.language=en'
+        testLogging {
+            exceptionFormat = 'full'
+        }
+        afterSuite {
+            System.out.print(".")
+            System.out.flush()
+        }
+
+        reports.html.enabled = !System.getenv("TRAVIS")
+        reports.junitXml.enabled = !System.getenv("TRAVIS")
+    }
+
+    dependencies {
+        annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+        api platform("io.micronaut:micronaut-bom:$micronautVersion")
+        implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+
+        annotationProcessor "io.micronaut:micronaut-inject-java"
+        api "io.micronaut:micronaut-inject"
+
+        testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
+        testCompile("org.codehaus.groovy:groovy:3.0.2")
+        testImplementation("org.spockframework:spock-core:2.0-M2-groovy-3.0") {
+            exclude group: "org.codehaus.groovy", module: "groovy-all"
+        }
+    }
+
+    task allDeps(type: DependencyReportTask) {}
+
+    checkstyle {
+        toolVersion = 8.16
+        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
+        // Per submodule
+        maxErrors = 1
+        maxWarnings = 10
+
+        showViolations = true
+    }
+    checkstyleTest.enabled = false
+
+    idea {
+        module {
+            outputDir file('build/classes/java/main')
+            testOutputDir file('build/classes/groovy/test')
+        }
+    }
+
+    tasks.withType(JavaCompile){
+        options.encoding = "UTF-8"
+        options.compilerArgs.add('-parameters')
+    }
+
+    tasks.withType(com.hierynomus.gradle.license.tasks.LicenseFormat) {
+        check = true
+        include "**/*.java"
     }
 }
 
-//groovydoc {
-//    classpath += project.configurations.documentation
-//}
 
-task allDeps(type: DependencyReportTask) {}
 
-apply plugin: 'checkstyle'
 
-checkstyle {
-    toolVersion = 8.10
-    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 
-    // Per submodule
-    maxErrors = 1
-    maxWarnings = 10
-
-    showViolations = true
-}
-
-checkstyleTest.enabled = false
-
-//apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v$micronautDocsVersion/gradle/docs.gradle"
-apply from: file('gradle/license.gradle')
-
-apply plugin: 'com.adarshr.test-logger'
-
-testlogger {
-    showFullStackTraces true
-    showStandardStreams true
-    showPassedStandardStreams false
-    showSkippedStandardStreams false
-    showFailedStandardStreams true
-}
-
-tasks.withType(com.hierynomus.gradle.license.tasks.LicenseFormat) {
-    check = true
-    include "**/*.java"
-}
-
-tasks.withType(JavaExec) {
-    jvmArgs()
-}
