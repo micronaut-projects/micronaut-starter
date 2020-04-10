@@ -71,6 +71,14 @@ rocker {
     markAsGenerated null
 }
 
+tasks.withType(Test) {
+    useJUnitPlatform()
+    testLogging {
+        events TestLogEvent.STANDARD_ERROR
+        exceptionFormat = 'full'
+    }
+}
+
 testlogger {
     showFullStackTraces true
     showStandardStreams true
