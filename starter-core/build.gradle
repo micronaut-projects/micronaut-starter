@@ -87,3 +87,8 @@ testlogger {
     showSkippedStandardStreams false
     showFailedStandardStreams true
 }
+
+tasks.withType(com.hierynomus.gradle.license.tasks.LicenseFormat) {
+    check = true
+    include "**/*.java"
+}
