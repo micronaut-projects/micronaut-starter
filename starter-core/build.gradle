@@ -1,0 +1,89 @@
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
+plugins {
+    id "com.adarshr.test-logger" version "2.0.0"
+    id "application"
+    id "com.fizzed.rocker" version "1.2.3"
+}
+
+ext {
+    picocliVersion = '4.2.0'
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir("src/main/java")
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+        attributes('Implementation-Version': projectVersion)
+        attributes('Implementation-Title': title)
+        attributes "Main-Class": "io.micronaut.starter.MicronautStarter", "Implementation-Version": project.version
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    api "info.picocli:picocli:${picocliVersion}"
+    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    api "com.fizzed:rocker-runtime:1.2.3"
+    api "io.micronaut:micronaut-inject"
+    runtime "org.slf4j:slf4j-nop:1.7.30"
+    implementation "org.fusesource.jansi:jansi:1.15"
+    implementation "org.yaml:snakeyaml:1.26"
+}
+
+mainClassName = "io.micronaut.starter.MicronautStarter"
+
+rocker {
+    // (All settings are shown with their defaults)
+    //
+    // Skips building templates all together
+    skip false
+    // Base directory for generated java sources, actual target is sub directory
+    // with the name of the source set. The value is passed through project.file().
+    outputBaseDirectory = "$buildDir/generated-src/rocker"
+    // Base directory for the directory where the hot reload feature
+    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
+    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
+    // The actual target is a sub directory with the name of the source set.
+    // The value is passed through project.file().
+    classBaseDirectory = "$buildDir/classes"
+    failOnError true
+    skipTouch true
+    // must not be empty when skipTouch is equal to false
+    touchFile ""
+    javaVersion '1.8'
+    extendsClass null
+    extendsModelClass null
+    optimize null
+    discardLogicWhitespace = true
+    targetCharset null
+    suffixRegex null
+    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
+    markAsGenerated null
+}
+
+//tasks.withType(Test) {
+//    useJUnitPlatform()
+//    testLogging {
+//        events TestLogEvent.STANDARD_ERROR
+//        exceptionFormat = 'full'
+//    }
+//}
+
+testlogger {
+    showFullStackTraces true
+    showStandardStreams true
+    showPassedStandardStreams false
+    showSkippedStandardStreams false
+    showFailedStandardStreams true
+}
