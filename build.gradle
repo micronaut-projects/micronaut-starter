@@ -80,19 +80,12 @@ subprojects { Project subproject ->
         annotationProcessor "io.micronaut:micronaut-inject-java"
         api "io.micronaut:micronaut-inject"
 
-        testAnnotationProcessor "io.micronaut:micronaut-inject-java:${micronautVersion}"
-        testImplementation("org.codehaus.groovy:groovy-test:$groovyVersion")
+        testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+        testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+        testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
         testImplementation("org.spockframework:spock-core:$spockVersion") {
             exclude group: "org.codehaus.groovy", module: "groovy-all"
         }
-
-        testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-        testImplementation "io.micronaut:micronaut-inject-groovy:$micronautVersion"
-
-        testImplementation "cglib:cglib-nodep:3.3.0"
-        testImplementation "org.objenesis:objenesis:3.1"
-
-        testRuntimeOnly "ch.qos.logback:logback-classic:1.2.3"
     }
 
     task allDeps(type: DependencyReportTask) {}
