@@ -33,15 +33,16 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         when:
         String template = versionsKt.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.kotlintest, BuildTool.gradleKotlin)).render().toString()
 
-        def expectation = """
-            |const val jvmVersion = "${VersionInfo.javaVersion}"
+        def expectation = """\
+            |const val jvmVersion = "${VersionInfo.getJdkVersion()}"
             |const val micronautVersion = "1.3.4"
             |const val kotlinVersion = "1.3.50"
             |const val jacksonKtModuleVersion = "2.9.8"
             |const val logbackVersion = "1.2.3"
             |const val mockkVersion = "1.9.3"
             |const val kotlintestJunit5RunnerVersion = "3.3.2"
-        """.strip().stripMargin()
+            |const val shadowJarVersion = "5.2.0"
+            |""".stripMargin()
         then:
         template.contains(expectation)
     }
