@@ -1,0 +1,248 @@
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.util.VersionInfo
+
+@args (
+Project project,
+Features features
+)
+
+version = "0.1"
+group = "@project.getPackageName()"
+
+plugins {
+@if (features.language().isJava()) {
+    id("net.ltgt.apt-eclipse") version aptEclipseVersion
+}
+@if (features.language().isKotlin()) {
+    kotlin("jvm") version kotlinVersion
+    kotlin("kapt") version kotlinVersion
+    kotlin("plugin.allopen") version kotlinVersion
+}
+@if (features.language().isGroovy() || features.testFramework().isSpock()) {
+    id("groovy")
+}
+@if (features.contains("jrebel")) {
+    id("org.zeroturnaround.gradle.jrebel") version jrebelVersion
+}
+@if (features.application() != null) {
+    application
+    id("com.github.johnrengelman.shadow") version shadowJarVersion
+}
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://jcenter.bintray.com" }
+}
+
+val developmentOnly: Configuration by configurations.creating
+
+dependencies {
+@io.micronaut.starter.feature.build.gradlekotlin.templates.annotationProcessors.template(features)
+@if (features.contains("graal-native-image")) {
+    @if (!features.language().isGroovy()) {
+    compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    }
+    compileOnly("org.graalvm.nativeimage:svm")
+}
+    implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    implementation("io.micronaut:micronaut-inject")
+    implementation("io.micronaut:micronaut-validation")
+@if (features.language().isKotlin()) {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+}
+@if (features.language().isGroovy()) {
+    implementation("io.micronaut:micronaut-runtime-groovy")
+} else {
+    implementation("io.micronaut:micronaut-runtime")
+}
+@if (features.contains("picocli")) {
+    implementation("info.picocli:picocli")
+    implementation("io.micronaut.configuration:micronaut-picocli")
+}
+@if (features.contains("annotation-api")) {
+    implementation("javax.annotation:javax.annotation-api")
+}
+@if (features.contains("netty-server")) {
+    implementation("io.micronaut:micronaut-http-server-netty")
+}
+@if (features.contains("jetty-server")) {
+    implementation("io.micronaut.servlet:micronaut-http-server-jetty")
+}
+@if (features.contains("undertow-server")) {
+    implementation("io.micronaut.servlet:micronaut-http-server-undertow")
+}
+@if (features.contains("tomcat-server")) {
+    implementation("io.micronaut.servlet:micronaut-http-server-tomcat")
+}
+@if (features.contains("http-client")) {
+    implementation("io.micronaut:micronaut-http-client")
+}
+@if (features.contains("swagger")) {
+    implementation("io.swagger.core.v3:swagger-annotations")
+}
+@if (features.contains("management")) {
+    implementation("io.micronaut:micronaut-management")
+}
+@if (features.contains("micrometer")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-core")
+}
+@if (features.contains("micrometer-appoptics")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-appoptics")
+}
+@if (features.contains("micrometer-atlas")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-atlas")
+}
+@if (features.contains("micrometer-azure-monitor")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-azure-monitor")
+}
+@if (features.contains("micrometer-cloudwatch")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-cloudwatch")
+}
+@if (features.contains("micrometer-datadog")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-datadog")
+}
+@if (features.contains("micrometer-dynatrace")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-dynatrace")
+}
+@if (features.contains("micrometer-elastic")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-elastic")
+}
+@if (features.contains("micrometer-ganglia")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-ganglia")
+}
+@if (features.contains("micrometer-graphite")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-graphite")
+}
+@if (features.contains("micrometer-humio")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-humio")
+}
+@if (features.contains("micrometer-influx")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-influx")
+}
+@if (features.contains("micrometer-jmx")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-jmx")
+}
+@if (features.contains("micrometer-kairos")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-kairos")
+}
+@if (features.contains("micrometer-new-relic")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-new-relic")
+}
+@if (features.contains("micrometer-prometheus")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-prometheus")
+}
+@if (features.contains("micrometer-signalfx")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-signalfx")
+}
+@if (features.contains("micrometer-stackdriver")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-stackdriver")
+}
+@if (features.contains("micrometer-statsd")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-statsd")
+}
+@if (features.contains("micrometer-wavefront")) {
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-wavefront")
+}
+@if (features.contains("flyway")) {
+    implementation("io.micronaut.configuration:micronaut-flyway")
+}
+@if (features.contains("liquibase")) {
+    implementation("io.micronaut.configuration:micronaut-liquibase")
+}
+@if (features.contains("jdbc-dbcp")) {
+    implementation("io.micronaut.configuration:micronaut-jdbc-dbcp")
+}
+@if (features.contains("jdbc-tomcat")) {
+    implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")
+}
+@if (features.contains("jdbc-hikari")) {
+    implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
+}
+@if (features.contains("log4j2")) {
+    implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    runtimeOnly("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:$log4jVersion")
+}
+@if (features.contains("logback")) {
+    runtimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
+}
+@if (features.language().isKotlin()) {
+    runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonKtModuleVersion")
+}
+@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+    runtimeOnly("com.h2database:h2")
+}
+
+@io.micronaut.starter.feature.build.gradlekotlin.templates.testFrameworks.template(features.language(), features.testFramework())
+}
+
+val mainClass = "@features.application().mainClassName(project)"
+
+tasks {
+@if (features.language().isJava()) {
+    withType(JavaCompile){
+          with(options) {
+              encoding = "UTF-8"
+              compilerArgs.add("-parameters")
+          }
+    }
+} else if (features.language().isKotlin()) {
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = jvmVersion
+            javaParameters = true
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = jvmVersion
+            javaParameters = true
+        }
+    }
+    allOpen {
+        annotation("io.micronaut.aop.Around")
+    }
+} else if (features.language().isGroovy()) {
+    withType<GroovyCompile> {
+        groovyOptions.forkOptions.jvmArgs = listOf("-Dgroovy.parameters=true")
+    }
+}
+
+@if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
+    // use JUnit 5 platform
+    test {
+        useJUnitPlatform()
+    }
+}
+    // this doesn't work on macOS
+    // test.classpath += configurations.developmentOnly
+@if (features.application() != null) {
+    application {
+        mainClassName = mainClass
+    }
+    shadowJar {
+        manifest {
+            attributes["Main-Class"] = mainClass
+        }
+        mergeServiceFiles()
+    }
+}
+    withType(JavaExec) {
+        classpath += configurations.developmentOnly
+        val jvmArgsList = mutableSetOf("-noverify", "-XX:TieredStopAtLevel=1", "-Dcom.sun.management.jmxremote") as LinkedHashSet
+@if (features.contains("springloaded")) {
+        jvmArgsList += listOf("-noverify", "-javaagent:agent/springloaded-$springLoadedVersion.jar")
+}
+@if (features.contains("jrebel")) {
+        if (project.hasProperty("rebelAgent")) {
+            jvmArgsList = listOf(rebelAgent)
+        }
+        dependsOn(generateRebel)
+}
+        jvmArgs = jvmArgsList.toList()
+    }
+}

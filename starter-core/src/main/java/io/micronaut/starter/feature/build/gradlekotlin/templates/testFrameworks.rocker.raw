@@ -1,0 +1,38 @@
+@import io.micronaut.starter.feature.test.TestFeature
+@import io.micronaut.starter.feature.lang.LanguageFeature
+
+@args (
+LanguageFeature language,
+TestFeature testFeature
+)
+
+@if (testFeature.isJunit()) {
+@if (language.isJava()) {
+    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+} else if (language.isKotlin()) {
+    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest("io.micronaut:micronaut-inject-java")
+}
+    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+@if (language.isGroovy()) {
+    testImplementation("io.micronaut:micronaut-inject-groovy")
+}
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+} else if (testFeature.isKotlinTest()) {
+    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest("io.micronaut:micronaut-inject-java")
+    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation("io.micronaut.test:micronaut-test-kotlintest")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:$kotlintestJunit5RunnerVersion")
+} else if (testFeature.isSpock()) {
+    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation("io.micronaut:micronaut-inject-groovy")
+    testImplementation("org.spockframework:spock-core") {
+        exclude(group = "org.codehaus.groovy", module = "groovy-all")
+    }
+    testImplementation("io.micronaut.test:micronaut-test-spock")
+}

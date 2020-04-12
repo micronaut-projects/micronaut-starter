@@ -1,0 +1,37 @@
+@import io.micronaut.starter.Project
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.util.VersionInfo
+
+@args (
+Project project,
+Features features
+)
+
+const val jvmVersion = "@VersionInfo.getJdkVersion()"
+const val micronautVersion = "1.3.4"
+@if (features.language().isKotlin()) {
+const val kotlinVersion = "@features.language().getVersion()"
+const val jacksonKtModuleVersion = "2.9.8"
+}
+@if (features.contains("log4j2")) {
+const val log4jVersion = "2.12.1"
+}
+@if (features.contains("logback")) {
+const val logbackVersion = "1.2.3"
+}
+@if (features.testFramework().isKotlinTest()) {
+const val mockkVersion = "1.9.3"
+const val kotlintestJunit5RunnerVersion = "3.3.2"
+}
+@if (features.contains("jrebel")) {
+const val jrebelVersion = "1.1.8"
+}
+@if (features.contains("springloaded")) {
+const val springLoadedVersion = "1.2.8.RELEASE"
+}
+@if (features.application() != null) {
+const val shadowJarVersion = "5.2.0"
+}
+@if (features.language().isJava()) {
+const val aptEclipseVersion = "0.21"
+}

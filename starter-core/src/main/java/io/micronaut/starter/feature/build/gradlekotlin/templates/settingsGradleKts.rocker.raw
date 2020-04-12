@@ -1,0 +1,5 @@
+@import io.micronaut.starter.Project
+
+@args (Project project)
+
+rootProject.name="@project.getName()"
