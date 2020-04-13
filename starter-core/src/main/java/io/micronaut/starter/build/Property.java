@@ -14,5 +14,4 @@ public interface Property {
         return getComment() != null;
     }
 
-
 }
