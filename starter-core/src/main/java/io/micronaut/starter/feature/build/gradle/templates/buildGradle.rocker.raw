@@ -9,6 +9,9 @@ Features features
 )
 
 plugins {
+@if (features.contains("asciidoctor")) {
+    id "org.asciidoctor.jvm.convert" version "3.1.0"
+}
 @if (features.language().isJava()) {
     id "net.ltgt.apt-eclipse" version "0.21"
 }
@@ -26,6 +29,9 @@ plugins {
 @if (features.application() != null) {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
+}
+@if (features.contains("jib")) {
+    id "com.google.cloud.tools.jib" version "2.1.0"
 }
 }
 
@@ -89,6 +95,9 @@ dependencies {
 }
 @if (features.contains("management")) {
     implementation "io.micronaut:micronaut-management"
+}
+@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
+    implementation "io.micronaut:micronaut-discovery-client"
 }
 @if (features.contains("micrometer")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-core"
@@ -209,22 +218,22 @@ tasks.withType(JavaCompile){
 }
 } else if (features.language().isKotlin()) {
 allOpen {
-	annotation("io.micronaut.aop.Around")
+    annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    //Will retain parameter names for Java reflection
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        //Will retain parameter names for Java reflection
+        javaParameters = true
+    }
 }
 
 compileTestKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        javaParameters = true
+    }
 }
 } else if (features.language().isGroovy()) {
 tasks.withType(GroovyCompile) {
@@ -253,4 +262,12 @@ tasks.withType(JavaExec) {
     }
 }
 }
+}
+
+@if (features.contains("asciidoctor")) {
+apply from: 'gradle/asciidoc.gradle'
+}
+
+@if (features.contains("jib")) {
+jib.to.image = 'gcr.io/@project.getName()/jib-image'
 }

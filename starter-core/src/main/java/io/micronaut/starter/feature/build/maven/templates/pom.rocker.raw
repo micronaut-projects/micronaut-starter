@@ -101,6 +101,9 @@ List<Property> properties
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
 }
+@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
+@dependency.template("io.micronaut", "micronaut-discovery-client", "compile", null)
+}
 @if (features.contains("micrometer")) {
 @dependency.template("io.micronaut.configuration", "micronaut-micrometer-core", "compile", null)
 }
@@ -636,6 +639,71 @@ List<Property> properties
             </goals>
           </execution>
         </executions>
+      </plugin>
+}
+@if (features.contains("asciidoctor")) {
+      <plugin>
+        <groupId>org.asciidoctor</groupId>
+        <artifactId>asciidoctor-maven-plugin</artifactId>
+        <version>${asciidoctor.maven.plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj</artifactId>
+            <version>${asciidoctorj.version}</version>
+          </dependency>
+          <dependency>
+            <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctorj-diagram</artifactId>
+            <version>${asciidoctorj.diagram.version}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <sourceDirectory>src/docs/asciidoc</sourceDirectory>
+          <requires>
+            <require>asciidoctor-diagram</require>
+          </requires>
+          <!-- Attributes common to all output formats -->
+          <attributes>
+            <endpoint-url>http://example.org</endpoint-url>
+            <sourcedir>${project.build.sourceDirectory}</sourcedir>
+            <project-version>${project.version}</project-version>
+          </attributes>
+        </configuration>
+        <executions>
+          <execution>
+            <id>asciidoc-to-html</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>html5</backend>
+              <sourceHighlighter>coderay</sourceHighlighter>
+              <attributes>
+                <imagesdir>./images</imagesdir>
+                <toc>left</toc>
+                <icons>font</icons>
+                <sectanchors>true</sectanchors>
+                <!-- set the idprefix to blank -->
+                <idprefix/>
+                <idseparator>-</idseparator>
+                <docinfo1>true</docinfo1>
+              </attributes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+}
+@if (features.contains("jib")) {
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <image>gcr.io/@project.getName()/jib-image</image>
+          </to>
+        </configuration>
       </plugin>
 }
     </plugins>

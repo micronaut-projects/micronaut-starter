@@ -1,0 +1,23 @@
+asciidoctorj {
+    version '2.1.0'
+    modules {
+        diagram {
+            version '1.5.18'
+        }
+    }
+
+    options doctype: "book", ruby: "erubis"
+
+    attributes "sourcedir": "src/docs/asciidoc",
+               "source-highlighter": "coderay",
+               "toc": "left",
+               "idprefix": "",
+               "idseparator": "-",
+               "icons": "font",
+               "setanchors": "",
+               "listing-caption": "",
+               "imagesdir": "images",
+               "project-version": "$project.version",
+               "revnumber": "$project.version"
+}
+
