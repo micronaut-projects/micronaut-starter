@@ -4,3 +4,4 @@
 /buildSrc/build
 **/.DS_Store
 build
+!starter-core/src/**/build/
