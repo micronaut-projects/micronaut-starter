@@ -19,13 +19,10 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(lang)
 
         when:
-        Process process = executeGradleCommand('run')
+        executeGradleCommand('run')
 
         then:
         testOutputContains("Startup completed")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
@@ -37,13 +34,10 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(lang, BuildTool.maven)
 
         when:
-        Process process = executeMavenCommand("compile exec:exec")
+        executeMavenCommand("compile exec:exec")
 
         then:
         testOutputContains("Startup completed")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
