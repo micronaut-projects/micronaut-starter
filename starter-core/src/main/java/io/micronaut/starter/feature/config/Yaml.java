@@ -54,5 +54,8 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     @Override
     public void apply(CommandContext commandContext) {
         commandContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", commandContext.getConfiguration()));
+        if (!commandContext.getBootstrapConfig().isEmpty()) {
+            commandContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", commandContext.getBootstrapConfig()));
+        }
     }
 }

@@ -99,6 +99,9 @@ dependencies {
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
     implementation "io.micronaut:micronaut-discovery-client"
 }
+@if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
+    implementation "io.micronaut:micronaut-discovery-client"
+}
 @if (features.contains("micrometer")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-core"
 }

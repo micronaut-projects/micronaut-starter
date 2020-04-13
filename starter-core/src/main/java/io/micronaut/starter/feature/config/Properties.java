@@ -28,5 +28,8 @@ public class Properties implements ConfigurationFeature {
     @Override
     public void apply(CommandContext commandContext) {
         commandContext.addTemplate("propertiesConfig", new PropertiesTemplate("src/main/resources/application.properties", commandContext.getConfiguration()));
+        if (!commandContext.getBootstrapConfig().isEmpty()) {
+            commandContext.addTemplate("propertiesBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.properties", commandContext.getBootstrapConfig()));
+        }
     }
 }
