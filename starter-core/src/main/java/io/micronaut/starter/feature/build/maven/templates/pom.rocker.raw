@@ -658,6 +658,17 @@ List<Property> properties
         </executions>
       </plugin>
 }
+@if (features.contains("jib")) {
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <image>gcr.io/@project.getName()/jib-image</image>
+          </to>
+        </configuration>
+      </plugin>
+}
     </plugins>
   </build>
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
