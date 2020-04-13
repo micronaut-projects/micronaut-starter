@@ -18,7 +18,7 @@ package io.micronaut.starter.util;
 public class VersionInfo {
 
     public static String getVersion() {
-        return "2.0.0.M1";
+        return "2.0.0.M2";
     }
 
     public static int getJavaVersion() {

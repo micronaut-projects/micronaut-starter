@@ -33,7 +33,7 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(lang, BuildTool.maven)
 
         when:
-        executeMavenCommand("compile exec:exec")
+        executeMavenCommand("mn:run")
 
         then:
         testOutputContains("Startup completed")

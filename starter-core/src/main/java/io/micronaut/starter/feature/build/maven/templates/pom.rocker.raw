@@ -11,12 +11,19 @@ Features features,
 List<Property> properties
 )
 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>@project.getPackageName()</groupId>
   <artifactId>@project.getName()</artifactId>
   <version>0.1</version>
+
+  <parent>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>@VersionInfo.getVersion()</version>
+  </parent>
 
   <properties>
     <jdk.version>@VersionInfo.getJdkVersion()</jdk.version>
@@ -42,18 +49,6 @@ List<Property> properties
       <url>https://jcenter.bintray.com</url>
     </repository>
   </repositories>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.micronaut</groupId>
-        <artifactId>micronaut-bom</artifactId>
-        <version>${micronaut.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <dependencies>
 @dependency.template("io.micronaut", "micronaut-inject", "compile", null)
@@ -237,57 +232,34 @@ List<Property> properties
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
   </dependencies>
+
   <build>
     <plugins>
+@if (features.application() != null) {
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+        <!-- TODO: remove version once a new Micronaut 2.x BOM is published -->
+        <version>1.0.0.RC3</version>
+@if (features.contains("springloaded") || features.contains("jrebel")) {
+          <configuration>
+            <jvmArguments>
+@if (features.contains("springloaded")) {
+              <jvmArgument>-noverify</jvmArgument>
+              <jvmArgument>-javaagent:${session.executionRootDirectory}/agent/springloaded-1.2.8.RELEASE.jar</jvmArgument>
+}
+@if (features.contains("jrebel")) {
+              <jvmArgument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArgument>
+}
+            </jvmArguments>
+          </configuration>
+}
+      </plugin>
+}
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.1.0</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-@if (features.application() != null) {
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>${exec.mainClass}</mainClass>
-                </transformer>}
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
-@if (features.application() != null) {
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.6.0</version>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-classpath</argument>
-            <classpath/>
-            <argument>-XX:TieredStopAtLevel=1</argument>
-            <argument>-Dcom.sun.management.jmxremote</argument>
-@if (features.contains("springloaded")) {
-            <argument>-noverify</argument>
-            <argument>-javaagent:agent/springloaded-1.2.8.RELEASE.jar</argument>
-}
-@if (features.contains("jrebel")) {
-            <argument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</argument>
-}
-            <argument>${exec.mainClass}</argument>
-@if (features.contains("picocli")) {
-            <argument>${args}</argument>
-}
-          </arguments>
-        </configuration>
-      </plugin>
-}
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -332,11 +304,7 @@ List<Property> properties
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
         <configuration>
-          <compilerArgs>
-            <arg>-parameters</arg>
-          </compilerArgs>
           <annotationProcessorPaths>
             <path>
               <groupId>io.micronaut</groupId>
@@ -378,9 +346,6 @@ List<Property> properties
               <goal>testCompile</goal>
             </goals>
             <configuration>
-              <compilerArgs>
-                <arg>-parameters</arg>
-              </compilerArgs>
               <annotationProcessorPaths>
                 <path>
                   <groupId>io.micronaut</groupId>
@@ -723,6 +688,7 @@ List<Property> properties
 }
     </plugins>
   </build>
+
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
   <pluginRepositories>
     <pluginRepository>
@@ -738,4 +704,5 @@ List<Property> properties
     </pluginRepository>
   </pluginRepositories>
 }
+
 </project>

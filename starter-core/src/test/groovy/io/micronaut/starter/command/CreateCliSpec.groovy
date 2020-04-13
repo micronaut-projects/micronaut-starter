@@ -33,7 +33,7 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         runCreateCliCommand(lang, BuildTool.maven)
 
         when:
-        executeMavenCommand("compile exec:exec -Dargs=-v")
+        executeMavenCommand("mn:run -Dmn.appArgs=-v")
 
         then:
         testOutputContains("Hi")
