@@ -27,7 +27,7 @@ class CommandSpec extends Specification {
     }
 
     void cleanupSpec() {
-        String jps = "jps -l".execute().text
+        String jps = "${System.getenv("JAVA_HOME")}/bin/jps -l".execute().text
         jps.eachLine { String l ->
             String[] parts = l.split(" ")
             if (parts.size() == 2 && parts[1] == "example.micronaut.Application") {
