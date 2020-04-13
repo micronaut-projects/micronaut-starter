@@ -16,27 +16,50 @@
 package io.micronaut.starter.feature.externalconfig;
 
 import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.externalconfig.template.k8sYaml;
+import io.micronaut.starter.feature.jib.Jib;
+import io.micronaut.starter.feature.other.Management;
+import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class ConfigConsul implements ExternalConfigFeature {
+public class Kubernetes implements ExternalConfigFeature {
+
+    private final Jib jib;
+    private final Management management;
+
+    public Kubernetes(Management management, Jib jib) {
+        this.management = management;
+        this.jib = jib;
+    }
 
     @Override
     public String getName() {
-        return "config-consul";
+        return "kubernetes";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Consul (https://www.consul.io)";
+        return "Adds support for Kubernetes";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Management.class)) {
+            featureContext.addFeature(management);
+        }
+        if (!featureContext.isPresent(Jib.class)) {
+            featureContext.addFeature(jib);
+        }
     }
 
     @Override
     public void apply(CommandContext commandContext) {
         commandContext.getBootstrapConfig().put("micronaut.application.name", commandContext.getProject().getName());
         commandContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        commandContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
-        commandContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        commandContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(commandContext.getProject())));
     }
+
 }

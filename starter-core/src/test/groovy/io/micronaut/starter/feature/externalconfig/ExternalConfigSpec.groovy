@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.discovery
+package io.micronaut.starter.feature.externalconfig
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.fixture.ContextFixture
@@ -6,15 +6,15 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-class DiscoverySpec extends Specification implements ContextFixture {
+class ExternalConfigSpec extends Specification implements ContextFixture {
 
     @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
 
-    void 'test there can only be one discovery feature'() {
+    void 'test there can only be one config feature'() {
         when:
-        getFeatures(["discovery-consul", "discovery-eureka"])
+        getFeatures(["config-consul", "kubernetes"])
 
         then:
         def ex = thrown(IllegalArgumentException)
