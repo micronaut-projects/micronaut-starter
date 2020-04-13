@@ -165,6 +165,15 @@ dependencies {
 @if (features.contains("micrometer-wavefront")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-registry-wavefront"
 }
+@if (features.contains("netflix-archaius")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-archaius"
+}
+@if (features.contains("netflix-hystrix")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-hystrix"
+}
+@if (features.contains("netflix-ribbon")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-ribbon"
+}
 @if (features.contains("flyway")) {
     implementation "io.micronaut.configuration:micronaut-flyway"
 }

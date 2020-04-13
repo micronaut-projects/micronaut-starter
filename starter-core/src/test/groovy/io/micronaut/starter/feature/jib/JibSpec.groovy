@@ -31,7 +31,7 @@ class JibSpec extends Specification implements ProjectFixture, ContextFixture {
     }
 
     @Unroll
-    void 'test maven asciidoctor feature for language=#language'() {
+    void 'test maven jib feature for language=#language'() {
         when:
         String template = pom.template(buildProject(), getFeatures(['jib'], language), []).render().toString()
 
