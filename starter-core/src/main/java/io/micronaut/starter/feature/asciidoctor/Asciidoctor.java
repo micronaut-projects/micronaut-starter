@@ -33,6 +33,11 @@ public class Asciidoctor implements Feature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds Asciidoctor documentation";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
 
         if (commandContext.getBuildTool() == BuildTool.gradle) {
