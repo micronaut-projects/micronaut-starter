@@ -9,6 +9,9 @@ Features features
 )
 
 plugins {
+@if (features.contains("asciidoctor")) {
+    id "org.asciidoctor.jvm.convert" version "3.1.0"
+}
 @if (features.language().isJava()) {
     id "net.ltgt.apt-eclipse" version "0.21"
 }
@@ -247,4 +250,8 @@ tasks.withType(JavaExec) {
     }
 }
 }
+}
+
+@if (features.contains("asciidoctor")) {
+apply from: 'gradle/asciidoc.gradle'
 }
