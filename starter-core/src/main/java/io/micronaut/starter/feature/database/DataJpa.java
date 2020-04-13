@@ -1,10 +1,15 @@
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.jdbc.Tomcat;
 
+import javax.inject.Singleton;
+import java.util.Map;
+
+@Singleton
 public class DataJpa implements DataFeature {
 
     private final Data data;
@@ -31,5 +36,12 @@ public class DataJpa implements DataFeature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(tomcat);
         }
+    }
+
+    @Override
+    public void apply(CommandContext commandContext) {
+        Map<String, Object> conf = getDatasourceConfig();
+        conf.put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+        commandContext.getConfiguration().putAll(conf);
     }
 }
