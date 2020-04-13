@@ -96,6 +96,9 @@ dependencies {
 @if (features.contains("management")) {
     implementation "io.micronaut:micronaut-management"
 }
+@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
+    implementation "io.micronaut:micronaut-discovery-client"
+}
 @if (features.contains("micrometer")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-core"
 }

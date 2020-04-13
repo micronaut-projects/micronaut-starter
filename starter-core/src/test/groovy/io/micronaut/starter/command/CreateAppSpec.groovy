@@ -1,12 +1,11 @@
 package io.micronaut.starter.command
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.fixture.CommandFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Unroll
-import spock.util.concurrent.PollingConditions
 
 class CreateAppSpec extends CommandSpec implements CommandFixture {
 
