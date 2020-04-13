@@ -206,22 +206,22 @@ tasks.withType(JavaCompile){
 }
 } else if (features.language().isKotlin()) {
 allOpen {
-	annotation("io.micronaut.aop.Around")
+    annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    //Will retain parameter names for Java reflection
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        //Will retain parameter names for Java reflection
+        javaParameters = true
+    }
 }
 
 compileTestKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        javaParameters = true
+    }
 }
 } else if (features.language().isGroovy()) {
 tasks.withType(GroovyCompile) {
