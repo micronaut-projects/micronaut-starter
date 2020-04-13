@@ -14,7 +14,6 @@ public class PropertiesTemplate implements Template {
         this.properties = transform(new LinkedProperties(), "", config);
     }
 
-
     @Override
     public String getPath() {
         return path;
@@ -26,7 +25,7 @@ public class PropertiesTemplate implements Template {
     }
 
     private Properties transform(Properties finalConfig, String prefix, Map<String, Object> config) {
-        for (Map.Entry<String, Object> entry: config.entrySet()) {
+        for (Map.Entry<String, Object> entry : config.entrySet()) {
             transform(finalConfig, prefix + entry.getKey(), entry.getValue());
         }
         return finalConfig;
