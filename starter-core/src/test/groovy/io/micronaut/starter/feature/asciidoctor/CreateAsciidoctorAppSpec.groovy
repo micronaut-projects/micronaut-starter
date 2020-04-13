@@ -19,13 +19,10 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(language, BuildTool.gradle, ['asciidoctor'])
 
         when:
-        Process process = executeGradleCommand('asciidoctor')
+        executeGradleCommand('asciidoctor')
 
         then:
         testOutputContains('BUILD SUCCESSFUL')
-
-        cleanup:
-        process.destroy()
 
         where:
         language << [Language.java, Language.kotlin, Language.groovy]
@@ -37,13 +34,10 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(language, BuildTool.maven, ['asciidoctor'])
 
         when:
-        Process process = executeMavenCommand('generate-resources')
+        executeMavenCommand('generate-resources')
 
         then:
         testOutputContains('BUILD SUCCESS')
-
-        cleanup:
-        process.destroy()
 
         where:
         language << [Language.java, Language.kotlin, Language.groovy]
