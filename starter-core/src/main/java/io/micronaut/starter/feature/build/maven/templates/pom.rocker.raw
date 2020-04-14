@@ -199,6 +199,15 @@ List<Property> properties
 @if (features.contains("data-jpa")) {
 @dependency.template("io.micronaut.data", "micronaut-data-jpa", "compile", null)
 }
+@if (features.contains("hibernate-validator")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-validator", "compile", null)
+}
+@if (features.contains("hibernate-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "compile", null)
+}
+@if (features.contains("hibernate-jpa")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -207,8 +216,11 @@ List<Property> properties
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", "1.2.3")
 }
-@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+@if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
+}
+@if (features.contains("hibernate-gorm")) {
+@dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", "2.9.8")

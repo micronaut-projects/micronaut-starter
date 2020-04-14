@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.jdbc
+package io.micronaut.starter.feature.database.jdbc
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle

@@ -13,22 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jdbc;
+package io.micronaut.starter.feature.database.jdbc;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.database.H2;
 
-import java.util.Collections;
+import javax.inject.Singleton;
 
-public interface JdbcFeature extends OneOfFeature {
+@Singleton
+public class Dbcp extends JdbcFeature {
 
-    @Override
-    default Class<?> getFeatureClass() {
-        return JdbcFeature.class;
+    public Dbcp(H2 h2) {
+        super(h2);
     }
 
     @Override
-    default void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("datasources.default", Collections.emptyMap());
+    public String getName() {
+        return "jdbc-dbcp";
     }
+
+    @Override
+    public String getDescription() {
+        return "Configures SQL DataSource instances using Commons DBCP";
+    }
+
 }

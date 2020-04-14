@@ -13,14 +13,9 @@ public interface DataFeature extends OneOfFeature {
     }
 
     default Map<String, Object> getDatasourceConfig() {
-        final String prefix = "datasources.default.";
         Map<String, Object> conf = new LinkedHashMap<>();
-        conf.put(prefix + "url", "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
-        conf.put(prefix + "driverClassName", "org.h2.Driver");
-        conf.put(prefix + "username", "sa");
-        conf.put(prefix + "password", "''");
-        conf.put(prefix + "schema-generate", "CREATE_DROP");
-        conf.put(prefix + "dialect", "H2");
+        conf.put("datasources.default.schema-generate", "CREATE_DROP");
+        conf.put("datasources.default.dialect", "H2");
         return conf;
     }
 }

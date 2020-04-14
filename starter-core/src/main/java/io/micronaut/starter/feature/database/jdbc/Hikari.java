@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jdbc;
+package io.micronaut.starter.feature.database.jdbc;
+
+import io.micronaut.starter.feature.database.H2;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Hikari implements JdbcFeature {
+public class Hikari extends JdbcFeature {
+
+    public Hikari(H2 h2) {
+        super(h2);
+    }
 
     @Override
     public String getName() {

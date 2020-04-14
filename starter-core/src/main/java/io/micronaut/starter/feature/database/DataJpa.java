@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.jdbc.Tomcat;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.jdbc.Tomcat;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -12,11 +12,11 @@ import java.util.Map;
 public class DataJpa implements DataFeature {
 
     private final Data data;
-    private final Tomcat tomcat;
+    private final JdbcFeature jdbcFeature;
 
-    public DataJpa(Data data, Tomcat tomcat) {
+    public DataJpa(Data data, JdbcFeature jdbcFeature) {
         this.data = data;
-        this.tomcat = tomcat;
+        this.jdbcFeature = jdbcFeature;
     }
 
     @Override
@@ -33,14 +33,14 @@ public class DataJpa implements DataFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
         if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(tomcat);
+            featureContext.addFeature(jdbcFeature);
         }
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        Map<String, Object> conf = getDatasourceConfig();
-        conf.put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
-        commandContext.getConfiguration().putAll(conf);
+        commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+        commandContext.getConfiguration().putAll(getDatasourceConfig());
+        commandContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
     }
 }

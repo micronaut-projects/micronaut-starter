@@ -195,6 +195,15 @@ dependencies {
 @if (features.contains("data-jdbc")) {
     implementation "io.micronaut.data:micronaut-data-jdbc"
 }
+@if (features.contains("hibernate-validator")) {
+    implementation "io.micronaut.configuration:micronaut-hibernate-validator"
+}
+@if (features.contains("hibernate-gorm")) {
+    implementation "io.micronaut.configuration:micronaut-hibernate-gorm"
+}
+@if (features.contains("hibernate-jpa")) {
+    implementation "io.micronaut.configuration:micronaut-hibernate-jpa"
+}
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
@@ -206,8 +215,11 @@ dependencies {
 @if (features.language().isKotlin()) {
     runtimeOnly "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
 }
-@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+@if (features.contains("h2")) {
     runtimeOnly "com.h2database:h2"
+}
+@if (features.contains("hibernate-gorm")) {
+    runtimeOnly "org.apache.tomcat:tomcat-jdbc"
 }
 
 @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())

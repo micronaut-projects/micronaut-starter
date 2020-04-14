@@ -2,8 +2,8 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.jdbc.Tomcat;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.jdbc.Tomcat;
 
 import javax.inject.Singleton;
 
@@ -11,11 +11,11 @@ import javax.inject.Singleton;
 public class DataJdbc implements DataFeature {
 
     private final Data data;
-    private final Tomcat tomcat;
+    private final JdbcFeature jdbcFeature;
 
-    public DataJdbc(Data data, Tomcat tomcat) {
+    public DataJdbc(Data data, JdbcFeature jdbcFeature) {
         this.data = data;
-        this.tomcat = tomcat;
+        this.jdbcFeature = jdbcFeature;
     }
 
     @Override
@@ -32,12 +32,13 @@ public class DataJdbc implements DataFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
         if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(tomcat);
+            featureContext.addFeature(jdbcFeature);
         }
     }
 
     @Override
     public void apply(CommandContext commandContext) {
+        commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
         commandContext.getConfiguration().putAll(getDatasourceConfig());
     }
 }
