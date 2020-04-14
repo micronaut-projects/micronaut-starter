@@ -41,7 +41,7 @@ val developmentOnly: Configuration by configurations.creating
 
 dependencies {
 @io.micronaut.starter.feature.build.gradlekotlin.templates.annotationProcessors.template(features)
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
     @if (!features.language().isGroovy()) {
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     }

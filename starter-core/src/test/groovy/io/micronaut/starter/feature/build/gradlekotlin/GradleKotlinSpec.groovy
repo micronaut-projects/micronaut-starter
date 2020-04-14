@@ -116,7 +116,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 
     void 'test graal-native-image feature'() {
         when:
-        String template = buildGradleKts.template(buildProject(), getFeatures(["graal-native-image"], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
 
         then:
         template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -125,7 +125,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures(["graal-native-image"], Language.kotlin, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.kotlin, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
 
         then:
         template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -134,7 +134,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures(["graal-native-image"], Language.groovy, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.groovy, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
 
         then:
         template.count('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))') == 1
@@ -168,5 +168,4 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         "tomcat-server"        | 'implementation("io.micronaut.servlet:micronaut-http-server-tomcat")'
         "undertow-server"      | 'implementation("io.micronaut.servlet:micronaut-http-server-undertow")'
     }
-
 }
