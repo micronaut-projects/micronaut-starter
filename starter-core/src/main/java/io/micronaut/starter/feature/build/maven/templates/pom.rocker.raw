@@ -558,7 +558,7 @@ List<Property> properties
       <plugin>
         <groupId>org.codehaus.gmavenplus</groupId>
         <artifactId>gmavenplus-plugin</artifactId>
-        <version>1.6.1</version>
+        <version>1.9.0</version>
         <executions>
           <execution>
             <goals>
@@ -578,7 +578,7 @@ List<Property> properties
 @if (features.language().isGroovy()) {
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>3.8.1</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
