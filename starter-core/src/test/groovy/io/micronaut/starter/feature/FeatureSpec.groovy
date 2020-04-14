@@ -40,13 +40,11 @@ class FeatureSpec extends Specification {
 
     @Unroll
     void "test #feature.name does not add an unmodifiable map to config"() {
-        given:
+        when:
         def commandCtx = new CommandContext(NameUtils.parse("foo"),
                 MicronautCommand.CREATE_APP,
-                new Options(Language.java, TestFramework.junit, BuildTool.gradle), [])
-
-        when:
-        feature.apply(commandCtx)
+                new Options(Language.java, TestFramework.junit, BuildTool.gradle), [feature])
+        commandCtx.applyFeatures()
 
         then:
         commandCtx.configuration.values().stream()
