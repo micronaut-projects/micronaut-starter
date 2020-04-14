@@ -3,8 +3,8 @@
     <dependency>
       <groupId>@groupId</groupId>
       <artifactId>@artifactId</artifactId>
-      <scope>@scope</scope>
 @if (version != null) {
       <version>@version</version>
 }
+      <scope>@scope</scope>
     </dependency>

@@ -83,20 +83,9 @@ class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixtu
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext([ 'data-jdbc'])
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        ctx.getTemplates().get("yamlConfig").write(baos)
+        CommandContext ctx = buildCommandContext(['data-jdbc'])
 
         then:
-        baos.toString().contains("""
-datasources:
-  default:
-    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-    schema-generate: CREATE_DROP
-    dialect: H2
-""".trim())
+        ctx.configuration.containsKey("datasources.default.url")
     }
 }

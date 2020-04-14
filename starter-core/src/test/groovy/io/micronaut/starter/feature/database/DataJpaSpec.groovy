@@ -84,20 +84,9 @@ class DataJpaSpec extends Specification implements ProjectFixture, ContextFixtur
     void "test config"() {
         when:
         CommandContext ctx = buildCommandContext(['data-jpa'])
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        ctx.getTemplates().get("yamlConfig").write(baos)
 
         then:
-        baos.toString().contains("""
-datasources:
-  default:
-    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-    schema-generate: CREATE_DROP
-    dialect: H2
-jpa.default.properties.hibernate.hbm2ddl.auto: update    
-""".trim())
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.containsKey("jpa.default.properties.hibernate.hbm2ddl.auto")
     }
 }

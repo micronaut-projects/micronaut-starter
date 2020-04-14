@@ -1,6 +1,13 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.Options
+import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.command.MicronautCommand
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.NameUtils
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -29,5 +36,32 @@ class FeatureSpec extends Specification {
 
         where:
         feature << ctx.getBeansOfType(Feature).toList()
+    }
+
+    @Unroll
+    void "test #feature.name does not add an unmodifiable map to config"() {
+        given:
+        def commandCtx = new CommandContext(NameUtils.parse("foo"),
+                MicronautCommand.CREATE_APP,
+                new Options(Language.java, TestFramework.junit, BuildTool.gradle), [])
+
+        when:
+        feature.apply(commandCtx)
+
+        then:
+        commandCtx.configuration.values().stream()
+                .filter(val -> val instanceof Map)
+                .map(val -> (Map) val)
+                .noneMatch((Map m) -> {
+                    try {
+                        m.put("hello", "world")
+                        return false
+                    } catch (UnsupportedOperationException e) {
+                        return true
+                    }
+                })
+
+        where:
+        feature << ctx.getBeansOfType(Feature)
     }
 }

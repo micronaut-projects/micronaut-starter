@@ -36,6 +36,7 @@ class HibernateGormSpec extends Specification implements ProjectFixture, Context
         template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-gorm\"")
         template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-validator\"")
         template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("runtimeOnly \"org.apache.tomcat:tomcat-jdbc\"")
     }
 
     void "test dependencies are present for maven"() {
@@ -64,30 +65,22 @@ class HibernateGormSpec extends Specification implements ProjectFixture, Context
       <scope>runtime</scope>
     </dependency>
 """)
+        template.contains("""
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+""")
     }
 
     void "test config"() {
         when:
         CommandContext ctx = buildCommandContext(['hibernate-gorm'])
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        ctx.getTemplates().get("yamlConfig").write(baos)
 
         then:
-        baos.toString().contains("""
-dataSource:
-  url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
-  pooled: true
-  jmxExport: true
-  driverClassName: org.h2.Driver
-  username: sa
-  password: ''
-hibernate:
-  hbm2ddl:
-    auto: update
-  cache:
-    queries: false
-    use_second_level_cache: false
-    use_query_cache: false    
-""".trim())
+        ctx.configuration.containsKey("dataSource.url")
+        ctx.configuration.containsKey("hibernate.hbm2ddl.auto")
+        ctx.configuration.containsKey("hibernate.cache.queries")
     }
 }
