@@ -65,6 +65,8 @@ subprojects { Project subproject ->
             System.out.print(".")
             System.out.flush()
         }
+        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+        maxHeapSize = "2G"
 
         reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
         reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
