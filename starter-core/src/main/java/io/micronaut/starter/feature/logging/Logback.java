@@ -38,6 +38,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds Logback Logging";
+    }
+
+    @Override
     public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof LoggingFeature);
     }

@@ -33,6 +33,7 @@ public class CommandContext {
     private final Project project;
     private final BuildProperties buildProperties = new BuildProperties();
     private final Map<String, Object> configuration = new LinkedHashMap<>();
+    private final Map<String, Object> bootstrapConfig = new LinkedHashMap<>();
     private final Map<String, Template> templates = new LinkedHashMap<>();
     private final MicronautCommand command;
     private final Features features;
@@ -64,6 +65,10 @@ public class CommandContext {
 
     public Map<String, Object> getConfiguration() {
         return configuration;
+    }
+
+    public Map<String, Object> getBootstrapConfig() {
+        return bootstrapConfig;
     }
 
     public Map<String, Template> getTemplates() {

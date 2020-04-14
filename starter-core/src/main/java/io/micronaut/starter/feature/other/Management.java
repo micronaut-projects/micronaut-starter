@@ -26,4 +26,9 @@ public class Management implements Feature {
     public String getName() {
         return "management";
     }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for management endpoints";
+    }
 }

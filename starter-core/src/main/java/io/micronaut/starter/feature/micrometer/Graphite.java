@@ -33,6 +33,11 @@ public class Graphite extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Graphite reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");

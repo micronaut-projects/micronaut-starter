@@ -33,6 +33,11 @@ public class Jmx extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Jmx reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.step", "PT1M");

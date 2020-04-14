@@ -113,7 +113,7 @@ class MicrometerSpec extends Specification implements ProjectFixture, ContextFix
         when: 'a new feature context with one micrometer feature'
         Features features = getFeatures(["micrometer-appoptics"])
 
-        then: 'the micrometer feature is added and also micrommeter-core and management'
+        then: 'the micrometer feature is added and also micrometer-core and management'
         features.containsAll(['micrometer-appoptics', 'micrometer', 'management'])
     }
 

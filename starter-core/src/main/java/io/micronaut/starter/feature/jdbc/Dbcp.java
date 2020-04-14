@@ -24,4 +24,9 @@ public class Dbcp implements JdbcFeature {
     public String getName() {
         return "jdbc-dbcp";
     }
+
+    @Override
+    public String getDescription() {
+        return "Configures SQL DataSource instances using Commons DBCP";
+    }
 }

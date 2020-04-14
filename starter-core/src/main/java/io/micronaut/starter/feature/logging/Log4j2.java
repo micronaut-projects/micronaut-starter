@@ -30,6 +30,11 @@ public class Log4j2 implements LoggingFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds Log4j2 Logging";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(commandContext.getProject())));
     }

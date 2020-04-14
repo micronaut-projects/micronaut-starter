@@ -1,0 +1,36 @@
+= Your Project
+author@@example.org
+
+Write a short introduction about your project
+
+== Build
+
+Explain what it requires and how to build the project. For example:
+
+This project requires Java 8 (min) and you can build it executing the following command:
+
+[source,console]
+----
+./gradlew build
+----
+
+== Architecture
+
+When you document your architecture you can use different `diagrams` blocks as
+for example `plantuml`
+
+[plantuml]
+----
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+----
+
+== Implementation
+
+Remember you can include piece of code extracted from your project using the `include` directive
+
+    include::{sourcedir}/com/mycompany/service/MyService.java[tags=init]
+

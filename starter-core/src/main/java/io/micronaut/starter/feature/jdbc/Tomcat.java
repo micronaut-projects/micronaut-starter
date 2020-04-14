@@ -24,4 +24,9 @@ public class Tomcat implements JdbcFeature {
     public String getName() {
         return "jdbc-tomcat";
     }
+
+    @Override
+    public String getDescription() {
+        return "Configures SQL DataSource instances using Tomcat Connection Pool";
+    }
 }

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.lang
 
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.Swagger
+import io.micronaut.starter.feature.other.Swagger
 import io.micronaut.starter.feature.lang.java.application
 import io.micronaut.starter.fixture.ProjectFixture
 import spock.lang.Specification

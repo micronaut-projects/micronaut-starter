@@ -13,4 +13,5 @@ public interface Property {
     default boolean isComment() {
         return getComment() != null;
     }
+
 }

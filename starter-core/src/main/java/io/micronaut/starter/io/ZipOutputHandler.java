@@ -29,17 +29,23 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipOutputHandler implements OutputHandler {
 
-    ZipOutputStream zipOutputStream;
+    private final ZipOutputStream zipOutputStream;
+    private final File zip;
 
     public ZipOutputHandler(Project project) throws IOException {
         File baseDirectory = new File(".").getCanonicalFile();
         Path zipPath = Paths.get(baseDirectory.getPath(), project.getName() + ".zip");
-        File zip = zipPath.toAbsolutePath().normalize().toFile();
+        zip = zipPath.toAbsolutePath().normalize().toFile();
         if (zip.exists()) {
             throw new IllegalArgumentException("Cannot create the project because the target zip file already exists");
         }
         zip.createNewFile();
         zipOutputStream = new ZipOutputStream(Files.newOutputStream(zip.toPath()));
+    }
+
+    @Override
+    public String getOutputLocation() {
+        return zip.getAbsolutePath();
     }
 
     @Override

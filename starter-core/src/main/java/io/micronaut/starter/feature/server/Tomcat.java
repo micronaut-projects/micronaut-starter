@@ -24,4 +24,9 @@ public class Tomcat implements ServerFeature {
     public String getName() {
         return "tomcat-server";
     }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for a Tomcat server";
+    }
 }

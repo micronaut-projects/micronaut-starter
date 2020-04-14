@@ -52,6 +52,11 @@ public class FileSystemOutputHandler implements OutputHandler {
     }
 
     @Override
+    public String getOutputLocation() {
+        return applicationDirectory.getAbsolutePath();
+    }
+
+    @Override
     public boolean exists(String path) {
         return new File(applicationDirectory, path).exists();
     }

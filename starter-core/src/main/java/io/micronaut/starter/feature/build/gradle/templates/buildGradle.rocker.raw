@@ -9,6 +9,9 @@ Features features
 )
 
 plugins {
+@if (features.contains("asciidoctor")) {
+    id "org.asciidoctor.jvm.convert" version "3.1.0"
+}
 @if (features.language().isJava()) {
     id "net.ltgt.apt-eclipse" version "0.21"
 }
@@ -27,6 +30,9 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
 }
+@if (features.contains("jib")) {
+    id "com.google.cloud.tools.jib" version "2.1.0"
+}
 }
 
 version "0.1"
@@ -44,7 +50,7 @@ configurations {
 
 dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
-@if (features.contains("graal-native-image")) {
+@if (features.contains("graalvm")) {
     @if (!features.language().isGroovy()) {
     compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     }
@@ -89,6 +95,15 @@ dependencies {
 }
 @if (features.contains("management")) {
     implementation "io.micronaut:micronaut-management"
+}
+@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
+    implementation "io.micronaut:micronaut-discovery-client"
+}
+@if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
+    implementation "io.micronaut:micronaut-discovery-client"
+}
+@if (features.contains("kubernetes")) {
+    implementation "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client"
 }
 @if (features.contains("micrometer")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-core"
@@ -150,6 +165,15 @@ dependencies {
 @if (features.contains("micrometer-wavefront")) {
     implementation "io.micronaut.configuration:micronaut-micrometer-registry-wavefront"
 }
+@if (features.contains("netflix-archaius")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-archaius"
+}
+@if (features.contains("netflix-hystrix")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-hystrix"
+}
+@if (features.contains("netflix-ribbon")) {
+    implementation "io.micronaut.configuration:micronaut-netflix-ribbon"
+}
 @if (features.contains("flyway")) {
     implementation "io.micronaut.configuration:micronaut-flyway"
 }
@@ -164,6 +188,12 @@ dependencies {
 }
 @if (features.contains("jdbc-hikari")) {
     implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
+}
+@if (features.contains("data-jpa")) {
+    implementation "io.micronaut.data:micronaut-data-jpa"
+}
+@if (features.contains("data-jdbc")) {
+    implementation "io.micronaut.data:micronaut-data-jdbc"
 }
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
@@ -203,22 +233,22 @@ tasks.withType(JavaCompile){
 }
 } else if (features.language().isKotlin()) {
 allOpen {
-	annotation("io.micronaut.aop.Around")
+    annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    //Will retain parameter names for Java reflection
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        //Will retain parameter names for Java reflection
+        javaParameters = true
+    }
 }
 
 compileTestKotlin {
-	kotlinOptions {
-	    jvmTarget = '@VersionInfo.getJdkVersion()'
-	    javaParameters = true
-	}
+    kotlinOptions {
+        jvmTarget = '@VersionInfo.getJdkVersion()'
+        javaParameters = true
+    }
 }
 } else if (features.language().isGroovy()) {
 tasks.withType(GroovyCompile) {
@@ -247,4 +277,12 @@ tasks.withType(JavaExec) {
     }
 }
 }
+}
+
+@if (features.contains("asciidoctor")) {
+apply from: 'gradle/asciidoc.gradle'
+}
+
+@if (features.contains("jib")) {
+jib.to.image = 'gcr.io/@project.getName()/jib-image'
 }

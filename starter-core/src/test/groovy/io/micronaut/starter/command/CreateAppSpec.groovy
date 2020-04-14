@@ -1,12 +1,11 @@
 package io.micronaut.starter.command
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.fixture.CommandFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Unroll
-import spock.util.concurrent.PollingConditions
 
 class CreateAppSpec extends CommandSpec implements CommandFixture {
 
@@ -19,13 +18,10 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(lang)
 
         when:
-        Process process = executeGradleCommand('run')
+        executeGradleCommand('run')
 
         then:
         testOutputContains("Startup completed")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
@@ -37,13 +33,10 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         runCreateAppCommand(lang, BuildTool.maven)
 
         when:
-        Process process = executeMavenCommand("compile exec:exec")
+        executeMavenCommand("mn:run")
 
         then:
         testOutputContains("Startup completed")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]

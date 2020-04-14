@@ -1,5 +1,0 @@
-command: CREATE_CLI
-defaultPackage: foo
-testFramework: junit
-sourceLanguage: java
-features: [logback, picocli, picocli-junit, java, application, junit, gradle, yaml]

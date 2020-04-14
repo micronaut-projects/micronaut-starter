@@ -44,13 +44,18 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_CLI;
+    public String getName() {
+        return "picocli";
     }
 
     @Override
-    public String getName() {
-        return "picocli";
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+        return micronautCommand == MicronautCommand.CREATE_CLI;
     }
 
     @Override

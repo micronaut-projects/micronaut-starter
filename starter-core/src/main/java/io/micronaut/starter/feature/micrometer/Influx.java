@@ -33,6 +33,11 @@ public class Influx extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ Influx reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".influx.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".influx.step", "PT1M");

@@ -33,6 +33,11 @@ public class Signalfx extends MicrometerFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "Adds support for Micrometer metrics (w/ SignalFx reporter)";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.enabled", true);
         commandContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.accessToken", "${SIGNALFX_API_TOKEN}");

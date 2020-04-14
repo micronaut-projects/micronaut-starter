@@ -24,4 +24,9 @@ public class Undertow implements ServerFeature {
     public String getName() {
         return "undertow-server";
     }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for an Undertow server";
+    }
 }

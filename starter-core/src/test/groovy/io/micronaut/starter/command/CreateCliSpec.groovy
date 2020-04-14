@@ -18,13 +18,10 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         runCreateCliCommand(lang)
 
         when:
-        Process process = executeGradleCommand('run --args="-v"')
+        executeGradleCommand('run --args="-v"')
 
         then:
         testOutputContains("Hi")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
@@ -36,13 +33,10 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         runCreateCliCommand(lang, BuildTool.maven)
 
         when:
-        Process process = executeMavenCommand("compile exec:exec -Dargs=-v")
+        executeMavenCommand("mn:run -Dmn.appArgs=-v")
 
         then:
         testOutputContains("Hi")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
@@ -54,13 +48,10 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         runCreateCliCommand(lang)
 
         when:
-        Process process = executeGradleCommand('test')
+        executeGradleCommand('test')
 
         then:
         testOutputContains("BUILD SUCCESSFUL")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
@@ -72,13 +63,10 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         runCreateCliCommand(lang, BuildTool.maven)
 
         when:
-        Process process = executeMavenCommand("compile test")
+        executeMavenCommand("compile test")
 
         then:
         testOutputContains("BUILD SUCCESS")
-
-        cleanup:
-        process.destroy()
 
         where:
         lang << [Language.java, Language.groovy, Language.kotlin, null]
