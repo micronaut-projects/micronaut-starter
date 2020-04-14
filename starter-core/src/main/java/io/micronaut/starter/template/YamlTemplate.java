@@ -57,23 +57,29 @@ public class YamlTemplate implements Template {
         Map<String, Object> transformed = new LinkedHashMap<>();
         for (Map.Entry<String, Object> entry: config.entrySet()) {
             Map<String, Object> finalMap = transformed;
-            String k = entry.getKey();
+            String key = entry.getKey();
             Object value = entry.getValue();
-            int index = k.indexOf('.');
+            int index = key.indexOf('.');
             if (index != -1) {
-                String[] keys = DOT_PATTERN.split(k);
-                for (int i = 0; i < keys.length - 1; i++) {
-                    if (!finalMap.containsKey(keys[i])) {
-                        finalMap.put(keys[i], new HashMap<>());
+                String[] keys = DOT_PATTERN.split(key);
+                if (config.keySet().stream().filter(k -> k.startsWith(keys[0])).count() == 1) {
+                    finalMap.put(key, value);
+                } else {
+                    for (int i = 0; i < keys.length - 1; i++) {
+                        String subKey = keys[i];
+
+                        if (!finalMap.containsKey(subKey)) {
+                            finalMap.put(subKey, new HashMap<>());
+                        }
+                        Object next = finalMap.get(subKey);
+                        if (next instanceof Map) {
+                            finalMap = ((Map<String, Object>) next);
+                        }
                     }
-                    Object next = finalMap.get(keys[i]);
-                    if (next instanceof Map) {
-                        finalMap = ((Map<String, Object>) next);
-                    }
+                    finalMap.put(keys[keys.length - 1], value);
                 }
-                finalMap.put(keys[keys.length - 1], value);
             } else {
-                finalMap.put(k, value);
+                finalMap.put(key, value);
             }
         }
         return transformed;

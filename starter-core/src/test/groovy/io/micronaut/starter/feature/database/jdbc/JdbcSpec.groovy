@@ -68,9 +68,15 @@ class JdbcSpec extends Specification implements ProjectFixture, ContextFixture {
     void "test jdbc feature configuration"() {
         when:
         CommandContext ctx = buildCommandContext([jdbcFeature])
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        ctx.getTemplates().get("yamlConfig").write(baos)
 
         then:
-        ctx.getConfiguration().get("datasources.default") == [:]
+        then:
+        baos.toString().contains("""
+datasources.default: {
+  }  
+""".trim())
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name

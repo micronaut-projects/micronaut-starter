@@ -37,7 +37,6 @@ public class DataJpa implements DataFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().remove("datasources.default");
         commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
         commandContext.getConfiguration().putAll(getDatasourceConfig());
         commandContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);

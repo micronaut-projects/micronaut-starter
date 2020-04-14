@@ -4,6 +4,7 @@ import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.externalconfig.ExternalConfigFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -24,6 +25,11 @@ public class AppName implements DefaultFeature {
     @Override
     public String getName() {
         return "app-name";
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOWEST.getOrder();
     }
 
     @Override
