@@ -21,7 +21,6 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -69,7 +68,7 @@ public class YamlTemplate implements Template {
                         String subKey = keys[i];
 
                         if (!finalMap.containsKey(subKey)) {
-                            finalMap.put(subKey, new HashMap<>());
+                            finalMap.put(subKey, new LinkedHashMap<>());
                         }
                         Object next = finalMap.get(subKey);
                         if (next instanceof Map) {

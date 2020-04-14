@@ -49,15 +49,15 @@ public class HibernateGorm implements Feature {
     @Override
     public void apply(CommandContext commandContext) {
         Map<String, Object> config = commandContext.getConfiguration();
-        config.put("hibernate.hbm2ddl.auto", "update");
-        config.put("hibernate.cache.queries", false);
-        config.put("hibernate.cache.use_second_level_cache", false);
-        config.put("hibernate.cache.use_query_cache", false);
         config.put("dataSource.url", "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
         config.put("dataSource.driverClassName", "org.h2.Driver");
         config.put("dataSource.username", "sa");
         config.put("dataSource.password", "");
+        config.put("hibernate.hbm2ddl.auto", "update");
+        config.put("hibernate.cache.queries", false);
+        config.put("hibernate.cache.use_second_level_cache", false);
+        config.put("hibernate.cache.use_query_cache", false);
     }
 }

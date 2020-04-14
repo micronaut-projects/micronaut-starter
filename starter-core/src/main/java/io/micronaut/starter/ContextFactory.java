@@ -43,7 +43,7 @@ public class ContextFactory {
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
                                                List<String> selectedFeatures,
                                                MicronautCommand command,
-                                               Language language,
+                                               Language selectedLanguage,
                                                BuildTool buildTool,
                                                TestFramework testFramework) {
         final List<Feature> features = new ArrayList<>(8);
@@ -56,16 +56,16 @@ public class ContextFactory {
             }
         }
 
-        Language lang = determineLanguage(language, features);
+        Language language = determineLanguage(selectedLanguage, features);
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
-                .filter(f -> ((DefaultFeature) f).shouldApply(command, lang, testFramework, buildTool, features))
+                .filter(f -> ((DefaultFeature) f).shouldApply(command, language, testFramework, buildTool, features))
                 .forEach(features::add);
 
         featureValidator.validate(new Options(language, testFramework, buildTool), features);
 
-        return new FeatureContext(lang, testFramework, buildTool, command, features);
+        return new FeatureContext(language, testFramework, buildTool, command, features);
     }
 
     public CommandContext createCommandContext(Project project,

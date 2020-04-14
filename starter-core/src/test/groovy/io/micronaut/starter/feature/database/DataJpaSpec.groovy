@@ -15,7 +15,7 @@ class DataJpaSpec extends Specification implements ProjectFixture, ContextFixtur
 
     @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
 
-    void "test data jdbc features"() {
+    void "test data jpa features"() {
         when:
         Features features = getFeatures(['data-jpa'])
 

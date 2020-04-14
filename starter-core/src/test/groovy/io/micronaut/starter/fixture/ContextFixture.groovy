@@ -20,8 +20,8 @@ trait ContextFixture {
     abstract BeanContext getBeanContext()
 
     Features getFeatures(List<String> features,
-                         Language language = Language.java,
-                         TestFramework testFramework = TestFramework.junit,
+                         Language language = null,
+                         TestFramework testFramework = null,
                          BuildTool buildTool = BuildTool.gradle) {
         FeatureContext featureContext = buildFeatureContext(features, new Options(language, testFramework, buildTool))
         featureContext.processSelectedFeatures()

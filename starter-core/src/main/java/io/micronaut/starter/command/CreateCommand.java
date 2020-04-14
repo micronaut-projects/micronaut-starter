@@ -21,7 +21,6 @@ import io.micronaut.starter.Options;
 import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.feature.*;
-import io.micronaut.starter.feature.externalconfig.ExternalConfigFeature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.BuildTool;
@@ -35,7 +34,6 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
