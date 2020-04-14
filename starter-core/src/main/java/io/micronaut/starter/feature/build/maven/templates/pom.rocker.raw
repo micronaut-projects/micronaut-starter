@@ -208,6 +208,12 @@ List<Property> properties
 @if (features.contains("hibernate-jpa")) {
 @dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "compile", null)
 }
+@if (features.contains("mongo-reactive")) {
+@dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "compile", null)
+}
+@if (features.contains("mongo-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -246,6 +252,9 @@ List<Property> properties
       </exclusions>
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
+}
+@if (features.contains("mongo-reactive")) {
+@dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
 }
   </dependencies>
 
@@ -334,23 +343,23 @@ List<Property> properties
             </path>
 @if (features.contains("graalvm")) {
             <path>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-graal</artifactId>
-                <version>${micronaut.version}</version>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-graal</artifactId>
+              <version>${micronaut.version}</version>
             </path>
 }
 @if (features.contains("picocli")) {
             <path>
-                <groupId>io.micronaut.configuration</groupId>
-                <artifactId>micronaut-picocli</artifactId>
-                <version>${micronaut.picocli.version}</version>
+              <groupId>io.micronaut.configuration</groupId>
+              <artifactId>micronaut-picocli</artifactId>
+              <version>${micronaut.picocli.version}</version>
             </path>
 }
 @if (features.contains("data")) {
             <path>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-data-processor</artifactId>
-                <version>${micronaut.data.version}</version>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-data-processor</artifactId>
+              <version>${micronaut.data.version}</version>
             </path>
 }
           </annotationProcessorPaths>
@@ -375,23 +384,23 @@ List<Property> properties
                 </path>
 @if (features.contains("graalvm")) {
                 <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-graal</artifactId>
+                  <version>${micronaut.version}</version>
                 </path>
 }
 @if (features.contains("picocli")) {
                 <path>
-                    <groupId>io.micronaut.configuration</groupId>
-                    <artifactId>micronaut-picocli</artifactId>
-                    <version>${micronaut.picocli.version}</version>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-picocli</artifactId>
+                  <version>${micronaut.picocli.version}</version>
                 </path>
 }
 @if (features.contains("data")) {
                 <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </path>
 }
               </annotationProcessorPaths>

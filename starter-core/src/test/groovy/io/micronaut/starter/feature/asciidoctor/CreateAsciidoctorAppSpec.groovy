@@ -6,10 +6,12 @@ import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Unroll
 
 class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
 
+    @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
 

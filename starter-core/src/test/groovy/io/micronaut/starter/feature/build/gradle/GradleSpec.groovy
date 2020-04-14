@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build.gradle
 
+import groovy.test.NotYetImplemented
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors

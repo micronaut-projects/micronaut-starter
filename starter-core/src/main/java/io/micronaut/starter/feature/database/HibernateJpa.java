@@ -36,6 +36,6 @@ public class HibernateJpa implements Feature {
     @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
-        commandContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+        commandContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }
 }

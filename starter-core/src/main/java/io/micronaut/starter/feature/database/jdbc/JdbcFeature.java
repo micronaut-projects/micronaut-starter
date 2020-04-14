@@ -17,10 +17,12 @@ package io.micronaut.starter.feature.database.jdbc;
 
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.H2;
 
 import java.util.Collections;
+import java.util.LinkedHashMap;
 
 public abstract class JdbcFeature implements OneOfFeature {
 
@@ -28,6 +30,11 @@ public abstract class JdbcFeature implements OneOfFeature {
 
     public JdbcFeature(H2 h2) {
         this.h2 = h2;
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOW.getOrder();
     }
 
     @Override
@@ -44,7 +51,7 @@ public abstract class JdbcFeature implements OneOfFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("datasources.default", Collections.emptyMap());
+        commandContext.getConfiguration().put("datasources.default", new LinkedHashMap<>());
     }
 
 }
