@@ -62,7 +62,7 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public String getVersion() {
-        return "1.3.50";
+        return "1.3.71";
     }
 
     @Override
