@@ -26,7 +26,11 @@ List<Property> properties
   </parent>
 
   <properties>
+@if ((features.language().isKotlin() || features.language().isGroovy()) && VersionInfo.getJavaVersion() > 13) {
+    <jdk.version>13</jdk.version>
+} else {
     <jdk.version>@VersionInfo.getJdkVersion()</jdk.version>
+}
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
