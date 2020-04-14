@@ -1,6 +1,5 @@
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;

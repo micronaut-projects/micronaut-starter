@@ -3,10 +3,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.database.jdbc.Tomcat;
 
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
 public class DataJpa implements DataFeature {
