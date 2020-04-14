@@ -21,7 +21,6 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.H2;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 
 public abstract class JdbcFeature implements OneOfFeature {

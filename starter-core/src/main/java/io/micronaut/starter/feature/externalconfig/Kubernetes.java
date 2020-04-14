@@ -57,7 +57,6 @@ public class Kubernetes implements ExternalConfigFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getBootstrapConfig().put("micronaut.application.name", commandContext.getProject().getName());
         commandContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
         commandContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(commandContext.getProject())));
     }

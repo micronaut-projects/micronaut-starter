@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.command.CommandContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -78,5 +79,24 @@ class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixtu
       <scope>runtime</scope>
     </dependency>
 """)
+    }
+
+    void "test config"() {
+        when:
+        CommandContext ctx = buildCommandContext([ 'data-jdbc'])
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        ctx.getTemplates().get("yamlConfig").write(baos)
+
+        then:
+        baos.toString().contains("""
+datasources:
+  default:
+    url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+    schema-generate: CREATE_DROP
+    dialect: H2
+""".trim())
     }
 }

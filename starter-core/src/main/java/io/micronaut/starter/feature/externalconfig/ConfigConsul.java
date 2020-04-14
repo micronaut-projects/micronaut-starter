@@ -34,7 +34,6 @@ public class ConfigConsul implements ExternalConfigFeature {
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getBootstrapConfig().put("micronaut.application.name", commandContext.getProject().getName());
         commandContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
         commandContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
         commandContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");

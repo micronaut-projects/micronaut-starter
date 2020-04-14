@@ -107,4 +107,10 @@ public class CommandContext {
             feature.apply(this);
         }
     }
+
+    public boolean isFeaturePresent(Class<? extends Feature> feature) {
+        return features.getFeatures().stream()
+                .map(Feature::getClass)
+                .anyMatch(feature::isAssignableFrom);
+    }
 }
