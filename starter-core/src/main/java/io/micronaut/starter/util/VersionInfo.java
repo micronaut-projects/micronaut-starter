@@ -16,7 +16,6 @@
 package io.micronaut.starter.util;
 
 import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.options.Language;
 
 public class VersionInfo {
 
