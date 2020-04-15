@@ -235,6 +235,9 @@ dependencies {
 @if (features.contains("elasticsearch")) {
     implementation "io.micronaut.configuration:micronaut-elasticsearch"
 }
+@if (features.contains("graphql")) {
+    implementation "io.micronaut.graphql:micronaut-graphql"
+}
 @if (features.contains("security-session")) {
     implementation "io.micronaut:micronaut-security-session"
 }
