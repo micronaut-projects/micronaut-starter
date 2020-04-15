@@ -13,10 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.externalconfig;
+package io.micronaut.starter.feature.elasticsearch;
 
+import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
 
-public interface ExternalConfigFeature extends Feature {
+import javax.inject.Singleton;
+
+@Singleton
+public class Elasticsearch implements Feature {
+
+    @Override
+    public String getName() {
+        return "elasticsearch";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for Elasticsearch in the application";
+    }
+
+    @Override
+    public void apply(CommandContext commandContext) {
+        commandContext.getConfiguration().put("elasticsearch.httpHosts", "\"http://localhost:9200,http://127.0.0.2:9200\"");
+    }
 
 }
