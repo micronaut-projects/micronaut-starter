@@ -15,13 +15,8 @@
  */
 package io.micronaut.starter.feature.externalconfig;
 
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.Feature;
 
-public interface ExternalConfigFeature extends OneOfFeature {
-
-    @Override
-    default Class<?> getFeatureClass() {
-        return ExternalConfigFeature.class;
-    }
+public interface ExternalConfigFeature extends Feature {
 
 }
