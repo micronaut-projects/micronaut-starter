@@ -26,11 +26,7 @@ List<Property> properties
   </parent>
 
   <properties>
-@if ((features.language().isKotlin() || features.language().isGroovy()) && VersionInfo.getJavaVersion() > 13) {
-    <jdk.version>13</jdk.version>
-} else {
-    <jdk.version>@VersionInfo.getJdkVersion()</jdk.version>
-}
+    <jdk.version>@VersionInfo.getTargetJdk(features.language())</jdk.version>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -241,6 +237,9 @@ List<Property> properties
 }
 @if (features.contains("elasticsearch")) {
 @dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "compile", null)
+}
+@if (features.contains("graphql")) {
+@dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
 }
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
