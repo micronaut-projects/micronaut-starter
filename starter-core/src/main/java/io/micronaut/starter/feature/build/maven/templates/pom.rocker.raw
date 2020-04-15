@@ -178,6 +178,16 @@ List<Property> properties
 @if (features.contains("netflix-ribbon")) {
 @dependency.template("io.micronaut.configuration", "micronaut-netflix-ribbon", "compile", null)
 }
+@if (features.contains("tracing-zipkin")) {
+@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
+@dependency.template("io.opentracing.brave", "brave-opentracing", "compile", null)
+@dependency.template("io.zipkin.brave", "brave-instrumentation-http", "runtime", null)
+@dependency.template("io.zipkin.reporter2", "zipkin-reporter", "runtime", null)
+}
+@if (features.contains("tracing-jaeger")) {
+@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
+@dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
+}
 @if (features.contains("flyway")) {
 @dependency.template("io.micronaut.configuration", "micronaut-flyway", "compile", null)
 }
