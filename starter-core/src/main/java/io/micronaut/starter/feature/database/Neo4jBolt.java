@@ -15,5 +15,26 @@
  */
 package io.micronaut.starter.feature.database;
 
-public class Neo4jBolt {
+import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.feature.Feature;
+
+import javax.inject.Singleton;
+
+@Singleton
+public class Neo4jBolt implements Feature {
+
+    @Override
+    public String getName() {
+        return "neo4j-bolt";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for the Neo4j Bolt Driver";
+    }
+
+    @Override
+    public void apply(CommandContext commandContext) {
+        commandContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
+    }
 }

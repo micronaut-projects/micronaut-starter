@@ -15,5 +15,41 @@
  */
 package io.micronaut.starter.feature.database;
 
-public class Neo4jGorm {
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.options.Language;
+
+import javax.inject.Singleton;
+import java.util.Optional;
+
+@Singleton
+public class Neo4jGorm implements Feature {
+
+    private final Neo4jBolt neo4jBolt;
+
+    public Neo4jGorm(Neo4jBolt neo4jBolt) {
+        this.neo4jBolt = neo4jBolt;
+    }
+
+    @Override
+    public String getName() {
+        return "neo4j-gorm";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Configures GORM for Neo4j for Groovy applications";
+    }
+
+    @Override
+    public Optional<Language> getRequiredLanguage() {
+        return Optional.of(Language.groovy);
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Neo4jBolt.class)) {
+            featureContext.addFeature(neo4jBolt);
+        }
+    }
 }

@@ -224,6 +224,12 @@ List<Property> properties
 @if (features.contains("mongo-gorm")) {
 @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
 }
+@if (features.contains("neo4j-bolt")) {
+@dependency.template("io.micronaut.configuration", "micronaut-neo4j-bolt", "compile", null)
+}
+@if (features.contains("neo4j-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -265,6 +271,9 @@ List<Property> properties
 }
 @if (features.contains("mongo-reactive")) {
 @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
+}
+@if (features.contains("neo4j-bolt")) {
+@dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
   </dependencies>
 

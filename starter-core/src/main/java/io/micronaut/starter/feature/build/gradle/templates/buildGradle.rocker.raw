@@ -220,6 +220,12 @@ dependencies {
 @if (features.contains("mongo-gorm")) {
     implementation "io.micronaut.configuration:micronaut-mongo-gorm"
 }
+@if (features.contains("neo4j-bolt")) {
+    implementation "io.micronaut.configuration:micronaut-neo4j-bolt"
+}
+@if (features.contains("neo4j-gorm")) {
+    implementation "io.micronaut.configuration:micronaut-neo4j-gorm"
+}
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
@@ -241,6 +247,9 @@ dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())
 @if (features.contains("mongo-reactive")) {
     testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
+}
+@if (features.contains("neo4j-bolt")) {
+    testRuntime "org.neo4j.test:neo4j-harness"
 }
 }
 
