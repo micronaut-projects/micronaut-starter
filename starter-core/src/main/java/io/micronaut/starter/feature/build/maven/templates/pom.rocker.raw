@@ -224,6 +224,12 @@ List<Property> properties
 @if (features.contains("mongo-gorm")) {
 @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
 }
+@if (features.contains("security-jwt")) {
+@dependency.template("io.micronaut", "micronaut-security-jwt", "compile", null)
+}
+@if (features.contains("security-session")) {
+@dependency.template("io.micronaut", "micronaut-security-session", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")

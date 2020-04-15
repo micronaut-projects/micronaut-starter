@@ -220,6 +220,12 @@ dependencies {
 @if (features.contains("mongo-gorm")) {
     implementation "io.micronaut.configuration:micronaut-mongo-gorm"
 }
+@if (features.contains("security-jwt")) {
+    implementation "io.micronaut:micronaut-security-jwt"
+}
+@if (features.contains("security-session")) {
+    implementation "io.micronaut:micronaut-security-session"
+}
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
