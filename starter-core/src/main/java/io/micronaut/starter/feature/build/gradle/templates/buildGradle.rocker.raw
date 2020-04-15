@@ -281,25 +281,27 @@ test {
 }
 
 }
-@if (features.language().isJava()) {
+
 java {
-    sourceCompatibility = JavaVersion.toVersion('@VersionInfo.getJdkVersion()')
-    targetCompatibility = JavaVersion.toVersion('@VersionInfo.getJdkVersion()')
+    sourceCompatibility = JavaVersion.toVersion('@VersionInfo.getTargetJdk(features.language())')
+@if (!features.language().isKotlin()) {
+    targetCompatibility = JavaVersion.toVersion('@VersionInfo.getTargetJdk(features.language())')
 }
+}
+
+@if (features.language().isJava()) {
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }
 } else if (features.language().isKotlin()) {
-java.sourceCompatibility = JavaVersion.toVersion('@(VersionInfo.getJavaVersion() > 13 ? 13 : VersionInfo.getJdkVersion())')
-
 allOpen {
     annotation("io.micronaut.aop.Around")
 }
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = '@(VersionInfo.getJavaVersion() > 13 ? 13 : VersionInfo.getJdkVersion())'
+        jvmTarget = '@VersionInfo.getTargetJdk(features.language())'
         //Will retain parameter names for Java reflection
         javaParameters = true
     }
@@ -307,15 +309,11 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = '@(VersionInfo.getJavaVersion() > 13 ? 13 : VersionInfo.getJdkVersion())'
+        jvmTarget = '@VersionInfo.getTargetJdk(features.language())'
         javaParameters = true
     }
 }
 } else if (features.language().isGroovy()) {
-java {
-    sourceCompatibility = JavaVersion.toVersion('@(VersionInfo.getJavaVersion() > 13 ? 13 : VersionInfo.getJdkVersion())')
-    targetCompatibility = JavaVersion.toVersion('@(VersionInfo.getJavaVersion() > 13 ? 13 : VersionInfo.getJdkVersion())')
-}
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }
