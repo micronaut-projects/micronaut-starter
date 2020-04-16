@@ -24,8 +24,8 @@ import java.util.Optional;
  * Picocli factory implementation that uses a Micronaut BeanContext to obtain bean instances.
  */
 class MicronautFactory implements CommandLine.IFactory {
-    private final BeanContext beanContext;
     CommandLine.IFactory defaultFactory;
+    private final BeanContext beanContext;
 
     public MicronautFactory() {
         this(BeanContext.run());
