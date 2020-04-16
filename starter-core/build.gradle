@@ -95,9 +95,15 @@ task generateManpageAsciiDoc(type: JavaExec) {
     args mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
 }
 
+task copyAdocs(type: Copy) {
+    from file("${projectDir}/src/docs/asciidoc")
+    include "**/*.adoc"
+    into file("${project.buildDir}/generated-picocli-docs")
+}
+
 apply plugin: 'org.asciidoctor.convert'
 asciidoctor {
-    dependsOn(generateManpageAsciiDoc)
+    dependsOn(generateManpageAsciiDoc, copyAdocs)
     sourceDir = file("${project.buildDir}/generated-picocli-docs")
     outputDir = file("${project.buildDir}/docs")
     logDocuments = true
