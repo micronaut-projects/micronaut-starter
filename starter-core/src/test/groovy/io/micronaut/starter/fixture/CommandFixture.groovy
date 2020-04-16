@@ -4,6 +4,8 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.OutputHandler
 import io.micronaut.starter.command.CreateAppCommand
 import io.micronaut.starter.command.CreateCliCommand
+import io.micronaut.starter.command.CreateCommand
+import io.micronaut.starter.command.CreateGrpcCommand
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -29,6 +31,19 @@ trait CommandFixture {
 
     CreateAppCommand runCreateAppCommand(Language lang, BuildTool buildTool = BuildTool.gradle, List <String> features = []) {
         CreateAppCommand command = beanContext.getBean(CreateAppCommand)
+        command.name = 'example.micronaut.foo'
+        command.lang = lang
+        command.build = buildTool
+        command.features = features
+
+        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
+        command.generate(outputHandler)
+
+        command
+    }
+
+    CreateGrpcCommand runCreateGrpcCommand(Language lang, BuildTool buildTool = BuildTool.gradle, List <String> features = []) {
+        CreateGrpcCommand command = beanContext.getBean(CreateGrpcCommand)
         command.name = 'example.micronaut.foo'
         command.lang = lang
         command.build = buildTool

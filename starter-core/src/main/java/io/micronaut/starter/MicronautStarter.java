@@ -19,10 +19,10 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.inject.BeanDefinition;
-import io.micronaut.starter.command.BaseCommand;
-import io.micronaut.starter.command.CodeGenCommand;
-import io.micronaut.starter.command.CreateAppCommand;
-import io.micronaut.starter.command.CreateCliCommand;
+import io.micronaut.starter.command.*;
+import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
@@ -30,10 +30,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 @CommandLine.Command(name = "mn", description = {
         "Micronaut CLI command line interface for generating projects and services.",
@@ -47,7 +50,8 @@ import java.util.function.BiFunction;
         commandListHeading = "%n@|bold,underline Commands:|@%n",
         subcommands = {
                 CreateAppCommand.class,
-                CreateCliCommand.class
+                CreateCliCommand.class,
+                CreateGrpcCommand.class
         })
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
@@ -100,7 +104,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         commandLine.setUsageHelpWidth(100);
 
         try {
-            CodeGenConfig codeGenConfig = loadConfig();
+            CodeGenConfig codeGenConfig = loadConfig(beanContext);
             if (codeGenConfig != null) {
                 beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
                         .map(BeanDefinition::getBeanType)
@@ -119,7 +123,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         throw new CommandLine.ParameterException(spec.commandLine(), "No command specified");
     }
 
-    private static CodeGenConfig loadConfig() throws IOException {
+    private static CodeGenConfig loadConfig(BeanContext beanContext) throws IOException {
         File micronautCli = new File("micronaut-cli.yml");
         if (micronautCli.exists()) {
             Yaml yaml = new Yaml();
@@ -130,6 +134,36 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
                 introspection.getBeanProperties().forEach(bp -> {
                     bp.convertAndSet(codeGenConfig, map.get(bp.getName()));
                 });
+                if (map.containsKey("profile")) {
+                    String profile = map.get("profile").toString();
+                    AvailableFeatures availableFeatures = null;
+                    List<Feature> features = new ArrayList<>();
+                    if (profile.equals("service")) {
+                        codeGenConfig.setCommand(MicronautCommand.CREATE_APP);
+                        availableFeatures = beanContext.getBean(CreateAppCommand.CreateAppFeatures.class);
+                    } else if (profile.equals("cli")) {
+                        codeGenConfig.setCommand(MicronautCommand.CREATE_CLI);
+                        availableFeatures = beanContext.getBean(CreateCliCommand.CreateCliFeatures.class);
+                    } else if (profile.equals("function-aws") || profile.equals("function-aws-alexa")) {
+                        codeGenConfig.setCommand(MicronautCommand.CREATE_FUNCTION);
+                    } else if (profile.equals("grpc")) {
+                        codeGenConfig.setCommand(MicronautCommand.CREATE_GRPC);
+                        availableFeatures = beanContext.getBean(CreateGrpcCommand.CreateGrpcFeatures.class);
+                    } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
+                        codeGenConfig.setCommand(MicronautCommand.CREATE_MESSAGING);
+                    }
+                    codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
+                            .filter(f -> f instanceof DefaultFeature)
+                            .map(DefaultFeature.class::cast)
+                            .filter(f -> f.shouldApply(
+                                    codeGenConfig.getCommand(),
+                                    codeGenConfig.getSourceLanguage(),
+                                    codeGenConfig.getTestFramework(),
+                                    codeGenConfig.getBuildTool(),
+                                    features))
+                            .map(Feature::getName)
+                            .collect(Collectors.toList()));
+                }
                 return codeGenConfig;
             }
         }

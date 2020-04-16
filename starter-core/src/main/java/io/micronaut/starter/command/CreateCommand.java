@@ -83,7 +83,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         }
 
         if (StringUtils.isEmpty(name)) {
-            throw new IllegalArgumentException("Please specify a name for the project");
+            throw new IllegalArgumentException("Specify an application name or use --inplace to create an application in the current directory");
         }
 
         Project project = NameUtils.parse(name);
@@ -108,6 +108,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(commandContext.getLanguage(),
                                 commandContext.getTestFramework(),
+                                commandContext.getBuildTool(),
                                 commandContext.getProject(),
                                 commandContext.getFeatures(),
                                 commandContext.getCommand())));

@@ -1,0 +1,26 @@
+@import io.micronaut.starter.Project
+
+@args (
+Project project
+)
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "@project.getPackageName()";
+option java_outer_classname = "@project.getClassName()";
+option objc_class_prefix = "HLW";
+
+package @project.getPackageName();
+
+service @project.getClassName()Service {
+  rpc send (@project.getClassName()Request) returns (@project.getClassName()Reply) {}
+}
+
+message @project.getClassName()Request {
+  string name = 1;
+}
+
+message @project.getClassName()Reply {
+  string message = 1;
+}

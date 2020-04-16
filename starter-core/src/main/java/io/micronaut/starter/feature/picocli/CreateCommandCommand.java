@@ -71,7 +71,7 @@ public class CreateCommandCommand extends CodeGenCommand {
     @Override
     public Integer call() throws Exception {
 
-        Project project = getProject(name, config);
+        Project project = getProject(name);
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;

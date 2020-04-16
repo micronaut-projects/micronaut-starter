@@ -15,11 +15,5 @@
  */
 package io.micronaut.starter.command;
 
-public enum MicronautCommand {
-    CREATE_APP,
-    CREATE_CLI,
-    CREATE_FUNCTION,
-    CREATE_GRPC,
-    CREATE_MESSAGING,
-    CUSTOM
+public class CreateMessagingCommand {
 }

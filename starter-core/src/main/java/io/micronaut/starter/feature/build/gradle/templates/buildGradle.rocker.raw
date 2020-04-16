@@ -30,6 +30,9 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id "application"
 }
+@if (features.contains("grpc")) {
+    id "com.google.protobuf" version "0.8.10"
+}
 @if (features.contains("jib")) {
     id "com.google.cloud.tools.jib" version "2.1.0"
 }
@@ -38,9 +41,19 @@ plugins {
 version "0.1"
 group "@project.getPackageName()"
 
+@if (features.contains("grpc")) {
+ext {
+    protocVersion="3.5.1"
+    grpcVersion="1.18.0"
+}
+}
+
+
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    //TODO remove once M3/RC1 is out
+    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
 }
 
 configurations {
@@ -67,6 +80,9 @@ dependencies {
     implementation "io.micronaut:micronaut-runtime-groovy"
 } else {
     implementation "io.micronaut:micronaut-runtime"
+}
+@if (features.contains("grpc")) {
+    implementation "io.micronaut.grpc:micronaut-grpc-runtime"
 }
 @if (features.contains("picocli")) {
     implementation "info.picocli:picocli"
@@ -319,6 +335,7 @@ tasks.withType(GroovyCompile) {
 }
 }
 
+
 @if (features.application() != null) {
 shadowJar {
     mergeServiceFiles()
@@ -342,10 +359,34 @@ tasks.withType(JavaExec) {
 }
 }
 
+
 @if (features.contains("asciidoctor")) {
 apply from: 'gradle/asciidoc.gradle'
 }
 
+
 @if (features.contains("jib")) {
 jib.to.image = 'gcr.io/@project.getName()/jib-image'
+}
+
+
+@if (features.contains("grpc")) {
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/grpc'
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+protobuf {
+    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    plugins {
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+    }
+    generateProtoTasks {
+        all()*.plugins { grpc {} }
+    }
+}
 }

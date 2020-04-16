@@ -61,7 +61,7 @@ public class YamlTemplate implements Template {
             int index = key.indexOf('.');
             if (index != -1) {
                 String[] keys = DOT_PATTERN.split(key);
-                if (config.keySet().stream().filter(k -> k.startsWith(keys[0])).count() == 1) {
+                if (!keys[0].equals("micronaut") && config.keySet().stream().filter(k -> k.startsWith(keys[0] + ".")).count() == 1) {
                     finalMap.put(key, value);
                 } else {
                     for (int i = 0; i < keys.length - 1; i++) {

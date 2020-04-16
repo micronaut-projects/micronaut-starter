@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.lang.LanguageFeature;
 public class VersionInfo {
 
     public static String getVersion() {
-        return "2.0.0.M2";
+        return "2.0.0.BUILD-SNAPSHOT";
     }
 
     public static int getJavaVersion() {
