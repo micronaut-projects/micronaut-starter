@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Neo4jBolt implements Feature {
+public class Zipkin implements TracingFeature {
 
     @Override
     public String getName() {
-        return "neo4j-bolt";
+        return "tracing-zipkin";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Neo4j Bolt Driver";
+        return "Adds support for distributed tracing with Zipkin (https://zipkin.io)";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
+        commandContext.getConfiguration().put("tracing.zipkin.enabled", true);
+        commandContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
+        commandContext.getConfiguration().put("tracing.zipkin.sampler.probability", 0.1);
     }
 }

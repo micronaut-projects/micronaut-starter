@@ -13,28 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Neo4jBolt implements Feature {
+public class Jaeger implements TracingFeature {
 
     @Override
     public String getName() {
-        return "neo4j-bolt";
+        return "tracing-jaeger";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Neo4j Bolt Driver";
+        return "Adds support for distributed tracing with Jaeger (https://www.jaegertracing.io)";
     }
 
     @Override
     public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
+        commandContext.getConfiguration().put("tracing.jaeger.enabled", true);
+        commandContext.getConfiguration().put("tracing.jaeger.sampler.probability", 0.1);
     }
 }

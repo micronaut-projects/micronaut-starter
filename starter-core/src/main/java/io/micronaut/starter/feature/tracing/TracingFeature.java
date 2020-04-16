@@ -13,28 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.tracing;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.OneOfFeature;
 
-import javax.inject.Singleton;
-
-@Singleton
-public class Neo4jBolt implements Feature {
+public interface TracingFeature extends OneOfFeature {
 
     @Override
-    public String getName() {
-        return "neo4j-bolt";
+    default Class<?> getFeatureClass() {
+        return TracingFeature.class;
     }
 
-    @Override
-    public String getDescription() {
-        return "Adds support for the Neo4j Bolt Driver";
-    }
-
-    @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
-    }
 }

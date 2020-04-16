@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.util;
 
+import io.micronaut.starter.feature.lang.LanguageFeature;
+
 public class VersionInfo {
 
     public static String getVersion() {
@@ -48,6 +50,15 @@ public class VersionInfo {
 
         return version.substring(0,
                 dotPos > -1 ? dotPos : dashPos > -1 ? dashPos : version.length());
+    }
+
+    public static String getTargetJdk(LanguageFeature language) {
+        final int javaVersion = getJavaVersion();
+        if (language.isJava()) {
+            return getJdkVersion();
+        } else {
+            return javaVersion > 13 ? "13" : getJdkVersion();
+        }
     }
 
 }

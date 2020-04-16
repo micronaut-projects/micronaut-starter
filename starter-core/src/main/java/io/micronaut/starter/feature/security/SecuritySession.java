@@ -13,43 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.security;
 
+import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
-import java.util.Optional;
 
 @Singleton
-public class Neo4jGorm implements Feature {
-
-    private final Neo4jBolt neo4jBolt;
-
-    public Neo4jGorm(Neo4jBolt neo4jBolt) {
-        this.neo4jBolt = neo4jBolt;
-    }
+public class SecuritySession implements Feature {
 
     @Override
     public String getName() {
-        return "neo4j-gorm";
+        return "security-session";
     }
 
     @Override
     public String getDescription() {
-        return "Configures GORM for Neo4j for Groovy applications";
+        return "Adds support for Session based Authentication";
     }
 
     @Override
-    public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.groovy);
+    public void apply(CommandContext commandContext) {
+        commandContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
+        commandContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
+        commandContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
+        commandContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
     }
 
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Neo4jBolt.class)) {
-            featureContext.addFeature(neo4jBolt);
-        }
-    }
 }
