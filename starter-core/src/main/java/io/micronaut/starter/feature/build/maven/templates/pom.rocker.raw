@@ -4,6 +4,7 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
+@import io.micronaut.context.condition.OperatingSystem
 
 @args (
 Project project,
@@ -248,6 +249,9 @@ List<Property> properties
 }
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
+}
+@if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
+@dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
