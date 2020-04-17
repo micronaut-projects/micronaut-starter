@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller("/create")
@@ -45,7 +46,12 @@ public class CreateController implements CreateOperations {
                         featureValidator,
                         contextFactory
 
-                );
+                ) {
+                    @Override
+                    protected List<String> getSelectedFeatures() {
+                        return features != null ? features : new ArrayList<>();
+                    }
+                };
                 try {
                     createAppCommand.generate(project, new ZipOutputHandler(outputStream));
                     outputStream.flush();
