@@ -261,6 +261,9 @@ dependencies {
 @if (features.contains("postgres-reactive")) {
     implementation "io.micronaut.configuration:micronaut-postgres-reactive"
 }
+@if (features.contains("redis-lettuce")) {
+    implementation "io.micronaut.configuration:micronaut-redis-lettuce"
+}
 @if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
 }
