@@ -278,6 +278,9 @@ dependencies {
 @if (features.contains("kafka")) {
     implementation "io.micronaut.configuration:micronaut-kafka"
 }
+@if (features.contains("rabbitmq")) {
+    implementation "io.micronaut.configuration:micronaut-rabbitmq"
+}
 @if (features.contains("file-watch-osx")) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
 }

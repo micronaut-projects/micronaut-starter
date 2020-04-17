@@ -1,33 +1,33 @@
-package io.micronaut.starter.feature.messaging.kafka;
+package io.micronaut.starter.feature.messaging.rabbitmq;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.CodeGenConfig;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CodeGenCommand;
-import io.micronaut.starter.feature.messaging.kafka.template.listener.groovyListener;
-import io.micronaut.starter.feature.messaging.kafka.template.listener.javaListener;
-import io.micronaut.starter.feature.messaging.kafka.template.listener.kotlinListener;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.listener.groovyListener;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.listener.javaListener;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.listener.kotlinListener;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-kafka-listener", description = "Creates a listener interface for Kafka")
+@CommandLine.Command(name = "create-rabbitmq-listener", description = "Creates a listener interface for RabbitMQ")
 @Prototype
-public class CreateKafkaListener extends CodeGenCommand {
+public class CreateRabbitMQListener extends CodeGenCommand {
 
     @CommandLine.Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
     String listenerName;
 
-    public CreateKafkaListener(@Parameter CodeGenConfig config) {
+    public CreateRabbitMQListener(@Parameter CodeGenConfig config) {
         super(config);
     }
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("kafka");
+        return config.getFeatures().contains("rabbitmq");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CreateKafkaListener extends CodeGenCommand {
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
-                out("@|blue ||@ Rendered Kafka listener to " + renderResult.getPath());
+                out("@|blue ||@ Rendered RabbitMQ listener to " + renderResult.getPath());
             } else if (renderResult.isSkipped()) {
                 warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
             } else if (renderResult.getError() != null) {

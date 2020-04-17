@@ -1,33 +1,33 @@
-package io.micronaut.starter.feature.messaging.kafka;
+package io.micronaut.starter.feature.messaging.rabbitmq;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.starter.CodeGenConfig;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CodeGenCommand;
-import io.micronaut.starter.feature.messaging.kafka.template.producer.groovyProducer;
-import io.micronaut.starter.feature.messaging.kafka.template.producer.javaProducer;
-import io.micronaut.starter.feature.messaging.kafka.template.producer.kotlinProducer;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.producer.groovyProducer;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.producer.javaProducer;
+import io.micronaut.starter.feature.messaging.rabbitmq.template.producer.kotlinProducer;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-kafka-producer", description = "Creates a producer class for Kafka")
+@CommandLine.Command(name = "create-rabbitmq-producer", description = "Creates a producer class for RabbitMQ")
 @Prototype
-public class CreateKafkaProducer extends CodeGenCommand {
+public class CreateRabbitMQProducer extends CodeGenCommand {
 
     @CommandLine.Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
     String producerName;
 
-    public CreateKafkaProducer(@Parameter CodeGenConfig config) {
+    public CreateRabbitMQProducer(@Parameter CodeGenConfig config) {
         super(config);
     }
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("kafka");
+        return config.getFeatures().contains("rabbitmq");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CreateKafkaProducer extends CodeGenCommand {
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
-                out("@|blue ||@ Rendered Kafka producer to " + renderResult.getPath());
+                out("@|blue ||@ Rendered RabbitMQ producer to " + renderResult.getPath());
             } else if (renderResult.isSkipped()) {
                 warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
             } else if (renderResult.getError() != null) {
