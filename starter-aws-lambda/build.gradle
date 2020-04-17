@@ -14,7 +14,6 @@ dependencies {
     implementation "io.micronaut:micronaut-inject"
 
     implementation("io.micronaut.aws:micronaut-function-aws-api-proxy") {
-        exclude group: "org.apache.httpcomponents"
         exclude group: "org.slf4j"
     }
     runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
