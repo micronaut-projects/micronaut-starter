@@ -258,6 +258,18 @@ dependencies {
 @if (features.contains("security-session")) {
     implementation "io.micronaut:micronaut-security-session"
 }
+@if (features.contains("cache-caffeine")) {
+    implementation "io.micronaut.cache:micronaut-cache-caffeine"
+}
+@if (features.contains("cache-ehcache")) {
+    implementation "io.micronaut.cache:micronaut-cache-ehcache"
+}
+@if (features.contains("cache-hazelcast")) {
+    implementation "io.micronaut.cache:micronaut-cache-hazelcast"
+}
+@if (features.contains("cache-infinispan")) {
+    implementation "io.micronaut.cache:micronaut-cache-infinispan"
+}
 @if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
 }
