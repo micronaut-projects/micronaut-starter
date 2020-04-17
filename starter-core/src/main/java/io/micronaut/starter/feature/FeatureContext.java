@@ -37,22 +37,21 @@ public class FeatureContext {
     private List<FeaturePredicate> exclusions = new ArrayList<>();
     private ListIterator<Feature> iterator;
 
-    public FeatureContext(Language language,
-                          TestFramework testFramework,
-                          BuildTool buildTool,
+    public FeatureContext(Options options,
                           MicronautCommand command,
                           List<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
-        if (testFramework == null) {
-            testFramework = selectedFeatures.stream()
+        if (options.getTestFramework() == null) {
+            TestFramework testFramework = selectedFeatures.stream()
                     .filter(TestFeature.class::isInstance)
                     .map(TestFeature.class::cast)
                     .map(TestFeature::getTestFramework)
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
+            options = new Options(options.getLanguage(), testFramework, options.getBuildTool());
         }
-        this.options = new Options(language, testFramework, buildTool);
+        this.options = options;
     }
 
     public void processSelectedFeatures() {

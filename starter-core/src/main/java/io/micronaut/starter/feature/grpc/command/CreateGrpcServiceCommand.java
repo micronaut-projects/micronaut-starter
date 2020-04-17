@@ -30,7 +30,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-grpc-service", description = "Creates a GRPC service with proto file and associated test")
+@CommandLine.Command(name = "create-grpc-service", description = "Creates a gRPC service with proto file and associated test")
 @Prototype
 public class CreateGrpcServiceCommand extends CodeGenCommand {
 
@@ -51,7 +51,10 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
         CreateProtoServiceCommand command = getCommand(CreateProtoServiceCommand.class);
         command.serviceName = serviceName;
-        command.call();
+        int exitCode = command.call();
+        if (exitCode > 0) {
+            return exitCode;
+        }
 
         Project project = getProject(serviceName);
 
@@ -68,7 +71,7 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
-                out("@|blue ||@ Rendered GRPC service to " + renderResult.getPath());
+                out("@|blue ||@ Rendered gRPC service to " + renderResult.getPath());
             } else if (renderResult.isSkipped()) {
                 warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
             } else if (renderResult.getError() != null) {

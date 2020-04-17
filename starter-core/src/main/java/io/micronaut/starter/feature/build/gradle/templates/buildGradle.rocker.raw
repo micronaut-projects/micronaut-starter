@@ -258,6 +258,9 @@ dependencies {
 @if (features.contains("security-session")) {
     implementation "io.micronaut:micronaut-security-session"
 }
+@if (features.contains("kafka")) {
+    implementation "io.micronaut.configuration:micronaut-kafka"
+}
 @if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
 }

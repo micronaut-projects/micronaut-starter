@@ -1,0 +1,15 @@
+@import io.micronaut.starter.Project
+
+@args (
+    Project project
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName()
+}
+
+
+@@KafkaClient
+interface @project.getClassName() {
+
+}

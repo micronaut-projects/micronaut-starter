@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CommandLine.Command(name = CreateGrpcCommand.NAME, description = "Creates an application")
+@CommandLine.Command(name = CreateGrpcCommand.NAME, description = "Creates a gRPC application")
 @Prototype
 public class CreateGrpcCommand extends CreateCommand {
 

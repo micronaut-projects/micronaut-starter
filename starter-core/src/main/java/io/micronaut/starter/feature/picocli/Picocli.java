@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -24,7 +25,6 @@ import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
 import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
@@ -54,7 +54,7 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
         return micronautCommand == MicronautCommand.CREATE_CLI;
     }
 
