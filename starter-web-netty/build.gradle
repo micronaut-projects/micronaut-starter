@@ -22,7 +22,7 @@ dependencies {
 }
 test.classpath += configurations.developmentOnly
 
-mainClassName = "io.micronaut.starter.web.Application"
+mainClassName = "io.micronaut.starter.netty.Application"
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
@@ -31,7 +31,7 @@ test {
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.starter.web.Application'
+        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
     }
 }
 

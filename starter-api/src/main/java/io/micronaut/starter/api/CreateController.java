@@ -1,6 +1,9 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpHeaders;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.Project;
@@ -32,9 +35,9 @@ public class CreateController implements CreateOperations {
     }
 
     @Override
-    public Writable createApp(String name, @Nullable List<String> features) {
+    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features) {
         Project project = NameUtils.parse(name);
-        return new Writable() {
+        MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 CreateAppCommand createAppCommand = new CreateAppCommand(
@@ -55,6 +58,7 @@ public class CreateController implements CreateOperations {
             public void writeTo(Writer out) throws IOException {
                 // no-op, output stream used
             }
-        };
+        });
+        return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=application.zip");
     }
 }
