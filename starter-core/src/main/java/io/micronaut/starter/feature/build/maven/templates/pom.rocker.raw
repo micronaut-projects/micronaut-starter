@@ -253,6 +253,24 @@ List<Property> properties
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
 }
+@if (features.contains("cache-caffeine")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
+}
+@if (features.contains("cache-ehcache")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "compile", null)
+}
+@if (features.contains("cache-hazelcast")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "compile", null)
+}
+@if (features.contains("cache-infinispan")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)
+}
+@if (features.contains("postgres-reactive")) {
+@dependency.template("io.micronaut.configuration", "micronaut-postgres-reactive", "compile", null)
+}
+@if (features.contains("redis-lettuce")) {
+@dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
+}
 @if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
 @dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
