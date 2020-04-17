@@ -1,13 +1,11 @@
 package io.micronaut.starter.api
 
-import io.micronaut.core.io.Writable
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
 import javax.inject.Inject
-import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
 @MicronautTest
