@@ -15,13 +15,21 @@
  */
 package io.micronaut.starter.feature.filewatch;
 
+import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class FileWatch implements Feature {
+
+    private final FileWatchOsx fileWatchOsx;
+
+    public FileWatch(FileWatchOsx fileWatchOsx) {
+        this.fileWatchOsx = fileWatchOsx;
+    }
 
     @Override
     public String getName() {
@@ -31,6 +39,13 @@ public class FileWatch implements Feature {
     @Override
     public String getDescription() {
         return "Adds automatic restarts and file watch";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (OperatingSystem.getCurrent().isMacOs()) {
+            featureContext.addFeature(fileWatchOsx);
+        }
     }
 
     @Override

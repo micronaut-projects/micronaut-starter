@@ -4,7 +4,6 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
-@import io.micronaut.context.condition.OperatingSystem
 
 @args (
 Project project,
@@ -271,7 +270,7 @@ List<Property> properties
 @if (features.contains("redis-lettuce")) {
 @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
 }
-@if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
+@if (features.contains("file-watch-osx")) {
 @dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
 @if (features.contains("log4j2")) {

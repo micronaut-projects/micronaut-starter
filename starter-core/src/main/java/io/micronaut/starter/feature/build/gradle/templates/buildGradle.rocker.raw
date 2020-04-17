@@ -2,7 +2,6 @@
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
-@import io.micronaut.context.condition.OperatingSystem
 
 @args (
 Project project,
@@ -279,7 +278,7 @@ dependencies {
 @if (features.contains("kafka")) {
     implementation "io.micronaut.configuration:micronaut-kafka"
 }
-@if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
+@if (features.contains("file-watch-osx")) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
 }
 @if (features.contains("log4j2")) {
