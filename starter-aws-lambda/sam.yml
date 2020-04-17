@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Micronaut Starter Lambda
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+Resources:
+  ExampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: io.micronaut.starter.lambda.LambdaHandler::handleRequest
+      Runtime: java8
+      CodeUri: build/libs/example-all.jar
+      MemorySize: 320
+      Policies: AWSLambdaBasicExecutionRole
+      Timeout: 15
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /api/{proxy+}
+            Method: any
+Outputs:
+  ExampleApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Export:
+      Name: ExampleApi
