@@ -4,7 +4,7 @@
 ./gradlew clean starter-gcp-function:runFunction
 ```
 
-And visit http://localhost:8081/api/pets
+And visit http://localhost:8081/api/features
 
 ## Deploying the function
 

@@ -4,7 +4,7 @@
 ./gradlew clean starter-web-netty:run
 ```
 
-And visit http://localhost:8080/api/pets
+And visit http://localhost:8080/api/features
 
 ## Deploying the function
 
