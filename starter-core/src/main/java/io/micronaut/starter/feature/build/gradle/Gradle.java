@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.starter.Options;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
@@ -33,6 +34,10 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
+@TypeHint(typeNames = {
+    "io.micronaut.starter.feature.build.gradle.templates.buildGradle$PlainText"},
+    accessType = TypeHint.AccessType.ALL_DECLARED_FIELDS
+)
 public class Gradle implements BuildFeature {
 
     private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";

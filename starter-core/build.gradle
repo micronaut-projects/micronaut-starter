@@ -1,3 +1,4 @@
+import io.micronaut.starter.rocker.RockerReflectionConfigTask
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -23,9 +24,14 @@ dependencies {
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
     api "com.fizzed:rocker-runtime:1.2.3"
 
+    compileOnly "org.graalvm.nativeimage:svm"
     implementation "org.fusesource.jansi:jansi:1.15"
     implementation "org.yaml:snakeyaml:1.26"
 }
+
+task("buildRockerReflectionConfig", type: RockerReflectionConfigTask)
+        .mustRunAfter(compileJava)
+classes.dependsOn(buildRockerReflectionConfig)
 
 
 rocker {

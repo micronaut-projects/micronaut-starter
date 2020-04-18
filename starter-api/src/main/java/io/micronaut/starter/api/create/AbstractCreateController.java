@@ -29,6 +29,8 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,6 +49,7 @@ import java.util.List;
  */
 public abstract class AbstractCreateController implements CreateOperation {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
     protected final AvailableFeatures availableFeatures;
     protected final FeatureValidator featureValidator;
     protected final ContextFactory contextFactory;
@@ -77,11 +80,12 @@ public abstract class AbstractCreateController implements CreateOperation {
         MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
-                CreateCommand createAppCommand = buildCommand(lang, buildTool, testFramework, features != null ? features : Collections.emptyList());
                 try {
+                    CreateCommand createAppCommand = buildCommand(lang, buildTool, testFramework, features != null ? features : Collections.emptyList());
                     createAppCommand.generate(project, new ZipOutputHandler(outputStream));
                     outputStream.flush();
                 } catch (Exception e) {
+                    LOG.error("Error generating application: " + e.getMessage(), e);
                     throw new IOException(e.getMessage(), e);
                 }
             }

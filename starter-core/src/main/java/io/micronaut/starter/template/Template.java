@@ -15,9 +15,28 @@
  */
 package io.micronaut.starter.template;
 
+import io.micronaut.core.annotation.TypeHint;
+import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
+import io.micronaut.starter.feature.build.gradle.templates.annotationProcessor;
+import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors;
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
+import io.micronaut.starter.feature.cli;
+import io.micronaut.starter.feature.lang.java.application;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
+@TypeHint({
+    annotationProcessor.Template.class,
+    annotationProcessors.Template.class,
+    application.Template.class,
+    io.micronaut.starter.feature.lang.groovy.application.Template.class,
+    io.micronaut.starter.feature.lang.kotlin.application.Template.class,
+    asciidocGradle.Template.class,
+    cli.Template.class,
+    buildGradle.Template.class,
+
+})
 public interface Template {
 
     String getPath();
