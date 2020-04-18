@@ -11,7 +11,8 @@ And visit http://localhost:8080/features
 First prepare the image using Google Cloud Build:
 
 ```
-$ gcloud builds submit --tag gcr.io/[PROJECT-ID]/micronaut-starter --timeout 30m
+$ docker build . -t micronaut-starter
+$ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
 ```
 
 This delegates building of the image to GCP infrastructure. The build process may take some time as the GraalVM compiler is not the fastest.
