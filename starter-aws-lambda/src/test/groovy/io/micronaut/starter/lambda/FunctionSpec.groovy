@@ -8,12 +8,12 @@ import io.micronaut.function.aws.proxy.MicronautLambdaContainerHandler
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
+import io.micronaut.starter.util.ZipUtil
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
 import java.nio.charset.StandardCharsets
-import java.util.zip.ZipInputStream
 
 class FunctionSpec extends Specification {
     @Shared @AutoCleanup MicronautLambdaContainerHandler handler = new MicronautLambdaContainerHandler(
@@ -38,12 +38,10 @@ class FunctionSpec extends Specification {
         AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/create/app/test', HttpMethod.GET.toString())
         def response = handler.proxy(builder.build(), lambdaContext)
         def bytes = response.body.getBytes(StandardCharsets.UTF_8)
-        def zipInputStream = new ZipInputStream(new ByteArrayInputStream(bytes))
-        def zipEntry = zipInputStream.getNextEntry()
 
         then:
         response.statusCode == HttpStatus.CREATED.code
-        zipEntry != null
+        ZipUtil.isZip(bytes)
         response.multiValueHeaders.getFirst(HttpHeaders.CONTENT_DISPOSITION).contains("application.zip")
     }
 }

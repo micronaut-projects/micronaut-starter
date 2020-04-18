@@ -3,9 +3,9 @@ package io.micronaut.starter.azure
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
+import io.micronaut.starter.util.ZipUtil
 import spock.lang.Specification
 
-import java.util.zip.ZipInputStream
 
 class FunctionSpec extends Specification {
 
@@ -25,11 +25,9 @@ class FunctionSpec extends Specification {
         def function = new Function()
         def response = function.request(HttpMethod.GET, "/create/app/test")
                 .invoke()
-        def zipInputStream = new ZipInputStream(new ByteArrayInputStream(response.body))
-        def zipEntry = zipInputStream.getNextEntry()
         then:
         response.status.value() == HttpStatus.CREATED.code
-        zipEntry != null
+        ZipUtil.isZip(response.body)
         response.getHeader(HttpHeaders.CONTENT_DISPOSITION).contains("application.zip")
     }
 }
