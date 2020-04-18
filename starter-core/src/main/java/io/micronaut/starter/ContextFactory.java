@@ -23,9 +23,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
@@ -43,9 +41,7 @@ public class ContextFactory {
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
                                                List<String> selectedFeatures,
                                                MicronautCommand command,
-                                               Language language,
-                                               BuildTool buildTool,
-                                               TestFramework testFramework) {
+                                               Options options) {
         final List<Feature> features = new ArrayList<>(8);
         for (String name: selectedFeatures) {
             Feature feature = availableFeatures.findFeature(name).orElse(null);
@@ -56,16 +52,17 @@ public class ContextFactory {
             }
         }
 
-        Language lang = determineLanguage(language, features);
+        Language language = determineLanguage(options.getLanguage(), features);
+        Options newOptions = new Options(language, options.getTestFramework(), options.getBuildTool());
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
-                .filter(f -> ((DefaultFeature) f).shouldApply(command, lang, testFramework, buildTool, features))
+                .filter(f -> ((DefaultFeature) f).shouldApply(command, newOptions, features))
                 .forEach(features::add);
 
-        featureValidator.validate(new Options(language, testFramework, buildTool), features);
+        featureValidator.validate(newOptions, features);
 
-        return new FeatureContext(lang, testFramework, buildTool, command, features);
+        return new FeatureContext(newOptions, command, features);
     }
 
     public CommandContext createCommandContext(Project project,

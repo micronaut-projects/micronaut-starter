@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jdbc;
+package io.micronaut.starter.feature.tracing;
 
-import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.OneOfFeature;
 
-import java.util.Collections;
-
-public interface JdbcFeature extends OneOfFeature {
+public interface TracingFeature extends OneOfFeature {
 
     @Override
     default Class<?> getFeatureClass() {
-        return JdbcFeature.class;
+        return TracingFeature.class;
     }
 
-    @Override
-    default void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("datasources.default", Collections.emptyMap());
-    }
 }

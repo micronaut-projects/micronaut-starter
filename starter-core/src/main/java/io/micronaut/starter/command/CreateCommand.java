@@ -33,7 +33,9 @@ import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
@@ -74,6 +76,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     protected abstract List<String> getSelectedFeatures();
 
+    protected Map<String, Object> getAdditionalOptions() {
+        return Collections.emptyMap();
+    }
+
     @Override
     public Integer call() throws Exception {
 
@@ -83,7 +89,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         }
 
         if (StringUtils.isEmpty(name)) {
-            throw new IllegalArgumentException("Please specify a name for the project");
+            throw new IllegalArgumentException("Specify an application name or use --inplace to create an application in the current directory");
         }
 
         Project project = NameUtils.parse(name);
@@ -101,14 +107,15 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, lang, build, test);
+        Options options = new Options(lang, test, build, getAdditionalOptions());
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, options);
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
-        commandContext.getConfiguration().put("micronaut.application.name", project.getName());
         commandContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(commandContext.getLanguage(),
                                 commandContext.getTestFramework(),
+                                commandContext.getBuildTool(),
                                 commandContext.getProject(),
                                 commandContext.getFeatures(),
                                 commandContext.getCommand())));

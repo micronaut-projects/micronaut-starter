@@ -16,25 +16,11 @@ Micronaut Starter can be imported into IntelliJ IDEA by opening the `build.gradl
 
 To run the tests use `./gradlew check`. 
 
-## Building Documentation
-
-The documentation sources are located at `src/main/docs/guide`.
-
-To build the documentation run `./gradlew publishGuide` or `./gradlew pG` then open `build/docs/index.html`  
-
-To also build the javadocs instead run `./gradlew docs`.
-
 ## Working on the code base
 
-If you are working with the IntelliJ IDEA development environment, you can import the project using the Intellij Gradle Tooling ( "File / Import Project" and select the "settings.gradle" file).
+To generate a project execute `./gradlew run --args=""` where the args are what would be after `mn` using the CLI. For example: `./gradlew run --args="create-app temp"`. 
 
-To get a local development version of Micronaut Starter working, first run the `publishToMavenLocal` task.
-
-```
-./gradlew pTML
-```
-
-You can then reference the version specified with `projectVersion` in `gradle.properties` in a test project's `build.gradle` or `pom.xml`. 
+If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew assemble` and then `java -jar starter-core/build/libs/starter-core-1.0.0.BUILD-SNAPSHOT.jar create-app temp`
 
 ## Creating a pull request
 

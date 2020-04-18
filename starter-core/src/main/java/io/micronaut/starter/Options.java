@@ -15,20 +15,31 @@
  */
 package io.micronaut.starter;
 
+import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.convert.value.ConvertibleValues;
+import io.micronaut.core.convert.value.ConvertibleValuesMap;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
-public class Options {
+import java.util.*;
+
+public class Options implements ConvertibleValues<Object> {
 
     private final Language language;
     private final TestFramework testFramework;
     private final BuildTool buildTool;
+    private final ConvertibleValuesMap<Object> additionalOptions;
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool) {
+        this(language, testFramework, buildTool, Collections.emptyMap());
+    }
+
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, Map<String, Object> additionalOptions) {
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
+        this.additionalOptions = new ConvertibleValuesMap<>(additionalOptions);
     }
 
     public Language getLanguage() {
@@ -41,5 +52,20 @@ public class Options {
 
     public BuildTool getBuildTool() {
         return buildTool;
+    }
+
+    @Override
+    public Set<String> names() {
+        return additionalOptions.names();
+    }
+
+    @Override
+    public Collection<Object> values() {
+        return additionalOptions.values();
+    }
+
+    @Override
+    public <T> Optional<T> get(CharSequence name, ArgumentConversionContext<T> conversionContext) {
+        return additionalOptions.get(name, conversionContext);
     }
 }

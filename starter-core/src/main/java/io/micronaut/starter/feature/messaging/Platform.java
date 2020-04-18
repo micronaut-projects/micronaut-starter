@@ -13,21 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jdbc;
+package io.micronaut.starter.feature.messaging;
 
-import javax.inject.Singleton;
-
-@Singleton
-public class Hikari implements JdbcFeature {
-
-    @Override
-    public String getName() {
-        return "jdbc-hikari";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Configures SQL DataSource instances using Hikari Connection Pool";
-    }
-
+public enum Platform {
+    kafka, rabbitmq
 }

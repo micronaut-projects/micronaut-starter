@@ -1,5 +1,6 @@
 @import io.micronaut.starter.options.Language
 @import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.command.MicronautCommand
@@ -8,6 +9,7 @@
 @args (
 Language language,
 TestFramework testFramework,
+BuildTool buildTool,
 Project project,
 Features features,
 MicronautCommand command
@@ -17,4 +19,5 @@ command: @command.name()
 defaultPackage: @project.getPackageName()
 testFramework: @testFramework.name()
 sourceLanguage: @language.name()
+buildTool: @buildTool.name()
 features: @features.toString()

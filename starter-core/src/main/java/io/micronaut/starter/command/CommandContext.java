@@ -100,8 +100,17 @@ public class CommandContext {
     }
 
     public void applyFeatures() {
-        for (Feature feature: features.getFeatures()) {
+        List<Feature> features = new ArrayList<>(this.features.getFeatures());
+        features.sort(Comparator.comparingInt(Feature::getOrder));
+
+        for (Feature feature: features) {
             feature.apply(this);
         }
+    }
+
+    public boolean isFeaturePresent(Class<? extends Feature> feature) {
+        return features.getFeatures().stream()
+                .map(Feature::getClass)
+                .anyMatch(feature::isAssignableFrom);
     }
 }

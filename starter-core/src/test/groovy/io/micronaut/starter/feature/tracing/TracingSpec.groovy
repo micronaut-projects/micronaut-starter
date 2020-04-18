@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.externalconfig
+package io.micronaut.starter.feature.tracing
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.fixture.ContextFixture
@@ -6,15 +6,15 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-class ExternalConfigSpec extends Specification implements ContextFixture {
+class TracingSpec extends Specification implements ContextFixture {
 
     @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
 
-    void 'test there can only be one config feature'() {
+    void 'test there can only be one tracing feature'() {
         when:
-        getFeatures(["config-consul", "kubernetes"])
+        getFeatures(["tracing-zipkin", "tracing-jaeger"])
 
         then:
         def ex = thrown(IllegalArgumentException)

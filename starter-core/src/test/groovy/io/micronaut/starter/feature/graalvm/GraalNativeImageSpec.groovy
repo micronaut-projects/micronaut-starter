@@ -57,9 +57,9 @@ class GraalNativeImageSpec extends Specification implements ProjectFixture, Cont
 """)
         template.contains("""
             <path>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-graal</artifactId>
-                <version>\${micronaut.version}</version>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-graal</artifactId>
+              <version>\${micronaut.version}</version>
             </path>
 """)
 

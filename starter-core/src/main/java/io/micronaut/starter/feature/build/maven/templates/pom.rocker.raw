@@ -26,7 +26,7 @@ List<Property> properties
   </parent>
 
   <properties>
-    <jdk.version>@VersionInfo.getJdkVersion()</jdk.version>
+    <jdk.version>@VersionInfo.getTargetJdk(features.language())</jdk.version>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -47,6 +47,11 @@ List<Property> properties
     <repository>
       <id>jcenter.bintray.com</id>
       <url>https://jcenter.bintray.com</url>
+    </repository>
+    <!--TODO: Remove when M3/RC1 is out -->
+    <repository>
+      <id>jfrog-snapshots</id>
+      <url>https://oss.jfrog.org/oss-snapshot-local</url>
     </repository>
   </repositories>
 
@@ -82,6 +87,9 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-runtime-groovy", "compile", null)
 } else {
 @dependency.template("io.micronaut", "micronaut-runtime", "compile", null)
+}
+@if (features.contains("grpc")) {
+@dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "compile", null)
 }
 @if (features.contains("picocli")) {
 @dependency.template("info.picocli", "picocli", "compile", null)
@@ -174,6 +182,16 @@ List<Property> properties
 @if (features.contains("netflix-ribbon")) {
 @dependency.template("io.micronaut.configuration", "micronaut-netflix-ribbon", "compile", null)
 }
+@if (features.contains("tracing-zipkin")) {
+@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
+@dependency.template("io.opentracing.brave", "brave-opentracing", "compile", null)
+@dependency.template("io.zipkin.brave", "brave-instrumentation-http", "runtime", null)
+@dependency.template("io.zipkin.reporter2", "zipkin-reporter", "runtime", null)
+}
+@if (features.contains("tracing-jaeger")) {
+@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
+@dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
+}
 @if (features.contains("flyway")) {
 @dependency.template("io.micronaut.configuration", "micronaut-flyway", "compile", null)
 }
@@ -195,6 +213,69 @@ List<Property> properties
 @if (features.contains("data-jpa")) {
 @dependency.template("io.micronaut.data", "micronaut-data-jpa", "compile", null)
 }
+@if (features.contains("hibernate-validator")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-validator", "compile", null)
+}
+@if (features.contains("hibernate-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "compile", null)
+}
+@if (features.contains("hibernate-jpa")) {
+@dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "compile", null)
+}
+@if (features.contains("mongo-reactive")) {
+@dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "compile", null)
+}
+@if (features.contains("mongo-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
+}
+@if (features.contains("neo4j-bolt")) {
+@dependency.template("io.micronaut.configuration", "micronaut-neo4j-bolt", "compile", null)
+}
+@if (features.contains("neo4j-gorm")) {
+@dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "compile", null)
+}
+@if (features.contains("security-jwt")) {
+@dependency.template("io.micronaut", "micronaut-security-jwt", "compile", null)
+}
+@if (features.contains("security-session")) {
+@dependency.template("io.micronaut", "micronaut-security-session", "compile", null)
+}
+@if (features.contains("kafka")) {
+@dependency.template("io.micronaut.configuration", "micronaut-kafka", "compile", null)
+}
+@if (features.contains("rabbitmq")) {
+@dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "compile", null)
+}
+@if (features.contains("cassandra")) {
+@dependency.template("io.micronaut.configuration", "micronaut-cassandra", "compile", null)
+}
+@if (features.contains("elasticsearch")) {
+@dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "compile", null)
+}
+@if (features.contains("graphql")) {
+@dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
+}
+@if (features.contains("cache-caffeine")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
+}
+@if (features.contains("cache-ehcache")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "compile", null)
+}
+@if (features.contains("cache-hazelcast")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "compile", null)
+}
+@if (features.contains("cache-infinispan")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)
+}
+@if (features.contains("postgres-reactive")) {
+@dependency.template("io.micronaut.configuration", "micronaut-postgres-reactive", "compile", null)
+}
+@if (features.contains("redis-lettuce")) {
+@dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
+}
+@if (features.contains("file-watch-osx")) {
+@dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -203,8 +284,11 @@ List<Property> properties
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", "1.2.3")
 }
-@if (features.stream().anyMatch(f -> f.startsWith("jdbc-"))) {
+@if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
+}
+@if (features.contains("hibernate-gorm")) {
+@dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", "2.9.8")
@@ -230,6 +314,12 @@ List<Property> properties
       </exclusions>
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
+}
+@if (features.contains("mongo-reactive")) {
+@dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
+}
+@if (features.contains("neo4j-bolt")) {
+@dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
   </dependencies>
 
@@ -318,23 +408,23 @@ List<Property> properties
             </path>
 @if (features.contains("graalvm")) {
             <path>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-graal</artifactId>
-                <version>${micronaut.version}</version>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-graal</artifactId>
+              <version>${micronaut.version}</version>
             </path>
 }
 @if (features.contains("picocli")) {
             <path>
-                <groupId>io.micronaut.configuration</groupId>
-                <artifactId>micronaut-picocli</artifactId>
-                <version>${micronaut.picocli.version}</version>
+              <groupId>io.micronaut.configuration</groupId>
+              <artifactId>micronaut-picocli</artifactId>
+              <version>${micronaut.picocli.version}</version>
             </path>
 }
 @if (features.contains("data")) {
             <path>
-                <groupId>io.micronaut</groupId>
-                <artifactId>micronaut-data-processor</artifactId>
-                <version>${micronaut.data.version}</version>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-data-processor</artifactId>
+              <version>${micronaut.data.version}</version>
             </path>
 }
           </annotationProcessorPaths>
@@ -359,23 +449,23 @@ List<Property> properties
                 </path>
 @if (features.contains("graalvm")) {
                 <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-graal</artifactId>
-                    <version>${micronaut.version}</version>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-graal</artifactId>
+                  <version>${micronaut.version}</version>
                 </path>
 }
 @if (features.contains("picocli")) {
                 <path>
-                    <groupId>io.micronaut.configuration</groupId>
-                    <artifactId>micronaut-picocli</artifactId>
-                    <version>${micronaut.picocli.version}</version>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-picocli</artifactId>
+                  <version>${micronaut.picocli.version}</version>
                 </path>
 }
 @if (features.contains("data")) {
                 <path>
-                    <groupId>io.micronaut</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </path>
 }
               </annotationProcessorPaths>
@@ -558,7 +648,7 @@ List<Property> properties
       <plugin>
         <groupId>org.codehaus.gmavenplus</groupId>
         <artifactId>gmavenplus-plugin</artifactId>
-        <version>1.6.1</version>
+        <version>1.9.0</version>
         <executions>
           <execution>
             <goals>
@@ -578,7 +668,7 @@ List<Property> properties
 @if (features.language().isGroovy()) {
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>3.8.1</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -684,6 +774,37 @@ List<Property> properties
             <image>gcr.io/@project.getName()/jib-image</image>
           </to>
         </configuration>
+      </plugin>
+}
+@if (features.contains("grpc")) {
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.6.0.2</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <addProtoSources>all</addProtoSources>
+              <includeMavenTypes>direct</includeMavenTypes>
+              <inputDirectories>
+                <include>src/main/proto</include>
+              </inputDirectories>
+              <outputTargets>
+                <outputTarget>
+                   <type>java</type>
+                </outputTarget>
+                <outputTarget>
+                  <type>grpc-java</type>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1</pluginArtifact>
+                </outputTarget>
+              </outputTargets>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 }
     </plugins>

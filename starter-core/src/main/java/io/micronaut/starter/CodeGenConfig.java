@@ -17,6 +17,7 @@ package io.micronaut.starter;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
@@ -29,6 +30,7 @@ public class CodeGenConfig {
     private String defaultPackage;
     private TestFramework testFramework;
     private Language sourceLanguage;
+    private BuildTool buildTool;
     private List<String> features;
 
     public MicronautCommand getCommand() {
@@ -69,5 +71,13 @@ public class CodeGenConfig {
 
     public void setFeatures(List<String> features) {
         this.features = features;
+    }
+
+    public BuildTool getBuildTool() {
+        return buildTool;
+    }
+
+    public void setBuildTool(BuildTool buildTool) {
+        this.buildTool = buildTool;
     }
 }

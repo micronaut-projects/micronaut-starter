@@ -1,0 +1,16 @@
+@import io.micronaut.starter.Project
+
+@args (
+    Project project
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName();
+}
+
+import io.micronaut.configuration.rabbitmq.annotation.RabbitClient;
+
+@@RabbitClient
+public interface @project.getClassName() {
+
+}

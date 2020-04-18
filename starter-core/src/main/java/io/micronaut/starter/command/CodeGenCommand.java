@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.command;
 
+import io.micronaut.context.BeanContext;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.CodeGenConfig;
 import io.micronaut.starter.OutputHandler;
@@ -24,7 +25,7 @@ import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
-import javax.annotation.Nullable;
+import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.Callable;
@@ -37,20 +38,26 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
     protected boolean overwrite;
 
     private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
+    private BeanContext beanContext;
 
     public CodeGenCommand(CodeGenConfig config) {
         this.config = config;
         this.outputHandlerSupplier = () -> new FileSystemOutputHandler(new File(".").getCanonicalFile(), this);
     }
 
+    @Inject
+    public void setBeanContext(BeanContext beanContext) {
+        this.beanContext = beanContext;
+    }
+
     public abstract boolean applies();
 
-    protected Project getProject(String name, @Nullable CodeGenConfig codeGenConfig) {
+    protected Project getProject(String name) {
         if (name.indexOf('-') > -1) {
             name = NameUtils.getNameFromScript(name);
         }
-        if (codeGenConfig != null && codeGenConfig.getDefaultPackage() != null && name.indexOf('.') == -1) {
-            return NameUtils.parse(codeGenConfig.getDefaultPackage() + "." + name);
+        if (config != null && config.getDefaultPackage() != null && name.indexOf('.') == -1) {
+            return NameUtils.parse(config.getDefaultPackage() + "." + name);
         } else {
             return NameUtils.parse(name);
         }
@@ -58,5 +65,13 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
 
     protected TemplateRenderer getTemplateRenderer(Project project) throws IOException {
         return TemplateRenderer.create(project, outputHandlerSupplier.get());
+    }
+
+    protected <T extends CodeGenCommand> T getCommand(Class<T> clazz) {
+        T bean = beanContext.createBean(clazz, config);
+        bean.overwrite = overwrite;
+        bean.spec = spec;
+        bean.commonOptions = commonOptions;
+        return bean;
     }
 }

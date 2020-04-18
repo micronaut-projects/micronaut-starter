@@ -21,6 +21,7 @@ import io.micronaut.starter.template.Template;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,9 +44,18 @@ public class ZipOutputHandler implements OutputHandler {
         zipOutputStream = new ZipOutputStream(Files.newOutputStream(zip.toPath()));
     }
 
+    public ZipOutputHandler(OutputStream outputStream) {
+        zip = null;
+        zipOutputStream = new ZipOutputStream(outputStream);
+    }
+
     @Override
     public String getOutputLocation() {
-        return zip.getAbsolutePath();
+        if (zip == null) {
+            return null;
+        } else {
+            return zip.getAbsolutePath();
+        }
     }
 
     @Override

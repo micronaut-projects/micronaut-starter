@@ -13,12 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jdbc;
+package io.micronaut.starter.feature.database.jdbc;
+
+import io.micronaut.context.annotation.Primary;
+import io.micronaut.starter.feature.database.H2;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Tomcat implements JdbcFeature {
+@Primary
+public class Tomcat extends JdbcFeature {
+
+    public Tomcat(H2 h2) {
+        super(h2);
+    }
 
     @Override
     public String getName() {

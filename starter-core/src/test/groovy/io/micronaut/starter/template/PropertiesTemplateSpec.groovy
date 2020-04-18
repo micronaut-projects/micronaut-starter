@@ -21,20 +21,19 @@ class PropertiesTemplateSpec extends Specification {
         PropertiesTemplate template = new PropertiesTemplate(null, config)
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         template.write(baos)
+        String output = baos.toString()
 
         then:
-        baos.toString().contains("""
-a.b.c=1
-a.x=2
-a.y=3
-a.z[0]=4
-a.z[1]=5
-a.z[2]=6
-d[0].name=Sally
-d[0].age=30
-d[1].name=John
-d[1].age=40
-d[1].petNames[0]=Rover
-""")
+        output.contains("a.b.c=1")
+        output.contains("a.x=2")
+        output.contains("a.y=3")
+        output.contains("a.z[0]=4")
+        output.contains("a.z[1]=5")
+        output.contains("a.z[2]=6")
+        output.contains("d[0].name=Sally")
+        output.contains("d[0].age=30")
+        output.contains("d[1].name=John")
+        output.contains("d[1].age=40")
+        output.contains("d[1].petNames[0]=Rover")
     }
 }

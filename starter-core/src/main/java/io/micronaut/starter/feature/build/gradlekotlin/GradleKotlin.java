@@ -1,5 +1,21 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.feature.build.gradlekotlin;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.Feature;
@@ -9,8 +25,6 @@ import io.micronaut.starter.feature.build.gradlekotlin.templates.buildGradleKts;
 import io.micronaut.starter.feature.build.gradlekotlin.templates.settingsGradleKts;
 import io.micronaut.starter.feature.build.gradlekotlin.templates.versionsKt;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
@@ -82,9 +96,8 @@ public class GradleKotlin implements BuildFeature {
 
   @Override
   public boolean shouldApply(MicronautCommand micronautCommand,
-      Language language,
-      TestFramework testFramework, BuildTool buildTool,
+      Options options,
       List<Feature> selectedFeatures) {
-    return buildTool == BuildTool.gradleKotlin;
+    return options.getBuildTool() == BuildTool.gradleKotlin;
   }
 }

@@ -1,0 +1,17 @@
+@import io.micronaut.starter.Project
+
+@args (
+    Project project
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName();
+}
+
+import io.micronaut.configuration.kafka.annotation.KafkaListener;
+import io.micronaut.configuration.kafka.annotation.OffsetReset;
+
+@@KafkaListener(offsetReset = OffsetReset.EARLIEST)
+public class @project.getClassName() {
+
+}
