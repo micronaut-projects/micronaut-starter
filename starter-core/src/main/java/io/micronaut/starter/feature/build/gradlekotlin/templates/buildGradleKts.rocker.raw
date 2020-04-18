@@ -239,7 +239,7 @@ tasks {
 }
 @if (features.contains("jrebel")) {
         if (project.hasProperty("rebelAgent")) {
-            jvmArgsList = listOf(rebelAgent)
+            jvmArgsList += listOf(rebelAgent)
         }
         dependsOn(generateRebel)
 }
