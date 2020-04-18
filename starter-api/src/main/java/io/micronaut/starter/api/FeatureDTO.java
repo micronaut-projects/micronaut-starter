@@ -29,7 +29,7 @@ import io.micronaut.starter.feature.Feature;
 public class FeatureDTO {
     private final String name;
     private final String description;
-    
+
     /**
      * Default constructor.
      * @param feature The feature
