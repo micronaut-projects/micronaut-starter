@@ -1,5 +1,7 @@
 ## Running the app locally
 
+From the project root:
+
 ```cmd
 ./gradlew clean starter-web-netty:run
 ```
@@ -8,14 +10,13 @@ And visit http://localhost:8080/features
 
 ## Google Cloud Run Deployment
 
-First prepare the image using Google Cloud Build:
+From the project root build the docker image and push it to Google Container Registry:
 
 ```
 $ docker build . -t micronaut-starter
 $ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
+$ docker push gcr.io/[PROJECT ID]/micronaut-starter
 ```
-
-This delegates building of the image to GCP infrastructure. The build process may take some time as the GraalVM compiler is not the fastest.
 
 You are now ready to deploy your application:
 
