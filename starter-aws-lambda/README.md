@@ -4,7 +4,7 @@
 $ sam local start-api --template sam-local.yml
 ```
 
-And visit http://localhost:3000/api/features
+And visit http://localhost:3000/features
 
 ## Deploying the function
 
