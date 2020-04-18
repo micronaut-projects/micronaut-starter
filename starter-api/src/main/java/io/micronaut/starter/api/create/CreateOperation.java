@@ -17,6 +17,9 @@ package io.micronaut.starter.api.create;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,7 +36,16 @@ public interface CreateOperation {
      * Creates an application.
      * @param name The name of the application
      * @param features The features
+     * @param buildTool The build tool
+     * @param testFramework The test framework
+     * @param lang The lang
      * @return An HTTP response that emits a writable
      */
-    HttpResponse<Writable> createApp(String name, @Nullable List<String> features);
+    HttpResponse<Writable> createApp(
+            String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool buildTool,
+            @Nullable TestFramework testFramework,
+            @Nullable Language lang
+    );
 }

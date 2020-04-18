@@ -23,6 +23,9 @@ import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.command.CreateCliCommand;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,17 +51,35 @@ public class CreateCliAppController extends AbstractCreateController implements 
     }
 
     @Override
-    @Get(uri = "/cli/{name}{?features}", produces = "application/zip")
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features) {
-        return super.createApp(name, features);
+    @Get(uri = "/cli/{name}{?features,lang,build,test}", produces = "application/zip")
+    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
+        return super.createApp(name, features, build, test, lang);
     }
 
     @Override
-    protected CreateCommand buildCommand(@Nonnull List<String> features) {
+    protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nonnull List<String> features) {
         return new CreateCliCommand((CreateCliCommand.CreateCliFeatures) availableFeatures, featureValidator, contextFactory) {
             @Override
             protected List<String> getSelectedFeatures() {
                 return features;
+            }
+
+            @Nonnull
+            @Override
+            protected TestFramework getSelectedTestFramework() {
+                return testFramework != null ? testFramework : super.getSelectedTestFramework();
+            }
+
+            @Nonnull
+            @Override
+            protected Language getSelectedLang() {
+                return lang != null ? lang : super.getSelectedLang();
+            }
+
+            @Nonnull
+            @Override
+            protected BuildTool getSelectedBuildTool() {
+                return buildTool != null ? buildTool : super.getSelectedBuildTool();
             }
         };
     }

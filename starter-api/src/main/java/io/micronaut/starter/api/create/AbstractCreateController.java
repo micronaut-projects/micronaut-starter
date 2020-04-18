@@ -25,6 +25,9 @@ import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.ZipOutputHandler;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 
 import javax.annotation.Nonnull;
@@ -64,12 +67,17 @@ public abstract class AbstractCreateController implements CreateOperation {
     }
 
     @Override
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features) {
+    public HttpResponse<Writable> createApp(
+            String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool buildTool,
+            @Nullable TestFramework testFramework,
+            @Nullable Language lang) {
         Project project = NameUtils.parse(name);
         MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
-                CreateCommand createAppCommand = buildCommand(features != null ? features : Collections.emptyList());
+                CreateCommand createAppCommand = buildCommand(lang, buildTool, testFramework, features != null ? features : Collections.emptyList());
                 try {
                     createAppCommand.generate(project, new ZipOutputHandler(outputStream));
                     outputStream.flush();
@@ -95,8 +103,16 @@ public abstract class AbstractCreateController implements CreateOperation {
 
     /**
      * Build the create command.
+     * @param lang The language
+     * @param buildTool The build tool
+     * @param testFramework The test framework
      * @param features The features
      * @return The command
      */
-    protected abstract CreateCommand buildCommand(@Nonnull List<String> features) ;
+    protected abstract CreateCommand buildCommand(
+            Language lang,
+            BuildTool buildTool,
+            TestFramework testFramework,
+            @Nonnull List<String> features
+    );
 }

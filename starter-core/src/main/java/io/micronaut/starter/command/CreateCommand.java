@@ -33,6 +33,7 @@ import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -72,13 +73,37 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         this.command = command;
     }
 
-    protected abstract List<String> getSelectedFeatures();
+    /**
+     * @return The selected features.
+     */
+    protected @Nonnull abstract List<String> getSelectedFeatures();
+
+    /**
+     * @return The selected test framework.
+     */
+    protected @Nonnull TestFramework getSelectedTestFramework() {
+        return test;
+    }
+
+    /**
+     * @return The selected language
+     */
+    protected @Nonnull Language getSelectedLang() {
+        return lang;
+    }
+
+    /**
+     * @return The selected build tool
+     */
+    protected @Nonnull BuildTool getSelectedBuildTool() {
+        return build;
+    }
 
     @Override
     public Integer call() throws Exception {
 
         if (listFeatures) {
-            new ListFeatures(availableFeatures, new Options(lang, test, build), command, contextFactory).output(this);
+            new ListFeatures(availableFeatures, new Options(getSelectedLang(), getSelectedTestFramework(), getSelectedBuildTool()), command, contextFactory).output(this);
             return 0;
         }
 
@@ -101,7 +126,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, lang, build, test);
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, getSelectedLang(), getSelectedBuildTool(), getSelectedTestFramework());
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
         commandContext.addTemplate("micronautCli",

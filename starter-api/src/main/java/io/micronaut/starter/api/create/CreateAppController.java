@@ -23,7 +23,11 @@ import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +48,13 @@ public class CreateAppController extends AbstractCreateController implements Cre
     }
 
     @Override
-    @Get(uri = "/app/{name}{?features}", produces = "application/zip")
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features) {
-        return super.createApp(name, features);
+    @Get(uri = "/app/{name}{?features,lang,build,test}", produces = "application/zip")
+    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
+        return super.createApp(name, features, build, test, lang);
     }
 
     @Override
-    protected CreateCommand buildCommand(@Nullable List<String> features) {
+    protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nullable List<String> features) {
         return new CreateAppCommand(
                 (CreateAppCommand.CreateAppFeatures) availableFeatures,
                 featureValidator,
@@ -58,8 +62,26 @@ public class CreateAppController extends AbstractCreateController implements Cre
 
         ) {
             @Override
-            protected List<String> getSelectedFeatures() {
+            protected @Nonnull List<String> getSelectedFeatures() {
                 return features != null ? features : new ArrayList<>();
+            }
+
+            @Nonnull
+            @Override
+            protected TestFramework getSelectedTestFramework() {
+                return testFramework != null ? testFramework : super.getSelectedTestFramework();
+            }
+
+            @Nonnull
+            @Override
+            protected Language getSelectedLang() {
+                return lang != null ? lang : super.getSelectedLang();
+            }
+
+            @Nonnull
+            @Override
+            protected BuildTool getSelectedBuildTool() {
+                return buildTool != null ? buildTool : super.getSelectedBuildTool();
             }
         };
     }
