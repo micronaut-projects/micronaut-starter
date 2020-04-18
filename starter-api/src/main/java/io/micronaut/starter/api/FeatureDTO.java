@@ -18,6 +18,7 @@ package io.micronaut.starter.api;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.feature.Feature;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Represents an application feature.
@@ -26,6 +27,7 @@ import io.micronaut.starter.feature.Feature;
  * @since 1.0.0
  */
 @Introspected
+@Schema(name = "Feature")
 public class FeatureDTO {
     private final String name;
     private final String description;
@@ -53,6 +55,7 @@ public class FeatureDTO {
     /**
      * @return The name of the feature
      */
+    @Schema(description = "The name of the feature")
     public String getName() {
         return name;
     }
@@ -60,6 +63,7 @@ public class FeatureDTO {
     /**
      * @return The description of the feature
      */
+    @Schema(description = "A description of the feature")
     public String getDescription() {
         return description;
     }

@@ -26,6 +26,8 @@ import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,6 +54,11 @@ public class CreateGrpcAppController extends AbstractCreateController implements
 
     @Override
     @Get(uri = "/grpc/{name}{?features,lang,build,test}", produces = "application/zip")
+    @ApiResponse(
+            content = @Content(
+                    mediaType = "application/zip"
+            )
+    )
     public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
         return super.createApp(name, features, build, test, lang);
     }

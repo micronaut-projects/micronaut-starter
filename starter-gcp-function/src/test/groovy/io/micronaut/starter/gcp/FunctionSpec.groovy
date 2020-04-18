@@ -15,7 +15,7 @@ class FunctionSpec extends Specification {
 
         when:
         def function = new HttpFunction()
-        def response = function.invoke(HttpMethod.GET, "/api/features")
+        def response = function.invoke(HttpMethod.GET, "/features")
         then:
         response.status == HttpStatus.OK
     }
@@ -24,7 +24,7 @@ class FunctionSpec extends Specification {
 
         when:
         def function = new HttpFunction()
-        def response = function.invoke(HttpMethod.GET, "/api/create/app/test")
+        def response = function.invoke(HttpMethod.GET, "/create/app/test")
         byte[] bytes = response.getBody(Argument.of(byte[].class)).get()
         def zipInputStream = new ZipInputStream(new ByteArrayInputStream(bytes))
         def zipEntry = zipInputStream.getNextEntry()
