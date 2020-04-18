@@ -39,7 +39,7 @@ trait ContextFixture {
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
                 MicronautCommand.CREATE_APP,
-                options.language, options.buildTool, options.testFramework)
+                options)
     }
 
     CommandContext buildCommandContext(List<String> selectedFeatures,

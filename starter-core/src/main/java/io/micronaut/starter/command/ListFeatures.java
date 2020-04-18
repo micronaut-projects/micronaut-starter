@@ -47,9 +47,7 @@ public class ListFeatures {
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 Collections.emptyList(),
                 command,
-                options.getLanguage(),
-                options.getBuildTool(),
-                options.getTestFramework());
+                options);
         CommandContext commandContext = contextFactory.createCommandContext(null, featureContext, ConsoleOutput.NOOP);
 
         List<Feature> defaultFeatures = commandContext.getFeatures().getFeatures();

@@ -34,7 +34,9 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
@@ -99,6 +101,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         return build;
     }
 
+    protected Map<String, Object> getAdditionalOptions() {
+        return Collections.emptyMap();
+    }
+
     @Override
     public Integer call() throws Exception {
 
@@ -126,7 +132,8 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, getSelectedLang(), getSelectedBuildTool(), getSelectedTestFramework());
+        Options options = new Options(getSelectedLang(), getSelectedTestFramework(), getSelectedBuildTool(), getAdditionalOptions());
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, options);
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
         commandContext.addTemplate("micronautCli",

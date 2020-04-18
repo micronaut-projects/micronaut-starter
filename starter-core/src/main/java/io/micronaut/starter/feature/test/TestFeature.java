@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
@@ -69,10 +70,9 @@ public interface TestFeature extends DefaultFeature {
 
     @Override
     default boolean shouldApply(MicronautCommand micronautCommand,
-                               Language language,
-                               TestFramework testFramework,
-                               BuildTool buildTool,
-                               List<Feature> selectedFeatures) {
-        return testFramework == getTestFramework() || (testFramework == null && language == getDefaultLanguage());
+                                Options options,
+                                List<Feature> selectedFeatures) {
+        return options.getTestFramework() == getTestFramework() ||
+                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage());
     }
 }

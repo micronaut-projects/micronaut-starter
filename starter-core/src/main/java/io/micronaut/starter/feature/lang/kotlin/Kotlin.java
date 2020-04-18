@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.Feature;
@@ -22,9 +23,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.KotlinTest;
 import io.micronaut.starter.feature.test.TestFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -76,7 +75,7 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return language == Language.kotlin;
+    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.kotlin;
     }
 }

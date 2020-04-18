@@ -157,9 +157,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
                             .map(DefaultFeature.class::cast)
                             .filter(f -> f.shouldApply(
                                     codeGenConfig.getCommand(),
-                                    codeGenConfig.getSourceLanguage(),
-                                    codeGenConfig.getTestFramework(),
-                                    codeGenConfig.getBuildTool(),
+                                    new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool()),
                                     features))
                             .map(Feature::getName)
                             .collect(Collectors.toList()));
