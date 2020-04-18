@@ -162,6 +162,12 @@ dependencies {
 @if (features.contains("jdbc-hikari")) {
     implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
 }
+@if (features.contains("data-jpa")) {
+    implementation("io.micronaut.data:micronaut-data-jpa")
+}
+@if (features.contains("data-jdbc")) {
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+}
 @if (features.contains("log4j2")) {
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     runtimeOnly("org.apache.logging.log4j:log4j-api:$log4jVersion")

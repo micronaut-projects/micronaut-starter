@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
+import io.micronaut.starter.feature.build.gradlekotlin.templates.buildGradleKts
 import io.micronaut.starter.feature.build.maven.templates.pom
 import spock.lang.AutoCleanup
 import spock.lang.Shared
@@ -35,6 +36,17 @@ class DataJpaSpec extends Specification implements ProjectFixture, ContextFixtur
         template.contains("implementation \"io.micronaut.data:micronaut-data-jpa\"")
         template.contains("implementation \"io.micronaut.configuration:micronaut-jdbc-tomcat\"")
         template.contains("runtimeOnly \"com.h2database:h2\"")
+    }
+
+    void "test dependencies are present for gradle-kotlin"() {
+        when:
+        String template = buildGradleKts.template(buildProject(), getFeatures(["data-jpa"])).render().toString()
+
+        then:
+        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
+        template.contains("implementation(\"io.micronaut.data:micronaut-data-jpa\")")
+        template.contains("implementation(\"io.micronaut.configuration:micronaut-jdbc-tomcat\")")
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for maven"() {
