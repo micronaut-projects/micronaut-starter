@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create;
+package io.micronaut.starter.api.preview;
 
-import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.ContextFactory;
+import io.micronaut.starter.api.create.CreateOperation;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.feature.validation.FeatureValidator;
@@ -30,32 +30,34 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Implements the {@link CreateOperation} interface for applications.
+ * Previews an application contents.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/create")
-public class CreateAppController extends AbstractCreateController implements CreateOperation {
-    public CreateAppController(
+@Controller("/preview")
+public class PreviewAppController extends AbstractPreviewController {
+    public PreviewAppController(
             CreateAppCommand.CreateAppFeatures createAppFeatures,
             FeatureValidator featureValidator,
             ContextFactory contextFactory) {
         super(createAppFeatures, featureValidator, contextFactory);
     }
 
-    @Override
-    @Get(uri = "/app/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/app/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @ApiResponse(
             content = @Content(
-                    mediaType = "application/zip"
+                    mediaType = MediaType.APPLICATION_JSON
             )
     )
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
-        return super.createApp(name, features, build, test, lang);
+    @Override
+    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool buildTool, @Nullable TestFramework testFramework, @Nullable Language lang) throws IOException {
+        return super.previewApp(name, features, buildTool, testFramework, lang);
     }
 
     @Override
@@ -70,4 +72,5 @@ public class CreateAppController extends AbstractCreateController implements Cre
                 testFramework
         );
     }
+
 }

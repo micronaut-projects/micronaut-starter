@@ -65,29 +65,10 @@ public class CreateCliAppController extends AbstractCreateController implements 
 
     @Override
     protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nonnull List<String> features) {
-        return new CreateCliCommand((CreateCliCommand.CreateCliFeatures) availableFeatures, featureValidator, contextFactory) {
-            @Override
-            protected List<String> getSelectedFeatures() {
-                return features;
-            }
-
-            @Nonnull
-            @Override
-            protected TestFramework getSelectedTestFramework() {
-                return testFramework != null ? testFramework : super.getSelectedTestFramework();
-            }
-
-            @Nonnull
-            @Override
-            protected Language getSelectedLang() {
-                return lang != null ? lang : super.getSelectedLang();
-            }
-
-            @Nonnull
-            @Override
-            protected BuildTool getSelectedBuildTool() {
-                return buildTool != null ? buildTool : super.getSelectedBuildTool();
-            }
-        };
+        CreateCliCommand.CreateCliFeatures availableFeatures = (CreateCliCommand.CreateCliFeatures) CreateCliAppController.this.availableFeatures;
+        FeatureValidator featureValidator = CreateCliAppController.this.featureValidator;
+        ContextFactory contextFactory = CreateCliAppController.this.contextFactory;
+        return CreateOperation.buildCreateCliAppCommand(availableFeatures, featureValidator, contextFactory, features, lang, buildTool, testFramework);
     }
+
 }

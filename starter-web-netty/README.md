@@ -8,6 +8,14 @@ From the project root:
 
 And visit http://localhost:8080/features
 
+You can view the Swagger UI definition at: 
+
+http://localhost:8080/swagger/views/swagger-ui/index.html#/default/previewApp
+
+Or with RapiDoc:
+
+http://localhost:8080/swagger/views/rapidoc/index.html
+
 ## Google Cloud Run Deployment
 
 From the project root build the docker image and push it to Google Container Registry:

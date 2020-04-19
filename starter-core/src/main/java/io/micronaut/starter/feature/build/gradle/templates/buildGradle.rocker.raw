@@ -50,8 +50,7 @@ ext {
 
 
 repositories {
-    mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
+    jcenter()
     //TODO remove once M3/RC1 is out
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
 }
