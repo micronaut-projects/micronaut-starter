@@ -34,7 +34,6 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
