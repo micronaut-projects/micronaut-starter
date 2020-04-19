@@ -16,6 +16,8 @@
 package io.micronaut.starter.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashMap;
@@ -27,6 +29,7 @@ import java.util.Map;
  * @author graemerocher
  * @since 1.0.0
  */
+@Introspected
 public abstract class Linkable {
     private final Map<String, LinkDTO> links = new LinkedHashMap<>();
 
@@ -35,6 +38,7 @@ public abstract class Linkable {
      */
     @Schema(description = "Links to other resources")
     @JsonProperty("_links")
+    @ReflectiveAccess
     public Map<String, LinkDTO> getLinks() {
         return links;
     }

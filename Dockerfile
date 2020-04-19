@@ -12,7 +12,7 @@ FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
 COPY --from=gradle /home/app/starter-web-netty/build/libs/*.jar /home/app/server.jar
 WORKDIR /home/app
 RUN gu install native-image
-RUN native-image --no-server -cp server.jar
+RUN native-image --no-fallback --no-server -cp server.jar
 
 # Stage 3: Prepare Server
 FROM adoptopenjdk/openjdk11:alpine-slim
