@@ -29,6 +29,11 @@ public class Cassandra implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Cassandra Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Cassandra in the application";
     }

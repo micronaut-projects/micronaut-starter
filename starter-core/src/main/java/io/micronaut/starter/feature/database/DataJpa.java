@@ -38,6 +38,11 @@ public class DataJpa implements DataFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Data JPA";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micronaut Data Hibernate/JPA";
     }

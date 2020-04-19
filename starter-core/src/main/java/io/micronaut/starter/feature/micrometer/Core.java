@@ -34,6 +34,16 @@ public class Core implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micrometer Core";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put("micronaut.metrics.enabled", true);
     }

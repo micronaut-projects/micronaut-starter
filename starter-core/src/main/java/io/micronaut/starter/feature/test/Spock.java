@@ -45,4 +45,14 @@ public class Spock implements TestFeature {
     public Language getDefaultLanguage() {
         return Language.groovy;
     }
+
+    @Override
+    public String getTitle() {
+        return "Spock Testing Framework";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
 }

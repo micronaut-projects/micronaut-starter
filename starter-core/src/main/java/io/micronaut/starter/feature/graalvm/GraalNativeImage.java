@@ -33,6 +33,11 @@ public class GraalNativeImage implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GraalVM Native Image";
+    }
+
+    @Override
     public String getDescription() {
         return "Allows Building a GraalVM Native Image";
     }

@@ -45,6 +45,16 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Kotlin Language Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()

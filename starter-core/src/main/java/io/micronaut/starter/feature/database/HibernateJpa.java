@@ -37,6 +37,11 @@ public class HibernateJpa implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Hibernate JPA";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Hibernate/JPA";
     }

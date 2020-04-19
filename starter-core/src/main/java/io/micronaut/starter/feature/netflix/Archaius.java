@@ -28,6 +28,11 @@ public class Archaius implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Netflix Archaius Configuration";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Netflix Archaius";
     }

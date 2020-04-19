@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli.test.junit;
 
+import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
@@ -30,6 +31,16 @@ public class PicocliJunit implements Feature {
     @Override
     public String getName() {
         return "picocli-junit";
+    }
+
+    @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     @Override

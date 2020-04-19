@@ -40,6 +40,16 @@ public class Grpc implements DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "GRPC";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for building GRPC applications";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(commandContext.getProject())));
     }

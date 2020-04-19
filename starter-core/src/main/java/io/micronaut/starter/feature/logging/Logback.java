@@ -36,6 +36,11 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Logback Logging";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds Logback Logging";
     }

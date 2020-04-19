@@ -41,6 +41,16 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Groovy Application";
+    }
+
+    @Override
+    public String getDescription() {
+        return getTitle() + " Support";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         GroovyApplicationFeature.super.apply(commandContext);
 

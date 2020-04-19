@@ -29,6 +29,11 @@ public class MongoReactive implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Mongo Reactive Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for the Mongo Reactive Streams Driver";
     }

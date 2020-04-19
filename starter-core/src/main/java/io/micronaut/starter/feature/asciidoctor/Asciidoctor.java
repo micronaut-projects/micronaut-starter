@@ -33,6 +33,11 @@ public class Asciidoctor implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Asciidoctor Documentation";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds Asciidoctor documentation";
     }

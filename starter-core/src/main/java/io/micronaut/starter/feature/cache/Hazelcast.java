@@ -28,6 +28,11 @@ public class Hazelcast implements CacheFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Hazelcast Cache";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for cache using Hazelcast (https://hazelcast.org/)";
     }

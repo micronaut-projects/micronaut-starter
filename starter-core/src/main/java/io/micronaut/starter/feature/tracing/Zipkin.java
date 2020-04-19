@@ -28,6 +28,11 @@ public class Zipkin implements TracingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Zipkin Tracing";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for distributed tracing with Zipkin (https://zipkin.io)";
     }

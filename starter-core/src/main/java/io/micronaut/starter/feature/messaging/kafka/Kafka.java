@@ -41,6 +41,11 @@ public class Kafka implements DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Kafka Messaging";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Kafka";
     }

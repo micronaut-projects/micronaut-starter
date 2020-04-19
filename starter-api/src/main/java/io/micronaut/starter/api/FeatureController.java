@@ -52,6 +52,7 @@ public class FeatureController implements FeatureOperations {
     @Get("/")
     public List<FeatureDTO> features() {
         return features.stream()
+                .filter(Feature::isVisible)
                 .map(FeatureDTO::new)
                 .collect(Collectors.toList());
     }
@@ -62,16 +63,19 @@ public class FeatureController implements FeatureOperations {
             case app:
                 return beanLocator.getBean(CreateAppCommand.CreateAppFeatures.class)
                         .getAllFeatures()
+                        .filter(Feature::isVisible)
                         .map(FeatureDTO::new)
                         .collect(Collectors.toList());
             case grpc:
                 return beanLocator.getBean(CreateGrpcCommand.CreateGrpcFeatures.class)
                         .getAllFeatures()
+                        .filter(Feature::isVisible)
                         .map(FeatureDTO::new)
                         .collect(Collectors.toList());
             case cli:
                 return beanLocator.getBean(CreateCliCommand.CreateCliFeatures.class)
                         .getAllFeatures()
+                        .filter(Feature::isVisible)
                         .map(FeatureDTO::new)
                         .collect(Collectors.toList());
             default:

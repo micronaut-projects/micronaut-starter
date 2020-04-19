@@ -35,6 +35,16 @@ public class Data implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Data";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         if (commandContext.getBuildTool() == BuildTool.maven) {
             commandContext.getBuildProperties().put("micronaut.data.version", "1.0.2");

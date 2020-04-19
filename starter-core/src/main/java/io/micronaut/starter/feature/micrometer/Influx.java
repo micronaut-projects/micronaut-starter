@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.feature.other.Management;
 
@@ -30,6 +31,11 @@ public class Influx extends MicrometerFeature {
     @Override
     public String getName() {
         return "micrometer-influx";
+    }
+
+    @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
     }
 
     @Override

@@ -29,6 +29,11 @@ public class PostgresReactive implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Postgres Reactive Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for the Reactive Postgres driver in the application";
     }

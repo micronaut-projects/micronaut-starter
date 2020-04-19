@@ -59,6 +59,16 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "PicoCLI";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Support for creating PicoCLI applications";
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (featureContext.getTestFramework() == TestFramework.junit) {
             featureContext.addFeature(junit);

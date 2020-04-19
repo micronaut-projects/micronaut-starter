@@ -33,6 +33,16 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Annotation API";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public boolean isVisible() {
         return false;
     }

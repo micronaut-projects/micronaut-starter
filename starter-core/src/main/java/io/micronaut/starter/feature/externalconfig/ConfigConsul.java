@@ -28,6 +28,11 @@ public class ConfigConsul implements ExternalConfigFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Consul Distributed Configuration";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Distributed Configuration with Consul (https://www.consul.io)";
     }

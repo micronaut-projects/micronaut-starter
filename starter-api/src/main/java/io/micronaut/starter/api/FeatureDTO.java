@@ -17,6 +17,8 @@ package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.naming.Described;
+import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -28,8 +30,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Introspected
 @Schema(name = "Feature")
-public class FeatureDTO {
+public class FeatureDTO implements Named, Described {
     private final String name;
+    private final String title;
     private final String description;
 
     /**
@@ -38,17 +41,20 @@ public class FeatureDTO {
      */
     public FeatureDTO(Feature feature) {
         this.name = feature.getName();
+        this.title = feature.getTitle();
         this.description = feature.getDescription();
     }
 
     /**
      * Default constructor.
      * @param name The name
+     * @param title The title
      * @param description The description
      */
     @Creator
-    public FeatureDTO(String name, String description) {
+    public FeatureDTO(String name, String title, String description) {
         this.name = name;
+        this.title = title;
         this.description = description;
     }
 
@@ -58,6 +64,14 @@ public class FeatureDTO {
     @Schema(description = "The name of the feature")
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return The title of the feature
+     */
+    @Schema(description = "The title of the feature")
+    public String getTitle() {
+        return title;
     }
 
     /**

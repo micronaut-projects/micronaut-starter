@@ -29,6 +29,11 @@ public class Swagger implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Swagger/OpenAPI Support";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Swagger (OpenAPI)";
     }

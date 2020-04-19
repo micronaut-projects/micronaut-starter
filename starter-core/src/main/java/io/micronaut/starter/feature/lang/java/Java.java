@@ -58,6 +58,16 @@ public class Java implements LanguageFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Java Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()

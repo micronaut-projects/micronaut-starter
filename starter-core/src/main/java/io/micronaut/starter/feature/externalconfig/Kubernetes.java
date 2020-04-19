@@ -41,6 +41,11 @@ public class Kubernetes implements ExternalConfigFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Kubernetes Distributed Configuration";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Kubernetes";
     }

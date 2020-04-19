@@ -28,6 +28,11 @@ public class Jaeger implements TracingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Jaeger Tracing";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for distributed tracing with Jaeger (https://www.jaegertracing.io)";
     }

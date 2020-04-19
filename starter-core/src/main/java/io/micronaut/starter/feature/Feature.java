@@ -15,19 +15,18 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.core.naming.Described;
+import io.micronaut.core.naming.Named;
+import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.options.Language;
 
 import java.util.Optional;
 
-public interface Feature {
+public interface Feature extends Named, Ordered, Described {
 
-    String getName();
-
-    default String getDescription() {
-        return null;
-    }
+    String getTitle();
 
     default int getOrder() {
         return FeaturePhase.DEFAULT.getOrder();

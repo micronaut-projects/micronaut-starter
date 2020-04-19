@@ -29,6 +29,11 @@ public class SecuritySession implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Security Session";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Session based Authentication";
     }

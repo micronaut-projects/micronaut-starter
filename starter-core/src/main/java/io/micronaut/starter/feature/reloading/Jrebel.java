@@ -29,6 +29,11 @@ public class Jrebel implements ReloadingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "JRebel JVM Agent";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for class reloading with JRebel (requires separate JRebel installation)";
     }

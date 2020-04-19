@@ -29,6 +29,11 @@ public class Hystrix implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Netflix Hystrix";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Netflix Hystrix";
     }

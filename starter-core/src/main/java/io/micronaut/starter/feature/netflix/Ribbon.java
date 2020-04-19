@@ -29,6 +29,11 @@ public class Ribbon implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Netflix Ribbon LoadBalancer";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Netflix Ribbon";
     }

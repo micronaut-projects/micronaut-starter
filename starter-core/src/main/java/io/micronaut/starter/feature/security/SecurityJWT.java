@@ -29,6 +29,11 @@ public class SecurityJWT implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Security JWT";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for JWT (JSON Web Token) based Authentication";
     }

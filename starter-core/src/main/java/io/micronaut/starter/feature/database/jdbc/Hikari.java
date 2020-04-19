@@ -32,6 +32,11 @@ public class Hikari extends JdbcFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Hikari JDBC Connection Pool";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures SQL DataSource instances using Hikari Connection Pool";
     }

@@ -36,6 +36,11 @@ public class Springloaded implements ReloadingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Spring Loaded JVM Agent";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for class reloading with Spring-Loaded";
     }

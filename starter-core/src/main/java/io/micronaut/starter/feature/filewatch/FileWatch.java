@@ -37,6 +37,11 @@ public class FileWatch implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "File Watch Support";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds automatic restarts and file watch";
     }

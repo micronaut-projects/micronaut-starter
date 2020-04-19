@@ -32,6 +32,11 @@ public class Netty implements ServerFeature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Netty Server";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for a Netty server";
     }

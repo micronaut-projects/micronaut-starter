@@ -28,6 +28,11 @@ public class DiscoveryEureka implements DiscoveryFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Eureka Service Discovery";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Service Discovery with Eureka";
     }

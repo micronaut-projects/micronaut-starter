@@ -32,6 +32,16 @@ public class Docker implements DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Docker Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public boolean isVisible() {
         return false;
     }

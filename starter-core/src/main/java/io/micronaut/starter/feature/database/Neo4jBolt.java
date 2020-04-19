@@ -29,6 +29,11 @@ public class Neo4jBolt implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Neo4j Bolt Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for the Neo4j Bolt Driver";
     }

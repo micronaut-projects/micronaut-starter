@@ -38,6 +38,11 @@ public class DataJdbc implements DataFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Data JDBC";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micronaut Data JDBC";
     }

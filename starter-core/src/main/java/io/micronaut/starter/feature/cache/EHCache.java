@@ -28,6 +28,11 @@ public class EHCache implements CacheFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "EHCache Cache";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for cache using EHCache (https://www.ehcache.org/)";
     }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli.test.kotlintest;
 
+import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CommandContext;
 import io.micronaut.starter.command.MicronautCommand;
@@ -29,6 +30,16 @@ public class PicocliKotlinTest implements Feature {
     @Override
     public String getName() {
         return "picocli-kotlintest";
+    }
+
+    @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 
     @Override

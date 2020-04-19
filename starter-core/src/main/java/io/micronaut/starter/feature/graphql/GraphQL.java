@@ -29,6 +29,11 @@ public class GraphQL implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut GraphQL";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for GraphQL in the application";
     }

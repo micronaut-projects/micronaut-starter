@@ -42,6 +42,11 @@ public class HibernateGorm implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GORM for Hibernate";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for GORM persistence framework";
     }

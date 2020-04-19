@@ -28,6 +28,11 @@ public class Infinispan implements CacheFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Infinispan Cache";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for cache using Infinispan (https://infinispan.org/)";
     }

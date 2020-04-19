@@ -26,6 +26,11 @@ public class Jetty implements ServerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Jetty Server";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for a Jetty server";
     }

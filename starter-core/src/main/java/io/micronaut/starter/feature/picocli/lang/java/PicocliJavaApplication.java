@@ -42,6 +42,16 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "PicoCLI Java Application";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Support for creating PicoCLI Java applications";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         JavaApplicationFeature.super.apply(commandContext);
 

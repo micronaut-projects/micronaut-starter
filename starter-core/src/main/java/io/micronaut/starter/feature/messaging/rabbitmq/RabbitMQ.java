@@ -30,6 +30,11 @@ public class RabbitMQ implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "RabbitMQ Messaging";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for RabbitMQ in the application";
     }

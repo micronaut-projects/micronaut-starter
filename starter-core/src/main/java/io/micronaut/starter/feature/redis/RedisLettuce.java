@@ -29,6 +29,11 @@ public class RedisLettuce implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Lettuce Redis Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures the Lettuce driver for Redis";
     }

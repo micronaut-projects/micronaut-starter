@@ -44,6 +44,16 @@ public class Gradle implements BuildFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Gradle Build Tool";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for the Gradle build tool";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 

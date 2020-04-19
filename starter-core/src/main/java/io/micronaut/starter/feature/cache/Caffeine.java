@@ -28,6 +28,11 @@ public class Caffeine implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Caffeine Cache";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)";
     }

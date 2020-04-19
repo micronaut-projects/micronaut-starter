@@ -29,6 +29,11 @@ public class Elasticsearch implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Elasticsearch Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Elasticsearch in the application";
     }
