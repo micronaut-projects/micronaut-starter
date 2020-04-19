@@ -1,0 +1,33 @@
+plugins {
+    id "application"
+}
+
+ext {
+    picocliVersion = '4.2.0'
+}
+
+dependencies {
+    api project(":starter-core")
+    runtime "org.slf4j:slf4j-nop:1.7.30"
+    api "info.picocli:picocli:${picocliVersion}"
+    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    api "com.fizzed:rocker-runtime:1.2.3"
+
+    compileOnly "org.graalvm.nativeimage:svm"
+    implementation "org.fusesource.jansi:jansi:1.15"
+    implementation "org.yaml:snakeyaml:1.26"
+}
+
+mainClassName = "io.micronaut.starter.MicronautStarter"
+
+jar {
+    manifest {
+        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+        attributes('Implementation-Version': projectVersion)
+        attributes('Implementation-Title': title)
+        attributes "Main-Class": "io.micronaut.starter.MicronautStarter", "Implementation-Version": project.version
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

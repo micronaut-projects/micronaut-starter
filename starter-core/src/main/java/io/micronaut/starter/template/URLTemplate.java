@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Objects;
 
 public class URLTemplate implements Template {
 
@@ -31,8 +32,8 @@ public class URLTemplate implements Template {
     }
 
     public URLTemplate(String path, URL url, boolean executable) {
-        this.path = path;
-        this.url = url;
+        this.path = Objects.requireNonNull(path, "Path cannot be null");
+        this.url = Objects.requireNonNull(url, "Resource not found for path: " + path);
         this.executable = executable;
     }
 
