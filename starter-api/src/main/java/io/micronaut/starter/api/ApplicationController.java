@@ -18,13 +18,10 @@ package io.micronaut.starter.api;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.runtime.server.EmbeddedServer;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import javax.annotation.Nullable;
-import java.net.InetSocketAddress;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -48,16 +45,16 @@ import java.util.stream.Collectors;
 public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
-    private final EmbeddedServer embeddedServer;
+    private final ServerUrlResolver resolver;
 
     /**
      * Default constructor.
      * @param featureOperations The feature operations.
-     * @param embeddedServer The server if available
+     * @param resolver The server url resolver
      */
-    public ApplicationController(FeatureOperations featureOperations, @Nullable EmbeddedServer embeddedServer) {
+    public ApplicationController(FeatureOperations featureOperations, ServerUrlResolver resolver) {
         this.featureOperations = featureOperations;
-        this.embeddedServer = embeddedServer;
+        this.resolver = resolver;
     }
 
     /**
@@ -99,28 +96,10 @@ public class ApplicationController implements ApplicationTypeOperations {
     private ApplicationTypeDTO typeToDTO(ApplicationTypes type, HttpRequest<?> request, boolean includeFeatures) {
         List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(type) : Collections.emptyList();
         ApplicationTypeDTO dto = new ApplicationTypeDTO(type, features);
-        createLink(request, type, "create", dto);
-        createLink(request, type, "preview", dto);
+        Linkable.addLink(resolver, request, type, "create", dto);
+        Linkable.addLink(resolver, request, type, "preview", dto);
+        dto.addLink("self", new LinkDTO(resolver.resolveUrl(request) + request.getUri()));
         return dto;
     }
 
-    private void createLink(HttpRequest<?> request, ApplicationTypes type, String rel, ApplicationTypeDTO dto) {
-        LinkDTO link;
-        if (embeddedServer != null) {
-            String url = embeddedServer.getURL().toString();
-            if (!url.endsWith("/")) {
-                url += "/";
-            }
-            link = new LinkDTO((url + rel + "/" + type + "/{name}"));
-        } else {
-            InetSocketAddress serverAddress = request.getServerAddress();
-            String host = serverAddress.getHostString();
-            int port = serverAddress.getPort();
-            if (port > -1) {
-                host = host + ":" + port;
-            }
-            link = new LinkDTO((request.isSecure() ? "https" : "http") + "://" + host + "/" + rel + "/" + type + "/{name}");
-        }
-        dto.addLink(rel, link);
-    }
 }

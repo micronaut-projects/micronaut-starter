@@ -15,14 +15,11 @@
  */
 package io.micronaut.starter.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * DTO objects for {@link ApplicationType}.
@@ -32,10 +29,9 @@ import java.util.Map;
  */
 @Schema(name = "ApplicationType")
 @Introspected
-public class ApplicationTypeDTO implements ApplicationType {
+public class ApplicationTypeDTO extends Linkable implements ApplicationType {
     private final ApplicationTypes type;
     private final List<FeatureDTO> features;
-    private final Map<String, LinkDTO> links = new LinkedHashMap<>();
 
     /**
      * @param type The type
@@ -70,20 +66,4 @@ public class ApplicationTypeDTO implements ApplicationType {
         return type.getName();
     }
 
-    @Schema(description = "Links to other resources")
-    @JsonProperty("_links")
-    public Map<String, LinkDTO> getLinks() {
-        return links;
-    }
-
-    /**
-     * Adds a link.
-     * @param rel The relationship
-     * @param link The link
-     */
-    public void addLink(String rel, LinkDTO link) {
-        if (link != null && rel != null) {
-            links.put(rel, link);
-        }
-    }
 }

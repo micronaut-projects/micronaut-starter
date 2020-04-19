@@ -3,6 +3,7 @@ package io.micronaut.starter.api
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.api.preview.PreviewOperation
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -23,15 +24,14 @@ class PreviewControllerSpec extends Specification {
         def map = client.previewApp(ApplicationTypes.app, "test", Collections.emptyList(), null, null, null)
 
         then:
-        map.containsKey("build.gradle")
+        map.contents.containsKey("build.gradle")
 
     }
 
     @Client('/preview')
-    static interface PreviewClient extends PreviewOperation {
+    static interface PreviewClient  {
         @Get(uri = "/app/{name}{?features,build,test,lang}", consumes = MediaType.APPLICATION_JSON)
-        @Override
-        Map<String, String> previewApp(
+        PreviewDTO previewApp(
                 ApplicationTypes type,
                 String name,
                 @Nullable List<String> features,

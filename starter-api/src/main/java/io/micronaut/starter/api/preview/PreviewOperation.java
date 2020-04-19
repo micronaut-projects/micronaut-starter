@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import io.micronaut.http.HttpRequest;
 import io.micronaut.starter.api.ApplicationTypes;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -23,7 +24,6 @@ import io.micronaut.starter.options.TestFramework;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 public interface PreviewOperation {
     /**
@@ -36,12 +36,13 @@ public interface PreviewOperation {
      * @param lang The lang
      * @return An HTTP response that emits a writable
      */
-    Map<String, String> previewApp(
+    PreviewDTO previewApp(
             ApplicationTypes type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
-            @Nullable Language lang
+            @Nullable Language lang,
+            HttpRequest<?> request
     ) throws IOException;
 }

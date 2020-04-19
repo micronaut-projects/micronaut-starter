@@ -16,11 +16,15 @@
 package io.micronaut.starter.api.preview;
 
 import io.micronaut.context.BeanLocator;
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.api.LinkDTO;
+import io.micronaut.starter.api.Linkable;
+import io.micronaut.starter.api.ServerUrlResolver;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.io.MapOutputHandler;
@@ -28,8 +32,6 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,37 +49,39 @@ import java.util.Map;
 @Controller("/preview")
 public class PreviewController extends AbstractCreateController implements PreviewOperation {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
+    private final ServerUrlResolver resolver;
 
     /**
      * Default constructor.
      *
      * @param beanLocator The bean locator
      */
-    public PreviewController(BeanLocator beanLocator) {
+    public PreviewController(BeanLocator beanLocator, ServerUrlResolver resolver) {
         super(beanLocator);
+        this.resolver = resolver;
     }
 
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
-    @ApiResponse(
-            content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON
-            )
-    )
     @Override
-    public Map<String, String> previewApp(
+    public PreviewDTO previewApp(
             ApplicationTypes type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool build,
             @Nullable TestFramework test,
-            @Nullable Language lang) throws IOException {
+            @Nullable Language lang,
+            HttpRequest<?> request) throws IOException {
         try {
             Project project = NameUtils.parse(name);
             CreateCommand createAppCommand = buildCreateCommand(type);
             configureCommand(createAppCommand, build, lang, test, features);
             MapOutputHandler outputHandler = new MapOutputHandler();
             createAppCommand.generate(project, outputHandler);
-            return outputHandler.getProject();
+            Map<String, String> contents = outputHandler.getProject();
+            PreviewDTO previewDTO = new PreviewDTO(contents);
+            Linkable.addLink(resolver, request, type, "create", previewDTO);
+            previewDTO.addLink("self", new LinkDTO(resolver.resolveUrl(request) + request.getUri()));
+            return previewDTO;
         } catch (Exception e) {
             LOG.error("Error generating application: " + e.getMessage(), e);
             throw new IOException(e.getMessage(), e);
