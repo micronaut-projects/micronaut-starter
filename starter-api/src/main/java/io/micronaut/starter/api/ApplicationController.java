@@ -74,7 +74,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     }
 
     /**
-     * Get a specific application type
+     * Get a specific application type.
      * @param type The type
      * @param request The request
      * @return The type

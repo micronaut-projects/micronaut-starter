@@ -19,6 +19,7 @@ class FeatureValidatorSpec extends Specification {
         featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
             String name = "test-feature"
             String description = "test desc"
+            String title = "test title"
             Optional<Language> requiredLanguage = Optional.of(Language.groovy)
         }])
 
@@ -32,10 +33,12 @@ class FeatureValidatorSpec extends Specification {
         featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
             String name = "groovy-feature"
             String description = "groovy"
+            String title = "groovy title"
             Optional<Language> requiredLanguage = Optional.of(Language.groovy)
         }, new Feature() {
             String name = "kotlin-feature"
             String description = "groovy"
+            String title = "groovy title"
             Optional<Language> requiredLanguage = Optional.of(Language.kotlin)
         }])
 
@@ -51,10 +54,12 @@ class FeatureValidatorSpec extends Specification {
         featureValidator.validate(new Options(Language.java, null, null), [new OneOfFeature() {
             String name = "a"
             String description = "groovy"
+            String title = "groovy title"
             Class<?> featureClass = Object.class
         }, new OneOfFeature() {
             String name = "b"
             String description = "groovy"
+            String title = "groovy title"
             Class<?> featureClass = Object.class
         }])
 

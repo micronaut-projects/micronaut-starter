@@ -37,7 +37,7 @@ public interface ApplicationTypeOperations {
     List<ApplicationTypeDTO> list(HttpRequest<?> request);
 
     /**
-     * Get a specific application type
+     * Get a specific application type.
      * @param type The type
      * @param request The request
      * @return The type
