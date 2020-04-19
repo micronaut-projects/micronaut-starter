@@ -18,7 +18,6 @@ package io.micronaut.starter.api;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Get;
 
-import java.util.List;
 
 /**
  * Operations on application types.
@@ -34,7 +33,7 @@ public interface ApplicationTypeOperations {
      * @return The types
      */
     @Get("/application-types")
-    List<ApplicationTypeDTO> list(HttpRequest<?> request);
+    ApplicationTypeList list(HttpRequest<?> request);
 
     /**
      * Get a specific application type.
@@ -51,5 +50,5 @@ public interface ApplicationTypeOperations {
      * @return The features
      */
     @Get("/application-types/{type}/features")
-    List<FeatureDTO> features(ApplicationTypes type);
+    FeatureList features(ApplicationTypes type);
 }

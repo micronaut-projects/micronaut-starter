@@ -64,10 +64,11 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types")
-    public List<ApplicationTypeDTO> list(HttpRequest<?> request) {
-        return Arrays.stream(ApplicationTypes.values())
+    public ApplicationTypeList list(HttpRequest<?> request) {
+        List<ApplicationTypeDTO> types = Arrays.stream(ApplicationTypes.values())
                 .map(type -> typeToDTO(type, request, false))
                 .collect(Collectors.toList());
+        return new ApplicationTypeList(types);
     }
 
     /**
@@ -89,8 +90,8 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types/{type}/features")
-    public List<FeatureDTO> features(ApplicationTypes type) {
-        return featureOperations.getFeatures(type);
+    public FeatureList features(ApplicationTypes type) {
+        return new FeatureList(featureOperations.getFeatures(type));
     }
 
     private ApplicationTypeDTO typeToDTO(ApplicationTypes type, HttpRequest<?> request, boolean includeFeatures) {
