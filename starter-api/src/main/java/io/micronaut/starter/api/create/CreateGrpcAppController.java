@@ -29,7 +29,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -65,29 +64,10 @@ public class CreateGrpcAppController extends AbstractCreateController implements
 
     @Override
     protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nullable List<String> features) {
-        return new CreateGrpcCommand((CreateGrpcCommand.CreateGrpcFeatures) availableFeatures, featureValidator, contextFactory) {
-            @Override
-            protected List<String> getSelectedFeatures() {
-                return features;
-            }
-
-            @Nonnull
-            @Override
-            protected TestFramework getSelectedTestFramework() {
-                return testFramework != null ? testFramework : super.getSelectedTestFramework();
-            }
-
-            @Nonnull
-            @Override
-            protected Language getSelectedLang() {
-                return lang != null ? lang : super.getSelectedLang();
-            }
-
-            @Nonnull
-            @Override
-            protected BuildTool getSelectedBuildTool() {
-                return buildTool != null ? buildTool : super.getSelectedBuildTool();
-            }
-        };
+        CreateGrpcCommand.CreateGrpcFeatures availableFeatures = (CreateGrpcCommand.CreateGrpcFeatures) CreateGrpcAppController.this.availableFeatures;
+        FeatureValidator featureValidator = CreateGrpcAppController.this.featureValidator;
+        ContextFactory contextFactory = CreateGrpcAppController.this.contextFactory;
+        return CreateOperation.buildCreateGrpcAppCommand(availableFeatures, featureValidator, contextFactory, features, lang, buildTool, testFramework);
     }
+
 }

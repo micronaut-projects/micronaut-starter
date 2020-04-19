@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create;
+package io.micronaut.starter.api.preview;
 
-import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpResponse;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.ContextFactory;
-import io.micronaut.starter.command.CreateAppCommand;
+import io.micronaut.starter.api.create.CreateOperation;
+import io.micronaut.starter.command.CreateCliCommand;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
@@ -30,44 +30,48 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Implements the {@link CreateOperation} interface for applications.
+ * Previews a CLI application's contents.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/create")
-public class CreateAppController extends AbstractCreateController implements CreateOperation {
-    public CreateAppController(
-            CreateAppCommand.CreateAppFeatures createAppFeatures,
+@Controller("/preview")
+public class PreviewCliAppController extends AbstractPreviewController {
+    public PreviewCliAppController(
+            CreateCliCommand.CreateCliFeatures createAppFeatures,
             FeatureValidator featureValidator,
             ContextFactory contextFactory) {
         super(createAppFeatures, featureValidator, contextFactory);
     }
 
-    @Override
-    @Get(uri = "/app/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/cli/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @ApiResponse(
             content = @Content(
-                    mediaType = "application/zip"
+                    mediaType = MediaType.APPLICATION_JSON
             )
     )
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
-        return super.createApp(name, features, build, test, lang);
+    @Override
+    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool buildTool, @Nullable TestFramework testFramework, @Nullable Language lang) throws IOException {
+        return super.previewApp(name, features, buildTool, testFramework, lang);
     }
 
     @Override
     protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nullable List<String> features) {
-        return CreateOperation.buildCreateAppCommand(
-                (CreateAppCommand.CreateAppFeatures) availableFeatures,
+        return CreateOperation.buildCreateCliAppCommand(
+                (CreateCliCommand.CreateCliFeatures) availableFeatures,
                 featureValidator,
                 contextFactory,
-                features,
+                features != null ? features : Collections.emptyList(),
                 lang,
                 buildTool,
                 testFramework
         );
     }
+
 }
