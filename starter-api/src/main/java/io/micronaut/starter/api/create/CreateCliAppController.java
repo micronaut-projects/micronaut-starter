@@ -19,18 +19,15 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.command.CreateCliCommand;
-import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Provider;
 import java.util.List;
 
 /**
@@ -42,14 +39,12 @@ import java.util.List;
 @Controller("/create")
 public class CreateCliAppController extends AbstractCreateController implements CreateOperation {
     /**
-     * Abstract implementation of {@link CreateOperation}.
+     * Default constructor.
      *
-     * @param availableFeatures The available features
-     * @param featureValidator  The feature validator
-     * @param contextFactory    The context factory
+     * @param commandProvider The create CLI command provider
      */
-    protected CreateCliAppController(CreateCliCommand.CreateCliFeatures availableFeatures, FeatureValidator featureValidator, ContextFactory contextFactory) {
-        super(availableFeatures, featureValidator, contextFactory);
+    protected CreateCliAppController(Provider<CreateCliCommand> commandProvider) {
+        super(commandProvider);
     }
 
     @Override
@@ -62,13 +57,4 @@ public class CreateCliAppController extends AbstractCreateController implements 
     public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
         return super.createApp(name, features, build, test, lang);
     }
-
-    @Override
-    protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nonnull List<String> features) {
-        CreateCliCommand.CreateCliFeatures availableFeatures = (CreateCliCommand.CreateCliFeatures) CreateCliAppController.this.availableFeatures;
-        FeatureValidator featureValidator = CreateCliAppController.this.featureValidator;
-        ContextFactory contextFactory = CreateCliAppController.this.contextFactory;
-        return CreateOperation.buildCreateCliAppCommand(availableFeatures, featureValidator, contextFactory, features, lang, buildTool, testFramework);
-    }
-
 }

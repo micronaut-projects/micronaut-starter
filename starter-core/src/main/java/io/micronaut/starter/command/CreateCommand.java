@@ -34,6 +34,7 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -76,9 +77,35 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     /**
+     * @param lang Sets the lang to use
+     */
+    public void setLang(Language lang) {
+        this.lang = lang;
+    }
+
+    /**
+     * @param test Sets the test framework to use
+     */
+    public void setTestFramework(TestFramework test) {
+        this.test = test;
+    }
+
+    /**
+     * @param build Sets the build tool to use
+     */
+    public void setBuildTool(BuildTool build) {
+        this.build = build;
+    }
+
+    /**
+     * @param features Sets the features
+     */
+    public abstract void setFeatures(List<String> features);
+
+    /**
      * @return The selected features.
      */
-    protected @Nonnull abstract List<String> getSelectedFeatures();
+    protected abstract @Nonnull List<String> getSelectedFeatures();
 
     /**
      * @return The selected test framework.

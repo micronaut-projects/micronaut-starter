@@ -17,20 +17,11 @@ package io.micronaut.starter.api.create;
 
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
-import io.micronaut.starter.ContextFactory;
-import io.micronaut.starter.command.CreateAppCommand;
-import io.micronaut.starter.command.CreateCliCommand;
-import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.command.CreateGrpcCommand;
-import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -57,131 +48,4 @@ public interface CreateOperation {
             @Nullable TestFramework testFramework,
             @Nullable Language lang
     );
-
-    /**
-     * Builds the create GRPC app command.
-     * @param availableFeatures The features
-     * @param featureValidator The feature validator
-     * @param contextFactory The context factory
-     * @param features The features
-     * @param lang The lang
-     * @param buildTool The build framework
-     * @param testFramework The test framework
-     * @return The create command
-     */
-    static CreateGrpcCommand buildCreateGrpcAppCommand(CreateGrpcCommand.CreateGrpcFeatures availableFeatures, FeatureValidator featureValidator, ContextFactory contextFactory, @Nullable List<String> features, Language lang, BuildTool buildTool, TestFramework testFramework) {
-        return new CreateGrpcCommand(availableFeatures, featureValidator, contextFactory) {
-            @Override
-            protected List<String> getSelectedFeatures() {
-                return features != null ? features : Collections.emptyList();
-            }
-
-            @Nonnull
-            @Override
-            protected TestFramework getSelectedTestFramework() {
-                return testFramework != null ? testFramework : super.getSelectedTestFramework();
-            }
-
-            @Nonnull
-            @Override
-            protected Language getSelectedLang() {
-                return lang != null ? lang : super.getSelectedLang();
-            }
-
-            @Nonnull
-            @Override
-            protected BuildTool getSelectedBuildTool() {
-                return buildTool != null ? buildTool : super.getSelectedBuildTool();
-            }
-        };
-    }
-
-    /**
-     * Builds the create CLI app command.
-     * @param availableFeatures The features
-     * @param featureValidator The feature validator
-     * @param contextFactory The context factory
-     * @param features The features
-     * @param lang The lang
-     * @param buildTool The build framework
-     * @param testFramework The test framework
-     * @return The create command
-     */
-    static CreateCliCommand buildCreateCliAppCommand(CreateCliCommand.CreateCliFeatures availableFeatures, FeatureValidator featureValidator, ContextFactory contextFactory, @Nonnull List<String> features, Language lang, BuildTool buildTool, TestFramework testFramework) {
-        return new CreateCliCommand(availableFeatures, featureValidator, contextFactory) {
-            @Override
-            protected List<String> getSelectedFeatures() {
-                return features;
-            }
-
-            @Nonnull
-            @Override
-            protected TestFramework getSelectedTestFramework() {
-                return testFramework != null ? testFramework : super.getSelectedTestFramework();
-            }
-
-            @Nonnull
-            @Override
-            protected Language getSelectedLang() {
-                return lang != null ? lang : super.getSelectedLang();
-            }
-
-            @Nonnull
-            @Override
-            protected BuildTool getSelectedBuildTool() {
-                return buildTool != null ? buildTool : super.getSelectedBuildTool();
-            }
-        };
-    }
-
-    /**
-     * Builds the create command.
-     * @param appFeatures The features
-     * @param featureValidator The feature validator
-     * @param contextFactory The context factory
-     * @param features The features
-     * @param lang The lang
-     * @param buildTool The build framework
-     * @param testFramework The test framework
-     * @return The create command
-     */
-    static CreateCommand buildCreateAppCommand(
-            CreateAppCommand.CreateAppFeatures appFeatures,
-            FeatureValidator featureValidator,
-            ContextFactory contextFactory,
-            @Nullable List<String> features,
-            Language lang,
-            BuildTool buildTool,
-            TestFramework testFramework) {
-        return new CreateAppCommand(
-                appFeatures,
-                featureValidator,
-                contextFactory
-
-        ) {
-            @Override
-            protected @Nonnull
-            List<String> getSelectedFeatures() {
-                return features != null ? features : new ArrayList<>();
-            }
-
-            @Nonnull
-            @Override
-            protected TestFramework getSelectedTestFramework() {
-                return testFramework != null ? testFramework : super.getSelectedTestFramework();
-            }
-
-            @Nonnull
-            @Override
-            protected Language getSelectedLang() {
-                return lang != null ? lang : super.getSelectedLang();
-            }
-
-            @Nonnull
-            @Override
-            protected BuildTool getSelectedBuildTool() {
-                return buildTool != null ? buildTool : super.getSelectedBuildTool();
-            }
-        };
-    }
 }

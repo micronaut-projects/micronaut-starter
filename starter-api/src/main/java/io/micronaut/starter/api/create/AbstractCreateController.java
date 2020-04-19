@@ -19,11 +19,8 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.ZipOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -34,12 +31,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Provider;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Abstract implementation of a create controller.
@@ -50,23 +48,14 @@ import java.util.List;
 public abstract class AbstractCreateController implements CreateOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
-    protected final AvailableFeatures availableFeatures;
-    protected final FeatureValidator featureValidator;
-    protected final ContextFactory contextFactory;
+    private final Provider<? extends CreateCommand> createOperationProvider;
 
     /**
      * Abstract implementation of {@link CreateOperation}.
-     * @param availableFeatures The available features
-     * @param featureValidator The feature validator
-     * @param contextFactory The context factory
+     * @param createOperationProvider The create operation provider
      */
-    protected AbstractCreateController(
-            AvailableFeatures availableFeatures,
-            FeatureValidator featureValidator,
-            ContextFactory contextFactory) {
-        this.availableFeatures = availableFeatures;
-        this.featureValidator = featureValidator;
-        this.contextFactory = contextFactory;
+    protected AbstractCreateController(Provider<? extends CreateCommand> createOperationProvider) {
+        this.createOperationProvider = Objects.requireNonNull(createOperationProvider, "Create operation provider cannot be null");
     }
 
     @Override
@@ -81,7 +70,8 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
-                    CreateCommand createAppCommand = buildCommand(lang, buildTool, testFramework, features != null ? features : Collections.emptyList());
+                    CreateCommand createAppCommand = createOperationProvider.get();
+                    configureCommand(createAppCommand, buildTool, lang, testFramework, features);
                     createAppCommand.generate(project, new ZipOutputHandler(outputStream));
                     outputStream.flush();
                 } catch (Exception e) {
@@ -99,24 +89,44 @@ public abstract class AbstractCreateController implements CreateOperation {
     }
 
     /**
-     * @return The file name to return.
+     * Configures the command for the given arguments.
+     * @param createAppCommand The command
+     * @param buildTool The build tool
+     * @param lang The language
+     * @param testFramework The test framework
+     * @param features The features
      */
-    protected String getFilename() {
-        return "application.zip";
+    protected void configureCommand(
+            CreateCommand createAppCommand,
+            @Nullable BuildTool buildTool,
+            @Nullable Language lang,
+            @Nullable TestFramework testFramework,
+            @Nullable List<String> features) {
+        if (buildTool != null) {
+            createAppCommand.setBuildTool(buildTool);
+        }
+        if (lang != null) {
+            createAppCommand.setLang(lang);
+        }
+        if (testFramework != null) {
+            createAppCommand.setTestFramework(testFramework);
+        }
+        if (features != null) {
+            createAppCommand.setFeatures(features);
+        }
     }
 
     /**
-     * Build the create command.
-     * @param lang The language
-     * @param buildTool The build tool
-     * @param testFramework The test framework
-     * @param features The features
-     * @return The command
+     * @return The create operation provider
      */
-    protected abstract CreateCommand buildCommand(
-            Language lang,
-            BuildTool buildTool,
-            TestFramework testFramework,
-            @Nonnull List<String> features
-    );
+    protected @Nonnull Provider<? extends CreateCommand> getCreateOperationProvider() {
+        return createOperationProvider;
+    }
+
+    /**
+     * @return The file name to return.
+     */
+    protected @Nonnull String getFilename() {
+        return "application.zip";
+    }
 }

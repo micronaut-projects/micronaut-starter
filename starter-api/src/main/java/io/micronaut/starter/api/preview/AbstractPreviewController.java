@@ -15,12 +15,9 @@
  */
 package io.micronaut.starter.api.preview;
 
-import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -30,8 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
+import javax.inject.Provider;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -47,19 +44,23 @@ public abstract class AbstractPreviewController extends AbstractCreateController
     /**
      * Abstract implementation of {@link PreviewOperation}.
      *
-     * @param availableFeatures The available features
-     * @param featureValidator  The feature validator
-     * @param contextFactory    The context factory
+     * @param createOperationProvider The create operation provider
      */
-    protected AbstractPreviewController(AvailableFeatures availableFeatures, FeatureValidator featureValidator, ContextFactory contextFactory) {
-        super(availableFeatures, featureValidator, contextFactory);
+    protected AbstractPreviewController(Provider<? extends CreateCommand> createOperationProvider) {
+        super(createOperationProvider);
     }
 
     @Override
-    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool buildTool, @Nullable TestFramework testFramework, @Nullable Language lang) throws IOException {
+    public Map<String, String> previewApp(
+            String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool buildTool,
+            @Nullable TestFramework testFramework,
+            @Nullable Language lang) throws IOException {
         try {
             Project project = NameUtils.parse(name);
-            CreateCommand createAppCommand = buildCommand(lang, buildTool, testFramework, features != null ? features : Collections.emptyList());
+            CreateCommand createAppCommand = getCreateOperationProvider().get();
+            configureCommand(createAppCommand, buildTool, lang, testFramework, features);
             MapOutputHandler outputHandler = new MapOutputHandler();
             createAppCommand.generate(project, outputHandler);
             return outputHandler.getProject();

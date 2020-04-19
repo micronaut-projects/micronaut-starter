@@ -49,6 +49,13 @@ public class CreateMessagingCommand extends CreateCommand {
     }
 
     @Override
+    public void setFeatures(List<String> features) {
+        if (features != null) {
+            this.features = features;
+        }
+    }
+
+    @Override
     protected List<String> getSelectedFeatures() {
         return features;
     }

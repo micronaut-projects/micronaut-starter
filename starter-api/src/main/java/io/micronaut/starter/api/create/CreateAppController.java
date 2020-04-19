@@ -19,10 +19,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.command.CreateAppCommand;
-import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -30,6 +27,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
+import javax.inject.Provider;
 import java.util.List;
 
 /**
@@ -40,11 +38,13 @@ import java.util.List;
  */
 @Controller("/create")
 public class CreateAppController extends AbstractCreateController implements CreateOperation {
-    public CreateAppController(
-            CreateAppCommand.CreateAppFeatures createAppFeatures,
-            FeatureValidator featureValidator,
-            ContextFactory contextFactory) {
-        super(createAppFeatures, featureValidator, contextFactory);
+    /**
+     * Default constructor.
+     *
+     * @param commandProvider The create app command provider
+     */
+    public CreateAppController(Provider<CreateAppCommand> commandProvider) {
+        super(commandProvider);
     }
 
     @Override
@@ -56,18 +56,5 @@ public class CreateAppController extends AbstractCreateController implements Cre
     )
     public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
         return super.createApp(name, features, build, test, lang);
-    }
-
-    @Override
-    protected CreateCommand buildCommand(Language lang, BuildTool buildTool, TestFramework testFramework, @Nullable List<String> features) {
-        return CreateOperation.buildCreateAppCommand(
-                (CreateAppCommand.CreateAppFeatures) availableFeatures,
-                featureValidator,
-                contextFactory,
-                features,
-                lang,
-                buildTool,
-                testFramework
-        );
     }
 }
