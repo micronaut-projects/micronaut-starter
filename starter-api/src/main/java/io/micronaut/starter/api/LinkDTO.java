@@ -30,10 +30,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class LinkDTO {
 
     private final String href;
+    private final boolean templated;
+
+    public LinkDTO(String href) {
+        this(href, false);
+    }
 
     @Creator
-    public LinkDTO(String href) {
+    public LinkDTO(String href, boolean templated) {
         this.href = href;
+        this.templated = templated;
     }
 
     /**
@@ -49,6 +55,6 @@ public class LinkDTO {
      */
     @Schema(description = "Whether the link is templated")
     public boolean isTemplated() {
-        return true;
+        return templated;
     }
 }

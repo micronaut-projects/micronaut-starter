@@ -60,12 +60,7 @@ public class RequestInfo {
      * @return The self link
      */
     public LinkDTO self() {
-        return new LinkDTO(getCurrentURL()) {
-            @Override
-            public boolean isTemplated() {
-                return false;
-            }
-        };
+        return new LinkDTO(getCurrentURL(), false);
     }
 
     /**
@@ -82,11 +77,6 @@ public class RequestInfo {
      * @return A new link
      */
     public LinkDTO link(ApplicationType type) {
-        return new LinkDTO(getServerURL() + "/application-types/" + type.getName()) {
-            @Override
-            public boolean isTemplated() {
-                return false;
-            }
-        };
+        return new LinkDTO(getServerURL() + "/application-types/" + type.getName(), false);
     }
 }
