@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create;
+package io.micronaut.starter.api.preview;
 
-import io.micronaut.core.io.Writable;
-import io.micronaut.http.HttpResponse;
+import io.micronaut.context.BeanLocator;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.command.CreateCliCommand;
+import io.micronaut.starter.api.ApplicationTypes;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -27,34 +27,41 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Controller responsible for creating CLI applications.
+ * Previews an application contents.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/create")
-public class CreateCliAppController extends AbstractCreateController implements CreateOperation {
+@Controller("/preview")
+public class PreviewController extends AbstractPreviewController {
     /**
      * Default constructor.
      *
-     * @param commandProvider The create CLI command provider
+     * @param beanLocator The bean locator
      */
-    protected CreateCliAppController(Provider<CreateCliCommand> commandProvider) {
-        super(commandProvider);
+    public PreviewController(BeanLocator beanLocator) {
+        super(beanLocator);
     }
 
-    @Override
-    @Get(uri = "/cli/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @ApiResponse(
             content = @Content(
-                    mediaType = "application/zip"
+                    mediaType = MediaType.APPLICATION_JSON
             )
     )
-    public HttpResponse<Writable> createApp(String name, @Nullable List<String> features, BuildTool build, TestFramework test, Language lang) {
-        return super.createApp(name, features, build, test, lang);
+    @Override
+    public Map<String, String> previewApp(
+            ApplicationTypes type,
+            String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool build,
+            @Nullable TestFramework test,
+            @Nullable Language lang) throws IOException {
+        return super.previewApp(type, name, features, build, test, lang);
     }
 }

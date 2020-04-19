@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import io.micronaut.starter.api.ApplicationTypes;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -27,6 +28,7 @@ import java.util.Map;
 public interface PreviewOperation {
     /**
      * Previews an application.
+     * @param type The application type
      * @param name The name of the application
      * @param features The features
      * @param buildTool The build tool
@@ -35,6 +37,7 @@ public interface PreviewOperation {
      * @return An HTTP response that emits a writable
      */
     Map<String, String> previewApp(
+            ApplicationTypes type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,

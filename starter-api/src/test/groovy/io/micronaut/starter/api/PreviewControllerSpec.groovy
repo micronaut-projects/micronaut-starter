@@ -20,7 +20,7 @@ class PreviewControllerSpec extends Specification {
 
     void "test default create app command"() {
         when:
-        def map = client.previewApp("test", Collections.emptyList(), null, null, null)
+        def map = client.previewApp(ApplicationTypes.app, "test", Collections.emptyList(), null, null, null)
 
         then:
         map.containsKey("build.gradle")
@@ -32,6 +32,7 @@ class PreviewControllerSpec extends Specification {
         @Get(uri = "/app/{name}{?features,build,test,lang}", consumes = MediaType.APPLICATION_JSON)
         @Override
         Map<String, String> previewApp(
+                ApplicationTypes type,
                 String name,
                 @Nullable List<String> features,
                 @Nullable BuildTool build,

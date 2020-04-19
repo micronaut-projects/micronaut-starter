@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.preview;
+package io.micronaut.starter.api.create;
 
-import io.micronaut.http.MediaType;
+import io.micronaut.context.BeanLocator;
+import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.command.CreateCliCommand;
+import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -27,35 +30,39 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
 import javax.inject.Provider;
-import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Previews a CLI application's contents.
+ * Implements the {@link CreateOperation} interface for applications.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/preview")
-public class PreviewCliAppController extends AbstractPreviewController {
+@Controller("/create")
+public class CreateController extends AbstractCreateController implements CreateOperation {
     /**
      * Default constructor.
      *
-     * @param commandProvider The create app command provider
+     * @param beanLocator The bean locator
      */
-    public PreviewCliAppController(Provider<CreateCliCommand> commandProvider) {
-        super(commandProvider);
+    public CreateController(BeanLocator beanLocator) {
+        super(beanLocator);
     }
 
-    @Get(uri = "/cli/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
+    @Override
+    @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
     @ApiResponse(
             content = @Content(
-                    mediaType = MediaType.APPLICATION_JSON
+                    mediaType = "application/zip"
             )
     )
-    @Override
-    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool build, @Nullable TestFramework test, @Nullable Language lang) throws IOException {
-        return super.previewApp(name, features, build, test, lang);
+    public HttpResponse<Writable> createApp(
+            ApplicationTypes type,
+            String name,
+            @Nullable List<String> features,
+            BuildTool build,
+            TestFramework test,
+            Language lang) {
+        return super.createApp(type, name, features, build, test, lang);
     }
 }

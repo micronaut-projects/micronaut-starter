@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.api.preview;
 
+import io.micronaut.context.BeanLocator;
 import io.micronaut.starter.Project;
+import io.micronaut.starter.api.ApplicationTypes;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.io.MapOutputHandler;
@@ -27,7 +29,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -44,14 +45,15 @@ public abstract class AbstractPreviewController extends AbstractCreateController
     /**
      * Abstract implementation of {@link PreviewOperation}.
      *
-     * @param createOperationProvider The create operation provider
+     * @param beanLocator The bean locator
      */
-    protected AbstractPreviewController(Provider<? extends CreateCommand> createOperationProvider) {
-        super(createOperationProvider);
+    protected AbstractPreviewController(BeanLocator beanLocator) {
+        super(beanLocator);
     }
 
     @Override
     public Map<String, String> previewApp(
+            ApplicationTypes type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
@@ -59,7 +61,7 @@ public abstract class AbstractPreviewController extends AbstractCreateController
             @Nullable Language lang) throws IOException {
         try {
             Project project = NameUtils.parse(name);
-            CreateCommand createAppCommand = getCreateOperationProvider().get();
+            CreateCommand createAppCommand = buildCreateCommand(type);
             configureCommand(createAppCommand, buildTool, lang, testFramework, features);
             MapOutputHandler outputHandler = new MapOutputHandler();
             createAppCommand.generate(project, outputHandler);

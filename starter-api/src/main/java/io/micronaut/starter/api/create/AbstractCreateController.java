@@ -15,12 +15,17 @@
  */
 package io.micronaut.starter.api.create;
 
+import io.micronaut.context.BeanLocator;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.starter.Project;
+import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.command.CreateAppCommand;
+import io.micronaut.starter.command.CreateCliCommand;
 import io.micronaut.starter.command.CreateCommand;
+import io.micronaut.starter.command.CreateGrpcCommand;
 import io.micronaut.starter.io.ZipOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -31,13 +36,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Abstract implementation of a create controller.
@@ -48,18 +51,19 @@ import java.util.Objects;
 public abstract class AbstractCreateController implements CreateOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
-    private final Provider<? extends CreateCommand> createOperationProvider;
+    private final BeanLocator beanLocator;
 
     /**
      * Abstract implementation of {@link CreateOperation}.
-     * @param createOperationProvider The create operation provider
+     * @param beanLocator The bean locator
      */
-    protected AbstractCreateController(Provider<? extends CreateCommand> createOperationProvider) {
-        this.createOperationProvider = Objects.requireNonNull(createOperationProvider, "Create operation provider cannot be null");
+    protected AbstractCreateController(BeanLocator beanLocator) {
+        this.beanLocator = beanLocator;
     }
 
     @Override
     public HttpResponse<Writable> createApp(
+            ApplicationTypes type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
@@ -70,7 +74,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
-                    CreateCommand createAppCommand = createOperationProvider.get();
+                    CreateCommand createAppCommand = buildCreateCommand(type);
                     configureCommand(createAppCommand, buildTool, lang, testFramework, features);
                     createAppCommand.generate(project, new ZipOutputHandler(outputStream));
                     outputStream.flush();
@@ -86,6 +90,22 @@ public abstract class AbstractCreateController implements CreateOperation {
             }
         });
         return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + getFilename());
+    }
+
+    /**
+     * @param type The type
+     * @return The command
+     */
+    protected @Nonnull CreateCommand buildCreateCommand(@Nonnull ApplicationTypes type) {
+        switch (type) {
+            case cli:
+                return beanLocator.getBean(CreateCliCommand.class);
+            case grpc:
+                return beanLocator.getBean(CreateGrpcCommand.class);
+            case app:
+            default:
+                return beanLocator.getBean(CreateAppCommand.class);
+        }
     }
 
     /**
@@ -114,13 +134,6 @@ public abstract class AbstractCreateController implements CreateOperation {
         if (features != null) {
             createAppCommand.setFeatures(features);
         }
-    }
-
-    /**
-     * @return The create operation provider
-     */
-    protected @Nonnull Provider<? extends CreateCommand> getCreateOperationProvider() {
-        return createOperationProvider;
     }
 
     /**
