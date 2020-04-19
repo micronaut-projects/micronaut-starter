@@ -15,10 +15,15 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.context.BeanLocator;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.starter.command.CreateAppCommand;
+import io.micronaut.starter.command.CreateCliCommand;
+import io.micronaut.starter.command.CreateGrpcCommand;
 import io.micronaut.starter.feature.Feature;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +37,15 @@ import java.util.stream.Collectors;
 public class FeatureController implements FeatureOperations {
 
     private final List<Feature> features;
+    private final BeanLocator beanLocator;
 
     /**
      * Default constructor.
      * @param features The features
      */
-    public FeatureController(List<Feature> features) {
+    public FeatureController(List<Feature> features, BeanLocator beanLocator) {
         this.features = features;
+        this.beanLocator = beanLocator;
     }
 
     @Override
@@ -47,5 +54,28 @@ public class FeatureController implements FeatureOperations {
         return features.stream()
                 .map(FeatureDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FeatureDTO> features(ApplicationTypes type) {
+        switch (type) {
+            case app:
+                return beanLocator.getBean(CreateAppCommand.CreateAppFeatures.class)
+                        .getAllFeatures()
+                        .map(FeatureDTO::new)
+                        .collect(Collectors.toList());
+            case grpc:
+                return beanLocator.getBean(CreateGrpcCommand.CreateGrpcFeatures.class)
+                        .getAllFeatures()
+                        .map(FeatureDTO::new)
+                        .collect(Collectors.toList());
+            case cli:
+                return beanLocator.getBean(CreateCliCommand.CreateCliFeatures.class)
+                        .getAllFeatures()
+                        .map(FeatureDTO::new)
+                        .collect(Collectors.toList());
+            default:
+                return Collections.emptyList();
+        }
     }
 }

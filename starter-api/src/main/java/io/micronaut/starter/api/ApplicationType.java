@@ -15,29 +15,23 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.http.annotation.Get;
-
-import java.util.List;
+import io.micronaut.core.naming.Named;
 
 /**
- * API to expose information about features.
+ * Interface that defines an application type.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-public interface FeatureOperations {
-    /**
-     * List all the available features.
-     * @return The available features
-     */
-    @Get("/")
-    List<FeatureDTO> features();
+public interface ApplicationType extends Named {
 
     /**
-     * A list of features applicable to the given application type.
-     * @param type The type
-     * @return The features
+     * @return The title.
      */
-    @Get("/{type}")
-    List<FeatureDTO> features(ApplicationTypes type);
+    String getTitle();
+
+    /**
+     * @return The description.
+     */
+    String getDescription();
 }

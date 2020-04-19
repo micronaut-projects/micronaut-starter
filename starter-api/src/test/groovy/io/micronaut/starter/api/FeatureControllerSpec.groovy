@@ -19,6 +19,20 @@ class FeatureControllerSpec extends Specification {
         !features.isEmpty()
     }
 
+    void "test list features for application type"() {
+        when:
+        def features = client.features(ApplicationTypes.cli)
+
+        then:
+        !features.any { it.name == 'swagger' }
+
+        when:
+        features = client.features(ApplicationTypes.app)
+
+        then:
+        features.any { it.name == 'swagger' }
+    }
+
     @Client('/features')
     static interface FeatureClient extends FeatureOperations {}
 }
