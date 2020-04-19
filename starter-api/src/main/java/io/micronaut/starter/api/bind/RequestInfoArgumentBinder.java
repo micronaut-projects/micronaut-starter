@@ -35,7 +35,7 @@ import java.util.Optional;
  * @since 1.0.0
  */
 @Singleton
-public class ServerURLArgumentBinder implements TypedRequestArgumentBinder<RequestInfo> {
+public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<RequestInfo> {
 
     private static final Argument<RequestInfo> TYPE = Argument.of(RequestInfo.class);
 
@@ -45,7 +45,7 @@ public class ServerURLArgumentBinder implements TypedRequestArgumentBinder<Reque
      * Default constructor.
      * @param embeddedServerProvider The embedded server provider
      */
-    public ServerURLArgumentBinder(@Nullable Provider<EmbeddedServer> embeddedServerProvider) {
+    public RequestInfoArgumentBinder(@Nullable Provider<EmbeddedServer> embeddedServerProvider) {
         this.embeddedServerProvider = embeddedServerProvider;
     }
 
