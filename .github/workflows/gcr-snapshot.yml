@@ -1,4 +1,4 @@
-name: Deploy Snapshot to Google Container Registry
+name: Snapshot to GCR
 on:
   push:
     branches:
