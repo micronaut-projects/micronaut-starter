@@ -25,12 +25,14 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.compress.archivers.zip.UnixStat;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 public class ZipOutputHandler implements OutputHandler {
 
-    private final ZipOutputStream zipOutputStream;
+    private final ZipArchiveOutputStream zipOutputStream;
     private final File zip;
 
     public ZipOutputHandler(Project project) throws IOException {
@@ -41,12 +43,12 @@ public class ZipOutputHandler implements OutputHandler {
             throw new IllegalArgumentException("Cannot create the project because the target zip file already exists");
         }
         zip.createNewFile();
-        zipOutputStream = new ZipOutputStream(Files.newOutputStream(zip.toPath()));
+        zipOutputStream = new ZipArchiveOutputStream(Files.newOutputStream(zip.toPath()));
     }
 
     public ZipOutputHandler(OutputStream outputStream) {
         zip = null;
-        zipOutputStream = new ZipOutputStream(outputStream);
+        zipOutputStream = new ZipArchiveOutputStream(outputStream);
     }
 
     @Override
@@ -65,10 +67,13 @@ public class ZipOutputHandler implements OutputHandler {
 
     @Override
     public void write(String path, Template contents) throws IOException {
-        ZipEntry zipEntry = new ZipEntry(path);
-        zipOutputStream.putNextEntry(zipEntry);
+        ZipArchiveEntry zipEntry = new ZipArchiveEntry(path);
+        if (contents.isExecutable()) {
+            zipEntry.setUnixMode(UnixStat.FILE_FLAG | 0755);
+        }
+        zipOutputStream.putArchiveEntry(zipEntry);
         contents.write(zipOutputStream);
-        zipOutputStream.closeEntry();
+        zipOutputStream.closeArchiveEntry();
     }
 
     @Override

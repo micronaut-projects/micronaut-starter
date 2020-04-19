@@ -23,6 +23,7 @@ dependencies {
     compileOnly "org.fusesource.jansi:jansi:1.15"
     api "com.fizzed:rocker-runtime:1.2.3"
     implementation "org.yaml:snakeyaml:1.26"
+    implementation 'org.apache.commons:commons-compress:1.20'
 
     testImplementation "info.picocli:picocli:${picocliVersion}"
     testImplementation "info.picocli:picocli-shell-jline3:${picocliVersion}"
