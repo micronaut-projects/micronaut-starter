@@ -6,7 +6,7 @@ From the project root:
 ./gradlew clean starter-web-servlet:run
 ```
 
-And visit http://localhost:8080/features
+And visit http://localhost:8080/application-types
 
 You can view the Swagger UI definition at: 
 

@@ -4,7 +4,7 @@
 ./gradlew clean starter-gcp-function:runFunction
 ```
 
-And visit http://localhost:8081/features
+And visit http://localhost:8081/application-types
 
 ## Deploying the function
 
