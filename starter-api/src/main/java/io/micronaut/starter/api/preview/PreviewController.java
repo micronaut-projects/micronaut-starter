@@ -19,12 +19,19 @@ import io.micronaut.context.BeanLocator;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.starter.Project;
 import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.api.create.AbstractCreateController;
+import io.micronaut.starter.command.CreateCommand;
+import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -38,7 +45,9 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Controller("/preview")
-public class PreviewController extends AbstractPreviewController {
+public class PreviewController extends AbstractCreateController implements PreviewOperation {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
+
     /**
      * Default constructor.
      *
@@ -62,6 +71,16 @@ public class PreviewController extends AbstractPreviewController {
             @Nullable BuildTool build,
             @Nullable TestFramework test,
             @Nullable Language lang) throws IOException {
-        return super.previewApp(type, name, features, build, test, lang);
+        try {
+            Project project = NameUtils.parse(name);
+            CreateCommand createAppCommand = buildCreateCommand(type);
+            configureCommand(createAppCommand, build, lang, test, features);
+            MapOutputHandler outputHandler = new MapOutputHandler();
+            createAppCommand.generate(project, outputHandler);
+            return outputHandler.getProject();
+        } catch (Exception e) {
+            LOG.error("Error generating application: " + e.getMessage(), e);
+            throw new IOException(e.getMessage(), e);
+        }
     }
 }
