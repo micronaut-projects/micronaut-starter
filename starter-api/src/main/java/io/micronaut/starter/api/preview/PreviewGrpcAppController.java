@@ -50,7 +50,7 @@ public class PreviewGrpcAppController extends AbstractPreviewController {
         super(createAppFeatures, featureValidator, contextFactory);
     }
 
-    @Get(uri = "/cli/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "/grpc/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @ApiResponse(
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON
