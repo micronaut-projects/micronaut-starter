@@ -16,6 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.http.annotation.Get;
+import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.Parameter;
 
 
@@ -42,7 +43,7 @@ public interface ApplicationTypeOperations {
      * @return The type
      */
     @Get("/application-types/{type}")
-    ApplicationTypeDTO getType(ApplicationTypes type, @Parameter(hidden = true) RequestInfo serverURL);
+    ApplicationTypeDTO getType(ApplicationType type, @Parameter(hidden = true) RequestInfo serverURL);
 
     /**
      * List the type features.
@@ -51,5 +52,5 @@ public interface ApplicationTypeOperations {
      * @return The features
      */
     @Get("/application-types/{type}/features")
-    FeatureList features(ApplicationTypes type, @Parameter(hidden = true) RequestInfo serverURL);
+    FeatureList features(ApplicationType type, @Parameter(hidden = true) RequestInfo serverURL);
 }

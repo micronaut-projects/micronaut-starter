@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.picocli.lang.kotlin;
 
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -37,8 +37,8 @@ public class PicocliKotlinApplication implements KotlinApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI_APP;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.CLI;
     }
 
     @Override
@@ -52,10 +52,10 @@ public class PicocliKotlinApplication implements KotlinApplicationFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        KotlinApplicationFeature.super.apply(commandContext);
+    public void apply(GeneratorContext generatorContext) {
+        KotlinApplicationFeature.super.apply(generatorContext);
 
-        commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
+        generatorContext.addTemplate("application", getTemplate(generatorContext.getProject()));
     }
 
     public RockerTemplate getTemplate(Project project) {

@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.picocli;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -54,8 +54,8 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_CLI_APP;
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.CLI;
     }
 
     @Override
@@ -80,9 +80,9 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.maven) {
+            generatorContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
         }
     }
 }

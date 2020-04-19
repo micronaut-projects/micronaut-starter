@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.discovery;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,8 +38,8 @@ public class DiscoveryConsul implements DiscoveryFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("consul.client.registration.enabled", true);
-        commandContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
+        generatorContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
     }
 }

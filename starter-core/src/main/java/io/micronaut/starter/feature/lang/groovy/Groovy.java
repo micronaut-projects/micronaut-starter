@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.lang.groovy;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
@@ -79,7 +79,7 @@ public class Groovy implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return options.getLanguage() == Language.groovy;
     }
 }

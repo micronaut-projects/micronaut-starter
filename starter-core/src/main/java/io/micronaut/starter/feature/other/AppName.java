@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -31,7 +31,7 @@ import java.util.Map;
 public class AppName implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return true;
     }
 
@@ -61,13 +61,13 @@ public class AppName implements DefaultFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         Map<String, Object> appNameConfig;
-        if (commandContext.isFeaturePresent(ExternalConfigFeature.class)) {
-            appNameConfig = commandContext.getBootstrapConfig();
+        if (generatorContext.isFeaturePresent(ExternalConfigFeature.class)) {
+            appNameConfig = generatorContext.getBootstrapConfig();
         } else {
-            appNameConfig = commandContext.getConfiguration();
+            appNameConfig = generatorContext.getConfiguration();
         }
-        appNameConfig.put("micronaut.application.name", commandContext.getProject().getName());
+        appNameConfig.put("micronaut.application.name", generatorContext.getProject().getName());
     }
 }

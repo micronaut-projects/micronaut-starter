@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.YamlTemplate;
@@ -46,10 +46,10 @@ public class Properties implements ConfigurationFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("propertiesConfig", new PropertiesTemplate("src/main/resources/application.properties", commandContext.getConfiguration()));
-        if (!commandContext.getBootstrapConfig().isEmpty()) {
-            commandContext.addTemplate("propertiesBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.properties", commandContext.getBootstrapConfig()));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("propertiesConfig", new PropertiesTemplate("src/main/resources/application.properties", generatorContext.getConfiguration()));
+        if (!generatorContext.getBootstrapConfig().isEmpty()) {
+            generatorContext.addTemplate("propertiesBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
         }
     }
 }

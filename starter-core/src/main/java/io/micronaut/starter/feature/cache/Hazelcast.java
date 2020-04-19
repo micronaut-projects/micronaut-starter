@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.cache;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,8 +38,8 @@ public class Hazelcast implements CacheFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("hazelcast.network.addresses", "['121.0.0.1:5701']");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("hazelcast.network.addresses", "['121.0.0.1:5701']");
     }
 
 }

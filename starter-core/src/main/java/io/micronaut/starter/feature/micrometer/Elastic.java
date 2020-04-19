@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.core.naming.NameUtils;
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -44,8 +44,8 @@ public class Elastic extends MicrometerFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
     }
 }

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.discovery
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class DiscoveryConsulSpec extends Specification implements ProjectFixture, Conte
 
     void 'test discovery-consul configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['discovery-consul'])
+        GeneratorContext commandContext = buildCommandContext(['discovery-consul'])
 
         then:
         commandContext.configuration.get('consul.client.registration.enabled'.toString()) == true

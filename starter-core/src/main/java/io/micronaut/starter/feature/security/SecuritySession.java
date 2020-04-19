@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.security;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,11 +39,11 @@ public class SecuritySession implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        commandContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
-        commandContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
-        commandContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
+        generatorContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
     }
 
 }

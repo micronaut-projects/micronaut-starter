@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.cassandra;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,12 +39,12 @@ public class Cassandra implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("cassandra.default.clusterName", "\"myCluster\"");
-        commandContext.getConfiguration().put("cassandra.default.contactPoint", "\"localhost\"");
-        commandContext.getConfiguration().put("cassandra.default.port", 9042);
-        commandContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
-        commandContext.getConfiguration().put("cassandra.default.ssl", true);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("cassandra.default.clusterName", "\"myCluster\"");
+        generatorContext.getConfiguration().put("cassandra.default.contactPoint", "\"localhost\"");
+        generatorContext.getConfiguration().put("cassandra.default.port", 9042);
+        generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
+        generatorContext.getConfiguration().put("cassandra.default.ssl", true);
     }
 
 }

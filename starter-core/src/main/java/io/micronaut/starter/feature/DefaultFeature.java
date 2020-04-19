@@ -16,13 +16,13 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
 
 import java.util.List;
 
 public interface DefaultFeature extends Feature {
 
-    boolean shouldApply(MicronautCommand micronautCommand,
+    boolean shouldApply(ApplicationType applicationType,
                         Options options,
                         List<Feature> selectedFeatures);
 }

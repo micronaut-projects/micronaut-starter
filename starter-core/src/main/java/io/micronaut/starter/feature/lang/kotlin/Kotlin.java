@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.lang.kotlin;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
@@ -65,8 +65,8 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getBuildProperties().put("kotlinVersion", getVersion());
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getBuildProperties().put("kotlinVersion", getVersion());
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return options.getLanguage() == Language.kotlin;
     }
 }

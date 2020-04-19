@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.filewatch
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -55,7 +55,7 @@ class FileWatchSpec extends Specification implements ProjectFixture, ContextFixt
 
     void 'test file-watch configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['file-watch'])
+        GeneratorContext commandContext = buildCommandContext(['file-watch'])
 
         then:
         commandContext.configuration.get('micronaut.io.watch.paths'.toString()) == 'src/main'

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -76,7 +76,7 @@ class HibernateGormSpec extends Specification implements ProjectFixture, Context
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['hibernate-gorm'])
+        GeneratorContext ctx = buildCommandContext(['hibernate-gorm'])
 
         then:
         ctx.configuration.containsKey("dataSource.url")

@@ -17,6 +17,7 @@ package io.micronaut.starter.api;
 
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
@@ -61,7 +62,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Override
     @Get("/application-types")
     public ApplicationTypeList list(RequestInfo info) {
-        List<ApplicationTypeDTO> types = Arrays.stream(ApplicationTypes.values())
+        List<ApplicationTypeDTO> types = Arrays.stream(ApplicationType.values())
                 .map(type -> typeToDTO(type, info, false))
                 .collect(Collectors.toList());
         ApplicationTypeList applicationTypeList = new ApplicationTypeList(types);
@@ -80,7 +81,7 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types/{type}")
-    public ApplicationTypeDTO getType(ApplicationTypes type, RequestInfo info) {
+    public ApplicationTypeDTO getType(ApplicationType type, RequestInfo info) {
         return typeToDTO(type, info, true);
     }
 
@@ -92,7 +93,7 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types/{type}/features")
-    public FeatureList features(ApplicationTypes type, RequestInfo requestInfo) {
+    public FeatureList features(ApplicationType type, RequestInfo requestInfo) {
         FeatureList featureList = new FeatureList(featureOperations.getFeatures(type));
         featureList.addLink(
                 Relationship.SELF,
@@ -101,7 +102,7 @@ public class ApplicationController implements ApplicationTypeOperations {
         return featureList;
     }
 
-    private ApplicationTypeDTO typeToDTO(ApplicationTypes type, RequestInfo requestInfo, boolean includeFeatures) {
+    private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures) {
         List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(type) : Collections.emptyList();
         ApplicationTypeDTO dto = new ApplicationTypeDTO(type, features);
         dto.addLink(

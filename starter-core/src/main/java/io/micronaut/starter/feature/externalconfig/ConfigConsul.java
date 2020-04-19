@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.externalconfig;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,9 +38,9 @@ public class ConfigConsul implements ExternalConfigFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        commandContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
-        commandContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
+        generatorContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
+        generatorContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
     }
 }

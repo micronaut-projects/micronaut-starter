@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.cache
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class HazelcastSpec extends Specification implements ProjectFixture, ContextFixt
 
     void 'test cache-hazelcast configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cache-hazelcast'])
+        GeneratorContext commandContext = buildCommandContext(['cache-hazelcast'])
 
         then:
         commandContext.configuration.get('hazelcast.network.addresses'.toString()) == "['121.0.0.1:5701']"

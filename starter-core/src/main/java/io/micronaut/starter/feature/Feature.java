@@ -18,8 +18,8 @@ package io.micronaut.starter.feature;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Language;
 
 import java.util.Optional;
@@ -36,11 +36,11 @@ public interface Feature extends Named, Ordered, Described {
 
     }
 
-    default void apply(CommandContext commandContext) {
+    default void apply(GeneratorContext generatorContext) {
 
     }
 
-    default boolean supports(MicronautCommand command) {
+    default boolean supports(ApplicationType command) {
         return true;
     }
 

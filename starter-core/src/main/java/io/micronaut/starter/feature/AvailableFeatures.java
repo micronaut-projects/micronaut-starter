@@ -15,7 +15,11 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.application.ApplicationType;
+
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AvailableFeatures implements Iterable<String> {
@@ -27,6 +31,16 @@ public abstract class AvailableFeatures implements Iterable<String> {
         for (Feature feature: features) {
             this.features.put(feature.getName(), feature);
         }
+    }
+
+    public AvailableFeatures(List<Feature> features, ApplicationType applicationType) {
+        this.features = features.stream()
+                .filter(f -> f.supports(applicationType))
+                .collect(Collectors.toMap(
+                        Feature::getName,
+                        Function.identity(),
+                        (u,v) -> { return null; },
+                        LinkedHashMap::new));
     }
 
     @Override

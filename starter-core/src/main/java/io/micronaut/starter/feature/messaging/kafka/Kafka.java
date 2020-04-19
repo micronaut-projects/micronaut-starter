@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.messaging.kafka;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.messaging.Platform;
@@ -30,9 +30,9 @@ import java.util.Optional;
 public class Kafka implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         Optional<Platform> platform = options.get("platform", Platform.class);
-        return micronautCommand == MicronautCommand.CREATE_MESSAGING_APP && platform.isPresent() && platform.get() == Platform.kafka;
+        return applicationType == ApplicationType.MESSAGING && platform.isPresent() && platform.get() == Platform.kafka;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Kafka implements DefaultFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
     }
 }

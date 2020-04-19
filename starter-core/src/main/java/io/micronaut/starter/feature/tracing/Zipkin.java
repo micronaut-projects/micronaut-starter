@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.tracing;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,9 +38,9 @@ public class Zipkin implements TracingFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("tracing.zipkin.enabled", true);
-        commandContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
-        commandContext.getConfiguration().put("tracing.zipkin.sampler.probability", 0.1);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("tracing.zipkin.enabled", true);
+        generatorContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
+        generatorContext.getConfiguration().put("tracing.zipkin.sampler.probability", 0.1);
     }
 }

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.graalvm;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
@@ -43,13 +43,13 @@ public class GraalNativeImage implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(commandContext.getProject(), commandContext.getBuildTool())));
-        commandContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(commandContext.getProject()), true));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool())));
+        generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
 
-        commandContext.addTemplate("nativeImageProperties",
+        generatorContext.addTemplate("nativeImageProperties",
                 new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties",
-                        nativeImageProperties.template(commandContext.getProject(), commandContext.getFeatures())
+                        nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
     }

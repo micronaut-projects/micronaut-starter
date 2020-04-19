@@ -2,8 +2,8 @@ package io.micronaut.starter.feature
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.Options
-import io.micronaut.starter.command.CommandContext
-import io.micronaut.starter.command.MicronautCommand
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -41,8 +41,8 @@ class FeatureSpec extends Specification {
     @Unroll
     void "test #feature.name does not add an unmodifiable map to config"() {
         when:
-        def commandCtx = new CommandContext(NameUtils.parse("foo"),
-                MicronautCommand.CREATE_APP,
+        def commandCtx = new GeneratorContext(NameUtils.parse("foo"),
+                ApplicationType.DEFAULT,
                 new Options(Language.java, TestFramework.junit, BuildTool.gradle), [feature])
         commandCtx.applyFeatures()
 

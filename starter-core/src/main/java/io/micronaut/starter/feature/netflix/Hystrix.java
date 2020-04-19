@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.netflix;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,8 +39,8 @@ public class Hystrix implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("hystrix.stream.enabled", false);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("hystrix.stream.enabled", false);
     }
 
 }

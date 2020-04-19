@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.externalconfig
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -72,7 +72,7 @@ class ConfigConsulSpec extends Specification implements ProjectFixture, ContextF
 
     void 'test config-consul configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['config-consul'])
+        GeneratorContext commandContext = buildCommandContext(['config-consul'])
 
         then:
         commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'

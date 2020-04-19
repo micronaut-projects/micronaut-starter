@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.cache;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,9 +38,9 @@ public class Infinispan implements CacheFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("infinispan.client.hotrod.server.host", "infinispan.example.com");
-        commandContext.getConfiguration().put("infinispan.client.hotrod.server.port", 10222);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("infinispan.client.hotrod.server.host", "infinispan.example.com");
+        generatorContext.getConfiguration().put("infinispan.client.hotrod.server.port", 10222);
     }
 
 }

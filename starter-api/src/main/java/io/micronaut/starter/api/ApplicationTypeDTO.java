@@ -17,6 +17,7 @@ package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -29,21 +30,21 @@ import java.util.List;
  */
 @Schema(name = "ApplicationType")
 @Introspected
-public class ApplicationTypeDTO extends Linkable implements ApplicationType {
-    private final ApplicationTypes type;
+public class ApplicationTypeDTO extends Linkable {
+
+    private final ApplicationType type;
     private final List<FeatureDTO> features;
 
     /**
      * @param type The type
      * @param features The available features
      */
-    public ApplicationTypeDTO(ApplicationTypes type, List<FeatureDTO> features) {
+    public ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features) {
         this.type = type;
         this.features = features;
     }
 
     @Schema(description = "The title of the application type")
-    @Override
     public String getTitle() {
         return type.getTitle();
     }
@@ -54,14 +55,12 @@ public class ApplicationTypeDTO extends Linkable implements ApplicationType {
     }
 
     @Schema(description = "A description of the application type")
-    @Override
     public String getDescription() {
         return type.getDescription();
     }
 
     @Schema(description = "The name of the application type")
     @NonNull
-    @Override
     public String getName() {
         return type.getName();
     }

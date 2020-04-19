@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.redis
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class RedisLettuceSpec extends Specification implements ProjectFixture, ContextF
 
     void 'test redis-lettuce configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['redis-lettuce'])
+        GeneratorContext commandContext = buildCommandContext(['redis-lettuce'])
 
         then:
         commandContext.configuration.get('redis.uri'.toString()) == 'redis://localhost'

@@ -2,7 +2,7 @@
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.Project
-@import io.micronaut.starter.command.MicronautCommand
+@import io.micronaut.starter.application.ApplicationType
 @import java.util.List
 
 
@@ -12,10 +12,10 @@ TestFramework testFramework,
 BuildTool buildTool,
 Project project,
 List<String> features,
-MicronautCommand command
+ApplicationType applicationType
 )
 
-command: @command.name()
+applicationType: @applicationType.name()
 defaultPackage: @project.getPackageName()
 testFramework: @testFramework.name()
 sourceLanguage: @language.name()

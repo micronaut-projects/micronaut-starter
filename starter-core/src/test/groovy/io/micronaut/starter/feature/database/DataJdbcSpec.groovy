@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -83,7 +83,7 @@ class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixtu
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['data-jdbc'])
+        GeneratorContext ctx = buildCommandContext(['data-jdbc'])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")

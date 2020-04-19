@@ -16,13 +16,10 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.context.BeanLocator;
-import io.micronaut.starter.command.CreateAppCommand;
-import io.micronaut.starter.command.CreateCliCommand;
-import io.micronaut.starter.command.CreateGrpcCommand;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,28 +53,10 @@ public class FeatureService implements FeatureOperations {
     }
 
     @Override
-    public List<FeatureDTO> getFeatures(ApplicationTypes type) {
-        switch (type) {
-            case app:
-                return beanLocator.getBean(CreateAppCommand.CreateAppFeatures.class)
-                        .getAllFeatures()
-                        .filter(Feature::isVisible)
-                        .map(FeatureDTO::new)
-                        .collect(Collectors.toList());
-            case grpc:
-                return beanLocator.getBean(CreateGrpcCommand.CreateGrpcFeatures.class)
-                        .getAllFeatures()
-                        .filter(Feature::isVisible)
-                        .map(FeatureDTO::new)
-                        .collect(Collectors.toList());
-            case cli:
-                return beanLocator.getBean(CreateCliCommand.CreateCliFeatures.class)
-                        .getAllFeatures()
-                        .filter(Feature::isVisible)
-                        .map(FeatureDTO::new)
-                        .collect(Collectors.toList());
-            default:
-                return Collections.emptyList();
-        }
+    public List<FeatureDTO> getFeatures(ApplicationType type) {
+        return beanLocator.getBean(type.getAvailableFeaturesClass())
+                .getFeatures()
+                .map(FeatureDTO::new)
+                .collect(Collectors.toList());
     }
 }

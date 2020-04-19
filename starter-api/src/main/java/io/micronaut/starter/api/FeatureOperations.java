@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.starter.application.ApplicationType;
+
 import java.util.List;
 
 /**
@@ -35,5 +37,5 @@ public interface FeatureOperations {
      * @param type The type
      * @return The features
      */
-    List<FeatureDTO> getFeatures(ApplicationTypes type);
+    List<FeatureDTO> getFeatures(ApplicationType type);
 }

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -66,7 +66,7 @@ class MongoGormSpec extends Specification implements ProjectFixture, ContextFixt
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['mongo-gorm'])
+        GeneratorContext ctx = buildCommandContext(['mongo-gorm'])
 
         then:
         ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"

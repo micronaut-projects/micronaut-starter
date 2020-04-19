@@ -20,7 +20,8 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -38,13 +39,14 @@ import java.util.List;
  */
 @Controller("/create")
 public class CreateController extends AbstractCreateController implements CreateOperation {
+
     /**
      * Default constructor.
      *
-     * @param beanLocator The bean locator
+     * @param projectGenerator The project generator
      */
-    public CreateController(BeanLocator beanLocator) {
-        super(beanLocator);
+    public CreateController(ProjectGenerator projectGenerator) {
+        super(projectGenerator);
     }
 
     @Override
@@ -55,7 +57,7 @@ public class CreateController extends AbstractCreateController implements Create
             )
     )
     public HttpResponse<Writable> createApp(
-            ApplicationTypes type,
+            ApplicationType type,
             String name,
             @Nullable List<String> features,
             BuildTool build,

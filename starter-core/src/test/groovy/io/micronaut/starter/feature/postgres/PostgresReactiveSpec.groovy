@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.postgres
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class PostgresReactiveSpec extends Specification implements ProjectFixture, Cont
 
     void 'test postgres-reactive configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['postgres-reactive'])
+        GeneratorContext commandContext = buildCommandContext(['postgres-reactive'])
 
         then:
         commandContext.configuration.get('postgres.reactive.client.port'.toString()) == 5432

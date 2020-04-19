@@ -15,14 +15,16 @@
  */
 package io.micronaut.starter.api.preview;
 
-import io.micronaut.context.BeanLocator;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.starter.Options;
 import io.micronaut.starter.Project;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.api.*;
 import io.micronaut.starter.api.create.AbstractCreateController;
-import io.micronaut.starter.command.CreateCommand;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -34,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -45,21 +48,22 @@ import java.util.Map;
  */
 @Controller("/preview")
 public class PreviewController extends AbstractCreateController implements PreviewOperation {
+
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
 
     /**
      * Default constructor.
      *
-     * @param beanLocator The bean locator
+     * @param projectGenerator The project generator
      */
-    public PreviewController(BeanLocator beanLocator) {
-        super(beanLocator);
+    public PreviewController(ProjectGenerator projectGenerator) {
+        super(projectGenerator);
     }
 
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @Override
     public PreviewDTO previewApp(
-            ApplicationTypes type,
+            ApplicationType type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool build,
@@ -68,10 +72,13 @@ public class PreviewController extends AbstractCreateController implements Previ
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
         try {
             Project project = NameUtils.parse(name);
-            CreateCommand createAppCommand = buildCreateCommand(type);
-            configureCommand(createAppCommand, build, lang, test, features);
             MapOutputHandler outputHandler = new MapOutputHandler();
-            createAppCommand.generate(project, outputHandler);
+            projectGenerator.generate(type,
+                    project,
+                    new Options(lang, test, build == null ? BuildTool.gradle : build),
+                    features == null ? Collections.emptyList() : features,
+                    outputHandler,
+                    ConsoleOutput.NOOP);
             Map<String, String> contents = outputHandler.getProject();
             PreviewDTO previewDTO = new PreviewDTO(contents);
             previewDTO.addLink(Relationship.CREATE, requestInfo.link(Relationship.CREATE, type));

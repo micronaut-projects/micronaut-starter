@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.security
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class SecuritySessionSpec extends Specification implements ProjectFixture, Conte
 
     void 'test security-session configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['security-session'])
+        GeneratorContext commandContext = buildCommandContext(['security-session'])
 
         then:
         commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true

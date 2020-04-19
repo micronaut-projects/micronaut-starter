@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.picocli.test.junit;
 
 import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -44,8 +44,8 @@ public class PicocliJunit implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("picocliJunitTest", getTemplate(commandContext.getLanguage(), commandContext.getProject()));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
     }
 
     public RockerTemplate getTemplate(Language language, Project project) {
@@ -61,8 +61,8 @@ public class PicocliJunit implements Feature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI_APP;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.CLI;
     }
 
     @Override

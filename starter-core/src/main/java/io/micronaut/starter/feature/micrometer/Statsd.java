@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.core.naming.NameUtils;
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -44,11 +44,11 @@ public class Statsd extends MicrometerFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.flavor", "datadog");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.host", "localhost");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.port", 8125);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.flavor", "datadog");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.host", "localhost");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.port", 8125);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.step", "PT1M");
     }
 }

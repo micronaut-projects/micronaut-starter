@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
@@ -56,9 +56,9 @@ public class DataJpa implements DataFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
-        commandContext.getConfiguration().putAll(getDatasourceConfig());
-        commandContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+        generatorContext.getConfiguration().putAll(getDatasourceConfig());
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }
 }

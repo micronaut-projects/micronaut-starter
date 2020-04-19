@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.ConsoleOutput;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -40,7 +40,7 @@ public class ContextFactory {
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
                                                List<String> selectedFeatures,
-                                               MicronautCommand command,
+                                               ApplicationType command,
                                                Options options) {
         final List<Feature> features = new ArrayList<>(8);
         for (String name: selectedFeatures) {
@@ -65,16 +65,16 @@ public class ContextFactory {
         return new FeatureContext(newOptions, command, features);
     }
 
-    public CommandContext createCommandContext(Project project,
-                                               FeatureContext featureContext,
-                                               ConsoleOutput consoleOutput) {
+    public GeneratorContext createGeneratorContext(Project project,
+                                                   FeatureContext featureContext,
+                                                   ConsoleOutput consoleOutput) {
         featureContext.processSelectedFeatures();
 
         List<Feature> featureList = featureContext.getFinalFeatures(consoleOutput);
 
         featureValidator.validate(featureContext.getOptions(), featureList);
 
-        return new CommandContext(project, featureContext.getCommand(), featureContext.getOptions(), featureList);
+        return new GeneratorContext(project, featureContext.getCommand(), featureContext.getOptions(), featureList);
     }
 
     Language determineLanguage(Language language, List<Feature> features) {

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.reloading;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
@@ -65,9 +65,9 @@ public class Springloaded implements ReloadingFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        commandContext.addTemplate("springLoadedJar",
+        generatorContext.addTemplate("springLoadedJar",
                 new BinaryTemplate("agent/" + JAR_NAME, classLoader.getResource("springloaded/" + JAR_NAME)));
     }
 }

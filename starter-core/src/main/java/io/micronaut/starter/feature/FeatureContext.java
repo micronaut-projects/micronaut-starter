@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.ConsoleOutput;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toList;
 
 public class FeatureContext {
 
-    private final MicronautCommand command;
+    private final ApplicationType command;
     private final List<Feature> selectedFeatures;
     private final Options options;
     private final List<Feature> features = new ArrayList<>();
@@ -38,7 +38,7 @@ public class FeatureContext {
     private ListIterator<Feature> iterator;
 
     public FeatureContext(Options options,
-                          MicronautCommand command,
+                          ApplicationType command,
                           List<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
@@ -114,7 +114,7 @@ public class FeatureContext {
         feature.processSelectedFeatures(this);
     }
 
-    public MicronautCommand getCommand() {
+    public ApplicationType getCommand() {
         return command;
     }
 

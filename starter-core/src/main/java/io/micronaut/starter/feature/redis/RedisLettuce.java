@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.redis;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,8 +39,8 @@ public class RedisLettuce implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("redis.uri", "redis://localhost");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("redis.uri", "redis://localhost");
     }
 
 }

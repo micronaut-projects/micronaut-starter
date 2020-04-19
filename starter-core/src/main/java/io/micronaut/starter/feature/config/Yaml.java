@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.config;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -45,7 +45,7 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
     }
 
@@ -55,10 +55,10 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", commandContext.getConfiguration()));
-        if (!commandContext.getBootstrapConfig().isEmpty()) {
-            commandContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", commandContext.getBootstrapConfig()));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", generatorContext.getConfiguration()));
+        if (!generatorContext.getBootstrapConfig().isEmpty()) {
+            generatorContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", generatorContext.getBootstrapConfig()));
         }
     }
 }

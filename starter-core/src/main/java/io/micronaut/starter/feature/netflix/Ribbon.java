@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.netflix;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,9 +39,9 @@ public class Ribbon implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("ribbon.VipAddress", "test");
-        commandContext.getConfiguration().put("ribbon.ServerListRefreshInterval", 2000);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("ribbon.VipAddress", "test");
+        generatorContext.getConfiguration().put("ribbon.ServerListRefreshInterval", 2000);
     }
 
 }

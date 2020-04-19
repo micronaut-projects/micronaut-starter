@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -39,7 +39,7 @@ public class Neo4jBolt implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
     }
 }

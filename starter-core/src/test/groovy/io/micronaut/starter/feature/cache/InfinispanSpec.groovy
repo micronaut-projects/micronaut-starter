@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.cache
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class InfinispanSpec extends Specification implements ProjectFixture, ContextFix
 
     void 'test cache-infinispan configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cache-infinispan'])
+        GeneratorContext commandContext = buildCommandContext(['cache-infinispan'])
 
         then:
         commandContext.configuration.get('infinispan.client.hotrod.server.host'.toString()) == 'infinispan.example.com'

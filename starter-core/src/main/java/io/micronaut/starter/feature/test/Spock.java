@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
@@ -31,9 +31,9 @@ public class Spock implements TestFeature {
     }
 
     @Override
-    public void doApply(CommandContext commandContext) {
+    public void doApply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        commandContext.addTemplate("testDir", new URLTemplate("src/test/groovy/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
+        generatorContext.addTemplate("testDir", new URLTemplate("src/test/groovy/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
     }
 
     @Override

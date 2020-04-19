@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.filewatch;
 
 import io.micronaut.context.condition.OperatingSystem;
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 
@@ -54,9 +54,9 @@ public class FileWatch implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
-        commandContext.getConfiguration().put("micronaut.io.watch.restart", true);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
+        generatorContext.getConfiguration().put("micronaut.io.watch.restart", true);
     }
 
 }

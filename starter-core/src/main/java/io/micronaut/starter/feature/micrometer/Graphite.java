@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.core.naming.NameUtils;
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -44,10 +44,10 @@ public class Graphite extends MicrometerFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
     }
 }

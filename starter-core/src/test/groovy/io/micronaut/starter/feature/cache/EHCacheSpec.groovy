@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.cache
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class EHCacheSpec extends Specification implements ProjectFixture, ContextFixtur
 
     void 'test cache-ehcache configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cache-ehcache'])
+        GeneratorContext commandContext = buildCommandContext(['cache-ehcache'])
 
         then:
         commandContext.configuration.get('micronaut.caches.my-cache.maximumSize'.toString()) == 20

@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.discovery
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class DiscoveryEurekaSpec extends Specification implements ProjectFixture, Conte
 
     void 'test discovery-eureka configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['discovery-eureka'])
+        GeneratorContext commandContext = buildCommandContext(['discovery-eureka'])
 
         then:
         commandContext.configuration.get('eureka.client.registration.enabled'.toString()) == true

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.messaging.rabbitmq;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 
@@ -45,7 +45,7 @@ public class RabbitMQ implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
     }
 }

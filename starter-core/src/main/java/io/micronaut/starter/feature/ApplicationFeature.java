@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
@@ -29,9 +29,9 @@ public interface ApplicationFeature extends Feature {
     }
 
     @Override
-    default void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("exec.mainClass", mainClassName(commandContext.getProject()));
+    default void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.maven) {
+            generatorContext.getBuildProperties().put("exec.mainClass", mainClassName(generatorContext.getProject()));
         }
     }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.Hidden;
 
 import java.util.Objects;

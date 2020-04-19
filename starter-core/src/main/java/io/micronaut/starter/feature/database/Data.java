@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 
@@ -45,9 +45,9 @@ public class Data implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("micronaut.data.version", "1.0.2");
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.maven) {
+            generatorContext.getBuildProperties().put("micronaut.data.version", "1.0.2");
         }
     }
 }

@@ -15,17 +15,15 @@
  */
 package io.micronaut.starter.api.create;
 
-import io.micronaut.context.BeanLocator;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.Options;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.api.ApplicationTypes;
-import io.micronaut.starter.command.CreateAppCommand;
-import io.micronaut.starter.command.CreateCliCommand;
-import io.micronaut.starter.command.CreateCommand;
-import io.micronaut.starter.command.CreateGrpcCommand;
+import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ZipOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -40,6 +38,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,19 +50,19 @@ import java.util.List;
 public abstract class AbstractCreateController implements CreateOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
-    private final BeanLocator beanLocator;
+    protected final ProjectGenerator projectGenerator;
 
     /**
      * Abstract implementation of {@link CreateOperation}.
-     * @param beanLocator The bean locator
+     * @param projectGenerator The project generator
      */
-    protected AbstractCreateController(BeanLocator beanLocator) {
-        this.beanLocator = beanLocator;
+    protected AbstractCreateController(ProjectGenerator projectGenerator) {
+        this.projectGenerator = projectGenerator;
     }
 
     @Override
     public HttpResponse<Writable> createApp(
-            ApplicationTypes type,
+            ApplicationType type,
             String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
@@ -74,9 +73,12 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
-                    CreateCommand createAppCommand = buildCreateCommand(type);
-                    configureCommand(createAppCommand, buildTool, lang, testFramework, features);
-                    createAppCommand.generate(project, new ZipOutputHandler(outputStream));
+                    projectGenerator.generate(type,
+                            project,
+                            new Options(lang, testFramework, buildTool == null ? BuildTool.gradle : buildTool),
+                            features == null ? Collections.emptyList() : features,
+                            new ZipOutputHandler(outputStream),
+                            ConsoleOutput.NOOP);
                     outputStream.flush();
                 } catch (Exception e) {
                     LOG.error("Error generating application: " + e.getMessage(), e);
@@ -90,50 +92,6 @@ public abstract class AbstractCreateController implements CreateOperation {
             }
         });
         return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + getFilename());
-    }
-
-    /**
-     * @param type The type
-     * @return The command
-     */
-    protected @Nonnull CreateCommand buildCreateCommand(@Nonnull ApplicationTypes type) {
-        switch (type) {
-            case cli:
-                return beanLocator.getBean(CreateCliCommand.class);
-            case grpc:
-                return beanLocator.getBean(CreateGrpcCommand.class);
-            case app:
-            default:
-                return beanLocator.getBean(CreateAppCommand.class);
-        }
-    }
-
-    /**
-     * Configures the command for the given arguments.
-     * @param createAppCommand The command
-     * @param buildTool The build tool
-     * @param lang The language
-     * @param testFramework The test framework
-     * @param features The features
-     */
-    protected void configureCommand(
-            CreateCommand createAppCommand,
-            @Nullable BuildTool buildTool,
-            @Nullable Language lang,
-            @Nullable TestFramework testFramework,
-            @Nullable List<String> features) {
-        if (buildTool != null) {
-            createAppCommand.setBuildTool(buildTool);
-        }
-        if (lang != null) {
-            createAppCommand.setLang(lang);
-        }
-        if (testFramework != null) {
-            createAppCommand.setTestFramework(testFramework);
-        }
-        if (features != null) {
-            createAppCommand.setFeatures(features);
-        }
     }
 
     /**

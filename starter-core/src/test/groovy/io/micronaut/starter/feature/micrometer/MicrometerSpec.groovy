@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.micrometer
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -98,7 +98,7 @@ class MicrometerSpec extends Specification implements ProjectFixture, ContextFix
     @Unroll
     void 'test micrometer configuration for feature=#micrometerFeature'() {
         when:
-        CommandContext commandContext = buildCommandContext([micrometerFeature])
+        GeneratorContext commandContext = buildCommandContext([micrometerFeature])
 
         then: 'the micrometer configuration is enabled for the feature'
         commandContext.configuration.get("micronaut.metrics.export.${configKey}.enabled".toString()) == true

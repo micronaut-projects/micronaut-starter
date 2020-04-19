@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.cassandra
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class CassandraSpec extends Specification implements ProjectFixture, ContextFixt
 
     void 'test cassandra configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cassandra'])
+        GeneratorContext commandContext = buildCommandContext(['cassandra'])
 
         then:
         commandContext.configuration.get('cassandra.default.clusterName'.toString()) == '"myCluster"'

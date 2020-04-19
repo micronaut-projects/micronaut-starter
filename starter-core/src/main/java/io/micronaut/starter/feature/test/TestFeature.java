@@ -17,8 +17,8 @@ package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.Options;
 import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -41,16 +41,16 @@ public interface TestFeature extends DefaultFeature {
     }
 
     @Override
-    default void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            BuildProperties props = commandContext.getBuildProperties();
+    default void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.maven) {
+            BuildProperties props = generatorContext.getBuildProperties();
             props.put("maven-surefire-plugin.version", "2.22.2");
             props.put("maven-failsafe-plugin.version", "2.22.2");
         }
-        doApply(commandContext);
+        doApply(generatorContext);
     }
 
-    void doApply(CommandContext commandContext);
+    void doApply(GeneratorContext generatorContext);
 
     TestFramework getTestFramework();
 
@@ -69,7 +69,7 @@ public interface TestFeature extends DefaultFeature {
     }
 
     @Override
-    default boolean shouldApply(MicronautCommand micronautCommand,
+    default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 List<Feature> selectedFeatures) {
         return options.getTestFramework() == getTestFramework() ||

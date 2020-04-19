@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.server;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 
@@ -42,8 +42,8 @@ public class Netty implements ServerFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_APP &&
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature);
     }
 }

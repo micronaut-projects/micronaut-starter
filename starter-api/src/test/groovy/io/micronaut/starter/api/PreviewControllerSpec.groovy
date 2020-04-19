@@ -5,6 +5,7 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.api.preview.PreviewOperation
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -21,7 +22,7 @@ class PreviewControllerSpec extends Specification {
 
     void "test default create app command"() {
         when:
-        def map = client.previewApp(ApplicationTypes.app, "test", Collections.emptyList(), null, null, null)
+        def map = client.previewApp(ApplicationType.DEFAULT, "test", Collections.emptyList(), null, null, null)
 
         then:
         map.contents.containsKey("build.gradle")
@@ -32,7 +33,7 @@ class PreviewControllerSpec extends Specification {
     static interface PreviewClient  {
         @Get(uri = "/app/{name}{?features,build,test,lang}", consumes = MediaType.APPLICATION_JSON)
         PreviewDTO previewApp(
-                ApplicationTypes type,
+                ApplicationType type,
                 String name,
                 @Nullable List<String> features,
                 @Nullable BuildTool build,

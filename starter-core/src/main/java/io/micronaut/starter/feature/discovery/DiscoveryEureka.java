@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.discovery;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -38,9 +38,9 @@ public class DiscoveryEureka implements DiscoveryFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("eureka.client.registration.enabled", true);
-        commandContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("eureka.client.registration.enabled", true);
+        generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
     }
 
 }

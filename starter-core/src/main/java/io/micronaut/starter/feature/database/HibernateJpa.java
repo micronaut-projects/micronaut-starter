@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
@@ -54,8 +54,8 @@ public class HibernateJpa implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
-        commandContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }
 }
