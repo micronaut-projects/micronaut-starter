@@ -1,0 +1,7 @@
+{
+  "resources":[
+    {"pattern":"\\Qapplication.properties\\E"},
+    {"pattern":"\\Qlogback.xml\\E"}
+  ],
+  "bundles":[]
+}
