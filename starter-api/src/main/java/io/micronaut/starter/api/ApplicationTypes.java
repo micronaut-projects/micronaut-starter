@@ -39,7 +39,7 @@ public enum ApplicationTypes implements ApplicationType {
     /**
      * A messaging application.
      */
-    messaging("Mesaging", "A Messaging-Driven Application"),
+    messaging("Messaging", "A Messaging-Driven Application"),
     /**
      * A GRPC application.
      */
