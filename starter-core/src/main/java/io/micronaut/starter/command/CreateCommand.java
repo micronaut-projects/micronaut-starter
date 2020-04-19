@@ -33,6 +33,7 @@ import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,31 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         this.command = command;
     }
 
-    protected abstract List<String> getSelectedFeatures();
+    /**
+     * @return The selected features.
+     */
+    protected @Nonnull abstract List<String> getSelectedFeatures();
+
+    /**
+     * @return The selected test framework.
+     */
+    protected @Nonnull TestFramework getSelectedTestFramework() {
+        return test;
+    }
+
+    /**
+     * @return The selected language
+     */
+    protected @Nonnull Language getSelectedLang() {
+        return lang;
+    }
+
+    /**
+     * @return The selected build tool
+     */
+    protected @Nonnull BuildTool getSelectedBuildTool() {
+        return build;
+    }
 
     protected Map<String, Object> getAdditionalOptions() {
         return Collections.emptyMap();
@@ -84,7 +109,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public Integer call() throws Exception {
 
         if (listFeatures) {
-            new ListFeatures(availableFeatures, new Options(lang, test, build), command, contextFactory).output(this);
+            new ListFeatures(availableFeatures, new Options(getSelectedLang(), getSelectedTestFramework(), getSelectedBuildTool()), command, contextFactory).output(this);
             return 0;
         }
 
@@ -107,7 +132,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, getAdditionalOptions());
+        Options options = new Options(getSelectedLang(), getSelectedTestFramework(), getSelectedBuildTool(), getAdditionalOptions());
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, getSelectedFeatures(), command, options);
         CommandContext commandContext = contextFactory.createCommandContext(project, featureContext, this);
 
