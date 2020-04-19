@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.api;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.runtime.server.EmbeddedServer;
-import jdk.internal.jline.internal.Nullable;
 
 import javax.inject.Singleton;
 import java.net.InetSocketAddress;
