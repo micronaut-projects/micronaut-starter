@@ -26,7 +26,17 @@ public class RandomPort implements DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Random Port Support";
+    }
+
+    @Override
     public void apply(CommandContext commandContext) {
         commandContext.getConfiguration().put("micronaut.server.port", "-1");
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 }
