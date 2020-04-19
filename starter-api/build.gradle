@@ -1,5 +1,5 @@
 dependencies {
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.4.4"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.4.0"
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }

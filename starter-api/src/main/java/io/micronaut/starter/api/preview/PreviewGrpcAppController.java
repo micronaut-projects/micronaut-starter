@@ -57,8 +57,8 @@ public class PreviewGrpcAppController extends AbstractPreviewController {
             )
     )
     @Override
-    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool buildTool, @Nullable TestFramework testFramework, @Nullable Language lang) throws IOException {
-        return super.previewApp(name, features, buildTool, testFramework, lang);
+    public Map<String, String> previewApp(String name, @Nullable List<String> features, @Nullable BuildTool build, @Nullable TestFramework test, @Nullable Language lang) throws IOException {
+        return super.previewApp(name, features, build, test, lang);
     }
 
     @Override
