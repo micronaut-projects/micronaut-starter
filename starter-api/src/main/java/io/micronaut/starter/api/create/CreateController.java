@@ -21,7 +21,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.api.ApplicationTypes;
-import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -29,7 +28,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
-import javax.inject.Provider;
 import java.util.List;
 
 /**
