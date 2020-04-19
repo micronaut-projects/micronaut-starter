@@ -13,7 +13,7 @@ class FeatureControllerSpec extends Specification {
 
     void "test list features"() {
         when:
-        List<FeatureDTO> features = client.features(ApplicationTypes.app).features
+        List<FeatureDTO> features = client.features(ApplicationTypes.app, RequestInfo.LOCAL).features
 
         then:
         !features.isEmpty()
@@ -21,13 +21,13 @@ class FeatureControllerSpec extends Specification {
 
     void "test list features for application type"() {
         when:
-        def features = client.features(ApplicationTypes.cli).features
+        def features = client.features(ApplicationTypes.cli, RequestInfo.LOCAL).features
 
         then:
         !features.any { it.name == 'swagger' }
 
         when:
-        features = client.features(ApplicationTypes.app).features
+        features = client.features(ApplicationTypes.app, RequestInfo.LOCAL).features
 
         then:
         features.any { it.name == 'swagger' }

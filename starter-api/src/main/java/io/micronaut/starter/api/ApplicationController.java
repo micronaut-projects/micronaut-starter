@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
@@ -45,61 +44,78 @@ import java.util.stream.Collectors;
 public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
-    private final ServerUrlResolver resolver;
 
     /**
      * Default constructor.
      * @param featureOperations The feature operations.
-     * @param resolver The server url resolver
      */
-    public ApplicationController(FeatureOperations featureOperations, ServerUrlResolver resolver) {
+    public ApplicationController(FeatureOperations featureOperations) {
         this.featureOperations = featureOperations;
-        this.resolver = resolver;
     }
 
     /**
      * List the application types.
-     * @param request The request
+     * @param info the request info
      * @return The types
      */
     @Override
     @Get("/application-types")
-    public ApplicationTypeList list(HttpRequest<?> request) {
+    public ApplicationTypeList list(RequestInfo info) {
         List<ApplicationTypeDTO> types = Arrays.stream(ApplicationTypes.values())
-                .map(type -> typeToDTO(type, request, false))
+                .map(type -> typeToDTO(type, info, false))
                 .collect(Collectors.toList());
-        return new ApplicationTypeList(types);
+        ApplicationTypeList applicationTypeList = new ApplicationTypeList(types);
+        applicationTypeList.addLink(
+                Relationship.SELF,
+                info.self()
+        );
+        return applicationTypeList;
     }
 
     /**
      * Get a specific application type.
      * @param type The type
-     * @param request The request
+     * @param info The request info
      * @return The type
      */
     @Override
     @Get("/application-types/{type}")
-    public ApplicationTypeDTO getType(ApplicationTypes type, HttpRequest<?> request) {
-        return typeToDTO(type, request, true);
+    public ApplicationTypeDTO getType(ApplicationTypes type, RequestInfo info) {
+        return typeToDTO(type, info, true);
     }
 
     /**
      * List the type features.
      * @param type The features
+     * @param requestInfo The request info
      * @return The features
      */
     @Override
     @Get("/application-types/{type}/features")
-    public FeatureList features(ApplicationTypes type) {
-        return new FeatureList(featureOperations.getFeatures(type));
+    public FeatureList features(ApplicationTypes type, RequestInfo requestInfo) {
+        FeatureList featureList = new FeatureList(featureOperations.getFeatures(type));
+        featureList.addLink(
+                Relationship.SELF,
+                requestInfo.self()
+        );
+        return featureList;
     }
 
-    private ApplicationTypeDTO typeToDTO(ApplicationTypes type, HttpRequest<?> request, boolean includeFeatures) {
+    private ApplicationTypeDTO typeToDTO(ApplicationTypes type, RequestInfo requestInfo, boolean includeFeatures) {
         List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(type) : Collections.emptyList();
         ApplicationTypeDTO dto = new ApplicationTypeDTO(type, features);
-        Linkable.addLink(resolver, request, type, "create", dto);
-        Linkable.addLink(resolver, request, type, "preview", dto);
-        dto.addLink("self", new LinkDTO(resolver.resolveUrl(request) + request.getUri()));
+        dto.addLink(
+                Relationship.CREATE,
+                requestInfo.link(Relationship.CREATE, type)
+        );
+        dto.addLink(
+                Relationship.PREVIEW,
+                requestInfo.link(Relationship.PREVIEW, type)
+        );
+        dto.addLink(
+                Relationship.SELF,
+                requestInfo.link(type)
+        );
         return dto;
     }
 

@@ -16,15 +16,11 @@
 package io.micronaut.starter.api.preview;
 
 import io.micronaut.context.BeanLocator;
-import io.micronaut.http.HttpRequest;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.api.ApplicationTypes;
-import io.micronaut.starter.api.LinkDTO;
-import io.micronaut.starter.api.Linkable;
-import io.micronaut.starter.api.ServerUrlResolver;
+import io.micronaut.starter.api.*;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.command.CreateCommand;
 import io.micronaut.starter.io.MapOutputHandler;
@@ -32,6 +28,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,16 +46,14 @@ import java.util.Map;
 @Controller("/preview")
 public class PreviewController extends AbstractCreateController implements PreviewOperation {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
-    private final ServerUrlResolver resolver;
 
     /**
      * Default constructor.
      *
      * @param beanLocator The bean locator
      */
-    public PreviewController(BeanLocator beanLocator, ServerUrlResolver resolver) {
+    public PreviewController(BeanLocator beanLocator) {
         super(beanLocator);
-        this.resolver = resolver;
     }
 
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
@@ -70,7 +65,7 @@ public class PreviewController extends AbstractCreateController implements Previ
             @Nullable BuildTool build,
             @Nullable TestFramework test,
             @Nullable Language lang,
-            HttpRequest<?> request) throws IOException {
+            @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
         try {
             Project project = NameUtils.parse(name);
             CreateCommand createAppCommand = buildCreateCommand(type);
@@ -79,8 +74,8 @@ public class PreviewController extends AbstractCreateController implements Previ
             createAppCommand.generate(project, outputHandler);
             Map<String, String> contents = outputHandler.getProject();
             PreviewDTO previewDTO = new PreviewDTO(contents);
-            Linkable.addLink(resolver, request, type, "create", previewDTO);
-            previewDTO.addLink("self", new LinkDTO(resolver.resolveUrl(request) + request.getUri()));
+            previewDTO.addLink(Relationship.CREATE, requestInfo.link(Relationship.CREATE, type));
+            previewDTO.addLink(Relationship.SELF, requestInfo.self());
             return previewDTO;
         } catch (Exception e) {
             LOG.error("Error generating application: " + e.getMessage(), e);

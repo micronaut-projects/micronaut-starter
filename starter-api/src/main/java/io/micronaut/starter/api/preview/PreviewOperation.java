@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.api.preview;
 
-import io.micronaut.http.HttpRequest;
 import io.micronaut.starter.api.ApplicationTypes;
+import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.swagger.v3.oas.annotations.Parameter;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public interface PreviewOperation {
      * @param buildTool The build tool
      * @param testFramework The test framework
      * @param lang The lang
+     * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
     PreviewDTO previewApp(
@@ -43,6 +45,5 @@ public interface PreviewOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            HttpRequest<?> request
-    ) throws IOException;
+            @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
 }

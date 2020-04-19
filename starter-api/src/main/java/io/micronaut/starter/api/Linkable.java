@@ -16,7 +16,6 @@
 package io.micronaut.starter.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.http.HttpRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashMap;
@@ -45,28 +44,9 @@ public abstract class Linkable {
      * @param rel The relationship
      * @param link The link
      */
-    public void addLink(String rel, LinkDTO link) {
+    public void addLink(CharSequence rel, LinkDTO link) {
         if (link != null && rel != null) {
-            links.put(rel, link);
+            links.put(rel.toString(), link);
         }
-    }
-
-    /**
-     * Add a link.
-     * @param request The request
-     * @param type the type
-     * @param rel The relationship
-     * @param dto The linkable
-     */
-    public static void addLink(
-            ServerUrlResolver urlResolver,
-            HttpRequest<?> request,
-            ApplicationTypes type,
-            String rel,
-            Linkable dto) {
-
-        String url = urlResolver.resolveUrl(request);
-        LinkDTO link = new LinkDTO(url + "/" + rel + "/" + type + "/{name}");
-        dto.addLink(rel, link);
     }
 }

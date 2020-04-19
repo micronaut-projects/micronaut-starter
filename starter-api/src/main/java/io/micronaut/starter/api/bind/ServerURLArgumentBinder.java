@@ -13,38 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api;
+package io.micronaut.starter.api.bind;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
+import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
 import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.starter.api.RequestInfo;
 
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.net.InetSocketAddress;
+import java.util.Optional;
 
 /**
- * Default URL resolver.
+ * Binds the Server URL.
  *
  * @author graemerocher
  * @since 1.0.0
  */
 @Singleton
-public class DefaultUrlResolver implements ServerUrlResolver {
-    private final EmbeddedServer embeddedServer;
+public class ServerURLArgumentBinder implements TypedRequestArgumentBinder<RequestInfo> {
+
+    private static final Argument<RequestInfo> TYPE = Argument.of(RequestInfo.class);
+
+    private final Provider<EmbeddedServer> embeddedServerProvider;
 
     /**
      * Default constructor.
-     * @param embeddedServer The embedded server
+     * @param embeddedServerProvider The embedded server provider
      */
-    public DefaultUrlResolver(@Nullable EmbeddedServer embeddedServer) {
-        this.embeddedServer = embeddedServer;
+    public ServerURLArgumentBinder(@Nullable Provider<EmbeddedServer> embeddedServerProvider) {
+        this.embeddedServerProvider = embeddedServerProvider;
     }
 
     @Override
-    public String resolveUrl(HttpRequest<?> request) {
+    public Argument<RequestInfo> argumentType() {
+        return TYPE;
+    }
+
+    @Override
+    public BindingResult<RequestInfo> bind(ArgumentConversionContext<RequestInfo> context, HttpRequest<?> source) {
+        String url = resolveUrl(source);
+        return () -> Optional.of(new RequestInfo(url, source.getPath()));
+    }
+
+    private String resolveUrl(HttpRequest<?> request) {
         String url;
-        if (embeddedServer != null) {
-            url = embeddedServer.getURL().toString();
+        if (embeddedServerProvider != null) {
+            url = embeddedServerProvider.get().getURL().toString();
             if (url.endsWith("/")) {
                 url = url.substring(0, url.length() - 1);
             }

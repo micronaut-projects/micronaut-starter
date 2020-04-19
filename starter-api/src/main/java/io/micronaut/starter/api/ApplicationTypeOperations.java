@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Get;
+import io.swagger.v3.oas.annotations.Parameter;
 
 
 /**
@@ -29,26 +29,27 @@ import io.micronaut.http.annotation.Get;
 public interface ApplicationTypeOperations {
     /**
      * List the application types.
-     * @param request The request
+     * @param serverURL The server URL
      * @return The types
      */
     @Get("/application-types")
-    ApplicationTypeList list(HttpRequest<?> request);
+    ApplicationTypeList list(@Parameter(hidden = true) RequestInfo serverURL);
 
     /**
      * Get a specific application type.
      * @param type The type
-     * @param request The request
+     * @param serverURL The server URL
      * @return The type
      */
     @Get("/application-types/{type}")
-    ApplicationTypeDTO getType(ApplicationTypes type, HttpRequest<?> request);
+    ApplicationTypeDTO getType(ApplicationTypes type, @Parameter(hidden = true) RequestInfo serverURL);
 
     /**
      * List the type features.
      * @param type The features
+     * @param serverURL The server URL
      * @return The features
      */
     @Get("/application-types/{type}/features")
-    FeatureList features(ApplicationTypes type);
+    FeatureList features(ApplicationTypes type, @Parameter(hidden = true) RequestInfo serverURL);
 }
