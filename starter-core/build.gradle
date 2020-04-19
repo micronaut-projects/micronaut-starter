@@ -20,13 +20,16 @@ sourceSets {
 
 
 dependencies {
-    api "info.picocli:picocli:${picocliVersion}"
-    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
-    api "com.fizzed:rocker-runtime:1.2.3"
-
     compileOnly "org.graalvm.nativeimage:svm"
-    implementation "org.fusesource.jansi:jansi:1.15"
+    compileOnly "info.picocli:picocli:${picocliVersion}"
+    compileOnly "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    compileOnly "org.fusesource.jansi:jansi:1.15"
+    api "com.fizzed:rocker-runtime:1.2.3"
     implementation "org.yaml:snakeyaml:1.26"
+
+    testImplementation "info.picocli:picocli:${picocliVersion}"
+    testImplementation "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    testImplementation "org.fusesource.jansi:jansi:1.15"
 }
 
 task("buildRockerReflectionConfig", type: RockerReflectionConfigTask)
