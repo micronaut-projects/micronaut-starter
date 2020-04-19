@@ -4,21 +4,25 @@ on:
     branches:
       - master
 jobs:
-  build:
+  deploy:
+    name: Deploy job
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/cache@v1
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Build Docker image
+        run: |
+          docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot
+      - name: Authenticate into Google Cloud Platform
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - uses: micronaut-projects/push-docker-gcr@master
-        with:
-          gcr_host: gcr.io
-          image_name: micronaut-starter
-          image_tag: snapshot
-        env:
-          GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Configure Docker to use Google Cloud Platform
+        run: "gcloud auth configure-docker --quiet"
+      - name: Push image to Google Cloud Container Registry
+        run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot
+      - name: Install beta commands and deploy on cloud run
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy ${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }} --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed
