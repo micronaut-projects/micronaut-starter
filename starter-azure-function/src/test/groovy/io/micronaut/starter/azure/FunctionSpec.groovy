@@ -13,7 +13,7 @@ class FunctionSpec extends Specification {
 
         when:
         def function = new Function()
-        def response = function.request(HttpMethod.GET, "/features")
+        def response = function.request(HttpMethod.GET, '/application-types/app/features')
                                 .invoke()
         then:
         response.status.value() == HttpStatus.OK.code

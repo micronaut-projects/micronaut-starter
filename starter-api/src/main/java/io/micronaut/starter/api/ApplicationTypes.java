@@ -27,23 +27,23 @@ public enum ApplicationTypes implements ApplicationType {
     /**
      * Regular application.
      */
-    app("Application", "A Micronaut application"),
+    app("Micronaut Application", "A Micronaut application"),
     /**
      * A Serverless function.
      */
-    function("Function", "A Function Application for Serverless"),
+    function("Micronaut Function", "A Function Application for Serverless"),
     /**
      * A CLI application.
      */
-    cli("CLI", "A Command Line Application"),
+    cli("Micronaut CLI Application", "A Command Line Application"),
     /**
      * A messaging application.
      */
-    messaging("Messaging", "A Messaging-Driven Application"),
+    messaging("Micronaut Messaging Application", "A Messaging-Driven Application"),
     /**
      * A GRPC application.
      */
-    grpc("GRPC", "A GRPC Application");
+    grpc("Micronaut GRPC Application", "A GRPC Application");
 
     private final String title;
     private final String description;

@@ -15,27 +15,40 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.http.annotation.Get;
-
-import java.util.List;
+import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Introspected;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * API to expose information about features.
+ * Represents a link.
  *
  * @author graemerocher
  * @since 1.0.0
  */
-public interface FeatureOperations {
-    /**
-     * List all the available features.
-     * @return The available features
-     */
-    List<FeatureDTO> getAllFeatures();
+@Introspected
+@Schema(name = "Link")
+public class LinkDTO {
+
+    private final String href;
+
+    @Creator
+    public LinkDTO(String href) {
+        this.href = href;
+    }
 
     /**
-     * A list of features applicable to the given application type.
-     * @param type The type
-     * @return The features
+     * @return The link address
      */
-    List<FeatureDTO> getFeatures(ApplicationTypes type);
+    @Schema(description = "The link address")
+    public String getHref() {
+        return href;
+    }
+
+    /**
+     * @return Whether the link is templated
+     */
+    @Schema(description = "Whether the link is templated")
+    public boolean isTemplated() {
+        return true;
+    }
 }

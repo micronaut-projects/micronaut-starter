@@ -9,11 +9,11 @@ import javax.inject.Inject
 @MicronautTest
 class FeatureControllerSpec extends Specification {
     @Inject
-    FeatureClient client
+    ApplicationTypeClient client
 
     void "test list features"() {
         when:
-        List<FeatureDTO> features = client.features()
+        List<FeatureDTO> features = client.features(ApplicationTypes.app)
 
         then:
         !features.isEmpty()
@@ -33,6 +33,6 @@ class FeatureControllerSpec extends Specification {
         features.any { it.name == 'swagger' }
     }
 
-    @Client('/features')
-    static interface FeatureClient extends FeatureOperations {}
+    @Client('/')
+    static interface ApplicationTypeClient extends ApplicationTypeOperations {}
 }

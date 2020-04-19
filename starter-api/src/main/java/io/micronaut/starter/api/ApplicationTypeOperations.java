@@ -15,27 +15,41 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.annotation.Get;
 
 import java.util.List;
 
 /**
- * API to expose information about features.
+ * Operations on application types.
  *
  * @author graemerocher
  * @since 1.0.0
+ *
  */
-public interface FeatureOperations {
+public interface ApplicationTypeOperations {
     /**
-     * List all the available features.
-     * @return The available features
+     * List the application types.
+     * @param request The request
+     * @return The types
      */
-    List<FeatureDTO> getAllFeatures();
+    @Get("/application-types")
+    List<ApplicationTypeDTO> list(HttpRequest<?> request);
 
     /**
-     * A list of features applicable to the given application type.
+     * Get a specific application type
      * @param type The type
+     * @param request The request
+     * @return The type
+     */
+    @Get("/application-types/{type}")
+    ApplicationTypeDTO getType(ApplicationTypes type, HttpRequest<?> request);
+
+    /**
+     * List the type features.
+     * @param type The features
      * @return The features
      */
-    List<FeatureDTO> getFeatures(ApplicationTypes type);
+    @Get("/application-types/{type}/features")
+    List<FeatureDTO> features(ApplicationTypes type);
 }

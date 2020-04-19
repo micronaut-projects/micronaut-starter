@@ -25,7 +25,7 @@ class FunctionSpec extends Specification {
     void "test list features"() {
 
         when:
-        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/features', HttpMethod.GET.toString())
+        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/application-types/app/features', HttpMethod.GET.toString())
         def response = handler.proxy(builder.build(), lambdaContext)
 
         then:

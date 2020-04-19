@@ -16,13 +16,12 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.context.BeanLocator;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.command.CreateAppCommand;
 import io.micronaut.starter.command.CreateCliCommand;
 import io.micronaut.starter.command.CreateGrpcCommand;
 import io.micronaut.starter.feature.Feature;
 
+import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,8 +32,8 @@ import java.util.stream.Collectors;
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/features")
-public class FeatureController implements FeatureOperations {
+@Singleton
+public class FeatureService implements FeatureOperations {
 
     private final List<Feature> features;
     private final BeanLocator beanLocator;
@@ -43,14 +42,13 @@ public class FeatureController implements FeatureOperations {
      * Default constructor.
      * @param features The features
      */
-    public FeatureController(List<Feature> features, BeanLocator beanLocator) {
+    public FeatureService(List<Feature> features, BeanLocator beanLocator) {
         this.features = features;
         this.beanLocator = beanLocator;
     }
 
     @Override
-    @Get("/")
-    public List<FeatureDTO> features() {
+    public List<FeatureDTO> getAllFeatures() {
         return features.stream()
                 .filter(Feature::isVisible)
                 .map(FeatureDTO::new)
@@ -58,7 +56,7 @@ public class FeatureController implements FeatureOperations {
     }
 
     @Override
-    public List<FeatureDTO> features(ApplicationTypes type) {
+    public List<FeatureDTO> getFeatures(ApplicationTypes type) {
         switch (type) {
             case app:
                 return beanLocator.getBean(CreateAppCommand.CreateAppFeatures.class)

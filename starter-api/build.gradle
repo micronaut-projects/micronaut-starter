@@ -4,6 +4,7 @@ dependencies {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }
     implementation("io.swagger.core.v3:swagger-annotations")
+    api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-validation"
 
