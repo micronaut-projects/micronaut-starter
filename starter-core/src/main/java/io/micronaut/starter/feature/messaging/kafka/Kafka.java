@@ -32,7 +32,7 @@ public class Kafka implements DefaultFeature {
     @Override
     public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
         Optional<Platform> platform = options.get("platform", Platform.class);
-        return micronautCommand == MicronautCommand.CREATE_MESSAGING && platform.isPresent() && platform.get() == Platform.kafka;
+        return micronautCommand == MicronautCommand.CREATE_MESSAGING_APP && platform.isPresent() && platform.get() == Platform.kafka;
     }
 
     @Override

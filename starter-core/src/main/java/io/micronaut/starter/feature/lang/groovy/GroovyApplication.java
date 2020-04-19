@@ -37,7 +37,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP || command == MicronautCommand.CREATE_GRPC;
+        return command == MicronautCommand.CREATE_APP || command == MicronautCommand.CREATE_GRPC_APP;
     }
 
     @Override

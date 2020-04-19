@@ -31,12 +31,12 @@ public class Grpc implements DefaultFeature {
 
     @Override
     public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_GRPC;
+        return micronautCommand == MicronautCommand.CREATE_GRPC_APP;
     }
 
     @Override
     public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_GRPC;
+        return command == MicronautCommand.CREATE_GRPC_APP;
     }
 
     @Override

@@ -51,7 +51,7 @@ public class PicocliJunit implements Feature {
 
     @Override
     public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
+        return command == MicronautCommand.CREATE_CLI_APP;
     }
 
     @Override

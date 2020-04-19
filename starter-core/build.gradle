@@ -1,9 +1,10 @@
+import com.fizzed.rocker.compiler.PlainTextStrategy
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     id "com.adarshr.test-logger" version "2.0.0"
     id "application"
-    id "com.fizzed.rocker" version "1.2.3"
+    id "io.micronaut.starter.rocker"
 }
 
 ext {
@@ -41,6 +42,7 @@ dependencies {
 }
 
 mainClassName = "io.micronaut.starter.MicronautStarter"
+
 
 rocker {
     // (All settings are shown with their defaults)

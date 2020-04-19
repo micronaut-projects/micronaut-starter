@@ -1,6 +1,19 @@
+plugins {
+    id "java-gradle-plugin"
+}
+
 repositories {
     mavenCentral()
 }
 dependencies {
     implementation "com.fizzed:rocker-compiler:1.2.3"
+}
+
+gradlePlugin {
+    plugins {
+        rockerPlugin {
+            id = "io.micronaut.starter.rocker"
+            implementationClass = "io.micronaut.starter.rocker.plugin.RockerPlugin"
+        }
+    }
 }

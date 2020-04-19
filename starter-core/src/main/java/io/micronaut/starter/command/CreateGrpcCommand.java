@@ -39,7 +39,7 @@ public class CreateGrpcCommand extends CreateCommand {
     public CreateGrpcCommand(CreateGrpcFeatures createGrpcFeatures,
                              FeatureValidator featureValidator,
                              ContextFactory contextFactory) {
-        super(createGrpcFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_GRPC);
+        super(createGrpcFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_GRPC_APP);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class CreateGrpcCommand extends CreateCommand {
 
         public CreateGrpcFeatures(List<Feature> features) {
             super(features.stream()
-                    .filter(f -> f.supports(MicronautCommand.CREATE_GRPC))
+                    .filter(f -> f.supports(MicronautCommand.CREATE_GRPC_APP))
                     .collect(Collectors.toList()));
         }
     }

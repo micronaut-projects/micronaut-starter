@@ -23,6 +23,7 @@ import io.micronaut.starter.command.*;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
 import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
@@ -56,6 +57,8 @@ import java.util.stream.Collectors;
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
+    private static Boolean INTERACTIVE_SHELL = false;
+
     private static final BiFunction<Throwable, CommandLine, Integer> EXCEPTION_HANDLER = (e, commandLine) -> {
         BaseCommand command = commandLine.getCommand();
         command.err(e.getMessage());
@@ -67,7 +70,11 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            new InteractiveShell(createCommandLine(), MicronautStarter::execute, EXCEPTION_HANDLER).start();
+            //The first command line isn't technically in the shell yet so this is called
+            //before setting the static flag
+            CommandLine commandLine = createCommandLine();
+            MicronautStarter.INTERACTIVE_SHELL = true;
+            new InteractiveShell(commandLine, MicronautStarter::execute, EXCEPTION_HANDLER).start();
         } else {
             System.exit(execute(args));
         }
@@ -103,16 +110,13 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
 
-        try {
-            CodeGenConfig codeGenConfig = loadConfig(beanContext);
-            if (codeGenConfig != null) {
-                beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
-                        .map(BeanDefinition::getBeanType)
-                        .map(bt -> beanContext.createBean(bt, codeGenConfig))
-                        .filter(CodeGenCommand::applies)
-                        .forEach(commandLine::addSubcommand);
-            }
-        } catch (IOException e) {
+        CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, MicronautStarter.INTERACTIVE_SHELL ? ConsoleOutput.NOOP : starter);
+        if (codeGenConfig != null) {
+            beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
+                    .map(BeanDefinition::getBeanType)
+                    .map(bt -> beanContext.createBean(bt, codeGenConfig))
+                    .filter(CodeGenCommand::applies)
+                    .forEach(commandLine::addSubcommand);
         }
 
         return commandLine;
@@ -121,50 +125,5 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         throw new CommandLine.ParameterException(spec.commandLine(), "No command specified");
-    }
-
-    private static CodeGenConfig loadConfig(BeanContext beanContext) throws IOException {
-        File micronautCli = new File("micronaut-cli.yml");
-        if (micronautCli.exists()) {
-            Yaml yaml = new Yaml();
-            try (InputStream inputStream = Files.newInputStream(micronautCli.toPath())) {
-                Map<String, Object> map = yaml.load(inputStream);
-                BeanIntrospection<CodeGenConfig> introspection = BeanIntrospection.getIntrospection(CodeGenConfig.class);
-                CodeGenConfig codeGenConfig = introspection.instantiate();
-                introspection.getBeanProperties().forEach(bp -> {
-                    bp.convertAndSet(codeGenConfig, map.get(bp.getName()));
-                });
-                if (map.containsKey("profile")) {
-                    String profile = map.get("profile").toString();
-                    AvailableFeatures availableFeatures = null;
-                    List<Feature> features = new ArrayList<>();
-                    if (profile.equals("service")) {
-                        codeGenConfig.setCommand(MicronautCommand.CREATE_APP);
-                        availableFeatures = beanContext.getBean(CreateAppCommand.CreateAppFeatures.class);
-                    } else if (profile.equals("cli")) {
-                        codeGenConfig.setCommand(MicronautCommand.CREATE_CLI);
-                        availableFeatures = beanContext.getBean(CreateCliCommand.CreateCliFeatures.class);
-                    } else if (profile.equals("function-aws") || profile.equals("function-aws-alexa")) {
-                        codeGenConfig.setCommand(MicronautCommand.CREATE_FUNCTION);
-                    } else if (profile.equals("grpc")) {
-                        codeGenConfig.setCommand(MicronautCommand.CREATE_GRPC);
-                        availableFeatures = beanContext.getBean(CreateGrpcCommand.CreateGrpcFeatures.class);
-                    } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
-                        codeGenConfig.setCommand(MicronautCommand.CREATE_MESSAGING);
-                    }
-                    codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
-                            .filter(f -> f instanceof DefaultFeature)
-                            .map(DefaultFeature.class::cast)
-                            .filter(f -> f.shouldApply(
-                                    codeGenConfig.getCommand(),
-                                    new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool()),
-                                    features))
-                            .map(Feature::getName)
-                            .collect(Collectors.toList()));
-                }
-                return codeGenConfig;
-            }
-        }
-        return null;
     }
 }

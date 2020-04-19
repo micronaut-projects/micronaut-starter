@@ -65,7 +65,7 @@ public class CreateCommandCommand extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getCommand() == MicronautCommand.CREATE_CLI;
+        return config.getCommand() == MicronautCommand.CREATE_CLI_APP;
     }
 
     @Override

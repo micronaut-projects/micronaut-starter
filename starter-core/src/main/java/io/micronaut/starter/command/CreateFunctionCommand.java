@@ -15,5 +15,57 @@
  */
 package io.micronaut.starter.command;
 
-public class CreateFunctionCommand {
+import io.micronaut.context.annotation.Prototype;
+import io.micronaut.starter.ContextFactory;
+import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.Provider;
+import io.micronaut.starter.feature.validation.FeatureValidator;
+import picocli.CommandLine;
+
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@CommandLine.Command(name = CreateFunctionCommand.NAME, description = "Creates a cloud function")
+@Prototype
+public class CreateFunctionCommand extends CreateCommand {
+
+    public static final String NAME = "create-function";
+
+    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CreateFunctionFeatures.class)
+    List<String> features = new ArrayList<>();
+
+    @CommandLine.Option(names = {"-p", "--provider"}, paramLabel = "PROVIDER", description = "The cloud provider. Possible values: ${COMPLETION-CANDIDATES}")
+    Provider provider = Provider.aws;
+
+    public CreateFunctionCommand(CreateFunctionFeatures createFunctionFeatures,
+                                 FeatureValidator featureValidator,
+                                 ContextFactory contextFactory) {
+        super(createFunctionFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_FUNCTION);
+    }
+
+    @Override
+    protected List<String> getSelectedFeatures() {
+        return features;
+    }
+
+    @Override
+    protected Map<String, Object> getAdditionalOptions() {
+        return Collections.singletonMap("cloudProvider", provider);
+    }
+
+    @Singleton
+    public static class CreateFunctionFeatures extends AvailableFeatures {
+
+        public CreateFunctionFeatures(List<Feature> features) {
+            super(features.stream()
+                    .filter(f -> f.supports(MicronautCommand.CREATE_FUNCTION))
+                    .collect(Collectors.toList()));
+        }
+    }
+
 }

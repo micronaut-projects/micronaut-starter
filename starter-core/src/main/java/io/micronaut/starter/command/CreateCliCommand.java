@@ -40,7 +40,7 @@ public class CreateCliCommand extends CreateCommand {
     public CreateCliCommand(CreateCliFeatures createCliFeatures,
                             FeatureValidator featureValidator,
                             ContextFactory contextFactory) {
-        super(createCliFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_CLI);
+        super(createCliFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_CLI_APP);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CreateCliCommand extends CreateCommand {
 
         public CreateCliFeatures(List<Feature> features) {
             super(features.stream()
-                    .filter(f -> f.supports(MicronautCommand.CREATE_CLI))
+                    .filter(f -> f.supports(MicronautCommand.CREATE_CLI_APP))
                     .collect(Collectors.toList()));
         }
 

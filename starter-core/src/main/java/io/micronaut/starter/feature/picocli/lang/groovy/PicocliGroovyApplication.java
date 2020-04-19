@@ -38,7 +38,7 @@ public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
+        return command == MicronautCommand.CREATE_CLI_APP;
     }
 
     @Override

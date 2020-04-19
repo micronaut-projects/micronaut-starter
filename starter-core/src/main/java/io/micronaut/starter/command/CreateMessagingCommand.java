@@ -45,7 +45,7 @@ public class CreateMessagingCommand extends CreateCommand {
     public CreateMessagingCommand(CreateMessagingFeatures createMessagingFeatures,
                              FeatureValidator featureValidator,
                              ContextFactory contextFactory) {
-        super(createMessagingFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_MESSAGING);
+        super(createMessagingFeatures, featureValidator, contextFactory, MicronautCommand.CREATE_MESSAGING_APP);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CreateMessagingCommand extends CreateCommand {
 
         public CreateMessagingFeatures(List<Feature> features) {
             super(features.stream()
-                    .filter(f -> f.supports(MicronautCommand.CREATE_MESSAGING))
+                    .filter(f -> f.supports(MicronautCommand.CREATE_MESSAGING_APP))
                     .collect(Collectors.toList()));
         }
     }

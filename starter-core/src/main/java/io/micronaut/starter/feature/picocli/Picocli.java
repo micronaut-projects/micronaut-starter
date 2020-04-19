@@ -55,7 +55,7 @@ public class Picocli implements DefaultFeature {
 
     @Override
     public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_CLI;
+        return micronautCommand == MicronautCommand.CREATE_CLI_APP;
     }
 
     @Override

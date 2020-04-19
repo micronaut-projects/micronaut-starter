@@ -40,7 +40,7 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getCommand() == MicronautCommand.CREATE_GRPC;
+        return config.getCommand() == MicronautCommand.CREATE_GRPC_APP;
     }
 
     @Override
