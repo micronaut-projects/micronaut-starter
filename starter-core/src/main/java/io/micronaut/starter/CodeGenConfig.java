@@ -101,7 +101,6 @@ public class CodeGenConfig {
         return null;
     }
 
-
     public static CodeGenConfig load(BeanContext beanContext, InputStream inputStream, ConsoleOutput consoleOutput) {
         Yaml yaml = new Yaml();
         Map<String, Object> map = new LinkedHashMap<>();

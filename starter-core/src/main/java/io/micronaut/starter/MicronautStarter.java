@@ -17,27 +17,14 @@ package io.micronaut.starter;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.starter.command.*;
-import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import org.yaml.snakeyaml.Yaml;
 import picocli.CommandLine;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 
 @CommandLine.Command(name = "mn", description = {
         "Micronaut CLI command line interface for generating projects and services.",
@@ -57,7 +44,7 @@ import java.util.stream.Collectors;
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
-    private static Boolean INTERACTIVE_SHELL = false;
+    private static Boolean interactiveShell = false;
 
     private static final BiFunction<Throwable, CommandLine, Integer> EXCEPTION_HANDLER = (e, commandLine) -> {
         BaseCommand command = commandLine.getCommand();
@@ -73,7 +60,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
             //The first command line isn't technically in the shell yet so this is called
             //before setting the static flag
             CommandLine commandLine = createCommandLine();
-            MicronautStarter.INTERACTIVE_SHELL = true;
+            MicronautStarter.interactiveShell = true;
             new InteractiveShell(commandLine, MicronautStarter::execute, EXCEPTION_HANDLER).start();
         } else {
             System.exit(execute(args));
@@ -110,7 +97,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
 
-        CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, MicronautStarter.INTERACTIVE_SHELL ? ConsoleOutput.NOOP : starter);
+        CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, MicronautStarter.interactiveShell ? ConsoleOutput.NOOP : starter);
         if (codeGenConfig != null) {
             beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
                     .map(BeanDefinition::getBeanType)
