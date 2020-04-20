@@ -15,13 +15,17 @@
  */
 package io.micronaut.starter.api.create;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.ConsoleOutput;
 import io.micronaut.starter.Options;
 import io.micronaut.starter.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ZipOutputHandler;
@@ -34,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
@@ -63,22 +68,41 @@ public abstract class AbstractCreateController implements CreateOperation {
     @Override
     public HttpResponse<Writable> createApp(
             ApplicationType type,
-            String name,
+            @Pattern(regexp = "[\\w\\d-_]+") String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang) {
-        Project project = NameUtils.parse(name);
+        Project project;
+        try {
+            project = NameUtils.parse(name);
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, "Invalid project name: " + e.getMessage());
+        }
+
+        GeneratorContext generatorContext;
+        try {
+            generatorContext = projectGenerator.createGeneratorContext(
+                    type,
+                    project,
+                    new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool),
+                    features != null ? features : Collections.emptyList(),
+                    ConsoleOutput.NOOP
+            );
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
         MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
+
                     projectGenerator.generate(type,
                             project,
-                            new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool),
-                            features == null ? Collections.emptyList() : features,
                             new ZipOutputHandler(outputStream),
-                            ConsoleOutput.NOOP);
+                            generatorContext);
+
                     outputStream.flush();
                 } catch (Exception e) {
                     LOG.error("Error generating application: " + e.getMessage(), e);
@@ -91,13 +115,14 @@ public abstract class AbstractCreateController implements CreateOperation {
                 // no-op, output stream used
             }
         });
-        return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + getFilename());
+        return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + getFilename(project));
     }
 
     /**
      * @return The file name to return.
+     * @param project The project
      */
-    protected @Nonnull String getFilename() {
-        return "application.zip";
+    protected @Nonnull String getFilename(@NonNull Project project) {
+        return project.getName() + ".zip";
     }
 }

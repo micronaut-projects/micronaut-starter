@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.create;
 
+import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -28,6 +29,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.annotation.Nullable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -36,7 +39,7 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/create")
+@Controller("/")
 public class CreateController extends AbstractCreateController implements CreateOperation {
 
     /**
@@ -59,7 +62,7 @@ public class CreateController extends AbstractCreateController implements Create
      * @return A ZIP file containing the generated application.
      */
     @Override
-    @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/create/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
     @ApiResponse(
             description = "A ZIP file containing the generated application.",        
             content = @Content(
@@ -73,6 +76,33 @@ public class CreateController extends AbstractCreateController implements Create
             BuildTool build,
             TestFramework test,
             Language lang) {
+        return super.createApp(type, name, features, build, test, lang);
+    }
+
+    /**
+     * Creates the default application type using the name of the given Zip.
+     * @param type The type
+     * @param name The ZIP name
+     * @param features The features
+     * @param build The build tool
+     * @param test The test framework
+     * @param lang The language
+     * @return A Zip file containing the application
+     */
+    @Get(uri = "/{name}.zip{?type,features,lang,build,test}", produces = "application/zip")
+    @ApiResponse(
+            description = "A ZIP file containing the generated application.",
+            content = @Content(
+                    mediaType = "application/zip"
+            )
+    )
+    public HttpResponse<Writable> createZip(
+            @Bindable(defaultValue = "default") ApplicationType type,
+            @Pattern(regexp = "[\\w\\d-_]+") @NotBlank String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool build,
+            @Nullable TestFramework test,
+            @Nullable Language lang) {
         return super.createApp(type, name, features, build, test, lang);
     }
 }
