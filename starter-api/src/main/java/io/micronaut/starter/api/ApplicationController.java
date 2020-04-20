@@ -70,6 +70,17 @@ public class ApplicationController implements ApplicationTypeOperations {
     }
 
     /**
+     * Information about this instance.
+     * @param request The request
+     * @param info The info
+     * @return Information about this instance.
+     */
+    @Get("/info")
+    InfoDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+        return new InfoDTO(request.getUri().toString(), request.getServerAddress());
+    }
+
+    /**
      * Provides a description of the API.
      * @param request The request
      * @return A description of the API.
