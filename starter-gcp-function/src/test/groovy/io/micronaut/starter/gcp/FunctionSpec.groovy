@@ -29,7 +29,7 @@ class FunctionSpec extends Specification {
         then:
         response.status == HttpStatus.CREATED
         ZipUtil.isZip(bytes)
-        response.httpHeaders.get(HttpHeaders.CONTENT_DISPOSITION).contains("application.zip")
+        response.httpHeaders.get(HttpHeaders.CONTENT_DISPOSITION).contains("test.zip")
     }
 }
 
