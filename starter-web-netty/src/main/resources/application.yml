@@ -1,0 +1,16 @@
+micronaut:
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+  server:
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - ^http(|s):\/\/www\.micronaut\.io$
+          allowedMethods:
+            - GET
+
