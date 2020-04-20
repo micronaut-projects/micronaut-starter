@@ -38,3 +38,4 @@ shadowJar {
 }
 
 run.classpath += configurations.developmentOnly
+run.jvmArgs("-agentlib:native-image-agent=config-output-dir=tmp")
