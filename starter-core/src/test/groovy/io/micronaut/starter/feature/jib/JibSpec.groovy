@@ -1,21 +1,12 @@
 package io.micronaut.starter.feature.jib
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class JibSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class JibSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle jib feature for language=#language'() {

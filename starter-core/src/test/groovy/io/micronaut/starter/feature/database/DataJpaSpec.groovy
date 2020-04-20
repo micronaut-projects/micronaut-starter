@@ -1,19 +1,12 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class DataJpaSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class DataJpaSpec extends BeanContextSpec {
 
     void "test data jpa features"() {
         when:

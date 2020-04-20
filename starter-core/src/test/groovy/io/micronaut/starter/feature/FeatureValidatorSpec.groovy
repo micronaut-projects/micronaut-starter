@@ -1,18 +1,13 @@
 package io.micronaut.starter.feature
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Specification
 
-class FeatureValidatorSpec extends Specification {
+class FeatureValidatorSpec extends BeanContextSpec {
 
-    @AutoCleanup
-    BeanContext ctx = BeanContext.run()
-
-    FeatureValidator featureValidator = ctx.getBean(FeatureValidator)
+    FeatureValidator featureValidator = beanContext.getBean(FeatureValidator)
 
     void "test feature conflicts with language selection"() {
         when:
