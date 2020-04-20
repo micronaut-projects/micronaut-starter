@@ -273,6 +273,9 @@ List<Property> properties
 @if (features.contains("redis-lettuce")) {
 @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
 }
+@if (features.contains("vertx-pg-client")) {
+@dependency.template("io.micronaut.configuration", "micronaut-vertx-pg-client", "compile", null)
+}
 @if (features.contains("file-watch-osx")) {
 @dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
