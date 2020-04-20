@@ -8,6 +8,8 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
+    implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")
+
     implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime") {
         exclude group: "org.slf4j"
     }
@@ -21,12 +23,12 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+mainClassName = "io.micronaut.starter.lambda.CustomMicronautLambdaRuntime"
 
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.function.aws.runtime.MicronautLambdaRuntime'
+        attributes 'Main-Class': 'io.micronaut.starter.lambda.CustomMicronautLambdaRuntime'
     }
     transform(Log4j2PluginsCacheFileTransformer)
 }
