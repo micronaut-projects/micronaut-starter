@@ -39,7 +39,7 @@ public abstract class AvailableFeatures implements Iterable<String> {
                 .collect(Collectors.toMap(
                         Feature::getName,
                         Function.identity(),
-                        (u,v) -> { return null; },
+                        (u, v) -> null,
                         LinkedHashMap::new));
     }
 

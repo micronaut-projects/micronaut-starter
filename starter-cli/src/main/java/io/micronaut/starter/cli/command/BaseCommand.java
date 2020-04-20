@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.CommonOptionsMixin;
+import io.micronaut.starter.cli.CommonOptionsMixin;
 import io.micronaut.starter.ConsoleOutput;
 import picocli.CommandLine;
 

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.util;
+package io.micronaut.starter.cli.util;
 
+import io.micronaut.starter.util.VersionInfo;
 import picocli.CommandLine.IVersionProvider;
 
 import javax.inject.Singleton;

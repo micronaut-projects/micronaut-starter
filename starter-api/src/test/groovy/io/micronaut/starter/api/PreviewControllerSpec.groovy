@@ -31,7 +31,7 @@ class PreviewControllerSpec extends Specification {
 
     @Client('/preview')
     static interface PreviewClient  {
-        @Get(uri = "/app/{name}{?features,build,test,lang}", consumes = MediaType.APPLICATION_JSON)
+        @Get(uri = "/default/{name}{?features,build,test,lang}", consumes = MediaType.APPLICATION_JSON)
         PreviewDTO previewApp(
                 ApplicationType type,
                 String name,

@@ -23,6 +23,7 @@ import io.micronaut.starter.application.MessagingAvailableFeatures;
 import io.micronaut.starter.feature.messaging.Platform;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,7 @@ public class CreateMessagingCommand extends CreateCommand {
         super(createMessagingFeatures, contextFactory, ApplicationType.MESSAGING, projectGenerator);
     }
 
+    @Nonnull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;

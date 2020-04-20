@@ -3,10 +3,6 @@ plugins {
     id "io.micronaut.starter.rocker"
 }
 
-ext {
-    picocliVersion = '4.2.0'
-}
-
 sourceSets {
     main {
         rocker {

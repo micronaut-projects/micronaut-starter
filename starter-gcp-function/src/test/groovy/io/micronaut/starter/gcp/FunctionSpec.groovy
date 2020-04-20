@@ -14,7 +14,7 @@ class FunctionSpec extends Specification {
 
         when:
         def function = new HttpFunction()
-        def response = function.invoke(HttpMethod.GET, '/application-types/app/features')
+        def response = function.invoke(HttpMethod.GET, '/application-types/default/features')
         then:
         response.status == HttpStatus.OK
     }
@@ -23,7 +23,7 @@ class FunctionSpec extends Specification {
 
         when:
         def function = new HttpFunction()
-        def response = function.invoke(HttpMethod.GET, "/create/app/test")
+        def response = function.invoke(HttpMethod.GET, "/create/default/test")
         byte[] bytes = response.getBody(Argument.of(byte[].class)).get()
 
         then:

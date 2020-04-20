@@ -17,9 +17,9 @@ package io.micronaut.starter.cli.feature.messaging.kafka;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
-import io.micronaut.starter.CodeGenConfig;
+import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.generator.CodeGenCommand;
+import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.groovyListener;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.javaListener;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.kotlinListener;

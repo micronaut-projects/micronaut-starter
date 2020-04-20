@@ -71,7 +71,7 @@ class CreateControllerSpec extends Specification {
 
     @Client('/create')
     static interface CreateClient {
-        @Get(uri = "/app/{name}{?features,build,test,lang}", consumes = "application/zip")
+        @Get(uri = "/default/{name}{?features,build,test,lang}", consumes = "application/zip")
         byte[] createApp(
                 String name,
                 @Nullable List<String> features,

@@ -25,7 +25,7 @@ class FunctionSpec extends Specification {
     void "test list features"() {
 
         when:
-        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/application-types/app/features', HttpMethod.GET.toString())
+        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/application-types/default/features', HttpMethod.GET.toString())
         def response = handler.proxy(builder.build(), lambdaContext)
 
         then:
@@ -35,7 +35,7 @@ class FunctionSpec extends Specification {
     void "test create app"() {
 
         when:
-        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/create/app/test', HttpMethod.GET.toString())
+        AwsProxyRequestBuilder builder = new AwsProxyRequestBuilder('/create/default/test', HttpMethod.GET.toString())
         def response = handler.proxy(builder.build(), lambdaContext)
         def bytes = response.body.getBytes(StandardCharsets.UTF_8)
 

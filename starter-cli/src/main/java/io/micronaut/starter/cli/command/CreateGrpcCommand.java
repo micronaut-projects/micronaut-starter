@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.GrpcAvailableFeatures;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class CreateGrpcCommand extends CreateCommand {
         super(availableFeatures, contextFactory, ApplicationType.GRPC, projectGenerator);
     }
 
+    @Nonnull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;

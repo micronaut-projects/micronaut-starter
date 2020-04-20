@@ -23,6 +23,7 @@ import io.micronaut.starter.application.FunctionAvailableFeatures;
 import io.micronaut.starter.feature.function.Provider;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -46,7 +47,7 @@ public class CreateFunctionCommand extends CreateCommand {
         super(availableFeatures, contextFactory, ApplicationType.FUNCTION, projectGenerator);
     }
 
-
+    @Nonnull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;

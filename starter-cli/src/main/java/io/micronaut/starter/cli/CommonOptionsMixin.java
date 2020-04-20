@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
-import io.micronaut.starter.util.MicronautVersionProvider;
+import io.micronaut.starter.cli.util.MicronautVersionProvider;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 

@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.api.create;
 
-import io.micronaut.context.BeanLocator;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;

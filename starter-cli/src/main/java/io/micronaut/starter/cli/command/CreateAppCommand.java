@@ -22,6 +22,7 @@ import io.micronaut.starter.application.DefaultAvailableFeatures;
 import io.micronaut.starter.ContextFactory;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class CreateAppCommand extends CreateCommand {
         super(availableFeatures, contextFactory, ApplicationType.DEFAULT, projectGenerator);
     }
 
+    @Nonnull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;

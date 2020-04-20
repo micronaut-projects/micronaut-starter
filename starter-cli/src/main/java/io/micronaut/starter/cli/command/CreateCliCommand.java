@@ -23,6 +23,7 @@ import io.micronaut.starter.application.CliAvailableFeatures;
 import io.micronaut.starter.ContextFactory;
 import picocli.CommandLine;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class CreateCliCommand extends CreateCommand {
         super(availableFeatures, contextFactory, ApplicationType.CLI, projectGenerator);
     }
 
+    @Nonnull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;
