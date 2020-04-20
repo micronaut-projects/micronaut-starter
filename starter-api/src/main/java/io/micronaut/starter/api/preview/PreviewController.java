@@ -60,6 +60,16 @@ public class PreviewController extends AbstractCreateController implements Previ
         super(projectGenerator);
     }
 
+    /**
+     * Previews the contents of a generated application..
+     * @param type The application type The application type
+     * @param name The name of the application The name of the application
+     * @param features The features The chosen features
+     * @param build The build type (optional, defaults to Gradle)
+     * @param test The test framework (optional, defaults to JUnit)
+     * @param lang The language (optional, defaults to Java)
+     * @return A preview of the application contents.
+     */
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
     @Override
     public PreviewDTO previewApp(

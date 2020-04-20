@@ -48,6 +48,16 @@ public class CreateController extends AbstractCreateController implements Create
         super(projectGenerator);
     }
 
+    /**
+     * Creates an application, generating a ZIP file as the response.
+     * @param type The application type The application type
+     * @param name The name of the application The name of the application
+     * @param features The features The chosen features
+     * @param build The build type (optional, defaults to Gradle)
+     * @param test The test framework (optional, defaults to JUnit)
+     * @param lang The language (optional, defaults to Java)
+     * @return A ZIP file containing the generated application.
+     */
     @Override
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
     @ApiResponse(
