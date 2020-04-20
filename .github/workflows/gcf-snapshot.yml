@@ -21,4 +21,4 @@ jobs:
         run: |
           gcloud components install alpha --quiet
           cd starter-gcp-function/build/libs
-          gcloud alpha functions deploy ${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          gcloud alpha functions deploy ${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }} --trigger-http --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11
