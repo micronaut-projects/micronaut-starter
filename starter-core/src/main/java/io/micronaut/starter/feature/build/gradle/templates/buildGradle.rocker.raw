@@ -265,6 +265,9 @@ dependencies {
 @if (features.contains("vertx-pg-client")) {
     implementation "io.micronaut.configuration:micronaut-vertx-pg-client"
 }
+@if (features.contains("vertx-mysql-client")) {
+    implementation "io.micronaut.configuration:micronaut-vertx-mysql-client"
+}
 @if (features.contains("cache-caffeine")) {
     implementation "io.micronaut.cache:micronaut-cache-caffeine"
 }
