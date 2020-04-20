@@ -24,11 +24,12 @@ trait ContextFixture {
                          Language language = null,
                          TestFramework testFramework = null,
                          BuildTool buildTool = BuildTool.GRADLE) {
-        FeatureContext featureContext = buildFeatureContext(features, new Options(language, testFramework, buildTool))
+        Options options = new Options(language, testFramework, buildTool)
+        FeatureContext featureContext = buildFeatureContext(features, options)
         featureContext.processSelectedFeatures()
         List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
-        return new Features(finalFeatures)
+        return new Features(finalFeatures, options)
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
@@ -43,8 +44,8 @@ trait ContextFixture {
                 options)
     }
 
-    GeneratorContext buildCommandContext(List<String> selectedFeatures,
-                                         Options options = new Options(null, null, BuildTool.GRADLE)) {
+    GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
+                                           Options options = new Options(null, null, BuildTool.GRADLE)) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)
@@ -52,7 +53,7 @@ trait ContextFixture {
             commandContext.applyFeatures()
             return commandContext
         } else {
-            throw new IllegalStateException("Cannot get command context without implementing ProjectFixture")
+            throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
         }
     }
 

@@ -31,12 +31,10 @@ import java.util.List;
 @Singleton
 public class Kotlin implements LanguageFeature {
 
-    private final KotlinTest kotlinTest;
     private final List<KotlinApplicationFeature> applicationFeatures;
 
-    public Kotlin(List<KotlinApplicationFeature> applicationFeatures, KotlinTest kotlinTest) {
+    public Kotlin(List<KotlinApplicationFeature> applicationFeatures) {
         this.applicationFeatures = applicationFeatures;
-        this.kotlinTest = kotlinTest;
     }
 
     @Override
@@ -66,17 +64,7 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBuildProperties().put("kotlinVersion", getVersion());
-    }
-
-    @Override
-    public String getVersion() {
-        return "1.3.72";
-    }
-
-    @Override
-    public TestFeature getDefaultTestFeature() {
-        return kotlinTest;
+        generatorContext.getBuildProperties().put("kotlinVersion", "1.3.72");
     }
 
     @Override

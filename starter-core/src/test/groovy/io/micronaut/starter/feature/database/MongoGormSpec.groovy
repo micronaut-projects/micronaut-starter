@@ -60,7 +60,7 @@ class MongoGormSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['mongo-gorm'])
+        GeneratorContext ctx = buildGeneratorContext(['mongo-gorm'])
 
         then:
         ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"

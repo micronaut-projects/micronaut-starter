@@ -26,10 +26,6 @@ public interface LanguageFeature extends DefaultFeature {
         return false;
     }
 
-    String getVersion();
-
-    TestFeature getDefaultTestFeature();
-
     @Override
     default int getOrder() {
         return FeaturePhase.LANGUAGE.getOrder();

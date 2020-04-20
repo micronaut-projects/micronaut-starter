@@ -41,7 +41,7 @@ class HystrixSpec extends BeanContextSpec {
 
     void 'test netflix-hystrix configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['netflix-hystrix'])
+        GeneratorContext commandContext = buildGeneratorContext(['netflix-hystrix'])
 
         then:
         commandContext.configuration.get('hystrix.stream.enabled'.toString()) == false

@@ -41,7 +41,7 @@ class ElasticsearchSpec extends BeanContextSpec {
 
     void 'test elasticsearch configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['elasticsearch'])
+        GeneratorContext commandContext = buildGeneratorContext(['elasticsearch'])
 
         then:
         commandContext.configuration.get('elasticsearch.httpHosts'.toString()) == '"http://localhost:9200,http://127.0.0.2:9200"'

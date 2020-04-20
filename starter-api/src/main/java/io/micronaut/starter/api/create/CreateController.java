@@ -62,7 +62,7 @@ public class CreateController extends AbstractCreateController implements Create
      * @return A ZIP file containing the generated application.
      */
     @Override
-    @Get(uri = "/create/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion}", produces = "application/zip")
     @ApiResponse(
             description = "A ZIP file containing the generated application.",        
             content = @Content(
@@ -75,8 +75,9 @@ public class CreateController extends AbstractCreateController implements Create
             @Nullable List<String> features,
             BuildTool build,
             TestFramework test,
-            Language lang) {
-        return super.createApp(type, name, features, build, test, lang);
+            Language lang,
+            Integer javaVersion) {
+        return super.createApp(type, name, features, build, test, lang, javaVersion);
     }
 
     /**
@@ -102,7 +103,8 @@ public class CreateController extends AbstractCreateController implements Create
             @Nullable List<String> features,
             @Nullable BuildTool build,
             @Nullable TestFramework test,
-            @Nullable Language lang) {
-        return super.createApp(type, name, features, build, test, lang);
+            @Nullable Language lang,
+            @Nullable Integer javaVersion) {
+        return super.createApp(type, name, features, build, test, lang, javaVersion);
     }
 }

@@ -30,12 +30,10 @@ import java.util.List;
 @Singleton
 public class Groovy implements LanguageFeature {
 
-    private final Spock spock;
     private final List<GroovyApplicationFeature> applicationFeatures;
 
     public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
         this.applicationFeatures = applicationFeatures;
-        this.spock = spock;
     }
 
     @Override
@@ -61,16 +59,6 @@ public class Groovy implements LanguageFeature {
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }
-    }
-
-    @Override
-    public String getVersion() {
-        return null;
-    }
-
-    @Override
-    public TestFeature getDefaultTestFeature() {
-        return spock;
     }
 
     @Override

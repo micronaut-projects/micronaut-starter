@@ -41,7 +41,7 @@ class RibbonSpec extends BeanContextSpec {
 
     void 'test netflix-ribbon configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['netflix-ribbon'])
+        GeneratorContext commandContext = buildGeneratorContext(['netflix-ribbon'])
 
         then:
         commandContext.configuration.get('ribbon.VipAddress'.toString()) == 'test'

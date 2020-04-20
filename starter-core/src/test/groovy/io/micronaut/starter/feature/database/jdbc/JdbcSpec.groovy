@@ -57,7 +57,7 @@ class JdbcSpec extends BeanContextSpec {
 
     void "test jdbc feature configuration"() {
         when:
-        GeneratorContext ctx = buildCommandContext([jdbcFeature])
+        GeneratorContext ctx = buildGeneratorContext([jdbcFeature])
 
         then:
         ctx.configuration.containsKey("datasources.default")

@@ -41,7 +41,7 @@ class CassandraSpec extends BeanContextSpec {
 
     void 'test cassandra configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['cassandra'])
+        GeneratorContext commandContext = buildGeneratorContext(['cassandra'])
 
         then:
         commandContext.configuration.get('cassandra.default.clusterName'.toString()) == '"myCluster"'

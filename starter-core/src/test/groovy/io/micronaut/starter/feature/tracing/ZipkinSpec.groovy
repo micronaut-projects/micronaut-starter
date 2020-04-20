@@ -65,7 +65,7 @@ class ZipkinSpec extends BeanContextSpec {
 
     void 'test tracing-zipkin configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['tracing-zipkin'])
+        GeneratorContext commandContext = buildGeneratorContext(['tracing-zipkin'])
 
         then:
         commandContext.configuration.get('tracing.zipkin.enabled'.toString()) == true

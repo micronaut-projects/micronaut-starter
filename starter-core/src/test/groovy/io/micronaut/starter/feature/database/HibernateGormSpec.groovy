@@ -67,7 +67,7 @@ class HibernateGormSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['hibernate-gorm'])
+        GeneratorContext ctx = buildGeneratorContext(['hibernate-gorm'])
 
         then:
         ctx.configuration.containsKey("dataSource.url")

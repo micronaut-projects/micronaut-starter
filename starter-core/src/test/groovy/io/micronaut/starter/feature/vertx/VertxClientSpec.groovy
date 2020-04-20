@@ -41,7 +41,7 @@ class VertxClientSpec extends BeanContextSpec {
 
     void 'test vertx-mysql-client configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['vertx-mysql-client'])
+        GeneratorContext commandContext = buildGeneratorContext(['vertx-mysql-client'])
 
         then:
         commandContext.configuration.get('vertx.mysql.client.port'.toString()) == 5432

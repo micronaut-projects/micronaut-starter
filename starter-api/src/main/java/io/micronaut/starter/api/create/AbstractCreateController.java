@@ -72,7 +72,8 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
-            @Nullable Language lang) {
+            @Nullable Language lang,
+            @Nullable Integer javaVersion) {
         Project project;
         try {
             project = NameUtils.parse(name);
@@ -85,7 +86,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             generatorContext = projectGenerator.createGeneratorContext(
                     type,
                     project,
-                    new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool),
+                    new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool, javaVersion == null ? 11 : javaVersion),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP
             );
@@ -97,7 +98,6 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
-
                     projectGenerator.generate(type,
                             project,
                             new ZipOutputHandler(outputStream),

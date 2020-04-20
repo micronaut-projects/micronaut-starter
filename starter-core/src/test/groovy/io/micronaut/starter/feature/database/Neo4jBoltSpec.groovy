@@ -49,7 +49,7 @@ class Neo4jBoltSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['neo4j-bolt'])
+        GeneratorContext ctx = buildGeneratorContext(['neo4j-bolt'])
 
         then:
         ctx.getConfiguration().get("neo4j.uri") == "bolt://\${NEO4J_HOST:localhost}"

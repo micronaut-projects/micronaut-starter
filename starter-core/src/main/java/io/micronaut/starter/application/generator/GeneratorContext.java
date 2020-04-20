@@ -46,7 +46,7 @@ public class GeneratorContext {
                             List<Feature> features) {
         this.command = command;
         this.project = project;
-        this.features = new Features(features);
+        this.features = new Features(features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getVersion();
         if (options.getBuildTool() == BuildTool.GRADLE) {

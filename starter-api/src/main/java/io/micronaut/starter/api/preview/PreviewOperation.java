@@ -45,5 +45,6 @@ public interface PreviewOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
+            @Nullable Integer javaVersion,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
 }

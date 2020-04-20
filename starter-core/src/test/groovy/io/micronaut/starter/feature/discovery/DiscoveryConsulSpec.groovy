@@ -41,7 +41,7 @@ class DiscoveryConsulSpec extends BeanContextSpec {
 
     void 'test discovery-consul configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['discovery-consul'])
+        GeneratorContext commandContext = buildGeneratorContext(['discovery-consul'])
 
         then:
         commandContext.configuration.get('consul.client.registration.enabled'.toString()) == true

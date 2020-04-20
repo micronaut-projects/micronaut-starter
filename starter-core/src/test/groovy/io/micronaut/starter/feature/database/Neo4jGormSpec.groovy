@@ -58,7 +58,7 @@ class Neo4jGormSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['neo4j-gorm'])
+        GeneratorContext ctx = buildGeneratorContext(['neo4j-gorm'])
 
         then:
         ctx.getConfiguration().get("neo4j.uri") == "bolt://\${NEO4J_HOST:localhost}"

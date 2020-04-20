@@ -41,7 +41,7 @@ class GraphQLSpec extends BeanContextSpec {
 
     void 'test graphql configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['graphql'])
+        GeneratorContext commandContext = buildGeneratorContext(['graphql'])
 
         then:
         commandContext.configuration.get('#graphql.graphiql.enabled'.toString()) == true

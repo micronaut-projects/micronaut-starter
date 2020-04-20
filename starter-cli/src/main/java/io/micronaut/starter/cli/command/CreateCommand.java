@@ -25,6 +25,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
+import io.micronaut.starter.util.VersionInfo;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
@@ -82,7 +83,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public Integer call() throws Exception {
 
         if (listFeatures) {
-            new ListFeatures(availableFeatures, new Options(lang, test, build), applicationType, contextFactory).output(this);
+            new ListFeatures(availableFeatures, new Options(lang, test, build, VersionInfo.getJavaVersion()), applicationType, contextFactory).output(this);
             return 0;
         }
 
@@ -105,7 +106,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, getAdditionalOptions());
+        Options options = new Options(lang, test, build, VersionInfo.getJavaVersion(), getAdditionalOptions());
 
         projectGenerator.generate(applicationType, project, options, getSelectedFeatures(), outputHandler, this);
     }

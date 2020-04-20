@@ -49,6 +49,7 @@ public interface CreateOperation {
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
-            @Nullable Language lang
+            @Nullable Language lang,
+            @Nullable Integer javaVersion
     );
 }

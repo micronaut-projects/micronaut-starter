@@ -76,7 +76,7 @@ class DataJdbcSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['data-jdbc'])
+        GeneratorContext ctx = buildGeneratorContext(['data-jdbc'])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")

@@ -41,7 +41,7 @@ class SecurityJTWSpec extends BeanContextSpec {
 
     void 'test security-jwt configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['security-jwt'])
+        GeneratorContext commandContext = buildGeneratorContext(['security-jwt'])
 
         then:
         commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true

@@ -41,7 +41,7 @@ class RedisLettuceSpec extends BeanContextSpec {
 
     void 'test redis-lettuce configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['redis-lettuce'])
+        GeneratorContext commandContext = buildGeneratorContext(['redis-lettuce'])
 
         then:
         commandContext.configuration.get('redis.uri'.toString()) == 'redis://localhost'

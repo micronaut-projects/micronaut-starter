@@ -58,7 +58,7 @@ class HibernateJpaSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['hibernate-jpa'])
+        GeneratorContext ctx = buildGeneratorContext(['hibernate-jpa'])
 
         then:
         ctx.configuration.containsKey('datasources.default.url')

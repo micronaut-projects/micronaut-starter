@@ -49,7 +49,7 @@ class MongoReactiveSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['mongo-reactive'])
+        GeneratorContext ctx = buildGeneratorContext(['mongo-reactive'])
 
         then:
         ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"
