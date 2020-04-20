@@ -75,18 +75,9 @@ public class ApplicationController implements ApplicationTypeOperations, Applica
      * @param info The info
      * @return Information about this instance.
      */
-    @Get("/instance/version")
+    @Get("/version")
     VersionDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        return new VersionDTO(request.getUri().toString(), request.getServerAddress());
-    }
-
-    /**
-     * Metadata about this instance.
-     * @return Information about this instance.
-     */
-    @Get("/instance/metadata")
-    Map<String, String> getMetadata() {
-        return this.metadata;
+        return new VersionDTO(request.getUri().toString(), request.getServerAddress(), metadata != null ? metadata : Collections.emptyMap());
     }
 
     /**

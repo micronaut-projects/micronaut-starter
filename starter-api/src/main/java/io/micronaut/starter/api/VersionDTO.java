@@ -15,12 +15,14 @@
  */
 package io.micronaut.starter.api;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.version.VersionUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.net.InetSocketAddress;
+import java.util.Map;
 
 /**
  * Information about the application.
@@ -34,15 +36,26 @@ public class VersionDTO {
 
     private final String serverURL;
     private final InetSocketAddress serverAddress;
+    private final Map<String, String> metadata;
 
     /**
      * Default constructor.
      * @param serverURL The server URL
      * @param serverAddress The server address
+     * @param metadata The metadata
      */
-    public VersionDTO(String serverURL, InetSocketAddress serverAddress) {
+    public VersionDTO(String serverURL, InetSocketAddress serverAddress, Map<String, String> metadata) {
         this.serverURL = serverURL;
         this.serverAddress = serverAddress;
+        this.metadata = metadata;
+    }
+
+    /**
+     * @return The metadata
+     */
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    public Map<String, String> getMetadata() {
+        return metadata;
     }
 
     /**
