@@ -1,16 +1,8 @@
 package io.micronaut.starter.feature.discovery
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.fixture.ContextFixture
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
+import io.micronaut.starter.BeanContextSpec
 
-class DiscoverySpec extends Specification implements ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class DiscoverySpec extends BeanContextSpec {
 
     void 'test there can only be one discovery feature'() {
         when:
