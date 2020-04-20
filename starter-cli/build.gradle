@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath "info.picocli:picocli:4.2.0"
+    }
+}
+
 plugins {
     id "application"
     id "io.micronaut.starter.rocker"
@@ -29,18 +35,6 @@ dependencies {
 }
 
 mainClassName = "io.micronaut.starter.cli.MicronautStarter"
-
-jar {
-    manifest {
-        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-        attributes('Implementation-Version': projectVersion)
-        attributes('Implementation-Title': title)
-        attributes "Main-Class": "io.micronaut.starter.cli.MicronautStarter", "Implementation-Version": project.version
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
 
 sourceSets {
     main {
@@ -95,10 +89,91 @@ task copyAdocs(type: Copy) {
 }
 
 apply plugin: 'org.asciidoctor.convert'
+
 asciidoctor {
     dependsOn(generateManpageAsciiDoc, copyAdocs)
     sourceDir = file("${project.buildDir}/generated-picocli-docs")
     outputDir = file("${project.buildDir}/docs")
     logDocuments = true
     backends 'manpage', 'html5'
+}
+
+File outDir = new File(project.buildDir, 'bin')
+
+task buildCompletion(type: JavaExec) {
+    doFirst {
+        outDir.mkdir()
+    }
+    main = "picocli.AutoComplete"
+    jvmArgs = ["-Dpicocli.autocomplete.systemExitOnError"]
+    args = [mainClassName, "--completionScript=${outDir}/mn_completion", "--force", "--factory=io.micronaut.starter.cli.MicronautFactory"]
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task createStartScripts(type: MicronautCreateStartScripts) {
+    description = "Creates OS specific scripts to run the Micronaut CLI."
+    mainClassName = 'io.micronaut.cli.MicronautCli'
+    applicationName = 'mn'
+    defaultJvmOpts = ["-XX:+TieredCompilation", "-XX:TieredStopAtLevel=1", "-XX:CICompilerCount=3"]
+    outputDir = outDir
+    classpath = configurations.runtime
+    outputs.dir outDir
+    doLast {
+        ant.chmod(file: new File(outDir, 'mn'), perm: 'ugo+rx')
+    }
+    dependsOn(buildCompletion)
+}
+
+class MicronautCreateStartScripts extends org.gradle.api.tasks.application.CreateStartScripts {
+    Collection<String> projectArtifacts=[]
+
+    @org.gradle.api.tasks.TaskAction
+    void generate() {
+        def generator = new org.gradle.api.internal.plugins.StartScriptGenerator()
+        generator.unixStartScriptGenerator.template = project.resources.text.fromFile('unixStartScript.txt')
+        generator.applicationName = getApplicationName()
+        generator.mainClassName = getMainClassName()
+        generator.defaultJvmOpts = getDefaultJvmOpts()
+        generator.optsEnvironmentVar = getOptsEnvironmentVar()
+        generator.exitEnvironmentVar = getExitEnvironmentVar()
+        generator.classpath = project.tasks.getByName('fatJar').outputs.files.collect { it.name }
+        generator.scriptRelPath = "bin/${getUnixScript().name}"
+        generator.generateUnixScript(getUnixScript())
+        generator.generateWindowsScript(getWindowsScript())
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        // prevent fatJar result containing multiple versions of picocli
+        force("info.picocli:picocli:$picocliVersion")
+    }
+}
+
+task fatJar(type: Jar, dependsOn: ['createStartScripts']) {
+    manifest {
+        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+        attributes('Implementation-Version': projectVersion)
+        attributes('Implementation-Title': title)
+        attributes "Main-Class": "io.micronaut.starter.cli.MicronautStarter", "Implementation-Version": project.version
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+    destinationDirectory = project.buildDir
+}
+
+task cliZip(type: Zip, dependsOn: ['fatJar']) {
+    archiveFileName = "micronaut-cli-${project.version}.zip"
+    into("micronaut-cli-${project.version}") {
+        from('build/bin') {
+            into('bin')
+        }
+        from('../media') {
+            into('media')
+        }
+        from fatJar.outputs.files
+        from('../LICENSE')
+    }
 }
