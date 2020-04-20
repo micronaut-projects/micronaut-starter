@@ -15,8 +15,11 @@
  */
 package io.micronaut.starter.netty;
 
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.discovery.cloud.gcp.GoogleComputeInstanceMetadata;
 import io.micronaut.runtime.Micronaut;
 
+@Introspected(classes = GoogleComputeInstanceMetadata.class)
 public class Application {
 
     public static void main(String...args) {
