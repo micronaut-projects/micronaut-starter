@@ -1,21 +1,14 @@
 package io.micronaut.starter.feature.micrometer
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
-import io.micronaut.starter.options.BuildTool
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
-import spock.lang.Unroll
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
+import spock.lang.Unroll
 
-class MicrometerSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class MicrometerSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle micrometer feature #micrometerFeature.name'() {

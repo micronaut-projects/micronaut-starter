@@ -1,18 +1,10 @@
 package io.micronaut.starter.feature.migration
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class LiquibaseSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class LiquibaseSpec extends BeanContextSpec {
 
     void "test the dependency is added to the gradle build"() {
         when:
