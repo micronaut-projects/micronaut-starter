@@ -36,8 +36,8 @@ public class KotlinApplication implements KotlinApplicationFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.DEFAULT || command == ApplicationType.GRPC;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
     }
 
     @Override

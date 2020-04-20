@@ -281,7 +281,7 @@ dependencies {
     implementation "io.micronaut.cache:micronaut-cache-infinispan"
 }
 @if (features.contains("kafka")) {
-    implementation "io.micronaut.configuration:micronaut-kafka"
+    implementation "io.micronaut.kafka:micronaut-kafka"
 }
 @if (features.contains("rabbitmq")) {
     implementation "io.micronaut.configuration:micronaut-rabbitmq"

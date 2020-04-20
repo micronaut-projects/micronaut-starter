@@ -38,9 +38,6 @@ List<Property> properties
     <@prop.getKey()>@prop.getValue()</@prop.getKey()>
 }
 }
-    @for ((key, item) : properties) {
-
-    }
   </properties>
 
   <repositories>
@@ -241,7 +238,7 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-security-session", "compile", null)
 }
 @if (features.contains("kafka")) {
-@dependency.template("io.micronaut.configuration", "micronaut-kafka", "compile", null)
+@dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
 }
 @if (features.contains("rabbitmq")) {
 @dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "compile", null)

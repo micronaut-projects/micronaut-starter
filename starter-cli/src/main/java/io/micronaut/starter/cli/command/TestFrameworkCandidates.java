@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TestFrameworkCandidates extends ArrayList<String> {
+
     public TestFrameworkCandidates() {
         super(Stream.of(TestFramework.values()).map(tf -> tf.toString().toLowerCase()).collect(Collectors.toList()));
     }

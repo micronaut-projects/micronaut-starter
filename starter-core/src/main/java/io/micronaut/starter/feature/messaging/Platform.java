@@ -15,6 +15,15 @@
  */
 package io.micronaut.starter.feature.messaging;
 
+import javax.annotation.Nonnull;
+import java.util.Locale;
+
 public enum Platform {
-    kafka, rabbitmq
+    KAFKA,
+    RABBITMQ;
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
+    }
 }

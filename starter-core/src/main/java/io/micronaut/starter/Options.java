@@ -87,11 +87,11 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options withLanguage(Language language) {
-        return new Options(language, testFramework, buildTool, javaVersion);
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
     }
 
     public Options withTestFramework(TestFramework testFramework) {
-        return new Options(language, testFramework, buildTool, javaVersion);
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
     }
 
 

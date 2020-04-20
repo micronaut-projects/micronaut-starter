@@ -36,8 +36,8 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.DEFAULT || command == ApplicationType.GRPC;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
     }
 
     @Override

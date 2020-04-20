@@ -20,6 +20,8 @@ import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.MessagingAvailableFeatures;
+import io.micronaut.starter.cli.feature.messaging.PlatformCandidates;
+import io.micronaut.starter.cli.feature.messaging.PlatformConverter;
 import io.micronaut.starter.feature.messaging.Platform;
 import picocli.CommandLine;
 
@@ -35,8 +37,8 @@ public class CreateMessagingCommand extends CreateCommand {
 
     public static final String NAME = "create-messaging-app";
 
-    @CommandLine.Option(names = {"-p", "--platform"}, paramLabel = "PLATFORM", description = "The messaging platform to use. Possible values: ${COMPLETION-CANDIDATES}")
-    Platform platform = Platform.kafka;
+    @CommandLine.Option(names = {"-p", "--platform"}, paramLabel = "PLATFORM", description = "The messaging platform to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = PlatformCandidates.class, converter = PlatformConverter.class)
+    Platform platform = PlatformConverter.DEFAULT_PLATFORM;
 
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
     List<String> features = new ArrayList<>();

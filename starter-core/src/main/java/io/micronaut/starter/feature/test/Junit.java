@@ -33,7 +33,7 @@ public class Junit implements TestFeature {
     @Override
     public void doApply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        generatorContext.addTemplate("testDir", new URLTemplate("src/test/" + generatorContext.getLanguage().name() + "/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
+        generatorContext.addTemplate("testDir", new URLTemplate("src/test/" + generatorContext.getLanguage().getName() + "/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
     }
 
     @Override

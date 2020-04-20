@@ -5,6 +5,7 @@ import io.micronaut.starter.ConsoleOutput
 import io.micronaut.starter.Options
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.messaging.Platform
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -16,7 +17,7 @@ trait CommandFixture {
 
     abstract File getDir()
 
-    void generateCliProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List <String> features = []) {
+    void generateCliProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
@@ -26,7 +27,7 @@ trait CommandFixture {
         )
     }
 
-    void generateDefaultProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List <String> features = []) {
+    void generateDefaultProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.DEFAULT,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
@@ -36,10 +37,20 @@ trait CommandFixture {
         )
     }
 
-    void generateGrpcProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List <String> features = []) {
+    void generateGrpcProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.GRPC,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
+
+    void generateMessagingProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, Platform platform = Platform.KAFKA, List<String> features = []) {
+        beanContext.getBean(ProjectGenerator).generate(ApplicationType.MESSAGING,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, null, buildTool, [platform: platform]),
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
