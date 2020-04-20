@@ -38,7 +38,8 @@ import java.util.function.BiFunction;
         subcommands = {
                 CreateAppCommand.class,
                 CreateCliCommand.class,
-                CreateGrpcCommand.class
+                CreateGrpcCommand.class,
+                CreateFunctionCommand.class
         })
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
