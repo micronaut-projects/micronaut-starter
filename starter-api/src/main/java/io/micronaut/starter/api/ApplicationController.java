@@ -32,7 +32,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
