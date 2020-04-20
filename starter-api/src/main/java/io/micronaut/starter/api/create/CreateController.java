@@ -61,6 +61,7 @@ public class CreateController extends AbstractCreateController implements Create
     @Override
     @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
     @ApiResponse(
+            description = "A ZIP file containing the generated application.",        
             content = @Content(
                     mediaType = "application/zip"
             )
