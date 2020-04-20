@@ -23,12 +23,12 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+mainClassName = "io.micronaut.starter.lambda.CustomMicronautLambdaRuntime"
 
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.function.aws.runtime.MicronautLambdaRuntime'
+        attributes 'Main-Class': 'io.micronaut.starter.lambda.CustomMicronautLambdaRuntime'
     }
     transform(Log4j2PluginsCacheFileTransformer)
 }

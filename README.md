@@ -26,4 +26,4 @@ To generate an [AWS Lambda Custom Runtime](https://docs.aws.amazon.com/lambda/la
 
 `$ ./deploy.sh`
 
-It generates a zip file `build/function.zip` which you must upload to AWS Lambda. Set `Handler` to `io.micronaut.function.aws.runtime.MicronautLambdaRuntime`.  
+It generates a zip file `build/function.zip` which you must upload to AWS Lambda. Set `Handler` to `io.micronaut.starter.lambda.CustomMicronautLambdaRuntime`.  
