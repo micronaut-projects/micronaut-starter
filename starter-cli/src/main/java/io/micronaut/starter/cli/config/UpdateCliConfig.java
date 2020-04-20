@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.cli.config;
 
+import io.micronaut.core.util.functional.ThrowingSupplier;
+import io.micronaut.starter.OutputHandler;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -24,6 +26,7 @@ import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -42,6 +45,10 @@ public class UpdateCliConfig extends CodeGenCommand {
 
     public UpdateCliConfig(CodeGenConfig codeGenConfig) {
         super(codeGenConfig);
+    }
+
+    public UpdateCliConfig(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier) {
+        super(config, outputHandlerSupplier);
     }
 
     @Override

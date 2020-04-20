@@ -10,28 +10,36 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
+import java.nio.file.Files
+
 class CodeGenConfigSpec extends Specification {
 
     @Shared @AutoCleanup BeanContext ctx = BeanContext.run()
 
     void "test config is compatible with the old format"() {
         when:
-        String yml = """
+        File dir = Files.createTempDirectory("cli-config").toFile()
+        new File(dir, "micronaut-cli.yml").write("""
 profile: $profile
 defaultPackage: micronaut.testing.keycloak
 ---
 testFramework: junit
 sourceLanguage: java
-"""
-        CodeGenConfig config = CodeGenConfig.load(ctx, new ByteArrayInputStream(yml.bytes), ConsoleOutput.NOOP)
+""")
+        new File(dir, "build.gradle").createNewFile()
+
+        CodeGenConfig config = CodeGenConfig.load(ctx, dir, ConsoleOutput.NOOP)
 
         then:
         config.applicationType == command
         config.defaultPackage == "micronaut.testing.keycloak"
         config.testFramework == TestFramework.JUNIT
         config.sourceLanguage == Language.JAVA
-        config.buildTool == BuildTool.GRADLE // picked up because starter is a gradle project
+        config.buildTool == BuildTool.GRADLE
         config.features.containsAll(["java", "junit", "gradle"])
+
+        cleanup:
+        dir.delete()
 
         where:
         profile              | command

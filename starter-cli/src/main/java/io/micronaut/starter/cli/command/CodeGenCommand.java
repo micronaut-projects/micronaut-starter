@@ -45,6 +45,11 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
         this.outputHandlerSupplier = () -> new FileSystemOutputHandler(new File(".").getCanonicalFile(), this);
     }
 
+    public CodeGenCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier) {
+        this.config = config;
+        this.outputHandlerSupplier = outputHandlerSupplier;
+    }
+
     @Inject
     public void setBeanContext(BeanContext beanContext) {
         this.beanContext = beanContext;

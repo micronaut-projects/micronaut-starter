@@ -17,7 +17,9 @@ package io.micronaut.starter.options;
 
 import io.micronaut.starter.feature.Feature;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public enum Language {
@@ -38,4 +40,10 @@ public enum Language {
     public String toString() {
         return this.name().toLowerCase();
     }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
+    }
+
 }

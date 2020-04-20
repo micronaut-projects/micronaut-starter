@@ -15,12 +15,21 @@
  */
 package io.micronaut.starter.options;
 
+import javax.annotation.Nonnull;
+import java.util.Locale;
+
 public enum BuildTool {
+
     GRADLE,
     MAVEN;
 
     @Override
     public String toString() {
-        return this.name().toLowerCase();
+        return getName();
+    }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
     }
 }

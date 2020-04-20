@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.options;
 
+import javax.annotation.Nonnull;
+import java.util.Locale;
+
 public enum TestFramework {
     JUNIT,
     SPOCK,
@@ -23,5 +26,10 @@ public enum TestFramework {
     @Override
     public String toString() {
         return this.name().toLowerCase();
+    }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
     }
 }

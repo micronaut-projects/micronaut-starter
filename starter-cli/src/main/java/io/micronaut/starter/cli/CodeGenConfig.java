@@ -100,80 +100,85 @@ public class CodeGenConfig {
     }
 
     public static CodeGenConfig load(BeanContext beanContext, ConsoleOutput consoleOutput) {
-        File micronautCli = new File("micronaut-cli.yml");
+        try {
+            return load(beanContext, new File(".").getCanonicalFile(), consoleOutput);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static CodeGenConfig load(BeanContext beanContext, File directory, ConsoleOutput consoleOutput) {
+
+        File micronautCli = new File(directory, "micronaut-cli.yml");
         if (micronautCli.exists()) {
             try (InputStream inputStream = Files.newInputStream(micronautCli.toPath())) {
-                return load(beanContext, inputStream, consoleOutput);
+                Yaml yaml = new Yaml();
+                Map<String, Object> map = new LinkedHashMap<>();
+                Iterable<Object> objects = yaml.loadAll(inputStream);
+                Iterator<Object> i = objects.iterator();
+                if (i.hasNext()) {
+                    while (i.hasNext()) {
+                        Object object = i.next();
+                        if (object instanceof Map) {
+                            map.putAll((Map) object);
+                        }
+                    }
+                }
+                BeanIntrospection<CodeGenConfig> introspection = BeanIntrospection.getIntrospection(CodeGenConfig.class);
+                CodeGenConfig codeGenConfig = introspection.instantiate();
+                introspection.getBeanProperties().forEach(bp -> {
+                    Object value = map.get(bp.getName());
+                    if (value != null) {
+                        bp.convertAndSet(codeGenConfig, value);
+                    }
+                });
+
+                if (map.containsKey("profile")) {
+                    codeGenConfig.legacy = true;
+                    String profile = map.get("profile").toString();
+                    AvailableFeatures availableFeatures = null;
+                    List<Feature> features = new ArrayList<>();
+                    if (profile.equals("service")) {
+                        codeGenConfig.setApplicationType(ApplicationType.DEFAULT);
+                    } else if (profile.equals("cli")) {
+                        codeGenConfig.setApplicationType(ApplicationType.CLI);
+                    } else if (profile.equals("function-aws") || profile.equals("function-aws-alexa")) {
+                        codeGenConfig.setApplicationType(ApplicationType.FUNCTION);
+                    } else if (profile.equals("grpc")) {
+                        codeGenConfig.setApplicationType(ApplicationType.GRPC);
+                    } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
+                        codeGenConfig.setApplicationType(ApplicationType.MESSAGING);
+                    } else {
+                        return null;
+                    }
+
+                    availableFeatures = beanContext.getBean(codeGenConfig.getApplicationType().getAvailableFeaturesClass());
+
+                    if (new File(directory, "build.gradle").exists()) {
+                        codeGenConfig.setBuildTool(BuildTool.GRADLE);
+                    } else if (new File(directory, "pom.xml").exists()) {
+                        codeGenConfig.setBuildTool(BuildTool.MAVEN);
+                    } else {
+                        return null;
+                    }
+
+                    codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
+                            .filter(f -> f instanceof DefaultFeature)
+                            .map(DefaultFeature.class::cast)
+                            .filter(f -> f.shouldApply(
+                                    codeGenConfig.getApplicationType(),
+                                    new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
+                                    features))
+                            .map(Feature::getName)
+                            .collect(Collectors.toList()));
+
+                    consoleOutput.warning("This project is using Micronaut CLI v2 but is still using the v1 micronaut-cli.yml format");
+                    consoleOutput.warning("To replace the configuration with the new format, run `mn update-cli-config`");
+                }
+
+                return codeGenConfig;
             } catch (IOException e) { }
         }
         return null;
-    }
-
-    public static CodeGenConfig load(BeanContext beanContext, InputStream inputStream, ConsoleOutput consoleOutput) {
-        Yaml yaml = new Yaml();
-        Map<String, Object> map = new LinkedHashMap<>();
-        Iterable<Object> objects = yaml.loadAll(inputStream);
-        Iterator<Object> i = objects.iterator();
-        if (i.hasNext()) {
-            while (i.hasNext()) {
-                Object object = i.next();
-                if (object instanceof Map) {
-                    map.putAll((Map) object);
-                }
-            }
-        }
-        BeanIntrospection<CodeGenConfig> introspection = BeanIntrospection.getIntrospection(CodeGenConfig.class);
-        CodeGenConfig codeGenConfig = introspection.instantiate();
-        introspection.getBeanProperties().forEach(bp -> {
-            Object value = map.get(bp.getName());
-            if (value != null) {
-                bp.convertAndSet(codeGenConfig, value);
-            }
-        });
-
-        if (map.containsKey("profile")) {
-            codeGenConfig.legacy = true;
-            String profile = map.get("profile").toString();
-            AvailableFeatures availableFeatures = null;
-            List<Feature> features = new ArrayList<>();
-            if (profile.equals("service")) {
-                codeGenConfig.setApplicationType(ApplicationType.DEFAULT);
-            } else if (profile.equals("cli")) {
-                codeGenConfig.setApplicationType(ApplicationType.CLI);
-            } else if (profile.equals("function-aws") || profile.equals("function-aws-alexa")) {
-                codeGenConfig.setApplicationType(ApplicationType.FUNCTION);
-            } else if (profile.equals("grpc")) {
-                codeGenConfig.setApplicationType(ApplicationType.GRPC);
-            } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
-                codeGenConfig.setApplicationType(ApplicationType.MESSAGING);
-            } else {
-                return null;
-            }
-
-            availableFeatures = beanContext.getBean(codeGenConfig.getApplicationType().getAvailableFeaturesClass());
-
-            if (new File("build.gradle").exists()) {
-                codeGenConfig.setBuildTool(BuildTool.GRADLE);
-            } else if (new File("pom.xml").exists()) {
-                codeGenConfig.setBuildTool(BuildTool.MAVEN);
-            } else {
-                return null;
-            }
-
-            codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
-                    .filter(f -> f instanceof DefaultFeature)
-                    .map(DefaultFeature.class::cast)
-                    .filter(f -> f.shouldApply(
-                            codeGenConfig.getApplicationType(),
-                            new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
-                            features))
-                    .map(Feature::getName)
-                    .collect(Collectors.toList()));
-
-            consoleOutput.warning("This project is using Micronaut CLI v2 but is still using the v1 micronaut-cli.yml format");
-            consoleOutput.warning("To replace the configuration with the new format, run `mn update-cli-config`");
-        }
-
-        return codeGenConfig;
     }
 }

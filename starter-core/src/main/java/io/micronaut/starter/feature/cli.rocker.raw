@@ -15,9 +15,9 @@ List<String> features,
 ApplicationType applicationType
 )
 
-applicationType: @applicationType.name()
+applicationType: @applicationType.getName()
 defaultPackage: @project.getPackageName()
-testFramework: @testFramework.name()
-sourceLanguage: @language.name()
-buildTool: @buildTool.name()
+testFramework: @testFramework.getName()
+sourceLanguage: @language.getName()
+buildTool: @buildTool.getName()
 features: @features.toString()
