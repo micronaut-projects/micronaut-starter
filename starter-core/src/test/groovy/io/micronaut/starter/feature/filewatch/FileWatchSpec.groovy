@@ -46,7 +46,7 @@ class FileWatchSpec extends BeanContextSpec {
 
     void 'test file-watch configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['file-watch'])
+        GeneratorContext commandContext = buildGeneratorContext(['file-watch'])
 
         then:
         commandContext.configuration.get('micronaut.io.watch.paths'.toString()) == 'src/main'

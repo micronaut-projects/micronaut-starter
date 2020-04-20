@@ -76,7 +76,7 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test config"() {
         when:
-        GeneratorContext ctx = buildCommandContext(['data-jpa'])
+        GeneratorContext ctx = buildGeneratorContext(['data-jpa'])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")

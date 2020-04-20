@@ -41,7 +41,7 @@ class VertxPgSpec extends BeanContextSpec {
 
     void 'test vertx-pg-client configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['vertx-pg-client'])
+        GeneratorContext commandContext = buildGeneratorContext(['vertx-pg-client'])
 
         then:
         commandContext.configuration.get('vertx.pg.client.port'.toString()) == 5432

@@ -49,7 +49,7 @@ class JaegerSpec extends BeanContextSpec {
 
     void 'test tracing-jaeger configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['tracing-jaeger'])
+        GeneratorContext commandContext = buildGeneratorContext(['tracing-jaeger'])
 
         then:
         commandContext.configuration.get('tracing.jaeger.enabled'.toString()) == true

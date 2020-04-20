@@ -41,7 +41,7 @@ class InfinispanSpec extends BeanContextSpec {
 
     void 'test cache-infinispan configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['cache-infinispan'])
+        GeneratorContext commandContext = buildGeneratorContext(['cache-infinispan'])
 
         then:
         commandContext.configuration.get('infinispan.client.hotrod.server.host'.toString()) == 'infinispan.example.com'

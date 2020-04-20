@@ -15,7 +15,6 @@ import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.VersionInfo
 
 trait ContextFixture {
 
@@ -45,8 +44,8 @@ trait ContextFixture {
                 options)
     }
 
-    GeneratorContext buildCommandContext(List<String> selectedFeatures,
-                                         Options options = new Options(null, null, BuildTool.GRADLE)) {
+    GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
+                                           Options options = new Options(null, null, BuildTool.GRADLE)) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)
@@ -54,7 +53,7 @@ trait ContextFixture {
             commandContext.applyFeatures()
             return commandContext
         } else {
-            throw new IllegalStateException("Cannot get command context without implementing ProjectFixture")
+            throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
         }
     }
 

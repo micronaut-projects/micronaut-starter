@@ -41,7 +41,7 @@ class PostgresReactiveSpec extends BeanContextSpec {
 
     void 'test postgres-reactive configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['postgres-reactive'])
+        GeneratorContext commandContext = buildGeneratorContext(['postgres-reactive'])
 
         then:
         commandContext.configuration.get('postgres.reactive.client.port'.toString()) == 5432

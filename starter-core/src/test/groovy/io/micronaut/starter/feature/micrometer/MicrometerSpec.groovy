@@ -91,7 +91,7 @@ class MicrometerSpec extends BeanContextSpec {
     @Unroll
     void 'test micrometer configuration for feature=#micrometerFeature'() {
         when:
-        GeneratorContext commandContext = buildCommandContext([micrometerFeature])
+        GeneratorContext commandContext = buildGeneratorContext([micrometerFeature])
 
         then: 'the micrometer configuration is enabled for the feature'
         commandContext.configuration.get("micronaut.metrics.export.${configKey}.enabled".toString()) == true

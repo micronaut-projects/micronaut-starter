@@ -43,7 +43,7 @@ class KubernetesSpec extends BeanContextSpec {
 
     void 'test kubernetes configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['kubernetes'])
+        GeneratorContext commandContext = buildGeneratorContext(['kubernetes'])
 
         then:
         commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'

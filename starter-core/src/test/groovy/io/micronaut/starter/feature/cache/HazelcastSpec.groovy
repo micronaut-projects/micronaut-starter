@@ -41,7 +41,7 @@ class HazelcastSpec extends BeanContextSpec {
 
     void 'test cache-hazelcast configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['cache-hazelcast'])
+        GeneratorContext commandContext = buildGeneratorContext(['cache-hazelcast'])
 
         then:
         commandContext.configuration.get('hazelcast.network.addresses'.toString()) == "['121.0.0.1:5701']"

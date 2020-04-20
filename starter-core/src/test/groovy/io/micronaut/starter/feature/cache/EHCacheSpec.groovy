@@ -41,7 +41,7 @@ class EHCacheSpec extends BeanContextSpec {
 
     void 'test cache-ehcache configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['cache-ehcache'])
+        GeneratorContext commandContext = buildGeneratorContext(['cache-ehcache'])
 
         then:
         commandContext.configuration.get('micronaut.caches.my-cache.maximumSize'.toString()) == 20

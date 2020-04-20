@@ -41,7 +41,7 @@ class SecuritySessionSpec extends BeanContextSpec {
 
     void 'test security-session configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['security-session'])
+        GeneratorContext commandContext = buildGeneratorContext(['security-session'])
 
         then:
         commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true

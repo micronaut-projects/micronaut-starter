@@ -63,7 +63,7 @@ class ConfigConsulSpec extends BeanContextSpec {
 
     void 'test config-consul configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['config-consul'])
+        GeneratorContext commandContext = buildGeneratorContext(['config-consul'])
 
         then:
         commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'

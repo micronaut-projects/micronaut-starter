@@ -41,7 +41,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
 
     void 'test discovery-eureka configuration'() {
         when:
-        GeneratorContext commandContext = buildCommandContext(['discovery-eureka'])
+        GeneratorContext commandContext = buildGeneratorContext(['discovery-eureka'])
 
         then:
         commandContext.configuration.get('eureka.client.registration.enabled'.toString()) == true
