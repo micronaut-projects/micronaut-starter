@@ -1,32 +1,41 @@
 plugins {
     id "application"
     id "io.micronaut.starter.rocker"
+    id 'org.asciidoctor.convert' version '1.6.1' apply false
 }
 
 ext {
     picocliVersion = '4.2.0'
 }
 
+configurations {
+    generateConfig
+}
+
 dependencies {
     api project(":starter-core")
-    runtime "org.slf4j:slf4j-nop:1.7.30"
     api "info.picocli:picocli:${picocliVersion}"
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
     api "com.fizzed:rocker-runtime:1.2.3"
 
+    runtime "org.slf4j:slf4j-nop:1.7.30"
+
     compileOnly "org.graalvm.nativeimage:svm"
+
     implementation "org.fusesource.jansi:jansi:1.15"
     implementation "org.yaml:snakeyaml:1.26"
+
+    generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 }
 
-mainClassName = "io.micronaut.starter.MicronautStarter"
+mainClassName = "io.micronaut.starter.cli.MicronautStarter"
 
 jar {
     manifest {
         attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
         attributes('Implementation-Version': projectVersion)
         attributes('Implementation-Title': title)
-        attributes "Main-Class": "io.micronaut.starter.MicronautStarter", "Implementation-Version": project.version
+        attributes "Main-Class": "io.micronaut.starter.cli.MicronautStarter", "Implementation-Version": project.version
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
@@ -68,4 +77,28 @@ rocker {
     suffixRegex null
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
     markAsGenerated null
+}
+
+task generateManpageAsciiDoc(type: JavaExec) {
+    dependsOn(classes)
+    group = "Documentation"
+    description = "Generate AsciiDoc manpage"
+    classpath(configurations.compile, configurations.generateConfig, sourceSets.main.runtimeClasspath)
+    main 'picocli.codegen.docgen.manpage.ManPageGenerator'
+    args mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
+}
+
+task copyAdocs(type: Copy) {
+    from file("${projectDir}/src/docs/asciidoc")
+    include "**/*.adoc"
+    into file("${project.buildDir}/generated-picocli-docs")
+}
+
+apply plugin: 'org.asciidoctor.convert'
+asciidoctor {
+    dependsOn(generateManpageAsciiDoc, copyAdocs)
+    sourceDir = file("${project.buildDir}/generated-picocli-docs")
+    outputDir = file("${project.buildDir}/docs")
+    logDocuments = true
+    backends 'manpage', 'html5'
 }
