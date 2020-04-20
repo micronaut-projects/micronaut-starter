@@ -28,6 +28,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.api.starterApi;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 
@@ -76,7 +77,7 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Get("/")
     @Produces(MediaType.TEXT_PLAIN)
-    HttpResponse<Writable> home(HttpRequest<?> request) {
+    HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         Collection<MediaType> accept = request.accept();
         if (accept.contains(MediaType.TEXT_HTML_TYPE)) {
             return HttpResponse.permanentRedirect(URI.create("https://micronaut.io/start"));
@@ -84,13 +85,15 @@ public class ApplicationController implements ApplicationTypeOperations {
             return HttpResponse.ok(new Writable() {
 
                 @Override
-                public void writeTo(Writer out) throws IOException {
+                public void writeTo(Writer out) {
                     // no-op
                 }
 
                 @Override
-                public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
-                    new RockerTemplate("home", new starterApi().micronautVersion(VersionUtils.MICRONAUT_VERSION)).write(
+                public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
+                    new RockerTemplate("home", new starterApi()
+                            .serverURL(info.getServerURL())
+                            .micronautVersion(VersionUtils.MICRONAUT_VERSION)).write(
                         outputStream
                     );
                 }

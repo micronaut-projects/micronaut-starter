@@ -2,16 +2,17 @@
 @import java.util.List
 
 @args (
-    String micronautVersion
+    String micronautVersion,
+    String serverURL
 )
 
-=== Micronaut Starter @micronautVersion (https://start.micronaut.io)
+=== Micronaut Starter @micronautVersion (@serverURL)
 
 Micronaut Starter generates example project for the Micronaut framework (https://micronaut.io).
 
-The API is defined by the OpenAPI 3 specification https://start.micronaut.ioswagger/views/swagger-ui/index.html
+The API is defined by the OpenAPI 3 specification @serverURL/swagger/views/swagger-ui/index.html
 
-The primary API for generating application is https://start.micronaut.io/create/{type}/{name}.
+The primary API for generating application is @serverURL/create/{type}/{name}.
 
 The application type can be one of the following:
 
@@ -38,18 +39,18 @@ Available query parameters include:
 
 To view the possible features and their descriptions visit:
 
-https://start.micronaut.io/application-types/{type}/features
+@serverURL/application-types/{type}/features
 
 === Examples
 
 To create a default application:
 
-    $ curl https://start.micronaut.io/create/app/example -o example.zip
+    $ curl @serverURL/create/app/example -o example.zip
 
 To create a Maven application:
 
-    $ curl https://start.micronaut.io/create/app/example?build=maven -o example.zip
+    $ curl @serverURL/create/app/example?build=maven -o example.zip
 
 To create a Kotlin application:
 
-    $ curl https://start.micronaut.io/create/app/example?lang=kotlin -o example.zip
+    $ curl @serverURL/create/app/example?lang=kotlin -o example.zip
