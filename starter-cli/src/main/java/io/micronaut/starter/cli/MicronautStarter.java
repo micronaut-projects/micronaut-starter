@@ -69,18 +69,20 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
     }
 
     static CommandLine createCommandLine() {
+        boolean noOpConsole = MicronautStarter.interactiveShell;
         try (BeanContext beanContext = BeanContext.run()) {
-            return createCommandLine(beanContext);
+            return createCommandLine(beanContext, noOpConsole);
         }
     }
 
     static int execute(String[] args) {
+        boolean noOpConsole = args.length > 0 && args[0].startsWith("update-cli-config");
         try (BeanContext beanContext = BeanContext.run()) {
-            return createCommandLine(beanContext).execute(args);
+            return createCommandLine(beanContext, noOpConsole).execute(args);
         }
     }
 
-    private static CommandLine createCommandLine(BeanContext beanContext) {
+    private static CommandLine createCommandLine(BeanContext beanContext, boolean noOpConsole) {
         MicronautStarter starter = beanContext.getBean(MicronautStarter.class);
         CommandLine commandLine = new CommandLine(starter, new CommandLine.IFactory() {
             CommandLine.IFactory defaultFactory = CommandLine.defaultFactory();
@@ -98,7 +100,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
 
-        CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, MicronautStarter.interactiveShell ? ConsoleOutput.NOOP : starter);
+        CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, noOpConsole ? ConsoleOutput.NOOP : starter);
         if (codeGenConfig != null) {
             beanContext.getBeanDefinitions(CodeGenCommand.class).stream()
                     .map(BeanDefinition::getBeanType)

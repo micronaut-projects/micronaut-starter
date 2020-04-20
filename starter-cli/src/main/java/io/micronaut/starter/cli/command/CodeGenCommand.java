@@ -67,6 +67,10 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
         return TemplateRenderer.create(project, outputHandlerSupplier.get());
     }
 
+    protected TemplateRenderer getTemplateRenderer() throws IOException {
+        return TemplateRenderer.create(outputHandlerSupplier.get());
+    }
+
     protected <T extends CodeGenCommand> T getCommand(Class<T> clazz) {
         T bean = beanContext.createBean(clazz, config);
         bean.overwrite = overwrite;

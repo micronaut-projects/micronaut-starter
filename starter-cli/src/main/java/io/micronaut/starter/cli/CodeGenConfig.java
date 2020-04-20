@@ -25,7 +25,6 @@ import io.micronaut.starter.feature.*;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.util.NameUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -44,6 +43,8 @@ public class CodeGenConfig {
     private Language sourceLanguage;
     private BuildTool buildTool;
     private List<String> features;
+
+    private boolean legacy;
 
     public ApplicationType getApplicationType() {
         return applicationType;
@@ -93,6 +94,10 @@ public class CodeGenConfig {
         this.buildTool = buildTool;
     }
 
+    public boolean isLegacy() {
+        return legacy;
+    }
+
     public static CodeGenConfig load(BeanContext beanContext, ConsoleOutput consoleOutput) {
         File micronautCli = new File("micronaut-cli.yml");
         if (micronautCli.exists()) {
@@ -119,10 +124,14 @@ public class CodeGenConfig {
         BeanIntrospection<CodeGenConfig> introspection = BeanIntrospection.getIntrospection(CodeGenConfig.class);
         CodeGenConfig codeGenConfig = introspection.instantiate();
         introspection.getBeanProperties().forEach(bp -> {
-            bp.convertAndSet(codeGenConfig, map.get(bp.getName()));
+            Object value = map.get(bp.getName());
+            if (value != null) {
+                bp.convertAndSet(codeGenConfig, value);
+            }
         });
 
         if (map.containsKey("profile")) {
+            codeGenConfig.legacy = true;
             String profile = map.get("profile").toString();
             AvailableFeatures availableFeatures = null;
             List<Feature> features = new ArrayList<>();
@@ -161,16 +170,7 @@ public class CodeGenConfig {
                     .collect(Collectors.toList()));
 
             consoleOutput.warning("This project is using Micronaut CLI v2 but is still using the v1 micronaut-cli.yml format");
-            consoleOutput.warning("To prevent this warning in the future, modify micronaut-cli.yml to contain the following:");
-            consoleOutput.out(cli.template(codeGenConfig.getSourceLanguage(),
-                    codeGenConfig.getTestFramework(),
-                    codeGenConfig.getBuildTool(),
-                    NameUtils.parse(codeGenConfig.defaultPackage + ".Ignored"),
-                    codeGenConfig.getFeatures(),
-                    codeGenConfig.getApplicationType()).render().toString());
-            String commandName = codeGenConfig.getApplicationType().name().toLowerCase().replaceAll("_", "-");
-            consoleOutput.warning("In order to use code generation commands that are dependent on a feature, you may need to modify the feature list to include any features that are in use.");
-            consoleOutput.warning(String.format("For a list of available features, run `mn %s --list-features`", commandName));
+            consoleOutput.warning("To replace the configuration with the new format, run `mn update-cli-config`");
         }
 
         return codeGenConfig;

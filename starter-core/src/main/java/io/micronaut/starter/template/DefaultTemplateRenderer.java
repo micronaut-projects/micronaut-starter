@@ -16,21 +16,20 @@
 package io.micronaut.starter.template;
 
 import io.micronaut.starter.OutputHandler;
-import io.micronaut.starter.Project;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProjectTemplateRenderer implements TemplateRenderer {
+public class DefaultTemplateRenderer implements TemplateRenderer {
 
     private final Map<String, String> replacements;
     private final OutputHandler outputHandler;
 
-    public ProjectTemplateRenderer(Project project,
+    public DefaultTemplateRenderer(Map<String, String> pathReplacements,
                                    OutputHandler outputHandler) {
-        replacements = project.getProperties();
+        this.replacements = pathReplacements;
         this.outputHandler = outputHandler;
     }
 
