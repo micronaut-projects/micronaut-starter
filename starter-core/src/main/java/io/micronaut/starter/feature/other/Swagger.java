@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -29,12 +29,17 @@ public class Swagger implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Swagger/OpenAPI Support";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Swagger (OpenAPI)";
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.DEFAULT;
     }
 }

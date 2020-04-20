@@ -1,14 +1,6 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
     id "com.adarshr.test-logger" version "2.0.0"
-    id "application"
-    id "com.fizzed.rocker" version "1.2.3"
-    id 'org.asciidoctor.convert' version '1.6.1' apply false
-}
-
-ext {
-    picocliVersion = '4.2.0'
+    id "io.micronaut.starter.rocker"
 }
 
 sourceSets {
@@ -19,34 +11,13 @@ sourceSets {
     }
 }
 
-jar {
-    manifest {
-        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-        attributes('Implementation-Version': projectVersion)
-        attributes('Implementation-Title': title)
-        attributes "Main-Class": "io.micronaut.starter.MicronautStarter", "Implementation-Version": project.version
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
-configurations {
-    generateConfig
-}
 
 dependencies {
-    api "info.picocli:picocli:${picocliVersion}"
-    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    compileOnly "org.graalvm.nativeimage:svm"
     api "com.fizzed:rocker-runtime:1.2.3"
-
-    generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
-
-    runtime "org.slf4j:slf4j-nop:1.7.30"
-    implementation "org.fusesource.jansi:jansi:1.15"
     implementation "org.yaml:snakeyaml:1.26"
+    implementation 'org.apache.commons:commons-compress:1.20'
 }
-
-mainClassName = "io.micronaut.starter.MicronautStarter"
 
 rocker {
     // (All settings are shown with their defaults)
@@ -84,28 +55,4 @@ testlogger {
     showPassedStandardStreams false
     showSkippedStandardStreams false
     showFailedStandardStreams true
-}
-
-task generateManpageAsciiDoc(type: JavaExec) {
-    dependsOn(classes)
-    group = "Documentation"
-    description = "Generate AsciiDoc manpage"
-    classpath(configurations.compile, configurations.generateConfig, sourceSets.main.runtimeClasspath)
-    main 'picocli.codegen.docgen.manpage.ManPageGenerator'
-    args mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
-}
-
-task copyAdocs(type: Copy) {
-    from file("${projectDir}/src/docs/asciidoc")
-    include "**/*.adoc"
-    into file("${project.buildDir}/generated-picocli-docs")
-}
-
-apply plugin: 'org.asciidoctor.convert'
-asciidoctor {
-    dependsOn(generateManpageAsciiDoc, copyAdocs)
-    sourceDir = file("${project.buildDir}/generated-picocli-docs")
-    outputDir = file("${project.buildDir}/docs")
-    logDocuments = true
-    backends 'manpage', 'html5'
 }

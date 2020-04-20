@@ -32,6 +32,11 @@ public class Dbcp extends JdbcFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Commons DBCP JDBC Connection Pool";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures SQL DataSource instances using Commons DBCP";
     }

@@ -4,7 +4,6 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
-@import io.micronaut.context.condition.OperatingSystem
 
 @args (
 Project project,
@@ -49,6 +48,11 @@ List<Property> properties
       <id>jcenter.bintray.com</id>
       <url>https://jcenter.bintray.com</url>
     </repository>
+    <!--TODO: Remove when M3/RC1 is out -->
+    <repository>
+      <id>jfrog-snapshots</id>
+      <url>https://oss.jfrog.org/oss-snapshot-local</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -83,6 +87,9 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-runtime-groovy", "compile", null)
 } else {
 @dependency.template("io.micronaut", "micronaut-runtime", "compile", null)
+}
+@if (features.contains("grpc")) {
+@dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "compile", null)
 }
 @if (features.contains("picocli")) {
 @dependency.template("info.picocli", "picocli", "compile", null)
@@ -233,6 +240,12 @@ List<Property> properties
 @if (features.contains("security-session")) {
 @dependency.template("io.micronaut", "micronaut-security-session", "compile", null)
 }
+@if (features.contains("kafka")) {
+@dependency.template("io.micronaut.configuration", "micronaut-kafka", "compile", null)
+}
+@if (features.contains("rabbitmq")) {
+@dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "compile", null)
+}
 @if (features.contains("cassandra")) {
 @dependency.template("io.micronaut.configuration", "micronaut-cassandra", "compile", null)
 }
@@ -242,7 +255,25 @@ List<Property> properties
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
 }
-@if (features.contains("file-watch") && OperatingSystem.getCurrent().isMacOs()) {
+@if (features.contains("cache-caffeine")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
+}
+@if (features.contains("cache-ehcache")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "compile", null)
+}
+@if (features.contains("cache-hazelcast")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "compile", null)
+}
+@if (features.contains("cache-infinispan")) {
+@dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)
+}
+@if (features.contains("postgres-reactive")) {
+@dependency.template("io.micronaut.configuration", "micronaut-postgres-reactive", "compile", null)
+}
+@if (features.contains("redis-lettuce")) {
+@dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
+}
+@if (features.contains("file-watch-osx")) {
 @dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
 @if (features.contains("log4j2")) {
@@ -743,6 +774,37 @@ List<Property> properties
             <image>gcr.io/@project.getName()/jib-image</image>
           </to>
         </configuration>
+      </plugin>
+}
+@if (features.contains("grpc")) {
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.6.0.2</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <addProtoSources>all</addProtoSources>
+              <includeMavenTypes>direct</includeMavenTypes>
+              <inputDirectories>
+                <include>src/main/proto</include>
+              </inputDirectories>
+              <outputTargets>
+                <outputTarget>
+                   <type>java</type>
+                </outputTarget>
+                <outputTarget>
+                  <type>grpc-java</type>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1</pluginArtifact>
+                </outputTarget>
+              </outputTargets>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 }
     </plugins>

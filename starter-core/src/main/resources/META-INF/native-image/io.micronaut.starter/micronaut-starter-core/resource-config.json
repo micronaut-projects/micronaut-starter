@@ -1,0 +1,9 @@
+{
+  "resources": [
+    {"pattern":"gradle/.*$"},
+    {"pattern":"maven/.*$"},
+    {"pattern":"kotlintest/.*$"},
+    {"pattern":".gitkeep"},
+    {"pattern":"springloaded/.*$"}
+  ]
+}

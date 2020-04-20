@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.tracing;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -28,13 +28,18 @@ public class Jaeger implements TracingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Jaeger Tracing";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for distributed tracing with Jaeger (https://www.jaegertracing.io)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("tracing.jaeger.enabled", true);
-        commandContext.getConfiguration().put("tracing.jaeger.sampler.probability", 0.1);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("tracing.jaeger.enabled", true);
+        generatorContext.getConfiguration().put("tracing.jaeger.sampler.probability", 0.1);
     }
 }

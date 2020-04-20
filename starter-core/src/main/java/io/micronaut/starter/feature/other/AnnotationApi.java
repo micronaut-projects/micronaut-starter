@@ -15,12 +15,10 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.Options;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
@@ -35,12 +33,22 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Annotation API";
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
     public boolean isVisible() {
         return false;
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return VersionInfo.getJavaVersion() >= 9;
     }
 }

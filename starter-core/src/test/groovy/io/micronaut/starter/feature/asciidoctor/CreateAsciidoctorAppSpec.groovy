@@ -1,8 +1,8 @@
 package io.micronaut.starter.feature.asciidoctor
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandSpec
 import io.micronaut.starter.fixture.CommandFixture
+import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
@@ -18,7 +18,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test gradle create-app for asciidoctor feature, language=#language'() {
         given:
-        runCreateAppCommand(language, BuildTool.gradle, ['asciidoctor'])
+        generateDefaultProject(language, BuildTool.gradle, ['asciidoctor'])
 
         when:
         executeGradleCommand('asciidoctor')
@@ -33,7 +33,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test maven create-app for asciidoctor feature, language=#language'() {
         given:
-        runCreateAppCommand(language, BuildTool.maven, ['asciidoctor'])
+        generateDefaultProject(language, BuildTool.maven, ['asciidoctor'])
 
         when:
         executeMavenCommand('generate-resources')

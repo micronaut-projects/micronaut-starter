@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -29,12 +29,17 @@ public class MongoReactive implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Mongo Reactive Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for the Mongo Reactive Streams Driver";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}");
     }
 }

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HibernateValidator;
@@ -42,6 +42,11 @@ public class HibernateGorm implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GORM for Hibernate";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for GORM persistence framework";
     }
@@ -62,8 +67,8 @@ public class HibernateGorm implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        Map<String, Object> config = commandContext.getConfiguration();
+    public void apply(GeneratorContext generatorContext) {
+        Map<String, Object> config = generatorContext.getConfiguration();
         config.put("dataSource.url", "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);

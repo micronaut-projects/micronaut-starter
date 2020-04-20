@@ -15,16 +15,15 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.KotlinTest;
 import io.micronaut.starter.feature.test.TestFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -46,6 +45,16 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Kotlin Language Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
@@ -56,8 +65,8 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getBuildProperties().put("kotlinVersion", getVersion());
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getBuildProperties().put("kotlinVersion", getVersion());
     }
 
     @Override
@@ -76,7 +85,7 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return language == Language.kotlin;
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.kotlin;
     }
 }

@@ -37,6 +37,11 @@ public class Neo4jGorm implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GORM for Neo4j";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures GORM for Neo4j for Groovy applications";
     }

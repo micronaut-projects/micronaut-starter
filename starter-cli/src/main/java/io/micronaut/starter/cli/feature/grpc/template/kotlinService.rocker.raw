@@ -1,0 +1,16 @@
+@import io.micronaut.starter.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import javax.inject.Singleton
+
+@@Singleton
+class @project.getClassName() : @project.getClassName()Grpc.@project.getClassName()ImplBase() {
+
+}

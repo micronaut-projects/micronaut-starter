@@ -28,6 +28,11 @@ public class Management implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Management";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for management endpoints";
     }

@@ -1,6 +1,21 @@
+plugins {
+    id "java-gradle-plugin"
+}
+
 repositories {
     mavenCentral()
 }
+
 dependencies {
     implementation "com.fizzed:rocker-compiler:1.2.3"
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.10.1")
+}
+
+gradlePlugin {
+    plugins {
+        rockerPlugin {
+            id = "io.micronaut.starter.rocker"
+            implementationClass = "io.micronaut.starter.rocker.plugin.RockerPlugin"
+        }
+    }
 }

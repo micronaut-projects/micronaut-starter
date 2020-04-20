@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.tracing
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -58,7 +58,7 @@ class JaegerSpec extends Specification implements ProjectFixture, ContextFixture
 
     void 'test tracing-jaeger configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['tracing-jaeger'])
+        GeneratorContext commandContext = buildCommandContext(['tracing-jaeger'])
 
         then:
         commandContext.configuration.get('tracing.jaeger.enabled'.toString()) == true

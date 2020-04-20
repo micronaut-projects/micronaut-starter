@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.lang.groovy;
 
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -36,16 +36,26 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.DEFAULT || command == ApplicationType.GRPC;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        GroovyApplicationFeature.super.apply(commandContext);
+    public String getTitle() {
+        return "Groovy Application";
+    }
 
-        commandContext.addTemplate("application", new RockerTemplate("src/main/groovy/{packagePath}/Application.groovy",
-                application.template(commandContext.getProject(), commandContext.getFeatures())));
+    @Override
+    public String getDescription() {
+        return getTitle() + " Support";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        GroovyApplicationFeature.super.apply(generatorContext);
+
+        generatorContext.addTemplate("application", new RockerTemplate("src/main/groovy/{packagePath}/Application.groovy",
+                application.template(generatorContext.getProject(), generatorContext.getFeatures())));
     }
 
     protected String getPath() {

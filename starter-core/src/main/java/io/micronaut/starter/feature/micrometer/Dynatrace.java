@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -33,16 +34,21 @@ public class Dynatrace extends MicrometerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Dynatrace reporter)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.apiToken", "${DYNATRACE_DEVICE_API_TOKEN}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.uri", "${DYNATRACE_DEVICE_URI}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.deviceId", "${DYNATRACE_DEVICE_ID}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.apiToken", "${DYNATRACE_DEVICE_API_TOKEN}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.uri", "${DYNATRACE_DEVICE_URI}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.deviceId", "${DYNATRACE_DEVICE_ID}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.step", "PT1M");
     }
 }

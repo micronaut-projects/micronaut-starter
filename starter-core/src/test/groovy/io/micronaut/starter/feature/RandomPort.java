@@ -1,10 +1,8 @@
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -23,12 +21,22 @@ public class RandomPort implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_APP;
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("micronaut.server.port", "-1");
+    public String getTitle() {
+        return "Random Port Support";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micronaut.server.port", "-1");
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
     }
 }

@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -33,14 +34,19 @@ public class DataDog extends MicrometerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Datadog reporter)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.apiKey", "${DATADOG_APIKEY}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.apiKey", "${DATADOG_APIKEY}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.step", "PT1M");
     }
 }

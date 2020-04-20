@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.netflix
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class RibbonSpec extends Specification implements ProjectFixture, ContextFixture
 
     void 'test netflix-ribbon configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['netflix-ribbon'])
+        GeneratorContext commandContext = buildCommandContext(['netflix-ribbon'])
 
         then:
         commandContext.configuration.get('ribbon.VipAddress'.toString()) == 'test'

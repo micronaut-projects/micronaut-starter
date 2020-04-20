@@ -15,14 +15,12 @@
  */
 package io.micronaut.starter.feature.logging;
 
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.logging.template.logback;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -38,22 +36,27 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Logback Logging";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds Logback Logging";
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Language language, TestFramework testFramework, BuildTool buildTool, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof LoggingFeature);
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         String osName = System.getProperty("os.name");
         boolean jansi = false;
         if (osName == null || !osName.toLowerCase(Locale.ENGLISH).contains("windows")) {
             jansi = true;
         }
-        commandContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));
+        generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));
     }
 }

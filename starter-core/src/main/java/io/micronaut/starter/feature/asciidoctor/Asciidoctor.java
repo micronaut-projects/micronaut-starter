@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.asciidoctor;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
 import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
@@ -33,23 +33,28 @@ public class Asciidoctor implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Asciidoctor Documentation";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds Asciidoctor documentation";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
 
-        if (commandContext.getBuildTool() == BuildTool.gradle) {
-            commandContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
-        } else if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
-            commandContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
-            commandContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
-            commandContext.getBuildProperties().put("jruby.version", "9.2.11.1");
+        if (generatorContext.getBuildTool() == BuildTool.gradle) {
+            generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
+        } else if (generatorContext.getBuildTool() == BuildTool.maven) {
+            generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
+            generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
+            generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
+            generatorContext.getBuildProperties().put("jruby.version", "9.2.11.1");
         }
 
-        commandContext.addTemplate("indexAdoc", new RockerTemplate("src/docs/asciidoc/index.adoc", indexAdoc.template()));
+        generatorContext.addTemplate("indexAdoc", new RockerTemplate("src/docs/asciidoc/index.adoc", indexAdoc.template()));
 
 
     }

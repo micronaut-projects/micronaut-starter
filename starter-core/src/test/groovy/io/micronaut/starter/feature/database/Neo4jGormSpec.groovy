@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.database
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -65,7 +65,7 @@ class Neo4jGormSpec extends Specification implements ProjectFixture, ContextFixt
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['neo4j-gorm'])
+        GeneratorContext ctx = buildCommandContext(['neo4j-gorm'])
 
         then:
         ctx.getConfiguration().get("neo4j.uri") == "bolt://\${NEO4J_HOST:localhost}"

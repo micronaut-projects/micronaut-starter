@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature.graphql
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -50,7 +50,7 @@ class GraphQLSpec extends Specification implements ProjectFixture, ContextFixtur
 
     void 'test graphql configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['graphql'])
+        GeneratorContext commandContext = buildCommandContext(['graphql'])
 
         then:
         commandContext.configuration.get('#graphql.graphiql.enabled'.toString()) == true

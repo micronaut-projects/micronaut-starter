@@ -28,6 +28,11 @@ public class Jib implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Jib Docker Containers";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Jib builds";
     }

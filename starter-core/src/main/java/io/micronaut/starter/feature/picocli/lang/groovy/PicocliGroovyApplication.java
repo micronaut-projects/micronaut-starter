@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.picocli.lang.groovy;
 
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.lang.groovy.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -37,15 +37,25 @@ public class PicocliGroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.CLI;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        GroovyApplicationFeature.super.apply(commandContext);
+    public String getTitle() {
+        return "PicoCLI Groovy";
+    }
 
-        commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
+    @Override
+    public String getDescription() {
+        return getTitle() + " Support";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        GroovyApplicationFeature.super.apply(generatorContext);
+
+        generatorContext.addTemplate("application", getTemplate(generatorContext.getProject()));
     }
 
     public RockerTemplate getTemplate(Project project) {

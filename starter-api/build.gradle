@@ -1,0 +1,16 @@
+dependencies {
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.4.0"
+    api project(":starter-core"), {
+        exclude group:'org.slf4j', module:'slf4j-nop'
+    }
+    implementation("io.swagger.core.v3:swagger-annotations")
+    api "io.micronaut:micronaut-runtime"
+    api "io.micronaut:micronaut-http"
+    api "io.micronaut:micronaut-validation"
+
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut:micronaut-http-server-netty"
+    testImplementation "io.micronaut:micronaut-http-client"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+}

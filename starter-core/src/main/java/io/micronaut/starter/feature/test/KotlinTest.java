@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
@@ -31,12 +31,12 @@ public class KotlinTest implements TestFeature {
     }
 
     @Override
-    public void doApply(CommandContext commandContext) {
+    public void doApply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        commandContext.addTemplate("kotlinTestConfig",
+        generatorContext.addTemplate("kotlinTestConfig",
                 new URLTemplate("src/test/kotlin/io/kotlintest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotlintest/ProjectConfig.kt")));
-        commandContext.addTemplate("testDir", new URLTemplate("src/test/kotlin/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
+        generatorContext.addTemplate("testDir", new URLTemplate("src/test/kotlin/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
     }
 
     @Override
@@ -47,5 +47,15 @@ public class KotlinTest implements TestFeature {
     @Override
     public Language getDefaultLanguage() {
         return Language.kotlin;
+    }
+
+    @Override
+    public String getTitle() {
+        return "KotlinTest Testing Framework";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds support for the KotlinTest testing framework";
     }
 }

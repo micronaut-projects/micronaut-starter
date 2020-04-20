@@ -1,11 +1,12 @@
 package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.ConsoleOutput
 import io.micronaut.starter.Options
-import io.micronaut.starter.command.CommandContext
-import io.micronaut.starter.command.ConsoleOutput
-import io.micronaut.starter.command.CreateAppCommand
-import io.micronaut.starter.command.MicronautCommand
+import io.micronaut.starter.application.DefaultAvailableFeatures
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
 import io.micronaut.starter.ContextFactory
@@ -33,21 +34,21 @@ trait ContextFixture {
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
                                        Options options = new Options(null, null, BuildTool.gradle)) {
 
-        CreateAppCommand.CreateAppFeatures availableFeatures = beanContext.getBean(CreateAppCommand.CreateAppFeatures)
+        AvailableFeatures availableFeatures = beanContext.getBean(DefaultAvailableFeatures)
         ContextFactory factory = beanContext.getBean(ContextFactory)
 
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
-                MicronautCommand.CREATE_APP,
-                options.language, options.buildTool, options.testFramework)
+                ApplicationType.DEFAULT,
+                options)
     }
 
-    CommandContext buildCommandContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.gradle)) {
+    GeneratorContext buildCommandContext(List<String> selectedFeatures,
+                                         Options options = new Options(null, null, BuildTool.gradle)) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)
-            CommandContext commandContext = factory.createCommandContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
+            GeneratorContext commandContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
             commandContext.applyFeatures()
             return commandContext
         } else {

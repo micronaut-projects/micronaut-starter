@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.lang.java;
 
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -36,16 +36,26 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.DEFAULT || command == ApplicationType.GRPC;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        JavaApplicationFeature.super.apply(commandContext);
+    public String getTitle() {
+        return "Java Application Support";
+    }
 
-        commandContext.addTemplate("application", new RockerTemplate(getPath(),
-                application.template(commandContext.getProject(), commandContext.getFeatures())));
+    @Override
+    public String getDescription() {
+        return getTitle();
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        JavaApplicationFeature.super.apply(generatorContext);
+
+        generatorContext.addTemplate("application", new RockerTemplate(getPath(),
+                application.template(generatorContext.getProject(), generatorContext.getFeatures())));
     }
 
     protected String getPath() {

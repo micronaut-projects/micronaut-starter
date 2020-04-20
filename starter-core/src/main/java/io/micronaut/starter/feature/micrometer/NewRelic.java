@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -33,15 +34,20 @@ public class NewRelic extends MicrometerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ New Relic reporter)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.apiKey", "${NEWRELIC_API_KEY}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.apiKey", "${NEWRELIC_API_KEY}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.step", "PT1M");
     }
 }

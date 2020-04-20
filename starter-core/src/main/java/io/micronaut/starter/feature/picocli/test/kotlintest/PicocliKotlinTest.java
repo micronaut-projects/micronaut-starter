@@ -15,9 +15,10 @@
  */
 package io.micronaut.starter.feature.picocli.test.kotlintest;
 
+import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -32,8 +33,18 @@ public class PicocliKotlinTest implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("picocliKotlinTest", getTemplate(commandContext.getProject()));
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("picocliKotlinTest", getTemplate(generatorContext.getProject()));
     }
 
     public RockerTemplate getTemplate(Project project) {
@@ -41,8 +52,8 @@ public class PicocliKotlinTest implements Feature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
+    public boolean supports(ApplicationType command) {
+        return command == ApplicationType.CLI;
     }
 
     @Override

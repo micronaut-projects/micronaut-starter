@@ -37,6 +37,11 @@ public class MongoGorm implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GORM for MongoDB";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures GORM for MongoDB for Groovy applications";
     }

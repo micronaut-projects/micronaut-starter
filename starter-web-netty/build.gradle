@@ -1,0 +1,41 @@
+plugins {
+    id "com.github.johnrengelman.shadow"
+    id "application"
+}
+
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+    invoker
+}
+
+dependencies {
+    developmentOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation project(":starter-api")
+    implementation "io.micronaut:micronaut-inject"
+
+    implementation "io.micronaut:micronaut-http-server-netty"
+//    implementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M2"
+
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation "io.micronaut:micronaut-http-client"
+}
+test.classpath += configurations.developmentOnly
+
+mainClassName = "io.micronaut.starter.netty.Application"
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
+    }
+}
+
+run.classpath += configurations.developmentOnly

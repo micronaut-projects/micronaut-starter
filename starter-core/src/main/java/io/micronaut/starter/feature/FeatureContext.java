@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.Options;
-import io.micronaut.starter.command.ConsoleOutput;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -30,29 +30,28 @@ import static java.util.stream.Collectors.toList;
 
 public class FeatureContext {
 
-    private final MicronautCommand command;
+    private final ApplicationType command;
     private final List<Feature> selectedFeatures;
     private final Options options;
     private final List<Feature> features = new ArrayList<>();
     private List<FeaturePredicate> exclusions = new ArrayList<>();
     private ListIterator<Feature> iterator;
 
-    public FeatureContext(Language language,
-                          TestFramework testFramework,
-                          BuildTool buildTool,
-                          MicronautCommand command,
+    public FeatureContext(Options options,
+                          ApplicationType command,
                           List<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
-        if (testFramework == null) {
-            testFramework = selectedFeatures.stream()
+        if (options.getTestFramework() == null) {
+            TestFramework testFramework = selectedFeatures.stream()
                     .filter(TestFeature.class::isInstance)
                     .map(TestFeature.class::cast)
                     .map(TestFeature::getTestFramework)
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
+            options = new Options(options.getLanguage(), testFramework, options.getBuildTool());
         }
-        this.options = new Options(language, testFramework, buildTool);
+        this.options = options;
     }
 
     public void processSelectedFeatures() {
@@ -115,7 +114,7 @@ public class FeatureContext {
         feature.processSelectedFeatures(this);
     }
 
-    public MicronautCommand getCommand() {
+    public ApplicationType getCommand() {
         return command;
     }
 

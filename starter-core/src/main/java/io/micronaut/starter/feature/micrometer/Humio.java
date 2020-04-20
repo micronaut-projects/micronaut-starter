@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -33,13 +34,18 @@ public class Humio extends MicrometerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Humio reporter)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
     }
 }
