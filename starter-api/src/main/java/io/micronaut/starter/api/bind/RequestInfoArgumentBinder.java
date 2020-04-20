@@ -15,18 +15,15 @@
  */
 package io.micronaut.starter.api.bind;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.context.env.Environment;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
-import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.starter.api.RequestInfo;
-import javax.inject.Provider;
+import io.micronaut.starter.api.StarterConfiguration;
+
 import javax.inject.Singleton;
-import java.net.InetSocketAddress;
 import java.util.Optional;
 
 /**
@@ -39,15 +36,14 @@ import java.util.Optional;
 public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<RequestInfo> {
 
     private static final Argument<RequestInfo> TYPE = Argument.of(RequestInfo.class);
-
-    private final Provider<EmbeddedServer> embeddedServerProvider;
+    private final StarterConfiguration configuration;
 
     /**
      * Default constructor.
-     * @param embeddedServerProvider The embedded server provider
+     * @param configuration The configuration
      */
-    public RequestInfoArgumentBinder(@Nullable Provider<EmbeddedServer> embeddedServerProvider) {
-        this.embeddedServerProvider = embeddedServerProvider;
+    public RequestInfoArgumentBinder(StarterConfiguration configuration) {
+        this.configuration = configuration;
     }
 
     @Override
@@ -63,29 +59,25 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
 
     private String resolveUrl(HttpRequest<?> request) {
 
-        String url;
-        String hostname = System.getenv(Environment.HOSTNAME);
-        String host;
-        InetSocketAddress serverAddress = request.getServerAddress();
-        if (hostname != null) {
-            return "https://" + hostname;
+        String cp = configuration.getPath().orElse("");
+        String url = configuration.getUrl().map(Object::toString).orElse(null);
+        if (url != null) {
+            return "https://" + url + cp;
         } else {
-            hostname = request.getUri().getHost();
+           String hostname = request.getUri().getHost();
+           String host;
             if (hostname != null) {
                 host = hostname;
             } else {
-                if (embeddedServerProvider != null) {
-                    host = embeddedServerProvider.get().getHost();
-                } else {
-                    host = SocketUtils.LOCALHOST;
-                }
+                host = SocketUtils.LOCALHOST;
             }
+            int port = request.getServerAddress().getPort();
+            if (port > -1 && port != 80) {
+                host = host + ":" + port;
+            }
+            url = (request.isSecure() ? "https" : "http") + "://" + host + cp;
         }
-        int port = serverAddress.getPort();
-        if (port > -1 && port != 80) {
-            host = host + ":" + port;
-        }
-        url = (request.isSecure() ? "https" : "http") + "://" + host ;
+
         return url;
     }
 }

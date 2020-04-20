@@ -70,7 +70,7 @@ public class RequestInfo {
      * @return A new link
      */
     public LinkDTO link(Relationship rel, ApplicationType type) {
-        return new LinkDTO(getServerURL() + "/" + rel + "/" + type + "/{name}");
+        return new LinkDTO(getServerURL() + "/" + rel + "/" + type.getName() + "/{name}");
     }
 
     /**
