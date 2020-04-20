@@ -57,7 +57,7 @@ import java.util.stream.Collectors;
         )
 )
 @Controller("/")
-public class ApplicationController implements ApplicationTypeOperations{
+public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
 
