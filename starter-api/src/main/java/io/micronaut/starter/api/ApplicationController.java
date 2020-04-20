@@ -16,8 +16,10 @@
 package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.version.VersionUtils;
+import io.micronaut.discovery.event.ServiceReadyEvent;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -36,10 +38,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -57,9 +56,10 @@ import java.util.stream.Collectors;
         )
 )
 @Controller("/")
-public class ApplicationController implements ApplicationTypeOperations {
+public class ApplicationController implements ApplicationTypeOperations, ApplicationEventListener<ServiceReadyEvent> {
 
     private final FeatureOperations featureOperations;
+    private Map<String, String> metadata;
 
     /**
      * Default constructor.
@@ -75,9 +75,18 @@ public class ApplicationController implements ApplicationTypeOperations {
      * @param info The info
      * @return Information about this instance.
      */
-    @Get("/version")
+    @Get("/instance/version")
     VersionDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         return new VersionDTO(request.getUri().toString(), request.getServerAddress());
+    }
+
+    /**
+     * Metadata about this instance.
+     * @return Information about this instance.
+     */
+    @Get("/instance/metadata")
+    Map<String, String> getMetadata() {
+        return this.metadata;
     }
 
     /**
@@ -177,4 +186,8 @@ public class ApplicationController implements ApplicationTypeOperations {
         return dto;
     }
 
+    @Override
+    public void onApplicationEvent(ServiceReadyEvent event) {
+        this.metadata = event.getSource().getMetadata().asMap();
+    }
 }
