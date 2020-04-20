@@ -10,7 +10,7 @@ class MavenSpec extends BeanContextSpec {
 
     void "test annotation processor dependencies"() {
         when:
-        Features features = getFeatures([], null, null, BuildTool.maven)
+        Features features = getFeatures([], null, null, BuildTool.MAVEN)
         String template = pom.template(buildProject(), features, []).render().toString()
 
         then:
@@ -30,7 +30,7 @@ class MavenSpec extends BeanContextSpec {
 """)
 
         when:
-        features = getFeatures([], Language.kotlin, null, BuildTool.maven)
+        features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
         template = pom.template(buildProject(), features, []).render().toString()
 
         then:
@@ -50,7 +50,7 @@ class MavenSpec extends BeanContextSpec {
 """)
 
         when:
-        features = getFeatures([], Language.groovy, null, BuildTool.maven)
+        features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
         template = pom.template(buildProject(), features, []).render().toString()
 
         then:

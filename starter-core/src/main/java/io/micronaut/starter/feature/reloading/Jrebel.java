@@ -40,7 +40,7 @@ public class Jrebel implements ReloadingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.gradle) {
+        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
             generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
         }

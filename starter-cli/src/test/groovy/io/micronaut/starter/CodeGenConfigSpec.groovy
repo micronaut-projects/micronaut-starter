@@ -28,9 +28,9 @@ sourceLanguage: java
         then:
         config.applicationType == command
         config.defaultPackage == "micronaut.testing.keycloak"
-        config.testFramework == TestFramework.junit
-        config.sourceLanguage == Language.java
-        config.buildTool == BuildTool.gradle // picked up because starter is a gradle project
+        config.testFramework == TestFramework.JUNIT
+        config.sourceLanguage == Language.JAVA
+        config.buildTool == BuildTool.GRADLE // picked up because starter is a gradle project
         config.features.containsAll(["java", "junit", "gradle"])
 
         where:

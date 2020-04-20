@@ -13,29 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.options;
+package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public enum Language {
-    JAVA,
-    GROOVY,
-    KOTLIN;
-
-    public static Language infer(List<Feature> features) {
-        return features.stream()
-                .map(Feature::getRequiredLanguage)
-                .filter(Optional::isPresent)
-                .findFirst()
-                .map(Optional::get)
-                .orElse(null);
-    }
-
-    @Override
-    public String toString() {
-        return this.name().toLowerCase();
+public class BuildToolCandidates extends ArrayList<String> {
+    public BuildToolCandidates() {
+        super(Stream.of(BuildTool.values()).map(bt -> bt.toString().toLowerCase()).collect(Collectors.toList()));
     }
 }

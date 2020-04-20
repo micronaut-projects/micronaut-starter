@@ -24,13 +24,13 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
     @Unroll
     void 'test basic create-app for lang=#lang and maven'() {
         given:
-        generateDefaultProject(lang, BuildTool.maven)
+        generateDefaultProject(lang, BuildTool.MAVEN)
 
         when:
         executeMavenCommand("mn:run")
@@ -39,7 +39,7 @@ class CreateAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
 }

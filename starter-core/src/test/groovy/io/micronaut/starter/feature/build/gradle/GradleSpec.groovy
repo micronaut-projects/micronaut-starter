@@ -40,7 +40,7 @@ class GradleSpec extends BeanContextSpec {
         template.contains('annotationProcessor "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(getFeatures([], Language.kotlin)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.KOTLIN)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -48,7 +48,7 @@ class GradleSpec extends BeanContextSpec {
         template.contains('kapt "io.micronaut:micronaut-validation"')
 
         when:
-        template = annotationProcessors.template(getFeatures([], Language.groovy)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.GROOVY)).render().toString()
 
         then:
         template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')

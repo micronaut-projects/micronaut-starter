@@ -75,7 +75,7 @@ public abstract class AbstractCreateController implements CreateOperation {
                 try {
                     projectGenerator.generate(type,
                             project,
-                            new Options(lang, testFramework, buildTool == null ? BuildTool.gradle : buildTool),
+                            new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool),
                             features == null ? Collections.emptyList() : features,
                             new ZipOutputHandler(outputStream),
                             ConsoleOutput.NOOP);

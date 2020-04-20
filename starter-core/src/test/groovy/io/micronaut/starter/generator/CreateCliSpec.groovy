@@ -24,13 +24,13 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Hi")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
     @Unroll
     void 'test basic maven create-cli-app for lang=#lang'() {
         given:
-        generateCliProject(lang, BuildTool.maven)
+        generateCliProject(lang, BuildTool.MAVEN)
 
         when:
         executeMavenCommand("mn:run -Dmn.appArgs=-v")
@@ -39,7 +39,7 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Hi")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
     @Unroll
@@ -54,13 +54,13 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESSFUL")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
     @Unroll
     void 'test basic maven create-cli-app test for lang=#lang'() {
         given:
-        generateCliProject(lang, BuildTool.maven)
+        generateCliProject(lang, BuildTool.MAVEN)
 
         when:
         executeMavenCommand("compile test")
@@ -69,7 +69,7 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
 

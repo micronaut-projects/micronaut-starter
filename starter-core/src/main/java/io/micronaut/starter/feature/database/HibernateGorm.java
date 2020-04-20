@@ -53,7 +53,7 @@ public class HibernateGorm implements Feature {
 
     @Override
     public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.groovy);
+        return Optional.of(Language.GROOVY);
     }
 
     @Override

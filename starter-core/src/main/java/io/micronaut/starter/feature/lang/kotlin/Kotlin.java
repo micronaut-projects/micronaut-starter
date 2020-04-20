@@ -86,6 +86,6 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.kotlin;
+        return options.getLanguage() == Language.KOTLIN;
     }
 }

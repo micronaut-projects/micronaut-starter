@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.options;
+package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
+import picocli.CommandLine;
 
-import java.util.List;
-import java.util.Optional;
+public class BuildToolConverter implements CommandLine.ITypeConverter<BuildTool> {
 
-public enum Language {
-    JAVA,
-    GROOVY,
-    KOTLIN;
-
-    public static Language infer(List<Feature> features) {
-        return features.stream()
-                .map(Feature::getRequiredLanguage)
-                .filter(Optional::isPresent)
-                .findFirst()
-                .map(Optional::get)
-                .orElse(null);
-    }
+    public static final BuildTool DEFAULT_BUILD_TOOL = BuildTool.GRADLE;
 
     @Override
-    public String toString() {
-        return this.name().toLowerCase();
+    public BuildTool convert(String value) throws Exception {
+        if (value == null) {
+            return DEFAULT_BUILD_TOOL;
+        }
+        for (BuildTool bt : BuildTool.values()) {
+            if (value.equalsIgnoreCase(bt.toString())) {
+                return bt;
+            }
+        }
+        return DEFAULT_BUILD_TOOL;
     }
 }

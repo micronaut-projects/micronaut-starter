@@ -44,7 +44,7 @@ class MicrometerSpec extends BeanContextSpec {
     void 'test maven micrometer feature #micrometerFeature.name'() {
         given:
         String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
-        Features features = getFeatures([micrometerFeature.name], null, null, BuildTool.maven)
+        Features features = getFeatures([micrometerFeature.name], null, null, BuildTool.MAVEN)
 
         when:
         String template = pom.template(buildProject(), features, []).render().toString()
@@ -64,7 +64,7 @@ class MicrometerSpec extends BeanContextSpec {
 
     void "test maven micrometer multiple features"() {
         when:
-        Features features = getFeatures(["micrometer-atlas", "micrometer-influx"], null, null, BuildTool.maven)
+        Features features = getFeatures(["micrometer-atlas", "micrometer-influx"], null, null, BuildTool.MAVEN)
         String template = pom.template(buildProject(), features, []).render().toString()
 
         then:

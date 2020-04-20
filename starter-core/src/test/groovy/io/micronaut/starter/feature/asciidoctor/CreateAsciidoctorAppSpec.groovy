@@ -18,7 +18,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test gradle create-app for asciidoctor feature, language=#language'() {
         given:
-        generateDefaultProject(language, BuildTool.gradle, ['asciidoctor'])
+        generateDefaultProject(language, BuildTool.GRADLE, ['asciidoctor'])
 
         when:
         executeGradleCommand('asciidoctor')
@@ -27,13 +27,13 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains('BUILD SUCCESSFUL')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
     void 'test maven create-app for asciidoctor feature, language=#language'() {
         given:
-        generateDefaultProject(language, BuildTool.maven, ['asciidoctor'])
+        generateDefaultProject(language, BuildTool.MAVEN, ['asciidoctor'])
 
         when:
         executeMavenCommand('generate-resources')
@@ -42,7 +42,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains('BUILD SUCCESS')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
 }

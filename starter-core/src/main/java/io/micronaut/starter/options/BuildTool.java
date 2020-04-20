@@ -16,6 +16,11 @@
 package io.micronaut.starter.options;
 
 public enum BuildTool {
-    gradle,
-    maven
+    GRADLE,
+    MAVEN;
+
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
+    }
 }
