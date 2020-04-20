@@ -75,11 +75,11 @@ public class CreateCommandCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
-        if (config.getSourceLanguage() == Language.java) {
+        if (config.getSourceLanguage() == Language.JAVA) {
             renderResult = templateRenderer.render(javaApplication.getTemplate(project), overwrite);
-        } else if (config.getSourceLanguage() == Language.groovy) {
+        } else if (config.getSourceLanguage() == Language.GROOVY) {
             renderResult = templateRenderer.render(groovyApplication.getTemplate(project), overwrite);
-        } else if (config.getSourceLanguage() == Language.kotlin) {
+        } else if (config.getSourceLanguage() == Language.KOTLIN) {
             renderResult = templateRenderer.render(kotlinApplication.getTemplate(project), overwrite);
         }
 
@@ -93,11 +93,11 @@ public class CreateCommandCommand extends CodeGenCommand {
             }
         }
 
-        if (config.getTestFramework() == TestFramework.junit) {
+        if (config.getTestFramework() == TestFramework.JUNIT) {
             renderResult = templateRenderer.render(junit.getTemplate(config.getSourceLanguage(), project), overwrite);
-        } else if (config.getTestFramework() == TestFramework.spock) {
+        } else if (config.getTestFramework() == TestFramework.SPOCK) {
             renderResult = templateRenderer.render(spock.getTemplate(project), overwrite);
-        } else if (config.getTestFramework() == TestFramework.kotlintest) {
+        } else if (config.getTestFramework() == TestFramework.KOTLINTEST) {
             renderResult = templateRenderer.render(kotlinTest.getTemplate(project), overwrite);
         }
 

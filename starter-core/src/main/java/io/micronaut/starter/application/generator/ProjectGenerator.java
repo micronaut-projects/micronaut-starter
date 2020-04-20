@@ -51,11 +51,12 @@ public class ProjectGenerator {
                          OutputHandler outputHandler,
                          ConsoleOutput consoleOutput) throws Exception {
 
-        AvailableFeatures availableFeatures = beanContext.getBean(applicationType.getAvailableFeaturesClass());
+        GeneratorContext generatorContext = createGeneratorContext(applicationType, project, options, selectedFeatures, consoleOutput);
 
-        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options);
-        GeneratorContext generatorContext = contextFactory.createGeneratorContext(project, featureContext, consoleOutput);
+        generate(applicationType, project, outputHandler, generatorContext);
+    }
 
+    public void generate(ApplicationType applicationType, Project project, OutputHandler outputHandler, GeneratorContext generatorContext) throws Exception {
         generatorContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(generatorContext.getLanguage(),
@@ -67,16 +68,21 @@ public class ProjectGenerator {
 
         generatorContext.applyFeatures();
 
-        TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler);
-
-        for (Template template: generatorContext.getTemplates().values()) {
-            RenderResult renderResult = templateRenderer.render(template);
-            if (renderResult.getError() != null) {
-                throw renderResult.getError();
+        try (TemplateRenderer templateRenderer = TemplateRenderer.create(project, outputHandler)) {
+            for (Template template: generatorContext.getTemplates().values()) {
+                RenderResult renderResult = templateRenderer.render(template);
+                if (renderResult.getError() != null) {
+                    throw renderResult.getError();
+                }
             }
         }
+    }
 
-        templateRenderer.close();
+    public GeneratorContext createGeneratorContext(ApplicationType applicationType, Project project, Options options, List<String> selectedFeatures, ConsoleOutput consoleOutput) {
+        AvailableFeatures availableFeatures = beanContext.getBean(applicationType.getAvailableFeaturesClass());
+
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options);
+        return contextFactory.createGeneratorContext(project, featureContext, consoleOutput);
     }
 
 }

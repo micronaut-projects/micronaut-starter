@@ -21,7 +21,7 @@ http://localhost:8080/swagger/views/rapidoc/index.html
 From the project root build the docker image and push it to Google Container Registry:
 
 ```
-$ docker build . -t micronaut-starter
+$ docker build . -t micronaut-starter -f DockerfileCloudRun
 $ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
 $ docker push gcr.io/[PROJECT ID]/micronaut-starter
 ```

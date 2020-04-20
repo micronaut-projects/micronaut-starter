@@ -70,6 +70,6 @@ public class Java implements LanguageFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.java;
+        return options.getLanguage() == Language.JAVA;
     }
 }

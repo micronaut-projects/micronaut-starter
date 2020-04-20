@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Optional;
 
 public enum Language {
-    java,
-    groovy,
-    kotlin;
+    JAVA,
+    GROOVY,
+    KOTLIN;
 
     public static Language infer(List<Feature> features) {
         return features.stream()
@@ -32,5 +32,10 @@ public enum Language {
                 .findFirst()
                 .map(Optional::get)
                 .orElse(null);
+    }
+
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
     }
 }

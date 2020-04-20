@@ -19,6 +19,7 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.AvailableFeatures;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 
 public enum ApplicationType implements Named {
 
@@ -61,6 +62,6 @@ public enum ApplicationType implements Named {
     @Nonnull
     @Override
     public String getName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ENGLISH);
     }
 }

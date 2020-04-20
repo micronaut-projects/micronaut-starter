@@ -1,20 +1,11 @@
 package io.micronaut.starter.feature.graalvm
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class GraalNativeImageSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class GraalNativeImageSpec extends BeanContextSpec {
 
     void 'test gradle graalvm feature'() {
         when:
@@ -27,7 +18,7 @@ class GraalNativeImageSpec extends Specification implements ProjectFixture, Cont
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.kotlin)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -36,7 +27,7 @@ class GraalNativeImageSpec extends Specification implements ProjectFixture, Cont
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.groovy)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
@@ -64,7 +55,7 @@ class GraalNativeImageSpec extends Specification implements ProjectFixture, Cont
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.kotlin), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -83,7 +74,7 @@ class GraalNativeImageSpec extends Specification implements ProjectFixture, Cont
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.groovy), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

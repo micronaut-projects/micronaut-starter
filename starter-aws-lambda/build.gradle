@@ -4,51 +4,33 @@ plugins {
     id "application"
 }
 
-configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
-}
-
 dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation("io.micronaut.aws:micronaut-function-aws-api-proxy") {
+    implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")
+
+    implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime") {
         exclude group: "org.slf4j"
     }
-    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
-    runtimeOnly "com.amazonaws:aws-lambda-java-log4j2:1.1.0"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
 }
-test.classpath += configurations.developmentOnly
-
-mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
 }
 
+mainClassName = "io.micronaut.starter.lambda.CustomMicronautLambdaRuntime"
+
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.gcp.function.http.HttpFunction'
+        attributes 'Main-Class': 'io.micronaut.starter.lambda.CustomMicronautLambdaRuntime'
     }
     transform(Log4j2PluginsCacheFileTransformer)
 }
 
-run.classpath += configurations.developmentOnly
 
-task exploded(type: Copy) {
-    from sourceSets.main.output
-    into "build/exploded"
-
-
-    into('lib') {
-        from configurations.compileClasspath
-        from configurations.runtimeClasspath
-    }
-}
-
-shadowJar.dependsOn exploded

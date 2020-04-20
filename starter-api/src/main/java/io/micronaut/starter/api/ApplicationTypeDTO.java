@@ -28,7 +28,7 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-@Schema(name = "ApplicationType")
+@Schema(name = "ApplicationTypeInfo")
 @Introspected
 public class ApplicationTypeDTO extends Linkable {
 

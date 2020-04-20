@@ -22,8 +22,6 @@ import io.micronaut.starter.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
 
-
-import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 
@@ -40,7 +38,8 @@ import java.util.function.BiFunction;
         subcommands = {
                 CreateAppCommand.class,
                 CreateCliCommand.class,
-                CreateGrpcCommand.class
+                CreateGrpcCommand.class,
+                CreateFunctionCommand.class
         })
 @Prototype
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
@@ -84,19 +83,7 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     private static CommandLine createCommandLine(BeanContext beanContext, boolean noOpConsole) {
         MicronautStarter starter = beanContext.getBean(MicronautStarter.class);
-        CommandLine commandLine = new CommandLine(starter, new CommandLine.IFactory() {
-            CommandLine.IFactory defaultFactory = CommandLine.defaultFactory();
-
-            @Override
-            public <K> K create(Class<K> cls) throws Exception {
-                Optional<K> bean = beanContext.findOrInstantiateBean(cls);
-                if (bean.isPresent()) {
-                    return bean.get();
-                } else {
-                    return defaultFactory.create(cls);
-                }
-            }
-        });
+        CommandLine commandLine = new CommandLine(starter, new MicronautFactory(beanContext));
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));
         commandLine.setUsageHelpWidth(100);
 

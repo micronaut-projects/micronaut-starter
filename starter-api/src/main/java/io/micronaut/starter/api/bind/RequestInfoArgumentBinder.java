@@ -16,13 +16,14 @@
 package io.micronaut.starter.api.bind;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.convert.ArgumentConversionContext;
+import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.starter.api.RequestInfo;
-
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.net.InetSocketAddress;
@@ -61,21 +62,30 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
     }
 
     private String resolveUrl(HttpRequest<?> request) {
+
         String url;
-        if (embeddedServerProvider != null) {
-            url = embeddedServerProvider.get().getURL().toString();
-            if (url.endsWith("/")) {
-                url = url.substring(0, url.length() - 1);
-            }
+        String hostname = System.getenv(Environment.HOSTNAME);
+        String host;
+        InetSocketAddress serverAddress = request.getServerAddress();
+        if (hostname != null) {
+            return "https://" + hostname;
         } else {
-            InetSocketAddress serverAddress = request.getServerAddress();
-            String host = serverAddress.getHostString();
-            int port = serverAddress.getPort();
-            if (port > -1) {
-                host = host + ":" + port;
+            hostname = request.getUri().getHost();
+            if (hostname != null) {
+                host = hostname;
+            } else {
+                if (embeddedServerProvider != null) {
+                    host = embeddedServerProvider.get().getHost();
+                } else {
+                    host = SocketUtils.LOCALHOST;
+                }
             }
-            url = (request.isSecure() ? "https" : "http") + "://" + host ;
         }
+        int port = serverAddress.getPort();
+        if (port > -1 && port != 80) {
+            host = host + ":" + port;
+        }
+        url = (request.isSecure() ? "https" : "http") + "://" + host ;
         return url;
     }
 }

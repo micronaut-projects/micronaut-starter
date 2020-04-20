@@ -31,6 +31,7 @@ public class LambdaHandler implements RequestStreamHandler {
     public LambdaHandler() {
         try {
             handler = new MicronautLambdaContainerHandler();
+            handler.initialize();
         } catch (ContainerInitializationException e) {
             // if we fail here. We re-throw the exception to force another cold start
             e.printStackTrace();

@@ -68,6 +68,6 @@ public class Groovy implements LanguageFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.groovy;
+        return options.getLanguage() == Language.GROOVY;
     }
 }

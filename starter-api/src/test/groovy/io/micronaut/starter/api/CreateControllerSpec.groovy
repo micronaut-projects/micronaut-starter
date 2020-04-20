@@ -1,7 +1,11 @@
 package io.micronaut.starter.api
 
+import io.micronaut.http.HttpHeaders
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -11,7 +15,6 @@ import spock.lang.Specification
 
 import javax.annotation.Nullable
 import javax.inject.Inject
-import java.util.zip.ZipInputStream
 
 @MicronautTest
 class CreateControllerSpec extends Specification {
@@ -27,6 +30,46 @@ class CreateControllerSpec extends Specification {
         ZipUtil.isZip(bytes)
     }
 
+    void "test default create app - bad project name"() {
+        when:
+        client.createApp("tes%*&*t", Collections.emptyList(), null, null, null)
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        e.status == HttpStatus.BAD_REQUEST
+        e.message.contains("name: must match")
+    }
+
+    void "test default create app - missing feature"() {
+        when:
+        client.createApp("test",['junkkkk'], null, null, null)
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        e.status == HttpStatus.BAD_REQUEST
+        e.message.contains("The requested feature does not exist: junkkkk")
+    }
+
+    void "test default create app file name"() {
+        when:
+        def response = client.createResponse("test", Collections.emptyList(), null, null, null)
+        def bytes = response.body()
+
+        then:
+        ZipUtil.isZip(bytes)
+        response.header(HttpHeaders.CONTENT_DISPOSITION).contains("test.zip")
+    }
+
+    void "test get zip"() {
+        when:
+        def response = client.getZip("test", Collections.emptyList(), null, null, null)
+        def bytes = response.body()
+
+        then:
+        ZipUtil.isZip(bytes)
+        response.header(HttpHeaders.CONTENT_DISPOSITION).contains("test.zip")
+    }
+
     void "test default create app with feature"() {
         when:
         def bytes = client.createApp("test", ['graalvm'], null, null, null)
@@ -37,7 +80,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with kotlin"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], null, null, Language.kotlin)
+        def bytes = client.createApp("test", ['graalvm'], null, null, Language.KOTLIN)
 
         then:
         ZipUtil.containsFile(bytes, "Application.kt")
@@ -45,7 +88,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with groovy"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], null, null, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], null, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "Application.groovy")
@@ -53,7 +96,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with maven"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.maven, null, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], BuildTool.MAVEN, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "pom.xml")
@@ -61,17 +104,35 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with spock"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.gradle, TestFramework.spock, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY)
 
         then:
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock-core")
     }
 
 
-    @Client('/create')
+    @Client('/')
     static interface CreateClient {
-        @Get(uri = "/default/{name}{?features,build,test,lang}", consumes = "application/zip")
+        @Get(uri = "/create/default/{name}{?features,build,test,lang}", consumes = "application/zip")
         byte[] createApp(
+                String name,
+                @Nullable List<String> features,
+                @Nullable BuildTool build,
+                @Nullable TestFramework test,
+                @Nullable Language lang
+        );
+
+        @Get(uri = "/create/default/{name}{?features,build,test,lang}", consumes = "application/zip")
+        HttpResponse<byte[]> createResponse(
+                String name,
+                @Nullable List<String> features,
+                @Nullable BuildTool build,
+                @Nullable TestFramework test,
+                @Nullable Language lang
+        );
+
+        @Get(uri = "/{name}.zip{?features,build,test,lang}", consumes = "application/zip")
+        HttpResponse<byte[]> getZip(
                 String name,
                 @Nullable List<String> features,
                 @Nullable BuildTool build,

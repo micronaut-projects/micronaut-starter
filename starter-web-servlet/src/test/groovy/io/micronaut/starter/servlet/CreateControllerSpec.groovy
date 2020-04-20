@@ -37,7 +37,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with kotlin"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], null, null, Language.kotlin)
+        def bytes = client.createApp("test", ['graalvm'], null, null, Language.KOTLIN)
 
         then:
         ZipUtil.containsFile(bytes, "Application.kt")
@@ -45,7 +45,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with groovy"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], null, null, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], null, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "Application.groovy")
@@ -53,7 +53,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with maven"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.maven, null, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], BuildTool.MAVEN, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "pom.xml")
@@ -61,7 +61,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with spock"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.gradle, TestFramework.spock, Language.groovy)
+        def bytes = client.createApp("test", ['graalvm'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY)
 
         then:
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock-core")

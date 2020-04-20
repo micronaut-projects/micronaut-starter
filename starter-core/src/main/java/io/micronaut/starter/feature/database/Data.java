@@ -46,7 +46,7 @@ public class Data implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.maven) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("micronaut.data.version", "1.0.2");
         }
     }

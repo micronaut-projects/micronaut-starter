@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.cassandra
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class CassandraSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CassandraSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle cassandra feature for language=#language'() {
@@ -27,7 +18,7 @@ class CassandraSpec extends Specification implements ProjectFixture, ContextFixt
         template.contains('implementation "io.micronaut.configuration:micronaut-cassandra"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -45,7 +36,7 @@ class CassandraSpec extends Specification implements ProjectFixture, ContextFixt
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test cassandra configuration'() {

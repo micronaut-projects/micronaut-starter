@@ -1,20 +1,11 @@
 package io.micronaut.starter.feature.test
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class JUnitSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class JUnitSpec extends BeanContextSpec {
 
     void "test junit with different languages"() {
         when:
@@ -31,7 +22,7 @@ class JUnitSpec extends Specification implements ProjectFixture, ContextFixture 
 """)
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures([], Language.groovy, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.GROOVY, TestFramework.JUNIT)).render().toString()
 
         then:
         template.contains("""
@@ -44,7 +35,7 @@ class JUnitSpec extends Specification implements ProjectFixture, ContextFixture 
         !template.contains("testAnnotationProcessor")
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.KOTLIN, TestFramework.JUNIT)).render().toString()
 
         then:
         template.contains("""

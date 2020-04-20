@@ -24,7 +24,7 @@ trait ContextFixture {
     Features getFeatures(List<String> features,
                          Language language = null,
                          TestFramework testFramework = null,
-                         BuildTool buildTool = BuildTool.gradle) {
+                         BuildTool buildTool = BuildTool.GRADLE) {
         Options options = new Options(language, testFramework, buildTool)
         FeatureContext featureContext = buildFeatureContext(features, options)
         featureContext.processSelectedFeatures()
@@ -34,7 +34,7 @@ trait ContextFixture {
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.gradle, VersionInfo.getJavaVersion())) {
+                                       Options options = new Options(null, null, BuildTool.GRADLE, , VersionInfo.getJavaVersion())) {
 
         AvailableFeatures availableFeatures = beanContext.getBean(DefaultAvailableFeatures)
         ContextFactory factory = beanContext.getBean(ContextFactory)
@@ -46,7 +46,7 @@ trait ContextFixture {
     }
 
     GeneratorContext buildCommandContext(List<String> selectedFeatures,
-                                         Options options = new Options(null, null, BuildTool.gradle, VersionInfo.getJavaVersion())) {
+                                         Options options = new Options(null, null, BuildTool.GRADLE, VersionInfo.getJavaVersion())) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)

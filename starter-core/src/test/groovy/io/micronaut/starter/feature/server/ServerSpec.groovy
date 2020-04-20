@@ -1,21 +1,12 @@
 package io.micronaut.starter.feature.server
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class ServerSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class ServerSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle server feature #serverFeature'() {
@@ -48,7 +39,7 @@ class ServerSpec extends Specification implements ProjectFixture, ContextFixture
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.kotlin), []).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -60,7 +51,7 @@ class ServerSpec extends Specification implements ProjectFixture, ContextFixture
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.groovy), []).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

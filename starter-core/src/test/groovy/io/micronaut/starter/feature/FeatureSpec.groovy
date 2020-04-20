@@ -1,22 +1,15 @@
 package io.micronaut.starter.feature
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.Options
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-
-class FeatureSpec extends Specification {
-
-    @Shared @AutoCleanup BeanContext ctx = BeanContext.run()
+class FeatureSpec extends BeanContextSpec {
 
     @Unroll
     void "test default feature #feature.name cannot require a language"() {
@@ -26,7 +19,7 @@ class FeatureSpec extends Specification {
         !feature.requiredLanguage.isPresent()
 
         where:
-        feature << ctx.getBeansOfType(DefaultFeature).toList()
+        feature << beanContext.getBeansOfType(DefaultFeature).toList()
     }
 
     @Unroll
@@ -35,15 +28,17 @@ class FeatureSpec extends Specification {
         !feature.visible || feature.description != null
 
         where:
-        feature << ctx.getBeansOfType(Feature).toList()
+        feature << beanContext.getBeansOfType(Feature).toList()
     }
 
     @Unroll
     void "test #feature.name does not add an unmodifiable map to config"() {
         when:
-        def commandCtx = new GeneratorContext(NameUtils.parse("foo"),
-                ApplicationType.DEFAULT,
-                new Options(Language.java, TestFramework.junit, BuildTool.gradle), [feature])
+        def commandCtx = new GeneratorContext(buildProject(),
+                                              ApplicationType.DEFAULT,
+                                              new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
+                                              [feature]
+        )
         commandCtx.applyFeatures()
 
         then:
@@ -60,6 +55,6 @@ class FeatureSpec extends Specification {
                 })
 
         where:
-        feature << ctx.getBeansOfType(Feature)
+        feature << beanContext.getBeansOfType(Feature)
     }
 }

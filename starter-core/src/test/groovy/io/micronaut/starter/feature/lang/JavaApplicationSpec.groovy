@@ -1,8 +1,8 @@
 package io.micronaut.starter.feature.lang
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.feature.lang.java.application
 import io.micronaut.starter.fixture.ContextFixture
+import io.micronaut.starter.feature.lang.java.application
 import io.micronaut.starter.fixture.ProjectFixture
 import spock.lang.AutoCleanup
 import spock.lang.Shared

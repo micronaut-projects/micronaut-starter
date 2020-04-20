@@ -153,9 +153,9 @@ public class CodeGenConfig {
             availableFeatures = beanContext.getBean(codeGenConfig.getApplicationType().getAvailableFeaturesClass());
 
             if (new File("build.gradle").exists()) {
-                codeGenConfig.setBuildTool(BuildTool.gradle);
+                codeGenConfig.setBuildTool(BuildTool.GRADLE);
             } else if (new File("pom.xml").exists()) {
-                codeGenConfig.setBuildTool(BuildTool.maven);
+                codeGenConfig.setBuildTool(BuildTool.MAVEN);
             } else {
                 return null;
             }

@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.externalconfig
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class ConfigConsulSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class ConfigConsulSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle config-consul feature for language=#language'() {
@@ -27,7 +18,7 @@ class ConfigConsulSpec extends Specification implements ProjectFixture, ContextF
         template.contains('implementation "io.micronaut:micronaut-discovery-client"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test gradle config-consul multiple features'() {
@@ -53,7 +44,7 @@ class ConfigConsulSpec extends Specification implements ProjectFixture, ContextF
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test maven config-consul multiple features'() {

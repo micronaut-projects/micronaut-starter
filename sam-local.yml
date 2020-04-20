@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Micronaut Starter Lambda
+Description: Micronaut Starter API - micronaut-starter::micronaut-starter
 Globals:
   Api:
     EndpointConfiguration: REGIONAL
 Resources:
-  ExampleFunction:
+  MicronautStarterFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: io.micronaut.starter.lambda.LambdaHandler::handleRequest
-      Runtime: java8
-      CodeUri: build/exploded
-      MemorySize: 320
+      Handler: not.used.in.provided.runtime
+      Runtime: provided
+      CodeUri: build/function.zip
+      MemorySize: 128
       Policies: AWSLambdaBasicExecutionRole
       Timeout: 15
       Events:
@@ -20,10 +20,9 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: any
-
 Outputs:
-  ExampleApi:
+  MicronautStarterApi:
     Description: URL for application
-    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/ping'
+    Value: !Sub 'https://${MicronautStarterFunction}.execute-api.${AWS::Region}.amazonaws.com/'
     Export:
-      Name: ExampleApi
+      Name: MicronautStarterApi

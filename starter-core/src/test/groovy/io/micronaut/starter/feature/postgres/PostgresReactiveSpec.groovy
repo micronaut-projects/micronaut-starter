@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.postgres
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class PostgresReactiveSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class PostgresReactiveSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle postgres-reactive feature for language=#language'() {
@@ -27,7 +18,7 @@ class PostgresReactiveSpec extends Specification implements ProjectFixture, Cont
         template.contains('implementation "io.micronaut.configuration:micronaut-postgres-reactive"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -45,7 +36,7 @@ class PostgresReactiveSpec extends Specification implements ProjectFixture, Cont
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test postgres-reactive configuration'() {

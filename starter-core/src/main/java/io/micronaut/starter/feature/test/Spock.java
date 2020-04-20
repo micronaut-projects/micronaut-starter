@@ -38,12 +38,12 @@ public class Spock implements TestFeature {
 
     @Override
     public TestFramework getTestFramework() {
-        return TestFramework.spock;
+        return TestFramework.SPOCK;
     }
 
     @Override
     public Language getDefaultLanguage() {
-        return Language.groovy;
+        return Language.GROOVY;
     }
 
     @Override
