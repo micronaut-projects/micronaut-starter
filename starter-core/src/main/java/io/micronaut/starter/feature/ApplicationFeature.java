@@ -30,7 +30,7 @@ public interface ApplicationFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.maven) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("exec.mainClass", mainClassName(generatorContext.getProject()));
         }
     }

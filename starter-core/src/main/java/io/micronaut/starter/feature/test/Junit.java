@@ -38,12 +38,12 @@ public class Junit implements TestFeature {
 
     @Override
     public TestFramework getTestFramework() {
-        return TestFramework.junit;
+        return TestFramework.JUNIT;
     }
 
     @Override
     public Language getDefaultLanguage() {
-        return Language.java;
+        return Language.JAVA;
     }
 
     @Override

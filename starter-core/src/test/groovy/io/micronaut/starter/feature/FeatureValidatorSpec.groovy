@@ -11,11 +11,11 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test feature conflicts with language selection"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
             String name = "test-feature"
             String description = "test desc"
             String title = "test title"
-            Optional<Language> requiredLanguage = Optional.of(Language.groovy)
+            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
         }])
 
         then:
@@ -25,16 +25,16 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
             String name = "groovy-feature"
             String description = "groovy"
             String title = "groovy title"
-            Optional<Language> requiredLanguage = Optional.of(Language.groovy)
+            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
         }, new Feature() {
             String name = "kotlin-feature"
             String description = "groovy"
             String title = "groovy title"
-            Optional<Language> requiredLanguage = Optional.of(Language.kotlin)
+            Optional<Language> requiredLanguage = Optional.of(Language.KOTLIN)
         }])
 
         then:
@@ -46,7 +46,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test one of"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new OneOfFeature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new OneOfFeature() {
             String name = "a"
             String description = "groovy"
             String title = "groovy title"

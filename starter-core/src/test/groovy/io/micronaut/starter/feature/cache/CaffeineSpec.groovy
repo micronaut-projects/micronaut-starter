@@ -17,7 +17,7 @@ class CaffeineSpec extends BeanContextSpec {
         template.contains('implementation "io.micronaut.cache:micronaut-cache-caffeine"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class CaffeineSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
 }

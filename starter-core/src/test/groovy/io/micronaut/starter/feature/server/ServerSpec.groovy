@@ -39,7 +39,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.kotlin), []).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -51,7 +51,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.groovy), []).render().toString()
+        template = pom.template(buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

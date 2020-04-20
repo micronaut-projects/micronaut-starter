@@ -18,7 +18,7 @@ class GraalNativeImageSpec extends BeanContextSpec {
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.kotlin)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
         template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
@@ -27,7 +27,7 @@ class GraalNativeImageSpec extends BeanContextSpec {
         template.contains('compileOnly "org.graalvm.nativeimage:svm"')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.groovy)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
         template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
@@ -55,7 +55,7 @@ class GraalNativeImageSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.kotlin), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -74,7 +74,7 @@ class GraalNativeImageSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.groovy), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

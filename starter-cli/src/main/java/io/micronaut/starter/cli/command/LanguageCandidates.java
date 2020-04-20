@@ -13,29 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.options;
+package io.micronaut.starter.cli.command;
+import io.micronaut.starter.options.Language;
 
-import io.micronaut.starter.feature.Feature;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import java.util.List;
-import java.util.Optional;
-
-public enum Language {
-    JAVA,
-    GROOVY,
-    KOTLIN;
-
-    public static Language infer(List<Feature> features) {
-        return features.stream()
-                .map(Feature::getRequiredLanguage)
-                .filter(Optional::isPresent)
-                .findFirst()
-                .map(Optional::get)
-                .orElse(null);
-    }
-
-    @Override
-    public String toString() {
-        return this.name().toLowerCase();
+public class LanguageCandidates extends ArrayList<String> {
+    public LanguageCandidates() {
+        super(Stream.of(Language.values()).map(l -> l.toString().toLowerCase()).collect(Collectors.toList()));
     }
 }

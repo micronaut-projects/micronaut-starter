@@ -24,13 +24,13 @@ class CreateGrpcSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
     @Unroll
     void 'test basic create-grpc-app for lang=#lang and maven'() {
         given:
-        generateGrpcProject(lang, BuildTool.maven)
+        generateGrpcProject(lang, BuildTool.MAVEN)
 
         when:
         executeMavenCommand("mn:run")
@@ -39,7 +39,7 @@ class CreateGrpcSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        lang << [Language.java, Language.groovy, Language.kotlin, null]
+        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
     }
 
 }

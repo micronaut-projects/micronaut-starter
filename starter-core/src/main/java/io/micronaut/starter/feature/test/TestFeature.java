@@ -42,7 +42,7 @@ public interface TestFeature extends DefaultFeature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.maven) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             BuildProperties props = generatorContext.getBuildProperties();
             props.put("maven-surefire-plugin.version", "2.22.2");
             props.put("maven-failsafe-plugin.version", "2.22.2");
@@ -57,15 +57,15 @@ public interface TestFeature extends DefaultFeature {
     Language getDefaultLanguage();
 
     default boolean isJunit() {
-        return getTestFramework() == TestFramework.junit;
+        return getTestFramework() == TestFramework.JUNIT;
     }
 
     default boolean isSpock() {
-        return getTestFramework() == TestFramework.spock;
+        return getTestFramework() == TestFramework.SPOCK;
     }
 
     default boolean isKotlinTest() {
-        return getTestFramework() == TestFramework.kotlintest;
+        return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
     @Override

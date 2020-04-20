@@ -21,7 +21,7 @@ class ZipkinSpec extends BeanContextSpec {
         template.contains('runtimeOnly "io.zipkin.reporter2:zipkin-reporter"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -60,7 +60,7 @@ class ZipkinSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test tracing-zipkin configuration'() {
