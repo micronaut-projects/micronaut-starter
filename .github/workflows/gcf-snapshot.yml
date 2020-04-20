@@ -1,0 +1,24 @@
+name: Snapshot to GCF
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    name: Deploy job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Build the JAR
+        run: ./gradlew clean starter-gcp-function:shadowJar
+      - name: Authenticate into Google Cloud Platform
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Deploy to Cloud Function
+        run: |
+          gcloud components install alpha --quiet
+          cd starter-gcp-function/build/libs
+          gcloud alpha functions deploy ${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
