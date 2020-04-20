@@ -282,6 +282,9 @@ List<Property> properties
 @if (features.contains("file-watch-osx")) {
 @dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
 }
+@if (features.contains("alexa-http-server")) {
+@dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
