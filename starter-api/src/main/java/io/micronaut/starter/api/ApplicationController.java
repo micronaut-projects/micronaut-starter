@@ -75,9 +75,9 @@ public class ApplicationController implements ApplicationTypeOperations {
      * @param info The info
      * @return Information about this instance.
      */
-    @Get("/info")
-    InfoDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        return new InfoDTO(request.getUri().toString(), request.getServerAddress());
+    @Get("/version")
+    VersionDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
+        return new VersionDTO(request.getUri().toString(), request.getServerAddress());
     }
 
     /**

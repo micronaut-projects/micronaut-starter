@@ -13,6 +13,7 @@ dependencies {
     developmentOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-management"
 
     implementation "io.micronaut:micronaut-http-server-netty"
 //    implementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M2"

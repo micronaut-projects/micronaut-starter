@@ -29,8 +29,8 @@ import java.net.InetSocketAddress;
  * @since 1.0.0
  */
 @Introspected
-@Schema(name = "Info")
-public class InfoDTO {
+@Schema(name = "Version")
+public class VersionDTO {
 
     private final String serverURL;
     private final InetSocketAddress serverAddress;
@@ -40,7 +40,7 @@ public class InfoDTO {
      * @param serverURL The server URL
      * @param serverAddress The server address
      */
-    public InfoDTO(String serverURL, InetSocketAddress serverAddress) {
+    public VersionDTO(String serverURL, InetSocketAddress serverAddress) {
         this.serverURL = serverURL;
         this.serverAddress = serverAddress;
     }
