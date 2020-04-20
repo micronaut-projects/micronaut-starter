@@ -10,8 +10,9 @@ Micronaut Starter is a CLI tool that will help you generating new Micronaut appl
 == Available commands
 
 * link:mn.html[mn].
-** link:mn-create-app.html[mn create-app].
-** link:mn-create-cli-app.html[mn create-cli-app].
+** link:mn-create-app.html[create-app].
+** link:mn-create-cli-app.html[create-cli-app].
+** link:mn-create-grpc-app.html[create-grpc-app].
 
 == Installation
 
