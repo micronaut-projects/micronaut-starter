@@ -48,7 +48,7 @@ public class MongoGorm implements Feature {
 
     @Override
     public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.groovy);
+        return Optional.of(Language.GROOVY);
     }
 
     @Override

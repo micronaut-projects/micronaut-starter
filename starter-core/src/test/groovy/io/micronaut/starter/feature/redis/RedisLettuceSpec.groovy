@@ -18,7 +18,7 @@ class RedisLettuceSpec extends BeanContextSpec {
         template.contains('implementation "io.micronaut.configuration:micronaut-redis-lettuce"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class RedisLettuceSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test redis-lettuce configuration'() {

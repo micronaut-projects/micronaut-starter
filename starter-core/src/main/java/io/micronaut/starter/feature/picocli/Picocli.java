@@ -70,18 +70,18 @@ public class Picocli implements DefaultFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getTestFramework() == TestFramework.junit) {
+        if (featureContext.getTestFramework() == TestFramework.JUNIT) {
             featureContext.addFeature(junit);
-        } else if (featureContext.getTestFramework() == TestFramework.spock) {
+        } else if (featureContext.getTestFramework() == TestFramework.SPOCK) {
             featureContext.addFeature(spock);
-        } else if (featureContext.getTestFramework() == TestFramework.kotlintest) {
+        } else if (featureContext.getTestFramework() == TestFramework.KOTLINTEST) {
             featureContext.addFeature(kotlinTest);
         }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.maven) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
         }
     }

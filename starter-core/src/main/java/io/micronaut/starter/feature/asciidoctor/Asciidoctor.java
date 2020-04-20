@@ -45,9 +45,9 @@ public class Asciidoctor implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
 
-        if (generatorContext.getBuildTool() == BuildTool.gradle) {
+        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
             generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
-        } else if (generatorContext.getBuildTool() == BuildTool.maven) {
+        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
             generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
             generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");

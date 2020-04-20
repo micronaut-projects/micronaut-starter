@@ -18,7 +18,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
         template.contains('implementation "io.micronaut:micronaut-discovery-client"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test discovery-eureka configuration'() {

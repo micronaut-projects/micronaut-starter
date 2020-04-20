@@ -52,11 +52,11 @@ public class CreateKafkaListener extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
-        if (config.getSourceLanguage() == Language.java) {
+        if (config.getSourceLanguage() == Language.JAVA) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}.java", javaListener.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.groovy) {
+        } else if (config.getSourceLanguage() == Language.GROOVY) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}.groovy", groovyListener.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.kotlin) {
+        } else if (config.getSourceLanguage() == Language.KOTLIN) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}.kt", kotlinListener.template(project)), overwrite);
         }
 

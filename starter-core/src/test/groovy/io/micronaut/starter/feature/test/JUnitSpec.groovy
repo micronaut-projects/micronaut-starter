@@ -22,7 +22,7 @@ class JUnitSpec extends BeanContextSpec {
 """)
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures([], Language.groovy, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.GROOVY, TestFramework.JUNIT)).render().toString()
 
         then:
         template.contains("""
@@ -35,7 +35,7 @@ class JUnitSpec extends BeanContextSpec {
         !template.contains("testAnnotationProcessor")
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.junit)).render().toString()
+        template = buildGradle.template(buildProject(), getFeatures([], Language.KOTLIN, TestFramework.JUNIT)).render().toString()
 
         then:
         template.contains("""

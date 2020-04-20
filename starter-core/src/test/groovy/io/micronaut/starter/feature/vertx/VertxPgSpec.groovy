@@ -18,7 +18,7 @@ class VertxPgSpec extends BeanContextSpec {
         template.contains('implementation "io.micronaut.configuration:micronaut-vertx-pg-client"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class VertxPgSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test vertx-pg-client configuration'() {

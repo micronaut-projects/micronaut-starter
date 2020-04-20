@@ -18,7 +18,7 @@ class VertxClientSpec extends BeanContextSpec {
         template.contains('implementation "io.micronaut.configuration:micronaut-vertx-mysql-client"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class VertxClientSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test vertx-mysql-client configuration'() {

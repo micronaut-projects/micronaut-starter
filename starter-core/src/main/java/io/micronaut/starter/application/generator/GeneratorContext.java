@@ -49,9 +49,9 @@ public class GeneratorContext {
         this.features = new Features(features);
         this.options = options;
         String micronautVersion = VersionInfo.getVersion();
-        if (options.getBuildTool() == BuildTool.gradle) {
+        if (options.getBuildTool() == BuildTool.GRADLE) {
             buildProperties.put("micronautVersion", micronautVersion);
-        } else if (options.getBuildTool() == BuildTool.maven) {
+        } else if (options.getBuildTool() == BuildTool.MAVEN) {
             buildProperties.put("micronaut.version", micronautVersion);
         }
     }

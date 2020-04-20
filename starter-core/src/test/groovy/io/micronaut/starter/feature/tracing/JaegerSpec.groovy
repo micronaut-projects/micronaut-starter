@@ -19,7 +19,7 @@ class JaegerSpec extends BeanContextSpec {
         template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     @Unroll
@@ -44,7 +44,7 @@ class JaegerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
     void 'test tracing-jaeger configuration'() {

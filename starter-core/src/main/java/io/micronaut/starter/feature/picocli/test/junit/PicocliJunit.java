@@ -49,11 +49,11 @@ public class PicocliJunit implements Feature {
     }
 
     public RockerTemplate getTemplate(Language language, Project project) {
-        if (language == Language.java) {
+        if (language == Language.JAVA) {
             return new RockerTemplate("src/test/java/{packagePath}/{className}CommandTest.java", picocliJunitTest.template(project));
-        } else if (language == Language.groovy) {
+        } else if (language == Language.GROOVY) {
             return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandSpec.groovy", picocliGroovyJunitTest.template(project));
-        } else if (language == Language.kotlin) {
+        } else if (language == Language.KOTLIN) {
             return new RockerTemplate("src/test/kotlin/{packagePath}/{className}CommandSpec.kt", picocliKotlinJunitTest.template(project));
         } else {
             return null;

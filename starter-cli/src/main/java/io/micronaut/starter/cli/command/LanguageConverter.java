@@ -13,29 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.options;
+package io.micronaut.starter.cli.command;
+import io.micronaut.starter.options.Language;
+import picocli.CommandLine;
 
-import io.micronaut.starter.feature.Feature;
+public class LanguageConverter implements CommandLine.ITypeConverter<Language> {
 
-import java.util.List;
-import java.util.Optional;
-
-public enum Language {
-    JAVA,
-    GROOVY,
-    KOTLIN;
-
-    public static Language infer(List<Feature> features) {
-        return features.stream()
-                .map(Feature::getRequiredLanguage)
-                .filter(Optional::isPresent)
-                .findFirst()
-                .map(Optional::get)
-                .orElse(null);
-    }
+    public static final Language DEFAULT_LANGUAGE = Language.JAVA;
 
     @Override
-    public String toString() {
-        return this.name().toLowerCase();
+    public Language convert(String value) throws Exception {
+        if (value == null) {
+            return DEFAULT_LANGUAGE;
+        }
+        for (Language bt : Language.values()) {
+            if (value.equalsIgnoreCase(bt.toString())) {
+                return bt;
+            }
+        }
+        return DEFAULT_LANGUAGE;
     }
 }

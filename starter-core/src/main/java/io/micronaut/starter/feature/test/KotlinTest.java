@@ -41,12 +41,12 @@ public class KotlinTest implements TestFeature {
 
     @Override
     public TestFramework getTestFramework() {
-        return TestFramework.kotlintest;
+        return TestFramework.KOTLINTEST;
     }
 
     @Override
     public Language getDefaultLanguage() {
-        return Language.kotlin;
+        return Language.KOTLIN;
     }
 
     @Override
