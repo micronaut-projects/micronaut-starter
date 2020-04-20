@@ -63,27 +63,25 @@ import java.util.stream.Collectors;
 public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
+    private final StarterConfiguration configuration;
 
     /**
      * Default constructor.
      * @param featureOperations The feature operations.
+     * @param configuration The starter configuration
      */
-    public ApplicationController(FeatureOperations featureOperations) {
+    public ApplicationController(FeatureOperations featureOperations, StarterConfiguration configuration) {
         this.featureOperations = featureOperations;
+        this.configuration = configuration;
     }
 
     /**
      * Information about this instance.
-     * @param request The request
-     * @param info The info
      * @return Information about this instance.
      */
     @Get("/version")
-    VersionDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        return new VersionDTO(
-                info.getServerURL(),
-                request.getServerAddress()
-        );
+    VersionDTO getInfo() {
+        return new VersionDTO(configuration);
     }
 
     /**

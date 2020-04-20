@@ -15,12 +15,10 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.core.version.VersionUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.net.InetSocketAddress;
 
 /**
  * Information about the application.
@@ -30,27 +28,25 @@ import java.net.InetSocketAddress;
  */
 @Introspected
 @Schema(name = "Version")
-public class VersionDTO {
+public class VersionDTO extends Linkable {
 
     private final String serverURL;
-    private final InetSocketAddress serverAddress;
+    private final String path;
 
     /**
      * Default constructor.
-     * @param serverURL The server URL
-     * @param serverAddress The server address
+     * @param configuration The configuration
      */
-    public VersionDTO(String serverURL, InetSocketAddress serverAddress) {
-        this.serverURL = serverURL;
-        this.serverAddress = serverAddress;
+    public VersionDTO(StarterConfiguration configuration) {
+        this.serverURL = configuration.getUrl().map(Object::toString).orElse(SocketUtils.LOCALHOST);
+        this.path = configuration.getPath().orElse("/");
     }
 
     /**
-     * @return The server address
+     * @return The configured path
      */
-    public String getServerHost() {
-        String host = System.getenv(Environment.HOSTNAME);
-        return host != null ? host : serverAddress.getHostName();
+    public String getPath() {
+        return path;
     }
 
     /**
@@ -63,7 +59,7 @@ public class VersionDTO {
     /**
      * @return The version
      */
-    public String getVersion() {
+    public String getMicronautVersion() {
         return VersionUtils.MICRONAUT_VERSION;
     }
 }
