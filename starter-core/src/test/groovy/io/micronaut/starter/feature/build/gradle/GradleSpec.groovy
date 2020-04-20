@@ -1,23 +1,13 @@
 package io.micronaut.starter.feature.build.gradle
 
-import groovy.test.NotYetImplemented
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.build.Property
 import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class GradleSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class GradleSpec extends BeanContextSpec {
 
     void "test settings.gradle"() {
         String template = settingsGradle.template(buildProject()).render().toString()
