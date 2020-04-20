@@ -16,10 +16,8 @@
 package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.version.VersionUtils;
-import io.micronaut.discovery.event.ServiceReadyEvent;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -38,7 +36,10 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -56,10 +57,9 @@ import java.util.stream.Collectors;
         )
 )
 @Controller("/")
-public class ApplicationController implements ApplicationTypeOperations, ApplicationEventListener<ServiceReadyEvent> {
+public class ApplicationController implements ApplicationTypeOperations{
 
     private final FeatureOperations featureOperations;
-    private Map<String, String> metadata;
 
     /**
      * Default constructor.
@@ -77,7 +77,10 @@ public class ApplicationController implements ApplicationTypeOperations, Applica
      */
     @Get("/version")
     VersionDTO getInfo(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
-        return new VersionDTO(request.getUri().toString(), request.getServerAddress(), metadata != null ? metadata : Collections.emptyMap());
+        return new VersionDTO(
+                info.getServerURL(),
+                request.getServerAddress()
+        );
     }
 
     /**
@@ -177,8 +180,4 @@ public class ApplicationController implements ApplicationTypeOperations, Applica
         return dto;
     }
 
-    @Override
-    public void onApplicationEvent(ServiceReadyEvent event) {
-        this.metadata = event.getSource().getMetadata().asMap();
-    }
 }

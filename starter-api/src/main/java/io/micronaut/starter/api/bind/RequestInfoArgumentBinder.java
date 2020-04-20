@@ -68,7 +68,7 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
         String host;
         InetSocketAddress serverAddress = request.getServerAddress();
         if (hostname != null) {
-            host = hostname;
+            return (request.isSecure() ? "https" : "http") + "://" + hostname;
         } else {
             hostname = request.getUri().getHost();
             if (hostname != null) {
