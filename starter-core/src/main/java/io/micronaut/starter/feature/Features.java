@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.Options;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,9 @@ public class Features extends ArrayList<String> {
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
+    private int javaVersion;
 
-    public Features(List<Feature> featureList) {
+    public Features(List<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));
         this.featureList = featureList;
         for (Feature feature: featureList) {
@@ -43,6 +46,7 @@ public class Features extends ArrayList<String> {
                 testFeature = (TestFeature) feature;
             }
         }
+        this.javaVersion = options.getJavaVersion();
     }
 
     public ApplicationFeature application() {
@@ -59,5 +63,13 @@ public class Features extends ArrayList<String> {
 
     public List<Feature> getFeatures() {
         return featureList;
+    }
+
+    public String getTargetJdk() {
+        if (language().isJava()) {
+            return VersionInfo.toJdkVersion(javaVersion);
+        } else {
+            return VersionInfo.toJdkVersion(Math.min(javaVersion, 13));
+        }
     }
 }

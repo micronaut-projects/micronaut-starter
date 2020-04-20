@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.util;
 
-import io.micronaut.starter.feature.lang.LanguageFeature;
-
 public class VersionInfo {
 
     public static String getVersion() {
@@ -39,26 +37,9 @@ public class VersionInfo {
                 dotPos > -1 ? dotPos : dashPos > -1 ? dashPos : version.length()));
     }
 
-    public static String getJdkVersion() {
-        String version = System.getProperty("java.version");
-        int dotPos = version.indexOf('.');
-        int dashPos = version.indexOf('-');
-
-        if (version.startsWith("1.")) {
-            dotPos += 2;
-        }
-
-        return version.substring(0,
-                dotPos > -1 ? dotPos : dashPos > -1 ? dashPos : version.length());
-    }
-
-    public static String getTargetJdk(LanguageFeature language) {
-        final int javaVersion = getJavaVersion();
-        if (language.isJava()) {
-            return getJdkVersion();
-        } else {
-            return javaVersion > 13 ? "13" : getJdkVersion();
-        }
+    public static String toJdkVersion(int javaVersion) {
+        String jdkVersion = String.valueOf(javaVersion);
+        return javaVersion <= 8 ? "1." + jdkVersion : jdkVersion;
     }
 
 }

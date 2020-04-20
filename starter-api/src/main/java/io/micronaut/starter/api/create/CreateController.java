@@ -49,7 +49,7 @@ public class CreateController extends AbstractCreateController implements Create
     }
 
     @Override
-    @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", produces = "application/zip")
     @ApiResponse(
             content = @Content(
                     mediaType = "application/zip"
@@ -61,7 +61,8 @@ public class CreateController extends AbstractCreateController implements Create
             @Nullable List<String> features,
             BuildTool build,
             TestFramework test,
-            Language lang) {
-        return super.createApp(type, name, features, build, test, lang);
+            Language lang,
+            Integer javaVersion) {
+        return super.createApp(type, name, features, build, test, lang, javaVersion);
     }
 }

@@ -1,15 +1,19 @@
 package io.micronaut.starter.feature.lang
 
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.other.Swagger
+import io.micronaut.context.BeanContext
 import io.micronaut.starter.feature.lang.java.application
+import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 
-class JavaApplicationSpec extends Specification implements ProjectFixture {
+class JavaApplicationSpec extends Specification implements ProjectFixture, ContextFixture {
+
+    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
 
     void "test java application"() {
-        String applicationJava = application.template(buildProject(), new Features([]))
+        String applicationJava = application.template(buildProject(), getFeatures([]))
         .render()
         .toString()
 
@@ -29,7 +33,7 @@ public class Application {
     }
 
     void "test java application with swagger"() {
-        String applicationJava = application.template(buildProject(), new Features([new Swagger()]))
+        String applicationJava = application.template(buildProject(), getFeatures(["swagger"]))
                 .render()
                 .toString()
 

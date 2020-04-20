@@ -31,30 +31,16 @@ import java.util.List;
 @Singleton
 public class Java implements LanguageFeature {
 
-    private final String version;
-    private final Junit junit;
     private final List<JavaApplicationFeature> applicationFeatures;
 
     public Java(List<JavaApplicationFeature> applicationFeatures,
                 Junit junit) {
         this.applicationFeatures = applicationFeatures;
-        this.junit = junit;
-        this.version = VersionInfo.getJdkVersion();
     }
 
     @Override
     public String getName() {
         return "java";
-    }
-
-    @Override
-    public String getVersion() {
-        return version;
-    }
-
-    @Override
-    public TestFeature getDefaultTestFeature() {
-        return junit;
     }
 
     @Override

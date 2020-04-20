@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.*;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.VersionInfo;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -164,7 +165,7 @@ public class CodeGenConfig {
                     .map(DefaultFeature.class::cast)
                     .filter(f -> f.shouldApply(
                             codeGenConfig.getApplicationType(),
-                            new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool()),
+                            new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
                             features))
                     .map(Feature::getName)
                     .collect(Collectors.toList()));

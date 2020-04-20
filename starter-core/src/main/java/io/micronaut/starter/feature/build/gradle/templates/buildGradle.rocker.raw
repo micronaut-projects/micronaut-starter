@@ -16,9 +16,9 @@ plugins {
     id "net.ltgt.apt-eclipse" version "0.21"
 }
 @if (features.language().isKotlin()) {
-    id "org.jetbrains.kotlin.jvm" version "@features.language().getVersion()"
-    id "org.jetbrains.kotlin.kapt" version "@features.language().getVersion()"
-    id "org.jetbrains.kotlin.plugin.allopen" version "@features.language().getVersion()"
+    id "org.jetbrains.kotlin.jvm" version "1.3.72"
+    id "org.jetbrains.kotlin.kapt" version "1.3.72"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.3.72"
 }
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
     id "groovy"
@@ -325,9 +325,9 @@ test {
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion('@VersionInfo.getTargetJdk(features.language())')
+    sourceCompatibility = JavaVersion.toVersion('@features.getTargetJdk()')
 @if (!features.language().isKotlin()) {
-    targetCompatibility = JavaVersion.toVersion('@VersionInfo.getTargetJdk(features.language())')
+    targetCompatibility = JavaVersion.toVersion('@features.getTargetJdk()')
 }
 }
 
@@ -343,7 +343,7 @@ allOpen {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = '@VersionInfo.getTargetJdk(features.language())'
+        jvmTarget = '@features.getTargetJdk()'
         //Will retain parameter names for Java reflection
         javaParameters = true
     }
@@ -351,7 +351,7 @@ compileKotlin {
 
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = '@VersionInfo.getTargetJdk(features.language())'
+        jvmTarget = '@features.getTargetJdk()'
         javaParameters = true
     }
 }

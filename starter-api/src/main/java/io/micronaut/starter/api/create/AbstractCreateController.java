@@ -67,7 +67,8 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
-            @Nullable Language lang) {
+            @Nullable Language lang,
+            @Nullable Integer javaVersion) {
         Project project = NameUtils.parse(name);
         MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
@@ -75,7 +76,7 @@ public abstract class AbstractCreateController implements CreateOperation {
                 try {
                     projectGenerator.generate(type,
                             project,
-                            new Options(lang, testFramework, buildTool == null ? BuildTool.gradle : buildTool),
+                            new Options(lang, testFramework, buildTool == null ? BuildTool.gradle : buildTool, javaVersion == null ? 11 : javaVersion),
                             features == null ? Collections.emptyList() : features,
                             new ZipOutputHandler(outputStream),
                             ConsoleOutput.NOOP);

@@ -15,6 +15,7 @@ import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 
 trait ContextFixture {
 
@@ -24,15 +25,16 @@ trait ContextFixture {
                          Language language = null,
                          TestFramework testFramework = null,
                          BuildTool buildTool = BuildTool.gradle) {
-        FeatureContext featureContext = buildFeatureContext(features, new Options(language, testFramework, buildTool))
+        Options options = new Options(language, testFramework, buildTool)
+        FeatureContext featureContext = buildFeatureContext(features, options)
         featureContext.processSelectedFeatures()
         List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
-        return new Features(finalFeatures)
+        return new Features(finalFeatures, options)
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.gradle)) {
+                                       Options options = new Options(null, null, BuildTool.gradle, VersionInfo.getJavaVersion())) {
 
         AvailableFeatures availableFeatures = beanContext.getBean(DefaultAvailableFeatures)
         ContextFactory factory = beanContext.getBean(ContextFactory)
@@ -44,7 +46,7 @@ trait ContextFixture {
     }
 
     GeneratorContext buildCommandContext(List<String> selectedFeatures,
-                                         Options options = new Options(null, null, BuildTool.gradle)) {
+                                         Options options = new Options(null, null, BuildTool.gradle, VersionInfo.getJavaVersion())) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)

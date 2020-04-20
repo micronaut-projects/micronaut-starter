@@ -49,6 +49,6 @@ public class AnnotationApi implements Feature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return VersionInfo.getJavaVersion() >= 9;
+        return options.getJavaVersion() >= 9;
     }
 }

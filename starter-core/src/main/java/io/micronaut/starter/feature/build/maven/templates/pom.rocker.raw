@@ -26,7 +26,7 @@ List<Property> properties
   </parent>
 
   <properties>
-    <jdk.version>@VersionInfo.getTargetJdk(features.language())</jdk.version>
+    <jdk.version>@features.getTargetJdk()</jdk.version>
     <maven.compiler.target>${jdk.version}</maven.compiler.target>
     <maven.compiler.source>${jdk.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

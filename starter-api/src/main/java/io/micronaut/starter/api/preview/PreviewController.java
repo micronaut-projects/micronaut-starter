@@ -60,7 +60,7 @@ public class PreviewController extends AbstractCreateController implements Previ
         super(projectGenerator);
     }
 
-    @Get(uri = "/{type}/{name}{?features,lang,build,test}", produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MediaType.APPLICATION_JSON)
     @Override
     public PreviewDTO previewApp(
             ApplicationType type,
@@ -69,13 +69,14 @@ public class PreviewController extends AbstractCreateController implements Previ
             @Nullable BuildTool build,
             @Nullable TestFramework test,
             @Nullable Language lang,
+            @Nullable Integer javaVersion,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
         try {
             Project project = NameUtils.parse(name);
             MapOutputHandler outputHandler = new MapOutputHandler();
             projectGenerator.generate(type,
                     project,
-                    new Options(lang, test, build == null ? BuildTool.gradle : build),
+                    new Options(lang, test, build == null ? BuildTool.gradle : build, javaVersion == null ? 11 : javaVersion),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,
                     ConsoleOutput.NOOP);
