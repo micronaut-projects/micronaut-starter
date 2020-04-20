@@ -24,7 +24,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
 import io.micronaut.runtime.server.EmbeddedServer;
 import io.micronaut.starter.api.RequestInfo;
-
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.net.InetSocketAddress;
@@ -63,12 +62,13 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
     }
 
     private String resolveUrl(HttpRequest<?> request) {
+
         String url;
         String hostname = System.getenv(Environment.HOSTNAME);
         String host;
         InetSocketAddress serverAddress = request.getServerAddress();
         if (hostname != null) {
-            return (request.isSecure() ? "https" : "http") + "://" + hostname;
+            return "https://" + hostname;
         } else {
             hostname = request.getUri().getHost();
             if (hostname != null) {
