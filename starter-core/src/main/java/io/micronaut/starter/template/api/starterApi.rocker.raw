@@ -1,0 +1,55 @@
+@import io.micronaut.starter.application.ApplicationType
+@import java.util.List
+
+@args (
+    String micronautVersion
+)
+
+=== Micronaut Starter @micronautVersion (https://start.micronaut.io)
+
+Micronaut Starter generates example project for the Micronaut framework (https://micronaut.io).
+
+The API is defined by the OpenAPI 3 specification https://start.micronaut.ioswagger/views/swagger-ui/index.html
+
+The primary API for generating application is https://start.micronaut.io/create/{type}/{name}.
+
+The application type can be one of the following:
+
++-----------------+------------------------------------------+
+| ID              | Description                              |
++-----------------+------------------------------------------+
+@for (ApplicationType type : ApplicationType.values()) {
+| @String.format("%-" + 15 + "s",type.name()) | @String.format("%-" + 40 + "s",type.getDescription()) |
+}
++-----------------+------------------------------------------+
+
+The "name" can be whatever you choose.
+
+Available query parameters include:
+
++-----------------+------------------------------------------+------------------------------+
+| Parameter       | Description                              | Default value                |
++-----------------+------------------------------------------+------------------------------+
+| build           | The build system                         | gradle                       |
+| lang            | The target language                      | java                         |
+| test            | The test framework                       | junit                        |
+| features        | The features you wish to include         | defaults                     |
++-----------------+------------------------------------------+------------------------------+
+
+To view the possible features and their descriptions visit:
+
+https://start.micronaut.io/application-types/{type}/features
+
+=== Examples
+
+To create a default application:
+
+    $ curl https://start.micronaut.io/create/app/example -o example.zip
+
+To create a Maven application:
+
+    $ curl https://start.micronaut.io/create/app/example?build=maven -o example.zip
+
+To create a Kotlin application:
+
+    $ curl https://start.micronaut.io/create/app/example?lang=kotlin -o example.zip
