@@ -22,8 +22,6 @@ import io.micronaut.starter.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
 
-
-import java.util.Optional;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 
