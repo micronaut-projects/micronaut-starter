@@ -70,6 +70,7 @@ io.micronaut.starter.feature.picocli.test.spock
 io.micronaut.starter.feature.postgres
 io.micronaut.starter.feature.redis
 io.micronaut.starter.feature.reloading
+io.micronaut.starter.feature.rss
 io.micronaut.starter.feature.security
 io.micronaut.starter.feature.server
 io.micronaut.starter.feature.test
