@@ -297,6 +297,10 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-views-velocity", "compile", null)
 @dependency.template("org.apache.velocity", "velocity-engine-core", "runtime", "2.0")
 }
+@if (features.contains("views-freemarker")) {
+@dependency.template("io.micronaut", "micronaut-views-freemarker", "compile", null)
+@dependency.template("org.freemarker", "freemarker", "runtime", "2.3.28")
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
