@@ -1,11 +1,13 @@
 package io.micronaut.starter.api
 
+import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
+import io.micronaut.starter.api.analytics.ApplicationGeneratingEvent
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -15,6 +17,7 @@ import spock.lang.Specification
 
 import javax.annotation.Nullable
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @MicronautTest
 class CreateControllerSpec extends Specification {
@@ -22,12 +25,16 @@ class CreateControllerSpec extends Specification {
     @Inject
     CreateClient client
 
+    @Inject
+    MyEventListener eventListener
+
     void "test default create app command"() {
         when:
         def bytes = client.createApp("test", Collections.emptyList(), null, null, null)
 
         then:
         ZipUtil.isZip(bytes)
+        eventListener.fired
     }
 
     void "test default create app - bad project name"() {
@@ -110,6 +117,14 @@ class CreateControllerSpec extends Specification {
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock-core")
     }
 
+    @Singleton
+    static class MyEventListener implements ApplicationEventListener<ApplicationGeneratingEvent> {
+        boolean fired = false
+        @Override
+        void onApplicationEvent(ApplicationGeneratingEvent event) {
+            fired = true
+        }
+    }
 
     @Client('/')
     static interface CreateClient {

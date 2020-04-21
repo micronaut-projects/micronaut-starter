@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
@@ -57,9 +58,10 @@ public class PreviewController extends AbstractCreateController implements Previ
      * Default constructor.
      *
      * @param projectGenerator The project generator
+     * @param eventPublisher The event publisher
      */
-    public PreviewController(ProjectGenerator projectGenerator) {
-        super(projectGenerator);
+    public PreviewController(ProjectGenerator projectGenerator, ApplicationEventPublisher eventPublisher) {
+        super(projectGenerator, eventPublisher);
     }
 
     /**

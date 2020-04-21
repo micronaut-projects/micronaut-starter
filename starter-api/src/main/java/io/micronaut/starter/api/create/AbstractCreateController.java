@@ -16,12 +16,14 @@
 package io.micronaut.starter.api.create;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.starter.api.analytics.ApplicationGeneratingEvent;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
@@ -56,13 +58,18 @@ public abstract class AbstractCreateController implements CreateOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
     protected final ProjectGenerator projectGenerator;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * Abstract implementation of {@link CreateOperation}.
      * @param projectGenerator The project generator
+     * @param eventPublisher The event publisher
      */
-    protected AbstractCreateController(ProjectGenerator projectGenerator) {
+    protected AbstractCreateController(
+            ProjectGenerator projectGenerator,
+            ApplicationEventPublisher eventPublisher) {
         this.projectGenerator = projectGenerator;
+        this.eventPublisher = eventPublisher;
     }
 
     @Override
@@ -90,6 +97,12 @@ public abstract class AbstractCreateController implements CreateOperation {
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP
             );
+
+            try {
+                eventPublisher.publishEvent(new ApplicationGeneratingEvent(generatorContext));
+            } catch (Exception e) {
+                LOG.warn("Error firing application generated event: " + e.getMessage(), e);
+            }
         } catch (IllegalArgumentException e) {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

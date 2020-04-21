@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.application.generator;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
@@ -29,6 +30,12 @@ import io.micronaut.starter.build.BuildProperties;
 
 import java.util.*;
 
+/**
+ * A context object used when generating projects.
+ *
+ * @author graemerocher
+ * @since 1.0.0
+ */
 public class GeneratorContext {
 
     private final Project project;
@@ -56,47 +63,82 @@ public class GeneratorContext {
         }
     }
 
+    /**
+     * Adds a template.
+     * @param name The name of the template
+     * @param template The template
+     */
     public void addTemplate(String name, Template template) {
         templates.put(name, template);
     }
 
-    public BuildProperties getBuildProperties() {
+    /**
+     * @return The build properties
+     */
+    @NonNull public BuildProperties getBuildProperties() {
         return buildProperties;
     }
 
-    public Map<String, Object> getConfiguration() {
+    /**
+     * @return The configuration
+     */
+    @NonNull public Map<String, Object> getConfiguration() {
         return configuration;
     }
 
-    public Map<String, Object> getBootstrapConfig() {
+    /**
+     * @return The bootstrap config
+     */
+    @NonNull public Map<String, Object> getBootstrapConfig() {
         return bootstrapConfig;
     }
 
-    public Map<String, Template> getTemplates() {
+    /**
+     * @return The templates
+     */
+    @NonNull public Map<String, Template> getTemplates() {
         return Collections.unmodifiableMap(templates);
     }
 
-    public Language getLanguage() {
+    /**
+     * @return The language
+     */
+    @NonNull public Language getLanguage() {
         return options.getLanguage();
     }
 
-    public TestFramework getTestFramework() {
+    /**
+     * @return The test framework
+     */
+    @NonNull public TestFramework getTestFramework() {
         return options.getTestFramework();
     }
 
-    public BuildTool getBuildTool() {
+    /**
+     * @return The build tool
+     */
+    @NonNull public BuildTool getBuildTool() {
         return options.getBuildTool();
     }
 
-    public Project getProject() {
+    /**
+     * @return The project
+     */
+    @NonNull public Project getProject() {
         return project;
     }
 
-    public ApplicationType getCommand() {
+    /**
+     * @return The application type
+     */
+    @NonNull public ApplicationType getApplicationType() {
         return command;
     }
 
-    public Features getFeatures() {
+    /**
+     * @return The selected features
+     */
+    @NonNull public Features getFeatures() {
         return features;
     }
 
@@ -110,6 +152,7 @@ public class GeneratorContext {
     }
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {
+        Objects.requireNonNull(feature, "The feature class cannot be null");
         return features.getFeatures().stream()
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);

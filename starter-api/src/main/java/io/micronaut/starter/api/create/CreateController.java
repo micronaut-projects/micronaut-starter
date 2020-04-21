@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.create;
 
+import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
@@ -46,9 +47,10 @@ public class CreateController extends AbstractCreateController implements Create
      * Default constructor.
      *
      * @param projectGenerator The project generator
+     * @param eventPublisher The event publisher
      */
-    public CreateController(ProjectGenerator projectGenerator) {
-        super(projectGenerator);
+    public CreateController(ProjectGenerator projectGenerator, ApplicationEventPublisher eventPublisher) {
+        super(projectGenerator, eventPublisher);
     }
 
     /**
