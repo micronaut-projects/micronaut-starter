@@ -15,33 +15,15 @@
  */
 package io.micronaut.starter.feature.messaging.kafka;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ;
-import io.micronaut.starter.options.Options;
+import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
-public class Kafka implements DefaultFeature {
+public class Kafka implements MessagingFeature {
 
     public static final String NAME = "kafka";
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        if (applicationType == ApplicationType.MESSAGING) {
-            return selectedFeatures.stream().noneMatch(feature ->
-                    feature.getName().equals(RabbitMQ.NAME)
-            );
-        } else {
-            return selectedFeatures.stream().anyMatch(feature ->
-                    feature.getName().equals(getName())
-            );
-        }
-    }
 
     @Override
     public String getName() {
