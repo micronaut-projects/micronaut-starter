@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.util;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -64,7 +66,7 @@ public class VersionInfo {
      * @param id The ID
      * @return The dependency version
      */
-    public static Map.Entry<String, String> getDependencyVersion(String id) {
+    public static @NonNull Map.Entry<String, String> getDependencyVersion(String id) {
         String key = id + ".version";
         Object version = VERSIONS.get(key);
         if (version != null) {

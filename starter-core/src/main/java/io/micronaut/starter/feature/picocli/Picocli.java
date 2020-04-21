@@ -26,9 +26,11 @@ import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class Picocli implements DefaultFeature {
@@ -82,7 +84,11 @@ public class Picocli implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
+            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("micronaut.picocli");
+            generatorContext.getBuildProperties().put(
+                    entry.getKey(),
+                    entry.getValue()
+            );
         }
     }
 }
