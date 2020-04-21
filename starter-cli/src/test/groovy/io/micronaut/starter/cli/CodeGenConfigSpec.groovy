@@ -1,4 +1,4 @@
-package io.micronaut.starter
+package io.micronaut.starter.cli
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType

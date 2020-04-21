@@ -26,7 +26,7 @@ public interface ServerFeature extends OneOfFeature {
     }
 
     @Override
-    default boolean supports(ApplicationType command) {
-        return command == ApplicationType.DEFAULT;
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 }

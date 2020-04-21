@@ -1,0 +1,29 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
+
+@@MicronautTest
+class @project.getClassName()Test {
+
+    @@Inject
+    lateinit var embeddedServer: EmbeddedServer
+
+    @@Test
+    fun testItWorks() {
+        Assertions.assertTrue(embeddedServer.isRunning)
+    }
+
+}

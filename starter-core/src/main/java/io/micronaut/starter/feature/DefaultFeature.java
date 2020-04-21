@@ -20,8 +20,25 @@ import io.micronaut.starter.application.ApplicationType;
 
 import java.util.List;
 
+/**
+ * A default feature is one that should be applied to a
+ * project conditionally without being explicitly selected.
+ * If a feature must be chosen by the user in order to be applied,
+ * then the feature is not a default feature.
+ *
+ * @author James Kleeh
+ * @since 2.0.0
+ */
 public interface DefaultFeature extends Feature {
 
+    /**
+     * Determines if the feature should be applied to the project.
+     *
+     * @param applicationType  The application type
+     * @param options          The options
+     * @param selectedFeatures The features manually selected by the user
+     * @return True if the feature should apply
+     */
     boolean shouldApply(ApplicationType applicationType,
                         Options options,
                         List<Feature> selectedFeatures);

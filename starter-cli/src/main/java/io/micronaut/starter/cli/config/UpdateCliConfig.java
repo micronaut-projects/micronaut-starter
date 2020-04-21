@@ -18,6 +18,7 @@ package io.micronaut.starter.cli.config;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.util.functional.ThrowingSupplier;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -53,8 +54,10 @@ public class UpdateCliConfig extends CodeGenCommand {
         super(codeGenConfig);
     }
 
-    public UpdateCliConfig(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier) {
-        super(config, outputHandlerSupplier);
+    public UpdateCliConfig(CodeGenConfig config,
+                           ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                           ConsoleOutput consoleOutput) {
+        super(config, outputHandlerSupplier, consoleOutput);
     }
 
     @Override

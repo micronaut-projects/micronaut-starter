@@ -19,6 +19,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.io.FileSystemOutputHandler;
@@ -40,16 +41,21 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
     protected boolean overwrite;
 
     private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
+    private final ConsoleOutput consoleOutput;
     private BeanContext beanContext;
 
     public CodeGenCommand(CodeGenConfig config) {
         this.config = config;
         this.outputHandlerSupplier = () -> new FileSystemOutputHandler(new File(".").getCanonicalFile(), this);
+        this.consoleOutput = null;
     }
 
-    public CodeGenCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier) {
+    public CodeGenCommand(CodeGenConfig config,
+                          ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                          ConsoleOutput consoleOutput) {
         this.config = config;
         this.outputHandlerSupplier = outputHandlerSupplier;
+        this.consoleOutput = consoleOutput;
     }
 
     @Inject
@@ -84,5 +90,32 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
         bean.spec = spec;
         bean.commonOptions = commonOptions;
         return bean;
+    }
+
+    @Override
+    public void out(String message) {
+        if (consoleOutput == null) {
+            super.out(message);
+        } else {
+            consoleOutput.out(message);
+        }
+    }
+
+    @Override
+    public void err(String message) {
+        if (consoleOutput == null) {
+            super.err(message);
+        } else {
+            consoleOutput.err(message);
+        }
+    }
+
+    @Override
+    public void warning(String message) {
+        if (consoleOutput == null) {
+            super.warning(message);
+        } else {
+            consoleOutput.warning(message);
+        }
     }
 }

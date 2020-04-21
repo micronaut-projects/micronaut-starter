@@ -10,13 +10,17 @@ import groovy.transform.CompileStatic
 @if (features.contains("swagger")) {
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.info.*
+}
 
+
+@if (features.contains("swagger")) {
 @@OpenAPIDefinition(
     info = @@Info(
             title = "@project.getName()",
             version = "0.0"
     )
-)}
+)
+}
 @@CompileStatic
 class Application {
     static void main(String[] args) {

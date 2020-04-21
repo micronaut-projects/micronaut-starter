@@ -37,8 +37,8 @@ public class PicocliGroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.CLI;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
     }
 
     @Override

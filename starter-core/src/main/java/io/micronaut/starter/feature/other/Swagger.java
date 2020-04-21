@@ -43,8 +43,8 @@ public class Swagger implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.DEFAULT;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override

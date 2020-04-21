@@ -35,8 +35,8 @@ public class Grpc implements DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.GRPC;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.GRPC;
     }
 
     @Override

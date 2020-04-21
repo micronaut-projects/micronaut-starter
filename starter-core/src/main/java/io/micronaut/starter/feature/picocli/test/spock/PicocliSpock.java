@@ -52,8 +52,8 @@ public class PicocliSpock implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType command) {
-        return command == ApplicationType.CLI;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
     }
 
     @Override

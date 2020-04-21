@@ -52,14 +52,7 @@ public class Kafka implements DefaultFeature, MessagingFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        if (applicationType == ApplicationType.MESSAGING) {
-            return selectedFeatures.stream().noneMatch(feature ->
-                    feature instanceof MessagingFeature && !feature.getName().equals(getName())
-            );
-        } else {
-            return selectedFeatures.stream().anyMatch(feature ->
-                    feature.getName().equals(getName())
-            );
-        }
+        return applicationType == ApplicationType.MESSAGING &&
+                selectedFeatures.stream().noneMatch(feature -> feature instanceof MessagingFeature);
     }
 }

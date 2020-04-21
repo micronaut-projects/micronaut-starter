@@ -9,7 +9,10 @@ import io.micronaut.runtime.Micronaut
 @if (features.contains("swagger")) {
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.info.*
+}
 
+
+@if (features.contains("swagger")) {
 @@OpenAPIDefinition(
     info = @@Info(
             title = "@project.getName()",
