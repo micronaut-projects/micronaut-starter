@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.cli.config;
 
+import io.micronaut.context.annotation.Parameter;
+import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.ApplicationType;
@@ -24,13 +26,15 @@ import io.micronaut.starter.feature.cli;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
+import picocli.CommandLine;
 
-import javax.inject.Singleton;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Singleton
+@CommandLine.Command(name = "update-cli-config", description = "Replaces the CLI configuration with the updated format")
+@Prototype
 public class UpdateCliConfig extends CodeGenCommand {
 
     private static final Map<ApplicationType, String> COMMANDS = new LinkedHashMap<>(ApplicationType.values().length);
@@ -43,7 +47,8 @@ public class UpdateCliConfig extends CodeGenCommand {
         COMMANDS.put(ApplicationType.MESSAGING, "create-messaging-app");
     }
 
-    public UpdateCliConfig(CodeGenConfig codeGenConfig) {
+    @Inject
+    public UpdateCliConfig(@Parameter CodeGenConfig codeGenConfig) {
         super(codeGenConfig);
     }
 

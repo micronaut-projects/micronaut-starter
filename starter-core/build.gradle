@@ -1,5 +1,3 @@
-import groovy.util.slurpersupport.GPathResult
-
 plugins {
     id "com.adarshr.test-logger" version "2.0.0"
     id "io.micronaut.starter.rocker"
@@ -12,7 +10,6 @@ sourceSets {
         }
     }
 }
-
 
 dependencies {
     api "com.fizzed:rocker-runtime:1.2.3"
