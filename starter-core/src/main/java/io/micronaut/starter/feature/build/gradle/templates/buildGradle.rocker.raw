@@ -36,6 +36,9 @@ plugins {
 @if (features.contains("jib")) {
     id "com.google.cloud.tools.jib" version "2.1.0"
 }
+@if (features.contains("views-rocker")) {
+    id "com.fizzed.rocker" version "1.2.3"
+}
 }
 
 version "0.1"
@@ -308,6 +311,9 @@ dependencies {
     implementation "io.micronaut:micronaut-views-freemarker"
     runtime "org.freemarker:freemarker:2.3.28"
 }
+@if (features.contains("views-rocker")) {
+    implementation "io.micronaut:micronaut-views-rocker"
+}
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
@@ -438,6 +444,16 @@ protobuf {
     }
     generateProtoTasks {
         all()*.plugins { grpc {} }
+    }
+}
+}
+
+@if (features.contains("views-rocker")) {
+sourceSets {
+    main {
+        rocker {
+            srcDir('src/main/resources')
+        }
     }
 }
 }

@@ -301,6 +301,9 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-views-freemarker", "compile", null)
 @dependency.template("org.freemarker", "freemarker", "runtime", "2.3.28")
 }
+@if (features.contains("views-rocker")) {
+@dependency.template("io.micronaut", "micronaut-views-rocker", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -415,6 +418,25 @@ List<Property> properties
           </execution>
         </executions>
       </plugin>
+@if (features.contains("views-rocker")) {
+      <plugin>
+        <groupId>com.fizzed</groupId>
+        <artifactId>rocker-maven-plugin</artifactId>
+        <version>1.2.3</version>
+        <executions>
+          <execution>
+            <id>generate-rocker-templates</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <templateDirectory>src/main/resources</templateDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+}
 @if (features.language().isJava()) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
