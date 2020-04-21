@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,9 +140,7 @@ extends <a href="../../../../io/micronaut/starter/api/Linkable.html" title="clas
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#VersionDTO-io.micronaut.starter.api.StarterConfiguration-">VersionDTO</a></span>(<a href="../../../../io/micronaut/starter/api/StarterConfiguration.html" title="class in io.micronaut.starter.api">StarterConfiguration</a>&nbsp;configuration)</code>
-<div class="block">Default constructor.</div>
-</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#VersionDTO--">VersionDTO</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -160,16 +158,15 @@ extends <a href="../../../../io/micronaut/starter/api/Linkable.html" title="clas
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#getMicronautVersion--">getMicronautVersion</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../io/micronaut/starter/api/VersionDTO.html" title="class in io.micronaut.starter.api">VersionDTO</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">addLink</a></span>(java.lang.CharSequence&nbsp;rel,
+       <a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a>&nbsp;link)</code>
+<div class="block">Adds a link.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#getServerURL--">getServerURL</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/VersionDTO.html#getVersions--">getVersions</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -177,7 +174,7 @@ extends <a href="../../../../io/micronaut/starter/api/Linkable.html" title="clas
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.api.<a href="../../../../io/micronaut/starter/api/Linkable.html" title="class in io.micronaut.starter.api">Linkable</a></h3>
-<code><a href="../../../../io/micronaut/starter/api/Linkable.html#addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">addLink</a>, <a href="../../../../io/micronaut/starter/api/Linkable.html#getLinks--">getLinks</a></code></li>
+<code><a href="../../../../io/micronaut/starter/api/Linkable.html#getLinks--">getLinks</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -200,18 +197,13 @@ extends <a href="../../../../io/micronaut/starter/api/Linkable.html" title="clas
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="VersionDTO-io.micronaut.starter.api.StarterConfiguration-">
+<a name="VersionDTO--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>VersionDTO</h4>
-<pre>public&nbsp;VersionDTO(<a href="../../../../io/micronaut/starter/api/StarterConfiguration.html" title="class in io.micronaut.starter.api">StarterConfiguration</a>&nbsp;configuration)</pre>
-<div class="block">Default constructor.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>configuration</code> - The configuration</dd>
-</dl>
+<pre>public&nbsp;VersionDTO()</pre>
 </li>
 </ul>
 </li>
@@ -222,42 +214,37 @@ extends <a href="../../../../io/micronaut/starter/api/Linkable.html" title="clas
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getPath--">
+<a name="getVersions--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getPath</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getPath()</pre>
+<h4>getVersions</h4>
+<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;getVersions()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The configured path</dd>
+<dd>The version</dd>
 </dl>
 </li>
 </ul>
-<a name="getServerURL--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getServerURL</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getServerURL()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The server URL</dd>
-</dl>
-</li>
-</ul>
-<a name="getMicronautVersion--">
+<a name="addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getMicronautVersion</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getMicronautVersion()</pre>
+<h4>addLink</h4>
+<pre>public&nbsp;<a href="../../../../io/micronaut/starter/api/VersionDTO.html" title="class in io.micronaut.starter.api">VersionDTO</a>&nbsp;addLink(java.lang.CharSequence&nbsp;rel,
+                          <a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a>&nbsp;link)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../io/micronaut/starter/api/Linkable.html#addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">Linkable</a></code></span></div>
+<div class="block">Adds a link.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../io/micronaut/starter/api/Linkable.html#addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">addLink</a></code>&nbsp;in class&nbsp;<code><a href="../../../../io/micronaut/starter/api/Linkable.html" title="class in io.micronaut.starter.api">Linkable</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>rel</code> - The relationship</dd>
+<dd><code>link</code> - The link</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The version</dd>
+<dd>this link</dd>
 </dl>
 </li>
 </ul>
