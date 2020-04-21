@@ -109,6 +109,13 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">GeneratorContext</span>
 extends java.lang.Object</pre>
+<div class="block">A context object used when generating projects.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>graemerocher</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -150,27 +157,29 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-">addTemplate</a></span>(java.lang.String&nbsp;name,
-           <a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&nbsp;template)</code>&nbsp;</td>
+           <a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&nbsp;template)</code>
+<div class="block">Adds a template.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#applyFeatures--">applyFeatures</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getApplicationType--">getApplicationType</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBootstrapConfig--">getBootstrapConfig</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/BuildProperties.html" title="class in io.micronaut.starter.build">BuildProperties</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--">getBuildProperties</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildTool--">getBuildTool</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getCommand--">getCommand</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
@@ -250,6 +259,12 @@ extends java.lang.Object</pre>
 <h4>addTemplate</h4>
 <pre>public&nbsp;void&nbsp;addTemplate(java.lang.String&nbsp;name,
                         <a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&nbsp;template)</pre>
+<div class="block">Adds a template.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name of the template</dd>
+<dd><code>template</code> - The template</dd>
+</dl>
 </li>
 </ul>
 <a name="getBuildProperties--">
@@ -258,7 +273,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBuildProperties</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/build/BuildProperties.html" title="class in io.micronaut.starter.build">BuildProperties</a>&nbsp;getBuildProperties()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/build/BuildProperties.html" title="class in io.micronaut.starter.build">BuildProperties</a>&nbsp;getBuildProperties()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The build properties</dd>
+</dl>
 </li>
 </ul>
 <a name="getConfiguration--">
@@ -267,7 +287,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getConfiguration</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getConfiguration()</pre>
+<pre>@NonNull
+public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getConfiguration()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The configuration</dd>
+</dl>
 </li>
 </ul>
 <a name="getBootstrapConfig--">
@@ -276,7 +301,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBootstrapConfig</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getBootstrapConfig()</pre>
+<pre>@NonNull
+public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getBootstrapConfig()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The bootstrap config</dd>
+</dl>
 </li>
 </ul>
 <a name="getTemplates--">
@@ -285,7 +315,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTemplates</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;&nbsp;getTemplates()</pre>
+<pre>@NonNull
+public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;&nbsp;getTemplates()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The templates</dd>
+</dl>
 </li>
 </ul>
 <a name="getLanguage--">
@@ -294,7 +329,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLanguage</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;getLanguage()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;getLanguage()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The language</dd>
+</dl>
 </li>
 </ul>
 <a name="getTestFramework--">
@@ -303,7 +343,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTestFramework</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;getTestFramework()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;getTestFramework()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The test framework</dd>
+</dl>
 </li>
 </ul>
 <a name="getBuildTool--">
@@ -312,7 +357,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBuildTool</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;getBuildTool()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;getBuildTool()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The build tool</dd>
+</dl>
 </li>
 </ul>
 <a name="getProject--">
@@ -321,16 +371,26 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getProject</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;getProject()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;getProject()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The project</dd>
+</dl>
 </li>
 </ul>
-<a name="getCommand--">
+<a name="getApplicationType--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCommand</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;getCommand()</pre>
+<h4>getApplicationType</h4>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;getApplicationType()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The application type</dd>
+</dl>
 </li>
 </ul>
 <a name="getFeatures--">
@@ -339,7 +399,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatures</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;getFeatures()</pre>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;getFeatures()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The selected features</dd>
+</dl>
 </li>
 </ul>
 <a name="applyFeatures--">

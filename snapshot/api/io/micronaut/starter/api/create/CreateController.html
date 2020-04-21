@@ -160,7 +160,8 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#CreateController-io.micronaut.starter.application.generator.ProjectGenerator-">CreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#CreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">CreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -232,17 +233,19 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CreateController-io.micronaut.starter.application.generator.ProjectGenerator-">
+<a name="CreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CreateController</h4>
-<pre>public&nbsp;CreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</pre>
+<pre>public&nbsp;CreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                        io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>projectGenerator</code> - The project generator</dd>
+<dd><code>eventPublisher</code> - The event publisher</dd>
 </dl>
 </li>
 </ul>

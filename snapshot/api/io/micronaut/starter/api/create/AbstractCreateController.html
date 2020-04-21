@@ -164,7 +164,8 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-">AbstractCreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">AbstractCreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                        io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</code>
 <div class="block">Abstract implementation of <a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a>.</div>
 </td>
 </tr>
@@ -238,17 +239,19 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-">
+<a name="AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractCreateController</h4>
-<pre>protected&nbsp;AbstractCreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</pre>
+<pre>protected&nbsp;AbstractCreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                                   io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</pre>
 <div class="block">Abstract implementation of <a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>projectGenerator</code> - The project generator</dd>
+<dd><code>eventPublisher</code> - The event publisher</dd>
 </dl>
 </li>
 </ul>

@@ -76,7 +76,7 @@
 <dd>
 <div class="block">Abstract implementation of a create controller.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-">AbstractCreateController(ProjectGenerator)</a></span> - Constructor for class io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">AbstractCreateController(ProjectGenerator, ApplicationEventPublisher)</a></span> - Constructor for class io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></dt>
 <dd>
 <div class="block">Abstract implementation of <a href="io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a>.</div>
 </dd>
@@ -91,7 +91,9 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/VersionDTO.html#addLink-java.lang.CharSequence-io.micronaut.starter.api.LinkDTO-">addLink(CharSequence, LinkDTO)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/VersionDTO.html" title="class in io.micronaut.starter.api">VersionDTO</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-">addTemplate(String, Template)</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds a template.</div>
+</dd>
 <dt><a href="io/micronaut/starter/feature/alexa/AlexaHttpServer.html" title="class in io.micronaut.starter.feature.alexa"><span class="typeNameLink">AlexaHttpServer</span></a> - Class in <a href="io/micronaut/starter/feature/alexa/package-summary.html">io.micronaut.starter.feature.alexa</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/alexa/AlexaHttpServer.html#AlexaHttpServer--">AlexaHttpServer()</a></span> - Constructor for class io.micronaut.starter.feature.alexa.<a href="io/micronaut/starter/feature/alexa/AlexaHttpServer.html" title="class in io.micronaut.starter.feature.alexa">AlexaHttpServer</a></dt>
@@ -150,6 +152,14 @@
 </dd>
 <dt><a href="io/micronaut/starter/feature/ApplicationFeature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">ApplicationFeature</span></a> - Interface in <a href="io/micronaut/starter/feature/package-summary.html">io.micronaut.starter.feature</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/api/analytics/ApplicationGeneratingEvent.html" title="class in io.micronaut.starter.api.analytics"><span class="typeNameLink">ApplicationGeneratingEvent</span></a> - Class in <a href="io/micronaut/starter/api/analytics/package-summary.html">io.micronaut.starter.api.analytics</a></dt>
+<dd>
+<div class="block">An event fired when an application is generated.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/analytics/ApplicationGeneratingEvent.html#ApplicationGeneratingEvent-io.micronaut.starter.application.generator.GeneratorContext-">ApplicationGeneratingEvent(GeneratorContext)</a></span> - Constructor for class io.micronaut.starter.api.analytics.<a href="io/micronaut/starter/api/analytics/ApplicationGeneratingEvent.html" title="class in io.micronaut.starter.api.analytics">ApplicationGeneratingEvent</a></dt>
+<dd>
+<div class="block">Constructs a prototypical Event.</div>
+</dd>
 <dt><a href="io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application"><span class="typeNameLink">ApplicationType</span></a> - Enum in <a href="io/micronaut/starter/application/package-summary.html">io.micronaut.starter.application</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/cli.html#applicationType-io.micronaut.starter.application.ApplicationType-">applicationType(ApplicationType)</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/cli.html" title="class in io.micronaut.starter.feature">cli</a></dt>
@@ -700,7 +710,7 @@
 <dd>
 <div class="block">Implements the <a href="io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a> interface for applications.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/create/CreateController.html#CreateController-io.micronaut.starter.application.generator.ProjectGenerator-">CreateController(ProjectGenerator)</a></span> - Constructor for class io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateController.html" title="class in io.micronaut.starter.api.create">CreateController</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/create/CreateController.html#CreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">CreateController(ProjectGenerator, ApplicationEventPublisher)</a></span> - Constructor for class io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateController.html" title="class in io.micronaut.starter.api.create">CreateController</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>
@@ -1049,7 +1059,9 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/command/CreateCommand.html#generate-io.micronaut.starter.application.Project-io.micronaut.starter.io.OutputHandler-">generate(Project, OutputHandler)</a></span> - Method in class io.micronaut.starter.cli.command.<a href="io/micronaut/starter/cli/command/CreateCommand.html" title="class in io.micronaut.starter.cli.command">CreateCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">GeneratorContext</span></a> - Class in <a href="io/micronaut/starter/application/generator/package-summary.html">io.micronaut.starter.application.generator</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">A context object used when generating projects.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">GeneratorContext(Project, ApplicationType, Options, List&lt;Feature&gt;)</a></span> - Constructor for class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/options/Options.html#get-java.lang.CharSequence-io.micronaut.core.convert.ArgumentConversionContext-">get(CharSequence, ArgumentConversionContext&lt;T&gt;)</a></span> - Method in class io.micronaut.starter.options.<a href="io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a></dt>
@@ -1067,6 +1079,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#getAllFeatures--">getAllFeatures()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/AvailableFeatures.html#getAllFeatures--">getAllFeatures()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/AvailableFeatures.html" title="class in io.micronaut.starter.feature">AvailableFeatures</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getApplicationType--">getApplicationType()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/CodeGenConfig.html#getApplicationType--">getApplicationType()</a></span> - Method in class io.micronaut.starter.cli.<a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></dt>
 <dd>&nbsp;</dd>
@@ -1190,8 +1204,6 @@
 <dd>
 <div class="block">Returns the class name representation of the given name.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getCommand--">getCommand()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/command/CodeGenCommand.html#getCommand-java.lang.Class-">getCommand(Class&lt;T&gt;)</a></span> - Method in class io.micronaut.starter.cli.command.<a href="io/micronaut/starter/cli/command/CodeGenCommand.html" title="class in io.micronaut.starter.cli.command">CodeGenCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/FeatureContext.html#getCommand--">getCommand()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a></dt>
@@ -2128,6 +2140,8 @@
 <dd>
 <div class="block">Returns the class name without the package prefix.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/analytics/ApplicationGeneratingEvent.html#getSource--">getSource()</a></span> - Method in class io.micronaut.starter.api.analytics.<a href="io/micronaut/starter/api/analytics/ApplicationGeneratingEvent.html" title="class in io.micronaut.starter.api.analytics">ApplicationGeneratingEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/CodeGenConfig.html#getSourceLanguage--">getSourceLanguage()</a></span> - Method in class io.micronaut.starter.cli.<a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/Features.html#getTargetJdk--">getTargetJdk()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a></dt>
@@ -2747,6 +2761,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/azure/Function.html#invoke-com.microsoft.azure.functions.HttpRequestMessage-com.microsoft.azure.functions.ExecutionContext-">invoke(HttpRequestMessage&lt;Optional&lt;byte[]&gt;&gt;, ExecutionContext)</a></span> - Method in class io.micronaut.starter.azure.<a href="io/micronaut/starter/azure/Function.html" title="class in io.micronaut.starter.azure">Function</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/package-summary.html">io.micronaut.starter.api</a> - package io.micronaut.starter.api</dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/api/analytics/package-summary.html">io.micronaut.starter.api.analytics</a> - package io.micronaut.starter.api.analytics</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/bind/package-summary.html">io.micronaut.starter.api.bind</a> - package io.micronaut.starter.api.bind</dt>
 <dd>&nbsp;</dd>
@@ -3566,7 +3582,7 @@
 <dd>
 <div class="block">Previews an application contents.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewController.html#PreviewController-io.micronaut.starter.application.generator.ProjectGenerator-">PreviewController(ProjectGenerator)</a></span> - Constructor for class io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewController.html" title="class in io.micronaut.starter.api.preview">PreviewController</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewController.html#PreviewController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">PreviewController(ProjectGenerator, ApplicationEventPublisher)</a></span> - Constructor for class io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewController.html" title="class in io.micronaut.starter.api.preview">PreviewController</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>
