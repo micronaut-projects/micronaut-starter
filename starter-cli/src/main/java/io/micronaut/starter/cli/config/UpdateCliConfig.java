@@ -29,6 +29,7 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
