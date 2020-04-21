@@ -25,8 +25,8 @@ jobs:
           - mkdir build
           - mv mn build/mn
       - name: Upload Snapshot
-          uses: actions/upload-artifact@v1
-          with:
-            name: mn-osx-snapshot
-            path: build/mn
+        uses: actions/upload-artifact@v1
+        with:
+          name: mn-osx-snapshot
+          path: build/mn
 
