@@ -7,7 +7,7 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
-import io.micronaut.starter.api.analytics.ApplicationGeneratingEvent
+import io.micronaut.starter.api.event.ApplicationGeneratingEvent
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
