@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.lang;
 
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.test.TestFeature;
 
 public interface LanguageFeature extends DefaultFeature {
 

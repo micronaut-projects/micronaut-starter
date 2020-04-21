@@ -1,7 +1,6 @@
 package io.micronaut.starter.cli.feature.messaging;
 
 import io.micronaut.starter.feature.messaging.Platform;
-import io.micronaut.starter.options.TestFramework;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

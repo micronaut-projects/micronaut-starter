@@ -20,7 +20,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.template.BinaryTemplate;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.Optional;

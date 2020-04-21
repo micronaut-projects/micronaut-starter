@@ -21,8 +21,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.feature.test.KotlinTest;
-import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;

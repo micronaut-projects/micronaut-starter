@@ -19,7 +19,6 @@ import io.micronaut.starter.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.List;

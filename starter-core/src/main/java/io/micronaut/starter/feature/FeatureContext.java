@@ -97,7 +97,9 @@ public class FeatureContext {
         return options.getBuildTool();
     }
 
-    public int getJavaVersion() { return options.getJavaVersion(); }
+    public int getJavaVersion() {
+        return options.getJavaVersion();
+    }
 
     public Options getOptions() {
         return options;
