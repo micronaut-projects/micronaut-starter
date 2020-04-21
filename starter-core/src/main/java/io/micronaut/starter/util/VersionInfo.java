@@ -22,10 +22,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class VersionInfo {
 
@@ -57,7 +54,8 @@ public class VersionInfo {
      */
     public static Map<String, String> getDependencyVersions() {
         Map<String, String> map = new LinkedHashMap<>();
-        VERSIONS.forEach((key, val) -> map.put(key.toString(), val.toString()));
+        VERSIONS.entrySet().stream().sorted(Comparator.comparing(o -> o.getKey().toString()))
+                .forEach((entry) -> map.put(entry.getKey().toString(), entry.getValue().toString()));
         return Collections.unmodifiableMap(map);
     }
 

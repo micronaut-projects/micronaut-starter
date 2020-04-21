@@ -20,6 +20,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,7 @@ public class FeatureService implements FeatureOperations {
         return features.stream()
                 .filter(Feature::isVisible)
                 .map(FeatureDTO::new)
+                .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
     }
 
@@ -57,6 +59,7 @@ public class FeatureService implements FeatureOperations {
         return beanLocator.getBean(type.getAvailableFeaturesClass())
                 .getFeatures()
                 .map(FeatureDTO::new)
+                .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
     }
 }
