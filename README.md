@@ -5,6 +5,12 @@
 
 Generates Micronaut applications.
 
+## Documentation
+
+<!-- See the [Documentation](https://micronaut-projects.github.io/micronaut-starter/1.0.x/guide/) for more information. -->
+
+See the [Snapshot Documentation](https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/) for the current development docs.
+
 ## Snapshots and Releases
 
 Snaphots are automatically published to [JFrog OSS](https://oss.jfrog.org/artifactory/oss-snapshot-local/) using [Github Actions](https://github.com/micronaut-projects/micronaut-aws/actions).
