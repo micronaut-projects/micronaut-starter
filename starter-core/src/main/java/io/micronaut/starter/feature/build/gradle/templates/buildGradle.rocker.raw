@@ -54,8 +54,10 @@ ext {
 
 repositories {
     jcenter()
-    //TODO remove once M3/RC1 is out
+    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    }
+
 }
 
 configurations {

@@ -15,23 +15,24 @@
  */
 package io.micronaut.starter.feature.messaging.rabbitmq;
 
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.messaging.Platform;
+import io.micronaut.starter.feature.messaging.kafka.Kafka;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Optional;
 
 @Singleton
 public class RabbitMQ implements DefaultFeature {
 
+    public static final String NAME = "rabbitmq";
+
     @Override
     public String getName() {
-        return "rabbitmq";
+        return NAME;
     }
 
     @Override
@@ -51,7 +52,14 @@ public class RabbitMQ implements DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        Optional<Platform> platform = options.get("platform", Platform.class);
-        return applicationType == ApplicationType.MESSAGING && platform.isPresent() && platform.get() == Platform.RABBITMQ;
+        if (applicationType == ApplicationType.MESSAGING) {
+            return selectedFeatures.stream().noneMatch(feature ->
+                    feature.getName().equals(Kafka.NAME)
+            );
+        } else {
+            return selectedFeatures.stream().anyMatch(feature ->
+                    feature.getName().equals(getName())
+            );
+        }
     }
 }
