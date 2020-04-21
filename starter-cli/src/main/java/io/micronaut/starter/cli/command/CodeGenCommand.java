@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.BeanContext;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.OutputHandler;
@@ -34,6 +35,7 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
 
     protected final CodeGenConfig config;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
     protected boolean overwrite;
 

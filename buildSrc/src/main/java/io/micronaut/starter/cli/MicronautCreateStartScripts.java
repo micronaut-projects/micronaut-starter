@@ -19,7 +19,7 @@ public class MicronautCreateStartScripts extends CreateStartScripts {
         generator.setDefaultJvmOpts(this.getDefaultJvmOpts());
         generator.setOptsEnvironmentVar(this.getOptsEnvironmentVar());
         generator.setExitEnvironmentVar(this.getExitEnvironmentVar());
-        generator.setClasspath(StreamSupport.stream(getProject().getTasks().getByName("fatJar").getOutputs().getFiles().spliterator(), false).map(File::getName).collect(Collectors.toList()));
+        generator.setClasspath(StreamSupport.stream(getProject().getTasks().getByName("shadowJar").getOutputs().getFiles().spliterator(), false).map(File::getName).collect(Collectors.toList()));
         generator.setScriptRelPath("bin/" + getUnixScript().getName());
         generator.generateUnixScript(this.getUnixScript());
         generator.generateWindowsScript(this.getWindowsScript());

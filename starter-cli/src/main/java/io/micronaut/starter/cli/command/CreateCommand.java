@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.*;
 import io.micronaut.starter.application.ApplicationType;
@@ -38,21 +39,27 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     protected final AvailableFeatures availableFeatures;
 
+    @ReflectiveAccess
     @CommandLine.Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
     String name;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
     Language lang;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
     TestFramework test;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
     BuildTool build = BuildToolConverter.DEFAULT_BUILD_TOOL;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
     boolean listFeatures;
 

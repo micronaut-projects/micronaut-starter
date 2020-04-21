@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.grpc;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -34,6 +35,7 @@ import picocli.CommandLine;
 @Prototype
 public class CreateGrpcServiceCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
     String serviceName;
 

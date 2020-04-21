@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.ContextFactory;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
@@ -35,9 +36,11 @@ public class CreateFunctionCommand extends CreateCommand {
 
     public static final String NAME = "create-function";
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-p", "--provider"}, paramLabel = "PROVIDER", description = "The cloud provider. Possible values: ${COMPLETION-CANDIDATES}")
     Provider provider = Provider.aws;
 

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.cli.util.MicronautVersionProvider;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
@@ -39,8 +40,10 @@ import picocli.CommandLine.Option;
 public class CommonOptionsMixin {
 
     @Option(names = {"-x", "--stacktrace"}, defaultValue = "false", description = "Show full stack trace when exceptions occur.")
+    @ReflectiveAccess
     public boolean showStacktrace;
 
     @Option(names = {"-v", "--verbose"}, defaultValue = "false", description = "Create verbose output.")
+    @ReflectiveAccess
     public boolean verbose;
 }

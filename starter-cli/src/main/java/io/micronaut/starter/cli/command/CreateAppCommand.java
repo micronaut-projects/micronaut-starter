@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.DefaultAvailableFeatures;
@@ -33,6 +34,7 @@ public class CreateAppCommand extends CreateCommand {
     public static final String NAME = "create-app";
 
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = DefaultAvailableFeatures.class)
+    @ReflectiveAccess
     List<String> features = new ArrayList<>();
 
     public CreateAppCommand(DefaultAvailableFeatures availableFeatures,

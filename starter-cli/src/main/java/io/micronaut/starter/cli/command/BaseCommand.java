@@ -15,16 +15,19 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.cli.CommonOptionsMixin;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.cli.CommonOptionsMixin;
 import picocli.CommandLine;
 
 public class BaseCommand implements ConsoleOutput {
 
     @CommandLine.Spec
+    @ReflectiveAccess
     protected CommandLine.Model.CommandSpec spec;
 
     @CommandLine.Mixin
+    @ReflectiveAccess
     protected CommonOptionsMixin commonOptions = new CommonOptionsMixin();
 
     public void out(String message) {

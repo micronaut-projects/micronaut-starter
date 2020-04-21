@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.cli.command;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.options.BuildTool;
 import picocli.CommandLine;
 
+@Introspected
 public class BuildToolConverter implements CommandLine.ITypeConverter<BuildTool> {
 
     public static final BuildTool DEFAULT_BUILD_TOOL = BuildTool.GRADLE;

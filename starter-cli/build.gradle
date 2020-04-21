@@ -2,6 +2,7 @@ import io.micronaut.starter.cli.MicronautCreateStartScripts
 
 plugins {
     id "application"
+    id "com.github.johnrengelman.shadow"
     id "io.micronaut.starter.rocker"
     id 'org.asciidoctor.convert' version '1.6.1' apply false
     id "io.sdkman.vendors" version "1.2.1"
@@ -16,6 +17,7 @@ configurations {
 }
 
 dependencies {
+    annotationProcessor("io.micronaut:micronaut-graal")
     api project(":starter-core")
     api "info.picocli:picocli:${picocliVersion}"
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
@@ -128,21 +130,15 @@ configurations.all {
     }
 }
 
-task fatJar(type: Jar, dependsOn: ['createStartScripts']) {
+shadowJar {
+    mergeServiceFiles()
     manifest {
-        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-        attributes('Implementation-Version': projectVersion)
-        attributes('Implementation-Title': title)
-        attributes "Main-Class": "io.micronaut.starter.cli.MicronautStarter", "Implementation-Version": project.version
+        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
     }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    with jar
-    destinationDirectory = project.buildDir
+    dependsOn(['createStartScripts'])
 }
 
-task cliZip(type: Zip, dependsOn: ['fatJar']) {
+task cliZip(type: Zip, dependsOn: ['shadowJar']) {
     archiveFileName = "micronaut-cli-${project.version}.zip"
     into("micronaut-cli-${project.version}") {
         from('build/bin') {
@@ -151,7 +147,7 @@ task cliZip(type: Zip, dependsOn: ['fatJar']) {
         from('../media') {
             into('media')
         }
-        from fatJar.outputs.files
+        from shadowJar.outputs.files
         from('../LICENSE')
     }
 }

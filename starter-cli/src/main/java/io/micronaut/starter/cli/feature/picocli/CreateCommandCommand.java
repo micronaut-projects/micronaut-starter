@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.picocli;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -37,6 +38,7 @@ import picocli.CommandLine;
 @Prototype
 public class CreateCommandCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
     String name;
 
