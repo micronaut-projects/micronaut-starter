@@ -300,6 +300,10 @@ dependencies {
     implementation "io.micronaut:micronaut-views-handlebars"
     runtime "com.github.jknack:handlebars:4.1.2"
 }
+@if (features.contains("views-velocity")) {
+    implementation "io.micronaut:micronaut-views-velocity"
+    runtime "org.apache.velocity:velocity-engine-core:2.0"
+}
 @if (features.contains("log4j2")) {
     implementation "org.apache.logging.log4j:log4j-core:2.12.1"
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
