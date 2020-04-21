@@ -308,6 +308,12 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-views-soy", "compile", null)
 @dependency.template("com.google.template", "soy", "compile", "2019-09-03")
 }
+@if (features.contains("rss")) {
+@dependency.template("io.micronaut.configuration", "micronaut-rss", "compile", null)
+}
+@if (features.contains("rss-itunes-podcast")) {
+@dependency.template("io.micronaut.configuration", "micronaut-itunespodcast", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
