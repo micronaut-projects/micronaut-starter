@@ -1,11 +1,13 @@
 package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.Language
+import spock.lang.Unroll
+
 class SwaggerSpec extends BeanContextSpec {
+
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
@@ -15,7 +17,6 @@ class SwaggerSpec extends BeanContextSpec {
         template.contains('implementation "io.swagger.core.v3:swagger-annotations"')
         template.contains("$scope \"io.micronaut.configuration:micronaut-openapi\"")
 
-
         where:
         language        | scope
         Language.JAVA   | "annotationProcessor"
@@ -23,20 +24,62 @@ class SwaggerSpec extends BeanContextSpec {
         Language.GROOVY | "compileOnly"
     }
 
-    @Unroll
-    void 'test swagger with Maven for language=#language'() {
+    void 'test maven swagger feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(["swagger"]), []).render().toString()
+        String template = pom.template(buildProject(), getFeatures(['swagger'], Language.JAVA), []).render().toString()
 
         then:
-        template.contains('<artifactId>swagger-annotations</artifactId>')
-        template.contains("<artifactId>micronaut-openapi</artifactId>")
+        template.contains("""
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+            <path>
+              <groupId>io.micronaut.configuration</groupId>
+              <artifactId>micronaut-openapi</artifactId>
+              <version>\${micronaut.openapi.version}</version>
+            </path>
+""")
 
+        when:
+        template = pom.template(buildProject(), getFeatures(['swagger'], Language.KOTLIN), []).render().toString()
 
-        where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
-        Language.GROOVY | "compileOnly"
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.configuration</groupId>
+                    <artifactId>micronaut-openapi</artifactId>
+                    <version>\${micronaut.openapi.version}</version>
+                </annotationProcessorPath>
+""")
+
+        when:
+        template = pom.template(buildProject(), getFeatures(['swagger'], Language.GROOVY), []).render().toString()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.configuration</groupId>
+      <artifactId>micronaut-openapi</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
     }
 }

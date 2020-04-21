@@ -97,6 +97,9 @@ List<Property> properties
 }
 @if (features.contains("swagger")) {
 @dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
+@if (features.language().isGroovy()) {
+@dependency.template("io.micronaut.configuration", "micronaut-openapi", "compile", null)
+}
 }
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
@@ -511,7 +514,6 @@ List<Property> properties
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
-
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
