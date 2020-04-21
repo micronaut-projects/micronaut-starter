@@ -15,7 +15,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew clean starter-cli:fatJar --no-daemon
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Upload Snapshot
