@@ -47,10 +47,12 @@ public abstract class Linkable {
      * Adds a link.
      * @param rel The relationship
      * @param link The link
+     * @return this link
      */
-    public void addLink(CharSequence rel, LinkDTO link) {
+    public Linkable addLink(CharSequence rel, LinkDTO link) {
         if (link != null && rel != null) {
             links.put(rel.toString(), link);
         }
+        return this;
     }
 }

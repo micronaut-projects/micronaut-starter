@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -44,6 +46,17 @@ public class VersionInfo {
             return micronautVersion.toString();
         }
         return "2.0.0";
+    }
+
+    /**
+     * Gets the dependency versions.
+     *
+     * @return The versions
+     */
+    public static Map<String, String> getDependencyVersions() {
+        Map<String, String> map = new LinkedHashMap<>();
+        VERSIONS.forEach((key, val) -> map.put(key.toString(), val.toString()));
+        return Collections.unmodifiableMap(map);
     }
 
     /**

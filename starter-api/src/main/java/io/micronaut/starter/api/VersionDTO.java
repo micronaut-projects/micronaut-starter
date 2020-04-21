@@ -16,9 +16,10 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Map;
 
 /**
  * Information about the application.
@@ -30,36 +31,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "Version")
 public class VersionDTO extends Linkable {
 
-    private final String serverURL;
-    private final String path;
-
-    /**
-     * Default constructor.
-     * @param configuration The configuration
-     */
-    public VersionDTO(StarterConfiguration configuration) {
-        this.serverURL = configuration.getUrl().map(Object::toString).orElse(SocketUtils.LOCALHOST);
-        this.path = configuration.getPath().orElse("/");
-    }
-
-    /**
-     * @return The configured path
-     */
-    public String getPath() {
-        return path;
-    }
-
-    /**
-     * @return The server URL
-     */
-    public String getServerURL() {
-        return serverURL;
-    }
-
     /**
      * @return The version
      */
-    public String getMicronautVersion() {
-        return VersionInfo.getMicronautVersion();
+    public Map<String, String> getVersions() {
+        return VersionInfo.getDependencyVersions();
+    }
+
+    @Override
+    public VersionDTO addLink(CharSequence rel, LinkDTO link) {
+        super.addLink(rel, link);
+        return this;
     }
 }

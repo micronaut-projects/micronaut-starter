@@ -76,9 +76,10 @@ public class ApplicationController implements ApplicationTypeOperations {
      * Information about this instance.
      * @return Information about this instance.
      */
-    @Get("/version")
-    VersionDTO getInfo() {
-        return new VersionDTO(configuration);
+    @Get("/versions")
+    VersionDTO getInfo(@Parameter(hidden = true) RequestInfo info) {
+        return new VersionDTO()
+                 .addLink(Relationship.SELF, info.self());
     }
 
     /**
