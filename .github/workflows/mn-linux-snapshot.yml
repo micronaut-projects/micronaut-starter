@@ -1,28 +1,28 @@
-name: Mac OS X Native CLI
+name: Linux Native CLI
 on: [push]
 jobs:
   build:
-    name: Builds OS X Native CLI
-    runs-on: macOS-latest
+    name: Builds Linux Native CLI
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Install GraalVM
         env:
           GRAAL_VERSION: 20.0.0
-          GRAAL_OS: darwin-amd64
+          GRAAL_OS: linux-amd64
         run: ./install-graal.sh
       - name: Install Native Image
-        run: ./graalvm/Contents/Home/bin/gu install native-image
+        run: ./graalvm/bin/gu install native-image
       - name: Build the JAR
         env:
-          JAVA_HOME: ./graalvm/Contents/Home
+          JAVA_HOME: ./graalvm
         run: ./gradlew clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Upload Snapshot
         uses: actions/upload-artifact@v1
         with:
-          name: mn-darwin-amd64-snapshot
+          name: mn-linux-amd64-snapshot
           path: mn
 
