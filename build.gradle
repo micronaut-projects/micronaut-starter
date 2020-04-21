@@ -9,6 +9,9 @@ buildscript {
         classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
         classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
+        classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
+        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
+        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
     }
 }
 
@@ -25,6 +28,7 @@ version project.projectVersion
 subprojects { Project subproject ->
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
 
     version project.projectVersion
@@ -113,6 +117,8 @@ subprojects { Project subproject ->
     }
 
 }
+
+apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
 
 
 

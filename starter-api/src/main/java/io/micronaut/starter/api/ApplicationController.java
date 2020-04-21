@@ -19,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.version.VersionUtils;
-import io.micronaut.discovery.cloud.gcp.GoogleComputeInstanceMetadata;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -58,7 +57,6 @@ import java.util.stream.Collectors;
                 license = @License(name = "Apache 2.0")
         )
 )
-@Introspected(classes = GoogleComputeInstanceMetadata.class)
 @Controller("/")
 public class ApplicationController implements ApplicationTypeOperations {
 
