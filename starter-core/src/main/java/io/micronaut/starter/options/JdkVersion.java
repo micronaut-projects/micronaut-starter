@@ -24,7 +24,7 @@ package io.micronaut.starter.options;
 public enum JdkVersion {
     JDK_8(8),
     JDK_9(9),
-    JDK_11(9),
+    JDK_11(11),
     JDK_13(13),
     JDK_14(9);
 

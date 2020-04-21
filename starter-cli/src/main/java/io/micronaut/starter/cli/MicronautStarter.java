@@ -21,8 +21,6 @@ import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
-import io.micronaut.starter.cli.feature.messaging.PlatformCandidates;
-import io.micronaut.starter.cli.feature.messaging.PlatformConverter;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -55,8 +53,6 @@ import java.util.function.BiFunction;
     CommonOptionsMixin.class,
     TestFrameworkCandidates.class,
     TestFrameworkConverter.class,
-    PlatformCandidates.class,
-    PlatformConverter.class
 })
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 

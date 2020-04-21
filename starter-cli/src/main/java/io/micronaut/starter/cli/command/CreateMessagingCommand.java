@@ -17,30 +17,21 @@ package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.MessagingAvailableFeatures;
-import io.micronaut.starter.cli.feature.messaging.PlatformCandidates;
-import io.micronaut.starter.cli.feature.messaging.PlatformConverter;
-import io.micronaut.starter.feature.messaging.Platform;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 @CommandLine.Command(name = CreateMessagingCommand.NAME, description = "Creates a messaging application")
 @Prototype
 public class CreateMessagingCommand extends CreateCommand {
 
     public static final String NAME = "create-messaging-app";
-
-    @ReflectiveAccess
-    @CommandLine.Option(names = {"-p", "--platform"}, paramLabel = "PLATFORM", description = "The messaging platform to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = PlatformCandidates.class, converter = PlatformConverter.class)
-    Platform platform = PlatformConverter.DEFAULT_PLATFORM;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
@@ -57,10 +48,4 @@ public class CreateMessagingCommand extends CreateCommand {
     protected List<String> getSelectedFeatures() {
         return features;
     }
-
-    @Override
-    protected Map<String, Object> getAdditionalOptions() {
-        return Collections.singletonMap("platform", platform);
-    }
-
 }

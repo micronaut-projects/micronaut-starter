@@ -15,23 +15,19 @@
  */
 package io.micronaut.starter.feature.messaging.rabbitmq;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.DefaultFeature;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.messaging.Platform;
+import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import javax.inject.Singleton;
-import java.util.List;
-import java.util.Optional;
 
 @Singleton
-public class RabbitMQ implements DefaultFeature {
+public class RabbitMQ implements MessagingFeature {
+
+    public static final String NAME = "rabbitmq";
 
     @Override
     public String getName() {
-        return "rabbitmq";
+        return NAME;
     }
 
     @Override
@@ -46,12 +42,6 @@ public class RabbitMQ implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        Optional<Platform> platform = options.get("platform", Platform.class);
-        return applicationType == ApplicationType.MESSAGING && platform.isPresent() && platform.get() == Platform.RABBITMQ;
+        generatorContext.getConfiguration().put ("rabbitmq.uri", "amqp://localhost:5672");
     }
 }

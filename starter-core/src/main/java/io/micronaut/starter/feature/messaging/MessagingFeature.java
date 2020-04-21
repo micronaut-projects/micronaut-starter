@@ -15,15 +15,14 @@
  */
 package io.micronaut.starter.feature.messaging;
 
-import javax.annotation.Nonnull;
-import java.util.Locale;
+import io.micronaut.starter.feature.Feature;
 
-public enum Platform {
-    KAFKA,
-    RABBITMQ;
+/**
+ * Sub interface for messaging features.
+ *
+ * @author graemerocher
+ * @since 1.0.0
+ */
+public interface MessagingFeature extends Feature {
 
-    @Nonnull
-    public String getName() {
-        return name().toLowerCase(Locale.ENGLISH);
-    }
 }

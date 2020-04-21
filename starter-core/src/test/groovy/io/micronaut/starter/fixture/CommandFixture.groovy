@@ -5,7 +5,6 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.messaging.Platform
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -47,10 +46,10 @@ trait CommandFixture {
         )
     }
 
-    void generateMessagingProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, Platform platform = Platform.KAFKA, List<String> features = []) {
+    void generateMessagingProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.MESSAGING,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, null, buildTool, [platform: platform]),
+                new Options(lang, null, buildTool, Collections.emptyMap()),
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP

@@ -20,6 +20,8 @@ jobs:
         run: ./gradlew clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
       - name: Upload Snapshot
         uses: actions/upload-artifact@v1
         with:

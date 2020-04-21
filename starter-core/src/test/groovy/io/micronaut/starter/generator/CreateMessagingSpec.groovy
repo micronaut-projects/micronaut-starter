@@ -1,7 +1,8 @@
 package io.micronaut.starter.generator
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.feature.messaging.Platform
+import io.micronaut.starter.feature.messaging.kafka.Kafka
+import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
 import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -14,9 +15,9 @@ class CreateMessagingSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void 'test basic create-messaging-app for lang=#lang and platform=#platform'() {
+    void 'test basic create-messaging-app for lang=#lang and feature=#feature'() {
         given:
-        generateMessagingProject(lang, BuildTool.GRADLE, platform)
+        generateMessagingProject(lang, BuildTool.GRADLE, [feature])
 
         when:
         executeGradleCommand('run')
@@ -25,13 +26,13 @@ class CreateMessagingSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        [lang, platform] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Platform.KAFKA, Platform.RABBITMQ]].combinations()
+        [lang, feature] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Kafka.NAME, RabbitMQ.NAME]].combinations()
     }
 
     @Unroll
-    void 'test basic create-messaging-app for lang=#lang and platform=#platform and maven'() {
+    void 'test basic create-messaging-app for lang=#lang and feature=#feature and maven'() {
         given:
-        generateMessagingProject(lang, BuildTool.MAVEN, platform)
+        generateMessagingProject(lang, BuildTool.MAVEN, [feature])
 
         when:
         executeMavenCommand("mn:run")
@@ -40,7 +41,7 @@ class CreateMessagingSpec extends CommandSpec implements CommandFixture {
         testOutputContains("Startup completed")
 
         where:
-        [lang, platform] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Platform.KAFKA, Platform.RABBITMQ]].combinations()
+        [lang, feature] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Kafka.NAME, RabbitMQ.NAME]].combinations()
     }
 
 }
