@@ -1,7 +1,7 @@
 io.micronaut.starter.api
-io.micronaut.starter.api.analytics
 io.micronaut.starter.api.bind
 io.micronaut.starter.api.create
+io.micronaut.starter.api.event
 io.micronaut.starter.api.preview
 io.micronaut.starter.application
 io.micronaut.starter.application.generator
