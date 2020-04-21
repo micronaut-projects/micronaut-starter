@@ -18,8 +18,10 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
+import java.util.Map;
 
 @Singleton
 public class Data implements Feature {
@@ -46,8 +48,12 @@ public class Data implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.data");
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put("micronaut.data.version", "1.0.2");
+            generatorContext.getBuildProperties().put(
+                    dependencyVersion.getKey(),
+                    dependencyVersion.getValue()
+            );
         }
     }
 }

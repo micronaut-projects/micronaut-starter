@@ -17,7 +17,6 @@ package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.io.socket.SocketUtils;
-import io.micronaut.core.version.VersionUtils;
 import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -61,6 +60,6 @@ public class VersionDTO extends Linkable {
      * @return The version
      */
     public String getMicronautVersion() {
-        return VersionInfo.getVersion();
+        return VersionInfo.getMicronautVersion();
     }
 }

@@ -287,7 +287,7 @@ dependencies {
     implementation "io.micronaut.configuration:micronaut-rabbitmq"
 }
 @if (features.contains("file-watch-osx")) {
-    developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getVersion()"
+    developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getMicronautVersion()"
 }
 @if (features.contains("alexa-http-server")) {
     implementation "io.micronaut.aws:micronaut-aws-alexa-httpserver"

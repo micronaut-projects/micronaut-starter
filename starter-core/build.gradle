@@ -1,3 +1,5 @@
+import groovy.util.slurpersupport.GPathResult
+
 plugins {
     id "com.adarshr.test-logger" version "2.0.0"
     id "io.micronaut.starter.rocker"
@@ -20,8 +22,26 @@ dependencies {
 
 processResources.dependsOn('micronautVersionInfo')
 task micronautVersionInfo(type: WriteProperties) {
-    outputFile = "${buildDir}/resources/main/micronaut-version.properties"
-    property 'micronautVersion', micronautVersion
+    outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
+    property 'micronaut.version', micronautVersion
+    WriteProperties wp = delegate
+    boolean resolved = false
+    repositories.each { ArtifactRepository repo ->
+        if (repo instanceof MavenArtifactRepository) {
+            def url = ((MavenArtifactRepository) repo).getUrl()
+            try {
+                def xml = new XmlSlurper().parse(new URL("$url/io/micronaut/micronaut-bom/$micronautVersion/micronaut-bom-${micronautVersion}.pom").openStream())
+                xml.properties.children().each {
+                    wp.property it.name(), it.text()
+                }
+                resolved = true
+            } catch (e) {
+            }
+        }
+    }
+    if (!resolved) {
+        throw new RuntimeException("Dependency versions couldn't be resolved for Micronaut version: $micronautVersion")
+    }
 }
 
 rocker {

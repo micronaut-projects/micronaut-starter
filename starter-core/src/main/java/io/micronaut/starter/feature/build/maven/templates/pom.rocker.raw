@@ -22,7 +22,7 @@ List<Property> properties
   <parent>
     <groupId>io.micronaut</groupId>
     <artifactId>micronaut-parent</artifactId>
-    <version>@VersionInfo.getVersion()</version>
+    <version>@VersionInfo.getMicronautVersion()</version>
   </parent>
 
   <properties>
@@ -277,7 +277,7 @@ List<Property> properties
 @dependency.template("io.micronaut.configuration", "micronaut-vertx-mysql-client", "compile", null)
 }
 @if (features.contains("file-watch-osx")) {
-@dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getVersion())
+@dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getMicronautVersion())
 }
 @if (features.contains("alexa-http-server")) {
 @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "compile", null)
@@ -433,6 +433,13 @@ List<Property> properties
               <version>${micronaut.data.version}</version>
             </path>
 }
+@if (features.contains("swagger")) {
+            <path>
+              <groupId>io.micronaut.configuration</groupId>
+              <artifactId>micronaut-openapi</artifactId>
+              <version>${micronaut.openapi.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -534,6 +541,13 @@ List<Property> properties
                     <groupId>io.micronaut</groupId>
                     <artifactId>micronaut-data-processor</artifactId>
                     <version>${micronaut.data.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("swagger")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.configuration</groupId>
+                    <artifactId>micronaut-openapi</artifactId>
+                    <version>${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
