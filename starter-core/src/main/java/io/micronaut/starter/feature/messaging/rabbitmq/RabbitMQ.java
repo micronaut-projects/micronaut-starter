@@ -42,6 +42,6 @@ public class RabbitMQ implements MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
+        generatorContext.getConfiguration().put ("rabbitmq.uri", "amqp://localhost:5672");
     }
 }

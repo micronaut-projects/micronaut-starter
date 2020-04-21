@@ -15,12 +15,7 @@
  */
 package io.micronaut.starter.feature.messaging;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
-
-import java.util.List;
 
 /**
  * Sub interface for messaging features.
@@ -28,17 +23,6 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-public interface MessagingFeature extends DefaultFeature  {
-    @Override
-    default boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        if (applicationType == ApplicationType.MESSAGING) {
-            return selectedFeatures.stream().noneMatch(feature ->
-                    feature instanceof MessagingFeature && !feature.getName().equals(getName())
-            );
-        } else {
-            return selectedFeatures.stream().anyMatch(feature ->
-                    feature.getName().equals(getName())
-            );
-        }
-    }
+public interface MessagingFeature extends Feature {
+
 }

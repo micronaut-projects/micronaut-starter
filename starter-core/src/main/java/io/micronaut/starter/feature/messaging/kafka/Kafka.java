@@ -15,13 +15,18 @@
  */
 package io.micronaut.starter.feature.messaging.kafka;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
-public class Kafka implements MessagingFeature {
+public class Kafka implements DefaultFeature, MessagingFeature {
 
     public static final String NAME = "kafka";
 
@@ -43,5 +48,18 @@ public class Kafka implements MessagingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        if (applicationType == ApplicationType.MESSAGING) {
+            return selectedFeatures.stream().noneMatch(feature ->
+                    feature instanceof MessagingFeature && !feature.getName().equals(getName())
+            );
+        } else {
+            return selectedFeatures.stream().anyMatch(feature ->
+                    feature.getName().equals(getName())
+            );
+        }
     }
 }
