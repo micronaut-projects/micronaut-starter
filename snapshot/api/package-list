@@ -12,7 +12,6 @@ io.micronaut.starter.cli.command
 io.micronaut.starter.cli.config
 io.micronaut.starter.cli.feature.grpc
 io.micronaut.starter.cli.feature.grpc.template
-io.micronaut.starter.cli.feature.messaging
 io.micronaut.starter.cli.feature.messaging.kafka
 io.micronaut.starter.cli.feature.messaging.kafka.template.listener
 io.micronaut.starter.cli.feature.messaging.kafka.template.producer
