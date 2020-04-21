@@ -1,13 +1,10 @@
-buildscript {
-    dependencies {
-        classpath "info.picocli:picocli:4.2.0"
-    }
-}
+import io.micronaut.starter.cli.MicronautCreateStartScripts
 
 plugins {
     id "application"
     id "io.micronaut.starter.rocker"
     id 'org.asciidoctor.convert' version '1.6.1' apply false
+    id "io.sdkman.vendors" version "1.2.1"
 }
 
 ext {
@@ -124,25 +121,6 @@ task createStartScripts(type: MicronautCreateStartScripts) {
     dependsOn(buildCompletion)
 }
 
-class MicronautCreateStartScripts extends org.gradle.api.tasks.application.CreateStartScripts {
-    Collection<String> projectArtifacts=[]
-
-    @org.gradle.api.tasks.TaskAction
-    void generate() {
-        def generator = new org.gradle.api.internal.plugins.StartScriptGenerator()
-        generator.unixStartScriptGenerator.template = project.resources.text.fromFile('unixStartScript.txt')
-        generator.applicationName = getApplicationName()
-        generator.mainClassName = getMainClassName()
-        generator.defaultJvmOpts = getDefaultJvmOpts()
-        generator.optsEnvironmentVar = getOptsEnvironmentVar()
-        generator.exitEnvironmentVar = getExitEnvironmentVar()
-        generator.classpath = project.tasks.getByName('fatJar').outputs.files.collect { it.name }
-        generator.scriptRelPath = "bin/${getUnixScript().name}"
-        generator.generateUnixScript(getUnixScript())
-        generator.generateWindowsScript(getWindowsScript())
-    }
-}
-
 configurations.all {
     resolutionStrategy {
         // prevent fatJar result containing multiple versions of picocli
@@ -176,4 +154,14 @@ task cliZip(type: Zip, dependsOn: ['fatJar']) {
         from fatJar.outputs.files
         from('../LICENSE')
     }
+}
+
+sdkman {
+    api = "https://vendors.sdkman.io"
+    consumerKey = System.getenv("GVM_SDKVENDOR_KEY") ?: project.hasProperty("gvmSdkvendorKey") ? project.gvmSdkvendorKey : ''
+    consumerToken = System.getenv("GVM_SDKVENDOR_TOKEN") ?: project.hasProperty("gvmSdkvendorToken") ? project.gvmSdkvendorToken : ''
+    candidate = "micronaut"
+    version = project.version
+    url = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/micronaut-cli-${project.version}.zip"
+    hashtag = "#micronautfw"
 }
