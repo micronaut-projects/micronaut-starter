@@ -17,7 +17,7 @@ jobs:
           JAVA_HOME: /usr/lib/graalvm
         run: ./gradlew clean starter-cli:fatJar
       - name: Build Native Image
-        run: /usr/lib/graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+        run: graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Upload Snapshot
         uses: actions/upload-artifact@v1
         with:
