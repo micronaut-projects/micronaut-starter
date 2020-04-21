@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.analytics;
+package io.micronaut.starter.api.event;
 
 import io.micronaut.context.event.ApplicationEvent;
 import io.micronaut.starter.application.generator.GeneratorContext;

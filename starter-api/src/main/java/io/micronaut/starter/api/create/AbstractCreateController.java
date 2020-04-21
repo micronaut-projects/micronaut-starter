@@ -23,7 +23,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.starter.api.analytics.ApplicationGeneratingEvent;
+import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
