@@ -15,10 +15,30 @@
  */
 package io.micronaut.starter.util;
 
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
+
 public class VersionInfo {
 
     public static String getVersion() {
-        return "2.0.0.BUILD-SNAPSHOT";
+        URL resource = VersionInfo.class.getResource("/micronaut-version.properties");
+        if (resource != null) {
+            try(Reader reader = new InputStreamReader(resource.openStream(), StandardCharsets.UTF_8)) {
+                Properties props = new Properties();
+                props.load(reader);
+                Object micronautVersion = props.get("micronautVersion");
+                if (micronautVersion != null) {
+                    return micronautVersion.toString();
+                }
+            } catch (IOException e) {
+                // ignore
+            }
+        }
+        return "2.0.0";
     }
 
     public static int getJavaVersion() {

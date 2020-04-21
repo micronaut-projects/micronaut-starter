@@ -18,6 +18,12 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
+processResources.dependsOn('micronautVersionInfo')
+task micronautVersionInfo(type: WriteProperties) {
+    outputFile = "${buildDir}/resources/main/micronaut-version.properties"
+    property 'micronautVersion', micronautVersion
+}
+
 rocker {
     // (All settings are shown with their defaults)
     //

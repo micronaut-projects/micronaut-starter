@@ -4,6 +4,7 @@
     {"pattern":"maven/.*$"},
     {"pattern":"kotlintest/.*$"},
     {"pattern":".gitkeep"},
-    {"pattern":"springloaded/.*$"}
+    {"pattern":"springloaded/.*$"},
+    {"pattern":"\\Qmicronaut-version.properties\\E"}
   ]
 }
