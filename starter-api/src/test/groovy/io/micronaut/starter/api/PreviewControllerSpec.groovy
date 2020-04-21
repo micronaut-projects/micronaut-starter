@@ -1,8 +1,10 @@
 package io.micronaut.starter.api
 
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.api.preview.PreviewOperation
 import io.micronaut.starter.application.ApplicationType
@@ -27,6 +29,16 @@ class PreviewControllerSpec extends Specification {
         then:
         map.contents.containsKey("build.gradle")
 
+    }
+
+    void "test preview - bad feature"() {
+        when:
+        def map = client.previewApp(ApplicationType.DEFAULT, "test", ['juikkkk'], null, null, null)
+
+        then:
+        def e = thrown(HttpClientResponseException)
+        e.status == HttpStatus.BAD_REQUEST
+        e.message == 'The requested feature does not exist: juikkkk'
     }
 
     @Client('/preview')

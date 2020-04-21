@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.api.preview;
 
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
@@ -95,6 +97,8 @@ public class PreviewController extends AbstractCreateController implements Previ
             previewDTO.addLink(Relationship.CREATE, requestInfo.link(Relationship.CREATE, type));
             previewDTO.addLink(Relationship.SELF, requestInfo.self());
             return previewDTO;
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         } catch (Exception e) {
             LOG.error("Error generating application: " + e.getMessage(), e);
             throw new IOException(e.getMessage(), e);
