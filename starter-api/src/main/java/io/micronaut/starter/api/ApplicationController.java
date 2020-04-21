@@ -16,7 +16,6 @@
 package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.version.VersionUtils;
 import io.micronaut.http.HttpRequest;
