@@ -1,7 +1,7 @@
 @import io.micronaut.starter.options.Language
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.options.BuildTool
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.application.ApplicationType
 @import java.util.List
 

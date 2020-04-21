@@ -133,7 +133,7 @@ configurations.all {
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
+        attributes 'Main-Class': 'io.micronaut.cli.MicronautCli'
     }
     dependsOn(['createStartScripts'])
 }
@@ -151,7 +151,7 @@ task cliZip(type: Zip, dependsOn: ['shadowJar']) {
         from('../LICENSE')
     }
 }
-
+assemble.dependsOn('cliZip')
 sdkman {
     api = "https://vendors.sdkman.io"
     consumerKey = System.getenv("GVM_SDKVENDOR_KEY") ?: project.hasProperty("gvmSdkvendorKey") ? project.gvmSdkvendorKey : ''

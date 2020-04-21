@@ -15,9 +15,7 @@
  */
 package io.micronaut.starter.io;
 
-import io.micronaut.starter.OutputHandler;
-import io.micronaut.starter.Project;
-import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.template.Template;
 
 import java.io.File;

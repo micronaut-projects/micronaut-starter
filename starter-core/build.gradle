@@ -13,7 +13,6 @@ sourceSets {
 
 
 dependencies {
-    compileOnly "org.graalvm.nativeimage:svm"
     api "com.fizzed:rocker-runtime:1.2.3"
     implementation "org.yaml:snakeyaml:1.26"
     implementation 'org.apache.commons:commons-compress:1.20'

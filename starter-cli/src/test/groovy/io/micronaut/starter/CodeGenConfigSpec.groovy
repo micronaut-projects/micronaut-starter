@@ -3,6 +3,7 @@ package io.micronaut.starter
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
+import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

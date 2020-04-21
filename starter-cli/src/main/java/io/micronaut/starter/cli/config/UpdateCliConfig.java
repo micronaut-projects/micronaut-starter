@@ -16,7 +16,7 @@
 package io.micronaut.starter.cli.config;
 
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.OutputHandler;
+import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;

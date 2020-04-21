@@ -1,0 +1,23 @@
+The subproject `starter-azure-function` provides a function that can be deployed to Microsoft Azure.
+
+=== Running the Function Locally
+
+First uncomment the Azure plugin from `starter-azure-function/build.grade`:
+
+```cmd
+./gradlew clean starter-azure-function:azureFunctionsRun
+```
+
+And visit http://localhost:7071/api/application-types
+
+=== Continuous Deployment
+
+TODO
+
+=== Deploying the Function Yourself
+
+First uncomment the Azure plugin from `starter-azure-function/build.grade` then run:
+
+```cmd
+./gradlew clean starter-azure-function:azureFunctionsDeploy
+```

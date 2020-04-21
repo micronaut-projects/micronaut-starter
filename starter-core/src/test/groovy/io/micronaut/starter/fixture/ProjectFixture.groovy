@@ -1,6 +1,6 @@
 package io.micronaut.starter.fixture
 
-import io.micronaut.starter.Project
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.util.NameUtils
 
 trait ProjectFixture {

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Options;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.util.VersionInfo;

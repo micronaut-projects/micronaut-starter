@@ -16,7 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.CommonOptionsMixin;
 import picocli.CommandLine;
 

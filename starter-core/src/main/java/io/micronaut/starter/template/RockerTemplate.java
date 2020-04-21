@@ -17,7 +17,7 @@ package io.micronaut.starter.template;
 
 import com.fizzed.rocker.RockerModel;
 import com.fizzed.rocker.runtime.OutputStreamOutput;
-import io.micronaut.starter.OutputHandler;
+import io.micronaut.starter.io.OutputHandler;
 
 import java.io.OutputStream;
 

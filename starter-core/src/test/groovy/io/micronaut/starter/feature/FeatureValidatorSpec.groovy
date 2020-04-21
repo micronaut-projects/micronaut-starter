@@ -1,7 +1,7 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.Options
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
 

@@ -1,6 +1,6 @@
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Options;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 

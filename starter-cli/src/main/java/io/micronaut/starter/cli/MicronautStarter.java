@@ -19,7 +19,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
-import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import io.micronaut.starter.cli.feature.messaging.PlatformCandidates;
 import io.micronaut.starter.cli.feature.messaging.PlatformConverter;

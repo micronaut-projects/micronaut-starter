@@ -1,0 +1,34 @@
+The subproject `starter-web-netty` provides an implementation that runs on Netty.
+
+=== Running the Application locally
+
+From the project root:
+
+```cmd
+./gradlew clean starter-web-netty:run
+```
+
+And visit http://localhost:8080/application-types
+
+You can view the Swagger UI definition at:
+
+http://localhost:8080/swagger/views/swagger-ui/index.html
+
+Or with RapiDoc:
+
+http://localhost:8080/swagger/views/rapidoc/index.html
+
+=== Deploying the Application
+
+You can build the WAR file with:
+
+```cmd
+./gradlew clean starter-web-netty:shadowJar
+```
+
+A runnable JAR file will be located in `starter-web-servlet/build/libs`:
+
+[source,bash,subs="attributes"]
+----
+$ java -jar starter-web-netty/build/libs/starter-web-netty-{version}-all.jar
+----

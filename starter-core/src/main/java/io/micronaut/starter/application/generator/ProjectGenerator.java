@@ -16,12 +16,12 @@
 package io.micronaut.starter.application.generator;
 
 import io.micronaut.context.BeanContext;
-import io.micronaut.starter.ContextFactory;
-import io.micronaut.starter.Options;
-import io.micronaut.starter.OutputHandler;
-import io.micronaut.starter.Project;
+import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.io.OutputHandler;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.ConsoleOutput;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.cli;

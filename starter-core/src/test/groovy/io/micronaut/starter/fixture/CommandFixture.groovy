@@ -1,8 +1,8 @@
 package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.ConsoleOutput
-import io.micronaut.starter.Options
+import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.messaging.Platform

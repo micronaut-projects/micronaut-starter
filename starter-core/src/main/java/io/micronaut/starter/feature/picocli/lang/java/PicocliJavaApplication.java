@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli.lang.java;
 
-import io.micronaut.starter.Project;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;

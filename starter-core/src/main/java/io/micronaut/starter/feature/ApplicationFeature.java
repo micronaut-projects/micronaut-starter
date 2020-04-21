@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Project;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.BuildTool;
 

@@ -3,7 +3,7 @@ package io.micronaut.starter.config
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.CommandFixture
 import io.micronaut.starter.CommandSpec
-import io.micronaut.starter.ConsoleOutput
+import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.config.UpdateCliConfig

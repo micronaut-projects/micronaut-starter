@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter;
+package io.micronaut.starter.application;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;

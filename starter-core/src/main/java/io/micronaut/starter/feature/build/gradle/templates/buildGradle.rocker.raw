@@ -1,5 +1,5 @@
 @import io.micronaut.starter.options.TestFramework
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
 

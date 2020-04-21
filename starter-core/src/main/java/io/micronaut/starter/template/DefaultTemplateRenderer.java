@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.starter.OutputHandler;
+import io.micronaut.starter.io.OutputHandler;
 
 import java.io.IOException;
 import java.util.Map;

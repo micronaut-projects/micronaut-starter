@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.picocli.test.spock;
 
 import io.micronaut.core.naming.NameUtils;
-import io.micronaut.starter.Project;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;

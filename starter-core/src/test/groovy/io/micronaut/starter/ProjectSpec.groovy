@@ -1,5 +1,6 @@
 package io.micronaut.starter
 
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.util.NameUtils
 import spock.lang.Specification
 import spock.lang.Unroll
