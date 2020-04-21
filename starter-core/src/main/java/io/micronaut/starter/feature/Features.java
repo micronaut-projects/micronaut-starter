@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
@@ -30,7 +31,7 @@ public class Features extends ArrayList<String> {
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
-    private int javaVersion;
+    private JdkVersion javaVersion;
 
     public Features(List<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));
@@ -67,9 +68,9 @@ public class Features extends ArrayList<String> {
 
     public String getTargetJdk() {
         if (language().isJava()) {
-            return VersionInfo.toJdkVersion(javaVersion);
+            return VersionInfo.toJdkVersion(javaVersion.majorVersion());
         } else {
-            return VersionInfo.toJdkVersion(Math.min(javaVersion, 13));
+            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 13));
         }
     }
 }

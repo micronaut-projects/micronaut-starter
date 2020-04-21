@@ -15,13 +15,10 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.test.TestFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 import java.util.*;
 
@@ -97,7 +94,7 @@ public class FeatureContext {
         return options.getBuildTool();
     }
 
-    public int getJavaVersion() {
+    public JdkVersion getJavaVersion() {
         return options.getJavaVersion();
     }
 

@@ -16,6 +16,7 @@
 package io.micronaut.starter.util;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.options.JdkVersion;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -88,7 +89,7 @@ public class VersionInfo {
         throw new IllegalArgumentException("Could not get version for ID " + id);
     }
 
-    public static int getJavaVersion() {
+    public static JdkVersion getJavaVersion() {
         String version = System.getProperty("java.version");
         if (version.startsWith("1.")) {
             version = version.substring(2);
@@ -100,8 +101,8 @@ public class VersionInfo {
         // 9.0.1
         int dotPos = version.indexOf('.');
         int dashPos = version.indexOf('-');
-        return Integer.parseInt(version.substring(0,
-                dotPos > -1 ? dotPos : dashPos > -1 ? dashPos : version.length()));
+        return JdkVersion.valueOf(Integer.parseInt(version.substring(0,
+                dotPos > -1 ? dotPos : dashPos > -1 ? dashPos : version.length())));
     }
 
     public static String toJdkVersion(int javaVersion) {

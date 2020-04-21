@@ -29,10 +29,10 @@ public class Options implements ConvertibleValues<Object> {
     private final Language language;
     private final TestFramework testFramework;
     private final BuildTool buildTool;
-    private final int javaVersion;
+    private final JdkVersion javaVersion;
     private final ConvertibleValuesMap<Object> additionalOptions;
 
-    public Options(Language language, TestFramework testFramework, BuildTool buildTool, int javaVersion) {
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion) {
         this(language, testFramework, buildTool, javaVersion, Collections.emptyMap());
     }
 
@@ -44,7 +44,7 @@ public class Options implements ConvertibleValues<Object> {
         this(language, testFramework, buildTool, VersionInfo.getJavaVersion(), additionalOptions);
     }
 
-    public Options(Language language, TestFramework testFramework, BuildTool buildTool, int javaVersion, Map<String, Object> additionalOptions) {
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
@@ -79,7 +79,7 @@ public class Options implements ConvertibleValues<Object> {
         return additionalOptions.get(name, conversionContext);
     }
 
-    public int getJavaVersion() {
+    public JdkVersion getJavaVersion() {
         return javaVersion;
     }
 

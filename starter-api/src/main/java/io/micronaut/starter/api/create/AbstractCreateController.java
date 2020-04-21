@@ -25,15 +25,12 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.analytics.ApplicationGeneratingEvent;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ZipOutputHandler;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +77,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            @Nullable Integer javaVersion) {
+            @Nullable JdkVersion javaVersion) {
         Project project;
         try {
             project = NameUtils.parse(name);
@@ -93,7 +90,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             generatorContext = projectGenerator.createGeneratorContext(
                     type,
                     project,
-                    new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool, javaVersion == null ? 11 : javaVersion),
+                    new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool, javaVersion != null ? javaVersion : JdkVersion.JDK_8),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP
             );

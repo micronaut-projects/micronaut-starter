@@ -24,6 +24,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -78,7 +79,7 @@ public class CreateController extends AbstractCreateController implements Create
             BuildTool build,
             TestFramework test,
             Language lang,
-            Integer javaVersion) {
+            JdkVersion javaVersion) {
         return super.createApp(type, name, features, build, test, lang, javaVersion);
     }
 
@@ -106,7 +107,7 @@ public class CreateController extends AbstractCreateController implements Create
             @Nullable BuildTool build,
             @Nullable TestFramework test,
             @Nullable Language lang,
-            @Nullable Integer javaVersion) {
+            @Nullable JdkVersion javaVersion) {
         return super.createApp(type, name, features, build, test, lang, javaVersion);
     }
 }

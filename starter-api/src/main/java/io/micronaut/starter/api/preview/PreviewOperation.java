@@ -18,6 +18,7 @@ package io.micronaut.starter.api.preview;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -45,6 +46,6 @@ public interface PreviewOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            @Nullable Integer javaVersion,
+            @Nullable JdkVersion javaVersion,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
 }

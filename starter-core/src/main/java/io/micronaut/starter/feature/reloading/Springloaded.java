@@ -46,7 +46,7 @@ public class Springloaded implements ReloadingFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        int jdkVersion = featureContext.getJavaVersion();
+        int jdkVersion = featureContext.getJavaVersion().majorVersion();
         if (jdkVersion >= 9) {
             Springloaded springloaded = this;
             featureContext.exclude(new FeaturePredicate() {

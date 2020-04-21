@@ -19,6 +19,7 @@ import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
@@ -50,6 +51,6 @@ public interface CreateOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            @Nullable Integer javaVersion
+            @Nullable JdkVersion javaVersion
     );
 }
