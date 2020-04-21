@@ -20,10 +20,3 @@ A release is performed with the following steps:
 * Celebrate!
 
 
-## Deployments
-
-To generate an [AWS Lambda Custom Runtime](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html) which runs a native image of the app, run: 
-
-`$ ./deploy.sh`
-
-It generates a zip file `build/function.zip` which you must upload to AWS Lambda. Set `Handler` to `io.micronaut.starter.lambda.CustomMicronautLambdaRuntime`.  

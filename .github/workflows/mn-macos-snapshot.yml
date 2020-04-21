@@ -10,11 +10,9 @@ jobs:
       - name: Install GraalVM
         env:
           GRAAL_VERSION: 20.0.0
-          GRAAL_FILENAME: graalvm-ce-java8-darwin-amd64-${GRAAL_VERSION}.tar.gz
+          GRAAL_OS: darwin-amd64
         run:
-          - curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME} -o /tmp/${GRAAL_FILENAME}
-          - tar -zxvf /tmp/${GRAAL_FILENAME} -C /tmp && mv /tmp/graalvm-ce-java8-${GRAAL_VERSION} /usr/lib/graalvm
-          - rm -rf /tmp/*
+          - ./install-graal.sh
       - name: Build the JAR
         env:
           JAVA_HOME: /usr/lib/graalvm
