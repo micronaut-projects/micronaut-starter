@@ -1,6 +1,7 @@
 import io.micronaut.starter.cli.MicronautCreateStartScripts
 
 plugins {
+    id "org.mikeneck.graalvm-native-image" version "0.3.0"
     id "application"
     id "com.github.johnrengelman.shadow"
     id "io.micronaut.starter.rocker"
@@ -135,4 +136,14 @@ sdkman {
     version = project.version
     url = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/micronaut-cli-${project.version}.zip"
     hashtag = "#micronautfw"
+}
+
+nativeImage {
+    graalVmHome = System.getProperty('java.home')
+    mainClass = 'io.micronaut.starter.cli.MicronautStarter'
+    executableName = 'mn'
+    arguments(
+            '--no-fallback',
+            '--no-server'
+    )
 }

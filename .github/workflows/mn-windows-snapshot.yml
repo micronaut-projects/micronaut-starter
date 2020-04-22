@@ -13,6 +13,7 @@ jobs:
         os: [windows-2016, windows-latest]
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
       - uses: DeLaGuardo/setup-graalvm@2.0
         with:
           graalvm-version: '19.3.0.2.java11'
@@ -20,22 +21,18 @@ jobs:
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         run: |
           choco install visualstudio2017-workload-vctools
-      - name: Build JAR
-        run: |
-          ./gradlew starter-cli:shadowJar
-          $env:JAR_FILE=@(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]
-      - name: Build Native Image
+      - name: set env variables and run the Gradle build
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          call "%JAVA_HOME%\bin\native-mage --no-server --no-fallback -cp '%JAR_FILE%'"
+          ./gradlew starter-cli:nativeImage
       - name: Verify Build
-        run: mn --version
+        run: ./starter-cli/build/graal/mn --version
       - name: Verify Create App
-        run: mn create-app test
+        run: ./starter-cli/build/graal/mn create-app test
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
           name: mn-${{ matrix.os }}-snapshot.exe
-          path: mn.exe
+          path: starter-cli/build/graal
 
