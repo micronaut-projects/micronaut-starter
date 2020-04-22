@@ -19,7 +19,6 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.azure.AzureFunction;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;

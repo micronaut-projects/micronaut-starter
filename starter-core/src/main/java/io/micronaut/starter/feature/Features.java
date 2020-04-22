@@ -23,7 +23,6 @@ import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class Features extends ArrayList<String> {
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
-    private JdkVersion javaVersion;
+    private final JdkVersion javaVersion;
 
     public Features(Set<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));

@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.jib;
 
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
 import javax.inject.Singleton;
