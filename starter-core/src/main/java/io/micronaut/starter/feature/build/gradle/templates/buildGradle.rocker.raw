@@ -115,7 +115,11 @@ dependencies {
     implementation("io.micronaut.servlet:micronaut-http-server-tomcat")
 }
 @if (features.contains("google-cloud-function")) {
-    implementation "io.micronaut.gcp:micronaut-gcp-function-http"
+    implementation("io.micronaut.gcp:micronaut-gcp-function-http")
+    @if (features.language().isGroovy() && features.testFramework().isSpock()) {
+        // required due to a Spock compiler bug
+    testImplementation("io.micronaut.servlet:micronaut-servlet-core")
+    }
 }
 @if (features.contains("http-client")) {
     implementation("io.micronaut:micronaut-http-client")
