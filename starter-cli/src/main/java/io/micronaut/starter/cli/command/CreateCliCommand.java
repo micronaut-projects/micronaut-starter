@@ -22,9 +22,11 @@ import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.CliAvailableFeatures;
 import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.starter.feature.AvailableFeatures;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class CreateCliCommand extends CreateCommand {
     @ReflectiveAccess
     List<String> features = new ArrayList<>();
 
-    public CreateCliCommand(CliAvailableFeatures availableFeatures,
+    public CreateCliCommand(@Named("cli") AvailableFeatures availableFeatures,
                             ContextFactory contextFactory,
                             ProjectGenerator projectGenerator) {
         super(availableFeatures, contextFactory, ApplicationType.CLI, projectGenerator);

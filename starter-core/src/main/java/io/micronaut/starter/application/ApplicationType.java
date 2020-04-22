@@ -16,33 +16,25 @@
 package io.micronaut.starter.application;
 
 import io.micronaut.core.naming.Named;
-import io.micronaut.starter.feature.AvailableFeatures;
 
 import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public enum ApplicationType implements Named {
 
-    DEFAULT("Micronaut Application", "A Micronaut application", DefaultAvailableFeatures.class),
-    CLI("Micronaut CLI Application", "A Command Line Application", CliAvailableFeatures.class),
-    FUNCTION("Micronaut Function", "A Function Application for Serverless", FunctionAvailableFeatures.class),
-    GRPC("Micronaut GRPC Application", "A GRPC Application", GrpcAvailableFeatures.class),
-    MESSAGING("Micronaut Messaging Application", "A Messaging-Driven Application", MessagingAvailableFeatures.class);
+    DEFAULT("Micronaut Application", "A Micronaut application"),
+    CLI("Micronaut CLI Application", "A Command Line Application"),
+    FUNCTION("Micronaut Function", "A Function Application for Serverless"),
+    GRPC("Micronaut GRPC Application", "A GRPC Application"),
+    MESSAGING("Micronaut Messaging Application", "A Messaging-Driven Application");
 
     private final String title;
     private final String description;
-    private final Class<? extends AvailableFeatures> availableFeaturesClass;
 
     ApplicationType(String title,
-                    String description,
-                    Class<? extends AvailableFeatures> availableFeaturesClass) {
+                    String description) {
         this.title = title;
         this.description = description;
-        this.availableFeaturesClass = availableFeaturesClass;
-    }
-
-    public Class<? extends AvailableFeatures> getAvailableFeaturesClass() {
-        return availableFeaturesClass;
     }
 
     /**

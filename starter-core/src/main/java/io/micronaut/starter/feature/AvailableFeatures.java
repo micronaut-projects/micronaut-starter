@@ -15,62 +15,17 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.application.ApplicationType;
-
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import java.util.Optional;
 import java.util.stream.Stream;
 
-public abstract class AvailableFeatures implements Iterable<String> {
+public interface AvailableFeatures extends Iterable<String> {
 
-    private final Map<String, Feature> features;
+    Optional<Feature> findFeature(@NonNull String name);
 
-    public AvailableFeatures(List<Feature> features) {
-        this.features = new LinkedHashMap<>(features.size());
-        for (Feature feature: features) {
-            this.features.put(feature.getName(), feature);
-        }
-    }
+    Optional<Feature> findFeature(@NonNull String name, boolean ignoreVisibility);
 
-    public AvailableFeatures(List<Feature> features, ApplicationType applicationType) {
-        this.features = features.stream()
-                .filter(f -> f.supports(applicationType))
-                .collect(Collectors.toMap(
-                        Feature::getName,
-                        Function.identity(),
-                        (u, v) -> null,
-                        LinkedHashMap::new));
-    }
+    Stream<Feature> getFeatures();
 
-    @Override
-    public Iterator<String> iterator() {
-        return getFeatures()
-                .map(Feature::getName)
-                .iterator();
-    }
-
-    public Optional<Feature> findFeature(String name) {
-        return findFeature(name, false);
-    }
-
-    public Optional<Feature> findFeature(String name, boolean ignoreVisibility) {
-        Feature feature = features.get(name);
-        if (feature != null) {
-            if (ignoreVisibility || feature.isVisible()) {
-                return Optional.of(feature);
-            }
-        }
-        return Optional.empty();
-    }
-
-    public Stream<Feature> getFeatures() {
-        Stream<Feature> stream = features.values().stream();
-        return stream.filter(Feature::isVisible);
-    }
-
-    public Stream<Feature> getAllFeatures() {
-        return features.values().stream();
-    }
-
+    Stream<Feature> getAllFeatures();
 }
