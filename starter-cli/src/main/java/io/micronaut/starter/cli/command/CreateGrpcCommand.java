@@ -21,9 +21,11 @@ import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.GrpcAvailableFeatures;
+import io.micronaut.starter.feature.AvailableFeatures;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class CreateGrpcCommand extends CreateCommand {
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = GrpcAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
-    public CreateGrpcCommand(GrpcAvailableFeatures availableFeatures,
+    public CreateGrpcCommand(@Named("grpc") AvailableFeatures availableFeatures,
                              ContextFactory contextFactory,
                              ProjectGenerator projectGenerator) {
         super(availableFeatures, contextFactory, ApplicationType.GRPC, projectGenerator);

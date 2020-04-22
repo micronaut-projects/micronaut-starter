@@ -15,14 +15,16 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.AvailableFeaturesImpl;
 import io.micronaut.starter.feature.Feature;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.List;
 
+@Named("messaging")
 @Singleton
-public class MessagingAvailableFeatures extends AvailableFeatures {
+public class MessagingAvailableFeatures extends AvailableFeaturesImpl {
 
     public MessagingAvailableFeatures(List<Feature> features) {
         super(features, ApplicationType.MESSAGING);

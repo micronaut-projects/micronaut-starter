@@ -16,7 +16,9 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.context.BeanLocator;
+import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -56,8 +58,8 @@ public class FeatureService implements FeatureOperations {
 
     @Override
     public List<FeatureDTO> getFeatures(ApplicationType type) {
-        return beanLocator.getBean(type.getAvailableFeaturesClass())
-                .getFeatures()
+        return beanLocator.getBean(AvailableFeatures.class, Qualifiers.byName(type.getName()))
+                .getFeaturesStream()
                 .map(FeatureDTO::new)
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());

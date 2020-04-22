@@ -1,9 +1,9 @@
 package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
+import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.application.DefaultAvailableFeatures
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.AvailableFeatures
@@ -23,9 +23,11 @@ trait ContextFixture {
     Features getFeatures(List<String> features,
                          Language language = null,
                          TestFramework testFramework = null,
-                         BuildTool buildTool = BuildTool.GRADLE) {
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         ApplicationType applicationType = ApplicationType.DEFAULT
+    ) {
         Options options = new Options(language, testFramework, buildTool)
-        FeatureContext featureContext = buildFeatureContext(features, options)
+        FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
         featureContext.processSelectedFeatures()
         List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
@@ -33,14 +35,15 @@ trait ContextFixture {
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.GRADLE)) {
+                                       Options options = new Options(null, null, BuildTool.GRADLE),
+                                       ApplicationType applicationType = ApplicationType.DEFAULT) {
 
-        AvailableFeatures availableFeatures = beanContext.getBean(DefaultAvailableFeatures)
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
         ContextFactory factory = beanContext.getBean(ContextFactory)
 
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
-                ApplicationType.DEFAULT,
+                applicationType,
                 options)
     }
 
