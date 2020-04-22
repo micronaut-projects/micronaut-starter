@@ -17,7 +17,6 @@ package io.micronaut.starter.cli;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.TypeHint;
-import io.micronaut.starter.cli.command.CodeGenCommand;
 import picocli.CommandLine;
 
 import java.util.Optional;

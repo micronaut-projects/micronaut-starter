@@ -19,22 +19,6 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
-import io.micronaut.starter.cli.command.project.bean.CreateBeanCommand;
-import io.micronaut.starter.cli.command.project.job.CreateJobCommand;
-import io.micronaut.starter.cli.command.project.test.CreateTestCommand;
-import io.micronaut.starter.cli.config.UpdateCliConfigCommand;
-import io.micronaut.starter.cli.feature.database.CreateRepositoryCommand;
-import io.micronaut.starter.cli.feature.grpc.CreateGrpcServiceCommand;
-import io.micronaut.starter.cli.feature.grpc.CreateProtoServiceCommand;
-import io.micronaut.starter.cli.feature.messaging.kafka.CreateKafkaListener;
-import io.micronaut.starter.cli.feature.messaging.kafka.CreateKafkaProducer;
-import io.micronaut.starter.cli.feature.messaging.rabbitmq.CreateRabbitMQListener;
-import io.micronaut.starter.cli.feature.messaging.rabbitmq.CreateRabbitMQProducer;
-import io.micronaut.starter.cli.feature.other.CreateClientCommand;
-import io.micronaut.starter.cli.feature.picocli.CreateCommandCommand;
-import io.micronaut.starter.cli.feature.server.controller.CreateControllerCommand;
-import io.micronaut.starter.cli.feature.server.websocket.CreateWebsocketClientCommand;
-import io.micronaut.starter.cli.feature.server.websocket.CreateWebsocketServerCommand;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
@@ -48,7 +32,7 @@ import java.util.function.BiFunction;
             "",
             "*  @|bold create-app|@ @|yellow NAME|@",
             "*  @|bold create-cli-app|@ @|yellow NAME|@",
-            "*  @|bold create-function|@ @|yellow NAME|@ @|yellow --provider|@ @|yellow,italic CLOUD_PROVIDER_NAME|@",
+            "*  @|bold create-function|@ @|yellow NAME|@",
             "*  @|bold create-grpc-app|@ @|yellow NAME|@",
             "*  @|bold create-messaging-app|@ @|yellow NAME|@"
         },
