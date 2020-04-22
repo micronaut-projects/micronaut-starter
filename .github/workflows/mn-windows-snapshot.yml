@@ -22,18 +22,25 @@ jobs:
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         run: |
           choco install visualstudio2017-workload-vctools
-      - name: set env variables and run the Gradle build
+      - name: Build JAR File
         shell: cmd
         env:
           JAVA_HOME: ./graalvm-ce-java11-20.0.0
-        run: ./build-windows-cli.bat
+        run: ./gradlew starter-cli:copyShadowJar
+      - name: Build Native Image
+        shell: cmd
+        env:
+          JAVA_HOME: ./graalvm-ce-java11-20.0.0
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          native-image --no-server --no-fallback -cp build/libs/cli.jar
       - name: Verify Build
-        run: ./starter-cli/build/graal/mn --version
+        run: mn --version
       - name: Verify Create App
-        run: ./starter-cli/build/graal/mn create-app test
+        run: mn create-app test
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
           name: mn-${{ matrix.os }}-snapshot.exe
-          path: starter-cli/build/graal
+          path: mn
 
