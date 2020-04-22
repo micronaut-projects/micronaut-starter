@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.function.gcp.template.*;
 import io.micronaut.starter.feature.server.template.groovyController;
 import io.micronaut.starter.feature.server.template.javaController;
 import io.micronaut.starter.feature.server.template.kotlinController;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -62,7 +63,16 @@ public class GoogleCloudFunction implements FunctionFeature {
     public void apply(GeneratorContext generatorContext) {
         ApplicationType type = generatorContext.getApplicationType();
         if (type == ApplicationType.DEFAULT) {
+
             Project project = generatorContext.getProject().withClassName("Hello");
+            BuildTool buildTool = generatorContext.getBuildTool();
+            generatorContext.addTemplate("readme", new RockerTemplate(
+                    "README.md",
+                    gcpFunctionReadme.template(project,
+                            generatorContext.getFeatures(),
+                            getRunCommand(buildTool),
+                            getBuildCommand(buildTool)
+                    )));
             Language language = generatorContext.getLanguage();
             String sourceFile = language.getSrcDir() + "/{packagePath}/HelloController." + language.getExtension();
             TestFramework testFramework = generatorContext.getTestFramework();
@@ -119,6 +129,22 @@ public class GoogleCloudFunction implements FunctionFeature {
                 );
             }
 
+        }
+    }
+
+    private String getRunCommand(BuildTool buildTool) {
+        if (buildTool == BuildTool.MAVEN) {
+            return "mvnw clean package";
+        } else {
+            return "gradlew runFunction";
+        }
+    }
+
+    private String getBuildCommand(BuildTool buildTool) {
+        if (buildTool == BuildTool.MAVEN) {
+            return "mvnw function:run";
+        } else {
+            return "gradlew clean shadowJar";
         }
     }
 }

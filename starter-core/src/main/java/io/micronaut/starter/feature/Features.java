@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.lang.LanguageFeature;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class Features extends ArrayList<String> {
 
     private final List<Feature> featureList;
+    private final BuildTool buildTool;
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
@@ -48,6 +50,11 @@ public class Features extends ArrayList<String> {
             }
         }
         this.javaVersion = options.getJavaVersion();
+        this.buildTool = options.getBuildTool();
+    }
+
+    public BuildTool build() {
+        return buildTool;
     }
 
     public ApplicationFeature application() {

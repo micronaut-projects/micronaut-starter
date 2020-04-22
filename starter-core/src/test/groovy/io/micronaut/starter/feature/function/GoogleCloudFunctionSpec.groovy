@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.function
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.VersionInfo
@@ -21,6 +22,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
                 ['google-cloud-function']
         )
         String build = output['build.gradle']
+        def readme = output["README.md"]
 
         then:
         build.contains('compileOnly "com.google.cloud.functions:functions-framework-api"')
@@ -29,6 +31,8 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+        readme?.contains("Micronaut and Google Cloud Function")
+        readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
         language << Language.values()
