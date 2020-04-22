@@ -21,7 +21,7 @@ jobs:
           JAVA_HOME: .\graalvm-ce-java8-20.0.0
         run: .\gradlew.bat clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: .\graalvm-ce-java8-20.0.0\bin\native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+        run: .\graalvm-ce-java8-20.0.0\bin\native-image --no-fallback --no-server -cp @(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]
       - name: Verify Build
         run: .\mn.exe --version
       - name: Verify Create App
