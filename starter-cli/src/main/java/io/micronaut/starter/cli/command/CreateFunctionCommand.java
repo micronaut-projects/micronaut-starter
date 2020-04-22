@@ -17,20 +17,17 @@ package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.FunctionAvailableFeatures;
-import io.micronaut.starter.feature.function.Provider;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-@CommandLine.Command(name = CreateFunctionCommand.NAME, description = "Creates a cloud function")
+@CommandLine.Command(name = CreateFunctionCommand.NAME, description = "Creates a Cloud Function")
 @Prototype
 public class CreateFunctionCommand extends CreateCommand {
 
@@ -39,10 +36,6 @@ public class CreateFunctionCommand extends CreateCommand {
     @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)
     List<String> features = new ArrayList<>();
-
-    @ReflectiveAccess
-    @CommandLine.Option(names = {"-p", "--provider"}, paramLabel = "PROVIDER", description = "The cloud provider. Possible values: ${COMPLETION-CANDIDATES}")
-    Provider provider = Provider.aws;
 
     public CreateFunctionCommand(FunctionAvailableFeatures availableFeatures,
                                  ContextFactory contextFactory,
@@ -54,11 +47,6 @@ public class CreateFunctionCommand extends CreateCommand {
     @Override
     protected List<String> getSelectedFeatures() {
         return features;
-    }
-
-    @Override
-    protected Map<String, Object> getAdditionalOptions() {
-        return Collections.singletonMap("cloudProvider", provider);
     }
 
 }
