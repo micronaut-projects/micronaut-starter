@@ -1,6 +1,0 @@
-applicationType: default
-defaultPackage: foo
-testFramework: kotlintest
-sourceLanguage: kotlin
-buildTool: gradle
-features: [app-name, logback, netty-server, http-client, kotlin, application, kotlinTest, gradle, yaml]
