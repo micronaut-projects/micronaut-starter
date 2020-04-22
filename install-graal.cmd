@@ -58,17 +58,12 @@ if exist "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxi
 )
 set MAVEN_OPTS=--add-exports=java.base/jdk.internal.module=ALL-UNNAMED
 
-@REM Work around Maven Plugin incompatibility (https://github.com/oracle/graal/issues/1866)
-if not exist %JAVA_HOME%\bin\native-image.exe (
-  @REM Change to GraalVM root dir
-  cd %JAVA_HOME%
-  @REM Build yourself a native-image.exe next to bin\native-image.cmd
-  bin\native-image.cmd -jar lib\graalvm\svm-driver.jar "-H:Path=.\bin"
-)
+echo "Install Native Image"
+%JAVA_HOME%\bin\gu install native-image
 GOTO set-java-home
 
 :set-java-home
 echo Setting JAVA_HOME=%JAVA_HOME%
 %JAVA_HOME%\bin\java -version
 
-echo "You can now run the build with: mvnw clean verify"
+echo "GraalVM %GRAAL_VERSION% Install Complete."

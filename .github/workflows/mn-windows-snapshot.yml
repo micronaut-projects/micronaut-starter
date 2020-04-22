@@ -12,6 +12,10 @@ jobs:
         uses: actions/checkout@v1
       - name: Install GraalVM
         run: .\install-graal.cmd
+      - name: Enable Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.1.0
+        with:
+          sdk: 7
       - name: Build the JAR
         run: .\gradlew.bat clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
