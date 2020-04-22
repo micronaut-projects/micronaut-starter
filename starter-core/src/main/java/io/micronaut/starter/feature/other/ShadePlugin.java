@@ -13,44 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.messaging.kafka;
+package io.micronaut.starter.feature.other;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.azure.AzureFunction;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.List;
 
+/**
+ * Adds a shaded JAR feature.
+ */
 @Singleton
-public class KafkaStreams implements Feature {
+public class ShadePlugin implements DefaultFeature {
 
-    private final Kafka kafka;
+    @Override
+    public String getTitle() {
+        return "Shaded JAR";
+    }
 
-    public KafkaStreams(Kafka kafka) {
-        this.kafka = kafka;
+    @Override
+    public String getDescription() {
+        return "Adds Support for Producing a Shaded (FAT) JAR";
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "kafka-streams";
+        return "shade";
     }
 
     @Override
-    public String getTitle() {
-        return "Kafka Streams";
+    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+        return selectedFeatures.stream()
+                .noneMatch(f -> f.getName().equals("jib") || f.getName().equals(AzureFunction.NAME));
     }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Kafka Streams";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Kafka.class)) {
-            featureContext.addFeature(kafka);
-        }
-    }
-
 }

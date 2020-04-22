@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.alexa;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -30,6 +31,11 @@ public class AlexaHttpServer implements Feature {
     @Override
     public String getTitle() {
         return "Alexa Skill as Http Service";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override

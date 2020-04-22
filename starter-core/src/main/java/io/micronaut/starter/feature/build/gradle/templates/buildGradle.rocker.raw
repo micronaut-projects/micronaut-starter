@@ -27,8 +27,13 @@ plugins {
 @if (features.contains("jrebel")) {
     id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
 }
+@if (features.contains("azure-function")) {
+    id "com.microsoft.azure.azurefunctions" version "1.1.0"
+}
 @if (features.application() != null) {
+    @if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "5.2.0"
+    }
     id "application"
 }
 @if (features.contains("grpc")) {
@@ -120,6 +125,14 @@ dependencies {
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
     @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
+    }
+}
+@if (features.contains("azure-function")) {
+    implementation("io.micronaut.azure:micronaut-azure-function-http")
+    implementation("com.microsoft.azure.functions:azure-functions-java-library")
+    @if (features.language().isGroovy() && features.testFramework().isSpock()) {
+        // required due to a Spock compiler bug
+    testImplementation("io.micronaut.servlet:micronaut-servlet-core")
     }
 }
 @if (features.contains("http-client")) {
@@ -461,6 +474,19 @@ task('runFunction', type: JavaExec, dependsOn: classes) {
 
     )
 }
+}
+@if (features.contains("azure-function")) {
+azurefunctions {
+    resourceGroup = 'java-functions-group'
+    appName = '@project.getName()'
+    pricingTier = 'Consumption'
+    region = 'westus'
+    runtime {
+      os = 'windows'
+    }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+
 }
 
 tasks.withType(JavaExec) {
