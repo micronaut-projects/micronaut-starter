@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.messaging.rabbitmq;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -33,6 +34,7 @@ import picocli.CommandLine;
 @Prototype
 public class CreateRabbitMQProducer extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
     String producerName;
 

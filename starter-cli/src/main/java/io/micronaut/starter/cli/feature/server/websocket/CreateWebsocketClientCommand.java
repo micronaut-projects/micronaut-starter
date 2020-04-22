@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.server.websocket;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -36,6 +37,7 @@ import java.io.IOException;
 @Prototype
 public class CreateWebsocketClientCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "CLIENT-NAME", description = "The name of the client to create")
     String clientName;
 

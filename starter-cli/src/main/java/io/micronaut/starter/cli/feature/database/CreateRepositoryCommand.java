@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.database;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -40,9 +41,11 @@ public class CreateRepositoryCommand extends CodeGenCommand {
 
     private static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
 
+    @ReflectiveAccess
     @CommandLine.Parameters(index = "0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
     String repositoryName;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--idType"}, description = "Specify custom id type [Integer, Long, String] or full package name [ie. com.corp.Book] - Defaults to Long")
     String idType = "Long";
 

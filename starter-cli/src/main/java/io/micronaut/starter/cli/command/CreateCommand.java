@@ -22,11 +22,8 @@ import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.*;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.util.NameUtils;
 import io.micronaut.starter.util.VersionInfo;
@@ -66,6 +63,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @CommandLine.Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
     boolean listFeatures;
 
+    @ReflectiveAccess
+    @CommandLine.Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
+    Integer javaVersion;
+
     private final ContextFactory contextFactory;
     private final ApplicationType applicationType;
     private final ProjectGenerator projectGenerator;
@@ -91,9 +92,8 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @Override
     public Integer call() throws Exception {
-
         if (listFeatures) {
-            new ListFeatures(availableFeatures, new Options(lang, test, build, VersionInfo.getJavaVersion()), applicationType, contextFactory).output(this);
+            new ListFeatures(availableFeatures, new Options(lang, test, build, getJdkVersion()), applicationType, contextFactory).output(this);
             return 0;
         }
 
@@ -116,8 +116,16 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, VersionInfo.getJavaVersion(), getAdditionalOptions());
+        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
 
         projectGenerator.generate(applicationType, project, options, getSelectedFeatures(), outputHandler, this);
+    }
+
+    private JdkVersion getJdkVersion() {
+        if (javaVersion == null) {
+            return VersionInfo.getJavaVersion();
+        } else {
+            return JdkVersion.valueOf(javaVersion);
+        }
     }
 }

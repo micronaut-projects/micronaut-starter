@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.server.websocket;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -39,6 +40,7 @@ import java.util.List;
 @Prototype
 public class CreateWebsocketServerCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "SERVER-NAME", description = "The name of the server to create")
     String serverName;
 

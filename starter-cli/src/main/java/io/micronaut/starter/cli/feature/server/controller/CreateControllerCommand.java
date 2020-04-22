@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.feature.server.controller;
 
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -39,6 +40,7 @@ import java.util.*;
 @CommandLine.Command(name = "create-controller", description = "Creates a controller and associated test")
 public class CreateControllerCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "CONTROLLER-NAME", description = "The name of the controller to create")
     String controllerName;
 

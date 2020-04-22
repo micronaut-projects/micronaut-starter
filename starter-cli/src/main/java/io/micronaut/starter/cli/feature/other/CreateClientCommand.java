@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.feature.other;
 
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
@@ -34,6 +35,7 @@ import java.io.IOException;
 @CommandLine.Command(name = "create-client", description = "Creates a client interface")
 public class CreateClientCommand extends CodeGenCommand {
 
+    @ReflectiveAccess
     @CommandLine.Parameters(paramLabel = "CLIENT-NAME", description = "The name of the client to create")
     String clientName;
 

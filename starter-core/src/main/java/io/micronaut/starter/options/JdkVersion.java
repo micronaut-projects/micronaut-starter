@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.options;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * JDK versions.
  *
@@ -22,14 +25,20 @@ package io.micronaut.starter.options;
  * @since 1.0.0
  */
 public enum JdkVersion {
-    JDK_8(8),
-    JDK_11(11),
-    JDK_14(14);
+    JDK_8(8, true),
+    JDK_9(9, false),
+    JDK_10(10, false),
+    JDK_11(11, true),
+    JDK_12(12, false),
+    JDK_13(13, false),
+    JDK_14(14, true);
 
     private final int majorVersion;
+    private final boolean hasSupport;
 
-    JdkVersion(int majorVersion) {
+    JdkVersion(int majorVersion, boolean hasSupport) {
         this.majorVersion = majorVersion;
+        this.hasSupport = hasSupport;
     }
 
     public static JdkVersion valueOf(int majorVersion) {
@@ -41,11 +50,15 @@ public enum JdkVersion {
             case 14:
                 return JDK_14;
             default:
-                throw new IllegalArgumentException("Unsupported JDK version: " + majorVersion);
+                throw new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " + Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList()));
         }
     }
 
     public int majorVersion() {
         return majorVersion;
+    }
+
+    public boolean hasSupport() {
+        return hasSupport;
     }
 }

@@ -21,11 +21,9 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.MessagingAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.feature.AvailableFeatures;
 import picocli.CommandLine;
 
 import javax.annotation.Nonnull;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class CreateMessagingCommand extends CreateCommand {
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
-    public CreateMessagingCommand(@Named("messaging") AvailableFeatures createMessagingFeatures,
+    public CreateMessagingCommand(MessagingAvailableFeatures createMessagingFeatures,
                                   ContextFactory contextFactory,
                                   ProjectGenerator projectGenerator) {
         super(createMessagingFeatures, contextFactory, ApplicationType.MESSAGING, projectGenerator);
