@@ -15,14 +15,16 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.List;
 
+@Named("default")
 @Singleton
-public class DefaultAvailableFeatures extends AvailableFeatures {
+public class DefaultAvailableFeatures extends BaseAvailableFeatures {
 
     public DefaultAvailableFeatures(List<Feature> features) {
         super(features, ApplicationType.DEFAULT);

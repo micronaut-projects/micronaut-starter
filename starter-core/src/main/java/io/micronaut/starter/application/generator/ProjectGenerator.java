@@ -16,6 +16,7 @@
 package io.micronaut.starter.application.generator;
 
 import io.micronaut.context.BeanContext;
+import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.io.OutputHandler;
@@ -79,7 +80,7 @@ public class ProjectGenerator {
     }
 
     public GeneratorContext createGeneratorContext(ApplicationType applicationType, Project project, Options options, List<String> selectedFeatures, ConsoleOutput consoleOutput) {
-        AvailableFeatures availableFeatures = beanContext.getBean(applicationType.getAvailableFeaturesClass());
+        AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(applicationType.getName()));
 
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options);
         return contextFactory.createGeneratorContext(project, featureContext, consoleOutput);
