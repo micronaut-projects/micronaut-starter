@@ -17,7 +17,7 @@ class @project.getClassName()FunctionTest : StringSpec({
 
     "test function" {
        HttpFunction().use { function ->
-           GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+           val response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
            response.status shouldBe HttpStatus.OK
         }
     }
