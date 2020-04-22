@@ -167,7 +167,11 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Yaml.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Yaml.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+ included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>,
+ or added explicitly by another feature through <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -179,7 +183,9 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Yaml.html#getOrder--">getOrder</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Yaml.html#getOrder--">getOrder</a></span>()</code>
+<div class="block">The order of a feature controls the order in which it applies.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
@@ -189,7 +195,9 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Yaml.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
+           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>
+<div class="block">Determines if the feature should be applied to the project.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -267,6 +275,8 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The title of the feature</dd>
 </dl>
 </li>
 </ul>
@@ -280,6 +290,8 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -292,9 +304,17 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <pre>public&nbsp;boolean&nbsp;shouldApply(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                            java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">DefaultFeature</a></code></span></div>
+<div class="block">Determines if the feature should be applied to the project.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dd><code>options</code> - The options</dd>
+<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should apply</dd>
 </dl>
 </li>
 </ul>
@@ -305,11 +325,18 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <li class="blockList">
 <h4>getOrder</h4>
 <pre>public&nbsp;int&nbsp;getOrder()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">Feature</a></code></span></div>
+<div class="block">The order of a feature controls the order in which it applies. The
+ order of a feature is important to ensure that any previous work done
+ by other features that may be required is done. See <a href="../../../../../io/micronaut/starter/feature/FeaturePhase.html" title="enum in io.micronaut.starter.feature"><code>FeaturePhase</code></a>
+ for a list of phases to choose from.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getOrder</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.order.Ordered</code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The order of the feature</dd>
 </dl>
 </li>
 </ul>
@@ -320,9 +347,21 @@ implements <a href="../../../../../io/micronaut/starter/feature/config/Configura
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;void&nbsp;apply(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+ included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>,
+ or added explicitly by another feature through <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.
+
+ At this point the feature list is set and cannot change.
+
+ This method can be implemented to modify the generated project. The feature can add templates
+ by executing <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-"><code>GeneratorContext.addTemplate(String, io.micronaut.starter.template.Template)</code></a>, modify configuration
+ by modifying <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getConfiguration--"><code>GeneratorContext.getConfiguration()</code></a> or <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBootstrapConfig--"><code>GeneratorContext.getBootstrapConfig()</code></a>, or modify build properties through <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--"><code>GeneratorContext.getBuildProperties()</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
 </li>
 </ul>

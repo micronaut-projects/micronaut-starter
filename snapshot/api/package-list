@@ -9,7 +9,11 @@ io.micronaut.starter.azure
 io.micronaut.starter.build
 io.micronaut.starter.cli
 io.micronaut.starter.cli.command
+io.micronaut.starter.cli.command.project.bean
+io.micronaut.starter.cli.command.project.job
+io.micronaut.starter.cli.command.project.test
 io.micronaut.starter.cli.config
+io.micronaut.starter.cli.feature.database
 io.micronaut.starter.cli.feature.grpc
 io.micronaut.starter.cli.feature.grpc.template
 io.micronaut.starter.cli.feature.messaging.kafka
@@ -18,7 +22,10 @@ io.micronaut.starter.cli.feature.messaging.kafka.template.producer
 io.micronaut.starter.cli.feature.messaging.rabbitmq
 io.micronaut.starter.cli.feature.messaging.rabbitmq.template.listener
 io.micronaut.starter.cli.feature.messaging.rabbitmq.template.producer
+io.micronaut.starter.cli.feature.other
 io.micronaut.starter.cli.feature.picocli
+io.micronaut.starter.cli.feature.server.controller
+io.micronaut.starter.cli.feature.server.websocket
 io.micronaut.starter.cli.util
 io.micronaut.starter.feature
 io.micronaut.starter.feature.alexa
@@ -63,6 +70,7 @@ io.micronaut.starter.feature.picocli
 io.micronaut.starter.feature.picocli.lang.groovy
 io.micronaut.starter.feature.picocli.lang.java
 io.micronaut.starter.feature.picocli.lang.kotlin
+io.micronaut.starter.feature.picocli.test
 io.micronaut.starter.feature.picocli.test.junit
 io.micronaut.starter.feature.picocli.test.kotlintest
 io.micronaut.starter.feature.picocli.test.spock

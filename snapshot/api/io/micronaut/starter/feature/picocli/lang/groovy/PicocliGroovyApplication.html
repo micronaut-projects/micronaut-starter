@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -167,35 +167,33 @@ implements <a href="../../../../../../../io/micronaut/starter/feature/lang/groov
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+ included by default as a result of <a href="../../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>,
+ or added explicitly by another feature through <a href="../../../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../io/micronaut/starter/template/RockerTemplate.html" title="class in io.micronaut.starter.template">RockerTemplate</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#getTemplate-io.micronaut.starter.application.Project-">getTemplate</a></span>(<a href="../../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#mainClassName-io.micronaut.starter.application.Project-">mainClassName</a></span>(<a href="../../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;command)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/picocli/lang/groovy/PicocliGroovyApplication.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
+<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -217,7 +215,7 @@ implements <a href="../../../../../../../io/micronaut/starter/feature/lang/groov
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
+<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
 </ul>
 </li>
 </ul>
@@ -282,36 +280,16 @@ implements <a href="../../../../../../../io/micronaut/starter/feature/lang/groov
 <ul class="blockList">
 <li class="blockList">
 <h4>supports</h4>
-<pre>public&nbsp;boolean&nbsp;supports(<a href="../../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;command)</pre>
+<pre>public&nbsp;boolean&nbsp;supports(<a href="../../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">Feature</a></code></span></div>
+<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="getTitle--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTitle</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getTitle()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="getDescription--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDescription</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature can be selected by the user</dd>
 </dl>
 </li>
 </ul>
@@ -322,11 +300,23 @@ implements <a href="../../../../../../../io/micronaut/starter/feature/lang/groov
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;void&nbsp;apply(<a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
+ included by default as a result of <a href="../../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>,
+ or added explicitly by another feature through <a href="../../../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.
+
+ At this point the feature list is set and cannot change.
+
+ This method can be implemented to modify the generated project. The feature can add templates
+ by executing <a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-"><code>GeneratorContext.addTemplate(String, io.micronaut.starter.template.Template)</code></a>, modify configuration
+ by modifying <a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getConfiguration--"><code>GeneratorContext.getConfiguration()</code></a> or <a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBootstrapConfig--"><code>GeneratorContext.getBootstrapConfig()</code></a>, or modify build properties through <a href="../../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--"><code>GeneratorContext.getBuildProperties()</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../io/micronaut/starter/feature/ApplicationFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/ApplicationFeature.html" title="interface in io.micronaut.starter.feature">ApplicationFeature</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
 </li>
 </ul>

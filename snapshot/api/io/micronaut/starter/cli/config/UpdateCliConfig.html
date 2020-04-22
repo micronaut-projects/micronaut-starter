@@ -121,7 +121,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>@Singleton
+<pre>@Prototype
 public class <span class="typeNameLabel">UpdateCliConfig</span>
 extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html" title="class in io.micronaut.starter.cli.command">CodeGenCommand</a></pre>
 </li>
@@ -174,8 +174,9 @@ extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/config/UpdateCliConfig.html#UpdateCliConfig-io.micronaut.starter.cli.CodeGenConfig-">UpdateCliConfig</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;codeGenConfig)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/config/UpdateCliConfig.html#UpdateCliConfig-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-">UpdateCliConfig</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-               io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/config/UpdateCliConfig.html#UpdateCliConfig-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-">UpdateCliConfig</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+               io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
+               <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -206,14 +207,14 @@ extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.cli.command.<a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html" title="class in io.micronaut.starter.cli.command">CodeGenCommand</a></h3>
-<code><a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getCommand-java.lang.Class-">getCommand</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getProject-java.lang.String-">getProject</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getTemplateRenderer--">getTemplateRenderer</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getTemplateRenderer-io.micronaut.starter.application.Project-">getTemplateRenderer</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#setBeanContext-io.micronaut.context.BeanContext-">setBeanContext</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#err-java.lang.String-">err</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getCommand-java.lang.Class-">getCommand</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getProject-java.lang.String-">getProject</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getTemplateRenderer--">getTemplateRenderer</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#getTemplateRenderer-io.micronaut.starter.application.Project-">getTemplateRenderer</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#out-java.lang.String-">out</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#setBeanContext-io.micronaut.context.BeanContext-">setBeanContext</a>, <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.html#warning-java.lang.String-">warning</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.cli.command.BaseCommand">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.cli.command.<a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html" title="class in io.micronaut.starter.cli.command">BaseCommand</a></h3>
-<code><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#err-java.lang.String-">err</a>, <a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#out-java.lang.String-">out</a>, <a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#showStacktrace--">showStacktrace</a>, <a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#verbose--">verbose</a>, <a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#warning-java.lang.String-">warning</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#showStacktrace--">showStacktrace</a>, <a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#verbose--">verbose</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -242,17 +243,20 @@ extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.
 <ul class="blockList">
 <li class="blockList">
 <h4>UpdateCliConfig</h4>
-<pre>public&nbsp;UpdateCliConfig(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;codeGenConfig)</pre>
+<pre>@Inject
+public&nbsp;UpdateCliConfig(@Parameter
+                               <a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;codeGenConfig)</pre>
 </li>
 </ul>
-<a name="UpdateCliConfig-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-">
+<a name="UpdateCliConfig-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>UpdateCliConfig</h4>
 <pre>public&nbsp;UpdateCliConfig(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-                       io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier)</pre>
+                       io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
+                       <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
 </li>
 </ul>
 </li>

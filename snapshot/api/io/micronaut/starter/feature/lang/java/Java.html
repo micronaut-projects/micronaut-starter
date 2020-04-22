@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -148,8 +148,7 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#Java-java.util.List-io.micronaut.starter.feature.test.Junit-">Java</a></span>(java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/java/JavaApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.java">JavaApplicationFeature</a>&gt;&nbsp;applicationFeatures,
-    <a href="../../../../../../io/micronaut/starter/feature/test/Junit.html" title="class in io.micronaut.starter.feature.test">Junit</a>&nbsp;junit)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#Java-java.util.List-">Java</a></span>(java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/java/JavaApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.java">JavaApplicationFeature</a>&gt;&nbsp;applicationFeatures)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -168,29 +167,26 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#isJava--">isJava</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>.</div>
+</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/java/Java.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-           java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
+           java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>
+<div class="block">Determines if the feature should be applied to the project.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -212,7 +208,7 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 </li>
 </ul>
@@ -228,14 +224,13 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Java-java.util.List-io.micronaut.starter.feature.test.Junit-">
+<a name="Java-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Java</h4>
-<pre>public&nbsp;Java(java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/java/JavaApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.java">JavaApplicationFeature</a>&gt;&nbsp;applicationFeatures,
-            <a href="../../../../../../io/micronaut/starter/feature/test/Junit.html" title="class in io.micronaut.starter.feature.test">Junit</a>&nbsp;junit)</pre>
+<pre>public&nbsp;Java(java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/java/JavaApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.java">JavaApplicationFeature</a>&gt;&nbsp;applicationFeatures)</pre>
 </li>
 </ul>
 </li>
@@ -259,32 +254,6 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 </dl>
 </li>
 </ul>
-<a name="getTitle--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTitle</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getTitle()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="getDescription--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDescription</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
-</dl>
-</li>
-</ul>
 <a name="processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">
 <!--   -->
 </a>
@@ -292,9 +261,20 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <li class="blockList">
 <h4>processSelectedFeatures</h4>
 <pre>public&nbsp;void&nbsp;processSelectedFeatures(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)</code></a>.
+
+ This method can be implemented to allow features to modify the list of features
+ that will apply to the project. The methods <a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>
+ and <a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html#exclude-io.micronaut.starter.feature.FeaturePredicate-"><code>FeatureContext.exclude(FeaturePredicate)</code></a> are the primary ways to add and
+ remove features from the context. <a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html#isPresent-java.lang.Class-"><code>FeatureContext.isPresent(Class)</code></a> can be used
+ to determine the existence of other features in order to make decisions.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>featureContext</code> - The feature context</dd>
 </dl>
 </li>
 </ul>
@@ -320,9 +300,17 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <pre>public&nbsp;boolean&nbsp;shouldApply(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                            java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">DefaultFeature</a></code></span></div>
+<div class="block">Determines if the feature should be applied to the project.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dd><code>options</code> - The options</dd>
+<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should apply</dd>
 </dl>
 </li>
 </ul>

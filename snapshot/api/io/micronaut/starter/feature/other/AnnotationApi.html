@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -167,25 +167,22 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#isVisible--">isVisible</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#isVisible--">isVisible</a></span>()</code>
+<div class="block">Some features should not be visible to the user because they are a common parent of other
+ selectable features, or they should always be applied, or any other reason.</div>
+</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/AnnotationApi.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
+           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>
+<div class="block">Determines if the feature should be applied to the project.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -200,7 +197,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 </li>
 </ul>
@@ -246,32 +243,6 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 </dl>
 </li>
 </ul>
-<a name="getTitle--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTitle</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getTitle()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="getDescription--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDescription</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
-</dl>
-</li>
-</ul>
 <a name="isVisible--">
 <!--   -->
 </a>
@@ -279,9 +250,14 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <li class="blockList">
 <h4>isVisible</h4>
 <pre>public&nbsp;boolean&nbsp;isVisible()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">Feature</a></code></span></div>
+<div class="block">Some features should not be visible to the user because they are a common parent of other
+ selectable features, or they should always be applied, or any other reason.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should able to be selected by the user</dd>
 </dl>
 </li>
 </ul>
@@ -294,9 +270,17 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <pre>public&nbsp;boolean&nbsp;shouldApply(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                            java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">DefaultFeature</a></code></span></div>
+<div class="block">Determines if the feature should be applied to the project.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dd><code>options</code> - The options</dd>
+<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should apply</dd>
 </dl>
 </li>
 </ul>

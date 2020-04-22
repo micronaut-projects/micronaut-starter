@@ -181,7 +181,9 @@ implements <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.h
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/other/HttpClient.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
+           java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>
+<div class="block">Determines if the feature should be applied to the project.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -238,9 +240,17 @@ implements <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.h
 <pre>public&nbsp;boolean&nbsp;shouldApply(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                            java.util.List&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">DefaultFeature</a></code></span></div>
+<div class="block">Determines if the feature should be applied to the project.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dd><code>options</code> - The options</dd>
+<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should apply</dd>
 </dl>
 </li>
 </ul>
@@ -267,6 +277,8 @@ implements <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.h
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The title of the feature</dd>
 </dl>
 </li>
 </ul>
@@ -280,6 +292,8 @@ implements <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.h
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 </dl>
 </li>
 </ul>
