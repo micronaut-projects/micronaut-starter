@@ -297,6 +297,9 @@ dependencies {
 @if (features.contains("alexa-http-server")) {
     implementation "io.micronaut.aws:micronaut-aws-alexa-httpserver"
 }
+@if (features.contains("alexa-function")) {
+    implementation("io.micronaut.aws:micronaut-function-aws-alexa")
+}
 @if (features.contains("views-thymeleaf")) {
     implementation "io.micronaut:micronaut-views-thymeleaf"
     runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"
