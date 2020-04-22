@@ -5,7 +5,6 @@
 **/.DS_Store
 build
 !starter-core/src/**/build/
-server
 # ignore resources, are downloaded via a gradle task from micronaut_docs
 src/main/docs/resources/css/highlight/*.css
 src/main/docs/resources/css/highlight/*.png

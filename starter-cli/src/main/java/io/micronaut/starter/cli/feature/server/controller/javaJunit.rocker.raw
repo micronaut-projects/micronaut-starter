@@ -1,0 +1,33 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+
+import io.micronaut.http.HttpStatus;
+import io.micronaut.http.client.RxHttpClient;
+import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import javax.inject.Inject;
+
+@@MicronautTest
+public class @project.getClassName()ControllerTest {
+
+    @@Inject
+    EmbeddedServer embeddedServer;
+
+    @@Test
+    public void testIndex() throws Exception {
+        try(RxHttpClient client = embeddedServer.getApplicationContext().createBean(RxHttpClient.class, embeddedServer.getURL())) {
+            Assertions.assertEquals(HttpStatus.OK, client.toBlocking().exchange("/@project.getPropertyName()").status());
+        }
+    }
+}
