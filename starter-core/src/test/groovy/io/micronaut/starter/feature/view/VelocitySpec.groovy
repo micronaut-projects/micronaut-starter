@@ -15,7 +15,7 @@ class VelocitySpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut:micronaut-views-velocity")')
-        template.contains('runtime "org.apache.velocity:velocity-engine-core:2.0"')
+        template.contains('runtime("org.apache.velocity:velocity-engine-core:2.0")')
 
         where:
         language << Language.values().toList()

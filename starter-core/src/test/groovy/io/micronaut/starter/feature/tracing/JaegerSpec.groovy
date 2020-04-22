@@ -16,7 +16,7 @@ class JaegerSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut:micronaut-tracing")')
-        template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
+        template.contains('runtimeOnly("io.jaegertracing:jaeger-thrift")')
 
         where:
         language << Language.values().toList()

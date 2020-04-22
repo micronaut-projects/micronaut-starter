@@ -22,7 +22,7 @@ class MongoReactiveSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-mongo-reactive")')
-        template.contains("testImplementation \"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\"")
+        template.contains("testImplementation(\"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\")")
     }
 
     void "test dependencies are present for maven"() {

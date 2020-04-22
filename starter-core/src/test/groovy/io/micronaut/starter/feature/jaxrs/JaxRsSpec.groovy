@@ -15,7 +15,7 @@ class JaxRsSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
-        template.contains("$scope \"io.micronaut.jaxrs:micronaut-jaxrs-processor\"")
+        template.contains("$scope(\"io.micronaut.jaxrs:micronaut-jaxrs-processor\")")
 
         where:
         language        | scope

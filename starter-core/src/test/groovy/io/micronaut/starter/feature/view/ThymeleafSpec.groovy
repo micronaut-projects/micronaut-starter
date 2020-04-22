@@ -15,7 +15,7 @@ class ThymeleafSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut:micronaut-views-thymeleaf")')
-        template.contains('runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"')
+        template.contains('runtime("org.thymeleaf:thymeleaf:3.0.11.RELEASE")')
 
         where:
         language << Language.values().toList()

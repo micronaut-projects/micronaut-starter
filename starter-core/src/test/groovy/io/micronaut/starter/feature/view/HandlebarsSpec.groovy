@@ -15,7 +15,7 @@ class HandlebarsSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut:micronaut-views-handlebars")')
-        template.contains('runtime "com.github.jknack:handlebars:4.1.2"')
+        template.contains('runtime("com.github.jknack:handlebars:4.1.2")')
 
         where:
         language << Language.values().toList()

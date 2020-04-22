@@ -25,7 +25,7 @@ class Neo4jGormSpec extends BeanContextSpec {
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-neo4j-gorm")')
         template.contains('implementation("io.micronaut.configuration:micronaut-neo4j-bolt")')
-        template.contains("testRuntime \"org.neo4j.test:neo4j-harness\"")
+        template.contains("testRuntime(\"org.neo4j.test:neo4j-harness\")")
     }
 
     void "test dependencies are present for maven"() {

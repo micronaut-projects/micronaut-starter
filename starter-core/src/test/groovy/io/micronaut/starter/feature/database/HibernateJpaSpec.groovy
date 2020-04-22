@@ -25,7 +25,7 @@ class HibernateJpaSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-jpa")')
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for maven"() {

@@ -15,7 +15,7 @@ class FreemarkerSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut:micronaut-views-freemarker")')
-        template.contains('runtime "org.freemarker:freemarker:2.3.28"')
+        template.contains('runtime("org.freemarker:freemarker:2.3.28")')
 
         where:
         language << Language.values().toList()

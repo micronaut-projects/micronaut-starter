@@ -17,8 +17,8 @@ class ZipkinSpec extends BeanContextSpec {
         then:
         template.contains('implementation("io.micronaut:micronaut-tracing")')
         template.contains('implementation("io.opentracing.brave:brave-opentracing")')
-        template.contains('runtimeOnly "io.zipkin.brave:brave-instrumentation-http"')
-        template.contains('runtimeOnly "io.zipkin.reporter2:zipkin-reporter"')
+        template.contains('runtimeOnly("io.zipkin.brave:brave-instrumentation-http")')
+        template.contains('runtimeOnly("io.zipkin.reporter2:zipkin-reporter")')
 
         where:
         language << Language.values().toList()

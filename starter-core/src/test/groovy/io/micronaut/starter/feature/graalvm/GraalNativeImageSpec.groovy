@@ -12,26 +12,26 @@ class GraalNativeImageSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["graalvm"])).render().toString()
 
         then:
-        template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('annotationProcessor "io.micronaut:micronaut-graal"')
-        template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('compileOnly "org.graalvm.nativeimage:svm"')
+        template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
+        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
         template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
-        template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('kapt "io.micronaut:micronaut-graal"')
-        template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('compileOnly "org.graalvm.nativeimage:svm"')
+        template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('kapt("io.micronaut:micronaut-graal")')
+        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
         template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
-        template.count('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")') == 1
-        template.contains('compileOnly "org.graalvm.nativeimage:svm"')
+        template.count('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))') == 1
+        template.contains('compileOnly("org.graalvm.nativeimage:svm")')
     }
 
     void 'test maven graalvm feature'() {

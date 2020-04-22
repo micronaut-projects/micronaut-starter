@@ -24,10 +24,10 @@ class DataJdbcSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["data-jdbc"])).render().toString()
 
         then:
-        template.contains("annotationProcessor \"io.micronaut.data:micronaut-data-processor\"")
+        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
         template.contains('implementation("io.micronaut.data:micronaut-data-jdbc")')
         template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")')
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for maven"() {

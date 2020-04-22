@@ -15,7 +15,7 @@ class SwaggerSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
-        template.contains("$scope \"io.micronaut.configuration:micronaut-openapi\"")
+        template.contains("$scope(\"io.micronaut.configuration:micronaut-openapi\")")
 
         where:
         language        | scope

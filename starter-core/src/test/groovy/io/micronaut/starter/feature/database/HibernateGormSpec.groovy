@@ -26,8 +26,8 @@ class HibernateGormSpec extends BeanContextSpec {
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-gorm")')
         template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-validator")')
-        template.contains("runtimeOnly \"com.h2database:h2\"")
-        template.contains("runtimeOnly \"org.apache.tomcat:tomcat-jdbc\"")
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
+        template.contains("runtimeOnly(\"org.apache.tomcat:tomcat-jdbc\")")
     }
 
     void "test dependencies are present for maven"() {

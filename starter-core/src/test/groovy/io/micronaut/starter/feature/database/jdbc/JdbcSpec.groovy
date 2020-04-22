@@ -15,7 +15,7 @@ class JdbcSpec extends BeanContextSpec {
 
         then:
         template.contains("implementation(\"io.micronaut.configuration:micronaut-${jdbcFeature}\")")
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name
