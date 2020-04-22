@@ -10,6 +10,13 @@ jobs:
     steps:
       - name: Enable Developer Command Prompt
         uses: ilammy/msvc-dev-cmd@v1.1.0
+        with:
+          sdk: 7
+      - name: Setup Python 2.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: '2.7.x'
+          architecture: 'x64'  
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Download GraalVM
