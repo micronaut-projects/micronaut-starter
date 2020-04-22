@@ -14,7 +14,7 @@ jobs:
         env:
           GRAAL_VERSION: 20.0.0
           GRAAL_OS: windows-amd64
-        run: wget "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/$GRAAL_FILENAME" -outfile "$GRAAL_FILENAME"
+        run: Invoke-WebRequest -Uri "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-$GRAAL_VERSION/$GRAAL_FILENAME" -OutFile "$GRAAL_FILENAME"
       - name: Install GraalVM
         run: Expand-Archive -path "$GRAAL_FILENAME" -destinationpath '.\graalvm'
       - name: Install Native Image
@@ -26,7 +26,9 @@ jobs:
       - name: Build Native Image
         run: .\graalvm\bin\native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Verify Build
-        run: ./mn --version
+        run: .\mn --version
+      - name: Verify Create App
+        run: .\mn create-app test
       - name: Upload Snapshot
         uses: actions/upload-artifact@v1
         with:
