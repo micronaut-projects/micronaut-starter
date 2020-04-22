@@ -304,7 +304,10 @@ List<Property> properties
 @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "compile", null)
 }
 @if (features.contains("alexa-function")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "compile", null)
+@dependency.template("io.micronaut", "micronaut-function-aws-alexa", "compile", null)
+}
+@if (features.contains("aws-lambda")) {
+@dependency.template("io.micronaut", "micronaut-function-aws", "compile", null)
 }
 @if (features.contains("views-thymeleaf")) {
 @dependency.template("io.micronaut", "micronaut-views-thymeleaf", "compile", null)
