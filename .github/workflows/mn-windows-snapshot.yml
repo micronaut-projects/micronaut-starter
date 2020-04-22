@@ -8,6 +8,8 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
       - name: Install GraalVM
         run: .\install-graal.cmd
       - name: Build the JAR
