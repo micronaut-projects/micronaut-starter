@@ -14,7 +14,7 @@ class JdbcSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures([jdbcFeature])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-${jdbcFeature}\"")
+        template.contains("implementation(\"io.micronaut.configuration:micronaut-${jdbcFeature}\")")
         template.contains("runtimeOnly \"com.h2database:h2\"")
 
         where:

@@ -15,12 +15,12 @@ class KubernetesSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['kubernetes'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.kubernetes:micronaut-kubernetes-discovery-client"')
-        template.contains('implementation "io.micronaut:micronaut-management"')
+        template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
+        template.contains('implementation("io.micronaut:micronaut-management")')
         template.contains('id "com.google.cloud.tools.jib" version "2.1.0"')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -38,7 +38,7 @@ class KubernetesSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test kubernetes configuration'() {

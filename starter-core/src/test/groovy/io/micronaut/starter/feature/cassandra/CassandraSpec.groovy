@@ -15,10 +15,10 @@ class CassandraSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['cassandra'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-cassandra"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-cassandra")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class CassandraSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test cassandra configuration'() {

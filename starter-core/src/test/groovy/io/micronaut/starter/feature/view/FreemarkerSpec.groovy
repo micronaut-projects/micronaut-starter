@@ -14,11 +14,11 @@ class FreemarkerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-freemarker'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-freemarker"')
+        template.contains('implementation("io.micronaut:micronaut-views-freemarker")')
         template.contains('runtime "org.freemarker:freemarker:2.3.28"')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class FreemarkerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
 }

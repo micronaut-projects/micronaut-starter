@@ -27,7 +27,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains('BUILD SUCCESSFUL')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
         testOutputContains('BUILD SUCCESS')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
 }

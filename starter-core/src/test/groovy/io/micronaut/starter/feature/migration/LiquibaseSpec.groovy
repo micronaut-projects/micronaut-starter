@@ -11,7 +11,7 @@ class LiquibaseSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['liquibase'])).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-liquibase"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-liquibase")')
     }
 
     void "test the dependency is added to the maven build"() {

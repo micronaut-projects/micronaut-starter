@@ -21,7 +21,7 @@ class MongoReactiveSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["mongo-reactive"])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-mongo-reactive\"")
+        template.contains('implementation("io.micronaut.configuration:micronaut-mongo-reactive")')
         template.contains("testImplementation \"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\"")
     }
 

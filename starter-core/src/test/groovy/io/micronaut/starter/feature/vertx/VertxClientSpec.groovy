@@ -15,10 +15,10 @@ class VertxClientSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['vertx-mysql-client'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-vertx-mysql-client"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-vertx-mysql-client")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class VertxClientSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test vertx-mysql-client configuration'() {

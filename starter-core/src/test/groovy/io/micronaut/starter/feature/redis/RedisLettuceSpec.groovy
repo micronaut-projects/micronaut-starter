@@ -15,10 +15,10 @@ class RedisLettuceSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['redis-lettuce'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-redis-lettuce"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-redis-lettuce")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class RedisLettuceSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test redis-lettuce configuration'() {

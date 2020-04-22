@@ -15,11 +15,11 @@ class JaegerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['tracing-jaeger'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-tracing"')
+        template.contains('implementation("io.micronaut:micronaut-tracing")')
         template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -44,7 +44,7 @@ class JaegerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test tracing-jaeger configuration'() {

@@ -15,10 +15,10 @@ class SecuritySessionSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['security-session'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-security-session"')
+        template.contains('implementation("io.micronaut:micronaut-security-session")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class SecuritySessionSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test security-session configuration'() {
