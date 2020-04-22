@@ -23,10 +23,8 @@ package io.micronaut.starter.options;
  */
 public enum JdkVersion {
     JDK_8(8),
-    JDK_9(9),
     JDK_11(11),
-    JDK_13(13),
-    JDK_14(9);
+    JDK_14(14);
 
     private final int majorVersion;
 
@@ -38,12 +36,8 @@ public enum JdkVersion {
         switch (majorVersion) {
             case 8:
                 return JDK_8;
-            case 9:
-                return JDK_9;
             case 11:
                 return JDK_11;
-            case 13:
-                return JDK_13;
             case 14:
                 return JDK_14;
             default:
