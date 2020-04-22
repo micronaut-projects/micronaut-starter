@@ -33,7 +33,7 @@ public enum TestFramework {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
-    public String getFilename(String path, Language language) {
+    public String getSourcePath(String path, Language language) {
         switch (this) {
             case SPOCK:
                 return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
