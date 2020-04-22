@@ -18,10 +18,10 @@ class ServerSpec extends BeanContextSpec {
 
         where:
         serverFeature     | dependency
-        "netty-server"    | 'implementation "io.micronaut:micronaut-http-server-netty"'
-        "jetty-server"    | 'implementation "io.micronaut.servlet:micronaut-http-server-jetty"'
-        "tomcat-server"   | 'implementation "io.micronaut.servlet:micronaut-http-server-tomcat"'
-        "undertow-server" | 'implementation "io.micronaut.servlet:micronaut-http-server-undertow"'
+        "netty-server"    | 'implementation("io.micronaut:micronaut-http-server-netty")'
+        "jetty-server"    | 'implementation("io.micronaut.servlet:micronaut-http-server-jetty")'
+        "tomcat-server"   | 'implementation("io.micronaut.servlet:micronaut-http-server-tomcat")'
+        "undertow-server" | 'implementation("io.micronaut.servlet:micronaut-http-server-undertow")'
     }
 
     @Unroll

@@ -15,7 +15,7 @@ class GraphQLSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['graphql'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.graphql:micronaut-graphql"')
+        template.contains('implementation("io.micronaut.graphql:micronaut-graphql")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

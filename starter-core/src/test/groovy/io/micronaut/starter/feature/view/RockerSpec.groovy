@@ -14,7 +14,7 @@ class RockerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-rocker'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-rocker"')
+        template.contains('implementation("io.micronaut:micronaut-views-rocker")')
         template.contains('id "com.fizzed.rocker" version "1.2.3"')
         template.contains("""
 sourceSets {

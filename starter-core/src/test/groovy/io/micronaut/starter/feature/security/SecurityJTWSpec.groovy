@@ -15,7 +15,7 @@ class SecurityJTWSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['security-jwt'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-security-jwt"')
+        template.contains('implementation("io.micronaut:micronaut-security-jwt")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

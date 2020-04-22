@@ -15,7 +15,7 @@ class EHCacheSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['cache-ehcache'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.cache:micronaut-cache-ehcache"')
+        template.contains('implementation("io.micronaut.cache:micronaut-cache-ehcache")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

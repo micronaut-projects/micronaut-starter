@@ -15,7 +15,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['discovery-eureka'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-discovery-client"')
+        template.contains('implementation("io.micronaut:micronaut-discovery-client")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

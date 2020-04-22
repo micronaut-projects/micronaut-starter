@@ -24,7 +24,7 @@ class HibernateJpaSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["hibernate-jpa"])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-jpa\"")
+        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-jpa")')
         template.contains("runtimeOnly \"com.h2database:h2\"")
     }
 

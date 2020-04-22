@@ -12,7 +12,7 @@ class FlywaySpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['flyway'])).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-flyway"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-flyway")')
     }
 
     void "test the dependency is added to the maven build"() {

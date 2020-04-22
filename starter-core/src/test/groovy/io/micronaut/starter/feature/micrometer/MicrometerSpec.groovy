@@ -20,7 +20,7 @@ class MicrometerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), features).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:${dependency}\"")
+        template.contains("implementation(\"io.micronaut.configuration:${dependency}\")")
 
         where:
         micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
@@ -33,9 +33,9 @@ class MicrometerSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-    implementation "io.micronaut.configuration:micronaut-micrometer-core"
-    implementation "io.micronaut.configuration:micronaut-micrometer-registry-atlas"
-    implementation "io.micronaut.configuration:micronaut-micrometer-registry-influx"
+    implementation("io.micronaut.configuration:micronaut-micrometer-core")
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-atlas")
+    implementation("io.micronaut.configuration:micronaut-micrometer-registry-influx")
 """)
         template.count("io.micronaut.configuration:micronaut-micrometer-core") == 1
     }

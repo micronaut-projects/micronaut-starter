@@ -14,8 +14,8 @@ class SoySpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-soy'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-soy"')
-        template.contains('implementation "com.google.template:soy:2019-09-03"')
+        template.contains('implementation("io.micronaut:micronaut-views-soy")')
+        template.contains('implementation("com.google.template:soy:2019-09-03")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

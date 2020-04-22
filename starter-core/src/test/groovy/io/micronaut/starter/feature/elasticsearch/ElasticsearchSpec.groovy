@@ -15,7 +15,7 @@ class ElasticsearchSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['elasticsearch'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-elasticsearch"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-elasticsearch")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

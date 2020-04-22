@@ -14,7 +14,7 @@ class ThymeleafSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-thymeleaf'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-thymeleaf"')
+        template.contains('implementation("io.micronaut:micronaut-views-thymeleaf")')
         template.contains('runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"')
 
         where:

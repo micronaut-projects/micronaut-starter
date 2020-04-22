@@ -15,8 +15,8 @@ class ZipkinSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['tracing-zipkin'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-tracing"')
-        template.contains('implementation "io.opentracing.brave:brave-opentracing"')
+        template.contains('implementation("io.micronaut:micronaut-tracing")')
+        template.contains('implementation("io.opentracing.brave:brave-opentracing")')
         template.contains('runtimeOnly "io.zipkin.brave:brave-instrumentation-http"')
         template.contains('runtimeOnly "io.zipkin.reporter2:zipkin-reporter"')
 
