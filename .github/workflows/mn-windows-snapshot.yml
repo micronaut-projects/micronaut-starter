@@ -14,6 +14,7 @@ jobs:
         env:
           GRAAL_VERSION: 20.0.0
           GRAAL_OS: windows-amd64
+          GRAAL_FILENAME: graalvm-ce-java8-${GRAAL_OS}-${GRAAL_VERSION}.zip
           GRAAL_DOWNLOAD: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME}
         run: Invoke-WebRequest -Uri "$GRAAL_DOWNLOAD" -OutFile "$GRAAL_FILENAME"
       - name: Install GraalVM
