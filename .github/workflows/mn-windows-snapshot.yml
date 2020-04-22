@@ -24,9 +24,11 @@ jobs:
           choco install visualstudio2017-workload-vctools
       - name: set env variables and run the Gradle build
         shell: cmd
+        env:
+          JAVA_HOME: ./graalvm-ce-java11-20.0.0
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./gradlew starter-cli:nativeImage
+          ./gradlew starter-cli:nativeImage --no-daemon
       - name: Verify Build
         run: ./starter-cli/build/graal/mn --version
       - name: Verify Create App
