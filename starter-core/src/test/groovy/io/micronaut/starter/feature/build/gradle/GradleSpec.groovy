@@ -35,24 +35,24 @@ class GradleSpec extends BeanContextSpec {
         String template = annotationProcessors.template(getFeatures([])).render().toString()
 
         then:
-        template.contains('annotationProcessor platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('annotationProcessor "io.micronaut:micronaut-inject-java"')
-        template.contains('annotationProcessor "io.micronaut:micronaut-validation"')
+        template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('annotationProcessor("io.micronaut:micronaut-inject-java")')
+        template.contains('annotationProcessor("io.micronaut:micronaut-validation")')
 
         when:
         template = annotationProcessors.template(getFeatures([], Language.KOTLIN)).render().toString()
 
         then:
-        template.contains('kapt platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('kapt "io.micronaut:micronaut-inject-java"')
-        template.contains('kapt "io.micronaut:micronaut-validation"')
+        template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('kapt("io.micronaut:micronaut-inject-java")')
+        template.contains('kapt("io.micronaut:micronaut-validation")')
 
         when:
         template = annotationProcessors.template(getFeatures([], Language.GROOVY)).render().toString()
 
         then:
-        template.contains('compileOnly platform("io.micronaut:micronaut-bom:\$micronautVersion")')
-        template.contains('compileOnly "io.micronaut:micronaut-inject-groovy"')
+        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains('compileOnly("io.micronaut:micronaut-inject-groovy")')
     }
 
 }
