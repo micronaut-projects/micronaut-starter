@@ -43,7 +43,7 @@ public class UpdateCliConfigCommand extends CodeGenCommand {
     static {
         COMMANDS.put(ApplicationType.DEFAULT, "create-app");
         COMMANDS.put(ApplicationType.CLI, "create-cli-app");
-        COMMANDS.put(ApplicationType.FUNCTION, "create-function-app");
+        COMMANDS.put(ApplicationType.FUNCTION, "create-function");
         COMMANDS.put(ApplicationType.GRPC, "create-grpc-app");
         COMMANDS.put(ApplicationType.MESSAGING, "create-messaging-app");
     }

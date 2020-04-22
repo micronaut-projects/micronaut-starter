@@ -31,7 +31,7 @@ import java.util.List;
 @Prototype
 public class CreateFunctionCommand extends CreateCommand {
 
-    public static final String NAME = "create-function-app";
+    public static final String NAME = "create-function";
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)

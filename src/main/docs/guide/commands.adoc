@@ -8,9 +8,9 @@ include::{includedir}/mn-create-app.adoc[]
 
 include::{includedir}/mn-create-cli-app.adoc[]
 
-== create-function-app
+== create-function
 
-include::{includedir}/mn-create-function-app.adoc[]
+include::{includedir}/mn-create-function.adoc[]
 
 == create-grpc-app
 
