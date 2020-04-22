@@ -62,6 +62,10 @@ public enum Language {
         return getSrcDir() + path + "." + getExtension();
     }
 
+    public String getTestSourcePath(String path) {
+        return getTestSrcDir() + path + "." + getExtension();
+    }
+
     public static Language infer(Set<Feature> features) {
         return features.stream()
                 .map(Feature::getRequiredLanguage)

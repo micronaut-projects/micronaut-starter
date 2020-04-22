@@ -34,6 +34,7 @@ public class PicocliJunit implements PicocliTestFeature {
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
+        generatorContext.removeTemplate("testDir");
         generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
     }
 
@@ -48,12 +49,15 @@ public class PicocliJunit implements PicocliTestFeature {
     }
 
     public RockerTemplate getTemplate(Language language, Project project) {
+
+        String testSource =  getTestFramework().getSourcePath("/{packagePath}/{className}Command", language);
+
         if (language == Language.JAVA) {
-            return new RockerTemplate("src/test/java/{packagePath}/{className}CommandTest.java", picocliJunitTest.template(project));
+            return new RockerTemplate(testSource, picocliJunitTest.template(project));
         } else if (language == Language.GROOVY) {
-            return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandTest.groovy", picocliGroovyJunitTest.template(project));
+            return new RockerTemplate(testSource, picocliGroovyJunitTest.template(project));
         } else if (language == Language.KOTLIN) {
-            return new RockerTemplate("src/test/kotlin/{packagePath}/{className}CommandTest.kt", picocliKotlinJunitTest.template(project));
+            return new RockerTemplate(testSource, picocliKotlinJunitTest.template(project));
         } else {
             return null;
         }

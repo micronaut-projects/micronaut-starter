@@ -24,9 +24,14 @@ trait ContextFixture {
                          Language language = null,
                          TestFramework testFramework = null,
                          BuildTool buildTool = BuildTool.GRADLE,
-                         ApplicationType applicationType = ApplicationType.DEFAULT
-    ) {
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
         Options options = new Options(language, testFramework, buildTool)
+        return getFeatures(features, options, applicationType)
+    }
+
+    Features getFeatures(List<String> features,
+                         Options options,
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
         FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
         featureContext.processSelectedFeatures()
         Set<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
@@ -49,10 +54,11 @@ trait ContextFixture {
     }
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
-                                           Options options = new Options(null, null, BuildTool.GRADLE)) {
+                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           ApplicationType applicationType = ApplicationType.DEFAULT) {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
-            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options)
+            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
             GeneratorContext commandContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
             commandContext.applyFeatures()
             return commandContext

@@ -27,6 +27,7 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 public interface TestFeature extends DefaultFeature {
 
@@ -68,11 +69,13 @@ public interface TestFeature extends DefaultFeature {
         return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
+    Predicate<ApplicationType> appliesToByDefault();
+
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return applicationType != ApplicationType.CLI && (options.getTestFramework() == getTestFramework() ||
+        return appliesToByDefault().test(applicationType) && (options.getTestFramework() == getTestFramework() ||
                 (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
     }
 }

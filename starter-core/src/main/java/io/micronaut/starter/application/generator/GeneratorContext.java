@@ -73,6 +73,14 @@ public class GeneratorContext {
     }
 
     /**
+     * Adds a template.
+     * @param name The name of the template
+     */
+    public void removeTemplate(String name) {
+        templates.remove(name);
+    }
+
+    /**
      * @return The build properties
      */
     @NonNull public BuildProperties getBuildProperties() {

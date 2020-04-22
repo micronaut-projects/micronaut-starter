@@ -20,12 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
-import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
-import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
@@ -34,16 +29,6 @@ import java.util.Set;
 
 @Singleton
 public class Picocli implements DefaultFeature {
-
-    private final PicocliJunit junit;
-    private final PicocliSpock spock;
-    private final PicocliKotlinTest kotlinTest;
-
-    public Picocli(PicocliJunit junit, PicocliSpock spock, PicocliKotlinTest kotlinTest) {
-        this.junit = junit;
-        this.spock = spock;
-        this.kotlinTest = kotlinTest;
-    }
 
     @Override
     public String getName() {
@@ -68,17 +53,6 @@ public class Picocli implements DefaultFeature {
     @Override
     public String getDescription() {
         return "Support for creating PicoCLI applications";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getTestFramework() == TestFramework.JUNIT) {
-            featureContext.addFeature(junit);
-        } else if (featureContext.getTestFramework() == TestFramework.SPOCK) {
-            featureContext.addFeature(spock);
-        } else if (featureContext.getTestFramework() == TestFramework.KOTLINTEST) {
-            featureContext.addFeature(kotlinTest);
-        }
     }
 
     @Override

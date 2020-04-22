@@ -34,6 +34,7 @@ public class PicocliSpock implements PicocliTestFeature {
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
+        generatorContext.removeTemplate("testDir");
         generatorContext.addTemplate("picocliSpock", getTemplate(generatorContext.getProject()));
     }
 
@@ -48,6 +49,7 @@ public class PicocliSpock implements PicocliTestFeature {
     }
 
     public RockerTemplate getTemplate(Project project) {
-        return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandSpec.groovy", picocliSpockTest.template(project));
+        return new RockerTemplate(getTestFramework().getSourcePath("/{packagePath}/{className}Command", Language.GROOVY), picocliSpockTest.template(project));
     }
+
 }
