@@ -127,9 +127,9 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#FeatureContext-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.List-">FeatureContext</a></span>(<a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#FeatureContext-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">FeatureContext</a></span>(<a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
               <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;command,
-              java.util.List&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
+              java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -148,7 +148,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-">addFeature</a></span>(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-">addFeature</a></span>(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature)</code>
+<div class="block">Adds a feature to be applied.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -167,7 +169,7 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#getFeatures--">getFeatures</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/FeatureContext.html#getFinalFeatures-io.micronaut.starter.io.ConsoleOutput-">getFinalFeatures</a></span>(<a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
@@ -220,7 +222,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FeatureContext-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.List-">
+<a name="FeatureContext-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -228,7 +230,7 @@ extends java.lang.Object</pre>
 <h4>FeatureContext</h4>
 <pre>public&nbsp;FeatureContext(<a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                       <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;command,
-                      java.util.List&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
+                      java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
 </li>
 </ul>
 </li>
@@ -263,7 +265,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getFinalFeatures</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;getFinalFeatures(<a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
+<pre>public&nbsp;java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;getFinalFeatures(<a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
 </li>
 </ul>
 <a name="getFeatures--">
@@ -336,6 +338,11 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>addFeature</h4>
 <pre>public&nbsp;void&nbsp;addFeature(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature)</pre>
+<div class="block">Adds a feature to be applied. The added feature is processed immediately.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>feature</code> - The feature to add</dd>
+</dl>
 </li>
 </ul>
 <a name="getCommand--">

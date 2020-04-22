@@ -120,7 +120,7 @@ Application generation commands are:</p>
 <p><strong>create-cli-app</strong> NAME</p>
 </li>
 <li>
-<p><strong>create-function-app</strong> NAME --provider <em>CLOUD_PROVIDER_NAME</em></p>
+<p><strong>create-function</strong> NAME</p>
 </li>
 <li>
 <p><strong>create-grpc-app</strong> NAME</p>
@@ -166,7 +166,7 @@ Application generation commands are:</p>
 <dd>
 <p>Creates a CLI application</p>
 </dd>
-<dt class="hdlist1"><strong>create-function-app</strong></dt>
+<dt class="hdlist1"><strong>create-function</strong></dt>
 <dd>
 <p>Creates a Cloud Function</p>
 </dd>
@@ -177,70 +177,6 @@ Application generation commands are:</p>
 <dt class="hdlist1"><strong>create-messaging-app</strong></dt>
 <dd>
 <p>Creates a messaging application</p>
-</dd>
-<dt class="hdlist1"><strong>create-bean</strong></dt>
-<dd>
-<p>Creates a singleton bean</p>
-</dd>
-<dt class="hdlist1"><strong>create-client</strong></dt>
-<dd>
-<p>Creates a client interface</p>
-</dd>
-<dt class="hdlist1"><strong>create-command</strong></dt>
-<dd>
-<p>Creates a CLI command</p>
-</dd>
-<dt class="hdlist1"><strong>create-controller</strong></dt>
-<dd>
-<p>Creates a controller and associated test</p>
-</dd>
-<dt class="hdlist1"><strong>create-grpc-service</strong></dt>
-<dd>
-<p>Creates a gRPC service with proto file and associated test</p>
-</dd>
-<dt class="hdlist1"><strong>create-job</strong></dt>
-<dd>
-<p>Creates a job with scheduled method</p>
-</dd>
-<dt class="hdlist1"><strong>create-kafka-listener</strong></dt>
-<dd>
-<p>Creates a listener interface for Kafka</p>
-</dd>
-<dt class="hdlist1"><strong>create-kafka-producer</strong></dt>
-<dd>
-<p>Creates a producer class for Kafka</p>
-</dd>
-<dt class="hdlist1"><strong>create-proto-service</strong></dt>
-<dd>
-<p>Creates a protobuf file for the given ame</p>
-</dd>
-<dt class="hdlist1"><strong>create-rabbitmq-listener</strong></dt>
-<dd>
-<p>Creates a listener interface for RabbitMQ</p>
-</dd>
-<dt class="hdlist1"><strong>create-rabbitmq-producer</strong></dt>
-<dd>
-<p>Creates a producer class for RabbitMQ</p>
-</dd>
-<dt class="hdlist1"><strong>create-repository</strong></dt>
-<dd>
-<p>Creates a repository</p>
-</dd>
-<dt class="hdlist1"><strong>create-test</strong></dt>
-<dd>
-<p>Creates a simple test for the project&#8217;s testing framework</p>
-</dd>
-<dt class="hdlist1"><strong>create-websocket-client</strong></dt>
-<dd>
-<p>Creates a Websocket client</p>
-</dd>
-<dt class="hdlist1"><strong>create-websocket-server</strong></dt>
-<dd>
-<p>Creates a Websocket server</p>
-</dd>
-<dt class="hdlist1"><strong>update-cli-config</strong></dt>
-<dd>
-<p>Replaces the CLI configuration with the updated format</p>
 </dd>
 </dl>
 </div>
@@ -277,7 +213,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-tomcat, config-consul, views-thymeleaf, azure-function, micrometer-statsd, jetty-server, jrebel, micrometer-humio, micrometer-datadog, discovery-eureka, micrometer-atlas, jmx, discovery-consul, micrometer-stackdriver, hibernate-jpa, micrometer-kairos, views-handlebars, vertx-pg-client, kafka-streams, cache-infinispan, kafka, jax-rs, jib, elasticsearch, micrometer-signalfx, vertx-mysql-client, kubernetes, micrometer-graphite, cache-caffeine, cache-ehcache, tomcat-server, file-watch, neo4j-gorm, micrometer-ganglia, netty-server, swagger, mongo-gorm, views-rocker, logback, micrometer-new-relic, neo4j-bolt, rabbitmq, micrometer-wavefront, redis-lettuce, asciidoctor, mongo-reactive, jackson-xml, shade, netflix-hystrix, micrometer-elastic, micrometer-prometheus, micrometer-dynatrace, cache-hazelcast, undertow-server, log4j2, rss-itunes-podcast, google-cloud-function, http-client, micrometer-cloudwatch, netflix-ribbon, security-session, micrometer-azure-monitor, management, rss, data-jpa, netflix-archaius, graphql, tracing-zipkin, alexa-http-server, security-jwt, postgres-reactive, micrometer-appoptics, graalvm, views-velocity, views-soy, micrometer-influx, hibernate-gorm, flyway, micrometer-jmx, hibernate-validator, views-freemarker, tracing-jaeger, data-jdbc, springloaded, cassandra, liquibase, yaml, properties</p>
+<p>The features to use. Possible values: jdbc-dbcp, jdbc-tomcat, jdbc-hikari, jax-rs, mongo-reactive, kafka, log4j2, micrometer-appoptics, config-consul, liquibase, micrometer-prometheus, jetty-server, elasticsearch, netflix-hystrix, tomcat-server, rabbitmq, netflix-archaius, vertx-pg-client, jackson-xml, micrometer-cloudwatch, micrometer-new-relic, micrometer-wavefront, rss-itunes-podcast, micrometer-influx, swagger, hibernate-validator, springloaded, cache-hazelcast, micrometer-stackdriver, data-jpa, views-thymeleaf, graalvm, cache-ehcache, graphql, views-velocity, micrometer-jmx, mongo-gorm, jrebel, rss, neo4j-bolt, micrometer-elastic, hibernate-gorm, cache-caffeine, kafka-streams, micrometer-kairos, micrometer-humio, hibernate-jpa, cache-infinispan, security-jwt, redis-lettuce, views-rocker, discovery-eureka, tracing-zipkin, jib, micrometer-ganglia, alexa-http-server, google-cloud-function, azure-function, neo4j-gorm, logback, micrometer-statsd, http-client, micrometer-graphite, micrometer-atlas, data-jdbc, undertow-server, jmx, netflix-ribbon, micrometer-signalfx, views-soy, management, kubernetes, micrometer-datadog, cassandra, views-freemarker, netty-server, views-handlebars, discovery-consul, asciidoctor, postgres-reactive, security-session, vertx-mysql-client, file-watch, flyway, micrometer-dynatrace, tracing-jaeger, micrometer-azure-monitor, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -364,7 +300,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-tomcat, config-consul, views-thymeleaf, micrometer-statsd, jrebel, micrometer-humio, micrometer-datadog, discovery-eureka, micrometer-atlas, jmx, discovery-consul, micrometer-stackdriver, hibernate-jpa, micrometer-kairos, views-handlebars, vertx-pg-client, kafka-streams, cache-infinispan, kafka, jax-rs, jib, elasticsearch, micrometer-signalfx, vertx-mysql-client, kubernetes, micrometer-graphite, cache-caffeine, cache-ehcache, file-watch, neo4j-gorm, micrometer-ganglia, mongo-gorm, views-rocker, logback, micrometer-new-relic, neo4j-bolt, rabbitmq, micrometer-wavefront, redis-lettuce, asciidoctor, mongo-reactive, jackson-xml, shade, netflix-hystrix, micrometer-elastic, micrometer-prometheus, micrometer-dynatrace, cache-hazelcast, log4j2, rss-itunes-podcast, http-client, micrometer-cloudwatch, netflix-ribbon, security-session, micrometer-azure-monitor, management, rss, data-jpa, netflix-archaius, graphql, tracing-zipkin, security-jwt, postgres-reactive, micrometer-appoptics, graalvm, views-velocity, views-soy, micrometer-influx, hibernate-gorm, flyway, micrometer-jmx, hibernate-validator, views-freemarker, tracing-jaeger, data-jdbc, springloaded, cassandra, liquibase, yaml, properties</p>
+<p>The features to use. Possible values: jdbc-dbcp, jdbc-tomcat, jdbc-hikari, jax-rs, mongo-reactive, kafka, log4j2, micrometer-appoptics, config-consul, liquibase, micrometer-prometheus, elasticsearch, netflix-hystrix, rabbitmq, netflix-archaius, vertx-pg-client, jackson-xml, micrometer-cloudwatch, micrometer-new-relic, micrometer-wavefront, rss-itunes-podcast, micrometer-influx, hibernate-validator, springloaded, cache-hazelcast, micrometer-stackdriver, data-jpa, views-thymeleaf, graalvm, cache-ehcache, graphql, views-velocity, micrometer-jmx, mongo-gorm, jrebel, rss, neo4j-bolt, micrometer-elastic, hibernate-gorm, cache-caffeine, kafka-streams, micrometer-kairos, micrometer-humio, hibernate-jpa, cache-infinispan, security-jwt, redis-lettuce, views-rocker, discovery-eureka, tracing-zipkin, jib, micrometer-ganglia, neo4j-gorm, logback, micrometer-statsd, http-client, micrometer-graphite, micrometer-atlas, data-jdbc, jmx, netflix-ribbon, micrometer-signalfx, views-soy, management, kubernetes, micrometer-datadog, cassandra, views-freemarker, views-handlebars, discovery-consul, asciidoctor, postgres-reactive, security-session, vertx-mysql-client, file-watch, flyway, micrometer-dynatrace, tracing-jaeger, micrometer-azure-monitor, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -419,20 +355,20 @@ Application generation commands are:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_create_function_app">create-function-app</h2>
+<h2 id="_create_function">create-function</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_name_4">Name</h3>
 <div class="paragraph">
-<p>mn-create-function-app - Creates a Cloud Function</p>
+<p>mn-create-function - Creates a Cloud Function</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_synopsis_4">Synopsis</h3>
 <div class="paragraph">
-<p><strong>mn create-function-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
-                       [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
-                       <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+<p><strong>mn create-function</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                   [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                   <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
 </div>
 </div>
 <div class="sect2">
@@ -451,7 +387,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-tomcat, config-consul, views-thymeleaf, azure-function, micrometer-statsd, jrebel, micrometer-humio, micrometer-datadog, discovery-eureka, micrometer-atlas, jmx, discovery-consul, micrometer-stackdriver, hibernate-jpa, micrometer-kairos, views-handlebars, vertx-pg-client, kafka-streams, cache-infinispan, kafka, jax-rs, jib, elasticsearch, micrometer-signalfx, vertx-mysql-client, kubernetes, micrometer-graphite, cache-caffeine, cache-ehcache, file-watch, neo4j-gorm, micrometer-ganglia, mongo-gorm, views-rocker, logback, micrometer-new-relic, neo4j-bolt, rabbitmq, micrometer-wavefront, redis-lettuce, asciidoctor, mongo-reactive, jackson-xml, shade, netflix-hystrix, micrometer-elastic, micrometer-prometheus, micrometer-dynatrace, cache-hazelcast, log4j2, rss-itunes-podcast, google-cloud-function, http-client, micrometer-cloudwatch, netflix-ribbon, security-session, micrometer-azure-monitor, management, rss, data-jpa, netflix-archaius, alexa-function, graphql, tracing-zipkin, security-jwt, postgres-reactive, micrometer-appoptics, graalvm, views-velocity, views-soy, micrometer-influx, hibernate-gorm, flyway, micrometer-jmx, hibernate-validator, views-freemarker, tracing-jaeger, data-jdbc, springloaded, cassandra, liquibase, yaml, properties</p>
+<p>The features to use. Possible values: jdbc-dbcp, jdbc-tomcat, jdbc-hikari, jax-rs, mongo-reactive, kafka, log4j2, micrometer-appoptics, config-consul, liquibase, micrometer-prometheus, elasticsearch, netflix-hystrix, rabbitmq, alexa-function, netflix-archaius, vertx-pg-client, jackson-xml, micrometer-cloudwatch, micrometer-new-relic, micrometer-wavefront, rss-itunes-podcast, micrometer-influx, hibernate-validator, springloaded, cache-hazelcast, micrometer-stackdriver, data-jpa, views-thymeleaf, graalvm, cache-ehcache, graphql, views-velocity, micrometer-jmx, mongo-gorm, jrebel, rss, neo4j-bolt, micrometer-elastic, hibernate-gorm, cache-caffeine, kafka-streams, micrometer-kairos, micrometer-humio, hibernate-jpa, cache-infinispan, security-jwt, redis-lettuce, views-rocker, discovery-eureka, tracing-zipkin, jib, micrometer-ganglia, google-cloud-function, azure-function, neo4j-gorm, logback, micrometer-statsd, http-client, micrometer-graphite, micrometer-atlas, data-jdbc, jmx, netflix-ribbon, micrometer-signalfx, views-soy, management, kubernetes, micrometer-datadog, cassandra, views-freemarker, views-handlebars, discovery-consul, asciidoctor, postgres-reactive, security-session, vertx-mysql-client, file-watch, flyway, micrometer-dynatrace, tracing-jaeger, micrometer-azure-monitor, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -538,7 +474,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-tomcat, config-consul, views-thymeleaf, micrometer-statsd, jrebel, micrometer-humio, micrometer-datadog, discovery-eureka, micrometer-atlas, jmx, discovery-consul, micrometer-stackdriver, hibernate-jpa, micrometer-kairos, views-handlebars, vertx-pg-client, kafka-streams, cache-infinispan, kafka, jax-rs, jib, elasticsearch, micrometer-signalfx, vertx-mysql-client, kubernetes, micrometer-graphite, cache-caffeine, cache-ehcache, file-watch, neo4j-gorm, micrometer-ganglia, mongo-gorm, views-rocker, logback, micrometer-new-relic, neo4j-bolt, rabbitmq, micrometer-wavefront, redis-lettuce, asciidoctor, mongo-reactive, jackson-xml, shade, netflix-hystrix, micrometer-elastic, micrometer-prometheus, micrometer-dynatrace, cache-hazelcast, log4j2, rss-itunes-podcast, http-client, micrometer-cloudwatch, netflix-ribbon, security-session, micrometer-azure-monitor, management, rss, data-jpa, netflix-archaius, graphql, tracing-zipkin, security-jwt, postgres-reactive, micrometer-appoptics, graalvm, views-velocity, views-soy, micrometer-influx, hibernate-gorm, flyway, micrometer-jmx, hibernate-validator, views-freemarker, tracing-jaeger, data-jdbc, springloaded, cassandra, liquibase, yaml, properties</p>
+<p>The features to use. Possible values: jdbc-dbcp, jdbc-tomcat, jdbc-hikari, jax-rs, mongo-reactive, kafka, log4j2, micrometer-appoptics, config-consul, liquibase, micrometer-prometheus, elasticsearch, netflix-hystrix, rabbitmq, netflix-archaius, vertx-pg-client, jackson-xml, micrometer-cloudwatch, micrometer-new-relic, micrometer-wavefront, rss-itunes-podcast, micrometer-influx, hibernate-validator, springloaded, cache-hazelcast, micrometer-stackdriver, data-jpa, views-thymeleaf, graalvm, cache-ehcache, graphql, views-velocity, micrometer-jmx, mongo-gorm, jrebel, rss, neo4j-bolt, micrometer-elastic, hibernate-gorm, cache-caffeine, kafka-streams, micrometer-kairos, micrometer-humio, hibernate-jpa, cache-infinispan, security-jwt, redis-lettuce, views-rocker, discovery-eureka, tracing-zipkin, jib, micrometer-ganglia, neo4j-gorm, logback, micrometer-statsd, http-client, micrometer-graphite, micrometer-atlas, data-jdbc, jmx, netflix-ribbon, micrometer-signalfx, views-soy, management, kubernetes, micrometer-datadog, cassandra, views-freemarker, views-handlebars, discovery-consul, asciidoctor, postgres-reactive, security-session, vertx-mysql-client, file-watch, flyway, micrometer-dynatrace, tracing-jaeger, micrometer-azure-monitor, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -625,7 +561,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-hikari, jdbc-tomcat, config-consul, views-thymeleaf, micrometer-statsd, jrebel, micrometer-humio, micrometer-datadog, discovery-eureka, micrometer-atlas, jmx, discovery-consul, micrometer-stackdriver, hibernate-jpa, micrometer-kairos, views-handlebars, vertx-pg-client, kafka-streams, cache-infinispan, kafka, jax-rs, jib, elasticsearch, micrometer-signalfx, vertx-mysql-client, kubernetes, micrometer-graphite, cache-caffeine, cache-ehcache, file-watch, neo4j-gorm, micrometer-ganglia, mongo-gorm, views-rocker, logback, micrometer-new-relic, neo4j-bolt, rabbitmq, micrometer-wavefront, redis-lettuce, asciidoctor, mongo-reactive, jackson-xml, shade, netflix-hystrix, micrometer-elastic, micrometer-prometheus, micrometer-dynatrace, cache-hazelcast, log4j2, rss-itunes-podcast, http-client, micrometer-cloudwatch, netflix-ribbon, security-session, micrometer-azure-monitor, management, rss, data-jpa, netflix-archaius, graphql, tracing-zipkin, security-jwt, postgres-reactive, micrometer-appoptics, graalvm, views-velocity, views-soy, micrometer-influx, hibernate-gorm, flyway, micrometer-jmx, hibernate-validator, views-freemarker, tracing-jaeger, data-jdbc, springloaded, cassandra, liquibase, yaml, properties</p>
+<p>The features to use. Possible values: jdbc-dbcp, jdbc-tomcat, jdbc-hikari, jax-rs, mongo-reactive, kafka, log4j2, micrometer-appoptics, config-consul, liquibase, micrometer-prometheus, elasticsearch, netflix-hystrix, rabbitmq, netflix-archaius, vertx-pg-client, jackson-xml, micrometer-cloudwatch, micrometer-new-relic, micrometer-wavefront, rss-itunes-podcast, micrometer-influx, hibernate-validator, springloaded, cache-hazelcast, micrometer-stackdriver, data-jpa, views-thymeleaf, graalvm, cache-ehcache, graphql, views-velocity, micrometer-jmx, mongo-gorm, jrebel, rss, neo4j-bolt, micrometer-elastic, hibernate-gorm, cache-caffeine, kafka-streams, micrometer-kairos, micrometer-humio, hibernate-jpa, cache-infinispan, security-jwt, redis-lettuce, views-rocker, discovery-eureka, tracing-zipkin, jib, micrometer-ganglia, neo4j-gorm, logback, micrometer-statsd, http-client, micrometer-graphite, micrometer-atlas, data-jdbc, jmx, netflix-ribbon, micrometer-signalfx, views-soy, management, kubernetes, micrometer-datadog, cassandra, views-freemarker, views-handlebars, discovery-consul, asciidoctor, postgres-reactive, security-session, vertx-mysql-client, file-watch, flyway, micrometer-dynatrace, tracing-jaeger, micrometer-azure-monitor, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
