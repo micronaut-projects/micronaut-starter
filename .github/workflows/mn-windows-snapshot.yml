@@ -11,11 +11,11 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Download GraalVM
-        env:
-          GRAAL_DOWNLOAD: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java8-windows-amd64-20.0.0.zip
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java8-windows-amd64-20.0.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
         run: Expand-Archive -path 'graal.zip' -destinationpath '.\graalvm'
+      - name: Confirm Install
+        run: Get-ChildItem -Path '.\graalvm'
       - name: Install Native Image
         run: .\graalvm\bin\gu.cmd install native-image
       - name: Build the JAR
