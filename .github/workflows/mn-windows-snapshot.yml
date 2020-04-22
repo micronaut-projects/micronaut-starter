@@ -15,7 +15,7 @@ jobs:
       - name: Install GraalVM
         run: Expand-Archive -path 'graal.zip' -destinationpath '.'
       - name: Confirm Install
-        run: Get-ChildItem -Path '.\graalvm'
+        run: Get-ChildItem -Path '.'
       - name: Install Native Image
         run: graalvm-ce-java8-20.0.0\bin\gu.cmd install native-image
       - name: Build the JAR
