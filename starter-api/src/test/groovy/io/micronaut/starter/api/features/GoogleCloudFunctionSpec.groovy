@@ -23,7 +23,7 @@ class GoogleCloudFunctionSpec extends Specification {
 
         then:
         map.contents.containsKey('src/main/java/test/HelloController.java')
-        map.contents.containsKey('src/test/java/test/HelloControllerTest.java')
+        map.contents.containsKey('src/test/java/test/HelloFunctionTest.java')
         !map.contents.containsKey('src/main/java/test/Application.java')
     }
 }
