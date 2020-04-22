@@ -60,12 +60,6 @@ set MAVEN_OPTS=--add-exports=java.base/jdk.internal.module=ALL-UNNAMED
 
 echo "Install Native Image"
 %JAVA_HOME%\bin\gu install native-image
-GOTO set-java-home
-
-:set-java-home
-echo Setting JAVA_HOME=%JAVA_HOME%
-%JAVA_HOME%\bin\java -version
-
 echo "GraalVM %GRAAL_VERSION% Install Complete."
 
 echo "Building Micronaut Starter JAR"
@@ -73,3 +67,4 @@ echo "Building Micronaut Starter JAR"
 
 echo "Building Native Image"
 powershell -Command "%JAVA_HOME%\bin\native-image --no-fallback --no-server -cp @(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]"
+
