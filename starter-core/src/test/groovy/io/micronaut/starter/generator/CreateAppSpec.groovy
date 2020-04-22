@@ -7,10 +7,7 @@ import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Unroll
 
-class CreateAppSpec extends CommandSpec implements CommandFixture {
-
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CreateAppSpec extends CommandSpec {
 
     @Unroll
     void 'test basic create-app for lang=#lang'() {

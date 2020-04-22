@@ -1,16 +1,10 @@
 package io.micronaut.starter.generator
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
 import spock.lang.Unroll
 
-class CreateGrpcSpec extends CommandSpec implements CommandFixture {
-
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CreateGrpcSpec extends CommandSpec {
 
     @Unroll
     void 'test basic create-grpc-app for lang=#lang'() {
