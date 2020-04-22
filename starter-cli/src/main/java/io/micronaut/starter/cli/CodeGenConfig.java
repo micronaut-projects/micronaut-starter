@@ -163,7 +163,7 @@ public class CodeGenConfig {
                         return null;
                     }
 
-                    codeGenConfig.setFeatures(availableFeatures.getFeaturesStream()
+                    codeGenConfig.setFeatures(availableFeatures.getAllFeatures()
                             .filter(f -> f instanceof DefaultFeature)
                             .map(DefaultFeature.class::cast)
                             .filter(f -> f.shouldApply(

@@ -55,7 +55,7 @@ public class ContextFactory {
         Language language = determineLanguage(options.getLanguage(), features);
         Options newOptions = options.withLanguage(language);
 
-        availableFeatures.getFeaturesStream()
+        availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
                 .filter(f -> ((DefaultFeature) f).shouldApply(command, newOptions, features))
                 .forEach(features::add);

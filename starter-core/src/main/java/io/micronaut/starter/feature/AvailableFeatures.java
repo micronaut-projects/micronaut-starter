@@ -25,7 +25,7 @@ public interface AvailableFeatures extends Iterable<String> {
 
     Optional<Feature> findFeature(@NonNull String name, boolean ignoreVisibility);
 
-    Stream<Feature> getVisibleFeaturesStream();
+    Stream<Feature> getFeatures();
 
-    Stream<Feature> getFeaturesStream();
+    Stream<Feature> getAllFeatures();
 }

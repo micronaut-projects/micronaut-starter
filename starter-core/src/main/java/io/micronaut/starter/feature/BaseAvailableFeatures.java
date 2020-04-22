@@ -27,10 +27,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AvailableFeaturesImpl implements AvailableFeatures {
+public class BaseAvailableFeatures implements AvailableFeatures {
     private final Map<String, Feature> features;
 
-    public AvailableFeaturesImpl(List<Feature> features, ApplicationType applicationType) {
+    public BaseAvailableFeatures(List<Feature> features, ApplicationType applicationType) {
         this.features = features.stream()
                 .filter(f -> f.supports(applicationType))
                 .collect(Collectors.toMap(
@@ -42,7 +42,7 @@ public class AvailableFeaturesImpl implements AvailableFeatures {
 
     @Override
     public Iterator<String> iterator() {
-        return getVisibleFeaturesStream()
+        return getFeatures()
                 .map(Feature::getName)
                 .iterator();
     }
@@ -64,13 +64,12 @@ public class AvailableFeaturesImpl implements AvailableFeatures {
     }
 
     @Override
-    public Stream<Feature> getVisibleFeaturesStream() {
-        Stream<Feature> stream = features.values().stream();
-        return stream.filter(Feature::isVisible);
+    public Stream<Feature> getFeatures() {
+        return getAllFeatures().filter(Feature::isVisible);
     }
 
     @Override
-    public Stream<Feature> getFeaturesStream() {
+    public Stream<Feature> getAllFeatures() {
         return features.values().stream();
     }
 }

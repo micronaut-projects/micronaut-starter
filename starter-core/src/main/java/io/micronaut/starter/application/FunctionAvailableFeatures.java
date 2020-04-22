@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.starter.feature.AvailableFeaturesImpl;
+import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Named;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Named("function")
 @Singleton
-public class FunctionAvailableFeatures extends AvailableFeaturesImpl {
+public class FunctionAvailableFeatures extends BaseAvailableFeatures {
 
     public FunctionAvailableFeatures(List<Feature> features) {
         super(features, ApplicationType.FUNCTION);

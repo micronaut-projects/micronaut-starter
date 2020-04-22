@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.starter.feature.AvailableFeaturesImpl;
+import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Named;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Named("grpc")
 @Singleton
-public class GrpcAvailableFeatures extends AvailableFeaturesImpl {
+public class GrpcAvailableFeatures extends BaseAvailableFeatures {
 
     public GrpcAvailableFeatures(List<Feature> features) {
         super(features, ApplicationType.GRPC);
