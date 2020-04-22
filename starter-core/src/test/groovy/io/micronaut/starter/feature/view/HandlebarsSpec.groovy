@@ -14,7 +14,7 @@ class HandlebarsSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-handlebars'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-handlebars"')
+        template.contains('implementation("io.micronaut:micronaut-views-handlebars")')
         template.contains('runtime "com.github.jknack:handlebars:4.1.2"')
 
         where:

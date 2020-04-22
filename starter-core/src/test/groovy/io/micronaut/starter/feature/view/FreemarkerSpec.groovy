@@ -14,7 +14,7 @@ class FreemarkerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-freemarker'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-freemarker"')
+        template.contains('implementation("io.micronaut:micronaut-views-freemarker")')
         template.contains('runtime "org.freemarker:freemarker:2.3.28"')
 
         where:

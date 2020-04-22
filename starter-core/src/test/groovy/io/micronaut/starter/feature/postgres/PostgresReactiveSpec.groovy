@@ -15,7 +15,7 @@ class PostgresReactiveSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['postgres-reactive'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-postgres-reactive"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-postgres-reactive")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

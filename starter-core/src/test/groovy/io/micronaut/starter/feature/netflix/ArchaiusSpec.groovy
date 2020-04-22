@@ -14,7 +14,7 @@ class ArchaiusSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['netflix-archaius'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-netflix-archaius"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-netflix-archaius")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

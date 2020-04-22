@@ -15,7 +15,7 @@ class JaegerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['tracing-jaeger'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-tracing"')
+        template.contains('implementation("io.micronaut:micronaut-tracing")')
         template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
 
         where:

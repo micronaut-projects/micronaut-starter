@@ -22,7 +22,7 @@ class Neo4jBoltSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["neo4j-bolt"])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-neo4j-bolt\"")
+        template.contains('implementation("io.micronaut.configuration:micronaut-neo4j-bolt")')
         template.contains("testRuntime \"org.neo4j.test:neo4j-harness\"")
     }
 

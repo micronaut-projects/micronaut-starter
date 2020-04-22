@@ -14,7 +14,7 @@ class CaffeineSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['cache-caffeine'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.cache:micronaut-cache-caffeine"')
+        template.contains('implementation("io.micronaut.cache:micronaut-cache-caffeine")')
 
         where:
         language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
