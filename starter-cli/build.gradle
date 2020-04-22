@@ -1,7 +1,6 @@
 import io.micronaut.starter.cli.MicronautCreateStartScripts
 
 plugins {
-    id "org.mikeneck.graalvm-native-image" version "0.3.0"
     id "application"
     id "com.github.johnrengelman.shadow"
     id "io.micronaut.starter.rocker"
@@ -138,12 +137,7 @@ sdkman {
     hashtag = "#micronautfw"
 }
 
-nativeImage {
-    graalVmHome = System.getProperty('java.home')
-    mainClass = 'io.micronaut.starter.cli.MicronautStarter'
-    executableName = 'mn'
-    arguments(
-            '--no-fallback',
-            '--no-server'
-    )
+task copyShadowJar(type: Copy) {
+    from shadowJar.outputs
+    into "${project.rootProject.buildDir}/libs"
 }
