@@ -18,7 +18,7 @@ class HazelcastSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.cache:micronaut-cache-hazelcast")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class HazelcastSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test cache-hazelcast configuration'() {

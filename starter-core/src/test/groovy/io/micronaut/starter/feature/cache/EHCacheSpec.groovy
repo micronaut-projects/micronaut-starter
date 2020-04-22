@@ -18,7 +18,7 @@ class EHCacheSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.cache:micronaut-cache-ehcache")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class EHCacheSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test cache-ehcache configuration'() {
