@@ -18,6 +18,7 @@ package io.micronaut.starter.cli;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.beans.BeanIntrospection;
+import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ConsoleOutput;
@@ -152,7 +153,7 @@ public class CodeGenConfig {
                         return null;
                     }
 
-                    availableFeatures = beanContext.getBean(codeGenConfig.getApplicationType().getAvailableFeaturesClass());
+                    availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(codeGenConfig.getApplicationType().getName()));
 
                     if (new File(directory, "build.gradle").exists()) {
                         codeGenConfig.setBuildTool(BuildTool.GRADLE);

@@ -315,6 +315,9 @@ dependencies {
 @if (features.contains("kafka")) {
     implementation("io.micronaut.kafka:micronaut-kafka")
 }
+@if (features.contains("kafka-streams")) {
+    implementation("io.micronaut.kafka:micronaut-kafka-streams")
+}
 @if (features.contains("rabbitmq")) {
     implementation("io.micronaut.configuration:micronaut-rabbitmq")
 }
