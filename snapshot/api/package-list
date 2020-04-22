@@ -46,7 +46,6 @@ io.micronaut.starter.feature.elasticsearch
 io.micronaut.starter.feature.externalconfig
 io.micronaut.starter.feature.externalconfig.template
 io.micronaut.starter.feature.filewatch
-io.micronaut.starter.feature.function
 io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graalvm.template
 io.micronaut.starter.feature.graphql
