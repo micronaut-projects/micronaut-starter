@@ -18,7 +18,7 @@ class HystrixSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-netflix-hystrix")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class HystrixSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test netflix-hystrix configuration'() {

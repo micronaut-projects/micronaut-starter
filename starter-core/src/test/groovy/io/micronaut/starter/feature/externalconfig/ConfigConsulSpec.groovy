@@ -18,7 +18,7 @@ class ConfigConsulSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test gradle config-consul multiple features'() {
@@ -44,7 +44,7 @@ class ConfigConsulSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test maven config-consul multiple features'() {

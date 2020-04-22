@@ -17,7 +17,7 @@ class RssSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-rss")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class RssSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

@@ -31,7 +31,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
         extension << Language.extensions()
         srcDir << Language.srcDirs()
         testSrcDir << Language.testSrcDirs()

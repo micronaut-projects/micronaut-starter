@@ -18,7 +18,7 @@ class RibbonSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-netflix-ribbon")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class RibbonSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test netflix-ribbon configuration'() {

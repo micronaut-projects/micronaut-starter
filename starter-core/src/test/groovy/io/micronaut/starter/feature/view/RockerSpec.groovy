@@ -27,7 +27,7 @@ sourceSets {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -64,7 +64,7 @@ sourceSets {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

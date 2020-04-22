@@ -18,7 +18,7 @@ class VertxPgSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-vertx-pg-client")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class VertxPgSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test vertx-pg-client configuration'() {

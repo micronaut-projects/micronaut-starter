@@ -18,7 +18,7 @@ class HandlebarsSpec extends BeanContextSpec {
         template.contains('runtime "com.github.jknack:handlebars:4.1.2"')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class HandlebarsSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

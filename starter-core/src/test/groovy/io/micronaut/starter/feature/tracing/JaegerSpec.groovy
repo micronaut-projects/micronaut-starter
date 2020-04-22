@@ -19,7 +19,7 @@ class JaegerSpec extends BeanContextSpec {
         template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -44,7 +44,7 @@ class JaegerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test tracing-jaeger configuration'() {

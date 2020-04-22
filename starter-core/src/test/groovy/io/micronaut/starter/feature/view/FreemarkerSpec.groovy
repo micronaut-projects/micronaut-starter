@@ -18,7 +18,7 @@ class FreemarkerSpec extends BeanContextSpec {
         template.contains('runtime "org.freemarker:freemarker:2.3.28"')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class FreemarkerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

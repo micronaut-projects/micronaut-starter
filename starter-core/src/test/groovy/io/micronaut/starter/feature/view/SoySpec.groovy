@@ -18,7 +18,7 @@ class SoySpec extends BeanContextSpec {
         template.contains('implementation("com.google.template:soy:2019-09-03")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class SoySpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

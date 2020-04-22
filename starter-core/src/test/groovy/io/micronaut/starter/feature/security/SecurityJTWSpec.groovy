@@ -18,7 +18,7 @@ class SecurityJTWSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut:micronaut-security-jwt")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class SecurityJTWSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test security-jwt configuration'() {

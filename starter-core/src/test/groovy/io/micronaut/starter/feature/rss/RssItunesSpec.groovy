@@ -17,7 +17,7 @@ class RssItunesSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-itunespodcast")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class RssItunesSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }

@@ -18,7 +18,7 @@ class ThymeleafSpec extends BeanContextSpec {
         template.contains('runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class ThymeleafSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }
