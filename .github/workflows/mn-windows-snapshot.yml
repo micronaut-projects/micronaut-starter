@@ -13,11 +13,12 @@ jobs:
         os: [windows-2016, windows-latest]
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/checkout@v1
-      - uses: DeLaGuardo/setup-graalvm@2.0
-        with:
-          graalvm-version: '20.0.0.java11'
-      - run: gu install native-image
+      - name: Download GraalVM
+        run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java8-windows-amd64-20.0.0.zip -OutFile 'graal.zip'
+      - name: Install GraalVM
+        run: Expand-Archive -path 'graal.zip' -destinationpath '.'
+      - name: Install Native Image
+        run: graalvm-ce-java11-20.0.0\bin\gu.cmd install native-image
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         run: |
           choco install visualstudio2017-workload-vctools
