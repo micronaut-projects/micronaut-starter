@@ -32,6 +32,7 @@ public class BaseAvailableFeatures implements AvailableFeatures {
 
     public BaseAvailableFeatures(List<Feature> features, ApplicationType applicationType) {
         this.features = features.stream()
+                .filter(Feature::isEnabled)
                 .filter(f -> f.supports(applicationType))
                 .collect(Collectors.toMap(
                         Feature::getName,

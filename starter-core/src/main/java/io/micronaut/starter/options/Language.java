@@ -61,6 +61,10 @@ public enum Language {
         return "src/test/" + name().toLowerCase(Locale.ENGLISH);
     }
 
+    public String getSourcePath(String path) {
+        return getSrcDir() + path + "." + getExtension();
+    }
+
     public static Language infer(List<Feature> features) {
         return features.stream()
                 .map(Feature::getRequiredLanguage)

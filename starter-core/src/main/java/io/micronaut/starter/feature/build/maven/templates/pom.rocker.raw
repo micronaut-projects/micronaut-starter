@@ -60,11 +60,16 @@ List<Property> properties
 @if (features.contains("google-cloud-function")) {
 @dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null)
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null)
-// Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged
+<!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
 @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
 @dependency.template("io.micronaut", "micronaut-http-netty", "compile", null)
 }
-
+@if (features.contains("azure-function")) {
+@dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null)
+@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null)
+<!-- Remove when https://github.com/microsoft/azure-maven-plugins/pull/1054 is released -->
+@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
+}
 @if (features.contains("netty-server")) {
 @dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
 }
@@ -407,10 +412,12 @@ List<Property> properties
 }
       </plugin>
 }
+@if (features.contains("shade")) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
       </plugin>
+}
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -477,6 +484,83 @@ List<Property> properties
           <configuration>
             <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
           </configuration>
+        </plugin>
+}
+@if (features.contains("azure-function")) {
+        <plugin>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-functions-maven-plugin</artifactId>
+            <version>1.4.1</version>
+            <configuration>
+                <resourceGroup>${functionResourceGroup}</resourceGroup>
+                <appName>${functionAppName}</appName>
+                <region>${functionAppRegion}</region>
+                <appSettings>
+                    <property>
+                        <name>WEBSITE_RUN_FROM_PACKAGE</name>
+                        <value>1</value>
+                    </property>
+                    <property>
+                        <name>FUNCTIONS_EXTENSION_VERSION</name>
+                        <value>~2</value>
+                    </property>
+                </appSettings>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>package-functions</id>
+                    <goals>
+                        <goal>package</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>copy-resources</id>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                        <overwrite>true</overwrite>
+                        <outputDirectory>${stagingDirectory}</outputDirectory>
+                        <resources>
+                            <resource>
+                                <directory>${project.basedir}</directory>
+                                <includes>
+                                    <include>host.json</include>
+                                    <include>local.settings.json</include>
+                                </includes>
+                            </resource>
+                        </resources>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>copy-dependencies</id>
+                    <phase>prepare-package</phase>
+                    <goals>
+                        <goal>copy-dependencies</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${stagingDirectory}/lib</outputDirectory>
+                        <overWriteReleases>false</overWriteReleases>
+                        <overWriteSnapshots>false</overWriteSnapshots>
+                        <overWriteIfNewer>true</overWriteIfNewer>
+                        <includeScope>runtime</includeScope>
+                        <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
 }
 @if (features.language().isJava()) {
