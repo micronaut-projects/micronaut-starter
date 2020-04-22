@@ -30,7 +30,8 @@ import java.util.Optional;
     "picocli.CommandLine$Model$CommandSpec"
 }, accessType = {TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS, TypeHint.AccessType.ALL_DECLARED_FIELDS})
 class MicronautFactory implements CommandLine.IFactory {
-    CommandLine.IFactory defaultFactory;
+
+    private final CommandLine.IFactory defaultFactory;
     private final BeanContext beanContext;
 
     public MicronautFactory() {
@@ -44,9 +45,6 @@ class MicronautFactory implements CommandLine.IFactory {
 
     @Override
     public <K> K create(Class<K> cls) throws Exception {
-        if ((CodeGenCommand.class.isAssignableFrom(cls))) {
-            return beanContext.createBean(cls, new CodeGenConfig());
-        }
         Optional<K> bean = beanContext.findOrInstantiateBean(cls);
         if (bean.isPresent()) {
             return bean.get();

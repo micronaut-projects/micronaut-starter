@@ -61,25 +61,7 @@ import java.util.function.BiFunction;
                 CreateCliCommand.class,
                 CreateFunctionCommand.class,
                 CreateGrpcCommand.class,
-                CreateMessagingCommand.class,
-
-                // Codegen commands
-                CreateBeanCommand.class,
-                CreateClientCommand.class,
-                CreateCommandCommand.class,
-                CreateControllerCommand.class,
-                CreateGrpcServiceCommand.class,
-                CreateJobCommand.class,
-                CreateKafkaListener.class,
-                CreateKafkaProducer.class,
-                CreateProtoServiceCommand.class,
-                CreateRabbitMQListener.class,
-                CreateRabbitMQProducer.class,
-                CreateRepositoryCommand.class,
-                CreateTestCommand.class,
-                CreateWebsocketClientCommand.class,
-                CreateWebsocketServerCommand.class,
-                UpdateCliConfigCommand.class
+                CreateMessagingCommand.class
         })
 @Prototype
 @TypeHint({
