@@ -8,15 +8,15 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - name: Enable Developer Command Prompt
-        uses: ilammy/msvc-dev-cmd@v1.1.0
-        with:
-          sdk: 7
+      - name: Install Choco
+        run: Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+      - name: Install Windows SDK for Windows 7
+        run: choco install windows-sdk-7.1
       - name: Setup Python 2.7
         uses: actions/setup-python@v1
         with:
           python-version: '2.7.x'
-          architecture: 'x64'  
+          architecture: 'x64'
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Download GraalVM
