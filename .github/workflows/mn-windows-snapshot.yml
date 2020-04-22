@@ -26,11 +26,7 @@ jobs:
         shell: cmd
         env:
           JAVA_HOME: ./graalvm-ce-java11-20.0.0
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./gradlew starter-cli:shadowJar --no-daemon
-          for %%x in (starter-cli\build\libs\*.jar) do if not defined jarFile set "jarFile=%%x"
-          native-image --no-server --no-fallback -cp "%jarFile%"
+        run: ./build-windows-cli.bat
       - name: Verify Build
         run: ./starter-cli/build/graal/mn --version
       - name: Verify Create App
