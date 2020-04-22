@@ -25,21 +25,21 @@ import javax.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class Swagger implements Feature {
+public class OpenApi implements Feature {
 
     @Override
     public String getName() {
-        return "swagger";
+        return "openapi";
     }
 
     @Override
     public String getTitle() {
-        return "Swagger/OpenAPI Support";
+        return "OpenAPI Support";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Swagger (OpenAPI)";
+        return "Adds support for OpenAPI";
     }
 
     @Override

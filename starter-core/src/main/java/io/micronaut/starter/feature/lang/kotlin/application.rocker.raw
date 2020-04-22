@@ -6,13 +6,13 @@
 package @project.getPackageName()
 
 import io.micronaut.runtime.Micronaut
-@if (features.contains("swagger")) {
+@if (features.contains("openapi")) {
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.info.*
 }
 
 
-@if (features.contains("swagger")) {
+@if (features.contains("openapi")) {
 @@OpenAPIDefinition(
     info = @@Info(
             title = "@project.getName()",

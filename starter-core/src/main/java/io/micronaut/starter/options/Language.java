@@ -51,11 +51,11 @@ public enum Language {
     }
 
     public String getSrcDir() {
-        return "src/main/" + name().toLowerCase(Locale.ENGLISH);
+        return "src/main/" + getName();
     }
 
     public String getTestSrcDir() {
-        return "src/test/" + name().toLowerCase(Locale.ENGLISH);
+        return "src/test/" + getName();
     }
 
     public String getSourcePath(String path) {
@@ -73,7 +73,7 @@ public enum Language {
 
     @Override
     public String toString() {
-        return this.name().toLowerCase();
+        return getName();
     }
 
     @Nonnull

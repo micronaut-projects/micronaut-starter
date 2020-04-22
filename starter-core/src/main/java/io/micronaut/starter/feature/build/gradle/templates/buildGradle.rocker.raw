@@ -138,7 +138,7 @@ dependencies {
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
 }
-@if (features.contains("swagger")) {
+@if (features.contains("openapi")) {
     @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
 }
 @if (features.contains("management")) {

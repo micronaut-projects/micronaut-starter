@@ -6,12 +6,12 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SwaggerSpec extends BeanContextSpec {
+class OpenApiSpec extends BeanContextSpec {
 
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['swagger'], language)).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures(['openapi'], language)).render().toString()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
@@ -26,7 +26,7 @@ class SwaggerSpec extends BeanContextSpec {
 
     void 'test maven swagger feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['swagger'], Language.JAVA), []).render().toString()
+        String template = pom.template(buildProject(), getFeatures(['openapi'], Language.JAVA), []).render().toString()
 
         then:
         template.contains("""
@@ -45,7 +45,7 @@ class SwaggerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(['swagger'], Language.KOTLIN), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(['openapi'], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -64,7 +64,7 @@ class SwaggerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(['swagger'], Language.GROOVY), []).render().toString()
+        template = pom.template(buildProject(), getFeatures(['openapi'], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

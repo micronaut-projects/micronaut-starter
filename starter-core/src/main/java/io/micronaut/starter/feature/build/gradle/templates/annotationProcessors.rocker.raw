@@ -21,7 +21,7 @@ Features features
 @if (features.contains("data")) {
 @annotationProcessor.template(features.language(), "\"io.micronaut.data:micronaut-data-processor\"")
 }
-@if (features.contains("swagger")) {
+@if (features.contains("openapi")) {
 @annotationProcessor.template(features.language(), "\"io.micronaut.configuration:micronaut-openapi\"")
 }
 @if (features.contains("jax-rs")) {

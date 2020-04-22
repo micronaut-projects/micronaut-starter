@@ -25,13 +25,13 @@ class FeatureControllerSpec extends Specification {
         def features = client.features(ApplicationType.CLI, RequestInfo.LOCAL).features
 
         then:
-        !features.any { it.name == 'swagger' }
+        !features.any { it.name == 'openapi' }
 
         when:
         features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features
 
         then:
-        features.any { it.name == 'swagger' }
+        features.any { it.name == 'openapi' }
     }
 
     @Client('/')

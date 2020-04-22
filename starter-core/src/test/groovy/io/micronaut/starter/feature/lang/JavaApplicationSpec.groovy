@@ -32,8 +32,8 @@ public class Application {
 """.trim())
     }
 
-    void "test java application with swagger"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["swagger"]))
+    void "test java application with openapi"() {
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]))
                 .render()
                 .toString()
 
