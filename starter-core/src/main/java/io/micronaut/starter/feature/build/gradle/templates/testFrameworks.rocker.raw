@@ -12,7 +12,7 @@ TestFeature testFeature
     testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "testAnnotationProcessor", null)
 } else if (language.isKotlin()) {
-    kaptTest platform("io.micronaut:micronaut-bom:$micronautVersion")
+    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
 }
     testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
