@@ -25,10 +25,10 @@ jobs:
           ./gradlew starter-cli:shadowJar
           $env:JAR_FILE=@(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]
       - name: Build Native Image
-          shell: cmd
-          run: |
-            call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-            native-mage --no-server --no-fallback -cp "%JAR_FILE%"
+        shell: cmd
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          native-mage --no-server --no-fallback -cp "%JAR_FILE%"
       - name: Verify Build
         run: mn --version
       - name: Verify Create App
