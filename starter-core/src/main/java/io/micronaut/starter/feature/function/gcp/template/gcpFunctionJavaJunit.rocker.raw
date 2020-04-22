@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import io.micronaut.http.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import io.micronaut.gcp.function.http.*;
+
+public class @project.getClassName()ControllerTest {
+
+    @@Test
+    public void testHello() throws Exception {
+        try (HttpFunction function = new HttpFunction()) {
+            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/hello");
+            assertEquals(HttpStatus.OK, response.getStatus());
+        }
+    }
+}

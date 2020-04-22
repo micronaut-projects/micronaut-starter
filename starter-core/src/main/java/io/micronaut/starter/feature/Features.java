@@ -66,6 +66,10 @@ public class Features extends ArrayList<String> {
         return featureList;
     }
 
+    public List<Feature> getFeatureList() {
+        return featureList;
+    }
+
     public String getTargetJdk() {
         if (language().isJava()) {
             return VersionInfo.toJdkVersion(javaVersion.majorVersion());

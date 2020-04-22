@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -28,7 +30,9 @@ public class HttpClient implements DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.DEFAULT;
+        return applicationType == ApplicationType.DEFAULT &&
+                selectedFeatures.stream().anyMatch(feature -> feature.getName().equals(getName())) ||
+                selectedFeatures.stream().noneMatch(feature -> feature instanceof FunctionFeature);
     }
 
     @Override

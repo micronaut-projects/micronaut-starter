@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.application;
 
+import io.micronaut.starter.util.NameUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,5 +71,21 @@ public class Project {
         properties.put("propertyName", propertyName);
         properties.put("name", name);
         return properties;
+    }
+
+    /**
+     * A new project wth the given class name.
+     * @param className The class name
+     * @return The new project.
+     */
+    public Project withClassName(String className) {
+        return new Project(
+                packageName,
+                packagePath,
+                className,
+                naturalName,
+                NameUtils.getPropertyName(className),
+                name
+        );
     }
 }

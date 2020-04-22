@@ -16,8 +16,8 @@ import io.micronaut.http.HttpStatus
 @@Controller("/@project.getPropertyName()")
 class @project.getClassName()Controller {
 
-    @@Get("/")
-    HttpStatus index() {
-        HttpStatus.OK
+    @@Get(uri="/", produces="text/plain")
+    fun index(): String {
+        return "Example Response"
     }
 }

@@ -8,8 +8,8 @@ Project project
 package @project.getPackageName()
 }
 
-
-import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.annotation.*
 import io.micronaut.test.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -19,11 +19,12 @@ import javax.inject.Inject
 class @project.getClassName()Test {
 
     @@Inject
-    lateinit var embeddedServer: EmbeddedServer
+    @@field:Client("/")
+    lateinit var client: RxHttpClient
 
     @@Test
     fun testItWorks() {
-        Assertions.assertTrue(embeddedServer.isRunning)
+        assertEquals(HttpStatus.OK, client.toBlocking().exchange("/@project.getPropertyName()").status())
     }
 
 }

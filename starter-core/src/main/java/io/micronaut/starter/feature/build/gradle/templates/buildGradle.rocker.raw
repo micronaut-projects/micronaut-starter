@@ -63,6 +63,9 @@ repositories {
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
+    @if (features.contains("google-cloud-function")) {
+    invoker
+    }
 }
 
 dependencies {
@@ -72,6 +75,10 @@ dependencies {
     compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     }
     compileOnly "org.graalvm.nativeimage:svm"
+}
+@if (features.contains("google-cloud-function")) {
+    compileOnly "com.google.cloud.functions:functions-framework-api"
+    invoker "com.google.cloud.functions.invoker:java-function-invoker:@VersionInfo.getDependencyVersion("google.function.invoker").getValue()"
 }
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-inject"
@@ -106,6 +113,9 @@ dependencies {
 }
 @if (features.contains("tomcat-server")) {
     implementation "io.micronaut.servlet:micronaut-http-server-tomcat"
+}
+@if (features.contains("google-cloud-function")) {
+    implementation "io.micronaut.gcp:micronaut-gcp-function-http"
 }
 @if (features.contains("http-client")) {
     implementation "io.micronaut:micronaut-http-client"
@@ -348,6 +358,9 @@ dependencies {
 @if (features.contains("mongo-reactive")) {
     testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
 }
+@if (features.contains("google-cloud-function")) {
+    testImplementation "com.google.cloud.functions:functions-framework-api"
+}
 @if (features.contains("neo4j-bolt")) {
     testRuntime "org.neo4j.test:neo4j-harness"
 }
@@ -356,8 +369,11 @@ dependencies {
 test.classpath += configurations.developmentOnly
 
 @if (features.application() != null) {
+@if (features.contains("google-cloud-function")) {
+mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
+} else {
 mainClassName = "@features.application().mainClassName(project)"
-
+}
 }
 @if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
 // use JUnit 5 platform
@@ -412,6 +428,19 @@ shadowJar {
 
 @if (features.contains("jrebel")) {
 run.dependsOn(generateRebel)
+}
+
+@if (features.contains("google-cloud-function")) {
+task('runFunction', type: JavaExec, dependsOn: classes) {
+    main = 'com.google.cloud.functions.invoker.runner.Invoker'
+    classpath(configurations.invoker)
+    args(
+            '--target', 'io.micronaut.gcp.function.http.HttpFunction',
+            '--classpath', (configurations.runtimeClasspath + sourceSets.main.output).asPath,
+            '--port', 8080
+
+    )
+}
 }
 
 tasks.withType(JavaExec) {

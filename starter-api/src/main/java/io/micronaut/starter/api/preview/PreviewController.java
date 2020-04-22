@@ -103,4 +103,20 @@ public class PreviewController extends AbstractCreateController implements Previ
             throw new IOException(e.getMessage(), e);
         }
     }
+
+    public PreviewDTO previewApp(
+            ApplicationType type,
+            String name,
+            @Nullable List<String> features) throws IOException {
+        return previewApp(
+                type,
+                name,
+                features,
+                null,
+                null,
+                null,
+                null,
+                new RequestInfo("http://localhost","")
+        );
+    }
 }

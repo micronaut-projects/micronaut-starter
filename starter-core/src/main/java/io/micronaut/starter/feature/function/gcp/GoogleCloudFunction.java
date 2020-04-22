@@ -1,0 +1,112 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.starter.feature.function.gcp;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
+import io.micronaut.starter.feature.lang.java.application;
+import io.micronaut.starter.feature.server.template.groovyController;
+import io.micronaut.starter.feature.server.template.javaController;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
+
+import javax.inject.Singleton;
+
+/**
+ * A feature for supporting Google Cloud Function.
+ *
+ * @author graemerocher
+ * @since 2.0.0
+ */
+@Singleton
+public class GoogleCloudFunction implements FunctionFeature {
+
+    public static final String NAME = "google-cloud-function";
+
+    @NonNull
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Google Cloud Function Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds Support for Google Cloud Function (https://cloud.google.com/functions)";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        ApplicationType type = generatorContext.getApplicationType();
+        if (type == ApplicationType.DEFAULT) {
+            Project project = generatorContext.getProject().withClassName("Hello");
+
+            Language language = generatorContext.getLanguage();
+            switch (language) {
+                case JAVA:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            "src/main/java/{packagePath}/HelloController.java",
+                            javaController.template(project)));
+                break;
+                case GROOVY:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            "src/main/groovy/{packagePath}/HelloController.groovy",
+                            groovyController.template(project)));
+                    break;
+                case KOTLIN:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            "src/main/kotlin/{packagePath}/HelloController.kt",
+                            groovyController.template(project)));
+                    break;
+            }
+
+            TestFramework testFramework = generatorContext.getTestFramework();
+            switch (testFramework) {
+                case JUNIT:
+                    switch (language) {
+                        case JAVA:
+                            generatorContext.addTemplate("testFunction", new RockerTemplate(
+                                    "src/test/java/{packagePath}/HelloControllerTest.java",
+                                    gcpFunctionJavaJunit.template(project)));
+                        break;
+                        case GROOVY:
+
+                        break;
+                        case KOTLIN:
+
+                        break;
+                    }
+                break;
+                case SPOCK:
+
+                break;
+                case KOTLINTEST:
+
+                break;
+            }
+
+        }
+    }
+}
