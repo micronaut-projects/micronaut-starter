@@ -28,7 +28,7 @@ jobs:
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          native-mage --no-server --no-fallback -cp "%JAR_FILE%"
+          call "%JAVA_HOME%\bin\native-mage --no-server --no-fallback -cp '%JAR_FILE%'"
       - name: Verify Build
         run: mn --version
       - name: Verify Create App
