@@ -346,6 +346,9 @@ dependencies {
 @if (features.contains("jackson-xml")) {
     implementation("io.micronaut.xml:micronaut-jackson-xml")
 }
+@if (features.contains("jax-rs")) {
+    implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")
+}
 @if (features.contains("log4j2")) {
     implementation("org.apache.logging.log4j:log4j-core:2.12.1")
     runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"

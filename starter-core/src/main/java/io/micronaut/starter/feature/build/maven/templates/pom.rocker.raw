@@ -320,6 +320,9 @@ List<Property> properties
 @if (features.contains("jackson-xml")) {
 @dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "compile", null)
 }
+@if (features.contains("jax-rs")) {
+@dependency.template("io.micronaut.jaxrs", "micronaut-jaxrs-server", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -497,6 +500,13 @@ List<Property> properties
               <version>${micronaut.openapi.version}</version>
             </path>
 }
+@if (features.contains("jax-rs")) {
+            <path>
+              <groupId>io.micronaut.jaxrs</groupId>
+              <artifactId>micronaut-jaxrs-processor</artifactId>
+              <version>${micronaut.jaxrs.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -536,6 +546,13 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-data-processor</artifactId>
                   <version>${micronaut.data.version}</version>
+                </path>
+}
+@if (features.contains("jax-rs")) {
+                <path>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>${micronaut.jaxrs.version}</version>
                 </path>
 }
               </annotationProcessorPaths>
@@ -606,6 +623,13 @@ List<Property> properties
                     <version>${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
 }
+@if (features.contains("jax-rs")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.jaxrs</groupId>
+                    <artifactId>micronaut-jaxrs-processor</artifactId>
+                    <version>${micronaut.jaxrs.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -659,6 +683,13 @@ List<Property> properties
                     <groupId>io.micronaut</groupId>
                     <artifactId>micronaut-data-processor</artifactId>
                     <version>${micronaut.data.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("jax-rs")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.jaxrs</groupId>
+                    <artifactId>micronaut-jaxrs-processor</artifactId>
+                    <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
