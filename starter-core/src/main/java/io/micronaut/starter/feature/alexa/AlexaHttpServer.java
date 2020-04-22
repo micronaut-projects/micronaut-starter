@@ -29,7 +29,7 @@ public class AlexaHttpServer implements Feature {
 
     @Override
     public String getTitle() {
-        return "Alexa Http Server";
+        return "Alexa Skill as Http Service";
     }
 
     @Override
