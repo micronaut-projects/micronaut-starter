@@ -134,7 +134,7 @@ public class GoogleCloudFunction implements FunctionFeature {
 
     private String getRunCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package";
+            return "mvnw function:run";
         } else {
             return "gradlew runFunction";
         }
@@ -142,7 +142,7 @@ public class GoogleCloudFunction implements FunctionFeature {
 
     private String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
-            return "mvnw function:run";
+            return "mvnw clean package";
         } else {
             return "gradlew clean shadowJar";
         }

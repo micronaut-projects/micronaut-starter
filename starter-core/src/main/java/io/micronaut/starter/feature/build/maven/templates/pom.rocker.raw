@@ -45,16 +45,26 @@ List<Property> properties
       <id>jcenter.bintray.com</id>
       <url>https://jcenter.bintray.com</url>
     </repository>
-    <!--TODO: Remove when M3/RC1 is out -->
+    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     <repository>
-      <id>jfrog-snapshots</id>
-      <url>https://oss.jfrog.org/oss-snapshot-local</url>
+          <id>jfrog-snapshots</id>
+          <url>https://oss.jfrog.org/oss-snapshot-local</url>
     </repository>
+    }
+
   </repositories>
 
   <dependencies>
 @dependency.template("io.micronaut", "micronaut-inject", "compile", null)
 @dependency.template("io.micronaut", "micronaut-validation", "compile", null)
+@if (features.contains("google-cloud-function")) {
+@dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null)
+@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null)
+// Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged
+@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
+@dependency.template("io.micronaut", "micronaut-http-netty", "compile", null)
+}
+
 @if (features.contains("netty-server")) {
 @dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
 }
@@ -373,8 +383,6 @@ List<Property> properties
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-        <!-- TODO: remove version once a new Micronaut 2.x BOM is published -->
-        <version>1.0.0.RC3</version>
 @if (features.contains("springloaded") || features.contains("jrebel")) {
           <configuration>
             <jvmArguments>
@@ -452,6 +460,15 @@ List<Property> properties
           </execution>
         </executions>
       </plugin>
+}
+@if (features.contains("google-cloud-function")) {
+       <plugin>
+          <groupId>com.google.cloud.functions</groupId>
+          <artifactId>function-maven-plugin</artifactId>
+          <configuration>
+            <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
+          </configuration>
+        </plugin>
 }
 @if (features.language().isJava()) {
       <plugin>
