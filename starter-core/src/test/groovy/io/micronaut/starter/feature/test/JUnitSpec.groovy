@@ -41,7 +41,7 @@ class JUnitSpec extends BeanContextSpec {
         template.contains("""
     kaptTest(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
     kaptTest("io.micronaut:micronaut-inject-java")
-    testImplementation platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    testImplementation(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
