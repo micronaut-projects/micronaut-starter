@@ -1,5 +1,8 @@
 name: Mac OS X Native CLI
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
     name: Builds OS X Native CLI

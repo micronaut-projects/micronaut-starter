@@ -1,5 +1,8 @@
 name: Linux Native CLI
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
     name: Builds Linux Native CLI
