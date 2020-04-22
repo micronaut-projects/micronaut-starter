@@ -41,16 +41,6 @@ public class Groovy implements LanguageFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Groovy";
-    }
-
-    @Override
-    public String getDescription() {
-        return getTitle() + " Language Support";
-    }
-
-    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()

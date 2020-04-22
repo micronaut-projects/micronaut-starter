@@ -41,16 +41,6 @@ public class KotlinApplication implements KotlinApplicationFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Kotlin Application";
-    }
-
-    @Override
-    public String getDescription() {
-        return getTitle() + " Support";
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 

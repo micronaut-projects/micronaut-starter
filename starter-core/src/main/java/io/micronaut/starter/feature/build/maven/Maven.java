@@ -43,16 +43,6 @@ public class Maven implements BuildFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Maven Build Tool";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the Maven build tool";
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 

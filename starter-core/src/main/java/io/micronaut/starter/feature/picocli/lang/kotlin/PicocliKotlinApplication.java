@@ -42,16 +42,6 @@ public class PicocliKotlinApplication implements KotlinApplicationFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "PicoCLI Kotlin Application";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Support for creating PicoCLI Kotlin applications";
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 

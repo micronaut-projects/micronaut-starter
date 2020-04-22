@@ -41,16 +41,6 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Java Application Support";
-    }
-
-    @Override
-    public String getDescription() {
-        return getTitle();
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         JavaApplicationFeature.super.apply(generatorContext);
 

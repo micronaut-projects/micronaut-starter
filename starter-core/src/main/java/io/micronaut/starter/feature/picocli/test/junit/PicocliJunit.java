@@ -34,16 +34,6 @@ public class PicocliJunit implements Feature {
     }
 
     @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
     }
@@ -65,8 +55,4 @@ public class PicocliJunit implements Feature {
         return applicationType == ApplicationType.CLI;
     }
 
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
 }

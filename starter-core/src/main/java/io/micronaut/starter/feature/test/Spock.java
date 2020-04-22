@@ -46,13 +46,4 @@ public class Spock implements TestFeature {
         return Language.GROOVY;
     }
 
-    @Override
-    public String getTitle() {
-        return "Spock Testing Framework";
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
 }

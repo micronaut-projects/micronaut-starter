@@ -46,13 +46,4 @@ public class Junit implements TestFeature {
         return Language.JAVA;
     }
 
-    @Override
-    public String getTitle() {
-        return "JUnit 5 Test Framework";
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
 }

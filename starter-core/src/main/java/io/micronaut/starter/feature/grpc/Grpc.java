@@ -35,21 +35,6 @@ public class Grpc implements DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.GRPC;
-    }
-
-    @Override
-    public String getTitle() {
-        return "GRPC";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for building GRPC applications";
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
     }

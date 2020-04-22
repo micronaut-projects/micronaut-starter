@@ -28,16 +28,6 @@ public class FileWatchOsx implements Feature {
     }
 
     @Override
-    public String getTitle() {
-        return "OS X FileWatch Service";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for using native file watch on OS X";
-    }
-
-    @Override
     public boolean isVisible() {
         return false;
     }

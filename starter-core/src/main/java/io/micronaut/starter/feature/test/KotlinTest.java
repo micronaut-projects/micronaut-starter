@@ -49,13 +49,4 @@ public class KotlinTest implements TestFeature {
         return Language.KOTLIN;
     }
 
-    @Override
-    public String getTitle() {
-        return "KotlinTest Testing Framework";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the KotlinTest testing framework";
-    }
 }

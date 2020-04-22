@@ -39,7 +39,14 @@ public interface Feature extends Named, Ordered, Described {
     /**
      * @return The title of the feature
      */
-    String getTitle();
+    default String getTitle() {
+        return null;
+    }
+
+    @Override
+    default String getDescription() {
+        return null;
+    }
 
     /**
      * The order of a feature controls the order in which it applies. The

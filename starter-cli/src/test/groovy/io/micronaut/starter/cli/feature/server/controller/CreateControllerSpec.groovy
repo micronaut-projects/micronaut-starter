@@ -1,4 +1,4 @@
-package io.micronaut.starter.cli.feature.server
+package io.micronaut.starter.cli.feature.server.controller
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig

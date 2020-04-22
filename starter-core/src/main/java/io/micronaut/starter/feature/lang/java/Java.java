@@ -20,7 +20,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
@@ -31,24 +30,13 @@ public class Java implements LanguageFeature {
 
     private final List<JavaApplicationFeature> applicationFeatures;
 
-    public Java(List<JavaApplicationFeature> applicationFeatures,
-                Junit junit) {
+    public Java(List<JavaApplicationFeature> applicationFeatures) {
         this.applicationFeatures = applicationFeatures;
     }
 
     @Override
     public String getName() {
         return "java";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Java Support";
-    }
-
-    @Override
-    public String getDescription() {
-        return getTitle();
     }
 
     @Override

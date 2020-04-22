@@ -15,16 +15,12 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
-public class Docker implements DefaultFeature {
+public class Docker implements Feature {
 
     @Override
     public String getName() {
@@ -37,17 +33,7 @@ public class Docker implements DefaultFeature {
     }
 
     @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public boolean isVisible() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return false;
     }
 }

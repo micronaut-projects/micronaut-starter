@@ -1,8 +1,10 @@
-package io.micronaut.starter.feature;
+package io.micronaut.starter.cli;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -29,4 +31,5 @@ public class RandomPort implements DefaultFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.server.port", "-1");
     }
+
 }

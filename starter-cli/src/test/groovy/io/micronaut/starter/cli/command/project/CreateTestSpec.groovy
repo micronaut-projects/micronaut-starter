@@ -4,7 +4,6 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
-import io.micronaut.starter.cli.command.project.job.CreateJobCommand
 import io.micronaut.starter.cli.command.project.test.CreateTestCommand
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool

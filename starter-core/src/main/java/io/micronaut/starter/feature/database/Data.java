@@ -37,16 +37,6 @@ public class Data implements Feature {
     }
 
     @Override
-    public String getTitle() {
-        return "Micronaut Data";
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.data");
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {

@@ -42,16 +42,6 @@ public class PicocliGroovyApplication implements GroovyApplicationFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "PicoCLI Groovy";
-    }
-
-    @Override
-    public String getDescription() {
-        return getTitle() + " Support";
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         GroovyApplicationFeature.super.apply(generatorContext);
 

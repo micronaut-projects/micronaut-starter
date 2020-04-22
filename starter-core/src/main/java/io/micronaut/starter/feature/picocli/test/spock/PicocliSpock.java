@@ -33,16 +33,6 @@ public class PicocliSpock implements Feature {
     }
 
     @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("picocliSpock", getTemplate(generatorContext.getProject()));
     }
@@ -56,8 +46,4 @@ public class PicocliSpock implements Feature {
         return applicationType == ApplicationType.CLI;
     }
 
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
 }

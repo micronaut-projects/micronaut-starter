@@ -41,12 +41,7 @@ sourceLanguage: java""")
         codeGenConfig.legacy
 
         when:
-        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput)) {
-            @Override
-            void out(String message) {
-                consoleOutput.out(message)
-            }
-        }.call()
+        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
 
         then:
         noExceptionThrown()
@@ -87,12 +82,7 @@ sourceLanguage: java""")
         codeGenConfig.legacy
 
         when:
-        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput)) {
-            @Override
-            void out(String message) {
-                consoleOutput.out(message)
-            }
-        }.call()
+        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
 
         then:
         noExceptionThrown()

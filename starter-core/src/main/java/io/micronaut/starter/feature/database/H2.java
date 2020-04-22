@@ -28,16 +28,6 @@ public class H2 implements Feature {
     }
 
     @Override
-    public String getTitle() {
-        return "H2 Database";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the H2 in-memory database";
-    }
-
-    @Override
     public boolean isVisible() {
         return false;
     }

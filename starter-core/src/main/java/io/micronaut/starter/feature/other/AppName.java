@@ -41,16 +41,6 @@ public class AppName implements DefaultFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Application Name Support";
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
     public int getOrder() {
         return FeaturePhase.LOWEST.getOrder();
     }
