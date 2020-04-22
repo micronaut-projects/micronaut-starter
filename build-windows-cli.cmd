@@ -1,0 +1,1 @@
+powershell -Command "%GRAAL_FILE%\bin\native-image --no-fallback --no-server -cp @(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]"
