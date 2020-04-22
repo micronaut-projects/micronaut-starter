@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.cli.feature.database;
 
 import io.micronaut.context.annotation.Parameter;
@@ -25,7 +40,7 @@ public class CreateRepositoryCommand extends CodeGenCommand {
 
     private static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
 
-    @CommandLine.Parameters(index="0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
+    @CommandLine.Parameters(index = "0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
     String repositoryName;
 
     @CommandLine.Option(names = {"-i", "--idType"}, description = "Specify custom id type [Integer, Long, String] or full package name [ie. com.corp.Book] - Defaults to Long")

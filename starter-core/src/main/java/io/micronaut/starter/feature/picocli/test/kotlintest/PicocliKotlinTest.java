@@ -15,20 +15,14 @@
  */
 package io.micronaut.starter.feature.picocli.test.kotlintest;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
-import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
 public class PicocliKotlinTest implements PicocliTestFeature {

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.cli.feature.server.controller;
 
 import io.micronaut.context.annotation.Parameter;
@@ -5,7 +20,6 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.cli.command.project.test.*;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.io.ConsoleOutput;
@@ -20,15 +34,14 @@ import picocli.CommandLine;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @CommandLine.Command(name = "create-controller", description = "Creates a controller and associated test")
 public class CreateControllerCommand extends CodeGenCommand {
 
-    private final List<Feature> features;
-
     @CommandLine.Parameters(paramLabel = "CONTROLLER-NAME", description = "The name of the controller to create")
     String controllerName;
+
+    private final List<Feature> features;
 
     @Inject
     public CreateControllerCommand(@Parameter CodeGenConfig config, List<Feature> features) {
