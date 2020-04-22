@@ -1,12 +1,20 @@
 package io.micronaut.starter.generator
 
+import io.micronaut.context.BeanContext
+import io.micronaut.starter.fixture.CommandFixture
+import spock.lang.AutoCleanup
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 import spock.util.environment.OperatingSystem
 
 import java.nio.file.Files
 
-class CommandSpec extends Specification {
+abstract class CommandSpec extends Specification implements CommandFixture {
+
+    @Shared
+    @AutoCleanup
+    BeanContext beanContext = BeanContext.run()
 
     File dir = Files.createTempDirectory('mn-starter').toFile()
     StringBuilder output
