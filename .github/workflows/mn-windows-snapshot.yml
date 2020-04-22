@@ -10,12 +10,8 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
-      - name: Install GraalVM
-        run: .\install-graal.cmd
-      - name: Build the JAR
-        run: .\gradlew.bat clean starter-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: .\build-windows-cli.cmd
+        run: .\build-windows-native.cmd
       - name: Verify Build
         run: .\mn.exe --version
       - name: Verify Create App

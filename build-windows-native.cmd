@@ -67,3 +67,9 @@ echo Setting JAVA_HOME=%JAVA_HOME%
 %JAVA_HOME%\bin\java -version
 
 echo "GraalVM %GRAAL_VERSION% Install Complete."
+
+echo "Building Micronaut Starter JAR"
+.\gradlew.bat clean starter-cli:shadowJar --no-daemon
+
+echo "Building Native Image"
+powershell -Command "%JAVA_HOME%\bin\native-image --no-fallback --no-server -cp @(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]"
