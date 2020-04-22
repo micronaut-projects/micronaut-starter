@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import io.micronaut.http.*
+import org.junit.jupiter.api.Test
+import io.micronaut.gcp.function.http.*
+import org.junit.jupiter.api.Assertions
+
+class @project.getClassName()FunctionTest {
+
+    @@Test
+    fun testFunction() {
+        HttpFunction().use { function ->
+           GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+           Assertions.assertEquals(HttpStatus.OK, response.getStatus());
+        }
+    }
+}

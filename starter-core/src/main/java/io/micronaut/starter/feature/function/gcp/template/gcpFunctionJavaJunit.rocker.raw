@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import io.micronaut.gcp.function.http.*;
 
-public class @project.getClassName()ControllerTest {
+public class @project.getClassName()FunctionTest {
 
     @@Test
-    public void testHello() throws Exception {
+    public void testFunction() throws Exception {
         try (HttpFunction function = new HttpFunction()) {
-            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/hello");
+            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()");
             assertEquals(HttpStatus.OK, response.getStatus());
         }
     }

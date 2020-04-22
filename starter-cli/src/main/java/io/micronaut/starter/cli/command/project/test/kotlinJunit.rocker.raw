@@ -24,7 +24,7 @@ class @project.getClassName()Test {
 
     @@Test
     fun testItWorks() {
-        assertEquals(HttpStatus.OK, client.toBlocking().exchange("/@project.getPropertyName()").status())
+        Assertions.assertEquals(HttpStatus.OK, client.toBlocking().exchange("/@project.getPropertyName()").status())
     }
 
 }

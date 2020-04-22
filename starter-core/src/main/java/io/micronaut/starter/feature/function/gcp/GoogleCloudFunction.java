@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.feature.function.gcp;
 
+import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
-import io.micronaut.starter.feature.lang.java.application;
+import io.micronaut.starter.feature.function.gcp.template.*;
 import io.micronaut.starter.feature.server.template.groovyController;
 import io.micronaut.starter.feature.server.template.javaController;
 import io.micronaut.starter.options.Language;
@@ -83,28 +83,35 @@ public class GoogleCloudFunction implements FunctionFeature {
             }
 
             TestFramework testFramework = generatorContext.getTestFramework();
+            String testFile = language.getTestSrcDir() + "/{packagePath}/HelloFunctionTest." + language.getExtension();
+            RockerModel testTemplate = null;
             switch (testFramework) {
                 case JUNIT:
                     switch (language) {
                         case JAVA:
-                            generatorContext.addTemplate("testFunction", new RockerTemplate(
-                                    "src/test/java/{packagePath}/HelloControllerTest.java",
-                                    gcpFunctionJavaJunit.template(project)));
+                            testTemplate = gcpFunctionJavaJunit.template(project);
                         break;
                         case GROOVY:
-
+                            testTemplate = gcpFunctionGroovyJunit.template(project);
                         break;
                         case KOTLIN:
-
+                            testTemplate = gcpFunctionKotlinJunit.template(project);
                         break;
                     }
                 break;
                 case SPOCK:
-
+                    testTemplate = gcpFunctionSpock.template(project);
                 break;
                 case KOTLINTEST:
-
+                    testTemplate = gcpFunctionKotlinTest.template(project);
                 break;
+            }
+
+            if (testTemplate != null) {
+                generatorContext.addTemplate("testFunction", new RockerTemplate(
+                        testFile,
+                        testTemplate)
+                );
             }
 
         }
