@@ -14,10 +14,10 @@ class AlexaHttpServerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['alexa-http-server'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.aws:micronaut-aws-alexa-httpserver"')
+        template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class AlexaHttpServerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList().toList()
     }
 
 }

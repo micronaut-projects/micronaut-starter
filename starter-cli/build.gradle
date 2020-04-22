@@ -72,31 +72,6 @@ rocker {
     markAsGenerated null
 }
 
-task generateManpageAsciiDoc(type: JavaExec) {
-    dependsOn(classes)
-    group = "Documentation"
-    description = "Generate AsciiDoc manpage"
-    classpath(configurations.compile, configurations.generateConfig, sourceSets.main.runtimeClasspath)
-    main 'picocli.codegen.docgen.manpage.ManPageGenerator'
-    args mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
-}
-
-task copyAdocs(type: Copy) {
-    from file("${projectDir}/src/docs/asciidoc")
-    include "**/*.adoc"
-    into file("${project.buildDir}/generated-picocli-docs")
-}
-
-apply plugin: 'org.asciidoctor.convert'
-
-asciidoctor {
-    dependsOn(generateManpageAsciiDoc, copyAdocs)
-    sourceDir = file("${project.buildDir}/generated-picocli-docs")
-    outputDir = file("${project.buildDir}/docs")
-    logDocuments = true
-    backends 'manpage', 'html5'
-}
-
 File outDir = new File(project.buildDir, 'bin')
 
 task buildCompletion(type: JavaExec) {

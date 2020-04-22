@@ -15,10 +15,10 @@ class VertxPgSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['vertx-pg-client'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-vertx-pg-client"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-vertx-pg-client")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class VertxPgSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test vertx-pg-client configuration'() {

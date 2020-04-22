@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.lang.java;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -44,8 +46,13 @@ public class JavaApplication implements JavaApplicationFeature {
     public void apply(GeneratorContext generatorContext) {
         JavaApplicationFeature.super.apply(generatorContext);
 
-        generatorContext.addTemplate("application", new RockerTemplate(getPath(),
-                application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+        Features features = generatorContext.getFeatures();
+        boolean hasFunction = features.getFeatureList().stream().anyMatch(f -> f instanceof FunctionFeature);
+
+        if (!hasFunction) {
+            generatorContext.addTemplate("application", new RockerTemplate(getPath(),
+                    application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+        }
     }
 
     protected String getPath() {

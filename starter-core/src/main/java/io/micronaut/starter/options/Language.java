@@ -18,14 +18,48 @@ package io.micronaut.starter.options;
 import io.micronaut.starter.feature.Feature;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
 public enum Language {
-    JAVA,
-    GROOVY,
-    KOTLIN;
+    JAVA("java"),
+    GROOVY("groovy"),
+    KOTLIN("kt");
+
+    private final String extension;
+
+    Language(String extension) {
+        this.extension = extension;
+    }
+
+    /**
+     * @return The extensions
+     */
+    public String getExtension() {
+        return extension;
+    }
+
+    public static String[] extensions() {
+        return Arrays.stream(values()).map(Language::getExtension).toArray(String[]::new);
+    }
+
+    public static String[] srcDirs() {
+        return Arrays.stream(values()).map(Language::getSrcDir).toArray(String[]::new);
+    }
+
+    public static String[] testSrcDirs() {
+        return Arrays.stream(values()).map(Language::getTestSrcDir).toArray(String[]::new);
+    }
+
+    public String getSrcDir() {
+        return "src/main/" + name().toLowerCase(Locale.ENGLISH);
+    }
+
+    public String getTestSrcDir() {
+        return "src/test/" + name().toLowerCase(Locale.ENGLISH);
+    }
 
     public static Language infer(List<Feature> features) {
         return features.stream()

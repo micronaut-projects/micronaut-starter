@@ -14,10 +14,10 @@ class RssItunesSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['rss-itunes-podcast'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-itunespodcast"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-itunespodcast")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class RssItunesSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
 }

@@ -11,13 +11,12 @@ package @project.getPackageName()
 
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
-import io.micronaut.http.HttpStatus
 
 @@Controller("/@project.getPropertyName()")
 class @project.getClassName()Controller {
 
-    @@Get("/")
-    HttpStatus index() {
-        HttpStatus.OK
+    @@Get(uri="/", produces="text/plain")
+    String index() {
+        "Example Response"
     }
 }

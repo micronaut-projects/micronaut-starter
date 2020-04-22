@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -44,6 +45,6 @@ public class Netty implements ServerFeature, DefaultFeature {
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
-                selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature);
+                selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
     }
 }

@@ -20,8 +20,18 @@ import java.util.Locale;
 
 public enum BuildTool {
 
-    GRADLE,
-    MAVEN;
+    GRADLE("build/libs"),
+    MAVEN("target");
+
+    private final String jarDirectory;
+
+    BuildTool(String jarDirectory) {
+        this.jarDirectory = jarDirectory;
+    }
+
+    public String getJarDirectory() {
+        return jarDirectory;
+    }
 
     @Override
     public String toString() {

@@ -15,10 +15,10 @@ class ConfigConsulSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['config-consul'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-discovery-client"')
+        template.contains('implementation("io.micronaut:micronaut-discovery-client")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test gradle config-consul multiple features'() {
@@ -26,7 +26,7 @@ class ConfigConsulSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['config-consul', 'discovery-consul'])).render().toString()
 
         then:
-        template.count('implementation "io.micronaut:micronaut-discovery-client"') == 1
+        template.count('implementation("io.micronaut:micronaut-discovery-client")') == 1
     }
 
     @Unroll
@@ -44,7 +44,7 @@ class ConfigConsulSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test maven config-consul multiple features'() {

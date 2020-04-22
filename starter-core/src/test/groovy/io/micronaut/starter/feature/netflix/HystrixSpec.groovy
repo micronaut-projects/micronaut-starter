@@ -15,10 +15,10 @@ class HystrixSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['netflix-hystrix'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-netflix-hystrix"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-netflix-hystrix")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class HystrixSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test netflix-hystrix configuration'() {

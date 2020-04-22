@@ -18,7 +18,7 @@ class AsciidoctorSpec extends BeanContextSpec {
         template.contains("apply from: 'gradle/asciidoc.gradle'")
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -46,7 +46,7 @@ class AsciidoctorSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
 }

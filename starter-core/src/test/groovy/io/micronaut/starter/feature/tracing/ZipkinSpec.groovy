@@ -15,13 +15,13 @@ class ZipkinSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['tracing-zipkin'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-tracing"')
-        template.contains('implementation "io.opentracing.brave:brave-opentracing"')
+        template.contains('implementation("io.micronaut:micronaut-tracing")')
+        template.contains('implementation("io.opentracing.brave:brave-opentracing")')
         template.contains('runtimeOnly "io.zipkin.brave:brave-instrumentation-http"')
         template.contains('runtimeOnly "io.zipkin.reporter2:zipkin-reporter"')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -60,7 +60,7 @@ class ZipkinSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test tracing-zipkin configuration'() {

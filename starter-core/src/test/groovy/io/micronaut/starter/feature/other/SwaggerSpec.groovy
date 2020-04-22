@@ -14,7 +14,7 @@ class SwaggerSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['swagger'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.swagger.core.v3:swagger-annotations"')
+        template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
         template.contains("$scope \"io.micronaut.configuration:micronaut-openapi\"")
 
         where:

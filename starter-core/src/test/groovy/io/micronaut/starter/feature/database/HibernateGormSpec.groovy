@@ -24,8 +24,8 @@ class HibernateGormSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(["hibernate-gorm"])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-gorm\"")
-        template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-validator\"")
+        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-gorm")')
+        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-validator")')
         template.contains("runtimeOnly \"com.h2database:h2\"")
         template.contains("runtimeOnly \"org.apache.tomcat:tomcat-jdbc\"")
     }

@@ -9,15 +9,13 @@ package @project.getPackageName();
 }
 
 
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.HttpStatus;
+import io.micronaut.http.annotation.*;
 
 @@Controller("/@project.getPropertyName()")
 public class @project.getClassName()Controller {
 
-    @@Get("/")
-    public HttpStatus index() {
-        return HttpStatus.OK;
+    @@Get(uri="/", produces="text/plain")
+    public String index() {
+        return "Example Response";
     }
 }

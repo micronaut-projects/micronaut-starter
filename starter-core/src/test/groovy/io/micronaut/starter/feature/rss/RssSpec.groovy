@@ -14,10 +14,10 @@ class RssSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['rss'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-rss"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-rss")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class RssSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
 }

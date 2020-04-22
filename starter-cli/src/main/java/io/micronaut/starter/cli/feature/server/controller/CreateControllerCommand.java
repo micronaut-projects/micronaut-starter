@@ -22,6 +22,7 @@ import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.ServerFeature;
+import io.micronaut.starter.feature.server.template.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;

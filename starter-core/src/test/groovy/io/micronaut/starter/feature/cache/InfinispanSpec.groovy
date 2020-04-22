@@ -15,10 +15,10 @@ class InfinispanSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['cache-infinispan'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.cache:micronaut-cache-infinispan"')
+        template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class InfinispanSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test cache-infinispan configuration'() {

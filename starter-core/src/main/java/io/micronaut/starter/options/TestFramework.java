@@ -32,4 +32,20 @@ public enum TestFramework {
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }
+
+    public String getFilename(String path, Language language) {
+        switch (this) {
+            case SPOCK:
+                return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
+            case KOTLINTEST:
+                return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
+            case JUNIT:
+            default:
+                if (language != null) {
+                    return language.getTestSrcDir() + path + "Test."  + language.getExtension();
+                } else {
+                    return Language.JAVA.getTestSrcDir() + "Test." + path + Language.JAVA.getExtension();
+                }
+        }
+    }
 }

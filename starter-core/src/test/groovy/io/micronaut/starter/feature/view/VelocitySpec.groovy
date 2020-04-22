@@ -14,11 +14,11 @@ class VelocitySpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['views-velocity'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-views-velocity"')
+        template.contains('implementation("io.micronaut:micronaut-views-velocity")')
         template.contains('runtime "org.apache.velocity:velocity-engine-core:2.0"')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -42,7 +42,7 @@ class VelocitySpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
 }

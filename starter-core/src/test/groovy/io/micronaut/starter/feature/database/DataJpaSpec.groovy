@@ -25,8 +25,8 @@ class DataJpaSpec extends BeanContextSpec {
 
         then:
         template.contains("annotationProcessor \"io.micronaut.data:micronaut-data-processor\"")
-        template.contains("implementation \"io.micronaut.data:micronaut-data-jpa\"")
-        template.contains("implementation \"io.micronaut.configuration:micronaut-jdbc-tomcat\"")
+        template.contains('implementation("io.micronaut.data:micronaut-data-jpa")')
+        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")')
         template.contains("runtimeOnly \"com.h2database:h2\"")
     }
 

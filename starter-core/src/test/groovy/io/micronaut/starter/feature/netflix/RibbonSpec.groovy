@@ -15,10 +15,10 @@ class RibbonSpec extends BeanContextSpec {
         String template = buildGradle.template(buildProject(), getFeatures(['netflix-ribbon'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.configuration:micronaut-netflix-ribbon"')
+        template.contains('implementation("io.micronaut.configuration:micronaut-netflix-ribbon")')
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class RibbonSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values().toList()
     }
 
     void 'test netflix-ribbon configuration'() {

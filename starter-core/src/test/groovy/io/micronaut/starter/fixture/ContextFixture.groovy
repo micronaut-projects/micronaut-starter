@@ -39,6 +39,7 @@ trait ContextFixture {
                                        ApplicationType applicationType = ApplicationType.DEFAULT) {
 
         AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures, Qualifiers.byName(applicationType.name))
+
         ContextFactory factory = beanContext.getBean(ContextFactory)
 
         factory.createFeatureContext(availableFeatures,

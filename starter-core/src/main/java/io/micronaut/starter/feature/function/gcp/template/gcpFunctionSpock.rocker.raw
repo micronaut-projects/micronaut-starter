@@ -1,0 +1,27 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import io.micronaut.http.*
+import io.micronaut.gcp.function.http.*
+import spock.lang.*
+
+class @project.getClassName()FunctionSpec extends Specification {
+
+    @@Shared @@AutoCleanup
+    HttpFunction function = new HttpFunction()
+
+    void "test function"() {
+        when:"The function is executed"
+        GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+
+        then:"The response is correct"
+        response.status == HttpStatus.OK
+    }
+}
