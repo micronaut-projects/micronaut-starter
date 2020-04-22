@@ -72,7 +72,7 @@ public interface TestFeature extends DefaultFeature {
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 List<Feature> selectedFeatures) {
-        return options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage());
+        return applicationType != ApplicationType.CLI && (options.getTestFramework() == getTestFramework() ||
+                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
     }
 }

@@ -37,7 +37,7 @@ sourceLanguage: java
         config.testFramework == TestFramework.JUNIT
         config.sourceLanguage == Language.JAVA
         config.buildTool == BuildTool.GRADLE
-        config.features.containsAll(["java", "junit", "gradle"])
+        config.features.containsAll(["java", "gradle"])
 
         cleanup:
         dir.delete()

@@ -4,6 +4,8 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.AutoCleanup
 import spock.lang.Unroll
 
@@ -15,7 +17,7 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test basic create-cli-app for lang=#lang'() {
         given:
-        generateCliProject(lang)
+        generateCliProject(new Options(lang, null, BuildTool.GRADLE))
 
         when:
         executeGradleCommand('run --args="-v"')
@@ -30,7 +32,7 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test basic maven create-cli-app for lang=#lang'() {
         given:
-        generateCliProject(lang, BuildTool.MAVEN)
+        generateCliProject(new Options(lang, null, BuildTool.MAVEN))
 
         when:
         executeMavenCommand("mn:run -Dmn.appArgs=-v")
@@ -43,9 +45,9 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
     }
 
     @Unroll
-    void 'test basic create-cli-app test for lang=#lang'() {
+    void 'test basic create-cli-app test for lang=#lang and #testFramework'() {
         given:
-        generateCliProject(lang)
+        generateCliProject(new Options(lang, testFramework, BuildTool.GRADLE))
 
         when:
         executeGradleCommand('test')
@@ -54,13 +56,18 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESSFUL")
 
         where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
+        lang            | testFramework
+        Language.JAVA   | TestFramework.JUNIT
+        Language.GROOVY | TestFramework.JUNIT
+        Language.KOTLIN | TestFramework.JUNIT
+        Language.GROOVY | TestFramework.SPOCK
+        Language.KOTLIN | TestFramework.KOTLINTEST
     }
 
     @Unroll
     void 'test basic maven create-cli-app test for lang=#lang'() {
         given:
-        generateCliProject(lang, BuildTool.MAVEN)
+        generateCliProject(new Options(lang, testFramework, BuildTool.MAVEN))
 
         when:
         executeMavenCommand("compile test")
@@ -69,7 +76,12 @@ class CreateCliSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
+        lang            | testFramework
+        Language.JAVA   | TestFramework.JUNIT
+        Language.GROOVY | TestFramework.JUNIT
+        Language.KOTLIN | TestFramework.JUNIT
+        Language.GROOVY | TestFramework.SPOCK
+        Language.KOTLIN | TestFramework.KOTLINTEST
     }
 
 

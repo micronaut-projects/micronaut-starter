@@ -16,10 +16,10 @@ trait CommandFixture {
 
     abstract File getDir()
 
-    void generateCliProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
+    void generateCliProject(Options options, List<String> features = []) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, null, buildTool),
+                options,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP

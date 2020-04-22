@@ -15,18 +15,22 @@
  */
 package io.micronaut.starter.feature.picocli.test.junit;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
+import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
-public class PicocliJunit implements Feature {
+public class PicocliJunit implements PicocliTestFeature {
 
     @Override
     public String getName() {
@@ -34,25 +38,30 @@ public class PicocliJunit implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
+    }
+
+    @Override
+    public TestFramework getTestFramework() {
+        return TestFramework.JUNIT;
+    }
+
+    @Override
+    public Language getDefaultLanguage() {
+        return Language.JAVA;
     }
 
     public RockerTemplate getTemplate(Language language, Project project) {
         if (language == Language.JAVA) {
             return new RockerTemplate("src/test/java/{packagePath}/{className}CommandTest.java", picocliJunitTest.template(project));
         } else if (language == Language.GROOVY) {
-            return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandSpec.groovy", picocliGroovyJunitTest.template(project));
+            return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandTest.groovy", picocliGroovyJunitTest.template(project));
         } else if (language == Language.KOTLIN) {
-            return new RockerTemplate("src/test/kotlin/{packagePath}/{className}CommandSpec.kt", picocliKotlinJunitTest.template(project));
+            return new RockerTemplate("src/test/kotlin/{packagePath}/{className}CommandTest.kt", picocliKotlinJunitTest.template(project));
         } else {
             return null;
         }
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.CLI;
     }
 
 }
