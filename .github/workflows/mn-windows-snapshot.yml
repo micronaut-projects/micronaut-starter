@@ -16,8 +16,8 @@ jobs:
       - uses: actions/checkout@v1
       - uses: DeLaGuardo/setup-graalvm@2.0
         with:
-          graalvm-version: '19.3.0.2.java11'
-      - run: java -version
+          graalvm-version: '20.0.0.java11'
+      - run: gu install native-image
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         run: |
           choco install visualstudio2017-workload-vctools
