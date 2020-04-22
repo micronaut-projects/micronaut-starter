@@ -47,7 +47,7 @@ public class JavaApplication implements JavaApplicationFeature {
         JavaApplicationFeature.super.apply(generatorContext);
 
         Features features = generatorContext.getFeatures();
-        boolean hasFunction = features.getFeatureList().stream().anyMatch(f -> f instanceof FunctionFeature);
+        boolean hasFunction = features.getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
 
         if (!hasFunction) {
             generatorContext.addTemplate("application", new RockerTemplate(getPath(),

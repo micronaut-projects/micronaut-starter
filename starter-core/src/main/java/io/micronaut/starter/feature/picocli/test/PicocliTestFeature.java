@@ -20,14 +20,14 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Options;
 
-import java.util.List;
+import java.util.Set;
 
 public interface PicocliTestFeature extends TestFeature {
 
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
-                                List<Feature> selectedFeatures) {
+                                Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.CLI && (options.getTestFramework() == getTestFramework() ||
                 (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
     }

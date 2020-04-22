@@ -24,8 +24,8 @@ import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
@@ -46,7 +46,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof LoggingFeature);
     }
 

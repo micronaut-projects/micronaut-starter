@@ -24,14 +24,14 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.externalconfig.ExternalConfigFeature;
 
 import javax.inject.Singleton;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Singleton
 public class AppName implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return true;
     }
 

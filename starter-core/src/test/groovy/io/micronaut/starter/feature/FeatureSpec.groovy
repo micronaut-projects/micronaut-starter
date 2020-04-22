@@ -37,7 +37,7 @@ class FeatureSpec extends BeanContextSpec {
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
                                               new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
-                                              [feature]
+                                              [feature] as Set
         )
         commandCtx.applyFeatures()
 

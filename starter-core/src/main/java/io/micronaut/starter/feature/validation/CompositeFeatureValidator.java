@@ -21,6 +21,7 @@ import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Set;
 
 @Primary
 @Singleton
@@ -32,7 +33,7 @@ public class CompositeFeatureValidator implements FeatureValidator {
         this.featureValidators = featureValidators;
     }
 
-    public void validate(Options options, List<Feature> features) {
+    public void validate(Options options, Set<Feature> features) {
         for (FeatureValidator featureValidator: featureValidators) {
             featureValidator.validate(options, features);
         }

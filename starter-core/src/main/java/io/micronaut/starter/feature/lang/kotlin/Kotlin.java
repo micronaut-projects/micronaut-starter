@@ -25,6 +25,7 @@ import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Kotlin implements LanguageFeature {
@@ -61,7 +62,7 @@ public class Kotlin implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return options.getLanguage() == Language.KOTLIN;
     }
 }

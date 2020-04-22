@@ -16,7 +16,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "test desc"
             String title = "test title"
             Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
-        }])
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)
@@ -35,7 +35,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "groovy"
             String title = "groovy title"
             Optional<Language> requiredLanguage = Optional.of(Language.KOTLIN)
-        }])
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)
@@ -56,7 +56,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "groovy"
             String title = "groovy title"
             Class<?> featureClass = Object.class
-        }])
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)

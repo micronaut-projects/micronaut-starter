@@ -21,8 +21,10 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.*;
+import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
@@ -54,6 +56,11 @@ public class AzureFunction extends AbstractFunctionFeature {
     @Override
     public String getDescription() {
         return "Adds support for writing functions deployable to Microsoft Azure";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.exclude(feature -> feature instanceof ShadePlugin);
     }
 
     @Override

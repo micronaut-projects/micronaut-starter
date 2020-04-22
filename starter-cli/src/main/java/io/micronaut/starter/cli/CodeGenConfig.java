@@ -137,8 +137,6 @@ public class CodeGenConfig {
                 if (map.containsKey("profile")) {
                     codeGenConfig.legacy = true;
                     String profile = map.get("profile").toString();
-                    AvailableFeatures availableFeatures = null;
-                    List<Feature> features = new ArrayList<>();
                     if (profile.equals("service")) {
                         codeGenConfig.setApplicationType(ApplicationType.DEFAULT);
                     } else if (profile.equals("cli")) {
@@ -153,7 +151,7 @@ public class CodeGenConfig {
                         return null;
                     }
 
-                    availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(codeGenConfig.getApplicationType().getName()));
+                    AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(codeGenConfig.getApplicationType().getName()));
 
                     if (new File(directory, "build.gradle").exists()) {
                         codeGenConfig.setBuildTool(BuildTool.GRADLE);
@@ -169,7 +167,7 @@ public class CodeGenConfig {
                             .filter(f -> f.shouldApply(
                                     codeGenConfig.getApplicationType(),
                                     new Options(codeGenConfig.getSourceLanguage(), codeGenConfig.getTestFramework(), codeGenConfig.getBuildTool(), VersionInfo.getJavaVersion()),
-                                    features))
+                                    new HashSet<>()))
                             .map(Feature::getName)
                             .collect(Collectors.toList()));
 

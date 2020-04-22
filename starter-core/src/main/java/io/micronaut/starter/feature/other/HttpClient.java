@@ -22,15 +22,14 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class HttpClient implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
-                selectedFeatures.stream().anyMatch(feature -> feature.getName().equals(getName())) ||
                 selectedFeatures.stream().noneMatch(feature -> feature instanceof FunctionFeature);
     }
 

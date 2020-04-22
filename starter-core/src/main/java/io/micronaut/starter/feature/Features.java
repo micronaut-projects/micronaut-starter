@@ -24,18 +24,19 @@ import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Features extends ArrayList<String> {
 
-    private final List<Feature> featureList;
+    private final Set<Feature> featureList;
     private final BuildTool buildTool;
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
     private JdkVersion javaVersion;
 
-    public Features(List<Feature> featureList, Options options) {
+    public Features(Set<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));
         this.featureList = featureList;
         for (Feature feature: featureList) {
@@ -69,11 +70,7 @@ public class Features extends ArrayList<String> {
         return testFeature;
     }
 
-    public List<Feature> getFeatures() {
-        return featureList;
-    }
-
-    public List<Feature> getFeatureList() {
+    public Set<Feature> getFeatures() {
         return featureList;
     }
 

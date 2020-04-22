@@ -23,7 +23,7 @@ import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Kafka implements DefaultFeature, MessagingFeature {
@@ -51,7 +51,7 @@ public class Kafka implements DefaultFeature, MessagingFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.MESSAGING &&
                 selectedFeatures.stream().noneMatch(feature -> feature instanceof MessagingFeature);
     }

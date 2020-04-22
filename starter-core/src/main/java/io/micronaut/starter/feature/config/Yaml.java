@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.YamlTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
@@ -45,7 +45,7 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
     }
 

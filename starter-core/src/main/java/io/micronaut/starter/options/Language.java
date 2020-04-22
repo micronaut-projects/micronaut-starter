@@ -18,10 +18,7 @@ package io.micronaut.starter.options;
 import io.micronaut.starter.feature.Feature;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 public enum Language {
     JAVA("java"),
@@ -65,7 +62,7 @@ public enum Language {
         return getSrcDir() + path + "." + getExtension();
     }
 
-    public static Language infer(List<Feature> features) {
+    public static Language infer(Set<Feature> features) {
         return features.stream()
                 .map(Feature::getRequiredLanguage)
                 .filter(Optional::isPresent)

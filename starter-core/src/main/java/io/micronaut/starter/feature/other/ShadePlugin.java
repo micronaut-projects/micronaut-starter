@@ -23,23 +23,13 @@ import io.micronaut.starter.feature.function.azure.AzureFunction;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Adds a shaded JAR feature.
  */
 @Singleton
 public class ShadePlugin implements DefaultFeature {
-
-    @Override
-    public String getTitle() {
-        return "Shaded JAR";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds Support for Producing a Shaded (FAT) JAR";
-    }
 
     @NonNull
     @Override
@@ -48,8 +38,12 @@ public class ShadePlugin implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
-        return selectedFeatures.stream()
-                .noneMatch(f -> f.getName().equals("jib") || f.getName().equals(AzureFunction.NAME));
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return true;
     }
 }

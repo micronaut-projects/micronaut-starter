@@ -29,7 +29,7 @@ trait ContextFixture {
         Options options = new Options(language, testFramework, buildTool)
         FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
         featureContext.processSelectedFeatures()
-        List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
+        Set<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
         return new Features(finalFeatures, options)
     }

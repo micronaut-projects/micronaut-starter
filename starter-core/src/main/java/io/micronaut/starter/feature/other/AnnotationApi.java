@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class AnnotationApi implements Feature, DefaultFeature {
@@ -37,7 +37,7 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return options.getJavaVersion().majorVersion() >= 9;
     }
 }

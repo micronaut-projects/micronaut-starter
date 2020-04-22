@@ -60,7 +60,7 @@ public interface Feature extends Named, Ordered, Described, Toggleable {
 
     /**
      * If this method is called for a given feature then that feature was explicitly selected
-     * or was included by default as a result of {@link DefaultFeature#shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)}.
+     * or was included by default as a result of {@link DefaultFeature#shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)}.
      *
      * This method can be implemented to allow features to modify the list of features
      * that will apply to the project. The methods {@link FeatureContext#addFeature(Feature)}
@@ -76,7 +76,7 @@ public interface Feature extends Named, Ordered, Described, Toggleable {
 
     /**
      * If this method is called for a given feature that means the feature was explicitly selected,
-     * included by default as a result of {@link DefaultFeature#shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.List)},
+     * included by default as a result of {@link DefaultFeature#shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)},
      * or added explicitly by another feature through {@link FeatureContext#addFeature(Feature)}.
      *
      * At this point the feature list is set and cannot change.

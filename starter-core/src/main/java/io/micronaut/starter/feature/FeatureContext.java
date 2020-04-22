@@ -22,21 +22,20 @@ import io.micronaut.starter.feature.test.TestFeature;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class FeatureContext {
 
     private final ApplicationType command;
-    private final List<Feature> selectedFeatures;
+    private final Set<Feature> selectedFeatures;
     private final Options options;
     private final List<Feature> features = new ArrayList<>();
-    private List<FeaturePredicate> exclusions = new ArrayList<>();
+    private final List<FeaturePredicate> exclusions = new ArrayList<>();
     private ListIterator<Feature> iterator;
 
     public FeatureContext(Options options,
                           ApplicationType command,
-                          List<Feature> selectedFeatures) {
+                          Set<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
         if (options.getTestFramework() == null) {
@@ -66,7 +65,7 @@ public class FeatureContext {
         exclusions.add(exclusion);
     }
 
-    public List<Feature> getFinalFeatures(ConsoleOutput consoleOutput) {
+    public Set<Feature> getFinalFeatures(ConsoleOutput consoleOutput) {
         return features.stream().filter(feature -> {
             for (FeaturePredicate predicate: exclusions) {
                 if (predicate.test(feature)) {
@@ -75,7 +74,7 @@ public class FeatureContext {
                 }
             }
             return true;
-        }).collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        }).collect(collectingAndThen(toSet(), Collections::unmodifiableSet));
     }
 
     public List<Feature> getFeatures() {
@@ -106,6 +105,11 @@ public class FeatureContext {
         return features.stream().anyMatch(feature -> feature instanceof ApplicationFeature);
     }
 
+    /**
+     * Adds a feature to be applied. The added feature is processed immediately.
+     *
+     * @param feature The feature to add
+     */
     public void addFeature(Feature feature) {
         if (iterator != null) {
             iterator.add(feature);

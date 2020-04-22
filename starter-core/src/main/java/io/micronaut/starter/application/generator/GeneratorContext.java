@@ -50,7 +50,7 @@ public class GeneratorContext {
     public GeneratorContext(Project project,
                             ApplicationType command,
                             Options options,
-                            List<Feature> features) {
+                            Set<Feature> features) {
         this.command = command;
         this.project = project;
         this.features = new Features(features, options);

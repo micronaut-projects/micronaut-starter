@@ -26,8 +26,7 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Singleton
 public class ContextFactory {
@@ -42,7 +41,7 @@ public class ContextFactory {
                                                List<String> selectedFeatures,
                                                ApplicationType command,
                                                Options options) {
-        final List<Feature> features = new ArrayList<>(8);
+        final Set<Feature> features = Collections.newSetFromMap(new IdentityHashMap<>(8));
         for (String name: selectedFeatures) {
             Feature feature = availableFeatures.findFeature(name).orElse(null);
             if (feature != null) {
@@ -70,14 +69,14 @@ public class ContextFactory {
                                                    ConsoleOutput consoleOutput) {
         featureContext.processSelectedFeatures();
 
-        List<Feature> featureList = featureContext.getFinalFeatures(consoleOutput);
+        Set<Feature> featureList = featureContext.getFinalFeatures(consoleOutput);
 
         featureValidator.validate(featureContext.getOptions(), featureList);
 
         return new GeneratorContext(project, featureContext.getCommand(), featureContext.getOptions(), featureList);
     }
 
-    Language determineLanguage(Language language, List<Feature> features) {
+    Language determineLanguage(Language language, Set<Feature> features) {
         if (language == null) {
             language = Language.infer(features);
         }

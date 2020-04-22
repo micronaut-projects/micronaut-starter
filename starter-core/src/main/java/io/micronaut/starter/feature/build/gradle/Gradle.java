@@ -30,7 +30,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Gradle implements BuildFeature {
@@ -64,7 +64,7 @@ public class Gradle implements BuildFeature {
     @Override
     public boolean shouldApply(ApplicationType applicationType,
                                Options options,
-                               List<Feature> selectedFeatures) {
+                               Set<Feature> selectedFeatures) {
         return options.getBuildTool() == BuildTool.GRADLE;
     }
 }

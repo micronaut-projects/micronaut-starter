@@ -26,7 +26,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
-import java.util.List;
+import java.util.Set;
 
 public interface TestFeature extends DefaultFeature {
 
@@ -71,7 +71,7 @@ public interface TestFeature extends DefaultFeature {
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
-                                List<Feature> selectedFeatures) {
+                                Set<Feature> selectedFeatures) {
         return applicationType != ApplicationType.CLI && (options.getTestFramework() == getTestFramework() ||
                 (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
     }

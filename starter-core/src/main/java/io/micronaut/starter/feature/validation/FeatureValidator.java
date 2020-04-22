@@ -18,9 +18,9 @@ package io.micronaut.starter.feature.validation;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
 
-import java.util.List;
+import java.util.Set;
 
 public interface FeatureValidator {
 
-    void validate(Options options, List<Feature> features);
+    void validate(Options options, Set<Feature> features);
 }

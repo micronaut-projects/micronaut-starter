@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ListFeatures {
@@ -53,7 +54,7 @@ public class ListFeatures {
                 options);
         GeneratorContext generatorContext = contextFactory.createGeneratorContext(null, featureContext, ConsoleOutput.NOOP);
 
-        List<Feature> defaultFeatures = generatorContext.getFeatures().getFeatures();
+        Set<Feature> defaultFeatures = generatorContext.getFeatures().getFeatures();
         List<Feature> allFeatures = availableFeatures.getFeatures().collect(Collectors.toList());
 
         int width = allFeatures.stream()

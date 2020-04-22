@@ -7,7 +7,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class RandomPort implements DefaultFeature {
@@ -23,7 +23,7 @@ public class RandomPort implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, List<Feature> selectedFeatures) {
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT;
     }
 
