@@ -116,7 +116,7 @@ public class PreviewController extends AbstractCreateController implements Previ
                 null,
                 null,
                 null,
-                new RequestInfo("http://localhost","")
+                new RequestInfo("http://localhost", "")
         );
     }
 }

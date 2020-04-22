@@ -65,11 +65,6 @@ public class GoogleCloudFunction implements FunctionFeature {
 
             Language language = generatorContext.getLanguage();
             switch (language) {
-                case JAVA:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            "src/main/java/{packagePath}/HelloController.java",
-                            javaController.template(project)));
-                break;
                 case GROOVY:
                     generatorContext.addTemplate("function", new RockerTemplate(
                             "src/main/groovy/{packagePath}/HelloController.groovy",
@@ -80,31 +75,39 @@ public class GoogleCloudFunction implements FunctionFeature {
                             "src/main/kotlin/{packagePath}/HelloController.kt",
                             groovyController.template(project)));
                     break;
+                case JAVA:
+                default:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            "src/main/java/{packagePath}/HelloController.java",
+                            javaController.template(project)));
+                    break;
             }
 
             TestFramework testFramework = generatorContext.getTestFramework();
             String testFile = language.getTestSrcDir() + "/{packagePath}/HelloFunctionTest." + language.getExtension();
             RockerModel testTemplate = null;
             switch (testFramework) {
-                case JUNIT:
-                    switch (language) {
-                        case JAVA:
-                            testTemplate = gcpFunctionJavaJunit.template(project);
-                        break;
-                        case GROOVY:
-                            testTemplate = gcpFunctionGroovyJunit.template(project);
-                        break;
-                        case KOTLIN:
-                            testTemplate = gcpFunctionKotlinJunit.template(project);
-                        break;
-                    }
-                break;
                 case SPOCK:
                     testTemplate = gcpFunctionSpock.template(project);
                 break;
                 case KOTLINTEST:
                     testTemplate = gcpFunctionKotlinTest.template(project);
                 break;
+                case JUNIT:
+                default:
+                    switch (language) {
+                        case GROOVY:
+                            testTemplate = gcpFunctionGroovyJunit.template(project);
+                            break;
+                        case KOTLIN:
+                            testTemplate = gcpFunctionKotlinJunit.template(project);
+                            break;
+                        case JAVA:
+                        default:
+                            testTemplate = gcpFunctionJavaJunit.template(project);
+                            break;
+                    }
+                    break;
             }
 
             if (testTemplate != null) {

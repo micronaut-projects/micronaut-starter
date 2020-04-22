@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
