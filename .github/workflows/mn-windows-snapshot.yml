@@ -6,11 +6,7 @@ on:
 jobs:
   build:
     name: Builds Windows Native CLI
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [windows-2016, windows-latest]
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
       - name: Download GraalVM
@@ -26,7 +22,7 @@ jobs:
         shell: cmd
         env:
           JAVA_HOME: ./graalvm-ce-java11-20.0.0
-        run: ./gradlew starter-cli:copyShadowJar
+        run: ./gradlew starter-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: cmd
         env:
@@ -41,6 +37,6 @@ jobs:
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
-          name: mn-${{ matrix.os }}-snapshot.exe
+          name: mn-windows-amd64-snapshot.exe
           path: mn
 
