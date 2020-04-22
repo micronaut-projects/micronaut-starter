@@ -18,7 +18,7 @@ class SecuritySessionSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut:micronaut-security-session")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class SecuritySessionSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test security-session configuration'() {

@@ -18,7 +18,7 @@ class GraphQLSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.graphql:micronaut-graphql")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class GraphQLSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test graphql configuration'() {

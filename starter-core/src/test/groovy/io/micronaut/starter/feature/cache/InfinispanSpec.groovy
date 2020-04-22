@@ -18,7 +18,7 @@ class InfinispanSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class InfinispanSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test cache-infinispan configuration'() {

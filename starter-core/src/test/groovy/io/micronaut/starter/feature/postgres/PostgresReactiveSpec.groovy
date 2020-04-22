@@ -18,7 +18,7 @@ class PostgresReactiveSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-postgres-reactive")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class PostgresReactiveSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test postgres-reactive configuration'() {

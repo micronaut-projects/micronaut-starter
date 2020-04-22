@@ -17,7 +17,7 @@ class JacksonXmlSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.xml:micronaut-jackson-xml")')
 
         where:
-        language << Language.values().toList()
+        language << Language.values().toList().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class JacksonXmlSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values().toList()
+        language << Language.values().toList().toList()
     }
 
 }

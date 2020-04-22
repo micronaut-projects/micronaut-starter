@@ -18,7 +18,7 @@ class ElasticsearchSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-elasticsearch")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class ElasticsearchSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test elasticsearch configuration'() {

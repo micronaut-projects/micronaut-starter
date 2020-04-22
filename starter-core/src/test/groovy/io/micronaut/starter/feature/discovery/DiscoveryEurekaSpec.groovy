@@ -18,7 +18,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test discovery-eureka configuration'() {

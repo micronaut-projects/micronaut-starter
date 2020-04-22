@@ -20,7 +20,7 @@ class KubernetesSpec extends BeanContextSpec {
         template.contains('id "com.google.cloud.tools.jib" version "2.1.0"')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -38,7 +38,7 @@ class KubernetesSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test kubernetes configuration'() {

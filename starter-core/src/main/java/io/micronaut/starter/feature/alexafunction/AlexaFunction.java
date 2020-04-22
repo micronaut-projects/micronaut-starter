@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.alexa;
+package io.micronaut.starter.feature.alexafunction;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class AlexaHttpServer implements Feature {
-
+public class AlexaFunction implements Feature {
     @Override
     public String getName() {
-        return "alexa-http-server";
+        return "alexa-function";
     }
 
     @Override
     public String getTitle() {
-        return "Alexa Skill as Http Service";
+        return "Alexa Skill as Function";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for hosting a Custom Skill as a Web Service (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html).";
+        return "Adds support for hosting a Custom Alexa Skill as an AWS Lambda function (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-an-aws-lambda-function.html).";
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        if (applicationType == ApplicationType.FUNCTION) {
+            return true;
+        }
+
+        return false;
+    }
 }

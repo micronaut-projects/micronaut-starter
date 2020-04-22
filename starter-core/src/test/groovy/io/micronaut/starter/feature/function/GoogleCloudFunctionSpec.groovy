@@ -35,7 +35,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
         extension << Language.extensions()
         srcDir << Language.srcDirs()
         testSrcDir << Language.testSrcDirs()

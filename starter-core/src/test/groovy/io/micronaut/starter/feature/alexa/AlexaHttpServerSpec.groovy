@@ -17,7 +17,7 @@ class AlexaHttpServerSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class AlexaHttpServerSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList().toList()
     }
 
 }

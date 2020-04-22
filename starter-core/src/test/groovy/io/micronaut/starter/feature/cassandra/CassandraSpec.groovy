@@ -18,7 +18,7 @@ class CassandraSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-cassandra")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -36,7 +36,7 @@ class CassandraSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     void 'test cassandra configuration'() {

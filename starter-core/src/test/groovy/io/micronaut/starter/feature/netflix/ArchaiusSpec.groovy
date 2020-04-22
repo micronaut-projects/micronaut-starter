@@ -17,7 +17,7 @@ class ArchaiusSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.configuration:micronaut-netflix-archaius")')
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -35,7 +35,7 @@ class ArchaiusSpec extends BeanContextSpec {
 """)
 
         where:
-        language << Language.values()
+        language << Language.values().toList()
     }
 
 }
