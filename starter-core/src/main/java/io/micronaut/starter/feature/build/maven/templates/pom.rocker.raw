@@ -314,6 +314,9 @@ List<Property> properties
 @if (features.contains("rss-itunes-podcast")) {
 @dependency.template("io.micronaut.configuration", "micronaut-itunespodcast", "compile", null)
 }
+@if (features.contains("jackson-xml")) {
+@dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "compile", null)
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
