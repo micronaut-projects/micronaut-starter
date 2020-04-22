@@ -140,4 +140,5 @@ sdkman {
 task copyShadowJar(type: Copy) {
     from shadowJar.outputs
     into "${project.rootProject.buildDir}/libs"
+    rename { String fileName -> "cli.jar" }
 }
