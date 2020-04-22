@@ -16,9 +16,9 @@ jobs:
           GRAAL_OS: windows-amd64
           GRAAL_FILENAME: graalvm-ce-java8-${GRAAL_OS}-${GRAAL_VERSION}.zip
           GRAAL_DOWNLOAD: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME}
-        run: Invoke-RestMethod -Uri "$GRAAL_DOWNLOAD" -OutFile "$GRAAL_FILENAME"
+        run: Invoke-RestMethod -Uri "$env:GRAAL_DOWNLOAD" -OutFile "$env:GRAAL_FILENAME"
       - name: Install GraalVM
-        run: Expand-Archive -path "$GRAAL_FILENAME" -destinationpath '.\graalvm'
+        run: Expand-Archive -path "$env:GRAAL_FILENAME" -destinationpath '.\graalvm'
       - name: Install Native Image
         run: .\graalvm\bin\gu.cmd install native-image
       - name: Build the JAR
