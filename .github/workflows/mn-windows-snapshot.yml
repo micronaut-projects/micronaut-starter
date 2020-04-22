@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v1
       - name: Build Native Image
         run: .\build-windows-native.cmd
+      - name: List Info
+        run: Get-ChildItem -Path "."
       - name: Verify Build
         run: .\mn.exe --version
       - name: Verify Create App
