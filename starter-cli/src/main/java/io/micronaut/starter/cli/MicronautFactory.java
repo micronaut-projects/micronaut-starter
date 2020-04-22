@@ -17,6 +17,7 @@ package io.micronaut.starter.cli;
 
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.TypeHint;
+import io.micronaut.starter.cli.command.CodeGenCommand;
 import picocli.CommandLine;
 
 import java.util.Optional;
@@ -43,6 +44,9 @@ class MicronautFactory implements CommandLine.IFactory {
 
     @Override
     public <K> K create(Class<K> cls) throws Exception {
+        if ((CodeGenCommand.class.isAssignableFrom(cls))) {
+            return beanContext.createBean(cls, new CodeGenConfig());
+        }
         Optional<K> bean = beanContext.findOrInstantiateBean(cls);
         if (bean.isPresent()) {
             return bean.get();

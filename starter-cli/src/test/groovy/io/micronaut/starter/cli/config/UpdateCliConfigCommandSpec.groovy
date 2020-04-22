@@ -12,7 +12,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.AutoCleanup
 
-class UpdateCliConfigSpec extends CommandSpec implements CommandFixture {
+class UpdateCliConfigCommandSpec extends CommandSpec implements CommandFixture {
 
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
@@ -41,7 +41,7 @@ sourceLanguage: java""")
         codeGenConfig.legacy
 
         when:
-        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
+        Integer exitCode = new UpdateCliConfigCommand(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
 
         then:
         noExceptionThrown()
@@ -82,7 +82,7 @@ sourceLanguage: java""")
         codeGenConfig.legacy
 
         when:
-        Integer exitCode = new UpdateCliConfig(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
+        Integer exitCode = new UpdateCliConfigCommand(codeGenConfig, () -> new FileSystemOutputHandler(dir, consoleOutput), consoleOutput).call()
 
         then:
         noExceptionThrown()

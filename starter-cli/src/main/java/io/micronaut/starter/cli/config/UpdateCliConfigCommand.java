@@ -36,26 +36,26 @@ import java.util.Map;
 
 @CommandLine.Command(name = "update-cli-config", description = "Replaces the CLI configuration with the updated format")
 @Prototype
-public class UpdateCliConfig extends CodeGenCommand {
+public class UpdateCliConfigCommand extends CodeGenCommand {
 
     private static final Map<ApplicationType, String> COMMANDS = new LinkedHashMap<>(ApplicationType.values().length);
 
     static {
         COMMANDS.put(ApplicationType.DEFAULT, "create-app");
         COMMANDS.put(ApplicationType.CLI, "create-cli-app");
-        COMMANDS.put(ApplicationType.FUNCTION, "create-function");
+        COMMANDS.put(ApplicationType.FUNCTION, "create-function-app");
         COMMANDS.put(ApplicationType.GRPC, "create-grpc-app");
         COMMANDS.put(ApplicationType.MESSAGING, "create-messaging-app");
     }
 
     @Inject
-    public UpdateCliConfig(@Parameter CodeGenConfig codeGenConfig) {
+    public UpdateCliConfigCommand(@Parameter CodeGenConfig codeGenConfig) {
         super(codeGenConfig);
     }
 
-    public UpdateCliConfig(CodeGenConfig config,
-                           ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                           ConsoleOutput consoleOutput) {
+    public UpdateCliConfigCommand(CodeGenConfig config,
+                                  ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                  ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
