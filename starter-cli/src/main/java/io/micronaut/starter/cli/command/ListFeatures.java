@@ -54,7 +54,7 @@ public class ListFeatures {
         GeneratorContext generatorContext = contextFactory.createGeneratorContext(null, featureContext, ConsoleOutput.NOOP);
 
         List<Feature> defaultFeatures = generatorContext.getFeatures().getFeatures();
-        List<Feature> allFeatures = availableFeatures.getAllFeatures().collect(Collectors.toList());
+        List<Feature> allFeatures = availableFeatures.getFeatures().collect(Collectors.toList());
 
         int width = allFeatures.stream()
                 .map(Feature::getName)

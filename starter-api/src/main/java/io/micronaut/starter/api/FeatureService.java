@@ -59,7 +59,7 @@ public class FeatureService implements FeatureOperations {
     @Override
     public List<FeatureDTO> getFeatures(ApplicationType type) {
         return beanLocator.getBean(AvailableFeatures.class, Qualifiers.byName(type.getName()))
-                .getAllFeatures()
+                .getFeatures()
                 .map(FeatureDTO::new)
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
