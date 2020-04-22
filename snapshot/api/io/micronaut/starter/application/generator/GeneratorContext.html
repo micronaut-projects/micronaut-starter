@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,14 +198,22 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getProject--">getProject</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getSourcePath-java.lang.String-">getSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTemplates--">getTemplates</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestFramework--">getTestFramework</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestSourcePath-java.lang.String-">getTestSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#isFeaturePresent-java.lang.Class-">isFeaturePresent</a></span>(java.lang.Class&lt;? extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</code>&nbsp;</td>
 </tr>
@@ -419,10 +427,28 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/feature/Features.html" 
 <a name="isFeaturePresent-java.lang.Class-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isFeaturePresent</h4>
 <pre>public&nbsp;boolean&nbsp;isFeaturePresent(java.lang.Class&lt;? extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</pre>
+</li>
+</ul>
+<a name="getSourcePath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSourcePath</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getSourcePath(java.lang.String&nbsp;path)</pre>
+</li>
+</ul>
+<a name="getTestSourcePath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getTestSourcePath</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getTestSourcePath(java.lang.String&nbsp;path)</pre>
 </li>
 </ul>
 </li>

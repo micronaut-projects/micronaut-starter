@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,6 +182,12 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-">previewApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+          java.lang.String&nbsp;name,
+          java.util.List&lt;java.lang.String&gt;&nbsp;features)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
           java.lang.String&nbsp;name,
           java.util.List&lt;java.lang.String&gt;&nbsp;features,
@@ -249,7 +255,7 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 <a name="previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>previewApp</h4>
 <pre>@Get(uri="/{type}/{name}{?features,lang,build,test,javaVersion}",
@@ -282,6 +288,23 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.
 <dd><code>requestInfo</code> - The request info</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A preview of the application contents.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a name="previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>previewApp</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a>&nbsp;previewApp(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+                             java.lang.String&nbsp;name,
+                             @Nullable
+                             java.util.List&lt;java.lang.String&gt;&nbsp;features)
+                      throws java.io.IOException</pre>
+<dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>
