@@ -23,9 +23,10 @@ trait ContextFixture {
     Features getFeatures(List<String> features,
                          Language language = null,
                          TestFramework testFramework = null,
-                         BuildTool buildTool = BuildTool.GRADLE) {
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
         Options options = new Options(language, testFramework, buildTool)
-        FeatureContext featureContext = buildFeatureContext(features, options)
+        FeatureContext featureContext = buildFeatureContext(features, options, applicationType)
         featureContext.processSelectedFeatures()
         List<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validate(featureContext.getOptions(), finalFeatures)
@@ -33,14 +34,15 @@ trait ContextFixture {
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,
-                                       Options options = new Options(null, null, BuildTool.GRADLE)) {
-
-        AvailableFeatures availableFeatures = beanContext.getBean(DefaultAvailableFeatures)
+                                       Options options = new Options(null, null, BuildTool.GRADLE),
+                                       ApplicationType applicationType = ApplicationType.DEFAULT) {
+        
+        AvailableFeatures availableFeatures = beanContext.getBean(applicationType.getAvailableFeaturesClass())
         ContextFactory factory = beanContext.getBean(ContextFactory)
 
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
-                ApplicationType.DEFAULT,
+                applicationType,
                 options)
     }
 
