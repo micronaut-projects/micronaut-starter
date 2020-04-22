@@ -2,6 +2,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.feature.build.gradle.templates.dependency
 
 @args (
 Project project,
@@ -70,318 +71,318 @@ configurations {
 
 dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
+@if (!features.language().isGroovy() && (features.contains("graalvm") || features.contains("google-cloud-function"))) {
+    compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+}
 @if (features.contains("graalvm")) {
-    @if (!features.language().isGroovy()) {
-    compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
-    }
-    compileOnly "org.graalvm.nativeimage:svm"
+    @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
 @if (features.contains("google-cloud-function")) {
-    compileOnly "com.google.cloud.functions:functions-framework-api"
-    invoker "com.google.cloud.functions.invoker:java-function-invoker:@VersionInfo.getDependencyVersion("google.function.invoker").getValue()"
+    @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
+    @dependency.template("com.google.cloud.functions.invoker", "java-function-invoker", "invoker", VersionInfo.getDependencyVersion("google.function.invoker").getValue())
 }
-    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    implementation("io.micronaut:micronaut-inject")
-    implementation("io.micronaut:micronaut-validation")
+    implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    @dependency.template("io.micronaut", "micronaut-inject", "implementation", null)
+    @dependency.template("io.micronaut", "micronaut-validation", "implementation", null)
 @if (features.language().isKotlin()) {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "implementation", "${kotlinVersion}")
+    @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "implementation", "${kotlinVersion}")
 }
 @if (features.language().isGroovy()) {
-    implementation("io.micronaut:micronaut-runtime-groovy")
+    @dependency.template("io.micronaut", "micronaut-runtime-groovy", "implementation", null)
 } else {
-    implementation("io.micronaut:micronaut-runtime")
+    @dependency.template("io.micronaut", "micronaut-runtime", "implementation", null)
 }
 @if (features.contains("grpc")) {
-    implementation("io.micronaut.grpc:micronaut-grpc-runtime")
+    @dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "implementation", null)
 }
 @if (features.contains("picocli")) {
-    implementation("info.picocli:picocli")
-    implementation("io.micronaut.configuration:micronaut-picocli")
+    @dependency.template("info.picocli", "picocli", "implementation", null)
+    @dependency.template("io.micronaut.configuration", "micronaut-picocli", "implementation", null)
 }
 @if (features.contains("annotation-api")) {
-    implementation("javax.annotation:javax.annotation-api")
+    @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
 }
 @if (features.contains("netty-server")) {
-    implementation("io.micronaut:micronaut-http-server-netty")
+    @dependency.template("io.micronaut", "micronaut-http-server-netty", "implementation", null)
 }
 @if (features.contains("jetty-server")) {
-    implementation("io.micronaut.servlet:micronaut-http-server-jetty")
+    @dependency.template("io.micronaut.servlet", "micronaut-http-server-jetty", "implementation", null)
 }
 @if (features.contains("undertow-server")) {
-    implementation("io.micronaut.servlet:micronaut-http-server-undertow")
+    @dependency.template("io.micronaut.servlet", "micronaut-http-server-undertow", "implementation", null)
 }
 @if (features.contains("tomcat-server")) {
-    implementation("io.micronaut.servlet:micronaut-http-server-tomcat")
+    @dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "implementation", null)
 }
 @if (features.contains("google-cloud-function")) {
-    implementation("io.micronaut.gcp:micronaut-gcp-function-http")
+    @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
-    testImplementation("io.micronaut.servlet:micronaut-servlet-core")
+    @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
     }
 }
 @if (features.contains("http-client")) {
-    implementation("io.micronaut:micronaut-http-client")
+    @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
 }
 @if (features.contains("swagger")) {
-    implementation("io.swagger.core.v3:swagger-annotations")
+    @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
 }
 @if (features.contains("management")) {
-    implementation("io.micronaut:micronaut-management")
+    @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
 }
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
-    implementation("io.micronaut:micronaut-discovery-client")
+    @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
 }
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
-    implementation("io.micronaut:micronaut-discovery-client")
+    @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
 }
 @if (features.contains("kubernetes")) {
-    implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")
+    @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "implementation", null)
 }
 @if (features.contains("micrometer")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-core")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-core", "implementation", null)
 }
 @if (features.contains("micrometer-appoptics")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-appoptics")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-appoptics", "implementation", null)
 }
 @if (features.contains("micrometer-atlas")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-atlas")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-atlas", "implementation", null)
 }
 @if (features.contains("micrometer-azure-monitor")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-azure-monitor")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-azure-monitor", "implementation", null)
 }
 @if (features.contains("micrometer-cloudwatch")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-cloudwatch")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-cloudwatch", "implementation", null)
 }
 @if (features.contains("micrometer-datadog")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-datadog")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-datadog", "implementation", null)
 }
 @if (features.contains("micrometer-dynatrace")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-dynatrace")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-dynatrace", "implementation", null)
 }
 @if (features.contains("micrometer-elastic")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-elastic")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-elastic", "implementation", null)
 }
 @if (features.contains("micrometer-ganglia")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-ganglia")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-ganglia", "implementation", null)
 }
 @if (features.contains("micrometer-graphite")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-graphite")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-graphite", "implementation", null)
 }
 @if (features.contains("micrometer-humio")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-humio")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-humio", "implementation", null)
 }
 @if (features.contains("micrometer-influx")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-influx")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-influx", "implementation", null)
 }
 @if (features.contains("micrometer-jmx")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-jmx")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-jmx", "implementation", null)
 }
 @if (features.contains("micrometer-kairos")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-kairos")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-kairos", "implementation", null)
 }
 @if (features.contains("micrometer-new-relic")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-new-relic")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-new-relic", "implementation", null)
 }
 @if (features.contains("micrometer-prometheus")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-prometheus")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-prometheus", "implementation", null)
 }
 @if (features.contains("micrometer-signalfx")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-signalfx")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-signalfx", "implementation", null)
 }
 @if (features.contains("micrometer-stackdriver")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-stackdriver")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-stackdriver", "implementation", null)
 }
 @if (features.contains("micrometer-statsd")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-statsd")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-statsd", "implementation", null)
 }
 @if (features.contains("micrometer-wavefront")) {
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-wavefront")
+    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-wavefront", "implementation", null)
 }
 @if (features.contains("netflix-archaius")) {
-    implementation("io.micronaut.configuration:micronaut-netflix-archaius")
+    @dependency.template("io.micronaut.configuration", "micronaut-netflix-archaius", "implementation", null)
 }
 @if (features.contains("netflix-hystrix")) {
-    implementation("io.micronaut.configuration:micronaut-netflix-hystrix")
+    @dependency.template("io.micronaut.configuration", "micronaut-netflix-hystrix", "implementation", null)
 }
 @if (features.contains("netflix-ribbon")) {
-    implementation("io.micronaut.configuration:micronaut-netflix-ribbon")
+    @dependency.template("io.micronaut.configuration", "micronaut-netflix-ribbon", "implementation", null)
 }
 @if (features.contains("tracing-zipkin")) {
-    implementation("io.micronaut:micronaut-tracing")
-    implementation("io.opentracing.brave:brave-opentracing")
-    runtimeOnly "io.zipkin.brave:brave-instrumentation-http"
-    runtimeOnly "io.zipkin.reporter2:zipkin-reporter"
+    @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
+    @dependency.template("io.opentracing.brave", "brave-opentracing", "implementation", null)
+    @dependency.template("io.zipkin.brave", "brave-instrumentation-http", "runtimeOnly", null)
+    @dependency.template("io.zipkin.reporter2", "zipkin-reporter", "runtimeOnly", null)
 }
 @if (features.contains("tracing-jaeger")) {
-    implementation("io.micronaut:micronaut-tracing")
-    runtimeOnly "io.jaegertracing:jaeger-thrift"
+    @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
+    @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
 }
 @if (features.contains("flyway")) {
-    implementation("io.micronaut.configuration:micronaut-flyway")
+    @dependency.template("io.micronaut.configuration", "micronaut-flyway", "implementation", null)
 }
 @if (features.contains("liquibase")) {
-    implementation("io.micronaut.configuration:micronaut-liquibase")
+    @dependency.template("io.micronaut.configuration", "micronaut-liquibase", "implementation", null)
 }
 @if (features.contains("jdbc-dbcp")) {
-    implementation("io.micronaut.configuration:micronaut-jdbc-dbcp")
+    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-dbcp", "implementation", null)
 }
 @if (features.contains("jdbc-tomcat")) {
-    implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")
+    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-tomcat", "implementation", null)
 }
 @if (features.contains("jdbc-hikari")) {
-    implementation("io.micronaut.configuration:micronaut-jdbc-hikari")
+    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "implementation", null)
 }
 @if (features.contains("data-jpa")) {
-    implementation("io.micronaut.data:micronaut-data-jpa")
+    @dependency.template("io.micronaut.data", "micronaut-data-jpa", "implementation", null)
 }
 @if (features.contains("data-jdbc")) {
-    implementation("io.micronaut.data:micronaut-data-jdbc")
+    @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "implementation", null)
 }
 @if (features.contains("hibernate-validator")) {
-    implementation("io.micronaut.configuration:micronaut-hibernate-validator")
+    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-validator", "implementation", null)
 }
 @if (features.contains("hibernate-gorm")) {
-    implementation("io.micronaut.configuration:micronaut-hibernate-gorm")
+    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "implementation", null)
 }
 @if (features.contains("hibernate-jpa")) {
-    implementation("io.micronaut.configuration:micronaut-hibernate-jpa")
+    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "implementation", null)
 }
 @if (features.contains("mongo-reactive")) {
-    implementation("io.micronaut.configuration:micronaut-mongo-reactive")
+    @dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "implementation", null)
 }
 @if (features.contains("mongo-gorm")) {
-    implementation("io.micronaut.configuration:micronaut-mongo-gorm")
+    @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "implementation", null)
 }
 @if (features.contains("neo4j-bolt")) {
-    implementation("io.micronaut.configuration:micronaut-neo4j-bolt")
+    @dependency.template("io.micronaut.configuration", "micronaut-neo4j-bolt", "implementation", null)
 }
 @if (features.contains("neo4j-gorm")) {
-    implementation("io.micronaut.configuration:micronaut-neo4j-gorm")
+    @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "implementation", null)
 }
 @if (features.contains("security-jwt")) {
-    implementation("io.micronaut:micronaut-security-jwt")
+    @dependency.template("io.micronaut", "micronaut-security-jwt", "implementation", null)
 }
 @if (features.contains("security-session")) {
-    implementation("io.micronaut:micronaut-security-session")
+    @dependency.template("io.micronaut", "micronaut-security-session", "implementation", null)
 }
 @if (features.contains("cassandra")) {
-    implementation("io.micronaut.configuration:micronaut-cassandra")
+    @dependency.template("io.micronaut.configuration", "micronaut-cassandra", "implementation", null)
 }
 @if (features.contains("elasticsearch")) {
-    implementation("io.micronaut.configuration:micronaut-elasticsearch")
+    @dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "implementation", null)
 }
 @if (features.contains("graphql")) {
-    implementation("io.micronaut.graphql:micronaut-graphql")
+    @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
 }
 @if (features.contains("postgres-reactive")) {
-    implementation("io.micronaut.configuration:micronaut-postgres-reactive")
+    @dependency.template("io.micronaut.configuration", "micronaut-postgres-reactive", "implementation", null)
 }
 @if (features.contains("redis-lettuce")) {
-    implementation("io.micronaut.configuration:micronaut-redis-lettuce")
+    @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
 @if (features.contains("vertx-pg-client")) {
-    implementation("io.micronaut.configuration:micronaut-vertx-pg-client")
+    @dependency.template("io.micronaut.configuration", "micronaut-vertx-pg-client", "implementation", null)
 }
 @if (features.contains("vertx-mysql-client")) {
-    implementation("io.micronaut.configuration:micronaut-vertx-mysql-client")
+    @dependency.template("io.micronaut.configuration", "micronaut-vertx-mysql-client", "implementation", null)
 }
 @if (features.contains("cache-caffeine")) {
-    implementation("io.micronaut.cache:micronaut-cache-caffeine")
+    @dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "implementation", null)
 }
 @if (features.contains("cache-ehcache")) {
-    implementation("io.micronaut.cache:micronaut-cache-ehcache")
+    @dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "implementation", null)
 }
 @if (features.contains("cache-hazelcast")) {
-    implementation("io.micronaut.cache:micronaut-cache-hazelcast")
+    @dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "implementation", null)
 }
 @if (features.contains("cache-infinispan")) {
-    implementation("io.micronaut.cache:micronaut-cache-infinispan")
+    @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "implementation", null)
 }
 @if (features.contains("kafka")) {
-    implementation("io.micronaut.kafka:micronaut-kafka")
+    @dependency.template("io.micronaut.kafka", "micronaut-kafka", "implementation", null)
 }
 @if (features.contains("kafka-streams")) {
-    implementation("io.micronaut.kafka:micronaut-kafka-streams")
+    @dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "implementation", null)
 }
 @if (features.contains("rabbitmq")) {
-    implementation("io.micronaut.configuration:micronaut-rabbitmq")
+    @dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "implementation", null)
 }
 @if (features.contains("file-watch-osx")) {
-    developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getMicronautVersion()"
+    @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", VersionInfo.getMicronautVersion())
 }
 @if (features.contains("alexa-http-server")) {
-    implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")
+    @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "implementation", null)
 }
 @if (features.contains("alexa-function")) {
-    implementation("io.micronaut.aws:micronaut-function-aws-alexa")
+    @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
 @if (features.contains("views-thymeleaf")) {
-    implementation("io.micronaut:micronaut-views-thymeleaf")
-    runtime "org.thymeleaf:thymeleaf:3.0.11.RELEASE"
+    @dependency.template("io.micronaut", "micronaut-views-thymeleaf", "implementation", null)
+    @dependency.template("org.thymeleaf", "thymeleaf", "runtime", "3.0.11.RELEASE")
 }
 @if (features.contains("views-handlebars")) {
-    implementation("io.micronaut:micronaut-views-handlebars")
-    runtime "com.github.jknack:handlebars:4.1.2"
+    @dependency.template("io.micronaut", "micronaut-views-handlebars", "implementation", null)
+    @dependency.template("com.github.jknack", "handlebars", "runtime", "4.1.2")
 }
 @if (features.contains("views-velocity")) {
-    implementation("io.micronaut:micronaut-views-velocity")
-    runtime "org.apache.velocity:velocity-engine-core:2.0"
+    @dependency.template("io.micronaut", "micronaut-views-velocity", "implementation", null)
+    @dependency.template("org.apache.velocity", "velocity-engine-core", "runtime", "2.0")
 }
 @if (features.contains("views-freemarker")) {
-    implementation("io.micronaut:micronaut-views-freemarker")
-    runtime "org.freemarker:freemarker:2.3.28"
+    @dependency.template("io.micronaut", "micronaut-views-freemarker", "implementation", null)
+    @dependency.template("org.freemarker", "freemarker", "runtime", "2.3.28")
 }
 @if (features.contains("views-rocker")) {
-    implementation("io.micronaut:micronaut-views-rocker")
+    @dependency.template("io.micronaut", "micronaut-views-rocker", "implementation", null)
 }
 @if (features.contains("views-soy")) {
-    implementation("io.micronaut:micronaut-views-soy")
-    implementation("com.google.template:soy:2019-09-03")
+    @dependency.template("io.micronaut", "micronaut-views-soy", "implementation", null)
+    @dependency.template("com.google.template", "soy", "implementation", "2019-09-03")
 }
 @if (features.contains("rss")) {
-    implementation("io.micronaut.configuration:micronaut-rss")
+    @dependency.template("io.micronaut.configuration", "micronaut-rss", "implementation", null)
 }
 @if (features.contains("rss-itunes-podcast")) {
-    implementation("io.micronaut.configuration:micronaut-itunespodcast")
+    @dependency.template("io.micronaut.configuration", "micronaut-itunespodcast", "implementation", null)
 }
 @if (features.contains("jackson-xml")) {
-    implementation("io.micronaut.xml:micronaut-jackson-xml")
+    @dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "implementation", null)
 }
 @if (features.contains("jax-rs")) {
-    implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")
+    @dependency.template("io.micronaut.jaxrs", "micronaut-jaxrs-server", "implementation", null)
 }
 @if (features.contains("jmx")) {
-    implementation("io.micronaut.configuration:micronaut-jmx")
+    @dependency.template("io.micronaut.configuration", "micronaut-jmx", "implementation", null)
 }
 @if (features.contains("log4j2")) {
-    implementation("org.apache.logging.log4j:log4j-core:2.12.1")
-    runtimeOnly "org.apache.logging.log4j:log4j-api:2.12.1"
-    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.12.1"
+    @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.12.1")
+    @dependency.template("org.apache.logging.log4j", "log4j-api", "runtimeOnly", "2.12.1")
+    @dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtimeOnly", "2.12.1")
 }
 @if (features.contains("logback")) {
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", "1.2.3")
 }
 @if (features.language().isKotlin()) {
-    runtimeOnly "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8"
+    @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", "2.9.8")
 }
 @if (features.contains("h2")) {
-    runtimeOnly "com.h2database:h2"
+    @dependency.template("com.h2database", "h2", "runtimeOnly", null)
 }
 @if (features.contains("hibernate-gorm")) {
-    runtimeOnly "org.apache.tomcat:tomcat-jdbc"
+    @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
 }
 
 @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())
 @if (features.contains("mongo-reactive")) {
-    testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1"
+    @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
 }
 @if (features.contains("google-cloud-function")) {
-    testImplementation "com.google.cloud.functions:functions-framework-api"
+    @dependency.template("com.google.cloud.functions", "functions-framework-api", "testImplementation", null)
 }
 @if (features.contains("neo4j-bolt")) {
-    testRuntime "org.neo4j.test:neo4j-harness"
+    @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntime", null)
 }
 }
 
