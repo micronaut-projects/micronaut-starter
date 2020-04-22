@@ -21,11 +21,14 @@ jobs:
         run: |
           choco install visualstudio2017-workload-vctools
       - name: Build JAR
-        run: ./gradlew starter-cli:shadowJar
-      - name: Build Native Image
         run: |
-          cmd.exe /C "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          native-image --no-fallback --no-server -cp @(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]
+          ./gradlew starter-cli:shadowJar
+          $env:JAR_FILE=@(gci .\starter-cli\build\libs\starter-cli-*-all.jar)[0]
+      - name: Build Native Image
+          shell: cmd
+          run: |
+            call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+            native-mage --no-server --no-fallback -cp "%JAR_FILE%"
       - name: Verify Build
         run: mn --version
       - name: Verify Create App
