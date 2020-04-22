@@ -1,0 +1,35 @@
+name: Windows Native CLI
+on:
+  push:
+    branches:
+      - windows-native
+jobs:
+  build:
+    name: Builds Windows Native CLI
+    runs-on: windows-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Download GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: windows-amd64
+        run: wget "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/$GRAAL_FILENAME" -outfile "$GRAAL_FILENAME"
+      - name: Install GraalVM
+        run: Expand-Archive -path "$GRAAL_FILENAME" -destinationpath '.\graalvm'
+      - name: Install Native Image
+        run: .\graalvm\bin\gu.cmd install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: .\graalvm
+        run: .\gradlew.bat clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: .\graalvm\bin\native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Upload Snapshot
+        uses: actions/upload-artifact@v1
+        with:
+          name: mn-windows-amd64-snapshot
+          path: mn
+
