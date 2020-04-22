@@ -1,6 +1,7 @@
 {
   "resources": [
     {"pattern":"gradle/.*$"},
+    {"pattern":"functions/.*$"},
     {"pattern":"maven/.*$"},
     {"pattern":"kotlintest/.*$"},
     {"pattern":".gitkeep"},

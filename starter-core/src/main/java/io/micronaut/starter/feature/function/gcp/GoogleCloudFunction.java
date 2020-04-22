@@ -17,18 +17,11 @@ package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.gcp.template.*;
-import io.micronaut.starter.feature.server.template.groovyController;
-import io.micronaut.starter.feature.server.template.javaController;
-import io.micronaut.starter.feature.server.template.kotlinController;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
@@ -39,7 +32,7 @@ import javax.inject.Singleton;
  * @since 2.0.0
  */
 @Singleton
-public class GoogleCloudFunction implements FunctionFeature {
+public class GoogleCloudFunction extends AbstractFunctionFeature {
 
     public static final String NAME = "google-cloud-function";
 
@@ -61,78 +54,45 @@ public class GoogleCloudFunction implements FunctionFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        ApplicationType type = generatorContext.getApplicationType();
-        if (type == ApplicationType.DEFAULT) {
-
-            Project project = generatorContext.getProject().withClassName("Hello");
-            BuildTool buildTool = generatorContext.getBuildTool();
-            generatorContext.addTemplate("readme", new RockerTemplate(
-                    "README.md",
-                    gcpFunctionReadme.template(project,
-                            generatorContext.getFeatures(),
-                            getRunCommand(buildTool),
-                            getBuildCommand(buildTool)
-                    )));
-            Language language = generatorContext.getLanguage();
-            String sourceFile = language.getSrcDir() + "/{packagePath}/HelloController." + language.getExtension();
-            TestFramework testFramework = generatorContext.getTestFramework();
-            String testSource =  testFramework.getFilename("/{packagePath}/HelloFunction", language);
-            switch (language) {
-                case GROOVY:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            groovyController.template(project)));
-                    break;
-                case KOTLIN:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            kotlinController.template(project)));
-                    break;
-                case JAVA:
-                default:
-                    generatorContext.addTemplate("function", new RockerTemplate(
-                            sourceFile,
-                            javaController.template(project)));
-                    break;
-            }
-
-
-            RockerModel testTemplate;
-            switch (testFramework) {
-                case SPOCK:
-                    testTemplate = gcpFunctionSpock.template(project);
-                break;
-                case KOTLINTEST:
-                    testTemplate = gcpFunctionKotlinTest.template(project);
-                break;
-                case JUNIT:
-                default:
-                    switch (language) {
-                        case GROOVY:
-                            testTemplate = gcpFunctionGroovyJunit.template(project);
-                            break;
-                        case KOTLIN:
-                            testTemplate = gcpFunctionKotlinJunit.template(project);
-                            break;
-                        case JAVA:
-                        default:
-                            testTemplate = gcpFunctionJavaJunit.template(project);
-                            break;
-                    }
-                    break;
-            }
-
-            if (testTemplate != null) {
-                generatorContext.addTemplate("testFunction", new RockerTemplate(
-                        testSource,
-                        testTemplate)
-                );
-            }
-
-        }
+        applyFunction(generatorContext, generatorContext.getApplicationType());
     }
 
-    private String getRunCommand(BuildTool buildTool) {
+    @Override
+    protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
+        return gcpFunctionReadme.template(project,
+                generatorContext.getFeatures(),
+                getRunCommand(buildTool),
+                getBuildCommand(buildTool)
+        );
+    }
+
+    @Override
+    protected RockerModel javaJUnitTemplate(Project project) {
+        return gcpFunctionJavaJunit.template(project);
+    }
+
+    @Override
+    protected RockerModel kotlinJUnitTemplate(Project project) {
+        return gcpFunctionKotlinJunit.template(project);
+    }
+
+    @Override
+    protected RockerModel groovyJUnitTemplate(Project project) {
+        return gcpFunctionGroovyJunit.template(project);
+    }
+
+    @Override
+    protected RockerModel kotlinTestTemplate(Project project) {
+        return gcpFunctionKotlinTest.template(project);
+    }
+
+    @Override
+    protected RockerModel spockTemplate(Project project) {
+        return gcpFunctionSpock.template(project);
+    }
+
+    @Override
+    protected String getRunCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw function:run";
         } else {
@@ -140,7 +100,8 @@ public class GoogleCloudFunction implements FunctionFeature {
         }
     }
 
-    private String getBuildCommand(BuildTool buildTool) {
+    @Override
+    protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw clean package";
         } else {

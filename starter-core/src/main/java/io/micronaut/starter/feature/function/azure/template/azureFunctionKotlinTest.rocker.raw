@@ -1,0 +1,26 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.microsoft.azure.functions.HttpStatus
+import io.micronaut.azure.function.http.HttpRequestMessageBuilder
+import io.micronaut.http.HttpMethod
+import io.kotlintest.specs.StringSpec
+import io.kotlintest.shouldBe
+
+class @project.getClassName()FunctionTest : StringSpec({
+
+    "test function" {
+       Function().use { function ->
+           val response = function.request(HttpMethod.GET, "/hello")
+                                  .invoke()
+           response.status shouldBe HttpStatus.OK
+        }
+    }
+})

@@ -157,4 +157,12 @@ public class GeneratorContext {
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
     }
+
+    public String getSourcePath(String path) {
+        return getLanguage().getSourcePath(path);
+    }
+
+    public String getTestSourcePath(String path) {
+        return getTestFramework().getSourcePath(path, getLanguage());
+    }
 }

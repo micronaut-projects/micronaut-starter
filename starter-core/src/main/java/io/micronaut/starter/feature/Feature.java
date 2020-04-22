@@ -18,6 +18,7 @@ package io.micronaut.starter.feature;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
+import io.micronaut.core.util.Toggleable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Language;
@@ -31,7 +32,7 @@ import java.util.Optional;
  * @author James Kleeh
  * @since 2.0.0
  */
-public interface Feature extends Named, Ordered, Described {
+public interface Feature extends Named, Ordered, Described, Toggleable {
 
     /**
      * @return The title of the feature
