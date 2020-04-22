@@ -15,26 +15,16 @@
  */
 package io.micronaut.starter.feature.rss;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Rss implements Feature {
+public class Rss extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "rss";
+    public Rss(@Named("rss") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public String getTitle() {
-        return "RSS Feed";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for generating RSS feeds (https://cyber.harvard.edu/rss/rss.html)";
-    }
-
 }

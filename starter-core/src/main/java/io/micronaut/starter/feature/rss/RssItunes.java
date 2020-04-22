@@ -15,26 +15,16 @@
  */
 package io.micronaut.starter.feature.rss;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class RssItunes implements Feature {
+public class RssItunes extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "rss-itunes-podcast";
+    public RssItunes(@Named("rssitunespodcast") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public String getTitle() {
-        return "RSS iTunes Podcast Feed";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for generating iTunes Podcast RSS feeds (https://itunespartner.apple.com/podcasts)";
-    }
-
 }

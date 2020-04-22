@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.elasticsearch;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Elasticsearch implements Feature {
+public class Elasticsearch extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "elasticsearch";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Elasticsearch Driver";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Elasticsearch in the application";
+    public Elasticsearch(@Named("elasticsearch") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

@@ -23,7 +23,7 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void "test feature #feature.name is not visible or has a description and title"() {
+    void "feature #feature.name is visible but does not have both description and title"() {
         expect:
         !feature.visible || (feature.description != null && feature.title != null)
 

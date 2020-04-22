@@ -15,26 +15,22 @@
  */
 package io.micronaut.starter.feature.alexa;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class AlexaHttpServer implements Feature {
+public class AlexaHttpServer extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "alexa-http-server";
+    public AlexaHttpServer(@Named("alexahttpserver") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override
-    public String getTitle() {
-        return "Alexa Skill as Http Service";
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for hosting a Custom Skill as a Web Service (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html).";
-    }
-
 }

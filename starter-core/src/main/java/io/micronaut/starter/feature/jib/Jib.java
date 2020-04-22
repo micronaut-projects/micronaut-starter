@@ -15,26 +15,16 @@
  */
 package io.micronaut.starter.feature.jib;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Jib implements Feature {
+public class Jib extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "jib";
+    public Jib(@Named("jib") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public String getTitle() {
-        return "Jib Docker Containers";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Jib builds";
-    }
-
 }

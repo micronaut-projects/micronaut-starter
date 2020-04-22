@@ -16,30 +16,21 @@
 package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
 import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Asciidoctor implements Feature {
+public class Asciidoctor extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "asciidoctor";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Asciidoctor Documentation";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds Asciidoctor documentation";
+    public Asciidoctor(@Named("asciidoctor") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

@@ -1,18 +1,12 @@
 package io.micronaut.starter.generator
 
-import io.micronaut.context.BeanContext
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.AutoCleanup
 import spock.lang.Unroll
 
-class CreateCliSpec extends CommandSpec implements CommandFixture {
-
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CreateCliSpec extends CommandSpec {
 
     @Unroll
     void 'test basic create-cli-app for lang=#lang'() {

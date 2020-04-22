@@ -27,14 +27,16 @@ public abstract class AvailableFeatures implements Iterable<String> {
     private final Map<String, Feature> features;
 
     public AvailableFeatures(List<Feature> features) {
-        this.features = new LinkedHashMap<>(features.size());
-        for (Feature feature: features) {
+        List<Feature> enabledFeatures = features.stream().filter(Feature::isEnabled).collect(Collectors.toList());
+        this.features = new LinkedHashMap<>(enabledFeatures.size());
+        for (Feature feature: enabledFeatures) {
             this.features.put(feature.getName(), feature);
         }
     }
 
     public AvailableFeatures(List<Feature> features, ApplicationType applicationType) {
         this.features = features.stream()
+                .filter(Feature::isEnabled)
                 .filter(f -> f.supports(applicationType))
                 .collect(Collectors.toMap(
                         Feature::getName,

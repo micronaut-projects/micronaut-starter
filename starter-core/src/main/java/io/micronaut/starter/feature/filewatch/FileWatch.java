@@ -17,33 +17,22 @@ package io.micronaut.starter.feature.filewatch;
 
 import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class FileWatch implements Feature {
+public class FileWatch extends ConfiguredFeature {
 
     private final FileWatchOsx fileWatchOsx;
 
-    public FileWatch(FileWatchOsx fileWatchOsx) {
+    public FileWatch(@Named("filewatch") FeatureConfiguration featureConfiguration,
+                     FileWatchOsx fileWatchOsx) {
+        super(featureConfiguration);
         this.fileWatchOsx = fileWatchOsx;
-    }
-
-    @Override
-    public String getName() {
-        return "file-watch";
-    }
-
-    @Override
-    public String getTitle() {
-        return "File Watch Support";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds automatic restarts and file watch";
     }
 
     @Override

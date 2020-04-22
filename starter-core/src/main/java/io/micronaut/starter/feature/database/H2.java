@@ -15,21 +15,16 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class H2 implements Feature {
+public class H2 extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "h2";
+    public H2(@Named("h2") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
-
 }

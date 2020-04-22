@@ -15,25 +15,16 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class HibernateValidator implements Feature {
+public class HibernateValidator extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "hibernate-validator";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Hibernate Validator";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the Hibernate validator";
+    public HibernateValidator(@Named("hibernatevalidator") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 }

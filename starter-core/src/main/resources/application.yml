@@ -1,0 +1,201 @@
+features:
+  alexahttpserver:
+    feature-name: 'alexa-http-server'
+    title: 'Alexa Http Server'
+    description: 'Adds support for hosting a Custom Skill as a Web Service (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html).'
+  asciidoctor:
+    title: 'Asciidoctor Documentation'
+    description: 'Adds Asciidoctor documentation'
+  cachecaffeine:
+    feature-name: 'cache-caffeine'
+    title: 'Caffeine Cache'
+    description: 'Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)'
+  data:
+    visible: false
+    title: 'Micronaut Data'
+  cassandra:
+    title: 'Cassandra Driver'
+    description: 'Adds support for Cassandra in the application'
+  h2:
+    feature-name: 'h2'
+    title: 'H2'
+    description: 'Adds dependencies to H2 Database Engine'
+    visible: false
+  hibernategorm:
+    feature-name: 'hibernate-gorm'
+  hibernatejpa:
+    feature-name: 'hibernate-jpa'
+    title: 'Hibernate JPA'
+    description: 'Adds support for Hibernate/JPA'
+  mongogorm:
+    feature-name: 'mongo-gorm'
+    title: 'GORM for MongoDB'
+    description: 'Configures GORM for MongoDB for Groovy applications'
+  mongoreactive:
+    feature-name: 'mongo-reactive'
+    title: 'Mongo Reactive Driver'
+    description: 'Adds support for the Mongo Reactive Streams Driver'
+  neo4jbolt:
+    feature-name: 'neo4j-bolt'
+    title: 'Neo4j Bolt Driver'
+    description: 'Adds support for the Neo4j Bolt Driver'
+  neo4jgorm:
+    feature-name: 'neo4j-gorm'
+    title: 'GORM for Neo4j'
+    description: 'Configures GORM for Neo4j for Groovy applications'
+  elasticsearch:
+    title: 'Elasticsearch Driver'
+    description: 'Adds support for Elasticsearch in the application'
+  filewatch:
+    feature-name: 'file-watch'
+    title: 'File Watch Support'
+    description: 'Adds automatic restarts and file watch'
+  filewatchosx:
+    feature-name: 'file-watch-osx'
+    visible: false
+    title: 'File Watch and MacOS'
+    description: 'MacOS dependencies to improve file watch performance'
+  graalvm:
+    title: 'GraalVM Native Image'
+    description: 'Allows Building a GraalVM Native Image'
+  graphql:
+    title: 'Micronaut GraphQL'
+    description: 'Adds support for GraphQL in the application'
+  jib:
+    title: 'Jib Docker Containers'
+    description: 'Adds support for Jib builds'
+  micrometer:
+    title: 'Micrometer Core'
+    visible: false
+  micrometerappoptics:
+    feature-name: 'micrometer-appoptics'
+    title: 'Micrometer Appoptics'
+    description: 'Adds support for Micrometer metrics (w/ AppOptics reporter)'
+  micrometerstatsd:
+    feature-name: 'micrometer-statsd'
+    title: 'Micrometer Statsd'
+    description: 'Adds support for Micrometer metrics (w/ Statsd reporter)'
+  micrometeratlas:
+    description: 'Adds support for Micrometer metrics (w/ Atlas reporter)'
+    feature-name: 'micrometer-atlas'
+    title: 'Micrometer Atlas'
+  micrometerazuremonitor:
+    feature-name: 'micrometer-azure-monitor'
+    title: 'Micrometer Azure Monitor'
+    description: 'Adds support for Micrometer metrics (w/ Azure Monitor reporter)'
+  micrometercloudwatch:
+    feature-name: 'micrometer-cloudwatch'
+    title: 'Micrometer Cloudwatch'
+    description: 'Adds support for Micrometer metrics (w/ AWS Cloudwatch reporter)'
+  micrometerdatadog:
+    feature-name: 'micrometer-datadog'
+    description: 'Adds support for Micrometer metrics (w/ Datadog reporter)'
+    title: 'Micrometer Datadog'
+  micrometerdynatrace:
+    feature-name: 'micrometer-dynatrace'
+    title: 'Micrometer Dynatrace'
+    description: 'Adds support for Micrometer metrics (w/ Dynatrace reporter)'
+  micrometerelastic:
+    feature-name: 'micrometer-elastic'
+    title: 'Micrometer Elastic'
+    description: 'Adds support for Micrometer metrics (w/ Elastic reporter)'
+  micrometerganglia:
+    feature-name: 'micrometer-ganglia'
+    title: 'Micrometer Ganglia'
+    description: 'Adds support for Micrometer metrics (w/ Ganglia reporter)'
+  micrometergraphite:
+    feature-name: 'micrometer-graphite'
+    title: 'Micrometer Graphite'
+    description: 'Adds support for Micrometer metrics (w/ Graphite reporter)'
+  micrometerhumio:
+    feature-name: 'micrometer-humio'
+    title: 'micrometer Humio'
+    description: 'Adds support for Micrometer metrics (w/ Humio reporter)'
+  micrometerinflux:
+    description: 'Adds support for Micrometer metrics (w/ Influx reporter)'
+    feature-name: 'micrometer-influx'
+    title: 'Micrometer Influx'
+  micrometerjmx:
+    feature-name: 'micrometer-jmx'
+    title: 'Micrometer Jmx'
+    description: 'Adds support for Micrometer metrics (w/ Jmx reporter)'
+  micrometerkairos:
+    feature-name: 'micrometer-kairos'
+    title: 'Micrometer Kairos'
+    description: 'Adds support for Micrometer metrics (w/ Kairos reporter)'
+  micrometernewrelic:
+    feature-name: 'micrometer-new-relic'
+    title: 'micrometer New Relic'
+    description: 'Adds support for Micrometer metrics (w/ New Relic reporter)'
+  micrometersignalfx:
+    feature-name: 'micrometer-signalfx'
+    title: 'Micrometer Signalfx'
+    description: 'Adds support for Micrometer metrics (w/ SignalFx reporter)'
+  micrometerprometheus:
+    description: 'Adds support for Micrometer metrics (w/ Prometheus reporter)'
+    feature-name: 'micrometer-prometheus'
+    title: 'Micrometer Prometheus'
+  micrometerstackdriver:
+    description: 'Adds support for Micrometer metrics (w/ Stackdriver reporter)'
+    feature-name: 'micrometer-stackdriver'
+    title: 'Micrometer Stackdriver'
+  micrometerwavefront:
+    title: 'Micrometer Wavefront'
+    feature-name: 'micrometer-wavefront'
+    description: 'Adds support for Micrometer metrics (w/ Wavefront reporter)'
+  netflixarchaius:
+    feature-name: 'netflix-archaius'
+    title: 'Netflix Archaius Configuration'
+    description: 'Adds support for Netflix Archaius'
+  netflixhystrix:
+    feature-name: 'netflix-hystrix'
+    title: 'Netflix Hystrix'
+    description: 'Adds support for Netflix Hystrix'
+  netflixribbon:
+    feature-name: 'netflix-ribbon'
+    title: 'Netflix Ribbon LoadBalancer'
+    description: 'Adds support for Netflix Ribbon'
+  docker:
+    title: 'Docker Support'
+    visible: false
+  hibernatevalidator:
+    feature-name: 'hibernate-validator'
+    title: 'Hibernate Validator'
+    description: 'Adds support for the Hibernate validator'
+  management:
+    title: 'Micronaut Management'
+    description: 'Adds support for management endpoints'
+  swagger:
+    title: 'Swagger/OpenAPI Support'
+    description: 'Adds support for Swagger (OpenAPI)'
+  postgresreactive:
+    feature-name: 'postgres-reactive'
+    title: 'Postgres Reactive Driver'
+    description: 'Adds support for the Reactive Postgres driver in the application'
+  redislettuce:
+    feature-name: 'redis-lettuce'
+    title: 'Lettuce Redis Driver'
+    description: 'Configures the Lettuce driver for Redis'
+  rss:
+    title: 'RSS Feed'
+    description: 'Adds support for generating RSS feeds (https://cyber.harvard.edu/rss/rss.html)'
+  rssitunespodcast:
+    feature-name: 'rss-itunes-podcast'
+    title: 'RSS iTunes Podcast Feed'
+    description: 'Adds support for generating iTunes Podcast RSS feeds (https://itunespartner.apple.com/podcasts)'
+  securityjwt:
+    feature-name: 'security-jwt'
+    title: 'Micronaut Security JWT'
+    description: 'Adds support for JWT (JSON Web Token) based Authentication'
+  securitysession:
+    feature-name: 'security-session'
+    title: 'Micronaut Security Session'
+    description: 'Adds support for Session based Authentication'
+  vertxmysqlclient:
+    feature-name: 'vertx-mysql-client'
+    title: 'Vertx Reactive MySql Client'
+    description: 'Add support for the Reactive MySQL Client in the application'
+  vertxpgclient:
+    feature-name: 'vertx-pg-client'
+    title: 'Vertx Reactive Postgres Client'
+    description: 'Add support for the Reactive Postgres Client in the application'

@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.cassandra;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Cassandra implements Feature {
+public class Cassandra extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "cassandra";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Cassandra Driver";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Cassandra in the application";
+    public Cassandra(@Named("cassandra") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

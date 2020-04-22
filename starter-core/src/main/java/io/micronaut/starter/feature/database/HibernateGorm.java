@@ -16,29 +16,29 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.options.Language;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 import java.util.Optional;
 
 @Singleton
-public class HibernateGorm implements Feature {
+public class HibernateGorm extends ConfiguredFeature {
 
     private final H2 h2;
     private final HibernateValidator hibernateValidator;
 
-    public HibernateGorm(H2 h2, HibernateValidator hibernateValidator) {
+    public HibernateGorm(@Named("hibernategorm") FeatureConfiguration featureConfiguration,
+                         H2 h2,
+                         HibernateValidator hibernateValidator) {
+        super(featureConfiguration);
         this.h2 = h2;
         this.hibernateValidator = hibernateValidator;
-    }
-
-    @Override
-    public String getName() {
-        return "hibernate-gorm";
     }
 
     @Override

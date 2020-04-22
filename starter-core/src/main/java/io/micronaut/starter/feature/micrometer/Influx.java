@@ -15,32 +15,20 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.other.Management;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
 public class Influx extends MicrometerFeature {
 
-    public Influx(Core core, Management management) {
-        super(core, management);
-    }
-
-    @Override
-    public String getName() {
-        return "micrometer-influx";
-    }
-
-    @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Influx reporter)";
+    public Influx(@Named("micrometerinflux") FeatureConfiguration featureConfiguration,
+                  Micrometer micrometer,
+                  Management management) {
+        super(featureConfiguration, micrometer, management);
     }
 
     @Override

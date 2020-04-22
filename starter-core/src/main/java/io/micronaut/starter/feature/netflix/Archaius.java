@@ -15,26 +15,15 @@
  */
 package io.micronaut.starter.feature.netflix;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Archaius implements Feature {
-
-    @Override
-    public String getName() {
-        return "netflix-archaius";
+public class Archaius extends ConfiguredFeature {
+    public Archaius(@Named("netflixarchaius") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public String getTitle() {
-        return "Netflix Archaius Configuration";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Netflix Archaius";
-    }
-
 }

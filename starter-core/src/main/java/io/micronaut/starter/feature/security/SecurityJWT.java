@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class SecurityJWT implements Feature {
+public class SecurityJWT extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "security-jwt";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micronaut Security JWT";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for JWT (JSON Web Token) based Authentication";
+    public SecurityJWT(@Named("securityjwt") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

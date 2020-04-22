@@ -24,7 +24,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class AnnotationApi implements Feature, DefaultFeature {
+public class AnnotationApi implements DefaultFeature {
 
     @Override
     public String getName() {

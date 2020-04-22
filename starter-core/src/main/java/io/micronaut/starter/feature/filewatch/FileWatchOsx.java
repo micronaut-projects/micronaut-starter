@@ -15,20 +15,16 @@
  */
 package io.micronaut.starter.feature.filewatch;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class FileWatchOsx implements Feature {
+public class FileWatchOsx extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "file-watch-osx";
-    }
-
-    @Override
-    public boolean isVisible() {
-        return false;
+    public FileWatchOsx(@Named("filewatchosx") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 }

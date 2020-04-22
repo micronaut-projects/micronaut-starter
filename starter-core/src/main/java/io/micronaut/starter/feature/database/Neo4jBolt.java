@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Neo4jBolt implements Feature {
+public class Neo4jBolt extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "neo4j-bolt";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Neo4j Bolt Driver";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the Neo4j Bolt Driver";
+    public Neo4jBolt(@Named("neo4jbolt") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

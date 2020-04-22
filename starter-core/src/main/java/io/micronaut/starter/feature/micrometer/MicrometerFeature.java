@@ -15,26 +15,31 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
 
-public abstract class MicrometerFeature implements Feature {
+public abstract class MicrometerFeature extends ConfiguredFeature {
 
     protected final String EXPORT_PREFIX = "micronaut.metrics.export";
 
-    private final Core core;
+    private final Micrometer micrometer;
     private final Management management;
 
-    public MicrometerFeature(Core core, Management management) {
-        this.core = core;
+    public MicrometerFeature(FeatureConfiguration featureConfiguration,
+                             Micrometer micrometer,
+                             Management management) {
+        super(featureConfiguration);
+        this.micrometer = micrometer;
         this.management = management;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Core.class)) {
-            featureContext.addFeature(core);
+        if (!featureContext.isPresent(Micrometer.class)) {
+            featureContext.addFeature(micrometer);
         }
         if (!featureContext.isPresent(Management.class)) {
             featureContext.addFeature(management);

@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.redis;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class RedisLettuce implements Feature {
+public class RedisLettuce extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "redis-lettuce";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Lettuce Redis Driver";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Configures the Lettuce driver for Redis";
+    public RedisLettuce(@Named("redislettuce") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

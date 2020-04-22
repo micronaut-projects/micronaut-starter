@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.naming.Described;
-import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
+import io.micronaut.core.util.Toggleable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Language;
+import io.micronaut.core.naming.Named;
 
 import java.util.Optional;
 
@@ -31,18 +34,35 @@ import java.util.Optional;
  * @author James Kleeh
  * @since 2.0.0
  */
-public interface Feature extends Named, Ordered, Described {
+public interface Feature extends Named, Ordered, Described, Toggleable {
+
+    @Override
+    @NonNull
+    default String getName() {
+        FeatureConfiguration conf = getFeatureConfiguration();
+        if (conf != null) {
+            if (conf.getFeatureName() != null) {
+                return conf.getFeatureName();
+            }
+            return conf.getName();
+        }
+        throw new ConfigurationException("you must either override getName() or provide a feature configuration");
+    }
+
+    default FeatureConfiguration getFeatureConfiguration() {
+        return null;
+    }
 
     /**
      * @return The title of the feature
      */
     default String getTitle() {
-        return null;
+        return getFeatureConfiguration() != null ? getFeatureConfiguration().getTitle() : null;
     }
 
     @Override
     default String getDescription() {
-        return null;
+        return getFeatureConfiguration() != null ? getFeatureConfiguration().getDescription() : null;
     }
 
     /**
@@ -107,7 +127,7 @@ public interface Feature extends Named, Ordered, Described {
      * @return True if the feature should able to be selected by the user
      */
     default boolean isVisible() {
-        return true;
+         return getFeatureConfiguration() == null || getFeatureConfiguration().isVisible();
     }
 
     /**
@@ -118,4 +138,8 @@ public interface Feature extends Named, Ordered, Described {
         return Optional.empty();
     }
 
+    @Override
+    default boolean isEnabled() {
+        return getFeatureConfiguration() == null || getFeatureConfiguration().isEnabled();
+    }
 }

@@ -16,26 +16,16 @@
 package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class SecuritySession implements Feature {
-
-    @Override
-    public String getName() {
-        return "security-session";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micronaut Security Session";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Session based Authentication";
+public class SecuritySession extends ConfiguredFeature {
+    public SecuritySession(@Named("securitysession") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

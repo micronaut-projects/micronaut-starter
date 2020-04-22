@@ -17,29 +17,20 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.VersionInfo;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class Swagger implements Feature {
+public class Swagger extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "swagger";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Swagger/OpenAPI Support";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Swagger (OpenAPI)";
+    public Swagger(@Named("swagger") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

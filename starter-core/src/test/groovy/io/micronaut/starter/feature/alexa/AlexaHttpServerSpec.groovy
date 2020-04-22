@@ -1,12 +1,40 @@
 package io.micronaut.starter.feature.alexa
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class AlexaHttpServerSpec extends BeanContextSpec {
+
+    @Shared
+    @Subject
+    AlexaHttpServer alexaHttpServer = beanContext.getBean(AlexaHttpServer)
+
+    @Unroll
+    void "alexa-http-server does not support #description"(ApplicationType applicationType,
+                                                        String description) {
+        expect:
+        !alexaHttpServer.supports(applicationType)
+
+        where:
+        applicationType << [
+                ApplicationType.CLI,
+                ApplicationType.GRPC,
+                ApplicationType.MESSAGING,
+                ApplicationType.FUNCTION
+        ]
+        description = applicationType.name
+    }
+
+    void "alexa-http-server supports default application type"() {
+        expect:
+        alexaHttpServer.supports(ApplicationType.DEFAULT)
+    }
 
     @Unroll
     void 'test gradle alexa-http-server feature for language=#language'() {

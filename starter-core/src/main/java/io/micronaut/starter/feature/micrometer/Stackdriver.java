@@ -15,32 +15,20 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.other.Management;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
 public class Stackdriver extends MicrometerFeature {
 
-    public Stackdriver(Core core, Management management) {
-        super(core, management);
-    }
-
-    @Override
-    public String getName() {
-        return "micrometer-stackdriver";
-    }
-
-    @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Stackdriver reporter)";
+    public Stackdriver(@Named("micrometerstackdriver") FeatureConfiguration featureConfiguration,
+                       Micrometer core,
+                       Management management) {
+        super(featureConfiguration, core, management);
     }
 
     @Override

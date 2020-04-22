@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.vertx;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class VertxMySql implements Feature {
+public class VertxMySql extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "vertx-mysql-client";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Vertx Reactive MySql Client";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Add support for the Reactive MySQL Client in the application";
+    public VertxMySql(@Named("vertxmysqlclient") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

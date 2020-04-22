@@ -15,25 +15,16 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Docker implements Feature {
+public class Docker extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "docker";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Docker Support";
-    }
-
-    @Override
-    public boolean isVisible() {
-        return false;
+    public Docker(@Named("docker") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 }

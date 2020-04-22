@@ -15,35 +15,24 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.options.Language;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Neo4jGorm implements Feature {
+public class Neo4jGorm extends ConfiguredFeature {
 
     private final Neo4jBolt neo4jBolt;
 
-    public Neo4jGorm(Neo4jBolt neo4jBolt) {
+    public Neo4jGorm(@Named("neo4jgorm") FeatureConfiguration featureConfiguration,
+                     Neo4jBolt neo4jBolt) {
+        super(featureConfiguration);
         this.neo4jBolt = neo4jBolt;
-    }
-
-    @Override
-    public String getName() {
-        return "neo4j-gorm";
-    }
-
-    @Override
-    public String getTitle() {
-        return "GORM for Neo4j";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Configures GORM for Neo4j for Groovy applications";
     }
 
     @Override

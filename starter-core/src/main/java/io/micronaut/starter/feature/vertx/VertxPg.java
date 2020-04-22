@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.vertx;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class VertxPg implements Feature {
+public class VertxPg extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "vertx-pg-client";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Vertx Reactive Postgres Client";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Add support for the Reactive Postgres Client in the application";
+    public VertxPg(@Named("vertxpgclient") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

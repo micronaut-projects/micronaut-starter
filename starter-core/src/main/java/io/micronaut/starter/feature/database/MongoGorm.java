@@ -15,35 +15,24 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.options.Language;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class MongoGorm implements Feature {
+public class MongoGorm extends ConfiguredFeature {
 
     private final MongoReactive mongoReactive;
 
-    public MongoGorm(MongoReactive mongoReactive) {
+    public MongoGorm(@Named("mongogorm") FeatureConfiguration featureConfiguration,
+                     MongoReactive mongoReactive) {
+        super(featureConfiguration);
         this.mongoReactive = mongoReactive;
-    }
-
-    @Override
-    public String getName() {
-        return "mongo-gorm";
-    }
-
-    @Override
-    public String getTitle() {
-        return "GORM for MongoDB";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Configures GORM for MongoDB for Groovy applications";
     }
 
     @Override

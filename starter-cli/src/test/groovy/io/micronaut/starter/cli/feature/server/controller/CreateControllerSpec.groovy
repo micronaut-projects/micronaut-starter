@@ -1,26 +1,15 @@
 package io.micronaut.starter.cli.feature.server.controller
 
-import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
-import io.micronaut.starter.cli.command.project.test.CreateTestCommand
-import io.micronaut.starter.cli.feature.server.controller.CreateControllerCommand
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.AutoCleanup
-import spock.lang.Shared
 import spock.lang.Unroll
 
-class CreateControllerSpec extends CommandSpec implements CommandFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
-
+class CreateControllerSpec extends CommandSpec {
     @Unroll
     void "test creating a controller and running the test for #language.getName() and #testFramework.getName()"() {
         generateDefaultProject(new Options(language, testFramework, BuildTool.GRADLE))

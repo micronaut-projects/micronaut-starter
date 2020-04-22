@@ -1,8 +1,6 @@
 package io.micronaut.starter.cli.command.project
 
-import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.cli.command.project.test.CreateTestCommand
 import io.micronaut.starter.io.ConsoleOutput
@@ -10,16 +8,9 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.AutoCleanup
-import spock.lang.Shared
 import spock.lang.Unroll
 
-class CreateTestSpec extends CommandSpec implements CommandFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
-
+class CreateTestSpec extends CommandSpec {
     @Unroll
     void "test create-test for #language.getName() and #testFramework.getName()"() {
         generateDefaultProject(new Options(language, testFramework, BuildTool.GRADLE))

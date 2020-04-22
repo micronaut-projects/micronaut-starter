@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature;
 
-import io.micronaut.starter.feature.ConfiguredFeature;
-import io.micronaut.starter.feature.FeatureConfiguration;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.naming.Described;
+import io.micronaut.core.naming.Named;
+import io.micronaut.core.util.Toggleable;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+public interface FeatureConfiguration extends Described, Named, Toggleable {
 
-@Singleton
-public class Management extends ConfiguredFeature {
+    @Nullable
+    String getTitle();
 
-    public Management(@Named("management") FeatureConfiguration featureConfiguration) {
-        super(featureConfiguration);
-    }
+    @Nullable
+    String getFeatureName();
+
+    boolean isVisible();
 }

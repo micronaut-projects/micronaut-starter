@@ -15,26 +15,16 @@
  */
 package io.micronaut.starter.feature.cache;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Caffeine implements Feature {
+public class Caffeine extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "cache-caffeine";
+    public Caffeine(@Named("cachecaffeine") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
-
-    @Override
-    public String getTitle() {
-        return "Caffeine Cache";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)";
-    }
-
 }

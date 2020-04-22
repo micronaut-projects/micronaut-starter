@@ -308,6 +308,9 @@ dependencies {
 @if (features.contains("file-watch-osx")) {
     developmentOnly "io.micronaut:micronaut-runtime-osx:@VersionInfo.getMicronautVersion()"
 }
+@if (features.contains("aws-lambda")) {
+    implementation("io.micronaut:micronaut-function-aws")
+}
 @if (features.contains("alexa-http-server")) {
     implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")
 }

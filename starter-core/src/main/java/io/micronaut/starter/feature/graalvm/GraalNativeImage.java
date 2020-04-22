@@ -16,30 +16,21 @@
 package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
 import io.micronaut.starter.template.RockerTemplate;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class GraalNativeImage implements Feature {
+public class GraalNativeImage extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "graalvm";
-    }
-
-    @Override
-    public String getTitle() {
-        return "GraalVM Native Image";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Allows Building a GraalVM Native Image";
+    public GraalNativeImage(@Named("graalvm") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

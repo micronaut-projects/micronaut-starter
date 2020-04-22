@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.postgres;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class PostgresReactive implements Feature {
+public class PostgresReactive extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "postgres-reactive";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Postgres Reactive Driver";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for the Reactive Postgres driver in the application";
+    public PostgresReactive(@Named("postgresreactive") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

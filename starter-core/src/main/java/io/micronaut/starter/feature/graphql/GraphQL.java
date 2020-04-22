@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.graphql;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class GraphQL implements Feature {
+public class GraphQL extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "graphql";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micronaut GraphQL";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for GraphQL in the application";
+    public GraphQL(@Named("graphql") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

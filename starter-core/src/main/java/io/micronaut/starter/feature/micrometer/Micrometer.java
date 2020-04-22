@@ -16,31 +16,17 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Core implements Feature {
+public class Micrometer extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "micrometer";
-    }
-
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micrometer Core";
-    }
-
-    @Override
-    public String getDescription() {
-        return null;
+    public Micrometer(@Named("micrometer") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

@@ -16,30 +16,19 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.other.Management;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
 public class Kairos extends MicrometerFeature {
 
-    public Kairos(Core core, Management management) {
-        super(core, management);
-    }
-
-    @Override
-    public String getName() {
-        return "micrometer-kairos";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Micrometer Kairos";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Kairos reporter)";
+    public Kairos(@Named("micrometerkairos") FeatureConfiguration featureConfiguration,
+                  Micrometer micrometer,
+                  Management management) {
+        super(featureConfiguration, micrometer, management);
     }
 
     @Override

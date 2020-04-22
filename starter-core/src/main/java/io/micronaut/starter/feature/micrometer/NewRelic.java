@@ -15,32 +15,20 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.other.Management;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
 public class NewRelic extends MicrometerFeature {
 
-    public NewRelic(Core core, Management management) {
-        super(core, management);
-    }
-
-    @Override
-    public String getName() {
-        return "micrometer-new-relic";
-    }
-
-    @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ New Relic reporter)";
+    public NewRelic(@Named("micrometernewrelic") FeatureConfiguration featureConfiguration,
+                    Micrometer micrometer,
+                    Management management) {
+        super(featureConfiguration, micrometer, management);
     }
 
     @Override

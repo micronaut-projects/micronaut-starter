@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.netflix;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
+import io.micronaut.starter.feature.FeatureConfiguration;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class Ribbon implements Feature {
+public class Ribbon extends ConfiguredFeature {
 
-    @Override
-    public String getName() {
-        return "netflix-ribbon";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Netflix Ribbon LoadBalancer";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Netflix Ribbon";
+    public Ribbon(@Named("netflixribbon") FeatureConfiguration featureConfiguration) {
+        super(featureConfiguration);
     }
 
     @Override

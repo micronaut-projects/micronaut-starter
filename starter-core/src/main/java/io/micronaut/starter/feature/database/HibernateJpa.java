@@ -16,34 +16,23 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.ConfiguredFeature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureConfiguration;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 @Singleton
-public class HibernateJpa implements Feature {
+public class HibernateJpa extends ConfiguredFeature {
 
     private final JdbcFeature jdbcFeature;
 
-    public HibernateJpa(JdbcFeature jdbcFeature) {
+    public HibernateJpa(@Named("hibernatejpa") FeatureConfiguration featureConfiguration,
+                        JdbcFeature jdbcFeature) {
+        super(featureConfiguration);
         this.jdbcFeature = jdbcFeature;
-    }
-
-    @Override
-    public String getName() {
-        return "hibernate-jpa";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Hibernate JPA";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Hibernate/JPA";
     }
 
     @Override

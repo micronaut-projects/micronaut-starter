@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature;
 
-import io.micronaut.starter.feature.ConfiguredFeature;
-import io.micronaut.starter.feature.FeatureConfiguration;
+public class ConfiguredFeature implements Feature {
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+    private final FeatureConfiguration featureConfiguration;
 
-@Singleton
-public class Management extends ConfiguredFeature {
+    public ConfiguredFeature(FeatureConfiguration featureConfiguration) {
+        this.featureConfiguration = featureConfiguration;
+    }
 
-    public Management(@Named("management") FeatureConfiguration featureConfiguration) {
-        super(featureConfiguration);
+    @Override
+    public FeatureConfiguration getFeatureConfiguration() {
+        return this.featureConfiguration;
     }
 }
