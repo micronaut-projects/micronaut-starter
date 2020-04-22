@@ -18,7 +18,7 @@ class JibSpec extends BeanContextSpec {
         template.contains("jib.to.image = 'gcr.io/foo/jib-image")
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Unroll
@@ -40,7 +40,7 @@ class JibSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
 }

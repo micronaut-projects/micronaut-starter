@@ -21,7 +21,7 @@ class FileWatchSpec extends BeanContextSpec {
         template.contains("developmentOnly \"io.micronaut:micronaut-runtime-osx:${VersionInfo.micronautVersion}\"")
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     @Requires({ os.macOs })
@@ -41,7 +41,7 @@ class FileWatchSpec extends BeanContextSpec {
 """)
 
         where:
-        language << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+        language << Language.values()
     }
 
     void 'test file-watch configuration'() {
