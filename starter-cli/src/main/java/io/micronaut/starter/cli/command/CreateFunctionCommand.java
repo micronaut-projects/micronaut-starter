@@ -34,7 +34,7 @@ import java.util.Map;
 @Prototype
 public class CreateFunctionCommand extends CreateCommand {
 
-    public static final String NAME = "create-function";
+    public static final String NAME = "create-function-app";
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)

@@ -1,21 +1,3 @@
-:doctype: article
-:toc: left
-
-= Micronaut Starter
-
-Generates Micronaut applications.
-
-Micronaut Starter is a CLI tool that will help you generating new Micronaut applications.
-
-== Available commands
-
-* link:mn.html[mn].
-** link:mn-create-app.html[create-app].
-** link:mn-create-cli-app.html[create-cli-app].
-** link:mn-create-grpc-app.html[create-grpc-app].
-
-== Installation
-
 The best way to install Micronaut on Unix systems is with http://sdkman.io/[SDKMAN] which greatly simplifies installing
 and managing multiple Micronaut versions.
 

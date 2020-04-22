@@ -1,6 +1,9 @@
 introduction:
   title: Introduction
+  installation: Installation
   releaseHistory: Release History
+commands:
+  title: Available commands
 starterImpls:
   title: Micronaut Starter
   starterCLI: CLI Application

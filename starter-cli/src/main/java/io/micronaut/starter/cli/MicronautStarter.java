@@ -19,6 +19,22 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.starter.cli.command.project.bean.CreateBeanCommand;
+import io.micronaut.starter.cli.command.project.job.CreateJobCommand;
+import io.micronaut.starter.cli.command.project.test.CreateTestCommand;
+import io.micronaut.starter.cli.config.UpdateCliConfigCommand;
+import io.micronaut.starter.cli.feature.database.CreateRepositoryCommand;
+import io.micronaut.starter.cli.feature.grpc.CreateGrpcServiceCommand;
+import io.micronaut.starter.cli.feature.grpc.CreateProtoServiceCommand;
+import io.micronaut.starter.cli.feature.messaging.kafka.CreateKafkaListener;
+import io.micronaut.starter.cli.feature.messaging.kafka.CreateKafkaProducer;
+import io.micronaut.starter.cli.feature.messaging.rabbitmq.CreateRabbitMQListener;
+import io.micronaut.starter.cli.feature.messaging.rabbitmq.CreateRabbitMQProducer;
+import io.micronaut.starter.cli.feature.other.CreateClientCommand;
+import io.micronaut.starter.cli.feature.picocli.CreateCommandCommand;
+import io.micronaut.starter.cli.feature.server.controller.CreateControllerCommand;
+import io.micronaut.starter.cli.feature.server.websocket.CreateWebsocketClientCommand;
+import io.micronaut.starter.cli.feature.server.websocket.CreateWebsocketServerCommand;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
@@ -27,21 +43,43 @@ import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 
 @CommandLine.Command(name = "mn", description = {
-        "Micronaut CLI command line interface for generating projects and services.",
-        "Commonly used commands are:",
-        "  @|bold create-app|@ @|yellow NAME|@",
-        "  @|bold create-cli-app|@ @|yellow NAME|@",
-        "  @|bold create-federation|@ @|yellow NAME|@ @|yellow --services|@ @|yellow,italic SERVICE_NAME[,SERVICE_NAME]...|@",
-        "  @|bold create-function|@ @|yellow NAME|@"},
+            "Micronaut CLI command line interface for generating projects and services.",
+            "Application generation commands are:",
+            "",
+            "*  @|bold create-app|@ @|yellow NAME|@",
+            "*  @|bold create-cli-app|@ @|yellow NAME|@",
+            "*  @|bold create-function-app|@ @|yellow NAME|@ @|yellow --provider|@ @|yellow,italic CLOUD_PROVIDER_NAME|@",
+            "*  @|bold create-grpc-app|@ @|yellow NAME|@",
+            "*  @|bold create-messaging-app|@ @|yellow NAME|@"
+        },
         synopsisHeading = "@|bold,underline Usage:|@ ",
         optionListHeading = "%n@|bold,underline Options:|@%n",
         commandListHeading = "%n@|bold,underline Commands:|@%n",
         subcommands = {
+                // Creation commands
                 CreateAppCommand.class,
                 CreateCliCommand.class,
-                CreateGrpcCommand.class,
                 CreateFunctionCommand.class,
-                CreateMessagingCommand.class
+                CreateGrpcCommand.class,
+                CreateMessagingCommand.class,
+
+                // Codegen commands
+                CreateBeanCommand.class,
+                CreateClientCommand.class,
+                CreateCommandCommand.class,
+                CreateControllerCommand.class,
+                CreateGrpcServiceCommand.class,
+                CreateJobCommand.class,
+                CreateKafkaListener.class,
+                CreateKafkaProducer.class,
+                CreateProtoServiceCommand.class,
+                CreateRabbitMQListener.class,
+                CreateRabbitMQProducer.class,
+                CreateRepositoryCommand.class,
+                CreateTestCommand.class,
+                CreateWebsocketClientCommand.class,
+                CreateWebsocketServerCommand.class,
+                UpdateCliConfigCommand.class
         })
 @Prototype
 @TypeHint({
