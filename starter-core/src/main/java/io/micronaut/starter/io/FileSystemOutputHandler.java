@@ -32,7 +32,6 @@ public class FileSystemOutputHandler implements OutputHandler {
         this.console = console;
         File baseDirectory;
         String userDir = System.getProperty("user.dir");
-        System.out.println("userDir = " + userDir);
         if (userDir != null) {
             baseDirectory = new File(userDir).getCanonicalFile();
         } else {
@@ -68,11 +67,7 @@ public class FileSystemOutputHandler implements OutputHandler {
         if ('/' != File.separatorChar) {
             path = path.replace('/', File.separatorChar);
         }
-        System.out.println("path = " + path);
-        System.out.println("applicationDirectory = " + applicationDirectory);
         File targetFile = new File(applicationDirectory, path);
-        System.out.println("targetFile = " + targetFile);
-        System.out.println("targetFileCanonical = " + targetFile.getCanonicalFile());
         targetFile.getParentFile().mkdirs();
         targetFile.createNewFile();
 
