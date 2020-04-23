@@ -10,7 +10,7 @@ micronaut:
       configurations:
         web:
           allowedOrigins:
-            - ^http(|s):\/\/www\.micronaut\.io$
+            - ^http(|s):\/\/micronaut\.io$
           allowedMethods:
             - GET
 
