@@ -44,3 +44,81 @@ jobs:
         uses: micronaut-projects/github-actions/post-release@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+  linux:
+    name: Builds Linux Native CLI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+      - name: Set the current upload url
+        id: upload_url
+        run: |
+          upload_url=`cat $GITHUB_EVENT_PATH | jq '.release.upload_url' | sed -e 's/^"\(.*\)"$/\1/g'`
+          echo ::set-output name=upload_url::${upload_url}
+      - name: Install GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: linux-amd64
+        run: ./install-graal.sh
+      - name: Install Native Image
+        run: ./graalvm/bin/gu install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: ./graalvm
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.upload_url.outputs.upload_url }}
+          asset_path: ./mn
+          asset_name: mn-linux-amd64-${{ steps.release_version.outputs.release_version }}
+          asset_content_type: application/zip
+  macos:
+    name: Builds OS X Native CLI
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+      - name: Set the current upload url
+        id: upload_url
+        run: |
+          upload_url=`cat $GITHUB_EVENT_PATH | jq '.release.upload_url' | sed -e 's/^"\(.*\)"$/\1/g'`
+          echo ::set-output name=upload_url::${upload_url}
+      - name: Install GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: darwin-amd64
+        run: ./install-graal.sh
+      - name: Install Native Image
+        run: ./graalvm/Contents/Home/bin/gu install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: ./graalvm/Contents/Home
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.upload_url.outputs.upload_url }}
+          asset_path: ./mn
+          asset_name: mn-darwin-amd64-${{ steps.release_version.outputs.release_version }}
+          asset_content_type: application/zip
