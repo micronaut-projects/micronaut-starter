@@ -1,0 +1,28 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.micronaut.core.annotation.Introspected
+import io.micronaut.function.aws.MicronautRequestHandler
+import java.util.UUID
+
+@@Introspected
+class BookMicronautRequestHandler : MicronautRequestHandler<Book?, BookSaved?>() {
+
+    override fun execute(input: Book?): BookSaved? {
+        return if (input != null) {
+            val bookSaved = BookSaved()
+            bookSaved.name = input.name
+            bookSaved.isbn = UUID.randomUUID().toString()
+            return bookSaved
+        } else {
+            null
+        }
+    }
+}

@@ -1,0 +1,36 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import spock.lang.AutoCleanup
+import spock.lang.Shared
+import spock.lang.Specification
+
+class BookMicronautRequestHandlerSpec extends Specification {
+
+    @@AutoCleanup
+    @@Shared
+    BookMicronautRequestHandler bookMicronautRequestHandler = new BookMicronautRequestHandler()
+
+
+    void "test Handler"() {
+        given:
+        Book book = new Book()
+        book.name = 'Building Microservices'
+
+        when:
+        BookSaved bookSaved = bookMicronautRequestHandler.execute(book)
+
+        then: 'book name matches the one supplied'
+        bookSaved.name == book.name
+
+        and: 'isbn is populated'
+        bookSaved.isbn
+    }
+}

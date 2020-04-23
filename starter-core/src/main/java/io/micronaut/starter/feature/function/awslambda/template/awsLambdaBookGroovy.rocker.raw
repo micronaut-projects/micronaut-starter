@@ -1,0 +1,22 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.annotation.Introspected
+
+import javax.validation.constraints.NotBlank
+
+@@Introspected
+class Book {
+
+    @@NonNull
+    @@NotBlank
+    String name
+}

@@ -1,0 +1,30 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.kotlintest.matchers.types.shouldNotBeNull
+import io.kotlintest.specs.StringSpec
+import io.kotlintest.shouldBe
+
+class BookMicronautRequestHandlerTest : StringSpec({
+
+    "test handler" {
+        val bookMicronautRequestHandler = BookMicronautRequestHandler()
+        val book = Book()
+        book.name = "Building Microservices"
+        val bookSaved = bookMicronautRequestHandler.execute(book)
+        bookSaved.shouldNotBeNull()
+        bookSaved.name.shouldBe(book.name)
+        bookSaved.isbn.shouldNotBeNull()
+        bookMicronautRequestHandler.applicationContext.close()
+    }
+})
+
+
+

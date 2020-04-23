@@ -337,6 +337,9 @@ implementation("com.microsoft.azure.functions:azure-functions-java-library")
 @if (features.contains("alexa-function")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
+@if (features.contains("aws-lambda")) {
+    @dependency.template("io.micronaut", "micronaut-function-aws", "implementation", null)
+}
 @if (features.contains("views-thymeleaf")) {
     @dependency.template("io.micronaut", "micronaut-views-thymeleaf", "implementation", null)
     @dependency.template("org.thymeleaf", "thymeleaf", "runtime", "3.0.11.RELEASE")
