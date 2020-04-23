@@ -36,13 +36,13 @@ jobs:
         run: ./mn.exe create-app test
       - name: Verify Build (CMD)
         shell: cmd
-        run: ./mn.exe --version
+        run: mn --version
       - name: Verify Create App (CMD)
         shell: cmd
-        run: ./mn.exe create-app test
+        run: mn create-app test
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
-          name: mn-windows-amd64-snapshot.exe
+          name: mn-win-amd64-snapshot
           path: ./mn.exe
 
