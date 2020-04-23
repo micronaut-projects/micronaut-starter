@@ -13,7 +13,7 @@ import io.micronaut.function.aws.MicronautRequestHandler;
 import java.util.UUID;
 
 @@Introspected
-public class BookMicronautRequestHandler extends MicronautRequestHandler<Book, BookSaved> {
+public class BookRequestHandler extends MicronautRequestHandler<Book, BookSaved> {
 
     @@Override
     public BookSaved execute(Book input) {

@@ -12,7 +12,7 @@ import io.micronaut.core.annotation.Introspected
 import io.micronaut.function.aws.MicronautRequestHandler
 
 @@Introspected
-class BookMicronautRequestHandler extends MicronautRequestHandler<Book, BookSaved> {
+class BookRequestHandler extends MicronautRequestHandler<Book, BookSaved> {
 
     @@Override
     BookSaved execute(Book input) {

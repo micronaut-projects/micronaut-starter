@@ -23,14 +23,14 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookKotlin;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerGroovy;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerGroovyJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerJava;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerKotlin;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerJavaJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerKotlinTest;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMicronautRequestHandlerSpock;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJava;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinTest;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerSpock;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
@@ -67,18 +67,18 @@ public class AwsLambda implements Feature, DefaultFeature {
         Project project = generatorContext.getProject();
         addBook(generatorContext, project);
         addBookSaved(generatorContext, project);
-        addBookMicronautRequestHandler(generatorContext, project);
+        addRequestHandler(generatorContext, project);
         addTest(generatorContext, project);
     }
 
     private void addTest(GeneratorContext generatorContext, Project project) {
-        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookMicronautRequestHandler");
-        generatorContext.addTestTemplate("testBookMicronautRequestHandler", testSource,
-                awsLambdaBookMicronautRequestHandlerJavaJunit.template(project),
-                awsLambdaBookMicronautRequestHandlerKotlinJunit.template(project),
-                awsLambdaBookMicronautRequestHandlerGroovyJunit.template(project),
-                awsLambdaBookMicronautRequestHandlerKotlinTest.template(project),
-                awsLambdaBookMicronautRequestHandlerSpock.template(project));
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookRequestHandler");
+        generatorContext.addTestTemplate("testBookRequestHandler", testSource,
+                awsLambdaBookRequestHandlerJavaJunit.template(project),
+                awsLambdaBookRequestHandlerKotlinJunit.template(project),
+                awsLambdaBookRequestHandlerGroovyJunit.template(project),
+                awsLambdaBookRequestHandlerKotlinTest.template(project),
+                awsLambdaBookRequestHandlerSpock.template(project));
     }
 
     private void addBook(GeneratorContext generatorContext, Project project) {
@@ -92,9 +92,9 @@ public class AwsLambda implements Feature, DefaultFeature {
                 awsLambdaBookSavedKotlin.template(project), awsLambdaBookSavedGroovy.template(project));
     }
 
-    private void addBookMicronautRequestHandler(GeneratorContext generatorContext, Project project) {
-        String awsLambdaBookMicronautRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/BookMicronautRequestHandler");
-        generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookMicronautRequestHandlerFile, awsLambdaBookMicronautRequestHandlerJava.template(project), awsLambdaBookMicronautRequestHandlerKotlin.template(project), awsLambdaBookMicronautRequestHandlerGroovy.template(project));
+    private void addRequestHandler(GeneratorContext generatorContext, Project project) {
+        String awsLambdaBookRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/BookRequestHandler");
+        generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookRequestHandlerFile, awsLambdaBookRequestHandlerJava.template(project), awsLambdaBookRequestHandlerKotlin.template(project), awsLambdaBookRequestHandlerGroovy.template(project));
     }
 
     @Override

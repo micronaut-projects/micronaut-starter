@@ -12,11 +12,11 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 
-class BookMicronautRequestHandlerSpec extends Specification {
+class BookRequestHandlerSpec extends Specification {
 
     @@AutoCleanup
     @@Shared
-    BookMicronautRequestHandler bookMicronautRequestHandler = new BookMicronautRequestHandler()
+    BookRequestHandler bookRequestHandler = new BookRequestHandler()
 
 
     void "test Handler"() {
@@ -25,7 +25,7 @@ class BookMicronautRequestHandlerSpec extends Specification {
         book.name = 'Building Microservices'
 
         when:
-        BookSaved bookSaved = bookMicronautRequestHandler.execute(book)
+        BookSaved bookSaved = bookRequestHandler.execute(book)
 
         then: 'book name matches the one supplied'
         bookSaved.name == book.name

@@ -12,17 +12,17 @@ import io.kotlintest.matchers.types.shouldNotBeNull
 import io.kotlintest.specs.StringSpec
 import io.kotlintest.shouldBe
 
-class BookMicronautRequestHandlerTest : StringSpec({
+class BookRequestHandlerTest : StringSpec({
 
     "test handler" {
-        val bookMicronautRequestHandler = BookMicronautRequestHandler()
+        val bookRequestHandler = BookRequestHandler()
         val book = Book()
         book.name = "Building Microservices"
-        val bookSaved = bookMicronautRequestHandler.execute(book)
+        val bookSaved = bookRequestHandler.execute(book)
         bookSaved.shouldNotBeNull()
         bookSaved.name.shouldBe(book.name)
         bookSaved.isbn.shouldNotBeNull()
-        bookMicronautRequestHandler.applicationContext.close()
+        bookRequestHandler.applicationContext.close()
     }
 })
 

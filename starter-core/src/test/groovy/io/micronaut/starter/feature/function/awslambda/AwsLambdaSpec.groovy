@@ -120,8 +120,8 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
 
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookMicronautRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookMicronautRequestHandlerTest.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
 
         where:
         language << Language.values().toList()
@@ -148,8 +148,8 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
 
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookMicronautRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookMicronautRequestHandlerTest.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
 
         where:
         language << Language.values().toList()

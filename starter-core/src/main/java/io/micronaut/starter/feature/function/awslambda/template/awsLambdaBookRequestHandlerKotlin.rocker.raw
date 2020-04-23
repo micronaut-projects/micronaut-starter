@@ -13,7 +13,7 @@ import io.micronaut.function.aws.MicronautRequestHandler
 import java.util.UUID
 
 @@Introspected
-class BookMicronautRequestHandler : MicronautRequestHandler<Book?, BookSaved?>() {
+class BookRequestHandler : MicronautRequestHandler<Book?, BookSaved?>() {
 
     override fun execute(input: Book?): BookSaved? {
         return if (input != null) {

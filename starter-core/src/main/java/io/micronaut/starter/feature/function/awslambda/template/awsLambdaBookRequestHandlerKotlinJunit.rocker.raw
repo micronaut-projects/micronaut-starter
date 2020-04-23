@@ -11,17 +11,17 @@ package @project.getPackageName()
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions
 
-class BookMicronautRequestHandlerTest {
+class BookRequestHandlerTest {
 
     @@Test
     fun testHandler() {
-        val bookMicronautRequestHandler = BookMicronautRequestHandler()
+        val bookRequestHandler = BookRequestHandler()
         val book = Book()
         book.name = "Building Microservices"
-        val bookSaved = bookMicronautRequestHandler.execute(book)
+        val bookSaved = bookRequestHandler.execute(book)
         Assertions.assertNotNull(bookSaved)
         Assertions.assertEquals(book.name, bookSaved!!.name)
         Assertions.assertNotNull(bookSaved.isbn)
-        bookMicronautRequestHandler.applicationContext.close()
+        bookRequestHandler.applicationContext.close()
     }
 }
