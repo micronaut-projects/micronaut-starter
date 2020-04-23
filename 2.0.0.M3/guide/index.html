@@ -1,0 +1,1289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Micronaut Starter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/custom.css" type="text/css" media="screen, print" title="Style" charset="utf-8" />
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8" />
+    <link rel="stylesheet" href="../css/highlight/agate.css">
+    <script src="../js/highlight.pack.js"></script>
+    <script src="../js/guide.js"></script>
+    <script src="../js/multi-language-sample.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="../css/multi-language-sample.css"/>
+    <script src="../js/docs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
+    <script type="text/javascript">
+        function addJsClass(el) {
+            var classes = document.body.className.split(" ");
+            classes.push("js");
+            document.body.className = classes.join(" ");
+        }
+    </script>
+
+</head>
+
+<body class="body" id="docs" onload="addJsClass();" onhashchange="highlightMenu()">
+
+<div id="table-of-content-nav-link" class="desktop">
+    <a id="theme-switcher" title="Switch to dark theme" href="javascript:switchTheme(true)"><i class="fa fa-moon-o"></i></a>
+    <a title="Collapse/Open Table of contents" title="Hide Table of Contents" href="javascript:hideTableOfContents();" class="button">[ + ]</a>
+</div>
+
+<div id="main">
+    <div id="navigation" class="no-print">
+        <div class="navTitle">
+            <span id="logo"><a href="http://micronaut.io" title="Go to Micronaut Website"><img src="../img/micronaut-logo-white.svg" alt="Micronaut"/></a></span>
+        </div>
+        <div class="navLinks">
+            <ul>
+                    <li><div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)" class="desktop">
+                            <a href="../guide/index.html" class="button">Table of contents</a>
+                            <div id="nav-summary-childs" style="display:none;">
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#commands"><strong>2</strong><span>Available commands</span></a></div>
+                                
+                                <div class="toc-item" style="margin-left:0"><a href="#starterImpls"><strong>3</strong><span>Micronaut Starter</span></a></div>
+                                
+                            </div>
+                        </div>
+                    </li>
+
+                <li id="table-of-content-nav-link-mobile" class="mobile">
+                    <a title="Scroll to Table of contents" href="javascript:scrollToTop();" class="button">Toc</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to API documentation" href="../api/index.html" class="button">API</a>
+                </li>
+                <li class="desktop">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Configuration Reference</a>
+                </li>
+                <li class="mobile">
+                    <a title="Go to Configuration Reference documentation" href="../guide/configurationreference.html" class="button">Conf</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    
+    <div id="table-of-content">
+        <div class="toc-content">
+
+        <h2>Table of Contents</h2>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-introduction"><a href="#introduction"><strong>1</strong><span>Introduction</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-installation"><a href="#installation"><strong>1.1</strong><span>Installation</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-releaseHistory"><a href="#releaseHistory"><strong>1.2</strong><span>Release History</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-commands"><a href="#commands"><strong>2</strong><span>Available commands</span></a></div>
+        
+        <div class="toc-item" style="margin-left:0px" id="toc-item-starterImpls"><a href="#starterImpls"><strong>3</strong><span>Micronaut Starter</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCLI"><a href="#starterCLI"><strong>3.1</strong><span>CLI Application</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterNetty"><a href="#starterNetty"><strong>3.2</strong><span>Web Application</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterServlet"><a href="#starterServlet"><strong>3.3</strong><span>WAR Deployment</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudRun"><a href="#starterCloudRun"><strong>3.4</strong><span>Google Cloud Run</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudFunction"><a href="#starterCloudFunction"><strong>3.5</strong><span>Google Cloud Function</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterLambda"><a href="#starterLambda"><strong>3.6</strong><span>AWS Lambda</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterAzure"><a href="#starterAzure"><strong>3.7</strong><span>Microsoft Azure</span></a></div>
+        
+        </div>
+    </div>
+    
+    <div class="docs-content">
+    <div class="project">
+        <h1>Micronaut Starter</h1>
+        <p></p>
+        <p>Generates Micronaut applications</p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/index.html'>2.0.0.M3</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.M3/guide/index.html'>2.0.0.M3</option></select></p>
+    </div>
+    
+<h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/introduction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This project implements a project generator for Micronaut as is both a Command Line (CLI) application and an API that can be run as a HTTP server, deployed to a Servlet container or executed on a Serverless platform (Google Cloud Run, Google Cloud Function, AWS Lambda or Azure Function).</p>
+</div>
+
+<h2 id="installation"><a class="anchor" href="#installation"></a>1.1 Installation</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/installation.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The best way to install Micronaut on Unix systems is with <a href="http://sdkman.io/">SDKMAN</a> which greatly simplifies installing
+and managing multiple Micronaut versions.</p>
+</div>
+<div class="sect2">
+<h3 id="_install_with_sdkman">Install with SDKMAN</h3>
+<div class="paragraph">
+<p>Before updating make sure you have latest version of SDKMAN installed. If not, run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to install Micronaut, run following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also specify the version to the <code>sdk install</code> command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut {project-version}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more information about SDKMAN usage on the <a href="http://sdkman.io/usage">SDKMAN Docs</a></p>
+</div>
+<div class="paragraph">
+<p>You should now be able to run the Micronaut CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_with_homebrew">Install with Homebrew</h3>
+<div class="paragraph">
+<p>Before installing make sure you have latest Homebrew updates.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew update</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to install Micronaut, run following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew install micronaut</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more information about Homebrew usage on their <a href="https://brew.sh/">homepage</a>.</p>
+</div>
+<div class="paragraph">
+<p>You should now be able to run the Micronaut CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_with_macports">Install with MacPorts</h3>
+<div class="paragraph">
+<p>Before installing it is recommended to sync the latest Portfiles.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port sync</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to install Micronaut, run following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port install micronaut</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can find more information about MacPorts usage on their <a href="https://www.macports.org">homepage</a>.</p>
+</div>
+<div class="paragraph">
+<p>You should now be able to run the Micronaut CLI.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_through_binary_on_windows">Install through Binary on Windows</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Download the latest binary from <a href="http://micronaut.io/download.html">Micronaut Website</a></p>
+</li>
+<li>
+<p>Extract the binary to appropriate location (For example: <code>C:\micronaut</code>)</p>
+</li>
+<li>
+<p>Create an environment variable <code>MICRONAUT_HOME</code> which points to the installation directory i.e. <code>C:\micronaut</code></p>
+</li>
+<li>
+<p>Update the <code>PATH</code> environment variable, append <code>%MICRONAUT_HOME%\bin</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>You should now be able to run the Micronaut CLI from the command prompt as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
+</div>
+</div>
+</div>
+
+<h2 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>1.2 Release History</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect3">
+<h4 id="_2_0_0_m3">2.0.0.M3</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Initial Milestone Release</p>
+</li>
+</ul>
+</div>
+</div>
+
+<h1 id="commands"><a class="anchor" href="#commands"></a>2 Available commands</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/commands.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_name">Name</h3>
+<div class="paragraph">
+<p>mn - Micronaut CLI command line interface for generating projects and services.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn</strong> [<strong>-hvVx</strong>] [COMMAND]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description">Description</h3>
+<div class="paragraph">
+<p>Micronaut CLI command line interface for generating projects and services.
+Application generation commands are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>create-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-cli-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-function</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-grpc-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-messaging-app</strong> NAME</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands">Commands</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>create-app</strong></dt>
+<dd>
+<p>Creates an application</p>
+</dd>
+<dt class="hdlist1"><strong>create-cli-app</strong></dt>
+<dd>
+<p>Creates a CLI application</p>
+</dd>
+<dt class="hdlist1"><strong>create-function</strong></dt>
+<dd>
+<p>Creates a Cloud Function</p>
+</dd>
+<dt class="hdlist1"><strong>create-grpc-app</strong></dt>
+<dd>
+<p>Creates a gRPC application</p>
+</dd>
+<dt class="hdlist1"><strong>create-messaging-app</strong></dt>
+<dd>
+<p>Creates a messaging application</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_app">create-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_2">Name</h3>
+<div class="paragraph">
+<p>mn-create-app - Creates an application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_2">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>] [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>]
+              [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_2">Description</h3>
+<div class="paragraph">
+<p>Creates an application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_2">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, openapi, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, tomcat-server, asciidoctor, kafka-streams, tracing-zipkin, netty-server, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, undertow-server, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, google-cloud-function, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, azure-function, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, alexa-http-server, views-velocity, cache-caffeine, jetty-server, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_cli_app">create-cli-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_3">Name</h3>
+<div class="paragraph">
+<p>mn-create-cli-app - Creates a CLI application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_3">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-cli-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                  [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                  <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_3">Description</h3>
+<div class="paragraph">
+<p>Creates a CLI application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_3">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_2">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_function">create-function</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_4">Name</h3>
+<div class="paragraph">
+<p>mn-create-function - Creates a Cloud Function</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_4">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-function</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                   [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                   <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_4">Description</h3>
+<div class="paragraph">
+<p>Creates a Cloud Function</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_4">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, alexa-function, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, google-cloud-function, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, aws-lambda, jrebel, azure-function, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_3">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_grpc_app">create-grpc-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_5">Name</h3>
+<div class="paragraph">
+<p>mn-create-grpc-app - Creates a gRPC application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_5">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-grpc-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                   [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                   <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_5">Description</h3>
+<div class="paragraph">
+<p>Creates a gRPC application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_5">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_4">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_messaging_app">create-messaging-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_6">Name</h3>
+<div class="paragraph">
+<p>mn-create-messaging-app - Creates a messaging application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_6">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-messaging-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                        [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                        <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_6">Description</h3>
+<div class="paragraph">
+<p>Creates a messaging application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_6">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_5">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+<h1 id="starterImpls"><a class="anchor" href="#starterImpls"></a>3 Micronaut Starter</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The core functionality of the project generator is contained within the <code>micronaut-starter-core</code> subproject:</p>
+</div>
+<div class="paragraph">
+<p>        <div class="listingblock multi-language-sample">
+<div class="title"></div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-core:2.0.0.M3")</span></code></pre>
+</div>
+</div>
+<div class="listingblock multi-language-sample">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
+    &lt;groupId&gt;io.micronaut.starter&lt;/groupId&gt;
+    &lt;artifactId&gt;micronaut-starter-core&lt;/artifactId&gt;
+    &lt;version&gt;2.0.0.M3&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+</p>
+</div>
+
+<h2 id="starterCLI"><a class="anchor" href="#starterCLI"></a>3.1 CLI Application</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCLI.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-web-cli</code> provides an implementation that can be run as a Command Line Application (CLI).</p>
+</div>
+<div class="sect2">
+<h3 id="_building_locally">Building Locally</h3>
+<div class="paragraph">
+<p>From the project root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-cli:assemble</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now you can run the following the start the CLI in interactive mode:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_building_a_native_image">Building a Native Image</h3>
+<div class="paragraph">
+<p>Install GraalVM and Native Image. Follow the steps in the previous section to build the CLI and then run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will produce the <code>mn</code> executable which you can start with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./mn</code></pre>
+</div>
+</div>
+</div>
+
+<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.2 Web Application</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-web-netty</code> provides an implementation that runs on Netty.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_application_locally">Running the Application locally</h3>
+<div class="paragraph">
+<p>From the project root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-netty:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And visit <a href="http://localhost:8080/application-types" class="bare">http://localhost:8080/application-types</a></p>
+</div>
+<div class="paragraph">
+<p>You can view the Swagger UI definition at:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8080/swagger/views/swagger-ui/index.html" class="bare">http://localhost:8080/swagger/views/swagger-ui/index.html</a></p>
+</div>
+<div class="paragraph">
+<p>Or with RapiDoc:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8080/swagger/views/rapidoc/index.html" class="bare">http://localhost:8080/swagger/views/rapidoc/index.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_application">Deploying the Application</h3>
+<div class="paragraph">
+<p>You can build the WAR file with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-netty:shadowJar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A runnable JAR file will be located in <code>starter-web-servlet/build/libs</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-2.0.0.M3-all.jar</code></pre>
+</div>
+</div>
+</div>
+
+<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.3 WAR Deployment</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-web-servlet</code> provides an implementation that can be deployed to any recent Servlet 4+ container (Tomcat 9, Jetty 9 etc.).</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_application_locally">Running the Application locally</h3>
+<div class="paragraph">
+<p>From the project root:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-servlet:run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And visit <a href="http://localhost:8080/application-types" class="bare">http://localhost:8080/application-types</a></p>
+</div>
+<div class="paragraph">
+<p>You can view the Swagger UI definition at:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8080/swagger/views/swagger-ui" class="bare">http://localhost:8080/swagger/views/swagger-ui</a></p>
+</div>
+<div class="paragraph">
+<p>Or with RapiDoc:</p>
+</div>
+<div class="paragraph">
+<p><a href="http://localhost:8080/swagger/views/rapidoc" class="bare">http://localhost:8080/swagger/views/rapidoc</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_application">Deploying the Application</h3>
+<div class="paragraph">
+<p>You can build the WAR file with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-servlet:assemble</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The WAR file will be located in <code>starter-web-servlet/build/libs</code> and can be deployed to any modern Servlet container (example Jetty 9 or Tomcat 9).</p>
+</div>
+</div>
+
+<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.4 Google Cloud Run</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-web-netty</code> provides an implementation that can be continuously deployed to Cloud Run as a GraalVM native image.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_application_locally">Running the Application Locally</h3>
+<div class="paragraph">
+<p>Install GraalVM and the native image tool and then run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">$ docker build . -t micronaut-starter -f DockerfileCloudRun
+$ docker run -p 8080:8080 micronaut-starter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then visit <a href="http://localhost:8080/swagger/views/swagger-ui/index.html" class="bare">http://localhost:8080/swagger/views/swagger-ui/index.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment">Continuous Deployment</h3>
+<div class="paragraph">
+<p>Micronaut Starter is continuously deployed to Google Cloud Run as a native GraalVM application using Github Actions.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22">Snapshot to GCR Workflow</a> (defined by <code>.github/workflows/gcr-snapshot.yml</code>) deploys the application on each commit and the application can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html" class="bare">https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_application">Deploying the Application</h3>
+<div class="paragraph">
+<p>To build and deploy the project yourself install setup the Google Cloud CLI then from the project root build the docker image and push it to Google Container Registry:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ docker build . -t micronaut-starter -f DockerfileCloudRun
+$ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
+$ docker push gcr.io/[PROJECT ID]/micronaut-starter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You are now ready to deploy your application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>$ gcloud beta run deploy --image gcr.io/[PROJECT ID]/micronaut-starter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Where <code>[PROJECT ID]</code> is replaced for your project ID. You should see output like the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code>Service name: (micronaut-starter):
+Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT_ID] region [us-central1]
+
+✓ Deploying... Done.
+  ✓ Creating Revision...
+  ✓ Routing traffic...
+Done.
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The URL is the URL of your Cloud Run application.</p>
+</div>
+</div>
+
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-gcp-function</code> provides a function that can be deployed to Google Cloud Function.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_function_locally">Running the Function Locally</h3>
+<div class="paragraph">
+<p>To run the function locally run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-gcp-function:runFunction</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then visit <a href="http://localhost:8081/application-types" class="bare">http://localhost:8081/application-types</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment">Continuous Deployment</h3>
+<div class="paragraph">
+<p>Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Worflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_function_yourself">Deploying the Function Yourself</h3>
+<div class="paragraph">
+<p>To deploy the function first build the function with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew clean starter-gcp-function:shadowJar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then <code>cd</code> into the <code>starter-gcp-function/build/libs</code> directory (deployment has to be done from the location where the JAR lives):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cd starter-gcp-function/build/libs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Choose unauthenticated access if you don&#8217;t need auth.</p>
+</div>
+<div class="paragraph">
+<p>To obtain the trigger URL do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe micronaut-starter --format='value(httpsTrigger.url)')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then use this variable to test the function invocation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -i $YOUR_HTTP_TRIGGER_URL/create/app/example -o application.zip</code></pre>
+</div>
+</div>
+</div>
+
+<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.6 AWS Lambda</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-aws-lambda</code> provides a function that can be deployed to AWS Lambda as a GraalVM native image.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_lambda_locally">Running the Lambda Locally</h3>
+<div class="paragraph">
+<p>From the root of the project run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">$ docker build . -f DockerfileLambda -t micronaut-starter
+$ mkdir -p build
+$ docker run --rm --entrypoint cat micronaut-starter  /home/application/function.zip &gt; build/function.zip</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then start the function with SAM (<a href="https://github.com/awslabs/aws-sam-cli" class="bare">https://github.com/awslabs/aws-sam-cli</a>).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">$ sam local start-api --template sam-local.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And visit <a href="http://localhost:3000/" class="bare">http://localhost:3000/</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment">Continuous Deployment</h3>
+<div class="paragraph">
+<p>Micronaut Starter is continuously deployed by Github Actions to AWS Lambda as a Serverless GraalVM native application using a custom AWS Lambda Runtime .</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+AWS+Lambda%22">Snapshot to AWS Lambda Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://cn58jiuova.execute-api.us-east-1.amazonaws.com/staging/application-types" class="bare">https://cn58jiuova.execute-api.us-east-1.amazonaws.com/staging/application-types</a></p>
+</div>
+</div>
+
+<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.7 Microsoft Azure</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterAzure.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-azure-function</code> provides a function that can be deployed to Microsoft Azure.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_function_locally">Running the Function Locally</h3>
+<div class="paragraph">
+<p>First uncomment the Azure plugin from <code>starter-azure-function/build.grade</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-azure-function:azureFunctionsRun</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And visit <a href="http://localhost:7071/api/application-types" class="bare">http://localhost:7071/api/application-types</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment">Continuous Deployment</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_function_yourself">Deploying the Function Yourself</h3>
+<div class="paragraph">
+<p>First uncomment the Azure plugin from <code>starter-azure-function/build.grade</code> then run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-azure-function:azureFunctionsDeploy</code></pre>
+</div>
+</div>
+</div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>2 Available commands 2.0.0.M3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Micronaut Starter
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2 Available commands</h1>
+
+                    <p><strong>Version:</strong> 2.0.0.M3</p>
+                </div>
+
+                
+
+                
+<h1 id="commands"><a class="anchor" href="#commands"></a>2 Available commands</h1>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/commands.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="sect2">
+<h3 id="_name">Name</h3>
+<div class="paragraph">
+<p>mn - Micronaut CLI command line interface for generating projects and services.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn</strong> [<strong>-hvVx</strong>] [COMMAND]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description">Description</h3>
+<div class="paragraph">
+<p>Micronaut CLI command line interface for generating projects and services.
+Application generation commands are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>create-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-cli-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-function</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-grpc-app</strong> NAME</p>
+</li>
+<li>
+<p><strong>create-messaging-app</strong> NAME</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_commands">Commands</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>create-app</strong></dt>
+<dd>
+<p>Creates an application</p>
+</dd>
+<dt class="hdlist1"><strong>create-cli-app</strong></dt>
+<dd>
+<p>Creates a CLI application</p>
+</dd>
+<dt class="hdlist1"><strong>create-function</strong></dt>
+<dd>
+<p>Creates a Cloud Function</p>
+</dd>
+<dt class="hdlist1"><strong>create-grpc-app</strong></dt>
+<dd>
+<p>Creates a gRPC application</p>
+</dd>
+<dt class="hdlist1"><strong>create-messaging-app</strong></dt>
+<dd>
+<p>Creates a messaging application</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_app">create-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_2">Name</h3>
+<div class="paragraph">
+<p>mn-create-app - Creates an application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_2">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>] [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>]
+              [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_2">Description</h3>
+<div class="paragraph">
+<p>Creates an application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_2">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, openapi, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, tomcat-server, asciidoctor, kafka-streams, tracing-zipkin, netty-server, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, undertow-server, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, google-cloud-function, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, azure-function, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, alexa-http-server, views-velocity, cache-caffeine, jetty-server, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_cli_app">create-cli-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_3">Name</h3>
+<div class="paragraph">
+<p>mn-create-cli-app - Creates a CLI application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_3">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-cli-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                  [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                  <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_3">Description</h3>
+<div class="paragraph">
+<p>Creates a CLI application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_3">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_2">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_function">create-function</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_4">Name</h3>
+<div class="paragraph">
+<p>mn-create-function - Creates a Cloud Function</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_4">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-function</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                   [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                   <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_4">Description</h3>
+<div class="paragraph">
+<p>Creates a Cloud Function</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_4">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, alexa-function, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, google-cloud-function, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, aws-lambda, jrebel, azure-function, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_3">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_grpc_app">create-grpc-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_5">Name</h3>
+<div class="paragraph">
+<p>mn-create-grpc-app - Creates a gRPC application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_5">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-grpc-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                   [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                   <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_5">Description</h3>
+<div class="paragraph">
+<p>Creates a gRPC application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_5">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_4">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_messaging_app">create-messaging-app</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_name_6">Name</h3>
+<div class="paragraph">
+<p>mn-create-messaging-app - Creates a messaging application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_synopsis_6">Synopsis</h3>
+<div class="paragraph">
+<p><strong>mn create-messaging-app</strong> [<strong>-hivVx</strong>] [<strong>--list-features</strong>] [<strong>-b</strong>=<em>BUILD-TOOL</em>]
+                        [<strong>--jdk</strong>=<em>&lt;javaVersion&gt;</em>] [<strong>-l</strong>=<em>LANG</em>] [<strong>-t</strong>=<em>TEST</em>] [<strong>-f</strong>=<em>FEATURE</em>[,
+                        <em>FEATURE</em>&#8230;&#8203;]]&#8230;&#8203; [<em>NAME</em>]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_6">Description</h3>
+<div class="paragraph">
+<p>Creates a messaging application</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_options_6">Options</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><strong>-b</strong>, <strong>--build</strong>=<em>BUILD-TOOL</em></dt>
+<dd>
+<p>Which build tool to configure. Possible values: gradle, maven.</p>
+</dd>
+<dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
+<dd>
+<p>The features to use. Possible values: jdbc-hikari, jdbc-tomcat, jdbc-dbcp, jmx, views-freemarker, jib, jackson-xml, micrometer-graphite, micrometer-humio, elasticsearch, asciidoctor, kafka-streams, tracing-zipkin, discovery-consul, cassandra, mongo-reactive, security-session, micrometer-jmx, http-client, hibernate-validator, logback, mongo-gorm, cache-ehcache, vertx-mysql-client, jax-rs, flyway, log4j2, views-thymeleaf, micrometer-atlas, micrometer-cloudwatch, netflix-hystrix, management, micrometer-appoptics, rss, graphql, file-watch, micrometer-datadog, rabbitmq, micrometer-ganglia, rss-itunes-podcast, liquibase, springloaded, micrometer-prometheus, netflix-archaius, micrometer-signalfx, hibernate-jpa, security-jwt, data-jpa, vertx-pg-client, micrometer-new-relic, views-soy, hibernate-gorm, micrometer-influx, cache-infinispan, micrometer-wavefront, micrometer-stackdriver, views-handlebars, micrometer-kairos, views-rocker, neo4j-gorm, micrometer-azure-monitor, micrometer-elastic, netflix-ribbon, graalvm, config-consul, redis-lettuce, cache-hazelcast, tracing-jaeger, neo4j-bolt, micrometer-statsd, kafka, micrometer-dynatrace, jrebel, postgres-reactive, data-jdbc, discovery-eureka, kubernetes, views-velocity, cache-caffeine, yaml, properties</p>
+</dd>
+<dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
+<dd>
+<p>Show this help message and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-i</strong>, <strong>--inplace</strong></dt>
+<dd>
+<p>Create a service using the current directory</p>
+</dd>
+<dt class="hdlist1"><strong>--jdk, --java-version</strong>=<em>&lt;javaVersion&gt;</em></dt>
+<dd>
+<p>The JDK version the project should target</p>
+</dd>
+<dt class="hdlist1"><strong>-l</strong>, <strong>--lang</strong>=<em>LANG</em></dt>
+<dd>
+<p>Which language to use. Possible values: java, groovy, kotlin.</p>
+</dd>
+<dt class="hdlist1"><strong>--list-features</strong></dt>
+<dd>
+<p>Output the available features and their descriptions</p>
+</dd>
+<dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
+<dd>
+<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+</dd>
+<dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
+<dd>
+<p>Create verbose output.</p>
+</dd>
+<dt class="hdlist1"><strong>-V</strong>, <strong>--version</strong></dt>
+<dd>
+<p>Print version information and exit.</p>
+</dd>
+<dt class="hdlist1"><strong>-x</strong>, <strong>--stacktrace</strong></dt>
+<dd>
+<p>Show full stack trace when exceptions occur.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arguments_5">Arguments</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">[<em>NAME</em>]</dt>
+<dd>
+<p>The name of the application to create.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="/cdn-cgi/apps/head/3cOPSgo5Omz84ycX7CvigfX4cpw.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-82213539-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-82213539-2');
+    </script>
+    <title>3.5 Google Cloud Function 2.0.0.M3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <div class="navTitle">
+        
+        Micronaut Starter
+    </div>
+    <div class="navLinks">
+        <ul>
+            <li>
+                <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                    <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                    <div id="nav-summary-childs" style="display:none;">
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span></a>
+                        </div>
+                        
+                    </div>
+                </div>
+            </li>
+            <li class="separator selected">
+                <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/commands.html">&lt;&lt; <strong>2</strong><span>Available commands</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>3.5 Google Cloud Function</h1>
+
+                    <p><strong>Version:</strong> 2.0.0.M3</p>
+                </div>
+
+                
+
+                
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The subproject <code>starter-gcp-function</code> provides a function that can be deployed to Google Cloud Function.</p>
+</div>
+<div class="sect2">
+<h3 id="_running_the_function_locally">Running the Function Locally</h3>
+<div class="paragraph">
+<p>To run the function locally run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-gcp-function:runFunction</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And then visit <a href="http://localhost:8081/application-types" class="bare">http://localhost:8081/application-types</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_continuous_deployment">Continuous Deployment</h3>
+<div class="paragraph">
+<p>Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Worflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deploying_the_function_yourself">Deploying the Function Yourself</h3>
+<div class="paragraph">
+<p>To deploy the function first build the function with:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew clean starter-gcp-function:shadowJar</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then <code>cd</code> into the <code>starter-gcp-function/build/libs</code> directory (deployment has to be done from the location where the JAR lives):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cd starter-gcp-function/build/libs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Choose unauthenticated access if you don&#8217;t need auth.</p>
+</div>
+<div class="paragraph">
+<p>To obtain the trigger URL do the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe micronaut-starter --format='value(httpsTrigger.url)')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can then use this variable to test the function invocation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -i $YOUR_HTTP_TRIGGER_URL/create/app/example -o application.zip</code></pre>
+</div>
+</div>
+</div>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/commands.html">&lt;&lt; <strong>2</strong><span>Available commands</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
