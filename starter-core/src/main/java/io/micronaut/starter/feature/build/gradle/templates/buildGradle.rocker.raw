@@ -30,10 +30,10 @@ plugins {
 @if (features.contains("azure-function")) {
     id "com.microsoft.azure.azurefunctions" version "1.1.0"
 }
-@if (features.application() != null) {
-    @if (features.contains("shade")) {
+@if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "5.2.0"
-    }
+}
+@if (features.application() != null) {
     id "application"
 }
 @if (features.contains("grpc")) {
@@ -458,12 +458,13 @@ tasks.withType(GroovyCompile) {
 }
 
 
-@if (features.application() != null) {
 @if (features.contains("shade")) {
 shadowJar {
     mergeServiceFiles()
 }
 }
+
+@if (features.application() != null) {
 
 @if (features.contains("jrebel")) {
 run.dependsOn(generateRebel)
