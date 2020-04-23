@@ -86,11 +86,13 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature {
     }
 
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
-        String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
-        generatorContext.addTemplate("trigger", triggerFile,
-                azureRawFunctionTriggerJava.template(project),
-                azureRawFunctionTriggerKotlin.template(project),
-                azureRawFunctionTriggerGroovy.template(project));
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
+            generatorContext.addTemplate("trigger", triggerFile,
+                    azureRawFunctionTriggerJava.template(project),
+                    azureRawFunctionTriggerKotlin.template(project),
+                    azureRawFunctionTriggerGroovy.template(project));
+        }
     }
 
     @Override

@@ -37,6 +37,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("local.settings.json")
         !output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
+        output.get("$srcDir/example/micronaut/Function.$extension".toString())
+                .contains(" AzureFunction")
         output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
 
         where:
@@ -70,6 +72,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
         output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
+        output.get("$srcDir/example/micronaut/Function.$extension".toString())
+                .contains(" AzureHttpFunction")
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
 

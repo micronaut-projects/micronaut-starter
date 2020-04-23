@@ -44,14 +44,17 @@ public class AzureRawFunction extends AbstractAzureFunction {
     @Override
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         super.applyFunction(generatorContext, type);
-        Project project = generatorContext.getProject();
 
-        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
-        generatorContext.addTestTemplate("testFunction", testSource,
-                javaJUnitTemplate(project),
-                kotlinJUnitTemplate(project),
-                groovyJUnitTemplate(project),
-                kotlinTestTemplate(project),
-                spockTemplate(project));
+        if (type == ApplicationType.FUNCTION) {
+            Project project = generatorContext.getProject();
+
+            String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
+            generatorContext.addTestTemplate("testFunction", testSource,
+                    javaJUnitTemplate(project),
+                    kotlinJUnitTemplate(project),
+                    groovyJUnitTemplate(project),
+                    kotlinTestTemplate(project),
+                    spockTemplate(project));
+        }
     }
 }

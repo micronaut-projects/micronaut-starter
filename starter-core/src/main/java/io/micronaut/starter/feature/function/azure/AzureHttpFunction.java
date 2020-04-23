@@ -17,11 +17,11 @@ package io.micronaut.starter.feature.function.azure;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
+import io.micronaut.starter.feature.function.azure.template.*;
 
 import javax.inject.Singleton;
 
@@ -56,11 +56,23 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
 
     @Override
     protected RockerModel kotlinTestTemplate(Project project) {
-        return azureFunctionTriggerKotlin.template(project);
+        return azureFunctionKotlinTest.template(project);
     }
 
     @Override
     public RockerModel spockTemplate(Project project) {
-        return azureFunctionTriggerKotlin.template(project);
+        return azureFunctionSpock.template(project);
+    }
+
+    @Override
+    protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
+        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+            String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
+            generatorContext.addTemplate("trigger", triggerFile,
+                    azureFunctionTriggerJava.template(project),
+                    azureFunctionTriggerKotlin.template(project),
+                    azureFunctionTriggerGroovy.template(project));
+        }
+
     }
 }
