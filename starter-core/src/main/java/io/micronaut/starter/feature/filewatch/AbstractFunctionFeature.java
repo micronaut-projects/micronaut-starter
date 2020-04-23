@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.server.template.groovyController;
 import io.micronaut.starter.feature.server.template.javaController;
@@ -34,7 +33,7 @@ import io.micronaut.starter.template.RockerTemplate;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractFunctionFeature implements FunctionFeature, TestTemplateProvider {
+public abstract class AbstractFunctionFeature implements FunctionFeature {
 
     protected RockerModel javaControllerTemplate(Project project) {
         return javaController.template(project);
@@ -82,7 +81,11 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, TestTe
             }
 
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
-            generatorContext.addTestTemplate(project, "testFunction", testSource, this);
+            generatorContext.addTestTemplate("testFunction", testSource,  javaJUnitTemplate(project),
+                    kotlinJUnitTemplate(project),
+                    groovyJUnitTemplate(project),
+                    kotlinTestTemplate(project),
+                    spockTemplate(project));
         }
     }
 
@@ -91,4 +94,14 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, TestTe
     protected abstract String getRunCommand(BuildTool buildTool);
 
     protected abstract String getBuildCommand(BuildTool buildTool);
+
+    protected abstract RockerModel javaJUnitTemplate(Project project);
+
+    protected abstract RockerModel kotlinJUnitTemplate(Project project);
+
+    protected abstract RockerModel groovyJUnitTemplate(Project project);
+
+    protected abstract RockerModel kotlinTestTemplate(Project project);
+
+    public abstract RockerModel spockTemplate(Project project);
 }

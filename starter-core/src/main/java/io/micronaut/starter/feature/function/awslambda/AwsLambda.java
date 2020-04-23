@@ -15,13 +15,10 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.SourceTemplateProvider;
-import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookKotlin;
@@ -73,95 +70,27 @@ public class AwsLambda implements Feature {
 
     private void addTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookMicronautRequestHandler");
-        generatorContext.addTestTemplate(project, "testBookMicronautRequestHandler", testSource, new TestTemplateProvider() {
-            @Override
-            public RockerModel javaJUnitTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerJavaJunit.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinJUnitTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerKotlinJunit.template(project);
-            }
-
-            @Override
-            public  RockerModel groovyJUnitTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerGroovyJunit.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinTestTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerKotlinTest.template(project);
-            }
-
-            @Override
-            public RockerModel spockTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerSpock.template(project);
-            }
-
-        });
+        generatorContext.addTestTemplate("testBookMicronautRequestHandler", testSource,
+                awsLambdaBookMicronautRequestHandlerJavaJunit.template(project),
+                awsLambdaBookMicronautRequestHandlerKotlinJunit.template(project),
+                awsLambdaBookMicronautRequestHandlerGroovyJunit.template(project),
+                awsLambdaBookMicronautRequestHandlerKotlinTest.template(project),
+                awsLambdaBookMicronautRequestHandlerSpock.template(project));
     }
 
     private void addBook(GeneratorContext generatorContext, Project project) {
         String bookFile = generatorContext.getSourcePath("/{packagePath}/Book");
-        SourceTemplateProvider bookTemplateProvider = new SourceTemplateProvider() {
-            @Override
-            public RockerModel javaTemplate(Project project) {
-                return awsLambdaBookJava.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinTemplate(Project project) {
-                return awsLambdaBookKotlin.template(project);
-            }
-
-            @Override
-            public RockerModel groovyTemplate(Project project) {
-                return awsLambdaBookGroovy.template(project);
-            }
-        };
-        generatorContext.addTemplate(project, "book", bookFile, bookTemplateProvider);
+        generatorContext.addTemplate("book", bookFile, awsLambdaBookJava.template(project), awsLambdaBookKotlin.template(project), awsLambdaBookGroovy.template(project));
     }
 
     private void addBookSaved(GeneratorContext generatorContext, Project project) {
         String bookSavedFile = generatorContext.getSourcePath("/{packagePath}/BookSaved");
-        SourceTemplateProvider bookSavedTemplateProvider = new SourceTemplateProvider() {
-            @Override
-            public RockerModel javaTemplate(Project project) {
-                return awsLambdaBookSavedJava.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinTemplate(Project project) {
-                return awsLambdaBookSavedKotlin.template(project);
-            }
-
-            @Override
-            public RockerModel groovyTemplate(Project project) {
-                return awsLambdaBookSavedGroovy.template(project);
-            }
-        };
-        generatorContext.addTemplate(project, "bookSaved", bookSavedFile, bookSavedTemplateProvider);
+        generatorContext.addTemplate("bookSaved", bookSavedFile, awsLambdaBookSavedJava.template(project),
+                awsLambdaBookSavedKotlin.template(project), awsLambdaBookSavedGroovy.template(project));
     }
 
     private void addBookMicronautRequestHandler(GeneratorContext generatorContext, Project project) {
         String awsLambdaBookMicronautRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/BookMicronautRequestHandler");
-        SourceTemplateProvider awsLambdaBookMicronautRequestHandlerSourceTemplateProvider = new SourceTemplateProvider() {
-            @Override
-            public RockerModel javaTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerJava.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerKotlin.template(project);
-            }
-
-            @Override
-            public RockerModel groovyTemplate(Project project) {
-                return awsLambdaBookMicronautRequestHandlerGroovy.template(project);
-            }
-        };
-        generatorContext.addTemplate(project, "bookMicronautRequestHandler", awsLambdaBookMicronautRequestHandlerFile, awsLambdaBookMicronautRequestHandlerSourceTemplateProvider);
+        generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookMicronautRequestHandlerFile, awsLambdaBookMicronautRequestHandlerJava.template(project), awsLambdaBookMicronautRequestHandlerKotlin.template(project), awsLambdaBookMicronautRequestHandlerGroovy.template(project));
     }
 }

@@ -23,7 +23,6 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.SourceTemplateProvider;
 import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.*;
 import io.micronaut.starter.feature.other.ShadePlugin;
@@ -105,22 +104,10 @@ public class AzureFunction extends AbstractFunctionFeature {
 
     private void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
         String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
-        generatorContext.addTemplate(project, "trigger", triggerFile, new SourceTemplateProvider() {
-            @Override
-            public RockerModel javaTemplate(Project project) {
-                return azureFunctionTriggerJava.template(project);
-            }
-
-            @Override
-            public RockerModel kotlinTemplate(Project project) {
-                return azureFunctionTriggerKotlin.template(project);
-            }
-
-            @Override
-            public RockerModel groovyTemplate(Project project) {
-                return azureFunctionTriggerGroovy.template(project);
-            }
-        });
+        generatorContext.addTemplate("trigger", triggerFile,
+                azureFunctionTriggerJava.template(project),
+                azureFunctionTriggerKotlin.template(project),
+                azureFunctionTriggerGroovy.template(project));
     }
 
     @Override
@@ -133,22 +120,22 @@ public class AzureFunction extends AbstractFunctionFeature {
     }
 
     @Override
-    public RockerModel javaJUnitTemplate(Project project) {
+    protected RockerModel javaJUnitTemplate(Project project) {
         return azureFunctionJavaJunit.template(project);
     }
 
     @Override
-    public RockerModel kotlinJUnitTemplate(Project project) {
+    protected RockerModel kotlinJUnitTemplate(Project project) {
         return azureFunctionKotlinJunit.template(project);
     }
 
     @Override
-    public RockerModel groovyJUnitTemplate(Project project) {
+    protected RockerModel groovyJUnitTemplate(Project project) {
         return azureFunctionGroovyJunit.template(project);
     }
 
     @Override
-    public RockerModel kotlinTestTemplate(Project project) {
+    protected RockerModel kotlinTestTemplate(Project project) {
         return azureFunctionKotlinTest.template(project);
     }
 

@@ -17,8 +17,6 @@ package io.micronaut.starter.application.generator;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.feature.SourceTemplateProvider;
-import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
@@ -178,34 +176,69 @@ public class GeneratorContext {
         return getTestFramework().getSourcePath(path, getLanguage());
     }
 
-    RockerModel parseModel(Project project,
-                                  SourceTemplateProvider sourceTemplateProvider) {
+    RockerModel parseModel(RockerModel javaTemplate,
+                           RockerModel kotlinTemplate,
+                           RockerModel groovyTemplate) {
         switch (getLanguage()) {
             case GROOVY:
-                return sourceTemplateProvider.groovyTemplate(project);
+                return javaTemplate;
             case KOTLIN:
-                return sourceTemplateProvider.kotlinTemplate(project);
+                return kotlinTemplate;
             case JAVA:
             default:
-                return sourceTemplateProvider.javaTemplate(project);
+                return groovyTemplate;
         }
     }
 
-    public void addTestTemplate(Project project,
-                                       String templateName,
-                                       String testSource,
-                                       TestTemplateProvider testTemplateProvider) {
-        RockerModel testTemplate = testTemplateProvider.getTestTemplate(project, this);
+    public void addTestTemplate(String templateName,
+                                String testSource,
+                                RockerModel javaJUnitTemplate,
+                                RockerModel kotlinJUnitTemplate,
+                                RockerModel groovyJUnitTemplate,
+                                RockerModel kotlinTestTemplate,
+                                RockerModel spockTemplate) {
+        RockerModel testTemplate = getTestTemplate(javaJUnitTemplate,
+                kotlinJUnitTemplate, groovyJUnitTemplate, kotlinTestTemplate, spockTemplate);
         if (testTemplate != null) {
             addTemplate(templateName, new RockerTemplate(testSource, testTemplate));
         }
     }
 
-    public void addTemplate(Project project,
-                            String templateName,
+    public RockerModel getTestTemplate(RockerModel javaJUnitTemplate,
+                                       RockerModel kotlinJUnitTemplate,
+                                       RockerModel groovyJUnitTemplate,
+                                       RockerModel kotlinTestTemplate,
+                                       RockerModel spockTemplate) {
+        TestFramework testFramework = getTestFramework();
+        Language language = getLanguage();
+        switch (testFramework) {
+            case SPOCK:
+                return spockTemplate;
+
+            case KOTLINTEST:
+                return kotlinTestTemplate;
+
+            case JUNIT:
+            default:
+                switch (language) {
+                    case GROOVY:
+                        return groovyJUnitTemplate;
+                    case KOTLIN:
+                        return kotlinJUnitTemplate;
+                    case JAVA:
+                    default:
+                        return javaJUnitTemplate;
+                }
+        }
+    }
+
+    public void addTemplate(String templateName,
                             String triggerFile,
-                            SourceTemplateProvider sourceTemplateProvider) {
-        RockerModel rockerModel = parseModel(project, sourceTemplateProvider);
+                            RockerModel javaTemplate,
+                            RockerModel kotlinTemplate,
+                            RockerModel groovyTemplate) {
+        RockerModel rockerModel = parseModel(javaTemplate, kotlinTemplate, groovyTemplate);
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
+
 }
