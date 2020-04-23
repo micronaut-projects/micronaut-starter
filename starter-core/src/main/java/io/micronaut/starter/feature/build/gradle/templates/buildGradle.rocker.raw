@@ -128,12 +128,16 @@ dependencies {
     }
 }
 @if (features.contains("azure-function")) {
+implementation("com.microsoft.azure.functions:azure-functions-java-library")
+@if (features.isFunction()) {
+    implementation("io.micronaut.azure:micronaut-azure-function")
+} else {
     implementation("io.micronaut.azure:micronaut-azure-function-http")
-    implementation("com.microsoft.azure.functions:azure-functions-java-library")
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
     testImplementation("io.micronaut.servlet:micronaut-servlet-core")
     }
+}
 }
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
@@ -477,19 +481,7 @@ task('runFunction', type: JavaExec, dependsOn: classes) {
     )
 }
 }
-@if (features.contains("azure-function")) {
-azurefunctions {
-    resourceGroup = 'java-functions-group'
-    appName = '@project.getName()'
-    pricingTier = 'Consumption'
-    region = 'westus'
-    runtime {
-      os = 'windows'
-    }
-    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
-}
 
-}
 
 tasks.withType(JavaExec) {
     classpath += configurations.developmentOnly
@@ -505,6 +497,18 @@ tasks.withType(JavaExec) {
 }
 }
 
+@if (features.contains("azure-function")) {
+azurefunctions {
+    resourceGroup = 'java-functions-group'
+    appName = '@project.getName()'
+    pricingTier = 'Consumption'
+    region = 'westus'
+    runtime {
+      os = 'windows'
+    }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+}
 
 @if (features.contains("asciidoctor")) {
 apply from: 'gradle/asciidoc.gradle'
