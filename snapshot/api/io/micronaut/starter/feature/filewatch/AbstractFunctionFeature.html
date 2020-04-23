@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":6,"i2":6,"i3":10,"i4":6,"i5":10,"i6":6,"i7":10,"i8":6,"i9":6,"i10":6,"i11":6};
+var methods = {"i0":10,"i1":10,"i2":6,"i3":6,"i4":10,"i5":6,"i6":10,"i7":6,"i8":10,"i9":6,"i10":6,"i11":6,"i12":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../io/micronaut/starter/feature/function/azure/AzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AzureFunction</a>, <a href="../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html" title="class in io.micronaut.starter.feature.function.gcp">GoogleCloudFunction</a></dd>
+<dd><a href="../../../../../io/micronaut/starter/feature/function/azure/AbstractAzureFunction.html" title="class in io.micronaut.starter.feature.function.azure">AbstractAzureFunction</a>, <a href="../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html" title="class in io.micronaut.starter.feature.function.gcp">GoogleCloudFunction</a></dd>
 </dl>
 <hr>
 <br>
@@ -181,49 +181,54 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
              <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected abstract java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a></span>(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#applyTestTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-">applyTestTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
+                 <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected abstract java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a></span>(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a></span>(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected abstract java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a></span>(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#groovyControllerTemplate-io.micronaut.starter.application.Project-">groovyControllerTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#javaControllerTemplate-io.micronaut.starter.application.Project-">javaControllerTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinControllerTemplate-io.micronaut.starter.application.Project-">kotlinControllerTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinTestTemplate-io.micronaut.starter.application.Project-">kotlinTestTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">readmeTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
               <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
               <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected abstract com.fizzed.rocker.RockerModel</code></td>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>abstract com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></span>(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 </table>
@@ -323,6 +328,16 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
                              <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</pre>
 </li>
 </ul>
+<a name="applyTestTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>applyTestTemplate</h4>
+<pre>protected&nbsp;void&nbsp;applyTestTemplate(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
+                                 <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
+</li>
+</ul>
 <a name="readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">
 <!--   -->
 </a>
@@ -332,6 +347,24 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 <pre>protected abstract&nbsp;com.fizzed.rocker.RockerModel&nbsp;readmeTemplate(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
                                                                 <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
                                                                 <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
+</li>
+</ul>
+<a name="getRunCommand-io.micronaut.starter.options.BuildTool-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRunCommand</h4>
+<pre>protected abstract&nbsp;java.lang.String&nbsp;getRunCommand(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
+</li>
+</ul>
+<a name="getBuildCommand-io.micronaut.starter.options.BuildTool-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBuildCommand</h4>
+<pre>protected abstract&nbsp;java.lang.String&nbsp;getBuildCommand(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
 </li>
 </ul>
 <a name="javaJUnitTemplate-io.micronaut.starter.application.Project-">
@@ -373,28 +406,10 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 <a name="spockTemplate-io.micronaut.starter.application.Project-">
 <!--   -->
 </a>
-<ul class="blockList">
-<li class="blockList">
-<h4>spockTemplate</h4>
-<pre>protected abstract&nbsp;com.fizzed.rocker.RockerModel&nbsp;spockTemplate(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
-</li>
-</ul>
-<a name="getRunCommand-io.micronaut.starter.options.BuildTool-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRunCommand</h4>
-<pre>protected abstract&nbsp;java.lang.String&nbsp;getRunCommand(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
-</li>
-</ul>
-<a name="getBuildCommand-io.micronaut.starter.options.BuildTool-">
-<!--   -->
-</a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getBuildCommand</h4>
-<pre>protected abstract&nbsp;java.lang.String&nbsp;getBuildCommand(<a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
+<h4>spockTemplate</h4>
+<pre>public abstract&nbsp;com.fizzed.rocker.RockerModel&nbsp;spockTemplate(<a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 </li>
 </ul>
 </li>

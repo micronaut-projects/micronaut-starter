@@ -49,8 +49,11 @@ io.micronaut.starter.feature.externalconfig
 io.micronaut.starter.feature.externalconfig.template
 io.micronaut.starter.feature.filewatch
 io.micronaut.starter.feature.function
+io.micronaut.starter.feature.function.awslambda
+io.micronaut.starter.feature.function.awslambda.template
 io.micronaut.starter.feature.function.azure
 io.micronaut.starter.feature.function.azure.template
+io.micronaut.starter.feature.function.azure.template.raw
 io.micronaut.starter.feature.function.gcp
 io.micronaut.starter.feature.function.gcp.template
 io.micronaut.starter.feature.graalvm
