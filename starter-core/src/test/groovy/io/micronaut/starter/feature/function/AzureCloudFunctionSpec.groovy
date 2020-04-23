@@ -12,6 +12,41 @@ import spock.lang.Unroll
 class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Unroll
+    void 'test gradle raw azure function feature for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language),
+                ['azure-function']
+        )
+        String build = output['build.gradle']
+        def readme = output["README.md"]
+
+        then:
+        build.contains('id "com.microsoft.azure.azurefunctions" version "1.1.0"')
+        !build.contains('implementation("io.micronaut.azure:micronaut-azure-function-http")')
+        build.contains('implementation("io.micronaut.azure:micronaut-azure-function")')
+        build.contains('implementation("com.microsoft.azure.functions:azure-functions-java-library")')
+        build.contains('azurefunctions {')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+        !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('shadowJar')
+        readme?.contains("Micronaut and Azure Function")
+        output.containsKey("host.json")
+        output.containsKey("local.settings.json")
+        !output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
     void 'test gradle azure function feature for language=#language'() {
         when:
         def output = generate(
@@ -24,6 +59,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
 
         then:
         build.contains('id "com.microsoft.azure.azurefunctions" version "1.1.0"')
+        build.contains('implementation("io.micronaut.azure:micronaut-azure-function-http")')
         build.contains('implementation("com.microsoft.azure.functions:azure-functions-java-library")')
         build.contains('azurefunctions {')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')

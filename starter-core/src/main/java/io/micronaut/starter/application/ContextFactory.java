@@ -73,7 +73,7 @@ public class ContextFactory {
 
         featureValidator.validate(featureContext.getOptions(), featureList);
 
-        return new GeneratorContext(project, featureContext.getCommand(), featureContext.getOptions(), featureList);
+        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureList);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {

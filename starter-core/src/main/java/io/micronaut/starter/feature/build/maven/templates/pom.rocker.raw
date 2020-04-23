@@ -69,9 +69,13 @@ List<Property> properties
 }
 @if (features.contains("azure-function")) {
 @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null)
-@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null)
 <!-- Remove when https://github.com/microsoft/azure-maven-plugins/pull/1054 is released -->
 @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
+@if (features.contains("azure-function-http")) {
+@dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null)
+} else {
+@dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null)
+}
 }
 @if (features.contains("netty-server")) {
 @dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)

@@ -131,14 +131,14 @@ dependencies {
 }
 @if (features.contains("azure-function")) {
 implementation("com.microsoft.azure.functions:azure-functions-java-library")
-@if (features.isFunction()) {
-    implementation("io.micronaut.azure:micronaut-azure-function")
-} else {
+@if (features.contains("azure-function-http")) {
     implementation("io.micronaut.azure:micronaut-azure-function-http")
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
     testImplementation("io.micronaut.servlet:micronaut-servlet-core")
     }
+} else {
+    implementation("io.micronaut.azure:micronaut-azure-function")
 }
 }
 @if (features.contains("http-client")) {

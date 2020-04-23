@@ -48,15 +48,16 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     }
 
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
+        BuildTool buildTool = generatorContext.getBuildTool();
+
+
+        generatorContext.addTemplate("readme", new RockerTemplate(
+                "README.md",
+                readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
+
         if (type == ApplicationType.DEFAULT) {
 
             Project project = generatorContext.getProject().withClassName("Hello");
-            BuildTool buildTool = generatorContext.getBuildTool();
-
-
-            generatorContext.addTemplate("readme", new RockerTemplate(
-                    "README.md",
-                    readmeTemplate(generatorContext, project, buildTool)));
 
             Language language = generatorContext.getLanguage();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/HelloController");
@@ -81,7 +82,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
             }
 
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
-            generatorContext.addTestTemplate("testFunction", testSource,  javaJUnitTemplate(project),
+            generatorContext.addTestTemplate("testFunction", testSource,
+                    javaJUnitTemplate(project),
                     kotlinJUnitTemplate(project),
                     groovyJUnitTemplate(project),
                     kotlinTestTemplate(project),

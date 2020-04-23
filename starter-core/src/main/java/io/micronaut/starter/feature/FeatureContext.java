@@ -119,7 +119,7 @@ public class FeatureContext {
         feature.processSelectedFeatures(this);
     }
 
-    public ApplicationType getCommand() {
+    public ApplicationType getApplicationType() {
         return command;
     }
 

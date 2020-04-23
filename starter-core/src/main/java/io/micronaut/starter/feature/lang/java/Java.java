@@ -44,7 +44,7 @@ public class Java implements LanguageFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
-                    .filter(f -> f.supports(featureContext.getCommand()))
+                    .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }

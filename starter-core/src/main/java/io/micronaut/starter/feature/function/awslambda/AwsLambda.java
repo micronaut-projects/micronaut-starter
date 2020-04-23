@@ -20,6 +20,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookKotlin;
@@ -99,6 +100,8 @@ public class AwsLambda implements Feature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.FUNCTION;
+        return applicationType == ApplicationType.FUNCTION && selectedFeatures.stream().noneMatch(feature ->
+                feature instanceof FunctionFeature && !feature.getName().equals(getName())
+        );
     }
 }
