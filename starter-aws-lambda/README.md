@@ -5,7 +5,7 @@ From the root of the project run:
 ```
 $ docker build . -f DockerfileLambda -t micronaut-starter
 $ mkdir -p build
-$ docker run --rm --entrypoint cat micronaut-starter  /home/application/function.zip > build/function.zip
+$ docker run --rm --entrypoint cat micronaut-starter /home/application/function.zip > build/function.zip
 ```
 
 Then start the function with SAM (https://github.com/awslabs/aws-sam-cli).
