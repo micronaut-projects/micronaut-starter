@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class FileSystemOutputHandler implements OutputHandler {
 
@@ -36,8 +34,7 @@ public class FileSystemOutputHandler implements OutputHandler {
         if (inplace) {
             applicationDirectory = baseDirectory;
         } else {
-            Path applicationPath = Paths.get(baseDirectory.getPath(), project.getName());
-            applicationDirectory = applicationPath.toAbsolutePath().normalize().toFile();
+            applicationDirectory = new File(".", project.getName()).getCanonicalFile();
         }
         if (applicationDirectory.exists() && !inplace) {
             throw new IllegalArgumentException("Cannot create the project because the target directory already exists");
