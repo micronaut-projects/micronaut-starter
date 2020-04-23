@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureUtils;
 import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.server.template.groovyController;
@@ -83,7 +82,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, TestTe
             }
 
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
-            FeatureUtils.addTestTemplate(project, generatorContext, "testFunction", testSource, this);
+            generatorContext.addTestTemplate(project, "testFunction", testSource, this);
         }
     }
 

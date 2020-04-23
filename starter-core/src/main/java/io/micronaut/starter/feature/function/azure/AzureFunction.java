@@ -22,7 +22,6 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeatureUtils;
 import io.micronaut.starter.feature.SourceTemplateProvider;
 import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.*;
@@ -105,7 +104,7 @@ public class AzureFunction extends AbstractFunctionFeature {
 
     private void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
         String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
-        FeatureUtils.addTemplate(project, generatorContext, "trigger", triggerFile, new SourceTemplateProvider() {
+        generatorContext.addTemplate(project, "trigger", triggerFile, new SourceTemplateProvider() {
             @Override
             public RockerModel javaTemplate(Project project) {
                 return azureFunctionTriggerJava.template(project);

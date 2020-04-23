@@ -15,7 +15,10 @@
  */
 package io.micronaut.starter.application.generator;
 
+import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.feature.SourceTemplateProvider;
+import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
@@ -24,6 +27,7 @@ import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
 import io.micronaut.starter.build.BuildProperties;
@@ -172,5 +176,36 @@ public class GeneratorContext {
 
     public String getTestSourcePath(String path) {
         return getTestFramework().getSourcePath(path, getLanguage());
+    }
+
+    RockerModel parseModel(Project project,
+                                  SourceTemplateProvider sourceTemplateProvider) {
+        switch (getLanguage()) {
+            case GROOVY:
+                return sourceTemplateProvider.groovyTemplate(project);
+            case KOTLIN:
+                return sourceTemplateProvider.kotlinTemplate(project);
+            case JAVA:
+            default:
+                return sourceTemplateProvider.javaTemplate(project);
+        }
+    }
+
+    public void addTestTemplate(Project project,
+                                       String templateName,
+                                       String testSource,
+                                       TestTemplateProvider testTemplateProvider) {
+        RockerModel testTemplate = testTemplateProvider.getTestTemplate(project, this);
+        if (testTemplate != null) {
+            addTemplate(templateName, new RockerTemplate(testSource, testTemplate));
+        }
+    }
+
+    public void addTemplate(Project project,
+                            String templateName,
+                            String triggerFile,
+                            SourceTemplateProvider sourceTemplateProvider) {
+        RockerModel rockerModel = parseModel(project, sourceTemplateProvider);
+        addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 }
