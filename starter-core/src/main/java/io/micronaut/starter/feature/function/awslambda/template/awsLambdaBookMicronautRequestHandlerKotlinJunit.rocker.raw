@@ -8,34 +8,20 @@ Project project
 package @project.getPackageName()
 }
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions
 
-public class BookMicronautRequestHandlerTest {
-
-    private static BookMicronautRequestHandler bookMicronautRequestHandler;
-
-    @@BeforeAll
-    public static void setupServer() {
-        bookMicronautRequestHandler = new BookMicronautRequestHandler();
-    }
-
-    @@AfterAll
-    public static void stopServer() {
-        if (bookMicronautRequestHandler != null) {
-            bookMicronautRequestHandler.getApplicationContext().close();
-        }
-    }
+class BookMicronautRequestHandlerTest {
 
     @@Test
-    public void testHandler() {
+    fun testHandler() {
+        val bookMicronautRequestHandler = BookMicronautRequestHandler()
         val book = Book()
         book.name = "Building Microservices"
-        BookSaved bookSaved = bookMicronautRequestHandler.execute(book);
-        assertEquals(bookSaved.getName(),book.getName());
-        assertNotNull(bookSaved.getIsbn());
+        val bookSaved = bookMicronautRequestHandler.execute(book)
+        Assertions.assertNotNull(bookSaved)
+        Assertions.assertEquals(book.name, bookSaved!!.name)
+        Assertions.assertNotNull(bookSaved.isbn)
+        bookMicronautRequestHandler.applicationContext.close()
     }
 }
