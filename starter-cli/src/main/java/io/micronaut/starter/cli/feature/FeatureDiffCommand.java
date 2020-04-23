@@ -50,8 +50,6 @@ public class FeatureDiffCommand extends CodeGenCommand {
     
     private final ProjectGenerator projectGenerator;
 
-    private final ProjectGenerator projectGenerator;
-
     @Inject
     public FeatureDiffCommand(@Parameter CodeGenConfig config, ProjectGenerator projectGenerator) {
         super(config);
