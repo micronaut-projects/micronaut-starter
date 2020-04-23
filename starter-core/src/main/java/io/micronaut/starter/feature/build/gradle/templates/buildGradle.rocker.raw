@@ -35,6 +35,8 @@ plugins {
 }
 @if (features.application() != null) {
     id "application"
+} else if (features.language().isJava()) {
+    id "java"
 }
 @if (features.contains("grpc")) {
     id "com.google.protobuf" version "0.8.10"
