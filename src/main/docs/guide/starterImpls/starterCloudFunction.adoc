@@ -4,9 +4,10 @@ The subproject `starter-gcp-function` provides a function that can be deployed t
 
 To run the function locally run:
 
-```cmd
+[source,cmd]
+----
 ./gradlew clean starter-gcp-function:runFunction
-```
+----
 
 And then visit http://localhost:8081/application-types
 
@@ -14,7 +15,7 @@ And then visit http://localhost:8081/application-types
 
 Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.
 
-The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22[Snapshot to GCF] (defined by `.github/workflows/gcf-snapshot.yml`) deploys the application on each commit and it can be accessed at the following URL:
+The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22[Snapshot to GCF Worflow] (defined by `.github/workflows/gcf-snapshot.yml`) deploys the application on each commit and the API can be accessed at the following URL:
 
 https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types
 
@@ -22,32 +23,37 @@ https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-func
 
 To deploy the function first build the function with:
 
-```bash
+[source,bash]
+----
 $ ./gradlew clean starter-gcp-function:shadowJar
-```
+----
 
 Then `cd` into the `starter-gcp-function/build/libs` directory (deployment has to be done from the location where the JAR lives):
 
-```bash
+[source,bash]
+----
 $ cd starter-gcp-function/build/libs
-```
+----
 
 Now run:
 
-```bash
+[source,bash]
+----
 $ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
-```
+----
 
 Choose unauthenticated access if you don't need auth.
 
 To obtain the trigger URL do the following:
 
-```bash
+[source,bash]
+----
 $ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe micronaut-starter --format='value(httpsTrigger.url)')
-```
+----
 
 You can then use this variable to test the function invocation:
 
-```bash
+[source,bash]
+----
 $ curl -i $YOUR_HTTP_TRIGGER_URL/create/app/example -o application.zip
-```
+----

@@ -15,7 +15,7 @@ And then visit http://localhost:8080/swagger/views/swagger-ui/index.html
 
 Micronaut Starter is continuously deployed to Google Cloud Run as a native GraalVM application using Github Actions.
 
-The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22[Snapshot to GCR] (defined by `.github/workflows/gcr-snapshot.yml`) deploys the application on each commit and it can be accessed at the following URL:
+The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22[Snapshot to GCR Workflow] (defined by `.github/workflows/gcr-snapshot.yml`) deploys the application on each commit and the application can be accessed at the following URL:
 
 https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html
 
@@ -23,21 +23,24 @@ https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-
 
 To build and deploy the project yourself install setup the Google Cloud CLI then from the project root build the docker image and push it to Google Container Registry:
 
-```
+[source]
+----
 $ docker build . -t micronaut-starter -f DockerfileCloudRun
 $ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
 $ docker push gcr.io/[PROJECT ID]/micronaut-starter
-```
+----
 
 You are now ready to deploy your application:
 
-```
+[source]
+----
 $ gcloud beta run deploy --image gcr.io/[PROJECT ID]/micronaut-starter
-```
+----
 
 Where `[PROJECT ID]` is replaced for your project ID. You should see output like the following:
 
-```
+[source]
+----
 Service name: (micronaut-starter):
 Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT_ID] region [us-central1]
 
@@ -46,6 +49,6 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
   ✓ Routing traffic...
 Done.
 Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app
-```
+----
 
 The URL is the URL of your Cloud Run application.
