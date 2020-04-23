@@ -136,3 +136,9 @@ sdkman {
     url = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/micronaut-cli-${project.version}.zip"
     hashtag = "#micronautfw"
 }
+
+task copyShadowJar(type: Copy) {
+    from shadowJar.outputs
+    into "${project.rootProject.buildDir}/libs"
+    rename { String fileName -> "cli.jar" }
+}

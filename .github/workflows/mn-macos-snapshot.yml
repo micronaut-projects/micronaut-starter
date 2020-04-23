@@ -1,5 +1,8 @@
 name: Mac OS X Native CLI
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   build:
     name: Builds OS X Native CLI
@@ -22,6 +25,8 @@ jobs:
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
+      - name: Verify Create App
+        run: ./mn create-app test
       - name: Upload Snapshot
         uses: actions/upload-artifact@v1
         with:
