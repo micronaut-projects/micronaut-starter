@@ -1,0 +1,29 @@
+name: Snapshot to AWS Lambda
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    name: Deploy Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Run Tests
+        run: ./gradlew clean starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+      - name: Build Docker image
+        run: |
+          docker build . -f DockerfileLambda -t micronaut-starter
+      - name: Extract Function
+        run: |
+          mkdir build
+          docker run --rm --entrypoint cat micronaut-starter /home/application/function.zip > build/function.zip
+      - name: AWS Lambda Deploy
+          uses: appleboy/lambda-action
+          with:
+            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws_region: ${{ secrets.AWS_REGION }}
+            function_name: micronaut-starter-snapshot
+            zip_file: build/function.zip

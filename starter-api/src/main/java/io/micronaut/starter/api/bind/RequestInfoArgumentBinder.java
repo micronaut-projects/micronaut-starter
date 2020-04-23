@@ -62,7 +62,11 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
         String cp = configuration.getPath().orElse("");
         String url = configuration.getUrl().map(Object::toString).orElse(null);
         if (url != null) {
-            return "https://" + url + cp;
+            if (url.startsWith("https://")) {
+                return url + cp;
+            } else {
+                return "https://" + url + cp;
+            }
         } else {
            String hostname = request.getUri().getHost();
            String host;
