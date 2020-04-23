@@ -44,11 +44,11 @@ import java.util.Map;
 @CommandLine.Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
 public class FeatureDiffCommand extends CodeGenCommand {
 
-    private final ProjectGenerator projectGenerator;
-
     @ReflectiveAccess
     @CommandLine.Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
     List<String> features = new ArrayList<>();
+    
+    private final ProjectGenerator projectGenerator;
 
     @Inject
     public FeatureDiffCommand(@Parameter CodeGenConfig config, ProjectGenerator projectGenerator) {
