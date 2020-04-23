@@ -2,7 +2,7 @@ name: Windows Native CLI
 on:
   push:
     branches:
-      - windows-native
+      - master
 jobs:
   build:
     name: Builds Windows Native CLI
