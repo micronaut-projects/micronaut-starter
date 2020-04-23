@@ -29,6 +29,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         !build.contains('"com.github.johnrengelman.shadow"')
+        !build.contains('shadowJar')
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")

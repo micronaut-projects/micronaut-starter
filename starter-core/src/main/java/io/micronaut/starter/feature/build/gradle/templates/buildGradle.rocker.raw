@@ -455,8 +455,10 @@ tasks.withType(GroovyCompile) {
 
 
 @if (features.application() != null) {
+@if (features.contains("shade")) {
 shadowJar {
     mergeServiceFiles()
+}
 }
 
 @if (features.contains("jrebel")) {
