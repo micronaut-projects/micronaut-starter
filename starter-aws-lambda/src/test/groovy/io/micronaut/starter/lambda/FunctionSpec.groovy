@@ -41,7 +41,7 @@ class FunctionSpec extends Specification {
 
         then:
         response.statusCode == HttpStatus.CREATED.code
-        ZipUtil.isZip(bytes)
+        ZipUtil.isZip(Base64.mimeDecoder.decode(bytes))
         response.multiValueHeaders.getFirst(HttpHeaders.CONTENT_DISPOSITION).contains("test.zip")
     }
 }

@@ -87,7 +87,7 @@ task buildCompletion(type: JavaExec) {
 
 task createStartScripts(type: MicronautCreateStartScripts) {
     description = "Creates OS specific scripts to run the Micronaut CLI."
-    mainClassName = 'io.micronaut.cli.MicronautCli'
+    mainClassName = 'io.micronaut.starter.cli.MicronautStarter'
     applicationName = 'mn'
     defaultJvmOpts = ["-XX:+TieredCompilation", "-XX:TieredStopAtLevel=1", "-XX:CICompilerCount=3"]
     outputDir = outDir
