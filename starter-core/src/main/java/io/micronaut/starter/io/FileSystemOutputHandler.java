@@ -30,11 +30,18 @@ public class FileSystemOutputHandler implements OutputHandler {
 
     public FileSystemOutputHandler(Project project, boolean inplace, ConsoleOutput console) throws IOException {
         this.console = console;
-        File baseDirectory = new File(".").getCanonicalFile();
+        File baseDirectory;
+        String userDir = System.getProperty("user.dir");
+        System.out.println("userDir = " + userDir);
+        if (userDir != null) {
+            baseDirectory = new File(userDir).getCanonicalFile();
+        } else {
+            baseDirectory = new File("").getCanonicalFile();
+        }
         if (inplace) {
             applicationDirectory = baseDirectory;
         } else {
-            applicationDirectory = new File(".", project.getName()).getCanonicalFile();
+            applicationDirectory = new File(baseDirectory, project.getName()).getCanonicalFile();
         }
         if (applicationDirectory.exists() && !inplace) {
             throw new IllegalArgumentException("Cannot create the project because the target directory already exists");
