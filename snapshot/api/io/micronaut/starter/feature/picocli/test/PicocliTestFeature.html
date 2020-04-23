@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18};
+var methods = {"i0":18,"i1":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -143,11 +143,13 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-           <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-           java.util.Set&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</code>
-<div class="block">Determines if the feature should be applied to the project.</div>
+<td class="colFirst"><code>default java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#appliesToByDefault--">appliesToByDefault</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#getOrder--">getOrder</a></span>()</code>
+<div class="block">The order of a feature controls the order in which it applies.</div>
 </td>
 </tr>
 </table>
@@ -156,7 +158,7 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.test.<a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#doApply-io.micronaut.starter.application.generator.GeneratorContext-">doApply</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getDefaultLanguage--">getDefaultLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getTestFramework--">getTestFramework</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isJunit--">isJunit</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKotlinTest--">isKotlinTest</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isSpock--">isSpock</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isVisible--">isVisible</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#doApply-io.micronaut.starter.application.generator.GeneratorContext-">doApply</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getDefaultLanguage--">getDefaultLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getTestFramework--">getTestFramework</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isJunit--">isJunit</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKotlinTest--">isKotlinTest</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isSpock--">isSpock</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#isVisible--">isVisible</a>, <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.Feature">
@@ -193,33 +195,40 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">
+<a name="getOrder--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOrder</h4>
+<pre>default&nbsp;int&nbsp;getOrder()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">Feature</a></code></span></div>
+<div class="block">The order of a feature controls the order in which it applies. The
+ order of a feature is important to ensure that any previous work done
+ by other features that may be required is done. See <a href="../../../../../../io/micronaut/starter/feature/FeaturePhase.html" title="enum in io.micronaut.starter.feature"><code>FeaturePhase</code></a>
+ for a list of phases to choose from.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>getOrder</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.order.Ordered</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#getOrder--">getOrder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The order of the feature</dd>
+</dl>
+</li>
+</ul>
+<a name="appliesToByDefault--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>shouldApply</h4>
-<pre>default&nbsp;boolean&nbsp;shouldApply(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-                            java.util.Set&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;selectedFeatures)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">DefaultFeature</a></code></span></div>
-<div class="block">Determines if the feature should be applied to the project.
-
- Default features do not need to be concerned if the feature was already
- selected and therefore is already in the list of selected features. The
- addition to the set is based on the identity of the feature instance and
- all features are singletons.</div>
+<h4>appliesToByDefault</h4>
+<pre>default&nbsp;java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;&nbsp;appliesToByDefault()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>applicationType</code> - The application type</dd>
-<dd><code>options</code> - The options</dd>
-<dd><code>selectedFeatures</code> - The features manually selected by the user</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the feature should apply</dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#appliesToByDefault--">appliesToByDefault</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
 </dl>
 </li>
 </ul>

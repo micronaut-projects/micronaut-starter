@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":9,"i7":9,"i8":9,"i9":10,"i10":9,"i11":9};
+var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":9,"i9":9,"i10":10,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -181,31 +181,35 @@ extends java.lang.Enum&lt;<a href="../../../../io/micronaut/starter/options/Lang
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#getTestSrcDir--">getTestSrcDir</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#getTestSourcePath-java.lang.String-">getTestSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#getTestSrcDir--">getTestSrcDir</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#infer-java.util.Set-">infer</a></span>(java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#srcDirs--">srcDirs</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#testSrcDirs--">testSrcDirs</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/Language.html#values--">values</a></span>()</code>
 <div class="block">Returns an array containing the constants of this enum type, in
@@ -383,6 +387,15 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getSourcePath</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getSourcePath(java.lang.String&nbsp;path)</pre>
+</li>
+</ul>
+<a name="getTestSourcePath-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTestSourcePath</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getTestSourcePath(java.lang.String&nbsp;path)</pre>
 </li>
 </ul>
 <a name="infer-java.util.Set-">

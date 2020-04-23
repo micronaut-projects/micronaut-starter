@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,18 +166,22 @@ implements <a href="../../../../../io/micronaut/starter/feature/test/TestFeature
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>java.util.function.Predicate&lt;<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/Junit.html#appliesToByDefault--">appliesToByDefault</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/Junit.html#doApply-io.micronaut.starter.application.generator.GeneratorContext-">doApply</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/Junit.html#getDefaultLanguage--">getDefaultLanguage</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/Junit.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/Junit.html#getTestFramework--">getTestFramework</a></span>()</code>&nbsp;</td>
 </tr>
@@ -283,13 +287,26 @@ implements <a href="../../../../../io/micronaut/starter/feature/test/TestFeature
 <a name="getDefaultLanguage--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getDefaultLanguage</h4>
 <pre>public&nbsp;<a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;getDefaultLanguage()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#getDefaultLanguage--">getDefaultLanguage</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="appliesToByDefault--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>appliesToByDefault</h4>
+<pre>public&nbsp;java.util.function.Predicate&lt;<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;&nbsp;appliesToByDefault()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#appliesToByDefault--">appliesToByDefault</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
 </dl>
 </li>
 </ul>
