@@ -32,7 +32,7 @@ import java.util.Optional;
  * @author James Kleeh
  * @since 2.0.0
  */
-public interface Feature extends Named, Ordered, Described, Toggleable {
+public interface Feature extends Named, Ordered, Described {
 
     /**
      * @return The title of the feature
