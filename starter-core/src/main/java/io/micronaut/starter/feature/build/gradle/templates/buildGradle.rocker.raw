@@ -36,8 +36,13 @@ plugins {
 @if (features.application() != null) {
     id "application"
 } else {
+@if (features.language().isKotlin()) {
+    id "java"
+} else {
     id "java-library"
 }
+}
+
 @if (features.contains("grpc")) {
     id "com.google.protobuf" version "0.8.10"
 }
