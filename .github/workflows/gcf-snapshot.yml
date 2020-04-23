@@ -15,10 +15,10 @@ jobs:
       - name: Authenticate into Google Cloud Platform
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
-          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+          service_account_email: ${{ secrets.GCLOUD_FUNCTION_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_FUNCTION_AUTH }}
       - name: Deploy to Cloud Function
         run: |
           gcloud components install alpha --quiet
           cd starter-gcp-function/build/libs
-          gcloud alpha functions deploy ${{ secrets.GCLOUD_SNAPSHOT_FUNCTION_NAME }} --trigger-http --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11
+          gcloud alpha functions deploy ${{ secrets.GCLOUD_SNAPSHOT_FUNCTION_NAME }} --trigger-http --project ${{ secrets.GCLOUD_FUNCTION_PROJECT }} --region  us-central1 --allow-unauthenticated --service-account=${{ secrets.GCLOUD_FUNCTION_EMAIL }} --quiet --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11
