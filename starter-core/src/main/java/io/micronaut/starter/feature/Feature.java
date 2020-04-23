@@ -18,7 +18,6 @@ package io.micronaut.starter.feature;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.core.util.Toggleable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Language;
