@@ -40,6 +40,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.get("$srcDir/example/micronaut/Function.$extension".toString())
                 .contains(" AzureFunction")
         output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
+        output.get("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
+                .contains("function.echo")
 
         where:
         language << Language.values().toList()
@@ -76,7 +78,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
                 .contains(" AzureHttpFunction")
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
-
+        output.get("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+                .contains("HttpRequestMessageBuilder")
         where:
         language << Language.values().toList()
         extension << Language.extensions()
@@ -106,6 +109,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+        output.get("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+              .contains("HttpRequestMessageBuilder")
 
         where:
         language << Language.values().toList()

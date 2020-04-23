@@ -46,7 +46,7 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
 
     @Override
     protected RockerModel kotlinJUnitTemplate(Project project) {
-        return azureFunctionTriggerKotlin.template(project);
+        return azureFunctionKotlinJunit.template(project);
     }
 
     @Override

@@ -81,14 +81,18 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-            String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
-            generatorContext.addTestTemplate("testFunction", testSource,
-                    javaJUnitTemplate(project),
-                    kotlinJUnitTemplate(project),
-                    groovyJUnitTemplate(project),
-                    kotlinTestTemplate(project),
-                    spockTemplate(project));
+            applyTestTemplate(generatorContext, project);
         }
+    }
+
+    protected void applyTestTemplate(GeneratorContext generatorContext, Project project) {
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
+        generatorContext.addTestTemplate("testFunction", testSource,
+                javaJUnitTemplate(project),
+                kotlinJUnitTemplate(project),
+                groovyJUnitTemplate(project),
+                kotlinTestTemplate(project),
+                spockTemplate(project));
     }
 
     protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
