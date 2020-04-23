@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -30,12 +31,13 @@ public class Features extends ArrayList<String> {
 
     private final Set<Feature> featureList;
     private final BuildTool buildTool;
+    private final ApplicationType type;
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
     private final JdkVersion javaVersion;
 
-    public Features(Set<Feature> featureList, Options options) {
+    public Features(ApplicationType type, Set<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));
         this.featureList = featureList;
         for (Feature feature: featureList) {
@@ -51,6 +53,11 @@ public class Features extends ArrayList<String> {
         }
         this.javaVersion = options.getJavaVersion();
         this.buildTool = options.getBuildTool();
+        this.type = type;
+    }
+
+    public boolean isFunction() {
+        return type == ApplicationType.FUNCTION;
     }
 
     public BuildTool build() {

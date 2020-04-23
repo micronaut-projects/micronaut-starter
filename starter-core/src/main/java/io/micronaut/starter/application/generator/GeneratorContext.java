@@ -48,12 +48,12 @@ public class GeneratorContext {
     private final Options options;
 
     public GeneratorContext(Project project,
-                            ApplicationType command,
+                            ApplicationType type,
                             Options options,
                             Set<Feature> features) {
-        this.command = command;
+        this.command = type;
         this.project = project;
-        this.features = new Features(features, options);
+        this.features = new Features(type, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
         if (options.getBuildTool() == BuildTool.GRADLE) {
