@@ -30,11 +30,15 @@ jobs:
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           ./graalvm-ce-java11-20.0.0/bin/native-image --no-server --no-fallback -cp build/libs/cli.jar
-      - name: List Files
-        run: Get-ChildItem -Path "."
-      - name: Verify Build
+      - name: Verify Build (Powershell)
         run: ./mn.exe --version
-      - name: Verify Create App
+      - name: Verify Create App (Powershell)
+        run: ./mn.exe create-app test
+      - name: Verify Build (CMD)
+        shell: cmd
+        run: ./mn.exe --version
+      - name: Verify Create App (CMD)
+        shell: cmd
         run: ./mn.exe create-app test
       - name: Publish artifact
         uses: actions/upload-artifact@master
