@@ -22,11 +22,12 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeatureUtils;
+import io.micronaut.starter.feature.SourceTemplateProvider;
 import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.*;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
@@ -97,29 +98,29 @@ public class AzureFunction extends AbstractFunctionFeature {
                     readMe
             ));
         }
-        String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
-        switch (generatorContext.getLanguage()) {
-            case GROOVY:
-                generatorContext.addTemplate("trigger", new RockerTemplate(
-                        triggerFile,
-                        azureFunctionTriggerGroovy.template(project)
-                ));
-                break;
-            case KOTLIN:
-                generatorContext.addTemplate("trigger", new RockerTemplate(
-                        triggerFile,
-                        azureFunctionTriggerKotlin.template(project)
-                ));
-                break;
-            case JAVA:
-            default:
-                generatorContext.addTemplate("trigger", new RockerTemplate(
-                        triggerFile,
-                        azureFunctionTriggerJava.template(project)
-                ));
-                break;
-        }
+
+        addFunctionTemplate(generatorContext, project);
         applyFunction(generatorContext, type);
+    }
+
+    private void addFunctionTemplate(GeneratorContext generatorContext, Project project) {
+        String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
+        FeatureUtils.addTemplate(project, generatorContext, "trigger", triggerFile, new SourceTemplateProvider() {
+            @Override
+            public RockerModel javaTemplate(Project project) {
+                return azureFunctionTriggerJava.template(project);
+            }
+
+            @Override
+            public RockerModel kotlinTemplate(Project project) {
+                return azureFunctionTriggerKotlin.template(project);
+            }
+
+            @Override
+            public RockerModel groovyTemplate(Project project) {
+                return azureFunctionTriggerGroovy.template(project);
+            }
+        });
     }
 
     @Override
@@ -132,27 +133,27 @@ public class AzureFunction extends AbstractFunctionFeature {
     }
 
     @Override
-    protected RockerModel javaJUnitTemplate(Project project) {
+    public RockerModel javaJUnitTemplate(Project project) {
         return azureFunctionJavaJunit.template(project);
     }
 
     @Override
-    protected RockerModel kotlinJUnitTemplate(Project project) {
+    public RockerModel kotlinJUnitTemplate(Project project) {
         return azureFunctionKotlinJunit.template(project);
     }
 
     @Override
-    protected RockerModel groovyJUnitTemplate(Project project) {
+    public RockerModel groovyJUnitTemplate(Project project) {
         return azureFunctionGroovyJunit.template(project);
     }
 
     @Override
-    protected RockerModel kotlinTestTemplate(Project project) {
+    public RockerModel kotlinTestTemplate(Project project) {
         return azureFunctionKotlinTest.template(project);
     }
 
     @Override
-    protected RockerModel spockTemplate(Project project) {
+    public RockerModel spockTemplate(Project project) {
         return azureFunctionSpock.template(project);
     }
 

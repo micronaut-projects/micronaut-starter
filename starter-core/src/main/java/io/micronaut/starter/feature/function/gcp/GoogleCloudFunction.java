@@ -67,27 +67,27 @@ public class GoogleCloudFunction extends AbstractFunctionFeature {
     }
 
     @Override
-    protected RockerModel javaJUnitTemplate(Project project) {
+    public RockerModel javaJUnitTemplate(Project project) {
         return gcpFunctionJavaJunit.template(project);
     }
 
     @Override
-    protected RockerModel kotlinJUnitTemplate(Project project) {
+    public RockerModel kotlinJUnitTemplate(Project project) {
         return gcpFunctionKotlinJunit.template(project);
     }
 
     @Override
-    protected RockerModel groovyJUnitTemplate(Project project) {
+    public RockerModel groovyJUnitTemplate(Project project) {
         return gcpFunctionGroovyJunit.template(project);
     }
 
     @Override
-    protected RockerModel kotlinTestTemplate(Project project) {
+    public RockerModel kotlinTestTemplate(Project project) {
         return gcpFunctionKotlinTest.template(project);
     }
 
     @Override
-    protected RockerModel spockTemplate(Project project) {
+    public RockerModel spockTemplate(Project project) {
         return gcpFunctionSpock.template(project);
     }
 

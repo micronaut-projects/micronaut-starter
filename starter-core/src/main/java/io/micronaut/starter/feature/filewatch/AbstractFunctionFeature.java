@@ -19,13 +19,14 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureUtils;
+import io.micronaut.starter.feature.TestTemplateProvider;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.server.template.groovyController;
 import io.micronaut.starter.feature.server.template.javaController;
 import io.micronaut.starter.feature.server.template.kotlinController;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 /**
@@ -34,7 +35,7 @@ import io.micronaut.starter.template.RockerTemplate;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractFunctionFeature implements FunctionFeature {
+public abstract class AbstractFunctionFeature implements FunctionFeature, TestTemplateProvider {
 
     protected RockerModel javaControllerTemplate(Project project) {
         return javaController.template(project);
@@ -60,9 +61,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     readmeTemplate(generatorContext, project, buildTool)));
 
             Language language = generatorContext.getLanguage();
-            TestFramework testFramework = generatorContext.getTestFramework();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/HelloController");
-            String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
+
             switch (language) {
                 case GROOVY:
                     generatorContext.addTemplate("function", new RockerTemplate(
@@ -82,53 +82,12 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-
-            RockerModel testTemplate;
-            switch (testFramework) {
-                case SPOCK:
-                    testTemplate = spockTemplate(project);
-                    break;
-                case KOTLINTEST:
-                    testTemplate = kotlinTestTemplate(project);
-                    break;
-                case JUNIT:
-                default:
-                    switch (language) {
-                        case GROOVY:
-                            testTemplate = groovyJUnitTemplate(project);
-                            break;
-                        case KOTLIN:
-                            testTemplate = kotlinJUnitTemplate(project);
-                            break;
-                        case JAVA:
-                        default:
-                            testTemplate = javaJUnitTemplate(project);
-                            break;
-                    }
-                    break;
-            }
-
-            if (testTemplate != null) {
-                generatorContext.addTemplate("testFunction", new RockerTemplate(
-                        testSource,
-                        testTemplate)
-                );
-            }
-
+            String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
+            FeatureUtils.addTestTemplate(project, generatorContext, "testFunction", testSource, this);
         }
     }
 
     protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
-
-    protected abstract RockerModel javaJUnitTemplate(Project project);
-
-    protected abstract RockerModel kotlinJUnitTemplate(Project project);
-
-    protected abstract RockerModel groovyJUnitTemplate(Project project);
-
-    protected abstract RockerModel kotlinTestTemplate(Project project);
-
-    protected abstract RockerModel spockTemplate(Project project);
 
     protected abstract String getRunCommand(BuildTool buildTool);
 
