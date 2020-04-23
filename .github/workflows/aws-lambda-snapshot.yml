@@ -11,7 +11,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Run Tests
-        run: ./gradlew clean starter-api:test starter-aws-lambda:test
+        run: ./gradlew clean starter-api:test starter-aws-lambda:test --refresh-dependencies
       - name: Build Docker image
         run: |
           docker build . -f DockerfileLambda -t micronaut-starter
