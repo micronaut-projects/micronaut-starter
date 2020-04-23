@@ -35,7 +35,11 @@ import picocli.CommandLine;
 import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @CommandLine.Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
 public class FeatureDiffCommand extends CodeGenCommand {
@@ -43,6 +47,8 @@ public class FeatureDiffCommand extends CodeGenCommand {
     @ReflectiveAccess
     @CommandLine.Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
     List<String> features = new ArrayList<>();
+    
+    private final ProjectGenerator projectGenerator;
 
     private final ProjectGenerator projectGenerator;
 
