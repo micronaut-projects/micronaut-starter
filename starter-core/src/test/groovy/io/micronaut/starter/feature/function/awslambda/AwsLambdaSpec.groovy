@@ -41,12 +41,44 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
+    void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
+        when:
+        String template = buildGradle.template(buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+
+        then:
+        template.contains('implementation("io.micronaut:micronaut-function-aws")')
+
+        where:
+        language << Language.values()
+    }
+
+
+    @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {
         when:
         String template = buildGradle.template(buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-function-aws")')
+
+        where:
+        language << Language.values()
+    }
+
+
+    @Unroll
+    void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
+        when:
+        String template = pom.template(buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-function-aws</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
 
         where:
         language << Language.values()

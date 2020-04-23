@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
@@ -33,11 +34,13 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookMic
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.Set;
 
 @Singleton
-public class AwsLambda implements Feature {
+public class AwsLambda implements Feature, DefaultFeature {
 
     @Override
     public String getName() {
@@ -92,5 +95,10 @@ public class AwsLambda implements Feature {
     private void addBookMicronautRequestHandler(GeneratorContext generatorContext, Project project) {
         String awsLambdaBookMicronautRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/BookMicronautRequestHandler");
         generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookMicronautRequestHandlerFile, awsLambdaBookMicronautRequestHandlerJava.template(project), awsLambdaBookMicronautRequestHandlerKotlin.template(project), awsLambdaBookMicronautRequestHandlerGroovy.template(project));
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.FUNCTION;
     }
 }
