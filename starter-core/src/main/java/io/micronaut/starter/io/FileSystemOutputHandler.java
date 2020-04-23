@@ -61,6 +61,9 @@ public class FileSystemOutputHandler implements OutputHandler {
 
     @Override
     public void write(String path, Template contents) throws IOException {
+        if ('/' != File.separatorChar) {
+            path = path.replace('/', File.separatorChar);
+        }
         File targetFile = new File(applicationDirectory, path);
         targetFile.getParentFile().mkdirs();
         targetFile.createNewFile();
