@@ -44,7 +44,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
     public void apply(GeneratorContext generatorContext) {
         GroovyApplicationFeature.super.apply(generatorContext);
 
-        generatorContext.addTemplate("application", new RockerTemplate("src/main/groovy/{packagePath}/Application.groovy",
+        generatorContext.addTemplate("application", new RockerTemplate(getPath(),
                 application.template(generatorContext.getProject(), generatorContext.getFeatures())));
     }
 
