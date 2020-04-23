@@ -9,74 +9,41 @@ import spock.lang.Unroll
 class CreateCliSpec extends CommandSpec {
 
     @Unroll
-    void 'test basic create-cli-app for lang=#lang'() {
+    void 'test basic create-cli-app for #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
-        generateCliProject(new Options(lang, null, BuildTool.GRADLE))
+        generateCliProject(new Options(language, null, buildTool))
 
         when:
-        executeGradleCommand('run --args="-v"')
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('run --args="-v"')
+        } else {
+            executeMavenCommand("mn:run -Dmn.appArgs=-v")
+        }
 
         then:
         testOutputContains("Hi")
 
         where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
     @Unroll
-    void 'test basic maven create-cli-app for lang=#lang'() {
+    void 'test basic create-cli-app test for #language and #testFramework and #buildTool'(Language language, TestFramework testFramework, BuildTool buildTool) {
         given:
-        generateCliProject(new Options(lang, null, BuildTool.MAVEN))
+        generateCliProject(new Options(language, testFramework, buildTool))
 
         when:
-        executeMavenCommand("mn:run -Dmn.appArgs=-v")
-
-        then:
-        testOutputContains("Hi")
-
-        where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
-    }
-
-    @Unroll
-    void 'test basic create-cli-app test for lang=#lang and #testFramework'() {
-        given:
-        generateCliProject(new Options(lang, testFramework, BuildTool.GRADLE))
-
-        when:
-        executeGradleCommand('test')
-
-        then:
-        testOutputContains("BUILD SUCCESSFUL")
-
-        where:
-        lang            | testFramework
-        Language.JAVA   | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.JUNIT
-        Language.KOTLIN | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.KOTLINTEST
-    }
-
-    @Unroll
-    void 'test basic maven create-cli-app test for lang=#lang'() {
-        given:
-        generateCliProject(new Options(lang, testFramework, BuildTool.MAVEN))
-
-        when:
-        executeMavenCommand("compile test")
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('test')
+        } else {
+            executeMavenCommand("compile test")
+        }
 
         then:
         testOutputContains("BUILD SUCCESS")
 
         where:
-        lang            | testFramework
-        Language.JAVA   | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.JUNIT
-        Language.KOTLIN | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.KOTLINTEST
+        [language, testFramework, buildTool] << [Language.values(), TestFramework.values(), BuildTool.values()].combinations()
     }
-
 
 }

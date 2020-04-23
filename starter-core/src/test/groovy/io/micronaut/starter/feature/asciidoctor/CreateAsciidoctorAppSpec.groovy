@@ -16,33 +16,22 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void 'test gradle create-app for asciidoctor feature, language=#language'() {
+    void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
-        generateDefaultProject(language, BuildTool.GRADLE, ['asciidoctor'])
+        generateDefaultProject(language, buildTool, ['asciidoctor'])
 
         when:
-        executeGradleCommand('asciidoctor')
-
-        then:
-        testOutputContains('BUILD SUCCESSFUL')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'test maven create-app for asciidoctor feature, language=#language'() {
-        given:
-        generateDefaultProject(language, BuildTool.MAVEN, ['asciidoctor'])
-
-        when:
-        executeMavenCommand('generate-resources')
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('asciidoctor')
+        } else {
+            executeMavenCommand("generate-resources")
+        }
 
         then:
         testOutputContains('BUILD SUCCESS')
 
         where:
-        language << Language.values().toList()
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
 }
