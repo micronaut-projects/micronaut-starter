@@ -21,7 +21,7 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void "test create-test for #language.getName() and #testFramework.getName() and #build.getName()"() {
+    void "test create-test for #language.getName() and #testFramework.getName() and #build.getName()"(Language language, TestFramework testFramework, BuildTool build) {
         generateDefaultProject(new Options(language, testFramework, build))
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)

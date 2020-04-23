@@ -423,6 +423,8 @@ mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
 mainClassName = "@features.application().mainClassName(project)"
 }
 }
+
+
 @if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
 // use JUnit 5 platform
 test {
@@ -443,11 +445,12 @@ tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
     options.compilerArgs.add('-parameters')
 }
-} else if (features.language().isKotlin()) {
+}
+@if (features.language().isKotlin() || features.testFramework().isKotlinTest()) {
 allOpen {
     annotation("io.micronaut.aop.Around")
 }
-
+@if (features.language().isKotlin()) {
 compileKotlin {
     kotlinOptions {
         jvmTarget = '@features.getTargetJdk()'
@@ -455,14 +458,16 @@ compileKotlin {
         javaParameters = true
     }
 }
-
+}
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = '@features.getTargetJdk()'
         javaParameters = true
     }
 }
-} else if (features.language().isGroovy()) {
+}
+
+@if (features.language().isGroovy()) {
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }

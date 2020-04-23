@@ -20,8 +20,8 @@ class CreateControllerSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void "test creating a controller and running the test for #language.getName() and #testFramework.getName()"() {
-        generateDefaultProject(new Options(language, testFramework, BuildTool.GRADLE))
+    void "test creating a controller and running the test for #language.getName() and #testFramework.getName() and #build.getName()"(Language language, TestFramework testFramework, BuildTool build) {
+        generateDefaultProject(new Options(language, testFramework, build))
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateControllerCommand command = new CreateControllerCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput, [])
@@ -32,21 +32,22 @@ class CreateControllerSpec extends CommandSpec implements CommandFixture {
 
         then:
         exitCode == 0
+        new File(dir, language.getSourcePath("/example/micronaut/GreetingController")).exists()
+        new File(dir, testFramework.getSourcePath("/example/micronaut/GreetingController", language)).exists()
         1 * consoleOutput.out({ it.contains("Rendered controller") })
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
-        executeGradleCommand("test")
+        if (build == BuildTool.GRADLE) {
+            executeGradleCommand("test")
+        } else if (build == BuildTool.MAVEN) {
+            executeMavenCommand("test")
+        }
 
         then:
-        testOutputContains("BUILD SUCCESSFUL")
+        testOutputContains("BUILD SUCCESS")
 
         where:
-        language        | testFramework
-        Language.JAVA   | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.JUNIT
-        Language.KOTLIN | TestFramework.JUNIT
-        Language.GROOVY | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.KOTLINTEST
+        [language, testFramework, build] << [Language.values(), TestFramework.values(), BuildTool.values()].combinations()
     }
 }

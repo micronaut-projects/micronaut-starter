@@ -19,7 +19,7 @@ class CreateClientSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void "test creating a client - #language.getName()"() {
+    void "test creating a client - #language.getName()"(Language language) {
         generateDefaultProject(language, BuildTool.GRADLE)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
@@ -28,7 +28,7 @@ class CreateClientSpec extends CommandSpec implements CommandFixture {
 
         when:
         Integer exitCode = command.call()
-        File output = new File(dir, file)
+        File output = new File(dir, language.getSourcePath("/example/micronaut/UserClient"))
 
         then:
         exitCode == 0
@@ -36,10 +36,7 @@ class CreateClientSpec extends CommandSpec implements CommandFixture {
         1 * consoleOutput.out({ it.contains("Rendered client") })
 
         where:
-        language        | file
-        Language.JAVA   | "src/main/java/example/micronaut/UserClient.java"
-        Language.KOTLIN | "src/main/kotlin/example/micronaut/UserClient.kt"
-        Language.GROOVY | "src/main/groovy/example/micronaut/UserClient.groovy"
+        language << Language.values()
     }
 
 }

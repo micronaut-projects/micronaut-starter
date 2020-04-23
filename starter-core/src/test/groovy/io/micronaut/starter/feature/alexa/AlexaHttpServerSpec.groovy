@@ -37,7 +37,7 @@ class AlexaHttpServerSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void 'test gradle alexa-http-server feature for language=#language'() {
+    void 'test gradle alexa-http-server feature for language=#language'(Language language) {
         when:
         String template = buildGradle.template(buildProject(), getFeatures(['alexa-http-server'], language)).render().toString()
 
@@ -45,7 +45,7 @@ class AlexaHttpServerSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
 
         where:
-        language << Language.values().toList()
+        language << Language.values()
     }
 
     @Unroll

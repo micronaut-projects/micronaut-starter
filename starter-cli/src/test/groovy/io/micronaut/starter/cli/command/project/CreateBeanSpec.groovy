@@ -6,16 +6,19 @@ import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.cli.command.project.bean.CreateBeanCommand
 import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared
+import spock.lang.Unroll
 
 class CreateBeanSpec extends CommandSpec implements CommandFixture {
 
     @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
 
-    void "test creating a bean - java"() {
-        generateDefaultProject(Language.JAVA)
+    @Unroll
+    void "test creating a bean - java and #build.getName()"(BuildTool build) {
+        generateDefaultProject(Language.JAVA, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -45,14 +48,22 @@ public class Application {
     }
 }
 """)
-        executeGradleCommand("run")
+        if (build == BuildTool.GRADLE) {
+            executeGradleCommand("run")
+        } else if (build == BuildTool.MAVEN) {
+            executeMavenCommand("mn:run")
+        }
 
         then:
         testOutputContains("Startup completed")
+
+        where:
+        build << BuildTool.values()
     }
 
-    void "test creating a bean - groovy"() {
-        generateDefaultProject(Language.GROOVY)
+    @Unroll
+    void "test creating a bean - groovy and #build.getName()"(BuildTool build) {
+        generateDefaultProject(Language.GROOVY, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -82,14 +93,22 @@ class Application {
     }
 }
 """)
-        executeGradleCommand("run")
+        if (build == BuildTool.GRADLE) {
+            executeGradleCommand("run")
+        } else if (build == BuildTool.MAVEN) {
+            executeMavenCommand("mn:run")
+        }
 
         then:
         testOutputContains("Startup completed")
+
+        where:
+        build << BuildTool.values()
     }
 
-    void "test creating a bean - kotlin"() {
-        generateDefaultProject(Language.KOTLIN)
+    @Unroll
+    void "test creating a bean - kotlin and #build.getName()"(BuildTool build) {
+        generateDefaultProject(Language.KOTLIN, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -122,9 +141,16 @@ object Application {
     }
 }
 """)
-        executeGradleCommand("run")
+        if (build == BuildTool.GRADLE) {
+            executeGradleCommand("run")
+        } else if (build == BuildTool.MAVEN) {
+            executeMavenCommand("mn:run")
+        }
 
         then:
         testOutputContains("Startup completed")
+
+        where:
+        build << BuildTool.values()
     }
 }
