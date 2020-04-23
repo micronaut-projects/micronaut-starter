@@ -9,33 +9,22 @@ import spock.lang.Unroll
 class CreateMessagingSpec extends CommandSpec {
 
     @Unroll
-    void 'test basic create-messaging-app for lang=#lang and feature=#feature'() {
+    void 'test basic create-messaging-app for #feature and #language and #buildTool'(Language language, BuildTool buildTool, String feature) {
         given:
-        generateMessagingProject(lang, BuildTool.GRADLE, [feature])
+        generateMessagingProject(language, buildTool, [feature])
 
         when:
-        executeGradleCommand('run')
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('run')
+        } else {
+            executeMavenCommand("mn:run")
+        }
 
         then:
         testOutputContains("Startup completed")
 
         where:
-        [lang, feature] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Kafka.NAME, RabbitMQ.NAME]].combinations()
-    }
-
-    @Unroll
-    void 'test basic create-messaging-app for lang=#lang and feature=#feature and maven'() {
-        given:
-        generateMessagingProject(lang, BuildTool.MAVEN, [feature])
-
-        when:
-        executeMavenCommand("mn:run")
-
-        then:
-        testOutputContains("Startup completed")
-
-        where:
-        [lang, feature] << [[Language.JAVA, Language.GROOVY, Language.KOTLIN, null], [Kafka.NAME, RabbitMQ.NAME]].combinations()
+        [language, buildTool, feature] << [Language.values(), BuildTool.values(), [Kafka.NAME, RabbitMQ.NAME]].combinations()
     }
 
 }

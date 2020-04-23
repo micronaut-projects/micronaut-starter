@@ -7,33 +7,22 @@ import spock.lang.Unroll
 class CreateGrpcSpec extends CommandSpec {
 
     @Unroll
-    void 'test basic create-grpc-app for lang=#lang'() {
+    void 'test basic create-grpc-app for #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
-        generateGrpcProject(lang)
+        generateGrpcProject(language, buildTool)
 
         when:
-        executeGradleCommand('run')
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('run')
+        } else {
+            executeMavenCommand("mn:run")
+        }
 
         then:
         testOutputContains("Startup completed")
 
         where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
-    }
-
-    @Unroll
-    void 'test basic create-grpc-app for lang=#lang and maven'() {
-        given:
-        generateGrpcProject(lang, BuildTool.MAVEN)
-
-        when:
-        executeMavenCommand("mn:run")
-
-        then:
-        testOutputContains("Startup completed")
-
-        where:
-        lang << [Language.JAVA, Language.GROOVY, Language.KOTLIN, null]
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
 
 }
