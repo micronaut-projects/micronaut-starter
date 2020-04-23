@@ -71,26 +71,31 @@ public class AzureFunction extends AbstractFunctionFeature {
         generatorContext.addTemplate("local.settings.json", new URLTemplate("local.settings.json", classLoader.getResource("functions/azure/local.settings.json")));
         BuildTool buildTool = generatorContext.getBuildTool();
         Project project = generatorContext.getProject();
-        if (type == ApplicationType.DEFAULT) {
-            if (buildTool == BuildTool.MAVEN) {
-                BuildProperties props = generatorContext.getBuildProperties();
-                props.put(
-                        "functionAppName",
-                        project.getName()
-                );
-                props.put(
-                        "functionAppRegion",
-                        "westus"
-                );
-                props.put(
-                        "functionResourceGroup",
-                        "java-functions-group"
-                );
-                props.put(
-                        "stagingDirectory",
-                        "${project.build.directory}/azure-functions/${functionAppName}"
-                );
-            }
+        if (buildTool == BuildTool.MAVEN) {
+            BuildProperties props = generatorContext.getBuildProperties();
+            props.put(
+                    "functionAppName",
+                    project.getName()
+            );
+            props.put(
+                    "functionAppRegion",
+                    "westus"
+            );
+            props.put(
+                    "functionResourceGroup",
+                    "java-functions-group"
+            );
+            props.put(
+                    "stagingDirectory",
+                    "${project.build.directory}/azure-functions/${functionAppName}"
+            );
+        }
+        if (type == ApplicationType.FUNCTION) {
+            RockerModel readMe = readmeTemplate(generatorContext, project, buildTool);
+            generatorContext.addTemplate("readMe", new RockerTemplate(
+                    "README.md",
+                    readMe
+            ));
         }
         String triggerFile = generatorContext.getSourcePath("/{packagePath}/Function");
         switch (generatorContext.getLanguage()) {
