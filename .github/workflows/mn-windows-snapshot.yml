@@ -39,7 +39,7 @@ jobs:
         run: mn --version
       - name: Verify Create App (CMD)
         shell: cmd
-        run: mn create-app test
+        run: mn create-app test2
       - name: Publish artifact
         uses: actions/upload-artifact@master
         with:
