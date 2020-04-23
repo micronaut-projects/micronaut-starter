@@ -20,7 +20,10 @@ class @project.getClassName()FunctionSpec extends Specification {
 
     void "test function"() {
         when:"The function is executed"
-        GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+        HttpRequestMessageBuilder.AzureHttpResponseMessage response =
+            function.request(HttpMethod.GET, "/hello")
+                    .invoke()
+
 
         then:"The response is correct"
         response.status == HttpStatus.OK

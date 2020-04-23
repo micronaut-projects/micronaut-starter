@@ -55,6 +55,9 @@ List<Property> properties
   </repositories>
 
   <dependencies>
+@if (features.language().isGroovy()) {
+@dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null)
+}
 @dependency.template("io.micronaut", "micronaut-inject", "compile", null)
 @dependency.template("io.micronaut", "micronaut-validation", "compile", null)
 @if (features.contains("google-cloud-function")) {
@@ -92,7 +95,7 @@ List<Property> properties
 @if (features.contains("graalvm")) {
 @dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
 @if (features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-graal", "compile", null)
+@dependency.template("io.micronaut", "micronaut-graal", "provided", null)
 }
 }
 @if (features.language().isGroovy()) {

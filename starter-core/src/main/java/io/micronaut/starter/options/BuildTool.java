@@ -20,17 +20,23 @@ import java.util.Locale;
 
 public enum BuildTool {
 
-    GRADLE("build/libs"),
-    MAVEN("target");
+    GRADLE("build/libs", "build.gradle"),
+    MAVEN("target", "pom.xml");
 
     private final String jarDirectory;
+    private final String fileName;
 
-    BuildTool(String jarDirectory) {
+    BuildTool(String jarDirectory, String fileName) {
         this.jarDirectory = jarDirectory;
+        this.fileName = fileName;
     }
 
     public String getJarDirectory() {
         return jarDirectory;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     @Override
