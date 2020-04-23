@@ -21,8 +21,8 @@ class Function : AzureFunction() {
                     name = "req",
                     methods = [HttpMethod.POST],
                     authLevel = AuthorizationLevel.ANONYMOUS) req: String,
-            context: ExecutionContext): String {
-        context.logger.info("Executing Function: ${javaClass.name}")
+            context: ExecutionContext?): String {
+        context?.logger?.info("Executing Function: ${javaClass.name}")
         return String.format(req)
     }
 }

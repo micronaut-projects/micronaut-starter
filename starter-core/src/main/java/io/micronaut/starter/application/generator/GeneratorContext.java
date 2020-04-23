@@ -181,12 +181,12 @@ public class GeneratorContext {
                            RockerModel groovyTemplate) {
         switch (getLanguage()) {
             case GROOVY:
-                return javaTemplate;
+                return groovyTemplate;
             case KOTLIN:
                 return kotlinTemplate;
             case JAVA:
             default:
-                return groovyTemplate;
+                return javaTemplate;
         }
     }
 

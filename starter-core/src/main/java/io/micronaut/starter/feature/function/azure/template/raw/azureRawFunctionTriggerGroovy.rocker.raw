@@ -20,7 +20,7 @@ class Function extends AzureFunction {
         @@HttpTrigger(name = "req", methods = HttpMethod.POST, authLevel = AuthorizationLevel.ANONYMOUS)
         String req,
         ExecutionContext context) {
-        context.getLogger().info("Executing Function: ${getClass().getName()}");
+        context?.getLogger()?.info("Executing Function: ${getClass().getName()}");
         return String.format(req)
     }
 }

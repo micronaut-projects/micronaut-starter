@@ -10,13 +10,13 @@ package @project.getPackageName();
 
 import spock.lang.*
 
-class @project.getClassName()FunctionSpec extends Specification {
+class FunctionSpec extends Specification {
 
     @@Shared @@AutoCleanup
     Function function = new Function()
 
     void "test function"() {
         expect:"The response is correct"
-        function.echo("test") == 'test'
+        function.echo("test", null) == 'test'
     }
 }

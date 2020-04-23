@@ -11,12 +11,12 @@ package @project.getPackageName();
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions
 
-class @project.getClassName()FunctionTest {
+class FunctionTest {
 
     @@Test
     fun testFunction() {
         Function().use { function ->
-           val response = function.echo("test")
+           val response = function.echo("test", null)
            Assertions.assertEquals("test", response)
         }
     }

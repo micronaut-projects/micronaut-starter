@@ -11,12 +11,12 @@ package @project.getPackageName();
 import org.junit.jupiter.api.Test
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class @project.getClassName()FunctionTest {
+class FunctionTest {
 
     @@Test
     void testFunction() {
         new Function().withCloseable { Function function ->
-            assert function.echo("test") == 'test'
+            assert function.echo("test", null) == 'test'
         }
     }
 }
