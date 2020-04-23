@@ -21,8 +21,8 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     @Unroll
-    void "test create-test for #language.getName() and #testFramework.getName()"() {
-        generateDefaultProject(new Options(language, testFramework, BuildTool.GRADLE))
+    void "test create-test for #language.getName() and #testFramework.getName() and #build.getName()"() {
+        generateDefaultProject(new Options(language, testFramework, build))
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateTestCommand command = new CreateTestCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -30,7 +30,7 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
 
         when:
         Integer exitCode = command.call()
-        File output = new File(dir, file)
+        File output = new File(dir, testFramework.getSourcePath("/example/micronaut/Greeting", language))
 
         then:
         exitCode == 0
@@ -38,17 +38,16 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
-        executeGradleCommand("test")
+        if (build == BuildTool.GRADLE) {
+            executeGradleCommand("test")
+        } else if (build == BuildTool.MAVEN) {
+            executeMavenCommand("compile test")
+        }
 
         then:
-        testOutputContains("BUILD SUCCESSFUL")
+        testOutputContains("BUILD SUCCESS")
 
         where:
-        language        | testFramework            | file
-        Language.JAVA   | TestFramework.JUNIT      | "src/test/java/example/micronaut/GreetingTest.java"
-        Language.GROOVY | TestFramework.JUNIT      | "src/test/groovy/example/micronaut/GreetingTest.groovy"
-        Language.KOTLIN | TestFramework.JUNIT      | "src/test/kotlin/example/micronaut/GreetingTest.kt"
-        Language.GROOVY | TestFramework.SPOCK      | "src/test/groovy/example/micronaut/GreetingSpec.groovy"
-        Language.KOTLIN | TestFramework.KOTLINTEST | "src/test/kotlin/example/micronaut/GreetingTest.kt"
+        [language, testFramework, build] << [Language.values(), TestFramework.values(), BuildTool.values()].combinations()
     }
 }

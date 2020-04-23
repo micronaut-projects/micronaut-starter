@@ -380,6 +380,9 @@ List<Property> properties
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @dependency.template("io.kotlintest", "kotlintest-runner-junit5", "test", "3.3.2")
 } else if (features.testFramework().isSpock()) {
+@if (!features.language().isGroovy()) {
+@dependency.template("io.micronaut", "micronaut-inject-groovy", "test", null)
+}
     <dependency>
       <groupId>org.spockframework</groupId>
       <artifactId>spock-core</artifactId>
@@ -761,6 +764,7 @@ List<Property> properties
               </sourceDirs>
             </configuration>
           </execution>
+@if (features.testFramework().isKotlinTest() || features.testFramework().isJunit()) {
           <execution>
             <id>test-kapt</id>
             <goals>
@@ -824,6 +828,7 @@ List<Property> properties
               </sourceDirs>
             </configuration>
           </execution>
+}
         </executions>
         <dependencies>
           <dependency>
@@ -877,12 +882,12 @@ List<Property> properties
           <execution>
             <goals>
               <goal>addSources</goal>
-              <goal>addTestSources</goal>
               <goal>generateStubs</goal>
               <goal>compile</goal>
+              <goal>removeStubs</goal>
+              <goal>addTestSources</goal>
               <goal>generateTestStubs</goal>
               <goal>compileTests</goal>
-              <goal>removeStubs</goal>
               <goal>removeTestStubs</goal>
             </goals>
           </execution>
