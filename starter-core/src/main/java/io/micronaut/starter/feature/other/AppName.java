@@ -58,6 +58,6 @@ public class AppName implements DefaultFeature {
         } else {
             appNameConfig = generatorContext.getConfiguration();
         }
-        appNameConfig.put("micronaut.application.name", generatorContext.getProject().getName());
+        appNameConfig.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
     }
 }

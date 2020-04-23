@@ -22,6 +22,7 @@ dependencies {
     api "info.picocli:picocli:${picocliVersion}"
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
     api "com.fizzed:rocker-runtime:1.2.3"
+    api "io.github.java-diff-utils:java-diff-utils:4.5"
 
     runtime "org.slf4j:slf4j-nop:1.7.30"
 

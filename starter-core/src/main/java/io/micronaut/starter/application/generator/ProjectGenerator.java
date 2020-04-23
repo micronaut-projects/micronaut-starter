@@ -32,7 +32,10 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 @Singleton
 public class ProjectGenerator {
@@ -58,13 +61,17 @@ public class ProjectGenerator {
     }
 
     public void generate(ApplicationType applicationType, Project project, OutputHandler outputHandler, GeneratorContext generatorContext) throws Exception {
+        List<String> features = new ArrayList<>(generatorContext.getFeatures().size());
+        features.addAll(generatorContext.getFeatures());
+        features.sort(Comparator.comparing(Function.identity()));
+
         generatorContext.addTemplate("micronautCli",
                 new RockerTemplate("micronaut-cli.yml",
                         cli.template(generatorContext.getLanguage(),
                                 generatorContext.getTestFramework(),
                                 generatorContext.getBuildTool(),
                                 generatorContext.getProject(),
-                                generatorContext.getFeatures(),
+                                features,
                                 applicationType)));
 
         generatorContext.applyFeatures();
