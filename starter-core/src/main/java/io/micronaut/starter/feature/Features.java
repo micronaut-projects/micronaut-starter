@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
