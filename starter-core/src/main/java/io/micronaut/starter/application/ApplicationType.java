@@ -22,10 +22,10 @@ import java.util.Locale;
 
 public enum ApplicationType implements Named {
 
-    DEFAULT("Micronaut Application", "A Micronaut application"),
+    DEFAULT("Micronaut Application", "A Micronaut Application"),
     CLI("Micronaut CLI Application", "A Command Line Application"),
     FUNCTION("Micronaut Function", "A Function Application for Serverless"),
-    GRPC("Micronaut GRPC Application", "A GRPC Application"),
+    GRPC("Micronaut GRPC Application", "A gRPC Application"),
     MESSAGING("Micronaut Messaging Application", "A Messaging-Driven Application");
 
     private final String title;
