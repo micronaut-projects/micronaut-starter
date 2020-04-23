@@ -7,7 +7,7 @@ plugins {
 configurations.all {
     resolutionStrategy.eachDependency {
         if (it.requested.group == 'io.micronaut.aws') {
-            it.useVersion("2.0.0.BUILD-SNAPSHOT")
+            it.useVersion("2.0.0.M1")
         }
     }
 }
