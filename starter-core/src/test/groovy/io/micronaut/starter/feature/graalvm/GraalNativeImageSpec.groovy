@@ -88,7 +88,7 @@ class GraalNativeImageSpec extends BeanContextSpec {
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-graal</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 """)
     }
