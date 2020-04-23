@@ -4,6 +4,7 @@ on:
     types: [published]
 jobs:
   build:
+    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -65,7 +66,7 @@ jobs:
           asset_content_type: application/zip
 
   linux:
-    name: Builds Linux Native CLI
+    name: Release Linux Native CLI
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -105,7 +106,7 @@ jobs:
           asset_content_type: application/zip
 
   macos:
-    name: Builds OS X Native CLI
+    name: Release OS X Native CLI
     runs-on: macOS-latest
     steps:
       - name: Checkout the repository
