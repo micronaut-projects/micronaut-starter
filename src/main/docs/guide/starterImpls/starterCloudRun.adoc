@@ -13,11 +13,11 @@ And then visit http://localhost:8080/swagger/views/swagger-ui/index.html
 
 === Continuous Deployment
 
-Micronaut Starter is continuously deployed to Google Cloud Run as a native GraalVM application using Github Actions.
+Micronaut Starter is continuously deployed to https://cloud.google.com/run[Google Cloud Run] as a native GraalVM application using Github Actions.
 
 The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22[Snapshot to GCR Workflow] (defined by `.github/workflows/gcr-snapshot.yml`) deploys the application on each commit and the application can be accessed at the following URL:
 
-https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html
+https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-ui/index.html
 
 === Deploying the Application
 
@@ -48,7 +48,7 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
   ✓ Creating Revision...
   ✓ Routing traffic...
 Done.
-Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-xxxxxxx-uc.a.run.app
 ----
 
 The URL is the URL of your Cloud Run application.

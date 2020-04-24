@@ -13,11 +13,11 @@ And then visit http://localhost:8081/application-types
 
 === Continuous Deployment
 
-Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.
+Micronaut Starter API is continuously deployed to https://cloud.google.com/functions[Google Cloud Function] as a Serverless Java application.
 
 The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22[Snapshot to GCF Worflow] (defined by `.github/workflows/gcf-snapshot.yml`) deploys the application on each commit and the API can be accessed at the following URL:
 
-https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types
+https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types
 
 === Deploying the Function Yourself
 

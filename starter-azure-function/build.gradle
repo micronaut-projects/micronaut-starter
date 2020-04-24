@@ -1,5 +1,5 @@
 plugins {
-   // id "com.microsoft.azure.azurefunctions" version "1.1.0"
+   id "com.microsoft.azure.azurefunctions" version "1.2.0"
 }
 
 dependencies {
@@ -13,7 +13,7 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
 }
 
-/*
+
 azurefunctions {
     allowTelemetry = false
     resourceGroup = 'java-functions-group'
@@ -25,4 +25,4 @@ azurefunctions {
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
-*/
+
