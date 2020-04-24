@@ -3,10 +3,11 @@ plugins {
     id "application"
 }
 
+ext.publish = false
+
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
-    invoker
 }
 
 dependencies {
@@ -14,7 +15,6 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-http-server-netty"
-//    implementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M2"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
 //    runtimeOnly project(":starter-analytics-postgres")

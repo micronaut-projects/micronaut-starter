@@ -2,7 +2,7 @@ dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     annotationProcessor "io.micronaut:micronaut-graal"
 
-    api project(":starter-api")
+    implementation project(":starter-api")
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation 'org.postgresql:postgresql:42.2.12'
     implementation 'com.google.cloud.sql:postgres-socket-factory:1.0.15'

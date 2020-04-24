@@ -10,7 +10,6 @@ import spock.lang.Specification
 class FunctionSpec extends Specification {
 
     void "test list features"() {
-
         when:
         def function = new Function()
         def response = function.request(HttpMethod.GET, '/application-types/default/features')

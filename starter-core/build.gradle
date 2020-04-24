@@ -12,7 +12,9 @@ sourceSets {
 }
 
 dependencies {
+    api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:1.2.3"
+    api "io.micronaut:micronaut-inject"
     implementation "org.yaml:snakeyaml:1.26"
     implementation 'org.apache.commons:commons-compress:1.20'
 }
