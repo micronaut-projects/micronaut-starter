@@ -11,7 +11,8 @@ jobs:
       - name: Set the current release version
         id: release_version
         run: |
-          $version = $GITHUB_REF.Substring(11)
+          $githubRef=Get-ChildItem Env:GITHUB_REF
+          $version = $githubRef.Substring(11)
           echo "::set-output name=release_version::${version}"
       - name: Set the current upload url
         id: upload_url
