@@ -17,12 +17,11 @@ package io.micronaut.starter.feature.awsapiproxy;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.function.FunctionFeature;
 import javax.inject.Singleton;
 
 @Singleton
-public class AwsApiGatewayLambdaProxy implements Feature {
+public class AwsApiGatewayLambdaProxy implements FunctionFeature {
 
     public static final String FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY = "aws-api-gateway-lambda-proxy";
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
@@ -42,6 +41,7 @@ public class AwsApiGatewayLambdaProxy implements Feature {
         return "Deploy your application to AWS Lambda and use API Gateway to proxy requests to it. Code your application with Controllers.";
     }
 
+    // Even we are flagging this as a function feature (to avoid the inclusion of things such as http-client), we allow this function to be run only in DEFAULT
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;

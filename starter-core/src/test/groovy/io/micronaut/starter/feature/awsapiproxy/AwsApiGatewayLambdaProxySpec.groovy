@@ -51,12 +51,7 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
         !feature.supports(applicationType)
 
         where:
-        applicationType << [
-                ApplicationType.FUNCTION,
-                ApplicationType.CLI,
-                ApplicationType.GRPC,
-                ApplicationType.MESSAGING
-        ]
+        applicationType << (ApplicationType.values().toList() - ApplicationType.DEFAULT)
         description = applicationType.name
     }
 
@@ -72,6 +67,8 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
+        !template.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
         language << Language.values()
