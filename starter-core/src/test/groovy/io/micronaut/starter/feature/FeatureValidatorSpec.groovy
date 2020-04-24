@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
@@ -16,6 +17,11 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "test desc"
             String title = "test title"
             Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }] as Set)
 
         then:
@@ -30,11 +36,21 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "groovy"
             String title = "groovy title"
             Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }, new Feature() {
             String name = "kotlin-feature"
             String description = "groovy"
             String title = "groovy title"
             Optional<Language> requiredLanguage = Optional.of(Language.KOTLIN)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }] as Set)
 
         then:
@@ -51,11 +67,21 @@ class FeatureValidatorSpec extends BeanContextSpec {
             String description = "groovy"
             String title = "groovy title"
             Class<?> featureClass = Object.class
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }, new OneOfFeature() {
             String name = "b"
             String description = "groovy"
             String title = "groovy title"
             Class<?> featureClass = Object.class
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }] as Set)
 
         then:

@@ -59,6 +59,11 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
                             String getName() {
                                 "test-feature"
                             }
+
+                            @Override
+                            boolean supports(ApplicationType applicationType) {
+                                true
+                            }
                         }] as Set
                 )
         ))
