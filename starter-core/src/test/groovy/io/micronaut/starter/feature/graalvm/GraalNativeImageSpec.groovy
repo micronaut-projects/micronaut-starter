@@ -20,15 +20,13 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     @Shared
     GraalNativeImage graalNativeImage = beanContext.getBean(GraalNativeImage)
 
-    @Unroll("feature graalvm works for application type: #description")
-    void "feature graalvm works for every type of application type"(ApplicationType applicationType,
-                                                                    String description) {
+    @Unroll("feature graalvm works for application type: #applicationType")
+    void "feature graalvm works for every type of application type"(ApplicationType applicationType) {
         expect:
         graalNativeImage.supports(applicationType)
 
         where:
         applicationType << ApplicationType.values()
-        description = applicationType.name
     }
 
     void 'test gradle graalvm feature'() {
@@ -115,6 +113,41 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
       <scope>provided</scope>
     </dependency>
 """)
+    }
+
+    @Unroll
+    void 'deploy.sh script is created for a function with feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['graalvm', 'aws-lambda-custom-runtime']
+        )
+        String deployscript = output['deploy.sh']
+
+        then:
+        deployscript
+        deployscript.contains('docker build . -t foo')
+        deployscript.contains('docker run --rm --entrypoint cat foo  /home/application/function.zip > build/function.zip')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'deploy.sh script is not created for an default app with feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['graalvm']
+        )
+
+        then:
+        !output.containsKey('deploy.sh')
+
+        where:
+        language << Language.values().toList()
     }
 
     @Unroll

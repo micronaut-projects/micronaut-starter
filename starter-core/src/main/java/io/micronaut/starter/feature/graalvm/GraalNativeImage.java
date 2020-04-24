@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
+import io.micronaut.starter.feature.graalvm.template.deploysh;
 import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
 import io.micronaut.starter.template.RockerTemplate;
@@ -49,8 +50,10 @@ public class GraalNativeImage implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         RockerModel dockerfileRockerModel;
-        if (generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA))) {
+        if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
             dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+            RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
+            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel));
 
         } else {
             dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
@@ -64,5 +67,9 @@ public class GraalNativeImage implements Feature {
                         nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
+    }
+
+    protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
     }
 }
