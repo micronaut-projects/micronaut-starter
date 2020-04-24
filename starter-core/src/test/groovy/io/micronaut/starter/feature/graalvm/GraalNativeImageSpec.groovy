@@ -138,9 +138,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         where:
         language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
     }
 
     @Unroll
@@ -166,8 +163,25 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         where:
         language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+    }
+
+    void 'verify native-image.properties for a default application type with gradle and feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['graalvm']
+        )
+        String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
+
+        then:
+        nativeImageProperties
+
+        nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
+        nativeImageProperties.contains('-H:Name=foo')
+        nativeImageProperties.contains('-H:Class=example.micronaut.Application')
+
+        where:
+        language << Language.values().toList()
     }
 }
