@@ -18,14 +18,11 @@ package io.micronaut.starter.application.generator;
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.feature.ApplicationFeature;
-import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
@@ -151,6 +148,14 @@ public class GeneratorContext {
      */
     @NonNull public Features getFeatures() {
         return features;
+    }
+
+
+    /**
+     * @return The JDK version
+     */
+    @NonNull public JdkVersion getJdkVersion() {
+        return options.getJavaVersion();
     }
 
     public void applyFeatures() {

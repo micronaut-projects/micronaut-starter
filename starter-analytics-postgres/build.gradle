@@ -1,0 +1,12 @@
+dependencies {
+    annotationProcessor "io.micronaut.data:micronaut-data-processor"
+
+    api project(":starter-api")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation 'org.postgresql:postgresql:42.2.12'
+    implementation "io.micronaut.configuration:micronaut-jdbc-tomcat"
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation "org.testcontainers:postgresql:1.13.0"
+    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+}
