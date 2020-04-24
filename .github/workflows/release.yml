@@ -46,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn
+          asset_path: ./mn.exe
           asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
 #  build:
