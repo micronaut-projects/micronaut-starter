@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -185,6 +185,10 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#nativeImageWillBeDeployedToAwsLambda-io.micronaut.starter.application.generator.GeneratorContext-">nativeImageWillBeDeployedToAwsLambda</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -277,7 +281,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;void&nbsp;apply(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
@@ -297,6 +301,15 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
 </dl>
+</li>
+</ul>
+<a name="nativeImageWillBeDeployedToAwsLambda-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>nativeImageWillBeDeployedToAwsLambda</h4>
+<pre>protected&nbsp;boolean&nbsp;nativeImageWillBeDeployedToAwsLambda(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
 </li>
 </ul>
 </li>
