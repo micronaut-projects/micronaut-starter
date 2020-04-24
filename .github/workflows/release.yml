@@ -49,16 +49,16 @@ jobs:
 #          token: ${{ secrets.GITHUB_TOKEN }}
 #      - name: SDKMAN release
 #        run: ./gradlew sdkMajorRelease --no-daemon
-      - name: Upload CLI Zip
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
-          asset_content_type: application/zip
+#      - name: Upload CLI Zip
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_content_type: application/zip
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
@@ -83,6 +83,13 @@ jobs:
         run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
+      - name: Package Build
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          mkdir -p mn-linux-amd64-${VERSION}/bin
+          mv ./mn mn-linux-amd64-${VERSION}/bin
+          tar -pcf mn-linux-amd64-${VERSION}.tar.gz
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -90,8 +97,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}
+          asset_path: ./mn-linux-amd64-${VERSION}.tar.gz
+          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
+          asset_content_type: application/tar+gzip
   macos:
     name: Release OS X Native CLI
     runs-on: macOS-latest
@@ -113,6 +121,13 @@ jobs:
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
+      - name: Package Build
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+        run: |
+          mkdir -p mn-darwin-amd64-${VERSION}/bin
+          mv ./mn mn-darwin-amd64-${VERSION}/bin
+          tar -pcf mn-darwin-amd64-${VERSION}.tar.gz
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -120,8 +135,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}
+          asset_path: ./mn-darwin-amd64-${VERSION}.tar.gz
+          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
+          asset_content_type: application/tar+gzip
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
@@ -158,6 +174,8 @@ jobs:
       - name: Verify Create App (CMD)
         shell: cmd
         run: mn create-app test2
+      - name: ZIP Archive
+        run: Compress-Archive -Path ./mn.exe -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -165,9 +183,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn.exe
-          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.exe
-          asset_content_type: application/vnd.microsoft.portable-executable
+          asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   gcr:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
