@@ -13,6 +13,7 @@ jobs:
         run: |
           $githubEvent=Get-ChildItem Env:GITHUB_EVENT_PATH
           $response = Get-Content -Raw -Path $githubEvent | ConvertFrom-Json
+          Write-Output "Releasing $response.release.tag"
           $upload_url=$response.release.upload_url
           $version=$response.release.tag.Substring(1)
           Write-Output "::set-output name=release_version::$version"
