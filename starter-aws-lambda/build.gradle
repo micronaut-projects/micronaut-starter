@@ -9,6 +9,9 @@ configurations.all {
         if (it.requested.group == 'io.micronaut.aws') {
             it.useVersion("2.0.0.M1")
         }
+        if (it.requested.group == 'io.micronaut') {
+            it.useVersion(micronautVersion)
+        }
     }
 }
 
