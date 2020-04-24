@@ -331,13 +331,13 @@ $ docker run -p 8080:8080 micronaut-starter</code></pre>
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed to Google Cloud Run as a native GraalVM application using Github Actions.</p>
+<p>Micronaut Starter is continuously deployed to <a href="https://cloud.google.com/run">Google Cloud Run</a> as a native GraalVM application using Github Actions.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22">Snapshot to GCR Workflow</a> (defined by <code>.github/workflows/gcr-snapshot.yml</code>) deploys the application on each commit and the application can be accessed at the following URL:</p>
 </div>
 <div class="paragraph">
-<p><a href="https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html" class="bare">https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html</a></p>
+<p><a href="https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-ui/index.html" class="bare">https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-ui/index.html</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -372,7 +372,7 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
   ✓ Creating Revision...
   ✓ Routing traffic...
 Done.
-Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app</code></pre>
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-xxxxxxx-uc.a.run.app</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -409,13 +409,13 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.</p>
+<p>Micronaut Starter API is continuously deployed to <a href="https://cloud.google.com/functions">Google Cloud Function</a> as a Serverless Java application.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Worflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
 </div>
 <div class="paragraph">
-<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types</a></p>
+<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -504,7 +504,7 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed by Github Actions to AWS Lambda as a Serverless GraalVM native application using a custom AWS Lambda Runtime .</p>
+<p>The Micronaut Starter API is continuously deployed by Github Actions to <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> as a Serverless GraalVM native application using a custom AWS Lambda Runtime .</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+AWS+Lambda%22">Snapshot to AWS Lambda Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>

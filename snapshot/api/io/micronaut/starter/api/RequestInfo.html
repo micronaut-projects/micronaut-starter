@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -153,8 +153,9 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#RequestInfo-java.lang.String-java.lang.String-">RequestInfo</a></span>(java.lang.String&nbsp;serverURL,
-           java.lang.String&nbsp;path)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#RequestInfo-java.lang.String-java.lang.String-java.util.Locale-">RequestInfo</a></span>(java.lang.String&nbsp;serverURL,
+           java.lang.String&nbsp;path,
+           java.util.Locale&nbsp;locale)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -178,19 +179,23 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#getCurrentURL--">getCurrentURL</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.util.Locale</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#getLocale--">getLocale</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#getServerURL--">getServerURL</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#link-io.micronaut.starter.application.ApplicationType-">link</a></span>(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#link-io.micronaut.starter.api.Relationship-io.micronaut.starter.application.ApplicationType-">link</a></span>(<a href="../../../../io/micronaut/starter/api/Relationship.html" title="enum in io.micronaut.starter.api">Relationship</a>&nbsp;rel,
     <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/RequestInfo.html#self--">self</a></span>()</code>&nbsp;</td>
 </tr>
@@ -233,18 +238,20 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="RequestInfo-java.lang.String-java.lang.String-">
+<a name="RequestInfo-java.lang.String-java.lang.String-java.util.Locale-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>RequestInfo</h4>
 <pre>public&nbsp;RequestInfo(java.lang.String&nbsp;serverURL,
-                   java.lang.String&nbsp;path)</pre>
+                   java.lang.String&nbsp;path,
+                   java.util.Locale&nbsp;locale)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>serverURL</code> - The URL</dd>
+<dd><code>locale</code> - The locale</dd>
 </dl>
 </li>
 </ul>
@@ -315,7 +322,7 @@ extends java.lang.Object</pre>
 <a name="link-io.micronaut.starter.application.ApplicationType-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>link</h4>
 <pre>public&nbsp;<a href="../../../../io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a>&nbsp;link(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</pre>
@@ -325,6 +332,15 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>A new link</dd>
 </dl>
+</li>
+</ul>
+<a name="getLocale--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getLocale</h4>
+<pre>public&nbsp;java.util.Locale&nbsp;getLocale()</pre>
 </li>
 </ul>
 </li>

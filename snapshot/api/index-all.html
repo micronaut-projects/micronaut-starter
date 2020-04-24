@@ -1440,7 +1440,7 @@
 <dd>
 <div class="block">Represents an application feature.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-io.micronaut.starter.feature.Feature-">FeatureDTO(Feature)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-io.micronaut.starter.feature.Feature-io.micronaut.context.MessageSource-io.micronaut.context.MessageSource.MessageContext-">FeatureDTO(Feature, MessageSource, MessageSource.MessageContext)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>
@@ -1544,7 +1544,7 @@
 <dd>
 <div class="block">Implements the <a href="io/micronaut/starter/api/FeatureOperations.html" title="interface in io.micronaut.starter.api"><code>FeatureOperations</code></a> interface.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#FeatureService-java.util.List-io.micronaut.context.BeanLocator-">FeatureService(List&lt;Feature&gt;, BeanLocator)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#FeatureService-java.util.List-io.micronaut.context.BeanLocator-io.micronaut.context.MessageSource-">FeatureService(List&lt;Feature&gt;, BeanLocator, MessageSource)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>
@@ -1658,11 +1658,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/command/CreateCommand.html#getAdditionalOptions--">getAdditionalOptions()</a></span> - Method in class io.micronaut.starter.cli.command.<a href="io/micronaut/starter/cli/command/CreateCommand.html" title="class in io.micronaut.starter.cli.command">CreateCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureOperations.html#getAllFeatures--">getAllFeatures()</a></span> - Method in interface io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureOperations.html" title="interface in io.micronaut.starter.api">FeatureOperations</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureOperations.html#getAllFeatures-java.util.Locale-">getAllFeatures(Locale)</a></span> - Method in interface io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureOperations.html" title="interface in io.micronaut.starter.api">FeatureOperations</a></dt>
 <dd>
 <div class="block">List all the available features.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#getAllFeatures--">getAllFeatures()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#getAllFeatures-java.util.Locale-">getAllFeatures(Locale)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/AvailableFeatures.html#getAllFeatures--">getAllFeatures()</a></span> - Method in interface io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/AvailableFeatures.html" title="interface in io.micronaut.starter.feature">AvailableFeatures</a></dt>
 <dd>&nbsp;</dd>
@@ -2434,11 +2434,11 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureList.html#getFeatures--">getFeatures()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureList.html" title="class in io.micronaut.starter.api">FeatureList</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureOperations.html#getFeatures-io.micronaut.starter.application.ApplicationType-">getFeatures(ApplicationType)</a></span> - Method in interface io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureOperations.html" title="interface in io.micronaut.starter.api">FeatureOperations</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureOperations.html#getFeatures-java.util.Locale-io.micronaut.starter.application.ApplicationType-">getFeatures(Locale, ApplicationType)</a></span> - Method in interface io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureOperations.html" title="interface in io.micronaut.starter.api">FeatureOperations</a></dt>
 <dd>
 <div class="block">A list of features applicable to the given application type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#getFeatures-io.micronaut.starter.application.ApplicationType-">getFeatures(ApplicationType)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureService.html#getFeatures-java.util.Locale-io.micronaut.starter.application.ApplicationType-">getFeatures(Locale, ApplicationType)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureService.html" title="class in io.micronaut.starter.api">FeatureService</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getFeatures--">getFeatures()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
@@ -2721,6 +2721,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/options/Options.html#getLanguage--">getLanguage()</a></span> - Method in class io.micronaut.starter.options.<a href="io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/Linkable.html#getLinks--">getLinks()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/Linkable.html" title="class in io.micronaut.starter.api">Linkable</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/RequestInfo.html#getLocale--">getLocale()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/util/NameUtils.html#getLogicalName-java.lang.Class-java.lang.String-">getLogicalName(Class&lt;?&gt;, String)</a></span> - Static method in class io.micronaut.starter.util.<a href="io/micronaut/starter/util/NameUtils.html" title="class in io.micronaut.starter.util">NameUtils</a></dt>
 <dd>
@@ -6118,7 +6120,7 @@
 <dd>
 <div class="block">The server URL.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/RequestInfo.html#RequestInfo-java.lang.String-java.lang.String-">RequestInfo(String, String)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/RequestInfo.html#RequestInfo-java.lang.String-java.lang.String-java.util.Locale-">RequestInfo(String, String, Locale)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>

@@ -140,7 +140,9 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-io.micronaut.starter.feature.Feature-">FeatureDTO</a></span>(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-io.micronaut.starter.feature.Feature-io.micronaut.context.MessageSource-io.micronaut.context.MessageSource.MessageContext-">FeatureDTO</a></span>(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature,
+          io.micronaut.context.MessageSource&nbsp;messageSource,
+          io.micronaut.context.MessageSource.MessageContext&nbsp;messageContext)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -200,17 +202,21 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FeatureDTO-io.micronaut.starter.feature.Feature-">
+<a name="FeatureDTO-io.micronaut.starter.feature.Feature-io.micronaut.context.MessageSource-io.micronaut.context.MessageSource.MessageContext-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>FeatureDTO</h4>
-<pre>public&nbsp;FeatureDTO(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature)</pre>
+<pre>public&nbsp;FeatureDTO(<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&nbsp;feature,
+                  io.micronaut.context.MessageSource&nbsp;messageSource,
+                  io.micronaut.context.MessageSource.MessageContext&nbsp;messageContext)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>feature</code> - The feature</dd>
+<dd><code>messageSource</code> - The message source</dd>
+<dd><code>messageContext</code> - The messageContext</dd>
 </dl>
 </li>
 </ul>
