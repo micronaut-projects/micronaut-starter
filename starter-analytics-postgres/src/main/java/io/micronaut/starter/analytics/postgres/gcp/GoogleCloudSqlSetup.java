@@ -31,7 +31,10 @@ import javax.inject.Singleton;
  * @since 1.0.0
  */
 @Singleton
-@TypeHint(typeNames = "com.google.cloud.sql.postgres.SocketFactory")
+@TypeHint(typeNames = {
+        "com.google.cloud.sql.postgres.SocketFactory",
+        "jnr.ffi.provider.jffi.Provider"
+})
 @Requires(property = GoogleCloudSqlSetup.CLOUD_SQL_CONNECTION_NAME)
 public class GoogleCloudSqlSetup implements BeanCreatedEventListener<DatasourceConfiguration> {
     public static final String CLOUD_SQL_CONNECTION_NAME = "cloud.sql.connection.name";
