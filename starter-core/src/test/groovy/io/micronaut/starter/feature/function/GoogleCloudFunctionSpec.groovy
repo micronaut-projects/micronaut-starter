@@ -2,16 +2,43 @@ package io.micronaut.starter.feature.function
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 
 class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Shared
+    @Subject
+    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
+
+    @Unroll
+    void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {
+        expect:
+        !googleCloudFunction.supports(applicationType)
+
+        where:
+        applicationType << ApplicationType.values().toList() - [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
+        description = applicationType.name
+    }
+
+    @Unroll
+    void "google-cloud-function supports #description"(ApplicationType applicationType, String description) {
+        expect:
+        googleCloudFunction.supports(applicationType)
+
+        where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
+        description = applicationType.name
+    }
 
     @Unroll
     void 'test gradle google cloud function feature for language=#language'() {
