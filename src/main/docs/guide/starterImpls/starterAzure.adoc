@@ -12,7 +12,11 @@ And visit http://localhost:7071/api/application-types
 
 === Continuous Deployment
 
-TODO
+Micronaut Starter API is continuously deployed to https://azure.microsoft.com/en-us/services/functions/[Azure Function] as a Serverless Java application.
+
+The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+Azure+Function%22[Snapshot to Azure Workflow] (defined by `.github/workflows/azure-function-snapshot.yml`) deploys the application on each commit and the API can be accessed at the following URL:
+
+https://micronaut-starter.azurewebsites.net/api/application-types
 
 === Deploying the Function Yourself
 
