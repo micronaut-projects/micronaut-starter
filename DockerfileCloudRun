@@ -6,13 +6,15 @@ FROM gradle:6.3.0 as gradle
 COPY --chown=gradle . /home/app
 WORKDIR /home/app
 RUN gradle starter-web-netty:shadowJar --no-daemon
+RUN gradle starter-analytics-postgres:jar --no-daemon
 
 # Stage 2: Build the native image
 FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
 COPY --from=gradle /home/app/starter-web-netty/build/libs/*.jar /home/app/server.jar
+COPY --from=gradle /home/app/starter-analytics-postgres/build/libs/*.jar /home/app/analytics.jar
 WORKDIR /home/app
 RUN gu install native-image
-RUN native-image --no-fallback --no-server -cp server.jar
+RUN native-image --no-fallback --no-server -cp server.jar:analytics.jar
 
 # Stage 3: Prepare Server
 FROM adoptopenjdk/openjdk11:alpine-slim
