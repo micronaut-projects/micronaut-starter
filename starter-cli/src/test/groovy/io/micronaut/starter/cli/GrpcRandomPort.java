@@ -24,6 +24,11 @@ public class GrpcRandomPort implements DefaultFeature {
         generatorContext.getConfiguration().put("grpc.server.port", SocketUtils.findAvailableTcpPort());
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
     @NonNull
     @Override
     public String getName() {
