@@ -3,6 +3,125 @@ on:
   release:
     types: [published]
 jobs:
+  build:
+    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          ref: ${{ github.head_ref }}
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+#      - name: Run pre-release
+#        uses: micronaut-projects/github-actions/pre-release@master
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build All
+        run: ./gradlew assemble
+#      - name: Publish to Bintray and Sonatype OSSRH
+#        env:
+#          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+#          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
+#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+#          GPG_FILE: ${{ secrets.GPG_FILE }}
+#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
+#      - name: Publish to Github Pages
+#        if: success()
+#        uses: micronaut-projects/github-pages-deploy-action@master
+#        env:
+#          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#          BASE_BRANCH: master
+#          BRANCH: gh-pages
+#          FOLDER: build/docs
+#          VERSION: ${{ steps.release_version.outputs.release_version }}
+#      - name: Run post-release
+#        if: success()
+#        uses: micronaut-projects/github-actions/post-release@master
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: SDKMAN release
+#        run: ./gradlew sdkMajorRelease --no-daemon
+      - name: Upload CLI Zip
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
+          asset_content_type: application/zip
+  linux:
+    name: Release Linux Native CLI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+      - name: Install GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: linux-amd64
+        run: ./install-graal.sh
+      - name: Install Native Image
+        run: ./graalvm/bin/gu install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: ./graalvm
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./mn
+          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}
+  macos:
+    name: Release OS X Native CLI
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Install GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: darwin-amd64
+        run: ./install-graal.sh
+      - name: Install Native Image
+        run: ./graalvm/Contents/Home/bin/gu install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: ./graalvm/Contents/Home
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./mn
+          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
@@ -47,175 +166,36 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./mn.exe
-          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
-#  build:
-#    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Set up JDK
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 1.8
-#          ref: ${{ github.head_ref }}
-#      - name: Set the current release version
-#        id: release_version
-#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-#      - name: Set the current upload url
-#        id: upload_url
-#        run: |
-#          upload_url=`cat $GITHUB_EVENT_PATH | jq '.release.upload_url' | sed -e 's/^"\(.*\)"$/\1/g'`
-#          echo ::set-output name=upload_url::${upload_url}
-#      - name: Run pre-release
-#        uses: micronaut-projects/github-actions/pre-release@master
-#        with:
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Publish to Bintray and Sonatype OSSRH
-#        env:
-#          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-#          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-#          GPG_FILE: ${{ secrets.GPG_FILE }}
-#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
-#      - name: Publish to Github Pages
-#        if: success()
-#        uses: micronaut-projects/github-pages-deploy-action@master
-#        env:
-#          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
-#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-#          BASE_BRANCH: master
-#          BRANCH: gh-pages
-#          FOLDER: build/docs
-#          VERSION: ${{ steps.release_version.outputs.release_version }}
-#      - name: Run post-release
-#        if: success()
-#        uses: micronaut-projects/github-actions/post-release@master
-#        with:
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: SDKMAN release
-#        run: ./gradlew sdkMajorRelease --no-daemon
-#      - name: Upload CLI Zip
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.upload_url.outputs.upload_url }}
-#          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-#          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
-#          asset_content_type: application/zip
-#
-#  linux:
-#    name: Release Linux Native CLI
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout the repository
-#        uses: actions/checkout@v1
-#      - name: Set the current release version
-#        id: release_version
-#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-#      - name: Set the current upload url
-#        id: upload_url
-#        run: |
-#          upload_url=`cat $GITHUB_EVENT_PATH | jq '.release.upload_url' | sed -e 's/^"\(.*\)"$/\1/g'`
-#          echo ::set-output name=upload_url::${upload_url}
-#      - name: Install GraalVM
-#        env:
-#          GRAAL_VERSION: 20.0.0
-#          GRAAL_OS: linux-amd64
-#        run: ./install-graal.sh
-#      - name: Install Native Image
-#        run: ./graalvm/bin/gu install native-image
-#      - name: Build the JAR
-#        env:
-#          JAVA_HOME: ./graalvm
-#        run: ./gradlew clean starter-cli:shadowJar --no-daemon
-#      - name: Build Native Image
-#        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
-#      - name: Verify Build
-#        run: ./mn --version
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.upload_url.outputs.upload_url }}
-#          asset_path: ./mn
-#          asset_name: mn-linux-amd64-${{ steps.release_version.outputs.release_version }}
-#          asset_content_type: application/zip
-#
-#  macos:
-#    name: Release OS X Native CLI
-#    runs-on: macOS-latest
-#    steps:
-#      - name: Checkout the repository
-#        uses: actions/checkout@v1
-#      - name: Set the current release version
-#        id: release_version
-#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-#      - name: Set the current upload url
-#        id: upload_url
-#        run: |
-#          upload_url=`cat $GITHUB_EVENT_PATH | jq '.release.upload_url' | sed -e 's/^"\(.*\)"$/\1/g'`
-#          echo ::set-output name=upload_url::${upload_url}
-#      - name: Install GraalVM
-#        env:
-#          GRAAL_VERSION: 20.0.0
-#          GRAAL_OS: darwin-amd64
-#        run: ./install-graal.sh
-#      - name: Install Native Image
-#        run: ./graalvm/Contents/Home/bin/gu install native-image
-#      - name: Build the JAR
-#        env:
-#          JAVA_HOME: ./graalvm/Contents/Home
-#        run: ./gradlew clean starter-cli:shadowJar --no-daemon
-#      - name: Build Native Image
-#        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
-#      - name: Verify Build
-#        run: ./mn --version
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.upload_url.outputs.upload_url }}
-#          asset_path: ./mn
-#          asset_name: mn-darwin-amd64-${{ steps.release_version.outputs.release_version }}
-#          asset_content_type: application/zip
-#  gcr:
-#    name: Deploy to Cloud Run
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout the repository
-#        uses: actions/checkout@v1
-#      - name: Set the current release version
-#        id: release_version
-#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-#      - name: Run Tests
-#        run: ./gradlew clean starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
-#      - name: Build Docker image
-#        run: |
-#          docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} -f DockerfileCloudRun
-#      - name: Authenticate into Google Cloud Platform
-#        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-#        with:
-#          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#      - name: Configure Docker to use Google Cloud Platform
-#        run: "gcloud auth configure-docker --quiet"
-#      - name: Push image to Google Cloud Container Registry
-#        run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}
-#      - name: Install beta commands and deploy on cloud run
-#        env:
-#          release_version: ${{ steps.release_version.outputs.release_version }}
-#        run: |
-#          gcloud components install beta --quiet
-#          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
-#          version="${release_version//./-}"
-#          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+  gcr:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+      - name: Run Tests
+        run: ./gradlew clean starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+      - name: Build Docker image
+        run: |
+          docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} -f DockerfileCloudRun
+      - name: Authenticate into Google Cloud Platform
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Configure Docker to use Google Cloud Platform
+        run: "gcloud auth configure-docker --quiet"
+      - name: Push image to Google Cloud Container Registry
+        run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}
+      - name: Install beta commands and deploy on cloud run
+        env:
+          release_version: ${{ steps.release_version.outputs.release_version }}
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
+          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
