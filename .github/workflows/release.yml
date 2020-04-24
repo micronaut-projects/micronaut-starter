@@ -13,13 +13,14 @@ jobs:
         run: |
           $githubRef=Get-ChildItem Env:GITHUB_REF
           $version = $githubRef.Substring(11)
-          echo "::set-output name=release_version::${version}"
+          Write-Output "::set-output name=release_version::$version"
       - name: Set the current upload url
         id: upload_url
         run: |
-          $response = Get-Content -Raw -Path $GITHUB_EVENT_PATH | ConvertFrom-Json
+          $githubEvent=Get-ChildItem Env:$GITHUB_EVENT_PATH
+          $response = Get-Content -Raw -Path $githubEvent | ConvertFrom-Json
           $upload_url=$response.release.upload_url
-          echo "::set-output name=upload_url::${upload_url}"
+          Write-Output "::set-output name=upload_url::${upload_url}"
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-windows-amd64-20.0.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
