@@ -4,12 +4,16 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class GraalNativeImageSpec extends BeanContextSpec {
+class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Subject
     @Shared
@@ -112,4 +116,58 @@ class GraalNativeImageSpec extends BeanContextSpec {
 """)
     }
 
+    @Unroll
+    void 'verify dockerfile for a default application type with maven and feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['graalvm']
+        )
+        String dockerfile = output['Dockerfile']
+
+        then:
+        dockerfile
+        dockerfile.contains('RUN native-image --no-server -cp target/foo-*.jar')
+        dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
+        dockerfile.contains('ENTRYPOINT ["/app/foo"]')
+
+        and: 'defaults to graalvm ce jdk8 image'
+        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'verify dockerfile for a default application type with gradle and feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['graalvm']
+        )
+        String dockerfile = output['Dockerfile']
+
+        then:
+        dockerfile
+        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        dockerfile.contains('RUN native-image --no-server -cp build/libs/foo-*-all.jar')
+        dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
+        dockerfile.contains('ENTRYPOINT ["/app/foo"]')
+
+        and: 'defaults to graalvm ce jdk8 image'
+        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
 }
