@@ -19,7 +19,9 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
@@ -32,6 +34,22 @@ import javax.inject.Singleton;
 
 @Singleton
 public class GraalNativeImage implements Feature {
+
+    private final AwsLambdaCustomRuntime awsLambdaCustomRuntime;
+
+    public GraalNativeImage(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
+        this.awsLambdaCustomRuntime = awsLambdaCustomRuntime;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getApplicationType() == ApplicationType.FUNCTION &&
+                featureContext.isPresent(AwsLambda.class) &&
+                awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
+                !featureContext.isPresent(AwsLambdaCustomRuntime.class)) {
+            featureContext.addFeature(awsLambdaCustomRuntime);
+        }
+    }
 
     @Override
     public String getName() {
