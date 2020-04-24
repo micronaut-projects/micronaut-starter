@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.discovery;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface DiscoveryFeature extends OneOfFeature {
@@ -24,4 +25,8 @@ public interface DiscoveryFeature extends OneOfFeature {
         return DiscoveryFeature.class;
     }
 
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI;
+    }
 }

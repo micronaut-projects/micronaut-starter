@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.redis;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -43,5 +44,9 @@ public class RedisLettuce implements Feature {
         generatorContext.getConfiguration().put("redis.uri", "redis://localhost");
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }
 

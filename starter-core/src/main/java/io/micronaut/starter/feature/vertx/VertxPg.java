@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.vertx;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -46,6 +47,11 @@ public class VertxPg implements Feature {
         generatorContext.getConfiguration().put("vertx.pg.client.database.user", "user");
         generatorContext.getConfiguration().put("vertx.pg.client.database.password", "password");
         generatorContext.getConfiguration().put("vertx.pg.client.database.maxSize", 5);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

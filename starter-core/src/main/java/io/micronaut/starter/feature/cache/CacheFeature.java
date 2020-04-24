@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.cache;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface CacheFeature extends OneOfFeature {
@@ -24,4 +25,8 @@ public interface CacheFeature extends OneOfFeature {
         return CacheFeature.class;
     }
 
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

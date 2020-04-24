@@ -45,4 +45,9 @@ public class ShadePlugin implements DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return true;
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

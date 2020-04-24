@@ -21,6 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
@@ -35,6 +36,19 @@ import javax.inject.Singleton;
 @Singleton
 public class AwsLambdaCustomRuntime implements ApplicationFeature {
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
+
+    private final AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy;
+
+    public AwsLambdaCustomRuntime(AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy) {
+        this.awsApiGatewayLambdaProxy = awsApiGatewayLambdaProxy;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (awsApiGatewayLambdaProxy.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsApiGatewayLambdaProxy.class)) {
+            featureContext.addFeature(awsApiGatewayLambdaProxy);
+        }
+    }
 
     @Override
     public String getName() {
@@ -65,12 +79,7 @@ public class AwsLambdaCustomRuntime implements ApplicationFeature {
     @SuppressWarnings("EmptyBlock")
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.setMainClass(this);
-
-        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT &&
-            !generatorContext.getFeatures().isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
-            //TODO HOw to apply aws-api-gateway-lambda feature
-        }
+        ApplicationFeature.super.apply(generatorContext);
 
         Project project = generatorContext.getProject();
         if (generatorContext.getFeatures().isFeaturePresent(AwsLambda.class)) {

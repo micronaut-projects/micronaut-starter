@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
 
@@ -40,5 +41,10 @@ public interface LanguageFeature extends DefaultFeature {
 
     default boolean isKotlin() {
         return false;
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

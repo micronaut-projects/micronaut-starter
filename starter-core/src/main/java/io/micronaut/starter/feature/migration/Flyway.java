@@ -34,5 +34,6 @@ public class Flyway implements MigrationFeature {
     public String getDescription() {
         return "Adds support for Flyway database migrations (https://flywaydb.org/)";
     }
+
 }
 

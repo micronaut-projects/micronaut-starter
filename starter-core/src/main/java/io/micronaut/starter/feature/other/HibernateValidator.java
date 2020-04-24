@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -35,5 +36,10 @@ public class HibernateValidator implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for the Hibernate validator";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

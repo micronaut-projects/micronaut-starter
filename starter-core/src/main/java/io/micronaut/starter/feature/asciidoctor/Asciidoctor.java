@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.asciidoctor;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
@@ -55,7 +56,10 @@ public class Asciidoctor implements Feature {
         }
 
         generatorContext.addTemplate("indexAdoc", new RockerTemplate("src/docs/asciidoc/index.adoc", indexAdoc.template()));
+    }
 
-
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

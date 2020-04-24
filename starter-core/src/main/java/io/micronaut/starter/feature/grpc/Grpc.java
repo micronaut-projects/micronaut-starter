@@ -48,4 +48,9 @@ public class Grpc implements DefaultFeature {
     public boolean isVisible() {
         return false;
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.PropertiesTemplate;
@@ -51,5 +52,10 @@ public class Properties implements ConfigurationFeature {
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
             generatorContext.addTemplate("propertiesBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
         }
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

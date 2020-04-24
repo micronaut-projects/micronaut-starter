@@ -65,4 +65,9 @@ public class Picocli implements DefaultFeature {
             );
         }
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
+    }
 }

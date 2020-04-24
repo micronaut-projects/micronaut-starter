@@ -15,19 +15,18 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 
 import java.util.Set;
-import java.util.function.Predicate;
 
 public interface TestFeature extends DefaultFeature {
 
@@ -69,13 +68,16 @@ public interface TestFeature extends DefaultFeature {
         return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
-    Predicate<ApplicationType> appliesToByDefault();
-
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return appliesToByDefault().test(applicationType) && (options.getTestFramework() == getTestFramework() ||
+        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
                 (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.messaging.kafka;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 
@@ -53,4 +54,8 @@ public class KafkaStreams implements Feature {
         }
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

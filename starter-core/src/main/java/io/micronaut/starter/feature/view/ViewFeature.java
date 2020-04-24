@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface ViewFeature extends OneOfFeature {
@@ -24,4 +25,8 @@ public interface ViewFeature extends OneOfFeature {
         return ViewFeature.class;
     }
 
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

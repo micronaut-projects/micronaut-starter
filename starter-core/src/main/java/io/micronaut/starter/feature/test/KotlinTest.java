@@ -15,14 +15,12 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
-import java.util.function.Predicate;
 
 @Singleton
 public class KotlinTest implements TestFeature {
@@ -51,8 +49,4 @@ public class KotlinTest implements TestFeature {
         return Language.KOTLIN;
     }
 
-    @Override
-    public Predicate<ApplicationType> appliesToByDefault() {
-        return (applicationType) -> true;
-    }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.jaxrs;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
@@ -52,4 +53,8 @@ public class JaxRs implements Feature {
         }
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

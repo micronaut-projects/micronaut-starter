@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.OneOfFeature;
 
 import java.util.LinkedHashMap;
@@ -32,5 +33,10 @@ public interface DataFeature extends OneOfFeature {
         conf.put("datasources.default.schema-generate", "CREATE_DROP");
         conf.put("datasources.default.dialect", "H2");
         return conf;
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

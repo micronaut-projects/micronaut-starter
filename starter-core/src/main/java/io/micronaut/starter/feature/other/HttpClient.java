@@ -47,4 +47,9 @@ public class HttpClient implements DefaultFeature {
     public String getDescription() {
         return "Adds support for the Micronaut HTTP client";
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

@@ -15,8 +15,13 @@
  */
 package io.micronaut.starter.feature.externalconfig;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 public interface ExternalConfigFeature extends Feature {
 
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI;
+    }
 }

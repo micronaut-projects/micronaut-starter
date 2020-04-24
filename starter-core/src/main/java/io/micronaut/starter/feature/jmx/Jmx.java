@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.jmx;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -37,4 +38,8 @@ public class Jmx implements Feature {
         return "Adds support for exposing management endpoints over JMX";
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

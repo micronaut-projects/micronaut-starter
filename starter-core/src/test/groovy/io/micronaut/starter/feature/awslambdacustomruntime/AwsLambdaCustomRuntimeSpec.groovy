@@ -9,7 +9,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -58,7 +57,6 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         language << Language.values().toList()
     }
 
-    @PendingFeature
     @Unroll
     void 'verify bootstrap for a function application type with maven and feature graalvm for language=#language aws-lambda-custom-runtime shoudl be included even if not specified '() {
         when:
@@ -124,7 +122,6 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         description = applicationType.name
     }
 
-    @PendingFeature
     @Unroll
     void 'test gradle aws-lambda-custom-runtime feature for language=#language and application: default'() {
         when:

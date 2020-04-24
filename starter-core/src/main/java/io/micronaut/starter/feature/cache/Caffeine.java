@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.cache;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -37,4 +38,8 @@ public class Caffeine implements Feature {
         return "Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)";
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

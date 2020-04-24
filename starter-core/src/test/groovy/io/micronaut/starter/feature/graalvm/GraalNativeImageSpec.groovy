@@ -255,7 +255,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         language << Language.values().toList()
     }
 
-    @PendingFeature
     @Unroll
     void 'verify dockerfile for a function application type with gradle and feature graalvm for language=#language'() {
         when:
@@ -283,7 +282,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         language << Language.values().toList()
     }
 
-    @PendingFeature
     @Unroll
     void 'verify dockerfile for a function application type with maven and feature graalvm for language=#language'() {
         when:
