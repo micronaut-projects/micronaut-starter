@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.feature.migration;
 
-import io.micronaut.starter.application.ApplicationType;
-
 import javax.inject.Singleton;
 
 @Singleton

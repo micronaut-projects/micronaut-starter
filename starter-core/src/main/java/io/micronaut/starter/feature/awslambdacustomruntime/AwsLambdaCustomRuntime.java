@@ -38,6 +38,7 @@ public class AwsLambdaCustomRuntime implements ApplicationFeature {
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
 
     private final AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy;
+
     public AwsLambdaCustomRuntime(AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy) {
         this.awsApiGatewayLambdaProxy = awsApiGatewayLambdaProxy;
     }

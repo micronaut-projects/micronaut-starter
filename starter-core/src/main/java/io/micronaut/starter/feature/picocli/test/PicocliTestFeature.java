@@ -19,8 +19,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.test.TestFeature;
 
-import java.util.function.Predicate;
-
 public interface PicocliTestFeature extends TestFeature {
 
     @Override
