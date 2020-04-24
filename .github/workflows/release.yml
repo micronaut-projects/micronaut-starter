@@ -87,9 +87,9 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p mn-linux-amd64-${VERSION}/bin
-          mv ./mn mn-linux-amd64-${VERSION}/bin
-          tar -pcf mn-linux-amd64-${VERSION}.tar.gz
+          mkdir -p "mn-darwin-amd64-${VERSION}"/bin
+          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
+          tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -125,9 +125,9 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p mn-darwin-amd64-${VERSION}/bin
-          mv ./mn mn-darwin-amd64-${VERSION}/bin
-          tar -pcf mn-darwin-amd64-${VERSION}.tar.gz
+          mkdir -p "mn-darwin-amd64-${VERSION}"/bin
+          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
+          tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
