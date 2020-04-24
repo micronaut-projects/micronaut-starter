@@ -1,11 +1,30 @@
 package io.micronaut.starter.feature.graalvm
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
+import spock.lang.Unroll
 
 class GraalNativeImageSpec extends BeanContextSpec {
+
+    @Subject
+    @Shared
+    GraalNativeImage graalNativeImage = beanContext.getBean(GraalNativeImage)
+
+    @Unroll("feature graalvm works for application type: #description")
+    void "feature graalvm works for every type of application type"(ApplicationType applicationType,
+                                                                    String description) {
+        expect:
+        graalNativeImage.supports(applicationType)
+
+        where:
+        applicationType << ApplicationType.values()
+        description = applicationType.name
+    }
 
     void 'test gradle graalvm feature'() {
         when:
