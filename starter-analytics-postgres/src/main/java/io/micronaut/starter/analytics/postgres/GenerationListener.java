@@ -15,8 +15,13 @@
  */
 package io.micronaut.starter.analytics.postgres;
 
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.context.env.Environment;
+import io.micronaut.core.annotation.TypeHint;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.runtime.event.annotation.EventListener;
 import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.starter.api.StarterConfiguration;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import org.slf4j.Logger;
@@ -29,6 +34,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
+import static io.micronaut.starter.analytics.postgres.GenerationListener.ENABLED;
+
 /**
  * A listener that will listen for {@link ApplicationGeneratingEvent} and save the generation.
  *
@@ -36,8 +43,11 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Singleton
+@TypeHint(org.postgresql.Driver.class)
+@Requires(env = Environment.GOOGLE_COMPUTE)
+@Requires(property = ENABLED, defaultValue = StringUtils.FALSE)
 public class GenerationListener {
-
+    public static final String ENABLED = StarterConfiguration.PREFIX + ".analytics.enabled";
     private static final Logger LOG = LoggerFactory.getLogger(GenerationListener.class);
     private final ExecutorService executorService;
     private final ApplicationRepository applicationRepository;

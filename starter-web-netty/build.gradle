@@ -17,6 +17,7 @@ dependencies {
 //    implementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M2"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly project(":starter-analytics-postgres")
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"

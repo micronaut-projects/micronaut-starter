@@ -1,9 +1,12 @@
 package io.micronaut.starter.analytics.postgres
 
+import io.micronaut.context.annotation.Property
+import io.micronaut.context.env.Environment
 import io.micronaut.context.event.ApplicationEventPublisher
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.data.runtime.config.SchemaGenerate
+import io.micronaut.starter.api.StarterConfiguration
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -23,7 +26,10 @@ import spock.util.concurrent.PollingConditions
 
 import javax.inject.Inject
 
-@MicronautTest(transactional = false)
+@MicronautTest(
+        transactional = false,
+        environments = Environment.GOOGLE_COMPUTE)
+@Property(name = GenerationListener.ENABLED, value = "true")
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
             .withDatabaseName("test-database")

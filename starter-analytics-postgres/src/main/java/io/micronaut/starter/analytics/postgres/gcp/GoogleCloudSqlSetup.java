@@ -18,7 +18,6 @@ package io.micronaut.starter.analytics.postgres.gcp;
 import io.micronaut.configuration.jdbc.hikari.DatasourceConfiguration;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.context.env.Environment;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
 import io.micronaut.core.annotation.TypeHint;
@@ -32,11 +31,10 @@ import javax.inject.Singleton;
  * @since 1.0.0
  */
 @Singleton
-@Requires(env = Environment.GOOGLE_COMPUTE)
-@Requires(property = GoogleCloudSqlSetup.CLOUD_SQL_CONNECTION_NAME)
 @TypeHint(typeNames = "com.google.cloud.sql.postgres.SocketFactory")
+@Requires(property = GoogleCloudSqlSetup.CLOUD_SQL_CONNECTION_NAME)
 public class GoogleCloudSqlSetup implements BeanCreatedEventListener<DatasourceConfiguration> {
-    static final String CLOUD_SQL_CONNECTION_NAME = "cloud.sql.connection.name";
+    public static final String CLOUD_SQL_CONNECTION_NAME = "cloud.sql.connection.name";
     private static final String DB_NAME = System.getenv("DB_NAME");
     private final String cloudSqlInstance;
 
