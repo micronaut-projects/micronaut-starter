@@ -153,7 +153,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Override
     @Get("/application-types/{type}/features")
     public FeatureList features(ApplicationType type, RequestInfo requestInfo) {
-        FeatureList featureList = new FeatureList(featureOperations.getFeatures(type));
+        FeatureList featureList = new FeatureList(featureOperations.getFeatures(requestInfo.getLocale(), type));
         featureList.addLink(
                 Relationship.SELF,
                 requestInfo.self()
@@ -162,7 +162,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     }
 
     private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures) {
-        List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(type) : Collections.emptyList();
+        List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(requestInfo.getLocale(), type) : Collections.emptyList();
         ApplicationTypeDTO dto = new ApplicationTypeDTO(type, features);
         dto.addLink(
                 Relationship.CREATE,

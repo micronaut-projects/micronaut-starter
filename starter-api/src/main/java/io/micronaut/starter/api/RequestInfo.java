@@ -18,6 +18,7 @@ package io.micronaut.starter.api;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.Hidden;
 
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -29,17 +30,20 @@ import java.util.Objects;
 @Hidden
 public class RequestInfo {
 
-    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/");
+    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/", Locale.ENGLISH);
 
     private final String serverURL;
     private final String currentPath;
+    private final Locale locale;
 
     /**
      * Default constructor.
      * @param serverURL The URL
+     * @param locale The locale
      */
-    public RequestInfo(String serverURL, String path) {
+    public RequestInfo(String serverURL, String path, Locale locale) {
         this.serverURL = Objects.requireNonNull(serverURL, "URL cannot be null");
+        this.locale = locale;
         this.currentPath = serverURL + Objects.requireNonNull(path, "Path cannot be null");
     }
 
@@ -79,5 +83,9 @@ public class RequestInfo {
      */
     public LinkDTO link(ApplicationType type) {
         return new LinkDTO(getServerURL() + "/application-types/" + type.getName(), false);
+    }
+
+    public Locale getLocale() {
+        return this.locale;
     }
 }

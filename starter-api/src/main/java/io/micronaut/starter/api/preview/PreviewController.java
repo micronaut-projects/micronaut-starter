@@ -38,6 +38,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -116,7 +117,7 @@ public class PreviewController extends AbstractCreateController implements Previ
                 null,
                 null,
                 null,
-                new RequestInfo("http://localhost", "")
+                new RequestInfo("http://localhost", "", Locale.ENGLISH)
         );
     }
 }

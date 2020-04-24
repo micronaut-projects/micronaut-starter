@@ -24,6 +24,7 @@ import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.StarterConfiguration;
 
 import javax.inject.Singleton;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -54,7 +55,7 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
     @Override
     public BindingResult<RequestInfo> bind(ArgumentConversionContext<RequestInfo> context, HttpRequest<?> source) {
         String url = resolveUrl(source);
-        return () -> Optional.of(new RequestInfo(url, source.getPath()));
+        return () -> Optional.of(new RequestInfo(url, source.getPath(), source.getLocale().orElse(Locale.ENGLISH)));
     }
 
     private String resolveUrl(HttpRequest<?> request) {

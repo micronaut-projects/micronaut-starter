@@ -16,6 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.context.BeanLocator;
+import io.micronaut.context.MessageSource;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
@@ -24,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import javax.inject.Singleton;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -37,30 +39,35 @@ public class FeatureService implements FeatureOperations {
 
     private final List<Feature> features;
     private final BeanLocator beanLocator;
+    private final MessageSource messageSource;
 
     /**
      * Default constructor.
      * @param features The features
+     * @param beanLocator The bean locator
      */
-    public FeatureService(List<Feature> features, BeanLocator beanLocator) {
+    public FeatureService(List<Feature> features, BeanLocator beanLocator, MessageSource messageSource) {
         this.features = features;
         this.beanLocator = beanLocator;
+        this.messageSource = messageSource;
     }
 
     @Override
-    public List<FeatureDTO> getAllFeatures() {
+    public List<FeatureDTO> getAllFeatures(Locale locale) {
+        MessageSource.MessageContext context = MessageSource.MessageContext.of(locale);
         return features.stream()
                 .filter(Feature::isVisible)
-                .map(FeatureDTO::new)
+                .map(feature -> new FeatureDTO(feature, messageSource, context))
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<FeatureDTO> getFeatures(ApplicationType type) {
+    public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type) {
+        MessageSource.MessageContext context = MessageSource.MessageContext.of(locale);
         return beanLocator.getBean(AvailableFeatures.class, Qualifiers.byName(type.getName()))
                 .getFeatures()
-                .map(FeatureDTO::new)
+                .map(feature -> new FeatureDTO(feature, messageSource, context))
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
     }

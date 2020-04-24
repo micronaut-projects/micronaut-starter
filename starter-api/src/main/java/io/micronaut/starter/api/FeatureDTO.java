@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.util.Locale;
 
 /**
  * Represents an application feature.
@@ -31,6 +34,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "Feature")
 public class FeatureDTO implements Named, Described {
+    private static final String MESSAGE_PREFIX = "starter.features.";
     private final String name;
     private final String title;
     private final String description;
@@ -38,11 +42,13 @@ public class FeatureDTO implements Named, Described {
     /**
      * Default constructor.
      * @param feature The feature
+     * @param messageSource The message source
+     * @param messageContext The messageContext
      */
-    public FeatureDTO(Feature feature) {
+    public FeatureDTO(Feature feature, MessageSource messageSource, MessageSource.MessageContext messageContext) {
         this.name = feature.getName();
-        this.title = feature.getTitle();
-        this.description = feature.getDescription();
+        this.title = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".title", messageContext, feature.getTitle());
+        this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
     }
 
     /**

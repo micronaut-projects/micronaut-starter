@@ -18,6 +18,7 @@ package io.micronaut.starter.api;
 import io.micronaut.starter.application.ApplicationType;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * API to expose information about features.
@@ -28,14 +29,16 @@ import java.util.List;
 public interface FeatureOperations {
     /**
      * List all the available features.
+     * @param locale The locale
      * @return The available features
      */
-    List<FeatureDTO> getAllFeatures();
+    List<FeatureDTO> getAllFeatures(Locale locale);
 
     /**
      * A list of features applicable to the given application type.
+     * @param locale The locale
      * @param type The type
      * @return The features
      */
-    List<FeatureDTO> getFeatures(ApplicationType type);
+    List<FeatureDTO> getFeatures(Locale locale, ApplicationType type);
 }
