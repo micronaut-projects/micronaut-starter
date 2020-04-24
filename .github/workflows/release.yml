@@ -21,7 +21,7 @@ jobs:
 #        with:
 #          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
-        run: ./gradlew assemble
+        run: ./gradlew starter-cli:cliZip
 #      - name: Publish to Bintray and Sonatype OSSRH
 #        env:
 #          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
