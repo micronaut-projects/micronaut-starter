@@ -140,6 +140,12 @@
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessors.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates"><span class="typeNameLink">annotationProcessors.Template</span></a> - Class in <a href="io/micronaut/starter/feature/build/gradle/templates/package-summary.html">io.micronaut.starter.feature.build.gradle.templates</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres"><span class="typeNameLink">Application</span></a> - Class in <a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a></dt>
+<dd>
+<div class="block">Models a generated application.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#Application-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Language-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.JdkVersion-">Application(ApplicationType, Language, BuildTool, TestFramework, JdkVersion)</a></span> - Constructor for class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/Features.html#application--">application()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/lang/groovy/application.html" title="class in io.micronaut.starter.feature.lang.groovy"><span class="typeNameLink">application</span></a> - Class in <a href="io/micronaut/starter/feature/lang/groovy/package-summary.html">io.micronaut.starter.feature.lang.groovy</a></dt>
@@ -172,7 +178,7 @@
 <dd>
 <div class="block">Main interface on the the starter API.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationController.html#ApplicationController-io.micronaut.starter.api.FeatureOperations-io.micronaut.starter.api.StarterConfiguration-">ApplicationController(FeatureOperations, StarterConfiguration)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationController.html" title="class in io.micronaut.starter.api">ApplicationController</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationController.html#ApplicationController-io.micronaut.starter.api.FeatureOperations-io.micronaut.starter.api.StarterConfiguration-io.micronaut.context.MessageSource-">ApplicationController(FeatureOperations, StarterConfiguration, MessageSource)</a></span> - Constructor for class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationController.html" title="class in io.micronaut.starter.api">ApplicationController</a></dt>
 <dd>
 <div class="block">Default constructor.</div>
 </dd>
@@ -185,6 +191,10 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/event/ApplicationGeneratingEvent.html#ApplicationGeneratingEvent-io.micronaut.starter.application.generator.GeneratorContext-">ApplicationGeneratingEvent(GeneratorContext)</a></span> - Constructor for class io.micronaut.starter.api.event.<a href="io/micronaut/starter/api/event/ApplicationGeneratingEvent.html" title="class in io.micronaut.starter.api.event">ApplicationGeneratingEvent</a></dt>
 <dd>
 <div class="block">Constructs a prototypical Event.</div>
+</dd>
+<dt><a href="io/micronaut/starter/analytics/postgres/ApplicationRepository.html" title="interface in io.micronaut.starter.analytics.postgres"><span class="typeNameLink">ApplicationRepository</span></a> - Interface in <a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a></dt>
+<dd>
+<div class="block">Repository for storing generated applications.</div>
 </dd>
 <dt><a href="io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application"><span class="typeNameLink">ApplicationType</span></a> - Enum in <a href="io/micronaut/starter/application/package-summary.html">io.micronaut.starter.application</a></dt>
 <dd>&nbsp;</dd>
@@ -1475,6 +1485,12 @@
 </a>
 <h2 class="title">F</h2>
 <dl>
+<dt><a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres"><span class="typeNameLink">Feature</span></a> - Class in <a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a></dt>
+<dd>
+<div class="block">Models a selected application feature.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Feature.html#Feature-io.micronaut.starter.analytics.postgres.Application-java.lang.String-">Feature(Application, String)</a></span> - Constructor for class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres">Feature</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Feature</span></a> - Interface in <a href="io/micronaut/starter/feature/package-summary.html">io.micronaut.starter.feature</a></dt>
 <dd>
 <div class="block">A feature is a class that affects the outcome of a generated
@@ -1521,6 +1537,8 @@
 <dt><a href="io/micronaut/starter/feature/FeaturePhase.html" title="enum in io.micronaut.starter.feature"><span class="typeNameLink">FeaturePhase</span></a> - Enum in <a href="io/micronaut/starter/feature/package-summary.html">io.micronaut.starter.feature</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/FeaturePredicate.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">FeaturePredicate</span></a> - Interface in <a href="io/micronaut/starter/feature/package-summary.html">io.micronaut.starter.feature</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/analytics/postgres/FeatureRepository.html" title="interface in io.micronaut.starter.analytics.postgres"><span class="typeNameLink">FeatureRepository</span></a> - Interface in <a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationController.html#features-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.api.RequestInfo-">features(ApplicationType, RequestInfo)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationController.html" title="class in io.micronaut.starter.api">ApplicationController</a></dt>
 <dd>
@@ -1714,6 +1732,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/command/CreateCommand.html#generate-io.micronaut.starter.application.Project-io.micronaut.starter.io.OutputHandler-">generate(Project, OutputHandler)</a></span> - Method in class io.micronaut.starter.cli.command.<a href="io/micronaut/starter/cli/command/CreateCommand.html" title="class in io.micronaut.starter.cli.command">CreateCommand</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/analytics/postgres/GenerationListener.html" title="class in io.micronaut.starter.analytics.postgres"><span class="typeNameLink">GenerationListener</span></a> - Class in <a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a></dt>
+<dd>
+<div class="block">A listener that will listen for <a href="io/micronaut/starter/api/event/ApplicationGeneratingEvent.html" title="class in io.micronaut.starter.api.event"><code>ApplicationGeneratingEvent</code></a> and save the generation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/GenerationListener.html#GenerationListener-java.util.concurrent.ExecutorService-io.micronaut.starter.analytics.postgres.ApplicationRepository-io.micronaut.starter.analytics.postgres.FeatureRepository-">GenerationListener(ExecutorService, ApplicationRepository, FeatureRepository)</a></span> - Constructor for class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/GenerationListener.html" title="class in io.micronaut.starter.analytics.postgres">GenerationListener</a></dt>
+<dd>
+<div class="block">Default constructor.</div>
+</dd>
 <dt><a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">GeneratorContext</span></a> - Class in <a href="io/micronaut/starter/application/generator/package-summary.html">io.micronaut.starter.application.generator</a></dt>
 <dd>
 <div class="block">A context object used when generating projects.</div>
@@ -1733,6 +1759,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/AvailableFeatures.html#getAllFeatures--">getAllFeatures()</a></span> - Method in interface io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/AvailableFeatures.html" title="interface in io.micronaut.starter.feature">AvailableFeatures</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/BaseAvailableFeatures.html#getAllFeatures--">getAllFeatures()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/BaseAvailableFeatures.html" title="class in io.micronaut.starter.feature">BaseAvailableFeatures</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Feature.html#getApplication--">getApplication()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres">Feature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getApplicationType--">getApplicationType()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
@@ -1991,6 +2019,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand(BuildTool)</a></span> - Method in class io.micronaut.starter.feature.function.gcp.<a href="io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html" title="class in io.micronaut.starter.feature.function.gcp">GoogleCloudFunction</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--">getBuildProperties()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getBuildTool--">getBuildTool()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getBuildTool--">getBuildTool()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
@@ -2520,6 +2550,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/view/ViewFeature.html#getFeatureClass--">getFeatureClass()</a></span> - Method in interface io.micronaut.starter.feature.view.<a href="io/micronaut/starter/feature/view/ViewFeature.html" title="interface in io.micronaut.starter.feature.view">ViewFeature</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getFeatures--">getFeatures()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationTypeDTO.html#getFeatures--">getFeatures()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationTypeDTO.html" title="class in io.micronaut.starter.api">ApplicationTypeDTO</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/FeatureList.html#getFeatures--">getFeatures()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/FeatureList.html" title="class in io.micronaut.starter.api">FeatureList</a></dt>
@@ -2804,6 +2836,12 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/LinkDTO.html#getHref--">getHref()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/LinkDTO.html" title="class in io.micronaut.starter.api">LinkDTO</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getId--">getId()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Feature.html#getId--">getId()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres">Feature</a></dt>
+<dd>
+<div class="block">The ID.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/options/BuildTool.html#getJarDirectory--">getJarDirectory()</a></span> - Method in enum io.micronaut.starter.options.<a href="io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/FeatureContext.html#getJavaVersion--">getJavaVersion()</a></span> - Method in class io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a></dt>
@@ -2812,9 +2850,15 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/util/VersionInfo.html#getJavaVersion--">getJavaVersion()</a></span> - Static method in class io.micronaut.starter.util.<a href="io/micronaut/starter/util/VersionInfo.html" title="class in io.micronaut.starter.util">VersionInfo</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getJdkVersion--">getJdkVersion()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getJdkVersion--">getJdkVersion()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/build/Comment.html#getKey--">getKey()</a></span> - Method in interface io.micronaut.starter.build.<a href="io/micronaut/starter/build/Comment.html" title="interface in io.micronaut.starter.build">Comment</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/build/Property.html#getKey--">getKey()</a></span> - Method in interface io.micronaut.starter.build.<a href="io/micronaut/starter/build/Property.html" title="interface in io.micronaut.starter.build">Property</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getLanguage--">getLanguage()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getLanguage--">getLanguage()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
@@ -2914,6 +2958,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/feature/server/websocket/kotlinWebsocketClient.html#getModifiedAt--">getModifiedAt()</a></span> - Static method in class io.micronaut.starter.cli.feature.server.websocket.<a href="io/micronaut/starter/cli/feature/server/websocket/kotlinWebsocketClient.html" title="class in io.micronaut.starter.cli.feature.server.websocket">kotlinWebsocketClient</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/feature/server/websocket/kotlinWebsocketServer.html#getModifiedAt--">getModifiedAt()</a></span> - Static method in class io.micronaut.starter.cli.feature.server.websocket.<a href="io/micronaut/starter/cli/feature/server/websocket/kotlinWebsocketServer.html" title="class in io.micronaut.starter.cli.feature.server.websocket">kotlinWebsocketServer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Feature.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres">Feature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationTypeDTO.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationTypeDTO.html" title="class in io.micronaut.starter.api">ApplicationTypeDTO</a></dt>
 <dd>&nbsp;</dd>
@@ -3866,6 +3912,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getTemplates--">getTemplates()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getTestFramework--">getTestFramework()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#getTestFramework--">getTestFramework()</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/CodeGenConfig.html#getTestFramework--">getTestFramework()</a></span> - Method in class io.micronaut.starter.cli.<a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></dt>
@@ -4095,6 +4143,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/view/Velocity.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.view.<a href="io/micronaut/starter/feature/view/Velocity.html" title="class in io.micronaut.starter.feature.view">Velocity</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/xml/JacksonXml.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.xml.<a href="io/micronaut/starter/feature/xml/JacksonXml.html" title="class in io.micronaut.starter.feature.xml">JacksonXml</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#getType--">getType()</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationController.html#getType-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.api.RequestInfo-">getType(ApplicationType, RequestInfo)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationController.html" title="class in io.micronaut.starter.api">ApplicationController</a></dt>
 <dd>
@@ -4401,6 +4451,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/lambda/CustomMicronautLambdaRuntime.html#INVOCATION_TEMPLATE">INVOCATION_TEMPLATE</a></span> - Static variable in class io.micronaut.starter.lambda.<a href="io/micronaut/starter/lambda/CustomMicronautLambdaRuntime.html" title="class in io.micronaut.starter.lambda">CustomMicronautLambdaRuntime</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/azure/Function.html#invoke-com.microsoft.azure.functions.HttpRequestMessage-com.microsoft.azure.functions.ExecutionContext-">invoke(HttpRequestMessage&lt;Optional&lt;byte[]&gt;&gt;, ExecutionContext)</a></span> - Method in class io.micronaut.starter.azure.<a href="io/micronaut/starter/azure/Function.html" title="class in io.micronaut.starter.azure">Function</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/analytics/postgres/package-summary.html">io.micronaut.starter.analytics.postgres</a> - package io.micronaut.starter.analytics.postgres</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/package-summary.html">io.micronaut.starter.api</a> - package io.micronaut.starter.api</dt>
 <dd>&nbsp;</dd>
@@ -5153,6 +5205,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/migration/Liquibase.html#Liquibase--">Liquibase()</a></span> - Constructor for class io.micronaut.starter.feature.migration.<a href="io/micronaut/starter/feature/migration/Liquibase.html" title="class in io.micronaut.starter.feature.migration">Liquibase</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/ApplicationRepository.html#list-io.micronaut.data.model.Pageable-">list(Pageable)</a></span> - Method in interface io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/ApplicationRepository.html" title="interface in io.micronaut.starter.analytics.postgres">ApplicationRepository</a></dt>
+<dd>
+<div class="block">List the applications with the features.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/ApplicationController.html#list-io.micronaut.starter.api.RequestInfo-">list(RequestInfo)</a></span> - Method in class io.micronaut.starter.api.<a href="io/micronaut/starter/api/ApplicationController.html" title="class in io.micronaut.starter.api">ApplicationController</a></dt>
 <dd>
 <div class="block">List the application types.</div>
@@ -6390,7 +6446,13 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/CodeGenConfig.html#setDefaultPackage-java.lang.String-">setDefaultPackage(String)</a></span> - Method in class io.micronaut.starter.cli.<a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#setFeatures-java.util.Set-">setFeatures(Set&lt;Feature&gt;)</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/CodeGenConfig.html#setFeatures-java.util.List-">setFeatures(List&lt;String&gt;)</a></span> - Method in class io.micronaut.starter.cli.<a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Application.html#setId-java.lang.Long-">setId(Long)</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/analytics/postgres/Feature.html#setId-java.lang.Long-">setId(Long)</a></span> - Method in class io.micronaut.starter.analytics.postgres.<a href="io/micronaut/starter/analytics/postgres/Feature.html" title="class in io.micronaut.starter.analytics.postgres">Feature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/generator/GeneratorContext.html#setMainClass-io.micronaut.starter.feature.ApplicationFeature-">setMainClass(ApplicationFeature)</a></span> - Method in class io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></dt>
 <dd>&nbsp;</dd>

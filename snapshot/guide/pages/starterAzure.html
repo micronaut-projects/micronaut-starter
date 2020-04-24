@@ -111,7 +111,13 @@ function addJsClass() {
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Micronaut Starter API is continuously deployed to <a href="https://azure.microsoft.com/en-us/services/functions/">Azure Function</a> as a Serverless Java application.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+Azure+Function%22">Snapshot to Azure Workflow</a> (defined by <code>.github/workflows/azure-function-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://micronaut-starter.azurewebsites.net/api/application-types" class="bare">https://micronaut-starter.azurewebsites.net/api/application-types</a></p>
 </div>
 </div>
 <div class="sect2">
