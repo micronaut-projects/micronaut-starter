@@ -29,4 +29,9 @@ public class RandomPort implements DefaultFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.server.port", "-1");
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }
