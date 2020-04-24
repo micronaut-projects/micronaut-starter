@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "Feature")
 public class FeatureDTO implements Named, Described {
-    private static final String MESSAGE_PREFIX = "starter.features.";
+    static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".features.";
     private final String name;
     private final String title;
     private final String description;
