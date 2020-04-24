@@ -1,8 +1,5 @@
 name: Windows Native CLI
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 jobs:
   build:
     name: Builds Windows Native CLI
@@ -41,6 +38,7 @@ jobs:
         shell: cmd
         run: mn create-app test2
       - name: Publish artifact
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@master
         with:
           name: mn-win-amd64-snapshot

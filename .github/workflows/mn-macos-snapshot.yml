@@ -1,8 +1,5 @@
 name: Mac OS X Native CLI
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 jobs:
   build:
     name: Builds OS X Native CLI
@@ -28,6 +25,7 @@ jobs:
       - name: Verify Create App
         run: ./mn create-app test
       - name: Upload Snapshot
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v1
         with:
           name: mn-darwin-amd64-snapshot
