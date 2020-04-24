@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -51,6 +52,14 @@ public class Features extends ArrayList<String> {
         }
         this.javaVersion = options.getJavaVersion();
         this.buildTool = options.getBuildTool();
+    }
+
+    public boolean hasFeature(String featureName) {
+        return getFeatures().stream().anyMatch(feature -> feature.getName().equals(featureName));
+    }
+
+    public boolean hasFunctionFeature() {
+        return getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
     }
 
     public BuildTool build() {

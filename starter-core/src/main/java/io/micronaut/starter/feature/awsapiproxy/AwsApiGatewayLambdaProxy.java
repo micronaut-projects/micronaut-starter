@@ -23,10 +23,14 @@ import javax.inject.Singleton;
 
 @Singleton
 public class AwsApiGatewayLambdaProxy implements Feature {
+
+    public static final String FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY = "aws-api-gateway-lambda-proxy";
+    public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
+
     @NonNull
     @Override
     public String getName() {
-        return "aws-api-gateway-lambda-proxy";
+        return FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY;
     }
 
     public String getTitle() {

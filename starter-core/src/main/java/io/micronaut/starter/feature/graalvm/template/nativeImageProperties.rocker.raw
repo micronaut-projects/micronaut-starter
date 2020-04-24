@@ -8,4 +8,4 @@ Features features
 
 Args = -H:IncludeResources=logback.xml|application.yml|bootstrap.yml \
        -H:Name=@project.getName() \
-       -H:Class=@features.application().mainClassName(project)
+       -H:Class=@features.application().mainClassName(project,features)

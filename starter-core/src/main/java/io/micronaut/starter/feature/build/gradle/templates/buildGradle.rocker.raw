@@ -420,7 +420,7 @@ test.classpath += configurations.developmentOnly
 @if (features.contains("google-cloud-function")) {
 mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
 } else {
-mainClassName = "@features.application().mainClassName(project)"
+mainClassName = "@features.application().mainClassName(project, features)"
 }
 }
 
