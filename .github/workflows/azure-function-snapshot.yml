@@ -1,0 +1,24 @@
+name: Snapshot to Azure Function
+on:
+  push:
+    branches:
+      - azure-function-deploy
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@master
+      - name: Setup Java 1.8.x
+        uses: actions/setup-java@v1
+        with:
+          java-version: '1.8.x'
+      - name: 'Package Function'
+        run: |
+          ./gradlew starter-azure-function:azureFunctionsPackage
+      - name: 'Deploy Azure Function'
+        uses: Azure/functions-action@v1
+        with:
+          app-name: micronaut-starter
+          package: ./starter-azure-function/build/azure-functions/micronaut-starter
+          publish-profile: ${{ secrets.SCM_CREDENTIALS }}
