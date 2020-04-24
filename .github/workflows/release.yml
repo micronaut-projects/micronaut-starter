@@ -8,18 +8,14 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set the current release version
-        id: release_version
-        run: |
-          $githubRef=Get-ChildItem Env:GITHUB_REF
-          $version = $githubRef.Substring(11)
-          Write-Output "::set-output name=release_version::$version"
-      - name: Set the current upload url
-        id: upload_url
+      - name: Configure Release
+        id: release
         run: |
           $githubEvent=Get-ChildItem Env:$GITHUB_EVENT_PATH
           $response = Get-Content -Raw -Path $githubEvent | ConvertFrom-Json
           $upload_url=$response.release.upload_url
+          $version=$response.release.tag.Substring(1)
+          Write-Output "::set-output name=release_version::$version"
           Write-Output "::set-output name=upload_url::${upload_url}"
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-windows-amd64-20.0.0.zip -OutFile 'graal.zip'
@@ -58,9 +54,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.upload_url.outputs.upload_url }}
+          upload_url: ${{ steps.release.outputs.upload_url }}
           asset_path: ./mn
-          asset_name: mn-win-amd64-${{ steps.release_version.outputs.release_version }}.zip
+          asset_name: mn-win-amd64-${{ steps.release.outputs.release_version }}.zip
           asset_content_type: application/zip
 #  build:
 #    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
