@@ -17,6 +17,7 @@ package io.micronaut.starter.application.generator;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
@@ -241,4 +242,9 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
+    public void setMainClass(ApplicationFeature applicationFeature) {
+        if (getBuildTool() == BuildTool.MAVEN) {
+            getBuildProperties().put("exec.mainClass", applicationFeature.mainClassName(getProject(), getFeatures()));
+        }
+    }
 }

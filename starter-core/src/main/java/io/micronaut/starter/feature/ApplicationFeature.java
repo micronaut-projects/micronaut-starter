@@ -17,7 +17,6 @@ package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
 
@@ -30,8 +29,6 @@ public interface ApplicationFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put("exec.mainClass", mainClassName(generatorContext.getProject(), generatorContext.getFeatures()));
-        }
+        generatorContext.setMainClass(this);
     }
 }
