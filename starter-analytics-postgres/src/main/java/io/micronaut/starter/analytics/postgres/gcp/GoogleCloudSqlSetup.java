@@ -36,8 +36,8 @@ import javax.inject.Singleton;
 @Requires(property = GoogleCloudSqlSetup.CLOUD_SQL_CONNECTION_NAME)
 @TypeHint(typeNames = "com.google.cloud.sql.postgres.SocketFactory")
 public class GoogleCloudSqlSetup implements BeanCreatedEventListener<DatasourceConfiguration> {
-    private static final String DB_NAME = System.getenv("DB_NAME");
     static final String CLOUD_SQL_CONNECTION_NAME = "cloud.sql.connection.name";
+    private static final String DB_NAME = System.getenv("DB_NAME");
     private final String cloudSqlInstance;
 
     public GoogleCloudSqlSetup(@Property(name = CLOUD_SQL_CONNECTION_NAME) String cloudSqlInstance) {
