@@ -16,6 +16,7 @@
 package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.context.MessageSource;
 import io.micronaut.core.io.Writable;
 import io.micronaut.core.version.VersionUtils;
 import io.micronaut.http.HttpRequest;
@@ -61,15 +62,18 @@ public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
     private final StarterConfiguration configuration;
+    private final MessageSource messageSource;
 
     /**
      * Default constructor.
      * @param featureOperations The feature operations.
      * @param configuration The starter configuration
+     * @param messageSource The message source
      */
-    public ApplicationController(FeatureOperations featureOperations, StarterConfiguration configuration) {
+    public ApplicationController(FeatureOperations featureOperations, StarterConfiguration configuration, MessageSource messageSource) {
         this.featureOperations = featureOperations;
         this.configuration = configuration;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -163,7 +167,9 @@ public class ApplicationController implements ApplicationTypeOperations {
 
     private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures) {
         List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(requestInfo.getLocale(), type) : Collections.emptyList();
-        ApplicationTypeDTO dto = new ApplicationTypeDTO(type, features);
+        ApplicationTypeDTO dto = new ApplicationTypeDTO(
+                type, features, messageSource, MessageSource.MessageContext.of(requestInfo.getLocale())
+        );
         dto.addLink(
                 Relationship.CREATE,
                 requestInfo.link(Relationship.CREATE, type)

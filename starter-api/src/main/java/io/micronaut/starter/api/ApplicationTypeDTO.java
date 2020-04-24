@@ -16,6 +16,9 @@
 package io.micronaut.starter.api;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.context.MessageSource;
+import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,22 +34,55 @@ import java.util.List;
 @Schema(name = "ApplicationTypeInfo")
 @Introspected
 public class ApplicationTypeDTO extends Linkable {
-
-    private final ApplicationType type;
+    static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
+    private final String name;
     private final List<FeatureDTO> features;
+    private final String title;
+    private final String description;
 
     /**
      * @param type The type
      * @param features The available features
      */
     public ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features) {
-        this.type = type;
+        this.name = type.getName();
         this.features = features;
+        this.title = type.getTitle();
+        this.description = type.getDescription();
+    }
+
+    /**
+     * @param name the name
+     * @param features The available features
+     */
+    @Creator
+    @Internal
+    ApplicationTypeDTO(String name, String title, String description, List<FeatureDTO> features) {
+        this.name = name;
+        this.features = features;
+        this.title = title;
+        this.description = description;
+    }
+
+    /**
+     * i18n constructor.
+     * @param type The type
+     * @param features The features
+     * @param messageSource The message source
+     * @param messageContext The message context
+     */
+    @Internal
+    ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features, MessageSource messageSource, MessageSource.MessageContext messageContext) {
+        String name = type.getName();
+        this.name = name;
+        this.features = features;
+        this.title = messageSource.getMessage(MESSAGE_PREFIX + name + ".title", messageContext, type.getTitle());
+        this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, type.getDescription());
     }
 
     @Schema(description = "The title of the application type")
     public String getTitle() {
-        return type.getTitle();
+        return title;
     }
 
     @Schema(description = "The possible application features")
@@ -56,13 +92,13 @@ public class ApplicationTypeDTO extends Linkable {
 
     @Schema(description = "A description of the application type")
     public String getDescription() {
-        return type.getDescription();
+        return description;
     }
 
     @Schema(description = "The name of the application type")
     @NonNull
     public String getName() {
-        return type.getName();
+        return name;
     }
 
 }
