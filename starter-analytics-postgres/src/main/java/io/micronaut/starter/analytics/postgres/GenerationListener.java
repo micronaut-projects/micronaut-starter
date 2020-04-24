@@ -24,6 +24,7 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.starter.api.StarterConfiguration;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import org.postgresql.PGProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +44,14 @@ import static io.micronaut.starter.analytics.postgres.GenerationListener.ENABLED
  * @since 1.0.0
  */
 @Singleton
-@TypeHint(org.postgresql.Driver.class)
+@TypeHint(
+    typeNames = "org.postgresql.Driver",
+    value = PGProperty.class,
+    accessType = {
+            TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS,
+            TypeHint.AccessType.ALL_DECLARED_FIELDS
+    }
+)
 @Requires(env = Environment.GOOGLE_COMPUTE)
 @Requires(property = ENABLED, defaultValue = StringUtils.FALSE)
 public class GenerationListener {

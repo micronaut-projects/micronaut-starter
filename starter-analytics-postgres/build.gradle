@@ -1,5 +1,6 @@
 dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
+    annotationProcessor "io.micronaut:micronaut-graal"
 
     api project(":starter-api")
     implementation("io.micronaut.data:micronaut-data-jdbc")
