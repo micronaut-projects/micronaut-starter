@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.picocli.lang.groovy;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.lang.groovy.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -27,7 +28,7 @@ import javax.inject.Singleton;
 public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
-    public String mainClassName(Project project) {
+    public String mainClassName(Project project, Features features) {
         return project.getPackageName() + "." + project.getClassName() + "Command";
     }
 

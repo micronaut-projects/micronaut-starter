@@ -10,6 +10,23 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
+    void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: groovy'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.GROOVY, TestFramework.SPOCK, BuildTool.GRADLE),
+                []
+        )
+
+        then:
+        output.containsKey("src/main/groovy/example/micronaut/Application.${Language.GROOVY.extension}".toString())
+
+        when:
+        def buildGradle = output['build.gradle']
+
+        then:
+        buildGradle.contains('mainClassName = "example.micronaut.Application"')
+    }
 
     @Unroll
     void "test generated Groovy application for build tool - #build"() {

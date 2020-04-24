@@ -19,7 +19,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -28,7 +28,10 @@ import javax.inject.Singleton;
 public class JavaApplication implements JavaApplicationFeature {
 
     @Override
-    public String mainClassName(Project project) {
+    public String mainClassName(Project project, Features features) {
+        if (features.hasFeature(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY)) {
+            return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
+        }
         return project.getPackageName() + ".Application";
     }
 
@@ -46,13 +49,17 @@ public class JavaApplication implements JavaApplicationFeature {
     public void apply(GeneratorContext generatorContext) {
         JavaApplicationFeature.super.apply(generatorContext);
 
-        Features features = generatorContext.getFeatures();
-        boolean hasFunction = features.getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
-
-        if (!hasFunction) {
+        if (shouldGenerateApplicationFile(generatorContext)) {
             generatorContext.addTemplate("application", new RockerTemplate(getPath(),
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
         }
+    }
+
+    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().hasFeature(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY)) {
+            return false;
+        }
+        return !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {
