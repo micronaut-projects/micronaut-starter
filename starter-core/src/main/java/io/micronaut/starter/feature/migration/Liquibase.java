@@ -34,4 +34,5 @@ public class Liquibase implements MigrationFeature {
     public String getDescription() {
         return "Adds support for Liquibase database migrations (http://www.liquibase.org/)";
     }
+
 }

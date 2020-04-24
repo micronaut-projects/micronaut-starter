@@ -65,7 +65,7 @@ public class AwsLambdaCustomRuntime implements ApplicationFeature {
     @SuppressWarnings("EmptyBlock")
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.setMainClass(this);
+        ApplicationFeature.super.apply(generatorContext);
 
         if (generatorContext.getApplicationType() == ApplicationType.DEFAULT &&
             !generatorContext.getFeatures().isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {

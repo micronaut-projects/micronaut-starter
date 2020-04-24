@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.netflix;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -43,4 +44,8 @@ public class Hystrix implements Feature {
         generatorContext.getConfiguration().put("hystrix.stream.enabled", false);
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

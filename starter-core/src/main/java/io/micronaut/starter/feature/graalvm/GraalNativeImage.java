@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.graalvm;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
@@ -67,6 +68,11 @@ public class GraalNativeImage implements Feature {
                         nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
     protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {

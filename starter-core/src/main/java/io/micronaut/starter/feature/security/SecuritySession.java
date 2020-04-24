@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -44,6 +45,11 @@ public class SecuritySession implements Feature {
         generatorContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
         generatorContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
         generatorContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.externalconfig;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.externalconfig.template.k8sYaml;
@@ -66,4 +67,8 @@ public class Kubernetes implements ExternalConfigFeature {
         generatorContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(generatorContext.getProject())));
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

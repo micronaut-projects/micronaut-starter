@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.graphql;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -41,6 +42,11 @@ public class GraphQL implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("#graphql.graphiql.enabled", true);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

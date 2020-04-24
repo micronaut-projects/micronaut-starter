@@ -91,14 +91,14 @@ public interface Feature extends Named, Ordered, Described {
     }
 
     /**
-     * This method can be implemented to ensure it is only selectable for a subset of application types.
+     * This method must be implemented to ensure it is only selectable for the desired
+     * application types. This method is not used for determining if a default feature
+     * should be applied.
      *
      * @param applicationType The application type
      * @return True if the feature can be selected by the user
      */
-    default boolean supports(ApplicationType applicationType) {
-        return true;
-    }
+    boolean supports(ApplicationType applicationType);
 
     /**
      * Some features should not be visible to the user because they are a common parent of other

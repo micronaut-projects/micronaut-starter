@@ -48,8 +48,4 @@ public class Spock implements TestFeature {
         return Language.GROOVY;
     }
 
-    @Override
-    public Predicate<ApplicationType> appliesToByDefault() {
-        return (applicationType) -> true;
-    }
 }

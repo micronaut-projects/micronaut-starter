@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -41,5 +42,10 @@ public class MongoReactive implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}");
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

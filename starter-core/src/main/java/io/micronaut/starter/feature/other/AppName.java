@@ -60,4 +60,9 @@ public class AppName implements DefaultFeature {
         }
         appNameConfig.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

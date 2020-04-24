@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
@@ -39,5 +40,10 @@ public abstract class MicrometerFeature implements Feature {
         if (!featureContext.isPresent(Management.class)) {
             featureContext.addFeature(management);
         }
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 }

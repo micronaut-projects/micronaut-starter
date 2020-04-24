@@ -40,4 +40,9 @@ public class AnnotationApi implements Feature, DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return options.getJavaVersion().majorVersion() >= 9;
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.postgres;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -46,6 +47,11 @@ public class PostgresReactive implements Feature {
         generatorContext.getConfiguration().put("postgres.reactive.client.database.user", "user");
         generatorContext.getConfiguration().put("postgres.reactive.client.database.password", "password");
         generatorContext.getConfiguration().put("postgres.reactive.client.database.maxSize", 5);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

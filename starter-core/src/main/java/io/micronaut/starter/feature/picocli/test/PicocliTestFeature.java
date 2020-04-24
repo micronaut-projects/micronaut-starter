@@ -29,7 +29,7 @@ public interface PicocliTestFeature extends TestFeature {
     }
 
     @Override
-    default Predicate<ApplicationType> appliesToByDefault() {
-        return (applicationType) -> applicationType == ApplicationType.CLI;
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
     }
 }

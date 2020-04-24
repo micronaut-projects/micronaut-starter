@@ -48,9 +48,5 @@ public class Junit implements TestFeature {
         return Language.JAVA;
     }
 
-    @Override
-    public Predicate<ApplicationType> appliesToByDefault() {
-        return (applicationType) -> true;
-    }
 
 }

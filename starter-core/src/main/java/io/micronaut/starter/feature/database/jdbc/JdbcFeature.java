@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database.jdbc;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -51,6 +52,11 @@ public abstract class JdbcFeature implements OneOfFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("datasources.default", new LinkedHashMap<>());
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

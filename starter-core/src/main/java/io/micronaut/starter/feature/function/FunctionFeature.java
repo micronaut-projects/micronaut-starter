@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
  * @since 1.0.0
  */
 public interface FunctionFeature extends Feature {
+
     @Override
     default boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;

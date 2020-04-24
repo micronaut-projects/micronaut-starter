@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.cassandra;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -45,6 +46,11 @@ public class Cassandra implements Feature {
         generatorContext.getConfiguration().put("cassandra.default.port", 9042);
         generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
         generatorContext.getConfiguration().put("cassandra.default.ssl", true);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

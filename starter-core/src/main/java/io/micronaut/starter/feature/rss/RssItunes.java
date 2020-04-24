@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.rss;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -35,6 +36,11 @@ public class RssItunes implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for generating iTunes Podcast RSS feeds (https://itunespartner.apple.com/podcasts)";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
 }

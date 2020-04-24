@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.options.Language;
@@ -57,4 +58,10 @@ public class MongoGorm implements Feature {
             featureContext.addFeature(mongoReactive);
         }
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
 }

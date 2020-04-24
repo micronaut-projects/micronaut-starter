@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.migration;
 
+import io.micronaut.starter.application.ApplicationType;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -34,5 +36,6 @@ public class Flyway implements MigrationFeature {
     public String getDescription() {
         return "Adds support for Flyway database migrations (https://flywaydb.org/)";
     }
+
 }
 

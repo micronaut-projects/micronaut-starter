@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -79,5 +80,10 @@ public class HibernateGorm implements Feature {
         config.put("hibernate.cache.queries", false);
         config.put("hibernate.cache.use_second_level_cache", false);
         config.put("hibernate.cache.use_query_cache", false);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

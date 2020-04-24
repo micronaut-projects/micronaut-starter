@@ -69,13 +69,16 @@ public interface TestFeature extends DefaultFeature {
         return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
-    Predicate<ApplicationType> appliesToByDefault();
-
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return appliesToByDefault().test(applicationType) && (options.getTestFramework() == getTestFramework() ||
+        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
                 (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

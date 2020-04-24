@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.vertx;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -46,6 +47,11 @@ public class VertxMySql implements Feature {
         generatorContext.getConfiguration().put("vertx.mysql.client.database.user", "user");
         generatorContext.getConfiguration().put("vertx.mysql.client.database.password", "password");
         generatorContext.getConfiguration().put("vertx.mysql.client.database.maxSize", 5);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

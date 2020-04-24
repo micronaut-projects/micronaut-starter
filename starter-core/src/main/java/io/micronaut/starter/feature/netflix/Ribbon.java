@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.netflix;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
@@ -44,4 +45,8 @@ public class Ribbon implements Feature {
         generatorContext.getConfiguration().put("ribbon.ServerListRefreshInterval", 2000);
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

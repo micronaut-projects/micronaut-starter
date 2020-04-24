@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.xml;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -37,4 +38,8 @@ public class JacksonXml implements Feature {
         return "Adds support for using Jackson XML serialization/deserialization (https://github.com/FasterXML/jackson-dataformat-xml)";
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

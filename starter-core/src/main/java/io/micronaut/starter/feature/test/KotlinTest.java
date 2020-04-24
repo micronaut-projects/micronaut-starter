@@ -51,8 +51,4 @@ public class KotlinTest implements TestFeature {
         return Language.KOTLIN;
     }
 
-    @Override
-    public Predicate<ApplicationType> appliesToByDefault() {
-        return (applicationType) -> true;
-    }
 }

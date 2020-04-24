@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.rss;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -37,4 +38,8 @@ public class Rss implements Feature {
         return "Adds support for generating RSS feeds (https://cyber.harvard.edu/rss/rss.html)";
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

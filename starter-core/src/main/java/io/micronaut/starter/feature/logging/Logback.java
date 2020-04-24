@@ -59,4 +59,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
         }
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

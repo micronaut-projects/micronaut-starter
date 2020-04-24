@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.filewatch;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -31,4 +32,10 @@ public class FileWatchOsx implements Feature {
     public boolean isVisible() {
         return false;
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
 }
