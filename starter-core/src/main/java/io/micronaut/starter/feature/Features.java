@@ -24,6 +24,7 @@ import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,10 +53,6 @@ public class Features extends ArrayList<String> {
         }
         this.javaVersion = options.getJavaVersion();
         this.buildTool = options.getBuildTool();
-    }
-
-    public boolean hasFeature(String featureName) {
-        return getFeatures().stream().anyMatch(feature -> feature.getName().equals(featureName));
     }
 
     public boolean hasFunctionFeature() {
@@ -88,5 +85,12 @@ public class Features extends ArrayList<String> {
         } else {
             return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 13));
         }
+    }
+
+    public boolean isFeaturePresent(Class<? extends Feature> feature) {
+        Objects.requireNonNull(feature, "The feature class cannot be null");
+        return getFeatures().stream()
+                .map(Feature::getClass)
+                .anyMatch(feature::isAssignableFrom);
     }
 }

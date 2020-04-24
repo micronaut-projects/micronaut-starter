@@ -43,9 +43,11 @@ import java.util.Set;
 @Singleton
 public class AwsLambda implements Feature, DefaultFeature {
 
+    public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
+
     @Override
     public String getName() {
-        return "aws-lambda";
+        return FEATURE_NAME_AWS_LAMBDA;
     }
 
     @Override

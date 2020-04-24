@@ -29,7 +29,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
 
     @Override
     public String mainClassName(Project project, Features features) {
-        if (features.hasFeature(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY)) {
+        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
             return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
         }
         return project.getPackageName() + ".Application";

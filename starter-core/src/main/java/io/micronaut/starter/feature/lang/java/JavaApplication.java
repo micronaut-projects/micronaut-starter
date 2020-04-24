@@ -29,7 +29,7 @@ public class JavaApplication implements JavaApplicationFeature {
 
     @Override
     public String mainClassName(Project project, Features features) {
-        if (features.hasFeature(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY)) {
+        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
             return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
         }
         return project.getPackageName() + ".Application";
@@ -56,7 +56,7 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY)) {
+        if (generatorContext.getFeatures().isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
             return false;
         }
         return !generatorContext.getFeatures().hasFunctionFeature();

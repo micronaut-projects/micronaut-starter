@@ -15,10 +15,14 @@
  */
 package io.micronaut.starter.feature.graalvm;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
+import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -44,7 +48,15 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool())));
+        RockerModel dockerfileRockerModel;
+        if (generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA))) {
+            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+
+        } else {
+            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+        }
+        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfileRockerModel));
+
         generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
 
         generatorContext.addTemplate("nativeImageProperties",

@@ -164,9 +164,7 @@ public class GeneratorContext {
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {
         Objects.requireNonNull(feature, "The feature class cannot be null");
-        return features.getFeatures().stream()
-                .map(Feature::getClass)
-                .anyMatch(feature::isAssignableFrom);
+        return features.isFeaturePresent(feature);
     }
 
     public String getSourcePath(String path) {

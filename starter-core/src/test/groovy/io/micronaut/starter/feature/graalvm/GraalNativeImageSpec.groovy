@@ -9,6 +9,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -216,6 +217,62 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
         nativeImageProperties.contains('-H:Name=foo')
         nativeImageProperties.contains('-H:Class=io.micronaut.function.aws.runtime.MicronautLambdaRuntime')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @PendingFeature
+    @Unroll
+    void 'verify dockerfile for a function application type with gradle and feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['graalvm'] // it will uses aws-lambda as its the default feature for function
+        )
+        String dockerfile = output['Dockerfile']
+
+        then:
+        dockerfile
+        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/foo-*-all.jar')
+        dockerfile.contains('RUN chmod 777 bootstrap')
+        dockerfile.contains('RUN chmod 777 foo')
+        dockerfile.contains('RUN zip -j function.zip bootstrap foo')
+        dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
+
+
+        and: 'defaults to graalvm ce jdk8 image'
+        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @PendingFeature
+    @Unroll
+    void 'verify dockerfile for a function application type with maven and feature graalvm for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['graalvm'] // it will uses aws-lambda as its the default feature for function
+        )
+        String dockerfile = output['Dockerfile']
+
+        then:
+        dockerfile
+        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp target/foo-*.jar')
+        dockerfile.contains('RUN chmod 777 bootstrap')
+        dockerfile.contains('RUN chmod 777 foo')
+        dockerfile.contains('RUN zip -j function.zip bootstrap foo')
+        dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
+
+
+        and: 'defaults to graalvm ce jdk8 image'
+        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
 
         where:
         language << Language.values().toList()
