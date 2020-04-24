@@ -11,7 +11,7 @@ jobs:
       - name: Configure Release
         id: release
         run: |
-          $githubEvent=Get-ChildItem Env:$GITHUB_EVENT_PATH
+          $githubEvent=Get-ChildItem Env:GITHUB_EVENT_PATH
           $response = Get-Content -Raw -Path $githubEvent | ConvertFrom-Json
           $upload_url=$response.release.upload_url
           $version=$response.release.tag.Substring(1)
