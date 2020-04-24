@@ -184,4 +184,41 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         where:
         language << Language.values().toList()
     }
+
+    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-api-gateway-lambda-proxy" for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['graalvm', 'aws-api-gateway-lambda-proxy']
+        )
+
+        then:
+        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+    }
+
+    void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-api-gateway-lambda-proxy" for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['graalvm', 'aws-api-gateway-lambda-proxy']
+        )
+        String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
+
+        then:
+        nativeImageProperties
+
+        nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
+        nativeImageProperties.contains('-H:Name=foo')
+        nativeImageProperties.contains('-H:Class=io.micronaut.function.aws.runtime.MicronautLambdaRuntime')
+
+        where:
+        language << Language.values().toList()
+    }
+
 }
