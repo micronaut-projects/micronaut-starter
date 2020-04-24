@@ -87,9 +87,9 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p "mn-darwin-amd64-${VERSION}"/bin
-          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
-          tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
+          mkdir -p "mn-linux-amd64-${VERSION}"/bin
+          mv ./mn "mn-linux-amd64-${VERSION}/bin"
+          tar -pcf "mn-linux-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -97,7 +97,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${VERSION}.tar.gz
+          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
           asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
           asset_content_type: application/tar+gzip
   macos:
@@ -135,7 +135,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${VERSION}.tar.gz
+          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
           asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
           asset_content_type: application/tar+gzip
   windows:
