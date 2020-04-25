@@ -31,6 +31,7 @@ import org.reactivestreams.Publisher;
 import javax.annotation.PreDestroy;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLEncoder;
 
@@ -58,8 +59,10 @@ public class GoogleAuth implements HttpClientFilter, AutoCloseable {
     }
 
     protected String encodeURI(MutableHttpRequest<?> request) throws UnsupportedEncodingException {
+        URI fullURI = request.getUri();
+        String receivingURI = fullURI.getScheme() + "://" + fullURI.getHost();
         return "/computeMetadata/v1/instance/service-accounts/default/identity?audience=" +
-                URLEncoder.encode(request.getUri().toString(), "UTF-8");
+                URLEncoder.encode(receivingURI, "UTF-8");
     }
 
     @Override

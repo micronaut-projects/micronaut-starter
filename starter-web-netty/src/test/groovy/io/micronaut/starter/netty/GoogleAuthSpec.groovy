@@ -34,6 +34,7 @@ class GoogleAuthSpec extends Specification {
 
         then:
         def e = thrown(ExecutionException)
-        e.cause.message.contains('metadata: nodename nor servname provided')
+        e.cause.message.contains('metadata: nodename nor servname provided') ||
+        e.cause.message.contains('Temporary failure in name resolution')
     }
 }
