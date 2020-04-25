@@ -26,6 +26,13 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
         run: ./gradlew check --parallel --continue --refresh-dependencies
+      - name: Verify CLI
+        run: |
+          ./gradlew micronaut-cli:assemble
+          cp starter-cli/build/distributions/micronaut-cli-*.zip cli.zip
+          unzip cli -d tmp
+          mv tmp/micronaut-cli-* tmp/cli
+          ./tmp/cli/bin/mn --version
       - name: Publish to JFrog OSS
         if: success() && github.event_name == 'push' && matrix.java == '8' && github.ref == 'refs/heads/master'
         env:

@@ -17,9 +17,9 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Verify Create App

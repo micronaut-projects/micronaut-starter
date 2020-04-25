@@ -121,7 +121,7 @@ subprojects { Project subproject ->
 
 apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
 
-Project starterCli = project('starter-cli')
+Project starterCli = project('micronaut-cli')
 
 starterCli.afterEvaluate {
     task generateManpageAsciiDoc(type: JavaExec) {

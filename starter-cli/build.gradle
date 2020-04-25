@@ -16,6 +16,13 @@ configurations {
     generateConfig
 }
 
+configurations.all {
+    resolutionStrategy {
+        // prevent fatJar result containing multiple versions of picocli
+        force("info.picocli:picocli:$picocliVersion")
+    }
+}
+
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
     api project(":starter-core")
@@ -84,48 +91,28 @@ task buildCompletion(type: JavaExec) {
     args = [mainClassName, "--completionScript=${outDir}/mn_completion", "--force", "--factory=io.micronaut.starter.cli.MicronautFactory"]
     classpath = sourceSets.main.runtimeClasspath
 }
+assemble.dependsOn(['buildCompletion'])
 
-task createStartScripts(type: MicronautCreateStartScripts) {
-    description = "Creates OS specific scripts to run the Micronaut CLI."
-    mainClassName = 'io.micronaut.starter.cli.MicronautStarter'
-    applicationName = 'mn'
-    defaultJvmOpts = ["-XX:+TieredCompilation", "-XX:TieredStopAtLevel=1", "-XX:CICompilerCount=3"]
-    outputDir = outDir
-    classpath = configurations.runtime
-    outputs.dir outDir
-    doLast {
-        ant.chmod(file: new File(outDir, 'mn'), perm: 'ugo+rx')
+distributions {
+    main {
+        contents {
+            from(outDir) {
+                into 'bin'
+            }
+            from("${project.rootProject.projectDir}/LICENSE") {
+                into ''
+            }
+        }
     }
-    dependsOn(buildCompletion)
 }
 
-configurations.all {
-    resolutionStrategy {
-        // prevent fatJar result containing multiple versions of picocli
-        force("info.picocli:picocli:$picocliVersion")
-    }
+startScripts {
+    applicationName = 'mn'
 }
 
 shadowJar {
     mergeServiceFiles()
-    dependsOn(['createStartScripts'])
 }
-
-task cliZip(type: Zip, dependsOn: ['shadowJar']) {
-    archiveFileName = "micronaut-cli-${project.version}.zip"
-    into("micronaut-cli-${project.version}") {
-        from('build/bin') {
-            into('bin')
-        }
-        from('../media') {
-            into('media')
-        }
-        from shadowJar.outputs.files
-        from('../LICENSE')
-    }
-}
-
-assemble.dependsOn('cliZip')
 
 sdkman {
     api = "https://vendors.sdkman.io"
