@@ -1,4 +1,4 @@
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.options.BuildTool
 
 @args (
@@ -14,7 +14,7 @@ RUN gu install native-image
 COPY . /home/app/@project.getName()
 WORKDIR /home/app/@project.getName()
 
-@if (buildTool.equals(BuildTool.gradle)) {
+@if (buildTool.equals(BuildTool.GRADLE)) {
 RUN native-image --no-server -cp build/libs/@project.getName()-*-all.jar
 } else {
 RUN native-image --no-server -cp target/@project.getName()-*.jar

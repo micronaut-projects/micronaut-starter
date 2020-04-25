@@ -15,12 +15,11 @@
  */
 package io.micronaut.starter.feature.reloading;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.template.BinaryTemplate;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.Optional;
@@ -36,13 +35,18 @@ public class Springloaded implements ReloadingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Spring Loaded JVM Agent";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for class reloading with Spring-Loaded";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        int jdkVersion = VersionInfo.getJavaVersion();
+        int jdkVersion = featureContext.getJavaVersion().majorVersion();
         if (jdkVersion >= 9) {
             Springloaded springloaded = this;
             featureContext.exclude(new FeaturePredicate() {
@@ -60,9 +64,9 @@ public class Springloaded implements ReloadingFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        commandContext.addTemplate("springLoadedJar",
+        generatorContext.addTemplate("springLoadedJar",
                 new BinaryTemplate("agent/" + JAR_NAME, classLoader.getResource("springloaded/" + JAR_NAME)));
     }
 }

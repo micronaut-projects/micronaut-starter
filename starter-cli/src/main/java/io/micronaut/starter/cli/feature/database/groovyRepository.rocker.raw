@@ -1,0 +1,33 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String idTypeImport,
+String idType,
+Boolean jdbcRepository
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.data.annotation.*
+import io.micronaut.data.model.*
+import io.micronaut.data.repository.CrudRepository
+@if (idTypeImport != null) {
+@idTypeImport
+}
+@if (jdbcRepository) {
+import io.micronaut.data.jdbc.annotation.JdbcRepository
+import io.micronaut.data.model.query.builder.sql.Dialect
+}
+
+@if (jdbcRepository) {
+@@JdbcRepository
+} else {
+@@Repository
+}
+interface @project.getClassName()Repository extends CrudRepository<@project.getClassName(), @idType> {
+
+}

@@ -15,33 +15,20 @@
  */
 package io.micronaut.starter.feature.picocli;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
-import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
-import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Singleton
 public class Picocli implements DefaultFeature {
-
-    private final PicocliJunit junit;
-    private final PicocliSpock spock;
-    private final PicocliKotlinTest kotlinTest;
-
-    public Picocli(PicocliJunit junit, PicocliSpock spock, PicocliKotlinTest kotlinTest) {
-        this.junit = junit;
-        this.spock = spock;
-        this.kotlinTest = kotlinTest;
-    }
 
     @Override
     public String getName() {
@@ -54,25 +41,33 @@ public class Picocli implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_CLI;
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.CLI;
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getTestFramework() == TestFramework.junit) {
-            featureContext.addFeature(junit);
-        } else if (featureContext.getTestFramework() == TestFramework.spock) {
-            featureContext.addFeature(spock);
-        } else if (featureContext.getTestFramework() == TestFramework.kotlintest) {
-            featureContext.addFeature(kotlinTest);
+    public String getTitle() {
+        return "PicoCLI";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Support for creating PicoCLI applications";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("micronaut.picocli");
+            generatorContext.getBuildProperties().put(
+                    entry.getKey(),
+                    entry.getValue()
+            );
         }
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("micronaut.picocli.version", "1.2.1");
-        }
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
     }
 }

@@ -1,13 +1,6 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
     id "com.adarshr.test-logger" version "2.0.0"
-    id "application"
-    id "com.fizzed.rocker" version "1.2.3"
-}
-
-ext {
-    picocliVersion = '4.2.0'
+    id "io.micronaut.starter.rocker"
 }
 
 sourceSets {
@@ -18,29 +11,37 @@ sourceSets {
     }
 }
 
-jar {
-    manifest {
-        attributes('Automatic-Module-Name': "${project.group}.${project.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-        attributes('Implementation-Version': projectVersion)
-        attributes('Implementation-Title': title)
-        attributes "Main-Class": "io.micronaut.starter.MicronautStarter", "Implementation-Version": project.version
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
-
 dependencies {
-    api "info.picocli:picocli:${picocliVersion}"
-    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:1.2.3"
-
-    runtime "org.slf4j:slf4j-nop:1.7.30"
-    implementation "org.fusesource.jansi:jansi:1.15"
+    api "io.micronaut:micronaut-inject"
     implementation "org.yaml:snakeyaml:1.26"
+    implementation 'org.apache.commons:commons-compress:1.20'
 }
 
-mainClassName = "io.micronaut.starter.MicronautStarter"
+processResources.dependsOn('micronautVersionInfo')
+task micronautVersionInfo(type: WriteProperties) {
+    outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
+    property 'micronaut.version', micronautVersion
+    WriteProperties wp = delegate
+    boolean resolved = false
+    repositories.each { ArtifactRepository repo ->
+        if (repo instanceof MavenArtifactRepository) {
+            def url = ((MavenArtifactRepository) repo).getUrl()
+            try {
+                def xml = new XmlSlurper().parse(new URL("$url/io/micronaut/micronaut-bom/$micronautVersion/micronaut-bom-${micronautVersion}.pom").openStream())
+                xml.properties.children().each {
+                    wp.property it.name(), it.text()
+                }
+                resolved = true
+            } catch (e) {
+            }
+        }
+    }
+    if (!resolved) {
+        throw new RuntimeException("Dependency versions couldn't be resolved for Micronaut version: $micronautVersion")
+    }
+}
 
 rocker {
     // (All settings are shown with their defaults)
@@ -63,7 +64,7 @@ rocker {
     javaVersion '1.8'
     extendsClass null
     extendsModelClass null
-    optimize null
+    optimize true
     discardLogicWhitespace = true
     targetCharset null
     suffixRegex null

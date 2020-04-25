@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
-import io.micronaut.starter.Options;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Language;
 
@@ -26,7 +26,7 @@ import java.util.*;
 public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validate(Options options, List<Feature> features) {
+    public void validate(Options options, Set<Feature> features) {
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
             feature.getRequiredLanguage().ifPresent(lang -> {

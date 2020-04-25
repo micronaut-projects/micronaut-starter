@@ -1,0 +1,11 @@
+{
+  "resources": [
+    {"pattern":"gradle/.*$"},
+    {"pattern":"functions/.*$"},
+    {"pattern":"maven/.*$"},
+    {"pattern":"kotlintest/.*$"},
+    {"pattern":".gitkeep"},
+    {"pattern":"springloaded/.*$"},
+    {"pattern":"\\Qmicronaut-versions.properties\\E"}
+  ]
+}

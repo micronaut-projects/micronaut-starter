@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.util;
 
-import io.micronaut.starter.Project;
+import io.micronaut.starter.application.Project;
 
 import java.util.*;
 import java.util.regex.Pattern;

@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.cache
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class EHCacheSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class EHCacheSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle cache-ehcache feature for language=#language'() {
@@ -24,10 +15,10 @@ class EHCacheSpec extends Specification implements ProjectFixture, ContextFixtur
         String template = buildGradle.template(buildProject(), getFeatures(['cache-ehcache'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.cache:micronaut-cache-ehcache"')
+        template.contains('implementation("io.micronaut.cache:micronaut-cache-ehcache")')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -45,12 +36,12 @@ class EHCacheSpec extends Specification implements ProjectFixture, ContextFixtur
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     void 'test cache-ehcache configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cache-ehcache'])
+        GeneratorContext commandContext = buildGeneratorContext(['cache-ehcache'])
 
         then:
         commandContext.configuration.get('micronaut.caches.my-cache.maximumSize'.toString()) == 20

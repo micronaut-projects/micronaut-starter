@@ -1,14 +1,18 @@
-@import io.micronaut.starter.feature.lang.LanguageFeature
+@import io.micronaut.starter.feature.Features
 
 @args (
-LanguageFeature language,
+Features features,
 String artifact
 )
 
-@if (language.isJava()) {
-    annotationProcessor(@artifact)
-} else if (language.isKotlin()) {
+@if (features.language().isJava()) {
+@if (features.testFramework().isKotlinTest()) {
     kapt(@artifact)
-} else if (language.isGroovy()) {
+} else {
+    annotationProcessor(@artifact)
+}
+} else if (features.language().isKotlin()) {
+    kapt(@artifact)
+} else if (features.language().isGroovy()) {
     compileOnly(@artifact)
 }

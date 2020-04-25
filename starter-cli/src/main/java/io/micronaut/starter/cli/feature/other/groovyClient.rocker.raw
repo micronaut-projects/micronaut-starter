@@ -1,0 +1,21 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.HttpStatus
+
+@@Client("@project.getPropertyName()")
+interface @project.getClassName()Client {
+
+    @@Get("/")
+    HttpStatus index()
+}

@@ -1,0 +1,15 @@
+introduction:
+  title: Introduction
+  installation: Installation
+  releaseHistory: Release History
+commands:
+  title: Available commands
+starterImpls:
+  title: Micronaut Starter
+  starterCLI: CLI Application
+  starterNetty: Web Application
+  starterServlet: WAR Deployment
+  starterCloudRun: Google Cloud Run
+  starterCloudFunction: Google Cloud Function
+  starterLambda: AWS Lambda
+  starterAzure: Microsoft Azure

@@ -15,20 +15,22 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.List;
 
 @Singleton
-public class Docker implements DefaultFeature {
+public class Docker implements Feature {
 
     @Override
     public String getName() {
         return "docker";
+    }
+
+    @Override
+    public String getTitle() {
+        return "Docker Support";
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Docker implements DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return false;
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

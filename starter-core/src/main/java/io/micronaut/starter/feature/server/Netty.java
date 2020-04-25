@@ -15,13 +15,14 @@
  */
 package io.micronaut.starter.feature.server;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Netty implements ServerFeature, DefaultFeature {
@@ -32,13 +33,18 @@ public class Netty implements ServerFeature, DefaultFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Netty Server";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for a Netty server";
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_APP &&
-                selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature);
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.DEFAULT &&
+                selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
     }
 }

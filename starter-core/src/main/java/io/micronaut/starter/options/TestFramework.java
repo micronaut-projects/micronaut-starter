@@ -15,8 +15,37 @@
  */
 package io.micronaut.starter.options;
 
+import javax.annotation.Nonnull;
+import java.util.Locale;
+
 public enum TestFramework {
-    junit,
-    spock,
-    kotlintest
+    JUNIT,
+    SPOCK,
+    KOTLINTEST;
+
+    @Override
+    public String toString() {
+        return this.name().toLowerCase();
+    }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
+    }
+
+    public String getSourcePath(String path, Language language) {
+        switch (this) {
+            case SPOCK:
+                return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
+            case KOTLINTEST:
+                return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
+            case JUNIT:
+            default:
+                if (language != null) {
+                    return language.getTestSrcDir() + path + "Test."  + language.getExtension();
+                } else {
+                    return Language.JAVA.getTestSrcDir() + "Test." + path + Language.JAVA.getExtension();
+                }
+        }
+    }
 }

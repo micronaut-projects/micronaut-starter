@@ -1,19 +1,13 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class HibernateJpaSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class HibernateJpaSpec extends BeanContextSpec {
 
     void "test hibernate jpa features"() {
         when:
@@ -30,8 +24,8 @@ class HibernateJpaSpec extends Specification implements ProjectFixture, ContextF
         String template = buildGradle.template(buildProject(), getFeatures(["hibernate-jpa"])).render().toString()
 
         then:
-        template.contains("implementation \"io.micronaut.configuration:micronaut-hibernate-jpa\"")
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-jpa")')
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for maven"() {
@@ -64,7 +58,7 @@ class HibernateJpaSpec extends Specification implements ProjectFixture, ContextF
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['hibernate-jpa'])
+        GeneratorContext ctx = buildGeneratorContext(['hibernate-jpa'])
 
         then:
         ctx.configuration.containsKey('datasources.default.url')

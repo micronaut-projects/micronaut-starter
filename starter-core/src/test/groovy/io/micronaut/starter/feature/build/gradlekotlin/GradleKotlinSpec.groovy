@@ -31,7 +31,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 
     void "test Versions.kr"() {
         when:
-        String template = versionsKt.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.kotlintest, BuildTool.gradleKotlin)).render().toString()
+        String template = versionsKt.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.kotlintest, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         def expectation = """\
             |const val jvmVersion = "${VersionInfo.getJdkVersion()}"
@@ -49,7 +49,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 
     void "test annotation processor dependencies"() {
         when:
-        String template = annotationProcessors.template(getFeatures([], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = annotationProcessors.template(getFeatures([], Language.java, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -57,7 +57,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('annotationProcessor("io.micronaut:micronaut-validation")')
 
         when:
-        template = annotationProcessors.template(getFeatures([], Language.kotlin, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.kotlin, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -65,7 +65,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('kapt("io.micronaut:micronaut-validation")')
 
         when:
-        template = annotationProcessors.template(getFeatures([], Language.groovy, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = annotationProcessors.template(getFeatures([], Language.groovy, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -74,7 +74,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 
     void "test junit with different languages"() {
         when:
-        String template = buildGradleKts.template(buildProject(), getFeatures([], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = buildGradleKts.template(buildProject(), getFeatures([], Language.java, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains("""
@@ -87,7 +87,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 """)
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures([], Language.groovy, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures([], Language.groovy, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains("""
@@ -100,7 +100,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         !template.contains("testAnnotationProcessor")
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures([], Language.kotlin, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains("""
@@ -116,7 +116,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
 
     void 'test graal-native-image feature'() {
         when:
-        String template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.java, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -125,7 +125,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.kotlin, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.kotlin, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -134,7 +134,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.groovy, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        template = buildGradleKts.template(buildProject(), getFeatures(["graalvm"], Language.groovy, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.count('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))') == 1
@@ -144,7 +144,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
     @Unroll
     void 'test jdbc feature #jdbcFeature'() {
         when:
-        String template = buildGradleKts.template(buildProject(), getFeatures([jdbcFeature], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = buildGradleKts.template(buildProject(), getFeatures([jdbcFeature], Language.java, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains("implementation(\"io.micronaut.configuration:micronaut-${jdbcFeature}\")")
@@ -156,7 +156,7 @@ class GradleKotlinSpec extends Specification implements ProjectFixture, ContextF
     @Unroll
     void 'test server feature #serverFeature'() {
         when:
-        String template = buildGradleKts.template(buildProject(), getFeatures([serverFeature], Language.java, TestFramework.junit, BuildTool.gradleKotlin)).render().toString()
+        String template = buildGradleKts.template(buildProject(), getFeatures([serverFeature], Language.java, TestFramework.junit, BuildTool.GRADLE_KOTLIN)).render().toString()
 
         then:
         template.contains(dependency)

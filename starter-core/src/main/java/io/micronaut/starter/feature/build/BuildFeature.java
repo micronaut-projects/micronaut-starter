@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
 
@@ -28,5 +29,10 @@ public interface BuildFeature extends DefaultFeature {
     @Override
     default int getOrder() {
         return FeaturePhase.BUILD.getOrder();
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

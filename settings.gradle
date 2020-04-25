@@ -1,3 +1,11 @@
 rootProject.name = 'micronaut-starter'
 
 include 'starter-core'
+include 'starter-cli'
+include 'starter-api'
+include 'starter-web-netty'
+include 'starter-web-servlet'
+include 'starter-azure-function'
+include 'starter-gcp-function'
+include 'starter-aws-lambda'
+include 'starter-analytics-postgres'

@@ -1,4 +1,4 @@
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 
 @args (Project project, Features features)
@@ -6,16 +6,20 @@
 package @project.getPackageName();
 
 import io.micronaut.runtime.Micronaut;
-@if (features.contains("swagger")) {
+@if (features.contains("openapi")) {
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
+}
 
+
+@if (features.contains("openapi")) {
 @@OpenAPIDefinition(
     info = @@Info(
             title = "@project.getName()",
             version = "0.0"
     )
-)}
+)
+}
 public class Application {
 
     public static void main(String[] args) {

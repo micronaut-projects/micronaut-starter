@@ -15,14 +15,13 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class AnnotationApi implements Feature, DefaultFeature {
@@ -38,7 +37,12 @@ public class AnnotationApi implements Feature, DefaultFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return VersionInfo.getJavaVersion() >= 9;
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getJavaVersion().majorVersion() >= 9;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

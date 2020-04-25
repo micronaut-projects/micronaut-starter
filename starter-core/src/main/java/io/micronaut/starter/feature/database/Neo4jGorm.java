@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.options.Language;
@@ -37,13 +38,18 @@ public class Neo4jGorm implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "GORM for Neo4j";
+    }
+
+    @Override
     public String getDescription() {
         return "Configures GORM for Neo4j for Groovy applications";
     }
 
     @Override
     public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.groovy);
+        return Optional.of(Language.GROOVY);
     }
 
     @Override
@@ -52,4 +58,10 @@ public class Neo4jGorm implements Feature {
             featureContext.addFeature(neo4jBolt);
         }
     }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
 }

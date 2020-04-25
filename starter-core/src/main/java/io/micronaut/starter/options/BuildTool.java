@@ -15,8 +15,39 @@
  */
 package io.micronaut.starter.options;
 
+import javax.annotation.Nonnull;
+import java.util.Locale;
+
 public enum BuildTool {
-    gradle,
-    maven,
-    gradleKotlin
+
+    GRADLE("build/libs", "build.gradle"),
+    MAVEN("target", "pom.xml"),
+    GRADLE_KOTLIN("build/libs", "build.gradle.kts");
+
+
+  private final String jarDirectory;
+    private final String fileName;
+
+    BuildTool(String jarDirectory, String fileName) {
+        this.jarDirectory = jarDirectory;
+        this.fileName = fileName;
+    }
+
+    public String getJarDirectory() {
+        return jarDirectory;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
+    }
 }

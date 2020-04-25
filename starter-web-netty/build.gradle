@@ -1,0 +1,42 @@
+plugins {
+    id "com.github.johnrengelman.shadow"
+    id "application"
+}
+
+ext.publish = false
+
+configurations {
+    // for dependencies that are needed for development only
+    developmentOnly
+}
+
+dependencies {
+    developmentOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation project(":starter-api")
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-http-server-netty"
+
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+//    runtimeOnly project(":starter-analytics-postgres")
+
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+    testImplementation "io.micronaut:micronaut-http-client"
+}
+test.classpath += configurations.developmentOnly
+
+mainClassName = "io.micronaut.starter.netty.Application"
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
+    }
+}
+
+run.classpath += configurations.developmentOnly
+//run.jvmArgs("-agentlib:native-image-agent=config-output-dir=tmp")

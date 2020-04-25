@@ -15,13 +15,12 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 public interface ApplicationFeature extends Feature {
 
-    String mainClassName(Project project);
+    String mainClassName(Project project, Features features);
 
     @Override
     default boolean isVisible() {
@@ -29,9 +28,7 @@ public interface ApplicationFeature extends Feature {
     }
 
     @Override
-    default void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            commandContext.getBuildProperties().put("exec.mainClass", mainClassName(commandContext.getProject()));
-        }
+    default void apply(GeneratorContext generatorContext) {
+        generatorContext.setMainClass(this);
     }
 }

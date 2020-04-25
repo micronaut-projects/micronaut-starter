@@ -1,11 +1,5 @@
 name: Java CI
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,19 +25,18 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
-        run: ./gradlew check --parallel --continue
+        run: ./gradlew check --parallel --continue --refresh-dependencies
       - name: Publish to JFrog OSS
-        if: success() && github.event_name == 'push' && matrix.java == '8'
+        if: success() && github.event_name == 'push' && matrix.java == '8' && github.ref == 'refs/heads/master'
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew publish
-#        run: ./gradlew publish docs
-#      - name: Publish to Github Pages
-#        if: success() && github.event_name == 'push' && matrix.java == '8'
-#        uses: micronaut-projects/github-pages-deploy-action@master
-#        env:
-#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-#          BASE_BRANCH: master
-#          BRANCH: gh-pages
-#          FOLDER: build/docs
+        run: ./gradlew publish docs
+      - name: Publish to Github Pages
+        if: success() && github.event_name == 'push' && matrix.java == '8' && github.ref == 'refs/heads/master'
+        uses: micronaut-projects/github-pages-deploy-action@master
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: build/docs

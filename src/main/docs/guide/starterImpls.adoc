@@ -1,0 +1,4 @@
+The core functionality of the project generator is contained within the `micronaut-starter-core` subproject:
+
+dependency:io.micronaut.starter:micronaut-starter-core[version="{version}"]
+

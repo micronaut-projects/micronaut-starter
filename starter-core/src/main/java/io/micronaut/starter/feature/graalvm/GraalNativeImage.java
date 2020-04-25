@@ -15,10 +15,18 @@
  */
 package io.micronaut.starter.feature.graalvm;
 
-import io.micronaut.starter.command.CommandContext;
+import com.fizzed.rocker.RockerModel;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
+import io.micronaut.starter.feature.graalvm.template.deploysh;
+import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -27,9 +35,30 @@ import javax.inject.Singleton;
 @Singleton
 public class GraalNativeImage implements Feature {
 
+    private final AwsLambdaCustomRuntime awsLambdaCustomRuntime;
+
+    public GraalNativeImage(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
+        this.awsLambdaCustomRuntime = awsLambdaCustomRuntime;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.getApplicationType() == ApplicationType.FUNCTION &&
+                featureContext.isPresent(AwsLambda.class) &&
+                awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
+                !featureContext.isPresent(AwsLambdaCustomRuntime.class)) {
+            featureContext.addFeature(awsLambdaCustomRuntime);
+        }
+    }
+
     @Override
     public String getName() {
         return "graalvm";
+    }
+
+    @Override
+    public String getTitle() {
+        return "GraalVM Native Image";
     }
 
     @Override
@@ -38,14 +67,33 @@ public class GraalNativeImage implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(commandContext.getProject(), commandContext.getBuildTool())));
-        commandContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(commandContext.getProject()), true));
+    public void apply(GeneratorContext generatorContext) {
+        RockerModel dockerfileRockerModel;
+        if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
+            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+            RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
+            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel));
 
-        commandContext.addTemplate("nativeImageProperties",
+        } else {
+            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+        }
+        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfileRockerModel));
+
+        generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
+
+        generatorContext.addTemplate("nativeImageProperties",
                 new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties",
-                        nativeImageProperties.template(commandContext.getProject(), commandContext.getFeatures())
+                        nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
     }
 }

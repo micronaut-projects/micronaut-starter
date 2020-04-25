@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.starter.OutputHandler;
-import io.micronaut.starter.Project;
+import io.micronaut.starter.io.OutputHandler;
+import io.micronaut.starter.application.Project;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.Collections;
 
 public interface TemplateRenderer extends Closeable {
 
@@ -29,7 +30,11 @@ public interface TemplateRenderer extends Closeable {
 
     RenderResult render(Template template, boolean force) throws IOException;
 
+    static TemplateRenderer create(OutputHandler outputHandler) {
+        return new DefaultTemplateRenderer(Collections.emptyMap(), outputHandler);
+    }
+
     static TemplateRenderer create(Project project, OutputHandler outputHandler) {
-        return new ProjectTemplateRenderer(project, outputHandler);
+        return new DefaultTemplateRenderer(project.getProperties(), outputHandler);
     }
 }

@@ -1,0 +1,30 @@
+The subproject `starter-aws-lambda` provides a function that can be deployed to AWS Lambda as a GraalVM native image.
+
+=== Running the Lambda Locally
+
+From the root of the project run:
+
+[source, cmd]
+----
+$ docker build . -f DockerfileLambda -t micronaut-starter
+$ mkdir -p build
+$ docker run --rm --entrypoint cat micronaut-starter  /home/application/function.zip > build/function.zip
+----
+
+Then start the function with SAM (https://github.com/awslabs/aws-sam-cli).
+
+[source,cmd]
+----
+$ sam local start-api --template sam-local.yml
+----
+
+And visit http://localhost:3000/
+
+=== Continuous Deployment
+
+The Micronaut Starter API is continuously deployed by Github Actions to https://aws.amazon.com/lambda/[AWS Lambda] as a Serverless GraalVM native application using a custom AWS Lambda Runtime .
+
+The https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+AWS+Lambda%22[Snapshot to AWS Lambda Workflow] (defined by `.github/workflows/gcf-snapshot.yml`) deploys the application on each commit and the API can be accessed at the following URL:
+
+https://cn58jiuova.execute-api.us-east-1.amazonaws.com/staging/application-types
+

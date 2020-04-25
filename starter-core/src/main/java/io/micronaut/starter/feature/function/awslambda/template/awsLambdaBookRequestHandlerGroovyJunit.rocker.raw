@@ -1,0 +1,39 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+public class BookRequestHandlerTest {
+
+    private static BookMicronautRequestHandler bookMicronautRequestHandler;
+
+    @@BeforeAll
+    public static void setupServer() {
+        bookMicronautRequestHandler = new BookMicronautRequestHandler()
+    }
+
+    @@AfterAll
+    public static void stopServer() {
+        bookMicronautRequestHandler?.applicationContext.close()
+    }
+
+    @@Test
+    public void testHandler() {
+        Book book = new Book()
+        book.name = 'Building Microservices'
+        BookSaved bookSaved = bookMicronautRequestHandler.execute(book)
+        assertEquals(bookSaved.name, book.name);
+        assertNotNull(bookSaved.isbn);
+    }
+}

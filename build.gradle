@@ -9,6 +9,9 @@ buildscript {
         classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
         classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
+        classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
+        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
+        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
     }
 }
 
@@ -25,6 +28,7 @@ version project.projectVersion
 subprojects { Project subproject ->
     repositories {
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
 
     version project.projectVersion
@@ -34,15 +38,21 @@ subprojects { Project subproject ->
     }
 
     apply plugin:"groovy"
-    apply plugin:"java-library"
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
 
+    if (subproject.hasProperty("publish") && subproject.publish) {
+        apply plugin:"java-library"
+        apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
+        bintray.publish = true
+    } else {
+        apply plugin: "java"
+    }
+
+
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-
-    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
 
     jar {
         manifest {
@@ -51,8 +61,6 @@ subprojects { Project subproject ->
             attributes('Implementation-Title': title)
         }
     }
-
-    bintray.publish = true
 
     tasks.withType(Test) {
         useJUnitPlatform()
@@ -74,12 +82,8 @@ subprojects { Project subproject ->
 
     dependencies {
         annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-        api platform("io.micronaut:micronaut-bom:$micronautVersion")
         implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-
         annotationProcessor "io.micronaut:micronaut-inject-java"
-        api "io.micronaut:micronaut-inject"
-
         testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
         testAnnotationProcessor "io.micronaut:micronaut-inject-java"
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
@@ -114,7 +118,36 @@ subprojects { Project subproject ->
 
 }
 
+apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
 
+Project starterCli = project('starter-cli')
 
+starterCli.afterEvaluate {
+    task generateManpageAsciiDoc(type: JavaExec) {
+        dependsOn(starterCli.tasks.getByName('classes'))
+        group = "Documentation"
+        description = "Generate AsciiDoc manpage"
+        classpath(starterCli.configurations.compile, starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
+        main 'picocli.codegen.docgen.manpage.ManPageGenerator'
+        args starterCli.mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
+    }
 
+    task copyManPages(type: Copy) {
+        dependsOn(generateManpageAsciiDoc)
+        group = "Documentation"
+        from file("${project.buildDir}/generated-picocli-docs")
+        include "**/*.adoc"
+        into file("${rootProject.buildDir.absolutePath}/generated/")
+        filter { String line ->
+            if (line == ':doctype: manpage' || line.startsWith('= ')) {
+                return ""
+            } else if (line.startsWith('==')) {
+                return '=' + line
+            } else {
+                return line
+            }
+        }
+    }
 
+    publishGuide.dependsOn(copyManPages)
+}

@@ -1,0 +1,3 @@
+@args(String groupId, String artifactId, String scope, String version)
+
+@(scope)("@groupId:@artifactId@(version != null ? ":" + version : "")")

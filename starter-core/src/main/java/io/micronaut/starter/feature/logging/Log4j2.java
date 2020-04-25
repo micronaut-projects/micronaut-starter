@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.logging;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.logging.template.log4j2;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -30,12 +31,22 @@ public class Log4j2 implements LoggingFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Log4j2 Logging";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds Log4j2 Logging";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(commandContext.getProject())));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(generatorContext.getProject())));
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

@@ -17,15 +17,56 @@ package io.micronaut.starter.options;
 
 import io.micronaut.starter.feature.Feature;
 
-import java.util.List;
-import java.util.Optional;
+import javax.annotation.Nonnull;
+import java.util.*;
 
 public enum Language {
-    java,
-    groovy,
-    kotlin;
+    JAVA("java"),
+    GROOVY("groovy"),
+    KOTLIN("kt");
 
-    public static Language infer(List<Feature> features) {
+    private final String extension;
+
+    Language(String extension) {
+        this.extension = extension;
+    }
+
+    /**
+     * @return The extensions
+     */
+    public String getExtension() {
+        return extension;
+    }
+
+    public static String[] extensions() {
+        return Arrays.stream(values()).map(Language::getExtension).toArray(String[]::new);
+    }
+
+    public static String[] srcDirs() {
+        return Arrays.stream(values()).map(Language::getSrcDir).toArray(String[]::new);
+    }
+
+    public static String[] testSrcDirs() {
+        return Arrays.stream(values()).map(Language::getTestSrcDir).toArray(String[]::new);
+    }
+
+    public String getSrcDir() {
+        return "src/main/" + getName();
+    }
+
+    public String getTestSrcDir() {
+        return "src/test/" + getName();
+    }
+
+    public String getSourcePath(String path) {
+        return getSrcDir() + path + "." + getExtension();
+    }
+
+    public String getTestSourcePath(String path) {
+        return getTestSrcDir() + path + "." + getExtension();
+    }
+
+    public static Language infer(Set<Feature> features) {
         return features.stream()
                 .map(Feature::getRequiredLanguage)
                 .filter(Optional::isPresent)
@@ -33,4 +74,15 @@ public enum Language {
                 .map(Optional::get)
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Nonnull
+    public String getName() {
+        return name().toLowerCase(Locale.ENGLISH);
+    }
+
 }

@@ -1,0 +1,50 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
+
+plugins {
+    id "com.github.johnrengelman.shadow"
+    id "application"
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (it.requested.group == 'io.micronaut.aws') {
+            it.useVersion("2.0.0.M1")
+        }
+        if (it.requested.group == 'io.micronaut') {
+            it.useVersion(micronautVersion)
+        }
+    }
+}
+
+dependencies {
+    implementation project(":starter-api")
+    implementation "io.micronaut:micronaut-inject"
+
+    implementation("io.micronaut.aws:micronaut-function-aws-api-proxy") {
+        exclude group: 'com.fasterxml.jackson.module', module:'jackson-module-afterburner'
+    }
+
+    implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime") {
+        exclude group: "org.slf4j"
+    }
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testImplementation "io.micronaut.test:micronaut-test-spock"
+}
+// use JUnit 5 platform
+test {
+    useJUnitPlatform()
+}
+
+mainClassName = "io.micronaut.starter.lambda.CustomMicronautLambdaRuntime"
+
+shadowJar {
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'io.micronaut.starter.lambda.CustomMicronautLambdaRuntime'
+    }
+    transform(Log4j2PluginsCacheFileTransformer)
+}
+
+

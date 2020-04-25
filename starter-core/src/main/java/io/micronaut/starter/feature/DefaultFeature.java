@@ -15,14 +15,36 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.ApplicationType;
 
-import java.util.List;
+import java.util.Set;
 
+/**
+ * A default feature is one that should be applied to a
+ * project conditionally without being explicitly selected.
+ * If a feature must be chosen by the user in order to be applied,
+ * then the feature is not a default feature.
+ *
+ * @author James Kleeh
+ * @since 2.0.0
+ */
 public interface DefaultFeature extends Feature {
 
-    boolean shouldApply(MicronautCommand micronautCommand,
+    /**
+     * Determines if the feature should be applied to the project.
+     *
+     * Default features do not need to be concerned if the feature was already
+     * selected and therefore is already in the list of selected features. The
+     * addition to the set is based on the identity of the feature instance and
+     * all features are singletons.
+     *
+     * @param applicationType  The application type
+     * @param options          The options
+     * @param selectedFeatures The features manually selected by the user
+     * @return True if the feature should apply
+     */
+    boolean shouldApply(ApplicationType applicationType,
                         Options options,
-                        List<Feature> selectedFeatures);
+                        Set<Feature> selectedFeatures);
 }

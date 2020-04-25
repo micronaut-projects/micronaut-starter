@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.elasticsearch;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -29,13 +30,23 @@ public class Elasticsearch implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Elasticsearch Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Elasticsearch in the application";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("elasticsearch.httpHosts", "\"http://localhost:9200,http://127.0.0.2:9200\"");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("elasticsearch.httpHosts", "\"http://localhost:9200,http://127.0.0.2:9200\"");
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

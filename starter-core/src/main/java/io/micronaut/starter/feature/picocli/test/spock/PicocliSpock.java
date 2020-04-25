@@ -15,16 +15,17 @@
  */
 package io.micronaut.starter.feature.picocli.test.spock;
 
-import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class PicocliSpock implements Feature {
+public class PicocliSpock implements PicocliTestFeature {
 
     @Override
     public String getName() {
@@ -32,21 +33,23 @@ public class PicocliSpock implements Feature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("picocliSpock", getTemplate(commandContext.getProject()));
+    public void doApply(GeneratorContext generatorContext) {
+        generatorContext.removeTemplate("testDir");
+        generatorContext.addTemplate("picocliSpock", getTemplate(generatorContext.getProject()));
+    }
+
+    @Override
+    public TestFramework getTestFramework() {
+        return TestFramework.SPOCK;
+    }
+
+    @Override
+    public Language getDefaultLanguage() {
+        return Language.GROOVY;
     }
 
     public RockerTemplate getTemplate(Project project) {
-        return new RockerTemplate("src/test/groovy/{packagePath}/{className}CommandSpec.groovy", picocliSpockTest.template(project));
+        return new RockerTemplate(getTestFramework().getSourcePath("/{packagePath}/{className}Command", Language.GROOVY), picocliSpockTest.template(project));
     }
 
-    @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
-    }
-
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
 }

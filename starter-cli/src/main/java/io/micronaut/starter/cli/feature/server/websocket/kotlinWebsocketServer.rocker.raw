@@ -1,0 +1,31 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.websocket.WebSocketBroadcaster
+import io.micronaut.websocket.WebSocketSession
+import io.micronaut.websocket.annotation.*
+
+@@ServerWebSocket("/@project.getPropertyName()/{topic}")
+class @project.getClassName()Server(private val broadcaster: WebSocketBroadcaster) {
+
+    @@OnOpen
+    fun onOpen() {
+    }
+
+    @@OnMessage
+    fun onMessage() {
+    }
+
+    @@OnClose
+    fun onClose() {
+    }
+
+}

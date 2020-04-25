@@ -1,14 +1,14 @@
 package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.OutputHandler
-import io.micronaut.starter.command.CreateAppCommand
-import io.micronaut.starter.command.CreateCliCommand
-import io.micronaut.starter.command.CreateCommand
-import io.micronaut.starter.command.CreateGrpcCommand
+import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.NameUtils
 
 trait CommandFixture {
 
@@ -16,43 +16,44 @@ trait CommandFixture {
 
     abstract File getDir()
 
-    CreateCliCommand runCreateCliCommand(Language lang, BuildTool buildTool = BuildTool.gradle, List <String> features = []) {
-        CreateCliCommand command = beanContext.getBean(CreateCliCommand)
-        command.name = 'example.micronaut.foo'
-        command.lang = lang
-        command.build = buildTool
-        command.features = features
-
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        command
+    void generateCliProject(Options options, List<String> features = []) {
+        beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
+                NameUtils.parse("example.micronaut.foo"),
+                options,
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
     }
 
-    CreateAppCommand runCreateAppCommand(Language lang, BuildTool buildTool = BuildTool.gradle, List <String> features = []) {
-        CreateAppCommand command = beanContext.getBean(CreateAppCommand)
-        command.name = 'example.micronaut.foo'
-        command.lang = lang
-        command.build = buildTool
-        command.features = features
-
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        command
+    void generateDefaultProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
+        beanContext.getBean(ProjectGenerator).generate(ApplicationType.DEFAULT,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, null, buildTool),
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
     }
 
-    CreateGrpcCommand runCreateGrpcCommand(Language lang, BuildTool buildTool = BuildTool.gradle, List <String> features = []) {
-        CreateGrpcCommand command = beanContext.getBean(CreateGrpcCommand)
-        command.name = 'example.micronaut.foo'
-        command.lang = lang
-        command.build = buildTool
-        command.features = features
+    void generateGrpcProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
+        beanContext.getBean(ProjectGenerator).generate(ApplicationType.GRPC,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, null, buildTool),
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
 
-        OutputHandler outputHandler = new FileSystemOutputHandler(dir, command)
-        command.generate(outputHandler)
-
-        command
+    void generateMessagingProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
+        beanContext.getBean(ProjectGenerator).generate(ApplicationType.MESSAGING,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, null, buildTool, Collections.emptyMap()),
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
     }
 
 }

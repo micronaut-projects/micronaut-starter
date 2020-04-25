@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.build.maven;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -28,7 +28,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Maven implements BuildFeature {
@@ -43,27 +43,27 @@ public class Maven implements BuildFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        commandContext.addTemplate("mavenWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource("maven/" + WRAPPER_JAR)));
-        commandContext.addTemplate("mavenWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
-        commandContext.addTemplate("mavenWrapperDownloader", new URLTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
-        commandContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
-        commandContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
+        generatorContext.addTemplate("mavenWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource("maven/" + WRAPPER_JAR)));
+        generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
+        generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
+        generatorContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
+        generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
 
-        commandContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
-                commandContext.getProject(),
-                commandContext.getFeatures(),
-                commandContext.getBuildProperties().getProperties()
+        generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                generatorContext.getBuildProperties().getProperties()
         )));
-        commandContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
+        generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand,
+    public boolean shouldApply(ApplicationType applicationType,
                                Options options,
-                               List<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.maven;
+                               Set<Feature> selectedFeatures) {
+        return options.getBuildTool() == BuildTool.MAVEN;
     }
 }

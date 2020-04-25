@@ -1,0 +1,20 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+Project project,
+BuildTool buildTool,
+Features features
+)
+#!/bin/sh
+set -euo pipefail
+@if (features.contains("graalvm")) {
+./@project.getName() -Xmx128m -Djava.library.path=$(pwd)
+} else {
+@if (buildTool.equals(BuildTool.GRADLE)) {
+java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.application().mainClassName(project,features)
+} else {
+java -XX:TieredStopAtLevel=1 -noverify -cp @(project.getName()).jar @features.application().mainClassName(project,features)
+}
+}

@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.lang;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.test.TestFeature;
 
 public interface LanguageFeature extends DefaultFeature {
 
@@ -25,10 +25,6 @@ public interface LanguageFeature extends DefaultFeature {
     default boolean isVisible() {
         return false;
     }
-
-    String getVersion();
-
-    TestFeature getDefaultTestFeature();
 
     @Override
     default int getOrder() {
@@ -45,5 +41,10 @@ public interface LanguageFeature extends DefaultFeature {
 
     default boolean isKotlin() {
         return false;
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

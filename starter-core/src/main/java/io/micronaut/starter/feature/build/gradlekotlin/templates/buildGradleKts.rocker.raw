@@ -1,7 +1,8 @@
 @import io.micronaut.starter.options.TestFramework
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.feature.build.gradle.templates.dependency
 
 @args (
 Project project,
@@ -186,7 +187,7 @@ dependencies {
 @io.micronaut.starter.feature.build.gradlekotlin.templates.testFrameworks.template(features.language(), features.testFramework())
 }
 
-val mainClass = "@features.application().mainClassName(project)"
+val mainClass = "@features.application().mainClassName(project, features)"
 
 tasks {
 @if (features.language().isJava()) {

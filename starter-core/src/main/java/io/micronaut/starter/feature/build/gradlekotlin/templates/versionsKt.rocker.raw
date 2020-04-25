@@ -1,4 +1,4 @@
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
 
@@ -7,10 +7,10 @@ Project project,
 Features features
 )
 
-const val jvmVersion = "@VersionInfo.getJdkVersion()"
+const val jvmVersion = "@VersionInfo.getJavaVersion()"
 const val micronautVersion = "1.3.4"
 @if (features.language().isKotlin()) {
-const val kotlinVersion = "@features.language().getVersion()"
+const val kotlinVersion = "1.3.72"
 const val jacksonKtModuleVersion = "2.9.8"
 }
 @if (features.contains("log4j2")) {

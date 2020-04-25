@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
-import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -26,7 +28,10 @@ import javax.inject.Singleton;
 public class JavaApplication implements JavaApplicationFeature {
 
     @Override
-    public String mainClassName(Project project) {
+    public String mainClassName(Project project, Features features) {
+        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
+            return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
+        }
         return project.getPackageName() + ".Application";
     }
 
@@ -36,16 +41,25 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP || command == MicronautCommand.CREATE_GRPC;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        JavaApplicationFeature.super.apply(commandContext);
+    public void apply(GeneratorContext generatorContext) {
+        JavaApplicationFeature.super.apply(generatorContext);
 
-        commandContext.addTemplate("application", new RockerTemplate(getPath(),
-                application.template(commandContext.getProject(), commandContext.getFeatures())));
+        if (shouldGenerateApplicationFile(generatorContext)) {
+            generatorContext.addTemplate("application", new RockerTemplate(getPath(),
+                    application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+        }
+    }
+
+    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
+            return false;
+        }
+        return !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {

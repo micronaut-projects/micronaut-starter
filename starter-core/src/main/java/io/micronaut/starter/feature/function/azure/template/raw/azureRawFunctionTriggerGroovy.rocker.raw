@@ -1,0 +1,26 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.microsoft.azure.functions.annotation.*
+import com.microsoft.azure.functions.*
+import io.micronaut.azure.function.AzureFunction
+
+/**
+ * Azure Functions with HTTP Trigger.
+ */
+class Function extends AzureFunction {
+    String echo(
+        @@HttpTrigger(name = "req", methods = HttpMethod.POST, authLevel = AuthorizationLevel.ANONYMOUS)
+        String req,
+        ExecutionContext context) {
+        context?.getLogger()?.info("Executing Function: ${getClass().getName()}");
+        return String.format(req)
+    }
+}

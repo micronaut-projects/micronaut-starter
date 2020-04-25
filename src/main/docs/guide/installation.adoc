@@ -1,0 +1,110 @@
+The best way to install Micronaut on Unix systems is with http://sdkman.io/[SDKMAN] which greatly simplifies installing
+and managing multiple Micronaut versions.
+
+=== Install with SDKMAN
+
+Before updating make sure you have latest version of SDKMAN installed. If not, run
+
+[source,bash]
+----
+$ sdk update
+----
+
+In order to install Micronaut, run following command:
+
+[source,bash]
+----
+$ sdk install micronaut
+----
+
+You can also specify the version to the `sdk install` command.
+
+[source,bash,subs="attributes"]
+----
+$ sdk install micronaut {project-version}
+----
+
+You can find more information about SDKMAN usage on the http://sdkman.io/usage[SDKMAN Docs]
+
+You should now be able to run the Micronaut CLI.
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----
+
+=== Install with Homebrew
+
+Before installing make sure you have latest Homebrew updates.
+
+[source,bash]
+----
+$ brew update
+----
+
+In order to install Micronaut, run following command:
+
+[source,bash]
+----
+$ brew install micronaut
+----
+
+You can find more information about Homebrew usage on their https://brew.sh/[homepage].
+
+You should now be able to run the Micronaut CLI.
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----
+
+=== Install with MacPorts
+
+Before installing it is recommended to sync the latest Portfiles.
+
+[source,bash]
+----
+$ sudo port sync
+----
+
+In order to install Micronaut, run following command:
+
+[source,bash]
+----
+$ sudo port install micronaut
+----
+
+You can find more information about MacPorts usage on their https://www.macports.org[homepage].
+
+You should now be able to run the Micronaut CLI.
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----
+
+=== Install through Binary on Windows
+
+* Download the latest binary from http://micronaut.io/download.html[Micronaut Website]
+* Extract the binary to appropriate location (For example: `C:\micronaut`)
+* Create an environment variable `MICRONAUT_HOME` which points to the installation directory i.e. `C:\micronaut`
+* Update the `PATH` environment variable, append `%MICRONAUT_HOME%\bin`.
+
+You should now be able to run the Micronaut CLI from the command prompt as follows:
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----

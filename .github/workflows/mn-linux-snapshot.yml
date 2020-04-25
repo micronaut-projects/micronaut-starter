@@ -1,0 +1,33 @@
+name: Linux Native CLI
+on: [push, pull_request]
+jobs:
+  build:
+    name: Builds Linux Native CLI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Install GraalVM
+        env:
+          GRAAL_VERSION: 20.0.0
+          GRAAL_OS: linux-amd64
+        run: ./install-graal.sh
+      - name: Install Native Image
+        run: ./graalvm/bin/gu install native-image
+      - name: Build the JAR
+        env:
+          JAVA_HOME: ./graalvm
+        run: ./gradlew clean starter-cli:shadowJar --no-daemon
+      - name: Build Native Image
+        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/starter-cli-*-all.jar
+      - name: Verify Build
+        run: ./mn --version
+      - name: Verify Create App
+        run: ./mn create-app test
+      - name: Upload Snapshot
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v1
+        with:
+          name: mn-linux-amd64-snapshot
+          path: mn
+

@@ -1,0 +1,20 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import javax.inject.Singleton
+import io.micronaut.scheduling.annotation.Scheduled
+
+@@Singleton
+class @project.getClassName() {
+
+    @@Scheduled(fixedRate = "5m")
+    void process() {}
+}

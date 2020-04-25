@@ -18,9 +18,55 @@ To run the tests use `./gradlew check`.
 
 ## Working on the code base
 
+### Running the CLI
+
 To generate a project execute `./gradlew run --args=""` where the args are what would be after `mn` using the CLI. For example: `./gradlew run --args="create-app temp"`. 
 
 If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew assemble` and then `java -jar starter-core/build/libs/starter-core-1.0.0.BUILD-SNAPSHOT.jar create-app temp`
+
+### Default Feature Logic
+
+Avoid having complex logic to determine if a default feature should be applied. If, for example, a default feature should not apply if feature x is chosen, the default feature should not add logic to assert it should not apply if feature x is chosen. Instead, feature x should exclude the default feature.
+
+### Feature Ownership
+
+A given feature owns its templates. Any modifications that need to be made to those templates based on the existence of another feature should be the responsibility of the feature owning the template. Avoid adding arbitrary entry points for content in templates for other features to use.
+
+### View Logic
+
+The view layer should have the least amount of logic possible. The feature classes are where all logic should be, and the view layer should almost exclusively only check for the existence of a feature. This usually means creating additional features that are invisible to the user. Those additional features can then be checked for in other templates.
+
+### Style Considerations
+
+#### Avoid Empty Else
+
+In order to preserve functionality for future additions, avoid a default else statement.
+
+Do this:
+
+```
+if (language == Language.JAVA) {
+
+} else if (language == Language.GROOVY) {
+
+} else if (langauge == Language.KOTLIN) {
+    //add support for kotlin
+}
+```
+
+Don't do this:
+
+```
+if (language == Language.JAVA) {
+
+} else if (language == Language.GROOVY) {
+
+} else {
+    //add support for kotlin
+}
+```
+
+With the above example, when support is added for another language then the Kotlin related functionality would be applied to the new language, which of course is undesirable.
 
 ## Creating a pull request
 

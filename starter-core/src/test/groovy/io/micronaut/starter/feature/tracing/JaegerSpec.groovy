@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.tracing
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class JaegerSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class JaegerSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle tracing-jaeger feature for language=#language'() {
@@ -24,11 +15,11 @@ class JaegerSpec extends Specification implements ProjectFixture, ContextFixture
         String template = buildGradle.template(buildProject(), getFeatures(['tracing-jaeger'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut:micronaut-tracing"')
-        template.contains('runtimeOnly "io.jaegertracing:jaeger-thrift"')
+        template.contains('implementation("io.micronaut:micronaut-tracing")')
+        template.contains('runtimeOnly("io.jaegertracing:jaeger-thrift")')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -53,12 +44,12 @@ class JaegerSpec extends Specification implements ProjectFixture, ContextFixture
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     void 'test tracing-jaeger configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['tracing-jaeger'])
+        GeneratorContext commandContext = buildGeneratorContext(['tracing-jaeger'])
 
         then:
         commandContext.configuration.get('tracing.jaeger.enabled'.toString()) == true

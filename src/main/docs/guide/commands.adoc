@@ -1,0 +1,21 @@
+include::{includedir}/mn.adoc[]
+
+== create-app
+
+include::{includedir}/mn-create-app.adoc[]
+
+== create-cli-app
+
+include::{includedir}/mn-create-cli-app.adoc[]
+
+== create-function-app
+
+include::{includedir}/mn-create-function-app.adoc[]
+
+== create-grpc-app
+
+include::{includedir}/mn-create-grpc-app.adoc[]
+
+== create-messaging-app
+
+include::{includedir}/mn-create-messaging-app.adoc[]

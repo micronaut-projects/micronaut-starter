@@ -15,33 +15,28 @@
  */
 package io.micronaut.starter.feature.grpc;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.grpc.template.proto;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Grpc implements DefaultFeature {
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return micronautCommand == MicronautCommand.CREATE_GRPC;
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.GRPC;
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_GRPC;
-    }
-
-    @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(commandContext.getProject())));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
     }
 
     @Override
@@ -52,5 +47,10 @@ public class Grpc implements DefaultFeature {
     @Override
     public boolean isVisible() {
         return false;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

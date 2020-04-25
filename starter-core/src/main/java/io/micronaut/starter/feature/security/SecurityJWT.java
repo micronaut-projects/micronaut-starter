@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.security;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -29,15 +30,24 @@ public class SecurityJWT implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Security JWT";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for JWT (JSON Web Token) based Authentication";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        commandContext.getConfiguration().put("micronaut.security.endpoints.oauth.enabled", true);
-        commandContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.endpoints.oauth.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

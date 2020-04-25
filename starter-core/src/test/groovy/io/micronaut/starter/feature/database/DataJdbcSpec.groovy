@@ -1,19 +1,12 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class DataJdbcSpec extends BeanContextSpec {
 
     void "test data jdbc features"() {
         when:
@@ -31,10 +24,10 @@ class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixtu
         String template = buildGradle.template(buildProject(), getFeatures(["data-jdbc"])).render().toString()
 
         then:
-        template.contains("annotationProcessor \"io.micronaut.data:micronaut-data-processor\"")
-        template.contains("implementation \"io.micronaut.data:micronaut-data-jdbc\"")
-        template.contains("implementation \"io.micronaut.configuration:micronaut-jdbc-tomcat\"")
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
+        template.contains('implementation("io.micronaut.data:micronaut-data-jdbc")')
+        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")')
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for maven"() {
@@ -83,7 +76,7 @@ class DataJdbcSpec extends Specification implements ProjectFixture, ContextFixtu
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['data-jdbc'])
+        GeneratorContext ctx = buildGeneratorContext(['data-jdbc'])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")

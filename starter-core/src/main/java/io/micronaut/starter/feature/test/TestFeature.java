@@ -15,18 +15,18 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.Options;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 
-import java.util.List;
+import java.util.Set;
 
 public interface TestFeature extends DefaultFeature {
 
@@ -41,38 +41,43 @@ public interface TestFeature extends DefaultFeature {
     }
 
     @Override
-    default void apply(CommandContext commandContext) {
-        if (commandContext.getBuildTool() == BuildTool.maven) {
-            BuildProperties props = commandContext.getBuildProperties();
+    default void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            BuildProperties props = generatorContext.getBuildProperties();
             props.put("maven-surefire-plugin.version", "2.22.2");
             props.put("maven-failsafe-plugin.version", "2.22.2");
         }
-        doApply(commandContext);
+        doApply(generatorContext);
     }
 
-    void doApply(CommandContext commandContext);
+    void doApply(GeneratorContext generatorContext);
 
     TestFramework getTestFramework();
 
     Language getDefaultLanguage();
 
     default boolean isJunit() {
-        return getTestFramework() == TestFramework.junit;
+        return getTestFramework() == TestFramework.JUNIT;
     }
 
     default boolean isSpock() {
-        return getTestFramework() == TestFramework.spock;
+        return getTestFramework() == TestFramework.SPOCK;
     }
 
     default boolean isKotlinTest() {
-        return getTestFramework() == TestFramework.kotlintest;
+        return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
     @Override
-    default boolean shouldApply(MicronautCommand micronautCommand,
+    default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
-                                List<Feature> selectedFeatures) {
-        return options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage());
+                                Set<Feature> selectedFeatures) {
+        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
+                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }

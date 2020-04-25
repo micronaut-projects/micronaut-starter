@@ -15,31 +15,27 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.ConsoleOutput;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.*;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.test.TestFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 public class FeatureContext {
 
-    private final MicronautCommand command;
-    private final List<Feature> selectedFeatures;
+    private final ApplicationType command;
+    private final Set<Feature> selectedFeatures;
     private final Options options;
     private final List<Feature> features = new ArrayList<>();
-    private List<FeaturePredicate> exclusions = new ArrayList<>();
+    private final List<FeaturePredicate> exclusions = new ArrayList<>();
     private ListIterator<Feature> iterator;
 
     public FeatureContext(Options options,
-                          MicronautCommand command,
-                          List<Feature> selectedFeatures) {
+                          ApplicationType command,
+                          Set<Feature> selectedFeatures) {
         this.command = command;
         this.selectedFeatures = selectedFeatures;
         if (options.getTestFramework() == null) {
@@ -49,7 +45,7 @@ public class FeatureContext {
                     .map(TestFeature::getTestFramework)
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
-            options = new Options(options.getLanguage(), testFramework, options.getBuildTool());
+            options = options.withTestFramework(testFramework);
         }
         this.options = options;
     }
@@ -69,7 +65,7 @@ public class FeatureContext {
         exclusions.add(exclusion);
     }
 
-    public List<Feature> getFinalFeatures(ConsoleOutput consoleOutput) {
+    public Set<Feature> getFinalFeatures(ConsoleOutput consoleOutput) {
         return features.stream().filter(feature -> {
             for (FeaturePredicate predicate: exclusions) {
                 if (predicate.test(feature)) {
@@ -78,7 +74,7 @@ public class FeatureContext {
                 }
             }
             return true;
-        }).collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        }).collect(collectingAndThen(toSet(), Collections::unmodifiableSet));
     }
 
     public List<Feature> getFeatures() {
@@ -97,6 +93,10 @@ public class FeatureContext {
         return options.getBuildTool();
     }
 
+    public JdkVersion getJavaVersion() {
+        return options.getJavaVersion();
+    }
+
     public Options getOptions() {
         return options;
     }
@@ -105,6 +105,11 @@ public class FeatureContext {
         return features.stream().anyMatch(feature -> feature instanceof ApplicationFeature);
     }
 
+    /**
+     * Adds a feature to be applied. The added feature is processed immediately.
+     *
+     * @param feature The feature to add
+     */
     public void addFeature(Feature feature) {
         if (iterator != null) {
             iterator.add(feature);
@@ -114,7 +119,7 @@ public class FeatureContext {
         feature.processSelectedFeatures(this);
     }
 
-    public MicronautCommand getCommand() {
+    public ApplicationType getApplicationType() {
         return command;
     }
 

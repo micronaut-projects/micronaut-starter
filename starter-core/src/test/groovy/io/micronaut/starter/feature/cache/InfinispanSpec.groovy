@@ -1,22 +1,13 @@
 package io.micronaut.starter.feature.cache
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
-class InfinispanSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class InfinispanSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle cache-infinispan feature for language=#language'() {
@@ -24,10 +15,10 @@ class InfinispanSpec extends Specification implements ProjectFixture, ContextFix
         String template = buildGradle.template(buildProject(), getFeatures(['cache-infinispan'], language)).render().toString()
 
         then:
-        template.contains('implementation "io.micronaut.cache:micronaut-cache-infinispan"')
+        template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     @Unroll
@@ -45,12 +36,12 @@ class InfinispanSpec extends Specification implements ProjectFixture, ContextFix
 """)
 
         where:
-        language << [Language.java, Language.kotlin, Language.groovy]
+        language << Language.values().toList()
     }
 
     void 'test cache-infinispan configuration'() {
         when:
-        CommandContext commandContext = buildCommandContext(['cache-infinispan'])
+        GeneratorContext commandContext = buildGeneratorContext(['cache-infinispan'])
 
         then:
         commandContext.configuration.get('infinispan.client.hotrod.server.host'.toString()) == 'infinispan.example.com'

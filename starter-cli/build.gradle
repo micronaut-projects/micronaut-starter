@@ -1,0 +1,144 @@
+import io.micronaut.starter.cli.MicronautCreateStartScripts
+
+plugins {
+    id "application"
+    id "com.github.johnrengelman.shadow"
+    id "io.micronaut.starter.rocker"
+    id 'org.asciidoctor.convert' version '1.6.1' apply false
+    id "io.sdkman.vendors" version "1.2.1"
+}
+
+ext {
+    picocliVersion = '4.2.0'
+}
+
+configurations {
+    generateConfig
+}
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-graal")
+    api project(":starter-core")
+    api "info.picocli:picocli:${picocliVersion}"
+    api "info.picocli:picocli-shell-jline3:${picocliVersion}"
+    api "com.fizzed:rocker-runtime:1.2.3"
+    api "io.github.java-diff-utils:java-diff-utils:4.5"
+
+    runtime "org.slf4j:slf4j-nop:1.7.30"
+
+    compileOnly "org.graalvm.nativeimage:svm"
+
+    implementation "org.fusesource.jansi:jansi:1.15"
+    implementation "org.yaml:snakeyaml:1.26"
+
+    generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
+}
+
+mainClassName = "io.micronaut.starter.cli.MicronautStarter"
+
+sourceSets {
+    main {
+        rocker {
+            srcDir("src/main/java")
+        }
+    }
+}
+
+rocker {
+    // (All settings are shown with their defaults)
+    //
+    // Skips building templates all together
+    skip false
+    // Base directory for generated java sources, actual target is sub directory
+    // with the name of the source set. The value is passed through project.file().
+    outputBaseDirectory = "$buildDir/generated-src/rocker"
+    // Base directory for the directory where the hot reload feature
+    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
+    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
+    // The actual target is a sub directory with the name of the source set.
+    // The value is passed through project.file().
+    classBaseDirectory = "$buildDir/classes"
+    failOnError true
+    skipTouch true
+    // must not be empty when skipTouch is equal to false
+    touchFile ""
+    javaVersion '1.8'
+    extendsClass null
+    extendsModelClass null
+    optimize null
+    discardLogicWhitespace = true
+    targetCharset null
+    suffixRegex null
+    postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
+    markAsGenerated null
+}
+
+File outDir = new File(project.buildDir, 'bin')
+
+task buildCompletion(type: JavaExec) {
+    doFirst {
+        outDir.mkdir()
+    }
+    main = "picocli.AutoComplete"
+    jvmArgs = ["-Dpicocli.autocomplete.systemExitOnError"]
+    args = [mainClassName, "--completionScript=${outDir}/mn_completion", "--force", "--factory=io.micronaut.starter.cli.MicronautFactory"]
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task createStartScripts(type: MicronautCreateStartScripts) {
+    description = "Creates OS specific scripts to run the Micronaut CLI."
+    mainClassName = 'io.micronaut.starter.cli.MicronautStarter'
+    applicationName = 'mn'
+    defaultJvmOpts = ["-XX:+TieredCompilation", "-XX:TieredStopAtLevel=1", "-XX:CICompilerCount=3"]
+    outputDir = outDir
+    classpath = configurations.runtime
+    outputs.dir outDir
+    doLast {
+        ant.chmod(file: new File(outDir, 'mn'), perm: 'ugo+rx')
+    }
+    dependsOn(buildCompletion)
+}
+
+configurations.all {
+    resolutionStrategy {
+        // prevent fatJar result containing multiple versions of picocli
+        force("info.picocli:picocli:$picocliVersion")
+    }
+}
+
+shadowJar {
+    mergeServiceFiles()
+    dependsOn(['createStartScripts'])
+}
+
+task cliZip(type: Zip, dependsOn: ['shadowJar']) {
+    archiveFileName = "micronaut-cli-${project.version}.zip"
+    into("micronaut-cli-${project.version}") {
+        from('build/bin') {
+            into('bin')
+        }
+        from('../media') {
+            into('media')
+        }
+        from shadowJar.outputs.files
+        from('../LICENSE')
+    }
+}
+
+assemble.dependsOn('cliZip')
+
+sdkman {
+    api = "https://vendors.sdkman.io"
+    consumerKey = System.getenv("GVM_SDKVENDOR_KEY") ?: project.hasProperty("gvmSdkvendorKey") ? project.gvmSdkvendorKey : ''
+    consumerToken = System.getenv("GVM_SDKVENDOR_TOKEN") ?: project.hasProperty("gvmSdkvendorToken") ? project.gvmSdkvendorToken : ''
+    candidate = "micronaut"
+    version = project.version
+    url = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/micronaut-cli-${project.version}.zip"
+    hashtag = "#micronautfw"
+}
+
+task copyShadowJar(type: Copy) {
+    from shadowJar.outputs
+    into "${project.rootProject.buildDir}/libs"
+    rename { String fileName -> "cli.jar" }
+}

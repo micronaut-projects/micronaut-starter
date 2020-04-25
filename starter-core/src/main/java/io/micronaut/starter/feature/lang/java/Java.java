@@ -15,31 +15,24 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
-import io.micronaut.starter.feature.test.Junit;
-import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Java implements LanguageFeature {
 
-    private final String version;
-    private final Junit junit;
     private final List<JavaApplicationFeature> applicationFeatures;
 
-    public Java(List<JavaApplicationFeature> applicationFeatures,
-                Junit junit) {
+    public Java(List<JavaApplicationFeature> applicationFeatures) {
         this.applicationFeatures = applicationFeatures;
-        this.junit = junit;
-        this.version = VersionInfo.getJdkVersion();
     }
 
     @Override
@@ -48,20 +41,10 @@ public class Java implements LanguageFeature {
     }
 
     @Override
-    public String getVersion() {
-        return version;
-    }
-
-    @Override
-    public TestFeature getDefaultTestFeature() {
-        return junit;
-    }
-
-    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
-                    .filter(f -> f.supports(featureContext.getCommand()))
+                    .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }
@@ -73,7 +56,7 @@ public class Java implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.java;
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.JAVA;
     }
 }

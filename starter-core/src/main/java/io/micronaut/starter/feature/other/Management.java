@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -28,7 +29,17 @@ public class Management implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Micronaut Management";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for management endpoints";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 }

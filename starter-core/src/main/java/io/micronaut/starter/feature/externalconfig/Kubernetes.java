@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.externalconfig;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.externalconfig.template.k8sYaml;
 import io.micronaut.starter.feature.jib.Jib;
@@ -41,6 +42,11 @@ public class Kubernetes implements ExternalConfigFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Kubernetes Distributed Configuration";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Kubernetes";
     }
@@ -56,9 +62,13 @@ public class Kubernetes implements ExternalConfigFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        commandContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(commandContext.getProject())));
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
+        generatorContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(generatorContext.getProject())));
     }
 
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
+    }
 }

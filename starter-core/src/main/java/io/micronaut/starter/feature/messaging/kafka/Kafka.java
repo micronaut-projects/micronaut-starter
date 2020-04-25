@@ -15,29 +15,29 @@
  */
 package io.micronaut.starter.feature.messaging.kafka;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.messaging.Platform;
+import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 @Singleton
-public class Kafka implements DefaultFeature {
+public class Kafka implements DefaultFeature, MessagingFeature {
 
-    @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        Optional<Platform> platform = options.get("platform", Platform.class);
-        return micronautCommand == MicronautCommand.CREATE_MESSAGING && platform.isPresent() && platform.get() == Platform.kafka;
-    }
+    public static final String NAME = "kafka";
 
     @Override
     public String getName() {
-        return "kafka";
+        return NAME;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Kafka Messaging";
     }
 
     @Override
@@ -46,7 +46,13 @@ public class Kafka implements DefaultFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return applicationType == ApplicationType.MESSAGING &&
+                selectedFeatures.stream().noneMatch(feature -> feature instanceof MessagingFeature);
     }
 }

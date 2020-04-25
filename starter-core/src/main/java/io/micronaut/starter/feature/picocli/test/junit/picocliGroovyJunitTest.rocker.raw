@@ -1,4 +1,4 @@
-@import io.micronaut.starter.Project
+@import io.micronaut.starter.application.Project
 
 @args (Project project)
 
@@ -20,13 +20,14 @@ class @project.getClassName()CommandTest {
     void testWithCommandLineOption() throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         System.out = new PrintStream(baos)
+        ApplicationContext ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)
 
-        try (ApplicationContext ctx = ApplicationContext.run(Environment.CLI, Environment.TEST)) {
-            String[] args = ["-v"] as String[]
-            PicocliRunner.run(@project.getClassName()Command, ctx, args)
+        String[] args = ["-v"] as String[]
+        PicocliRunner.run(@project.getClassName()Command, ctx, args)
 
-            // @project.getName()
-            assertTrue(baos.toString().contains("Hi!"))
-        }
+        // @project.getName()
+        assertTrue(baos.toString().contains("Hi!"))
+
+        ctx.close()
     }
 }

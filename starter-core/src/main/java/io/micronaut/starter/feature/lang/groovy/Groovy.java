@@ -15,27 +15,25 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
-import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Groovy implements LanguageFeature {
 
-    private final Spock spock;
     private final List<GroovyApplicationFeature> applicationFeatures;
 
     public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
         this.applicationFeatures = applicationFeatures;
-        this.spock = spock;
     }
 
     @Override
@@ -47,20 +45,10 @@ public class Groovy implements LanguageFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.hasApplicationFeature()) {
             applicationFeatures.stream()
-                    .filter(f -> f.supports(featureContext.getCommand()))
+                    .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }
-    }
-
-    @Override
-    public String getVersion() {
-        return null;
-    }
-
-    @Override
-    public TestFeature getDefaultTestFeature() {
-        return spock;
     }
 
     @Override
@@ -69,7 +57,7 @@ public class Groovy implements LanguageFeature {
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand, Options options, List<Feature> selectedFeatures) {
-        return options.getLanguage() == Language.groovy;
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getLanguage() == Language.GROOVY;
     }
 }

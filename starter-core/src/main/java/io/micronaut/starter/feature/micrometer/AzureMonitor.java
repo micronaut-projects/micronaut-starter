@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -33,14 +34,19 @@ public class AzureMonitor extends MicrometerFeature {
     }
 
     @Override
+    public String getTitle() {
+        return NameUtils.camelCase(getName());
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Azure Monitor reporter)";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
-        commandContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
     }
 }

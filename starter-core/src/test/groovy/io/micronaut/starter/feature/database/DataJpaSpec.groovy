@@ -1,20 +1,13 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.command.CommandContext
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.ContextFixture
-import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.gradlekotlin.templates.buildGradleKts
 import io.micronaut.starter.feature.build.maven.templates.pom
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
 
-class DataJpaSpec extends Specification implements ProjectFixture, ContextFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class DataJpaSpec extends BeanContextSpec {
 
     void "test data jpa features"() {
         when:
@@ -32,10 +25,10 @@ class DataJpaSpec extends Specification implements ProjectFixture, ContextFixtur
         String template = buildGradle.template(buildProject(), getFeatures(["data-jpa"])).render().toString()
 
         then:
-        template.contains("annotationProcessor \"io.micronaut.data:micronaut-data-processor\"")
-        template.contains("implementation \"io.micronaut.data:micronaut-data-jpa\"")
-        template.contains("implementation \"io.micronaut.configuration:micronaut-jdbc-tomcat\"")
-        template.contains("runtimeOnly \"com.h2database:h2\"")
+        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
+        template.contains('implementation("io.micronaut.data:micronaut-data-jpa")')
+        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")')
+        template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
     void "test dependencies are present for gradle-kotlin"() {
@@ -95,7 +88,7 @@ class DataJpaSpec extends Specification implements ProjectFixture, ContextFixtur
 
     void "test config"() {
         when:
-        CommandContext ctx = buildCommandContext(['data-jpa'])
+        GeneratorContext ctx = buildGeneratorContext(['data-jpa'])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")

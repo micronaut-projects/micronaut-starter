@@ -1,0 +1,34 @@
+The subproject `starter-web-cli` provides an implementation that can be run as a Command Line Application (CLI).
+
+=== Building Locally
+
+From the project root:
+
+[source,cmd]
+----
+./gradlew clean starter-cli:assemble
+----
+
+Now you can run the following the start the CLI in interactive mode:
+
+[source,bash,subs="attributes"]
+----
+java -jar starter-cli/build/libs/starter-cli-{version}-all.jar
+----
+
+=== Building a Native Image
+
+Install GraalVM and Native Image. Follow the steps in the previous section to build the CLI and then run:
+
+[source,bash,subs="attributes"]
+----
+native-image --no-server --no-fallback -cp starter-cli/build/libs/starter-cli-{version}-all.jar
+----
+
+This will produce the `mn` executable which you can start with:
+
+[source,cmd]
+----
+./mn
+----
+

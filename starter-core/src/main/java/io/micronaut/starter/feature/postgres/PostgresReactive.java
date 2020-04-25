@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.feature.postgres;
 
-import io.micronaut.starter.command.CommandContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -29,18 +30,28 @@ public class PostgresReactive implements Feature {
     }
 
     @Override
+    public String getTitle() {
+        return "Postgres Reactive Driver";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for the Reactive Postgres driver in the application";
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        commandContext.getConfiguration().put("postgres.reactive.client.port", 5432);
-        commandContext.getConfiguration().put("postgres.reactive.client.host", "localhost");
-        commandContext.getConfiguration().put("postgres.reactive.client.database", commandContext.getProject().getName());
-        commandContext.getConfiguration().put("postgres.reactive.client.database.user", "user");
-        commandContext.getConfiguration().put("postgres.reactive.client.database.password", "password");
-        commandContext.getConfiguration().put("postgres.reactive.client.database.maxSize", 5);
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("postgres.reactive.client.port", 5432);
+        generatorContext.getConfiguration().put("postgres.reactive.client.host", "localhost");
+        generatorContext.getConfiguration().put("postgres.reactive.client.database", generatorContext.getProject().getName());
+        generatorContext.getConfiguration().put("postgres.reactive.client.database.user", "user");
+        generatorContext.getConfiguration().put("postgres.reactive.client.database.password", "password");
+        generatorContext.getConfiguration().put("postgres.reactive.client.database.maxSize", 5);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }

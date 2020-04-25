@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
-import io.micronaut.starter.Options;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -30,7 +30,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
-import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class Gradle implements BuildFeature {
@@ -44,27 +44,27 @@ public class Gradle implements BuildFeature {
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
+    public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        commandContext.addTemplate("gradleWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
-        commandContext.addTemplate("gradleWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
-        commandContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
-        commandContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
+        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
+        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
+        generatorContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
-        commandContext.addTemplate("build", new RockerTemplate("build.gradle", buildGradle.template(
-                commandContext.getProject(),
-                commandContext.getFeatures()
+        generatorContext.addTemplate("build", new RockerTemplate("build.gradle", buildGradle.template(
+                generatorContext.getProject(),
+                generatorContext.getFeatures()
         )));
-        commandContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
-        commandContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(commandContext.getBuildProperties().getProperties())));
-        commandContext.addTemplate("gradleSettings", new RockerTemplate("settings.gradle", settingsGradle.template(commandContext.getProject())));
+        generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
+        generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
+        generatorContext.addTemplate("gradleSettings", new RockerTemplate("settings.gradle", settingsGradle.template(generatorContext.getProject())));
     }
 
     @Override
-    public boolean shouldApply(MicronautCommand micronautCommand,
+    public boolean shouldApply(ApplicationType applicationType,
                                Options options,
-                               List<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.gradle;
+                               Set<Feature> selectedFeatures) {
+        return options.getBuildTool() == BuildTool.GRADLE;
     }
 }

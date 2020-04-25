@@ -1,25 +1,28 @@
 package io.micronaut.starter.feature
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.Options
+import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Specification
 
-class FeatureValidatorSpec extends Specification {
+class FeatureValidatorSpec extends BeanContextSpec {
 
-    @AutoCleanup
-    BeanContext ctx = BeanContext.run()
-
-    FeatureValidator featureValidator = ctx.getBean(FeatureValidator)
+    FeatureValidator featureValidator = beanContext.getBean(FeatureValidator)
 
     void "test feature conflicts with language selection"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
             String name = "test-feature"
-            Optional<Language> requiredLanguage = Optional.of(Language.groovy)
-        }])
+            String description = "test desc"
+            String title = "test title"
+            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)
@@ -28,13 +31,27 @@ class FeatureValidatorSpec extends Specification {
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
             String name = "groovy-feature"
-            Optional<Language> requiredLanguage = Optional.of(Language.groovy)
+            String description = "groovy"
+            String title = "groovy title"
+            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }, new Feature() {
             String name = "kotlin-feature"
-            Optional<Language> requiredLanguage = Optional.of(Language.kotlin)
-        }])
+            String description = "groovy"
+            String title = "groovy title"
+            Optional<Language> requiredLanguage = Optional.of(Language.KOTLIN)
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)
@@ -45,13 +62,27 @@ class FeatureValidatorSpec extends Specification {
 
     void "test one of"() {
         when:
-        featureValidator.validate(new Options(Language.java, null, null), [new OneOfFeature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new OneOfFeature() {
             String name = "a"
+            String description = "groovy"
+            String title = "groovy title"
             Class<?> featureClass = Object.class
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
         }, new OneOfFeature() {
             String name = "b"
+            String description = "groovy"
+            String title = "groovy title"
             Class<?> featureClass = Object.class
-        }])
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
+        }] as Set)
 
         then:
         def ex = thrown(IllegalArgumentException)

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface ServerFeature extends OneOfFeature {
@@ -26,7 +26,7 @@ public interface ServerFeature extends OneOfFeature {
     }
 
     @Override
-    default boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_APP;
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 }

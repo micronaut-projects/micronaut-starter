@@ -15,9 +15,10 @@
  */
 package io.micronaut.starter.feature.picocli.lang.java;
 
-import io.micronaut.starter.Project;
-import io.micronaut.starter.command.CommandContext;
-import io.micronaut.starter.command.MicronautCommand;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -27,7 +28,7 @@ import javax.inject.Singleton;
 public class PicocliJavaApplication implements JavaApplicationFeature {
 
     @Override
-    public String mainClassName(Project project) {
+    public String mainClassName(Project project, Features features) {
         return project.getPackageName() + "." + project.getClassName() + "Command";
     }
 
@@ -37,15 +38,15 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
     }
 
     @Override
-    public boolean supports(MicronautCommand command) {
-        return command == MicronautCommand.CREATE_CLI;
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.CLI;
     }
 
     @Override
-    public void apply(CommandContext commandContext) {
-        JavaApplicationFeature.super.apply(commandContext);
+    public void apply(GeneratorContext generatorContext) {
+        JavaApplicationFeature.super.apply(generatorContext);
 
-        commandContext.addTemplate("application", getTemplate(commandContext.getProject()));
+        generatorContext.addTemplate("application", getTemplate(generatorContext.getProject()));
     }
 
     public RockerTemplate getTemplate(Project project) {

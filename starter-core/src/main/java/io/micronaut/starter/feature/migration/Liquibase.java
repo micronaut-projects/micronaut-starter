@@ -26,7 +26,13 @@ public class Liquibase implements MigrationFeature {
     }
 
     @Override
+    public String getTitle() {
+        return "Liquibase Database Migration";
+    }
+
+    @Override
     public String getDescription() {
         return "Adds support for Liquibase database migrations (http://www.liquibase.org/)";
     }
+
 }
