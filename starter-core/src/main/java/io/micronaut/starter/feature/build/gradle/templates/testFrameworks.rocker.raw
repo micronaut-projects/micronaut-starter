@@ -9,13 +9,13 @@ TestFeature testFeature
 
 @if (testFeature.isJunit()) {
 @if (language.isJava()) {
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "testAnnotationProcessor", null)
 } else if (language.isKotlin()) {
-    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
 }
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
 @if (language.isGroovy()) {
     @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
 }
@@ -23,14 +23,14 @@ TestFeature testFeature
     @dependency.template("io.micronaut.test", "micronaut-test-junit5", "testImplementation", null)
     @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "testRuntimeOnly", null)
 } else if (testFeature.isKotlinTest()) {
-    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "testImplementation", null)
     @dependency.template("io.mockk", "mockk", "testImplementation", "1.9.3")
     @dependency.template("io.kotlintest", "kotlintest-runner-junit5", "testImplementation", "3.3.2")
 } else if (testFeature.isSpock()) {
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testImplementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
     @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
     testImplementation("org.spockframework:spock-core") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"

@@ -13,9 +13,9 @@ class JUnitSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))
     testAnnotationProcessor("io.micronaut:micronaut-inject-java")
-    testImplementation(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
@@ -26,7 +26,7 @@ class JUnitSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-    testImplementation(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))
     testImplementation("io.micronaut:micronaut-inject-groovy")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
@@ -39,9 +39,9 @@ class JUnitSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-    kaptTest(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))
     kaptTest("io.micronaut:micronaut-inject-java")
-    testImplementation(platform("io.micronaut:micronaut-bom:\$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
