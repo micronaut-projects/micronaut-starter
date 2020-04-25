@@ -29,6 +29,9 @@ import java.util.concurrent.CompletableFuture
 @Property(
         name = "micronaut.http.services.analytics.url",
         value =  "http://localhost:8080/analytics/report")
+@Property(
+        name = "micronaut.http.services.analytics.token",
+        value =  "xxxxxxx")
 class ReportAnalyticsSpec extends Specification {
 
     @Inject
@@ -59,6 +62,7 @@ class ReportAnalyticsSpec extends Specification {
         then:
         conditions.eventually {
             controller.generated.buildTool == BuildTool.MAVEN
+            controller.token == "Bearer xxxxxxx"
         }
     }
 
@@ -67,10 +71,11 @@ class ReportAnalyticsSpec extends Specification {
     @Singleton
     static class AnalyticsController {
         Generated generated
+        String token
         @Post("/analytics/report")
         CompletableFuture<HttpStatus> applicationGenerated(@NonNull @Body Generated generated, @Header(HttpHeaders.AUTHORIZATION) String auth) {
             this.generated = generated
-            assert auth != null
+            token = auth
             return CompletableFuture.completedFuture(HttpStatus.OK)
         }
     }
