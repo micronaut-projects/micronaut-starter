@@ -17,6 +17,7 @@ package io.micronaut.starter.netty.analytics;
 
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpRequest;
@@ -37,7 +38,9 @@ import java.net.URLEncoder;
 
 @Filter(serviceId = "analytics")
 @Requires(env = Environment.GOOGLE_COMPUTE)
+@Requires(property = GoogleAuth.ENABLE_TOKEN, value = StringUtils.TRUE, defaultValue = StringUtils.TRUE)
 public class GoogleAuth implements HttpClientFilter, AutoCloseable {
+    public static final String ENABLE_TOKEN = "micronaut.http.services.analytics.token";
     private final RxHttpClient authClient;
 
     public GoogleAuth() {

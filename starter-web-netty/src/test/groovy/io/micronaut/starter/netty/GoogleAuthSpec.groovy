@@ -2,8 +2,6 @@ package io.micronaut.starter.netty
 
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
-import io.micronaut.http.HttpStatus
-import io.micronaut.http.client.exceptions.HttpClientException
 import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.netty.analytics.AnalyticsClient
@@ -21,9 +19,6 @@ import java.util.concurrent.ExecutionException
 @Property(
         name = "micronaut.http.services.analytics.url",
         value =  "http://localhost:8080/analytics/report")
-@Property(
-        name = "micronaut.http.services.analytics.token",
-        value =  "xxxxxxx")
 class GoogleAuthSpec extends Specification {
 
     @Inject AnalyticsClient client
