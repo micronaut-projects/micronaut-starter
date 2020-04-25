@@ -207,7 +207,8 @@ implements <a href="../../../../../../io/micronaut/starter/feature/Feature.html"
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
-<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types.</div>
 </td>
 </tr>
 </table>
@@ -328,7 +329,9 @@ implements <a href="../../../../../../io/micronaut/starter/feature/Feature.html"
 <h4>supports</h4>
 <pre>public&nbsp;boolean&nbsp;supports(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">Feature</a></code></span></div>
-<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types. This method is not used for determining if a default feature
+ should be applied.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>

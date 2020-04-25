@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18,"i2":18,"i3":18,"i4":18,"i5":18,"i6":18,"i7":18};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
+var methods = {"i0":18,"i1":18,"i2":18,"i3":18,"i4":18,"i5":18,"i6":18,"i7":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -149,7 +149,7 @@ extends io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, io.micr
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -195,9 +195,10 @@ extends io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, io.micr
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>default boolean</code></td>
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
-<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types.</div>
 </td>
 </tr>
 </table>
@@ -316,8 +317,10 @@ extends io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, io.micr
 <ul class="blockList">
 <li class="blockList">
 <h4>supports</h4>
-<pre>default&nbsp;boolean&nbsp;supports(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
-<div class="block">This method can be implemented to ensure it is only selectable for a subset of application types.</div>
+<pre>boolean&nbsp;supports(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types. This method is not used for determining if a default feature
+ should be applied.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>applicationType</code> - The application type</dd>

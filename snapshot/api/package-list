@@ -1,5 +1,8 @@
+io.micronaut.starter.analytics
 io.micronaut.starter.analytics.postgres
+io.micronaut.starter.analytics.postgres.gcp
 io.micronaut.starter.api
+io.micronaut.starter.api.analytics
 io.micronaut.starter.api.bind
 io.micronaut.starter.api.create
 io.micronaut.starter.api.event
@@ -105,6 +108,7 @@ io.micronaut.starter.feature.xml
 io.micronaut.starter.io
 io.micronaut.starter.lambda
 io.micronaut.starter.netty
+io.micronaut.starter.netty.analytics
 io.micronaut.starter.options
 io.micronaut.starter.servlet
 io.micronaut.starter.template

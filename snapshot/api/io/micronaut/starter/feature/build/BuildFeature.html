@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":18};
+var methods = {"i0":18,"i1":18,"i2":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,6 +155,13 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
  selectable features, or they should always be applied, or any other reason.</div>
 </td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/build/BuildFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.DefaultFeature">
@@ -168,7 +175,7 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.naming.Named">
@@ -212,7 +219,7 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <a name="getOrder--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getOrder</h4>
 <pre>default&nbsp;int&nbsp;getOrder()</pre>
@@ -228,6 +235,27 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <dd><code>getOrder</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.order.Ordered</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The order of the feature</dd>
+</dl>
+</li>
+</ul>
+<a name="supports-io.micronaut.starter.application.ApplicationType-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>supports</h4>
+<pre>default&nbsp;boolean&nbsp;supports(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">Feature</a></code></span></div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types. This method is not used for determining if a default feature
+ should be applied.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature can be selected by the user</dd>
 </dl>
 </li>
 </ul>

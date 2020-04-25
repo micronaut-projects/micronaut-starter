@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -148,7 +148,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#GraalNativeImage--">GraalNativeImage</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#GraalNativeImage-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-">GraalNativeImage</a></span>(<a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;awsLambdaCustomRuntime)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -189,6 +189,20 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#nativeImageWillBeDeployedToAwsLambda-io.micronaut.starter.application.generator.GeneratorContext-">nativeImageWillBeDeployedToAwsLambda</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/graalvm/GraalNativeImage.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -202,7 +216,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
 </ul>
 </li>
 </ul>
@@ -218,13 +232,13 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="GraalNativeImage--">
+<a name="GraalNativeImage-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>GraalNativeImage</h4>
-<pre>public&nbsp;GraalNativeImage()</pre>
+<pre>public&nbsp;GraalNativeImage(<a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;awsLambdaCustomRuntime)</pre>
 </li>
 </ul>
 </li>
@@ -235,6 +249,30 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processSelectedFeatures</h4>
+<pre>public&nbsp;void&nbsp;processSelectedFeatures(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">Feature</a></code></span></div>
+<div class="block">If this method is called for a given feature then that feature was explicitly selected
+ or was included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.
+
+ This method can be implemented to allow features to modify the list of features
+ that will apply to the project. The methods <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>
+ and <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#exclude-io.micronaut.starter.feature.FeaturePredicate-"><code>FeatureContext.exclude(FeaturePredicate)</code></a> are the primary ways to add and
+ remove features from the context. <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#isPresent-java.lang.Class-"><code>FeatureContext.isPresent(Class)</code></a> can be used
+ to determine the existence of other features in order to make decisions.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>featureContext</code> - The feature context</dd>
+</dl>
+</li>
+</ul>
 <a name="getName--">
 <!--   -->
 </a>
@@ -300,6 +338,27 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
+</dl>
+</li>
+</ul>
+<a name="supports-io.micronaut.starter.application.ApplicationType-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>supports</h4>
+<pre>public&nbsp;boolean&nbsp;supports(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">Feature</a></code></span></div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types. This method is not used for determining if a default feature
+ should be applied.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature can be selected by the user</dd>
 </dl>
 </li>
 </ul>
