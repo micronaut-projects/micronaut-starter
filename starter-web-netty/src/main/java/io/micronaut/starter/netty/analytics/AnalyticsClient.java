@@ -17,20 +17,17 @@ package io.micronaut.starter.netty.analytics;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;
-import io.micronaut.http.annotation.Header;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
-import io.micronaut.starter.api.analytics.AnalyticsOperations;
 import io.micronaut.starter.analytics.Generated;
+import io.micronaut.starter.api.analytics.AnalyticsOperations;
 
 import java.util.concurrent.CompletableFuture;
 
 @Requires(property = AnalyticsClient.SERVICE_ANALYTICS)
 @Client("analytics")
-@Header(name = HttpHeaders.AUTHORIZATION, value = "Bearer ${micronaut.http.services.analytics.token:notset}")
 public interface AnalyticsClient extends AnalyticsOperations {
 
     String SERVICE_ANALYTICS = "micronaut.http.services.analytics";
