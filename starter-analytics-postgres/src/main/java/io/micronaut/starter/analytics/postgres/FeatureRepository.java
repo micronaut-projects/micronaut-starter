@@ -16,9 +16,38 @@
 package io.micronaut.starter.analytics.postgres;
 
 import io.micronaut.data.jdbc.annotation.JdbcRepository;
+import io.micronaut.data.jdbc.runtime.JdbcOperations;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.CrudRepository;
+import io.micronaut.transaction.annotation.ReadOnly;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
-public interface FeatureRepository extends CrudRepository<Feature, Long> {
+public abstract class FeatureRepository implements CrudRepository<Feature, Long> {
+
+    private final JdbcOperations jdbcOperations;
+
+    public FeatureRepository(JdbcOperations jdbcOperations) {
+        this.jdbcOperations = jdbcOperations;
+    }
+
+    @ReadOnly
+    List<TotalDTO> topFeatures() {
+        return this.jdbcOperations.prepareStatement("SELECT name AS name, count(*) AS total FROM feature GROUP BY name ORDER BY total", statement -> {
+            ResultSet resultSet = statement.executeQuery();
+            List<TotalDTO> results = new ArrayList<>(40);
+            while (resultSet.next()) {
+                results.add(
+                        new TotalDTO(
+                                resultSet.getString("name"),
+                                resultSet.getLong("total")
+                        )
+                );
+            }
+            return results;
+        });
+    }
 }

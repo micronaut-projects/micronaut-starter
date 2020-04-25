@@ -51,6 +51,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
 
     @Inject AnalyticsClient client
     @Inject ApplicationRepository repository
+    @Inject FeatureRepository featureRepository
 
     void "test save generation data"() {
         given:
@@ -82,6 +83,14 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         application.jdkVersion == generated.jdkVersion
         application.testFramework == generated.testFramework
         application.features.find { it.name == 'azure-function' }
+
+        when:
+        def topFeatures = featureRepository.topFeatures()
+
+        then:
+        !topFeatures.isEmpty()
+        topFeatures[0].name == 'azure-function'
+        topFeatures[0].total == 1
     }
 
     @Client("/analytics")
