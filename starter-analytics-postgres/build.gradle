@@ -6,7 +6,7 @@ dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     annotationProcessor "io.micronaut:micronaut-graal"
 
-    api project(":starter-core")
+    implementation project(":starter-core")
     implementation "io.micronaut:micronaut-http-server-netty"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     implementation("io.micronaut.data:micronaut-data-jdbc")
