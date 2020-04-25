@@ -1,5 +1,3 @@
-import io.micronaut.starter.cli.MicronautCreateStartScripts
-
 plugins {
     id "application"
     id "com.github.johnrengelman.shadow"
