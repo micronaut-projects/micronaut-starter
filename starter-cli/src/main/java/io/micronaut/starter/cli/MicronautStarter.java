@@ -32,7 +32,7 @@ import java.util.function.BiFunction;
             "",
             "*  @|bold create-app|@ @|yellow NAME|@",
             "*  @|bold create-cli-app|@ @|yellow NAME|@",
-            "*  @|bold create-function|@ @|yellow NAME|@",
+            "*  @|bold create-function-app|@ @|yellow NAME|@",
             "*  @|bold create-grpc-app|@ @|yellow NAME|@",
             "*  @|bold create-messaging-app|@ @|yellow NAME|@"
         },

@@ -3,10 +3,11 @@ plugins {
     id "application"
 }
 
+ext.publish = false
+
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
-    invoker
 }
 
 dependencies {

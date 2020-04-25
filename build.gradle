@@ -38,15 +38,21 @@ subprojects { Project subproject ->
     }
 
     apply plugin:"groovy"
-    apply plugin:"java-library"
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
 
+    if (subproject.hasProperty("publish") && subproject.publish) {
+        apply plugin:"java-library"
+        apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
+        bintray.publish = true
+    } else {
+        apply plugin: "java"
+    }
+
+
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-
-    apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
 
     jar {
         manifest {
@@ -55,8 +61,6 @@ subprojects { Project subproject ->
             attributes('Implementation-Title': title)
         }
     }
-
-    bintray.publish = true
 
     tasks.withType(Test) {
         useJUnitPlatform()
@@ -78,12 +82,8 @@ subprojects { Project subproject ->
 
     dependencies {
         annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-        api platform("io.micronaut:micronaut-bom:$micronautVersion")
         implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-
         annotationProcessor "io.micronaut:micronaut-inject-java"
-        api "io.micronaut:micronaut-inject"
-
         testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
         testAnnotationProcessor "io.micronaut:micronaut-inject-java"
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")

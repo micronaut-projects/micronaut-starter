@@ -88,7 +88,11 @@ public class PreviewController extends AbstractCreateController implements Previ
             MapOutputHandler outputHandler = new MapOutputHandler();
             projectGenerator.generate(type,
                     project,
-                    new Options(lang, test, build == null ? BuildTool.GRADLE : build, javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
+                    new Options(
+                            lang,
+                            test,
+                            build == null ? BuildTool.GRADLE : build,
+                            javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,
                     ConsoleOutput.NOOP);

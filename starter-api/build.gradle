@@ -1,11 +1,13 @@
 dependencies {
     annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.4.0"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
+    api platform("io.micronaut:micronaut-bom:$micronautVersion")
 
     api project(":starter-core"), {
         exclude group:'org.slf4j', module:'slf4j-nop'
     }
     implementation("io.swagger.core.v3:swagger-annotations")
+    api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-validation"
