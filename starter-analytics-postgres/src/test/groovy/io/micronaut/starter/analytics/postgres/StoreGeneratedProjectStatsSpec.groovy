@@ -62,7 +62,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
                 TestFramework.SPOCK,
                 JdkVersion.JDK_9
         )
-        generated.setFeatures([new SelectedFeature("azure-function")])
+        generated.setSelectedFeatures([new SelectedFeature("azure-function")])
 
         when:
         HttpStatus status = client.applicationGenerated(

@@ -50,7 +50,7 @@ public class GenerationListener {
                 context.getTestFramework(),
                 context.getJdkVersion()
         );
-        generated.setFeatures(features);
+        generated.setSelectedFeatures(features);
         if (analyticsOperations != null) {
             analyticsOperations.applicationGenerated(generated)
                 .whenComplete((httpStatus, throwable) -> {
