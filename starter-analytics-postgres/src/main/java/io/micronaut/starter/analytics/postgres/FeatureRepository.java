@@ -22,6 +22,7 @@ import io.micronaut.data.repository.CrudRepository;
 import io.micronaut.transaction.annotation.ReadOnly;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,18 +37,46 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
 
     @ReadOnly
     List<TotalDTO> topFeatures() {
-        return this.jdbcOperations.prepareStatement("SELECT name AS name, count(*) AS total FROM feature GROUP BY name ORDER BY total", statement -> {
-            ResultSet resultSet = statement.executeQuery();
-            List<TotalDTO> results = new ArrayList<>(40);
-            while (resultSet.next()) {
-                results.add(
-                        new TotalDTO(
-                                resultSet.getString("name"),
-                                resultSet.getLong("total")
-                        )
-                );
+        return this.jdbcOperations
+                .prepareStatement("SELECT name AS name, count(*) AS total FROM feature GROUP BY name ORDER BY total",
+                        statement -> {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSetToTotals(resultSet);
             }
-            return results;
         });
+    }
+
+    @ReadOnly
+    List<TotalDTO> topLanguages() {
+        return this.jdbcOperations
+                .prepareStatement("SELECT language AS name, count(*) AS total FROM application GROUP BY name ORDER BY total",
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        });
+    }
+
+    List<TotalDTO> topBuildTools() {
+        return this.jdbcOperations
+                .prepareStatement("SELECT build_tool AS name, count(*) AS total FROM application GROUP BY name ORDER BY total",
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        });
+    }
+
+    private List<TotalDTO> resultSetToTotals(ResultSet resultSet) throws SQLException {
+        List<TotalDTO> results = new ArrayList<>(40);
+        while (resultSet.next()) {
+            results.add(
+                    new TotalDTO(
+                        resultSet.getString("name"),
+                        resultSet.getLong("total")
+                    )
+            );
+        }
+        return results;
     }
 }

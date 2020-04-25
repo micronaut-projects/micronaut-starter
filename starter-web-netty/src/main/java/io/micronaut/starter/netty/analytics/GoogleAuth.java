@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-@Filter(serviceId = "analytics", patterns = Filter.MATCH_ALL_PATTERN)
+@Filter(serviceId = "analytics")
 @Requires(env = Environment.GOOGLE_COMPUTE)
 public class GoogleAuth implements HttpClientFilter, AutoCloseable {
     private final RxHttpClient authClient;

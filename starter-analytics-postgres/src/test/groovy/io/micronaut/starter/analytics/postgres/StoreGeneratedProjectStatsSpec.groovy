@@ -91,6 +91,13 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         !topFeatures.isEmpty()
         topFeatures[0].name == 'azure-function'
         topFeatures[0].total == 1
+
+        when:
+        def languages = featureRepository.topLanguages()
+
+        then:
+        languages
+        languages[0].name == 'kotlin'
     }
 
     @Client("/analytics")
