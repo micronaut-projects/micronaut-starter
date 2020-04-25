@@ -1,35 +1,34 @@
 package io.micronaut.starter.analytics.postgres
 
-import io.micronaut.context.annotation.Property
+import edu.umd.cs.findbugs.annotations.NonNull
 import io.micronaut.context.env.Environment
-import io.micronaut.context.event.ApplicationEventPublisher
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.data.runtime.config.SchemaGenerate
-import io.micronaut.starter.api.StarterConfiguration
-import io.micronaut.starter.api.event.ApplicationGeneratingEvent
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.starter.analytics.Generated
+import io.micronaut.starter.analytics.SelectedFeature
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.NameUtils
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import org.testcontainers.containers.PostgreSQLContainer
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.util.concurrent.PollingConditions
 
 import javax.inject.Inject
+import java.util.concurrent.CompletableFuture
 
 @MicronautTest(
         transactional = false,
         environments = Environment.GOOGLE_COMPUTE)
-@Property(name = GenerationListener.ENABLED, value = "true")
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
             .withDatabaseName("test-database")
@@ -50,44 +49,44 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         ]
     }
 
-    @Inject ApplicationEventPublisher eventPublisher
+    @Inject AnalyticsClient client
     @Inject ApplicationRepository repository
 
     void "test save generation data"() {
+        given:
+        def generated = new Generated(
+                ApplicationType.FUNCTION,
+                Language.KOTLIN,
+                BuildTool.MAVEN,
+                TestFramework.SPOCK,
+                JdkVersion.JDK_9
+        )
+        generated.setFeatures([new SelectedFeature("azure-function")])
+
         when:
-        eventPublisher.publishEvent(new ApplicationGeneratingEvent(
-                new GeneratorContext(
-                        NameUtils.parse("test"),
-                        ApplicationType.FUNCTION,
-                        new Options(Language.KOTLIN, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_9),
-                        [new io.micronaut.starter.feature.Feature() {
-                            @Override
-                            String getName() {
-                                "test-feature"
-                            }
+        HttpStatus status = client.applicationGenerated(
+                generated
+        ).get()
 
-                            @Override
-                            boolean supports(ApplicationType applicationType) {
-                                true
-                            }
-                        }] as Set
-                )
-        ))
-
-        PollingConditions conditions = new PollingConditions()
 
         then:
-        conditions.eventually {
-            def list = repository.list(Pageable.UNPAGED)
-            list.size() == 1
-            list[0].buildTool == BuildTool.MAVEN
-            list[0].type == ApplicationType.FUNCTION
-            list[0].language == Language.KOTLIN
-            list[0].testFramework == TestFramework.SPOCK
-            list[0].jdkVersion == JdkVersion.JDK_9
-            list[0].features.first().name == 'test-feature'
-        }
+        status == HttpStatus.ACCEPTED
 
+        when:
+        def application = repository.list(Pageable.UNPAGED)[0]
+
+        then:
+        application.type == generated.type
+        application.language == generated.language
+        application.buildTool == generated.buildTool
+        application.jdkVersion == generated.jdkVersion
+        application.testFramework == generated.testFramework
+        application.features.find { it.name == 'azure-function' }
     }
 
+    @Client("/analytics")
+    static interface AnalyticsClient {
+        @Post("/report")
+        CompletableFuture<HttpStatus> applicationGenerated(@NonNull @Body Generated generated);
+    }
 }

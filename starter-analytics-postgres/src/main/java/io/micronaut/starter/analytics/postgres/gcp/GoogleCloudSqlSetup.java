@@ -20,8 +20,6 @@ import io.micronaut.context.annotation.Property;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.BeanCreatedEvent;
 import io.micronaut.context.event.BeanCreatedEventListener;
-import io.micronaut.core.annotation.TypeHint;
-
 import javax.inject.Singleton;
 
 /**
@@ -31,10 +29,6 @@ import javax.inject.Singleton;
  * @since 1.0.0
  */
 @Singleton
-@TypeHint(typeNames = {
-        "com.google.cloud.sql.postgres.SocketFactory",
-        "jnr.ffi.provider.jffi.Provider"
-})
 @Requires(property = GoogleCloudSqlSetup.CLOUD_SQL_CONNECTION_NAME)
 public class GoogleCloudSqlSetup implements BeanCreatedEventListener<DatasourceConfiguration> {
     public static final String CLOUD_SQL_CONNECTION_NAME = "cloud.sql.connection.name";

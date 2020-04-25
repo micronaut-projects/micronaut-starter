@@ -13,16 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package io.micronaut.starter.api.analytics;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.http.HttpStatus;
+import io.micronaut.starter.analytics.Generated;
+
+import java.util.concurrent.CompletableFuture;
 
 /**
- * Configuration only enabled on Google Compute.
+ * Interface to implement to provide analytics.
+ *
+ * @author graemerocher
+ * @since 1.0.0
  */
-@Requires(env = Environment.GOOGLE_COMPUTE)
-@Requires(property = ENABLED, defaultValue = StringUtils.FALSE)
-package io.micronaut.starter.analytics.postgres;
+public interface AnalyticsOperations {
 
-import io.micronaut.context.annotation.Requires;
-import io.micronaut.context.env.Environment;
-import io.micronaut.core.util.StringUtils;
-
-import static io.micronaut.starter.analytics.postgres.GenerationListener.ENABLED;
+    /**
+     * Report analytics.
+     * @param generated The generated data
+     * @return A future
+     */
+    CompletableFuture<HttpStatus> applicationGenerated(@NonNull Generated generated);
+}
