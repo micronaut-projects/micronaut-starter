@@ -20,6 +20,8 @@ dependencies {
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
 }
 
+mainClassName = 'io.micronaut.starter.analytics.postgres.Main'
+
 jib {
     mainClassName('io.micronaut.starter.analytics.postgres.Main')
 }
