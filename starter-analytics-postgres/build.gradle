@@ -19,3 +19,7 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:1.13.0"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
 }
+
+jib {
+    mainClassName('io.micronaut.starter.analytics.postgres.Main')
+}
