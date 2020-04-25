@@ -98,6 +98,9 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         then:
         languages
         languages[0].name == 'kotlin'
+        featureRepository.topBuildTools()
+        featureRepository.topJdkVersion()
+        featureRepository.topTestFrameworks()
     }
 
     @Client("/analytics")

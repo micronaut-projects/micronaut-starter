@@ -48,6 +48,26 @@ public class AnalyticsController {
         return featureRepository.topFeatures();
     }
 
+    @Get("/top/jdks")
+    List<TotalDTO> topJdks() {
+        return featureRepository.topJdkVersion();
+    }
+
+    @Get("/top/buildTools")
+    List<TotalDTO> topBuilds() {
+        return featureRepository.topBuildTools();
+    }
+
+    @Get("/top/languages")
+    List<TotalDTO> topLanguages() {
+        return featureRepository.topLanguages();
+    }
+
+    @Get("/top/testFrameworks")
+    List<TotalDTO> topTestFrameworks() {
+        return featureRepository.topTestFrameworks();
+    }
+
 
     /**
      * Report analytics.

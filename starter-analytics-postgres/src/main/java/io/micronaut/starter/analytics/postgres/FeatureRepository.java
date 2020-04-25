@@ -38,7 +38,7 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     @ReadOnly
     List<TotalDTO> topFeatures() {
         return this.jdbcOperations
-                .prepareStatement("SELECT name AS name, count(*) AS total FROM feature GROUP BY name ORDER BY total",
+                .prepareStatement(query("name", "feature"),
                         statement -> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 return resultSetToTotals(resultSet);
@@ -49,7 +49,7 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     @ReadOnly
     List<TotalDTO> topLanguages() {
         return this.jdbcOperations
-                .prepareStatement("SELECT language AS name, count(*) AS total FROM application GROUP BY name ORDER BY total",
+                .prepareStatement(query("language", "application"),
                         statement -> {
                             try (ResultSet resultSet = statement.executeQuery()) {
                                 return resultSetToTotals(resultSet);
@@ -57,9 +57,32 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
                         });
     }
 
+    @ReadOnly
     List<TotalDTO> topBuildTools() {
         return this.jdbcOperations
-                .prepareStatement("SELECT build_tool AS name, count(*) AS total FROM application GROUP BY name ORDER BY total",
+                .prepareStatement(query("build_tool", "application"),
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        });
+    }
+
+    @ReadOnly
+    List<TotalDTO> topTestFrameworks() {
+        return this.jdbcOperations
+                .prepareStatement(query("test_framework", "application"),
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        });
+    }
+
+    @ReadOnly
+    List<TotalDTO> topJdkVersion() {
+        return this.jdbcOperations
+                .prepareStatement(query("jdk_version", "application"),
                         statement -> {
                             try (ResultSet resultSet = statement.executeQuery()) {
                                 return resultSetToTotals(resultSet);
@@ -78,5 +101,9 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
             );
         }
         return results;
+    }
+
+    private String query(String name, String table) {
+        return "SELECT " + name + " AS name, count(*) AS total FROM " + table + " GROUP BY name ORDER BY total";
     }
 }
