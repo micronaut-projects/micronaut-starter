@@ -16,8 +16,15 @@
 package io.micronaut.starter.analytics.postgres;
 
 import io.micronaut.runtime.Micronaut;
+import io.netty.util.internal.MacAddressUtil;
+import io.netty.util.internal.PlatformDependent;
 
 public class Main {
+    static {
+        byte[] bestMacAddr = new byte[8];
+        PlatformDependent.threadLocalRandom().nextBytes(bestMacAddr);
+        System.setProperty("io.netty.machineId", MacAddressUtil.formatAddress(bestMacAddr));
+    }
     public static void main(String... args) {
         Micronaut.run(args);
     }
