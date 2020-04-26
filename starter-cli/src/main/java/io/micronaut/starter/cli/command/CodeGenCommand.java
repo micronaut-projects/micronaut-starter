@@ -28,7 +28,6 @@ import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
