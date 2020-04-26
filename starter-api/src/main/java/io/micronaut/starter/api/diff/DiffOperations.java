@@ -22,6 +22,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import javax.annotation.Nullable;
@@ -47,7 +48,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    String diffFeature(
+    Flowable<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,

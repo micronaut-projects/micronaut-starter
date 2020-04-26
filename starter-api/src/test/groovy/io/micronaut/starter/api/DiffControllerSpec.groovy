@@ -40,7 +40,7 @@ class DiffControllerSpec extends Specification {
 
     @Client('/diff')
     static interface DiffClient {
-        @Get(uri = "/{type}/{feature}{?lang,build,test,javaVersion,name}",
+        @Get(uri = "/{type}/feature/{feature}{?lang,build,test,javaVersion,name}",
                 consumes = MediaType.TEXT_PLAIN)
         String diffFeature(
                 @NotNull ApplicationType type,
