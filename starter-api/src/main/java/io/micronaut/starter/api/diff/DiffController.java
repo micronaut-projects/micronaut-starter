@@ -46,6 +46,7 @@ import java.util.Collections;
 @Controller("/diff")
 public class DiffController implements DiffOperations {
 
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private final ProjectGenerator projectGenerator;
     private final FeatureDiffer featureDiffer;
     private final Project project;
@@ -104,7 +105,7 @@ public class DiffController implements DiffOperations {
                     type,
                     options,
                     Collections.singletonList(feature),
-                    builder::append
+                    s -> builder.append(s).append(LINE_SEPARATOR)
             );
             return builder.toString();
         } catch (IllegalArgumentException e) {
