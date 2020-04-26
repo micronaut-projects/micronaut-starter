@@ -161,7 +161,7 @@ implements <a href="../../../../../io/micronaut/starter/api/diff/DiffOperations.
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>io.reactivex.Flowable&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/diff/DiffController.html#diffFeature-io.micronaut.starter.application.ApplicationType-java.lang.String-java.lang.String-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">diffFeature</a></span>(@NotNull <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
            java.lang.String&nbsp;name,
            @NotBlank java.lang.String&nbsp;feature,
@@ -225,23 +225,23 @@ implements <a href="../../../../../io/micronaut/starter/api/diff/DiffOperations.
 <ul class="blockListLast">
 <li class="blockList">
 <h4>diffFeature</h4>
-<pre>@Get(uri="/{type}/{feature}{?lang,build,test,javaVersion,name}",
+<pre>@Get(uri="/{type}/feature/{feature}{?lang,build,test,javaVersion,name}",
      produces="text/plain")
-public&nbsp;java.lang.String&nbsp;diffFeature(@NotNull
-                                                                                                                                 @NotNull <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
-                                                                                                                                 @Nullable
-                                                                                                                                 java.lang.String&nbsp;name,
-                                                                                                                                 @NonNull @NotBlank
-                                                                                                                                 @NotBlank java.lang.String&nbsp;feature,
-                                                                                                                                 @Nullable
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
-                                                                                                                                 @Nullable
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
-                                                                                                                                 @Nullable
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
-                                                                                                                                 @Nullable
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</pre>
+public&nbsp;io.reactivex.Flowable&lt;java.lang.String&gt;&nbsp;diffFeature(@NotNull
+                                                                                                                                                                @NotNull <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+                                                                                                                                                                @Nullable
+                                                                                                                                                                java.lang.String&nbsp;name,
+                                                                                                                                                                @NonNull @NotBlank
+                                                                                                                                                                @NotBlank java.lang.String&nbsp;feature,
+                                                                                                                                                                @Nullable
+                                                                                                                                                                <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
+                                                                                                                                                                @Nullable
+                                                                                                                                                                <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
+                                                                                                                                                                @Nullable
+                                                                                                                                                                <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
+                                                                                                                                                                @Nullable
+                                                                                                                                                                <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+                                                                                                                                                                <a href="../../../../../io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</pre>
 <div class="block">Returns a diff for the given application type and feature.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
