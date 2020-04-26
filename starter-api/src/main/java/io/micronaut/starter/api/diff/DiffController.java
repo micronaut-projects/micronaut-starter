@@ -111,7 +111,7 @@ public class DiffController implements DiffOperations {
                 );
                 emitter.onComplete();
             } catch (IllegalArgumentException e) {
-                emitter.onError(new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage())); ;
+                emitter.onError(new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage()));
             } catch (Exception e) {
                 emitter.onError(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
             }
