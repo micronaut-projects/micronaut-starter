@@ -607,7 +607,7 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
             <path>
-              <groupId>io.micronaut.configuration</groupId>
+              <groupId>io.micronaut.picocli</groupId>
               <artifactId>micronaut-picocli</artifactId>
               <version>${micronaut.picocli.version}</version>
             </path>

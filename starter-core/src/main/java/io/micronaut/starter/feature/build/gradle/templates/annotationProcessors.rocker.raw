@@ -16,7 +16,7 @@ Features features
 @annotationProcessor.template(features, "\"io.micronaut:micronaut-graal\"")
 }
 @if (features.contains("picocli")) {
-@annotationProcessor.template(features, "\"io.micronaut.configuration:micronaut-picocli\"")
+@annotationProcessor.template(features, "\"io.micronaut.picocli:micronaut-picocli\"")
 }
 @if (features.contains("data")) {
 @annotationProcessor.template(features, "\"io.micronaut.data:micronaut-data-processor\"")
