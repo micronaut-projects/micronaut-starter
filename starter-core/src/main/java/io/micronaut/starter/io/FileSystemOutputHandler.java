@@ -30,13 +30,7 @@ public class FileSystemOutputHandler implements OutputHandler {
 
     public FileSystemOutputHandler(Project project, boolean inplace, ConsoleOutput console) throws IOException {
         this.console = console;
-        File baseDirectory;
-        String userDir = System.getProperty("user.dir");
-        if (userDir != null) {
-            baseDirectory = new File(userDir).getCanonicalFile();
-        } else {
-            baseDirectory = new File("").getCanonicalFile();
-        }
+        File baseDirectory = getDefaultBaseDirectory();
         if (inplace) {
             applicationDirectory = baseDirectory;
         } else {
@@ -45,6 +39,22 @@ public class FileSystemOutputHandler implements OutputHandler {
         if (applicationDirectory.exists() && !inplace) {
             throw new IllegalArgumentException("Cannot create the project because the target directory already exists");
         }
+    }
+
+    /**
+     * Resolve the default base directory.
+     * @return The base directory
+     * @throws IOException If it cannot be resolved
+     */
+    public static File getDefaultBaseDirectory() throws IOException {
+        File baseDirectory;
+        String userDir = System.getProperty("user.dir");
+        if (userDir != null) {
+            baseDirectory = new File(userDir).getCanonicalFile();
+        } else {
+            baseDirectory = new File("").getCanonicalFile();
+        }
+        return baseDirectory;
     }
 
     public FileSystemOutputHandler(File directory, ConsoleOutput console) throws IOException {

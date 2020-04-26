@@ -19,6 +19,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ConsoleOutput;
@@ -102,7 +103,7 @@ public class CodeGenConfig {
 
     public static CodeGenConfig load(BeanContext beanContext, ConsoleOutput consoleOutput) {
         try {
-            return load(beanContext, new File(".").getCanonicalFile(), consoleOutput);
+            return load(beanContext, FileSystemOutputHandler.getDefaultBaseDirectory(), consoleOutput);
         } catch (IOException e) {
             return null;
         }

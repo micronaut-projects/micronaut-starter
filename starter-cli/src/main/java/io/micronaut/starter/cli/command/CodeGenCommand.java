@@ -46,7 +46,7 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
 
     public CodeGenCommand(CodeGenConfig config) {
         this.config = config;
-        this.outputHandlerSupplier = () -> new FileSystemOutputHandler(new File(".").getCanonicalFile(), this);
+        this.outputHandlerSupplier = () -> new FileSystemOutputHandler(FileSystemOutputHandler.getDefaultBaseDirectory(), this);
         this.consoleOutput = null;
     }
 
