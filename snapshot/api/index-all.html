@@ -1401,6 +1401,26 @@
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/graalvm/template/deploysh.Template.html" title="class in io.micronaut.starter.feature.graalvm.template"><span class="typeNameLink">deploysh.Template</span></a> - Class in <a href="io/micronaut/starter/feature/graalvm/template/package-summary.html">io.micronaut.starter.feature.graalvm.template</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/api/diff/DiffController.html" title="class in io.micronaut.starter.api.diff"><span class="typeNameLink">DiffController</span></a> - Class in <a href="io/micronaut/starter/api/diff/package-summary.html">io.micronaut.starter.api.diff</a></dt>
+<dd>
+<div class="block">A controller for performing Diffs.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/diff/DiffController.html#DiffController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.diff.FeatureDiffer-">DiffController(ProjectGenerator, FeatureDiffer)</a></span> - Constructor for class io.micronaut.starter.api.diff.<a href="io/micronaut/starter/api/diff/DiffController.html" title="class in io.micronaut.starter.api.diff">DiffController</a></dt>
+<dd>
+<div class="block">Default constructor.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/diff/DiffController.html#diffFeature-io.micronaut.starter.application.ApplicationType-java.lang.String-java.lang.String-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">diffFeature(ApplicationType, String, String, BuildTool, TestFramework, Language, JdkVersion, RequestInfo)</a></span> - Method in class io.micronaut.starter.api.diff.<a href="io/micronaut/starter/api/diff/DiffController.html" title="class in io.micronaut.starter.api.diff">DiffController</a></dt>
+<dd>
+<div class="block">Returns a diff for the given application type and feature.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/diff/DiffOperations.html#diffFeature-io.micronaut.starter.application.ApplicationType-java.lang.String-java.lang.String-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">diffFeature(ApplicationType, String, String, BuildTool, TestFramework, Language, JdkVersion, RequestInfo)</a></span> - Method in interface io.micronaut.starter.api.diff.<a href="io/micronaut/starter/api/diff/DiffOperations.html" title="interface in io.micronaut.starter.api.diff">DiffOperations</a></dt>
+<dd>
+<div class="block">Previews an application.</div>
+</dd>
+<dt><a href="io/micronaut/starter/api/diff/DiffOperations.html" title="interface in io.micronaut.starter.api.diff"><span class="typeNameLink">DiffOperations</span></a> - Interface in <a href="io/micronaut/starter/api/diff/package-summary.html">io.micronaut.starter.api.diff</a></dt>
+<dd>
+<div class="block">Operations for performing diffs.</div>
+</dd>
 <dt><a href="io/micronaut/starter/feature/discovery/DiscoveryConsul.html" title="class in io.micronaut.starter.feature.discovery"><span class="typeNameLink">DiscoveryConsul</span></a> - Class in <a href="io/micronaut/starter/feature/discovery/package-summary.html">io.micronaut.starter.feature.discovery</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/discovery/DiscoveryConsul.html#DiscoveryConsul--">DiscoveryConsul()</a></span> - Constructor for class io.micronaut.starter.feature.discovery.<a href="io/micronaut/starter/feature/discovery/DiscoveryConsul.html" title="class in io.micronaut.starter.feature.discovery">DiscoveryConsul</a></dt>
@@ -1524,9 +1544,13 @@
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html" title="class in io.micronaut.starter.cli.feature"><span class="typeNameLink">FeatureDiffCommand</span></a> - Class in <a href="io/micronaut/starter/cli/feature/package-summary.html">io.micronaut.starter.cli.feature</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-">FeatureDiffCommand(CodeGenConfig, ProjectGenerator)</a></span> - Constructor for class io.micronaut.starter.cli.feature.<a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html" title="class in io.micronaut.starter.cli.feature">FeatureDiffCommand</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.diff.FeatureDiffer-">FeatureDiffCommand(CodeGenConfig, ProjectGenerator, FeatureDiffer)</a></span> - Constructor for class io.micronaut.starter.cli.feature.<a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html" title="class in io.micronaut.starter.cli.feature">FeatureDiffCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-io.micronaut.starter.application.generator.ProjectGenerator-">FeatureDiffCommand(CodeGenConfig, ThrowingSupplier&lt;OutputHandler, IOException&gt;, ConsoleOutput, ProjectGenerator)</a></span> - Constructor for class io.micronaut.starter.cli.feature.<a href="io/micronaut/starter/cli/feature/FeatureDiffCommand.html" title="class in io.micronaut.starter.cli.feature">FeatureDiffCommand</a></dt>
+<dt><a href="io/micronaut/starter/diff/FeatureDiffer.html" title="class in io.micronaut.starter.diff"><span class="typeNameLink">FeatureDiffer</span></a> - Class in <a href="io/micronaut/starter/diff/package-summary.html">io.micronaut.starter.diff</a></dt>
+<dd>
+<div class="block">Methods for diffing projects and features.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/diff/FeatureDiffer.html#FeatureDiffer--">FeatureDiffer()</a></span> - Constructor for class io.micronaut.starter.diff.<a href="io/micronaut/starter/diff/FeatureDiffer.html" title="class in io.micronaut.starter.diff">FeatureDiffer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api"><span class="typeNameLink">FeatureDTO</span></a> - Class in <a href="io/micronaut/starter/api/package-summary.html">io.micronaut.starter.api</a></dt>
 <dd>
@@ -2320,6 +2344,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataFeature.html#getDatasourceConfig--">getDatasourceConfig()</a></span> - Method in interface io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/io/FileSystemOutputHandler.html#getDefaultBaseDirectory--">getDefaultBaseDirectory()</a></span> - Static method in class io.micronaut.starter.io.<a href="io/micronaut/starter/io/FileSystemOutputHandler.html" title="class in io.micronaut.starter.io">FileSystemOutputHandler</a></dt>
+<dd>
+<div class="block">Resolve the default base directory.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/picocli/test/junit/PicocliJunit.html#getDefaultLanguage--">getDefaultLanguage()</a></span> - Method in class io.micronaut.starter.feature.picocli.test.junit.<a href="io/micronaut/starter/feature/picocli/test/junit/PicocliJunit.html" title="class in io.micronaut.starter.feature.picocli.test.junit">PicocliJunit</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/picocli/test/kotlintest/PicocliKotlinTest.html#getDefaultLanguage--">getDefaultLanguage()</a></span> - Method in class io.micronaut.starter.feature.picocli.test.kotlintest.<a href="io/micronaut/starter/feature/picocli/test/kotlintest/PicocliKotlinTest.html" title="class in io.micronaut.starter.feature.picocli.test.kotlintest">PicocliKotlinTest</a></dt>
@@ -4512,6 +4540,8 @@
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/create/package-summary.html">io.micronaut.starter.api.create</a> - package io.micronaut.starter.api.create</dt>
 <dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/api/diff/package-summary.html">io.micronaut.starter.api.diff</a> - package io.micronaut.starter.api.diff</dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/event/package-summary.html">io.micronaut.starter.api.event</a> - package io.micronaut.starter.api.event</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/api/preview/package-summary.html">io.micronaut.starter.api.preview</a> - package io.micronaut.starter.api.preview</dt>
@@ -4565,6 +4595,8 @@
 <dt><a href="io/micronaut/starter/cli/feature/server/websocket/package-summary.html">io.micronaut.starter.cli.feature.server.websocket</a> - package io.micronaut.starter.cli.feature.server.websocket</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/cli/util/package-summary.html">io.micronaut.starter.cli.util</a> - package io.micronaut.starter.cli.util</dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/diff/package-summary.html">io.micronaut.starter.diff</a> - package io.micronaut.starter.diff</dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/package-summary.html">io.micronaut.starter.feature</a> - package io.micronaut.starter.feature</dt>
 <dd>&nbsp;</dd>
@@ -5601,7 +5633,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewController.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-">previewApp(ApplicationType, String, List&lt;String&gt;)</a></span> - Method in class io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewController.html" title="class in io.micronaut.starter.api.preview">PreviewController</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewOperation.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp(ApplicationType, String, List&lt;String&gt;, BuildTool, TestFramework, Language, JdkVersion, RequestInfo)</a></span> - Method in interface io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewOperation.html" title="interface in io.micronaut.starter.api.preview">PreviewOperation</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewOperations.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp(ApplicationType, String, List&lt;String&gt;, BuildTool, TestFramework, Language, JdkVersion, RequestInfo)</a></span> - Method in interface io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewOperations.html" title="interface in io.micronaut.starter.api.preview">PreviewOperations</a></dt>
 <dd>
 <div class="block">Previews an application.</div>
 </dd>
@@ -5619,7 +5651,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/api/preview/PreviewDTO.html#PreviewDTO-java.util.Map-">PreviewDTO(Map&lt;String, String&gt;)</a></span> - Constructor for class io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="io/micronaut/starter/api/preview/PreviewOperation.html" title="interface in io.micronaut.starter.api.preview"><span class="typeNameLink">PreviewOperation</span></a> - Interface in <a href="io/micronaut/starter/api/preview/package-summary.html">io.micronaut.starter.api.preview</a></dt>
+<dt><a href="io/micronaut/starter/api/preview/PreviewOperations.html" title="interface in io.micronaut.starter.api.preview"><span class="typeNameLink">PreviewOperations</span></a> - Interface in <a href="io/micronaut/starter/api/preview/package-summary.html">io.micronaut.starter.api.preview</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.awslambdacustomruntime.<a href="io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a></dt>
 <dd>&nbsp;</dd>
@@ -5666,6 +5698,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/reloading/Springloaded.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.reloading.<a href="io/micronaut/starter/feature/reloading/Springloaded.html" title="class in io.micronaut.starter.feature.reloading">Springloaded</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/diff/FeatureDiffer.html#produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-java.util.function.Consumer-">produceDiff(ProjectGenerator, Project, ApplicationType, Options, List&lt;String&gt;, Consumer&lt;String&gt;)</a></span> - Method in class io.micronaut.starter.diff.<a href="io/micronaut/starter/diff/FeatureDiffer.html" title="class in io.micronaut.starter.diff">FeatureDiffer</a></dt>
+<dd>
+<div class="block">Produces a Diff for the given arguments.</div>
+</dd>
 <dt><a href="io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application"><span class="typeNameLink">Project</span></a> - Class in <a href="io/micronaut/starter/application/package-summary.html">io.micronaut.starter.application</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/application/Project.html#Project-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">Project(String, String, String, String, String, String)</a></span> - Constructor for class io.micronaut.starter.application.<a href="io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a></dt>

@@ -170,14 +170,9 @@ extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-">FeatureDiffCommand</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-                  <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-io.micronaut.starter.application.generator.ProjectGenerator-">FeatureDiffCommand</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-                  io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
-                  <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput,
-                  <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/feature/FeatureDiffCommand.html#FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.diff.FeatureDiffer-">FeatureDiffCommand</a></span>(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+                  <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                  <a href="../../../../../io/micronaut/starter/diff/FeatureDiffer.html" title="class in io.micronaut.starter.diff">FeatureDiffer</a>&nbsp;featureDiffer)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -238,28 +233,17 @@ extends <a href="../../../../../io/micronaut/starter/cli/command/CodeGenCommand.
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>FeatureDiffCommand</h4>
-<pre>@Inject
-public&nbsp;FeatureDiffCommand(@Parameter
-                                  <a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-                                  <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</pre>
-</li>
-</ul>
-<a name="FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-io.micronaut.starter.application.generator.ProjectGenerator-">
+<a name="FeatureDiffCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.diff.FeatureDiffer-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>FeatureDiffCommand</h4>
-<pre>public&nbsp;FeatureDiffCommand(<a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
-                          io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
-                          <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput,
-                          <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator)</pre>
+<pre>@Inject
+public&nbsp;FeatureDiffCommand(@Parameter
+                                  <a href="../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+                                  <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+                                  <a href="../../../../../io/micronaut/starter/diff/FeatureDiffer.html" title="class in io.micronaut.starter.diff">FeatureDiffer</a>&nbsp;featureDiffer)</pre>
 </li>
 </ul>
 </li>
