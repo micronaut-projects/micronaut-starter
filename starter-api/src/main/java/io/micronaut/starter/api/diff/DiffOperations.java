@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.preview;
+package io.micronaut.starter.api.diff;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
@@ -24,25 +25,32 @@ import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.Parameter;
 
 import javax.annotation.Nullable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.List;
 
-public interface PreviewOperation {
+/**
+ * Operations for performing diffs.
+ *
+ * @author graemerocher
+ * @since 1.0.0
+ */
+public interface DiffOperations {
     /**
      * Previews an application.
      * @param type The application type
-     * @param name The name of the application
-     * @param features The features
+     * @param name The project name
+     * @param feature The feature
      * @param buildTool The build tool
      * @param testFramework The test framework
      * @param lang The lang
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    PreviewDTO previewApp(
-            ApplicationType type,
-            String name,
-            @Nullable List<String> features,
+    String diffFeature(
+            @NotNull ApplicationType type,
+            @Nullable String name,
+            @NotBlank @NonNull String feature,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,

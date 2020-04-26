@@ -41,6 +41,11 @@ public class FileSystemOutputHandler implements OutputHandler {
         }
     }
 
+    public FileSystemOutputHandler(File directory, ConsoleOutput console) throws IOException {
+        this.console = console;
+        this.applicationDirectory = directory;
+    }
+
     /**
      * Resolve the default base directory.
      * @return The base directory
@@ -55,11 +60,6 @@ public class FileSystemOutputHandler implements OutputHandler {
             baseDirectory = new File("").getCanonicalFile();
         }
         return baseDirectory;
-    }
-
-    public FileSystemOutputHandler(File directory, ConsoleOutput console) throws IOException {
-        this.console = console;
-        this.applicationDirectory = directory;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class FileSystemOutputHandler implements OutputHandler {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 }

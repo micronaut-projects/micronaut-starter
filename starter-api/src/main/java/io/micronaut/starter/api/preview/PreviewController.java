@@ -48,7 +48,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 @Controller("/preview")
-public class PreviewController extends AbstractCreateController implements PreviewOperation {
+public class PreviewController extends AbstractCreateController implements PreviewOperations {
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
 

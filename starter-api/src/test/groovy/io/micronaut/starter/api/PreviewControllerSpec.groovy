@@ -6,7 +6,6 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.starter.api.preview.PreviewDTO
-import io.micronaut.starter.api.preview.PreviewOperation
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
