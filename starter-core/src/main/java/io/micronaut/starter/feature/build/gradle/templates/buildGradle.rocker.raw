@@ -105,7 +105,7 @@ dependencies {
 }
 @if (features.contains("picocli")) {
     @dependency.template("info.picocli", "picocli", "implementation", null)
-    @dependency.template("io.micronaut.configuration", "micronaut-picocli", "implementation", null)
+    @dependency.template("io.micronaut.picocli", "micronaut-picocli", "implementation", null)
 }
 @if (features.contains("annotation-api")) {
     @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)

@@ -112,7 +112,7 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
 @dependency.template("info.picocli", "picocli", "compile", null)
-@dependency.template("io.micronaut.configuration", "micronaut-picocli", "compile", null)
+@dependency.template("io.micronaut.picocli", "micronaut-picocli", "compile", null)
 }
 @if (features.contains("annotation-api")) {
 @dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
