@@ -23,6 +23,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +37,7 @@ public class Generated {
     private final TestFramework testFramework;
     private final JdkVersion jdkVersion;
     private Collection<? extends SelectedFeature> features = new ArrayList<>();
+    private final String micronautVersion;
 
     @Creator
     public Generated(
@@ -49,6 +51,7 @@ public class Generated {
         this.buildTool = Objects.requireNonNull(buildTool, "Build tool cannot be null");
         this.testFramework = Objects.requireNonNull(testFramework, "Test framework cannot be null");
         this.jdkVersion = Objects.requireNonNull(jdkVersion, "JDK version cannot be null");
+        this.micronautVersion = VersionInfo.getMicronautVersion();
     }
 
     /**
@@ -97,6 +100,13 @@ public class Generated {
      */
     public @NonNull JdkVersion getJdkVersion() {
         return jdkVersion;
+    }
+
+    /**
+     * @return The Micronaut Version
+     */
+    public @NonNull String getMicronautVersion() {
+        return micronautVersion;
     }
 
 }

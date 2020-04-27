@@ -16,5 +16,6 @@ create table application
     build_tool varchar(255) not null,
     test_framework varchar(255) not null,
     jdk_version varchar(255) not null,
+    micronaut_version varchar(255) not null,
     date_created timestamp not null
 );

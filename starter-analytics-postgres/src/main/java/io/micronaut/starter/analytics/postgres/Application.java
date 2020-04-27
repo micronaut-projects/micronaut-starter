@@ -29,6 +29,7 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Objects;
@@ -52,6 +53,7 @@ public class Application {
     private final BuildTool buildTool;
     private final TestFramework testFramework;
     private final JdkVersion jdkVersion;
+    private final String micronautVersion;
     @DateCreated
     private LocalDateTime dateCreated;
 
@@ -61,12 +63,14 @@ public class Application {
             @NonNull Language language,
             @NonNull BuildTool buildTool,
             @NonNull TestFramework testFramework,
-            @NonNull JdkVersion jdkVersion) {
+            @NonNull JdkVersion jdkVersion,
+            @NonNull @NotBlank String micronautVersion) {
         this.type = Objects.requireNonNull(type, "Type cannot be null");
         this.language = Objects.requireNonNull(language, "Language cannot be null");
         this.buildTool = Objects.requireNonNull(buildTool, "Build tool cannot be null");
         this.testFramework = Objects.requireNonNull(testFramework, "Test framework cannot be null");
         this.jdkVersion = Objects.requireNonNull(jdkVersion, "JDK version cannot be null");
+        this.micronautVersion = Objects.requireNonNull(micronautVersion,"Micronaut version cannot be null");
     }
 
     /**
@@ -137,5 +141,12 @@ public class Application {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    /**
+     * @return The Micronaut version
+     */
+    public @NonNull @NotBlank String getMicronautVersion() {
+        return micronautVersion;
     }
 }
