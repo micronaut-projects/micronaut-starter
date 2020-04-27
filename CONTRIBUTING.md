@@ -24,8 +24,6 @@ To generate a project execute `./gradlew micronaut-cli:run --args=""` where the 
 
 If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew micronaut-cli:shadowJar` and then `java -jar starter-cli/build/libs/micronaut-cli-2.0.0.BUILD-SNAPSHOT-all.jar create-app temp`
 
-Note that interactive mode (ie: running without arguments) doesn't work when running the JAR [due to this issue](https://github.com/micronaut-projects/micronaut-starter/issues/130).
-
 ### Default Feature Logic
 
 Avoid having complex logic to determine if a default feature should be applied. If, for example, a default feature should not apply if feature x is chosen, the default feature should not add logic to assert it should not apply if feature x is chosen. Instead, feature x should exclude the default feature.
