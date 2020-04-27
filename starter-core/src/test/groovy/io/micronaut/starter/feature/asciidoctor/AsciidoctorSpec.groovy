@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.asciidoctor
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle asciidoctor feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['asciidoctor'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language)).render().toString()
 
         then:
         template.contains('id "org.asciidoctor.jvm.convert" version "3.1.0"')
@@ -24,7 +25,7 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test maven asciidoctor feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['asciidoctor'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), []).render().toString()
 
         then:
         template.contains("""

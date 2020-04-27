@@ -15,11 +15,12 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -28,9 +29,10 @@ import javax.inject.Singleton;
 public class GroovyApplication implements GroovyApplicationFeature {
 
     @Override
-    public String mainClassName(Project project, Features features) {
-        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
-            return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
+    @Nullable
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
+        if (features.isFeaturePresent(AwsLambda.class)) {
+            return null;
         }
         return project.getPackageName() + ".Application";
     }

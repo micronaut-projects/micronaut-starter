@@ -87,8 +87,9 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p "mn-linux-amd64-${VERSION}"/bin
+          mkdir -p "mn-linux-amd64-${VERSION}/bin"
           mv ./mn "mn-linux-amd64-${VERSION}/bin"
+          cp ./LICENSE "mn-linux-amd64-${VERSION}/"
           tar -pcf "mn-linux-amd64-${VERSION}.tar.gz" "mn-linux-amd64-${VERSION}"
       - name: Upload Release Asset
         id: upload-release-asset
@@ -125,8 +126,9 @@ jobs:
         env:
           VERSION: ${{ github.event.release.tag_name }}
         run: |
-          mkdir -p "mn-darwin-amd64-${VERSION}"/bin
+          mkdir -p "mn-darwin-amd64-${VERSION}/bin"
           mv ./mn "mn-darwin-amd64-${VERSION}/bin"
+          cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
           tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
       - name: Upload Release Asset
         id: upload-release-asset
@@ -175,7 +177,11 @@ jobs:
         shell: cmd
         run: mn create-app test2
       - name: ZIP Archive
-        run: Compress-Archive -Path ./mn.exe -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
+        run: |
+          New-Item ./mn-win-amd64-${{ github.event.release.tag_name }}/bin -ItemType Directory -ea 0
+          Move-Item -Path ./mn.exe -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}/bin
+          Copy-Item ./LICENSE -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}
+          Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1

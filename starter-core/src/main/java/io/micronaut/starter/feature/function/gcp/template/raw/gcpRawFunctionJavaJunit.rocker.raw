@@ -1,0 +1,23 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class FunctionTest {
+
+    @@Test
+    public void testFunction() throws Exception {
+        try (Function function = new Function()) {
+            // test logic here
+        }
+    }
+}

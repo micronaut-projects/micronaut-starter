@@ -18,7 +18,7 @@ class CreateBeanSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a bean - java and #build.getName()"(BuildTool build) {
-        generateDefaultProject(Language.JAVA, build)
+        generateProject(Language.JAVA, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -63,7 +63,7 @@ public class Application {
 
     @Unroll
     void "test creating a bean - groovy and #build.getName()"(BuildTool build) {
-        generateDefaultProject(Language.GROOVY, build)
+        generateProject(Language.GROOVY, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -108,7 +108,7 @@ class Application {
 
     @Unroll
     void "test creating a bean - kotlin and #build.getName()"(BuildTool build) {
-        generateDefaultProject(Language.KOTLIN, build)
+        generateProject(Language.KOTLIN, build)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateBeanCommand command = new CreateBeanCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

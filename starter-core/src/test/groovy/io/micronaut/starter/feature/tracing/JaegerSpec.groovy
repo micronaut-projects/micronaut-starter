@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.tracing
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class JaegerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle tracing-jaeger feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['tracing-jaeger'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-tracing")')
@@ -25,7 +26,7 @@ class JaegerSpec extends BeanContextSpec {
     @Unroll
     void 'test maven tracing-jaeger feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['tracing-jaeger'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language), []).render().toString()
 
         then:
         template.contains("""

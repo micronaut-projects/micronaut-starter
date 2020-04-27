@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class OpenApiSpec extends BeanContextSpec {
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['openapi'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language)).render().toString()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
@@ -26,7 +27,7 @@ class OpenApiSpec extends BeanContextSpec {
 
     void 'test maven swagger feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['openapi'], Language.JAVA), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.JAVA), []).render().toString()
 
         then:
         template.contains("""
@@ -45,7 +46,7 @@ class OpenApiSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(['openapi'], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -64,7 +65,7 @@ class OpenApiSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(['openapi'], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

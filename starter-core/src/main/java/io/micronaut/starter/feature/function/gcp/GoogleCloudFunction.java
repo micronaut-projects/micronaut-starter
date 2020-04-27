@@ -34,7 +34,7 @@ import javax.inject.Singleton;
 @Singleton
 public class GoogleCloudFunction extends AbstractFunctionFeature {
 
-    public static final String NAME = "google-cloud-function";
+    public static final String NAME = "google-cloud-function-http";
 
     @NonNull
     @Override
@@ -53,12 +53,20 @@ public class GoogleCloudFunction extends AbstractFunctionFeature {
     }
 
     @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         applyFunction(generatorContext, generatorContext.getApplicationType());
     }
 
     @Override
-    protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
+    protected RockerModel readmeTemplate(
+            GeneratorContext generatorContext,
+            Project project,
+            BuildTool buildTool) {
         return gcpFunctionReadme.template(project,
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),

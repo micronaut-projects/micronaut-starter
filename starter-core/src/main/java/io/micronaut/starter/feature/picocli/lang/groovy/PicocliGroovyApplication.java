@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.picocli.lang.groovy;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.lang.groovy.GroovyApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -28,7 +30,11 @@ import javax.inject.Singleton;
 public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
-    public String mainClassName(Project project, Features features) {
+    @Nullable
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
+        if (features.isFeaturePresent(AwsLambda.class)) {
+            return null;
+        }
         return project.getPackageName() + "." + project.getClassName() + "Command";
     }
 

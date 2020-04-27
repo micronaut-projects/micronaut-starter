@@ -126,3 +126,13 @@ task copyShadowJar(type: Copy) {
     into "${project.rootProject.buildDir}/libs"
     rename { String fileName -> "cli.jar" }
 }
+
+task exploded(type: Copy) {
+    from zipTree(distZip.outputs.files.singleFile)
+    into "${project.buildDir}/dist"
+    eachFile { FileCopyDetails fcd ->
+        fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
+    }
+}
+
+assemble.dependsOn('exploded')

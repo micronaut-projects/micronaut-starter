@@ -21,7 +21,7 @@ class CreateControllerSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a controller and running the test for #language.getName() and #testFramework.getName() and #build.getName()"(Language language, TestFramework testFramework, BuildTool build) {
-        generateDefaultProject(new Options(language, testFramework, build))
+        generateProject(new Options(language, testFramework, build))
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateControllerCommand command = new CreateControllerCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput, [])

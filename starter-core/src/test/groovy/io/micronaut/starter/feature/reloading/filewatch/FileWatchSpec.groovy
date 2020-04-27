@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.reloading.filewatch
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -15,7 +16,7 @@ class FileWatchSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle file-watch feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['file-watch'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['file-watch'], language)).render().toString()
 
         then:
         template.contains("developmentOnly(\"io.micronaut:micronaut-runtime-osx:${VersionInfo.micronautVersion}\")")
@@ -28,7 +29,7 @@ class FileWatchSpec extends BeanContextSpec {
     @Unroll
     void 'test maven file-watch feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['file-watch'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['file-watch'], language), []).render().toString()
 
         then:
         template.contains("""

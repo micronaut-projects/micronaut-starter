@@ -4,8 +4,10 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
+@import io.micronaut.starter.application.ApplicationType
 
 @args (
+ApplicationType applicationType,
 Project project,
 Features features,
 List<Property> properties
@@ -62,10 +64,14 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-validation", "compile", null)
 @if (features.contains("google-cloud-function")) {
 @dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null)
+    @if (features.contains("google-cloud-function-http")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null)
 <!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
 @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
 @dependency.template("io.micronaut", "micronaut-http-netty", "compile", null)
+    } else {
+@dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null)
+    }
 }
 @if (features.contains("azure-function")) {
 @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null)
@@ -313,10 +319,10 @@ List<Property> properties
 @if (features.contains("alexa-function")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "compile", null)
 }
-@if (features.contains("aws-lambda")) {
+@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut", "micronaut-function-aws", "compile", null)
 }
-@if (features.contains("aws-api-gateway-lambda-proxy")) {
+@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null)
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
@@ -607,9 +613,9 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
             <path>
-              <groupId>io.micronaut.picocli</groupId>
-              <artifactId>micronaut-picocli</artifactId>
-              <version>${micronaut.picocli.version}</version>
+              <groupId>info.picocli</groupId>
+              <artifactId>picocli-codegen</artifactId>
+              <version>${picocli.version}</version>
             </path>
 }
 @if (features.contains("data")) {
@@ -658,13 +664,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </path>
-}
-@if (features.contains("picocli")) {
-                <path>
-                  <groupId>io.micronaut.picocli</groupId>
-                  <artifactId>micronaut-picocli</artifactId>
-                  <version>${micronaut.picocli.version}</version>
                 </path>
 }
 @if (features.contains("data")) {
@@ -730,9 +729,9 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.picocli</groupId>
-                    <artifactId>micronaut-picocli</artifactId>
-                    <version>${micronaut.picocli.version}</version>
+                    <groupId>info.picocli</groupId>
+                    <artifactId>picocli-codegen</artifactId>
+                    <version>${picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {
@@ -796,13 +795,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("picocli")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.picocli</groupId>
-                  <artifactId>micronaut-picocli</artifactId>
-                  <version>${micronaut.picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {

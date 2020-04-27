@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.security
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class SecuritySessionSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle security-session feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['security-session'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-security-session")')
@@ -24,7 +25,7 @@ class SecuritySessionSpec extends BeanContextSpec {
     @Unroll
     void 'test maven security-session feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['security-session'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), []).render().toString()
 
         then:
         template.contains("""

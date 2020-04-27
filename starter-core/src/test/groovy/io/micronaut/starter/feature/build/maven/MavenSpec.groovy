@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.build.maven
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
@@ -11,7 +12,7 @@ class MavenSpec extends BeanContextSpec {
     void "test annotation processor dependencies"() {
         when:
         Features features = getFeatures([], null, null, BuildTool.MAVEN)
-        String template = pom.template(buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
 
         then:
         template.contains("""
@@ -31,7 +32,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
-        template = pom.template(buildProject(), features, []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
 
         then:
         template.contains("""
@@ -51,7 +52,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
-        template = pom.template(buildProject(), features, []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
 
         then:
         template.contains("""

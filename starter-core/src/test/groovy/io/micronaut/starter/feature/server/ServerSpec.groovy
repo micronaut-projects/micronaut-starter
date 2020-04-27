@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.server
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle server feature #serverFeature'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures([serverFeature])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature])).render().toString()
 
         then:
         template.contains(dependency)
@@ -27,7 +28,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test maven server feature #serverFeature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures([serverFeature]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), []).render().toString()
 
         then:
         template.contains("""
@@ -39,7 +40,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -51,7 +52,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

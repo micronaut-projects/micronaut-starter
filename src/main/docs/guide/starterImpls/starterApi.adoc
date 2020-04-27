@@ -1,0 +1,15 @@
+This project uses https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html[Micronaut's OpenAPI] support to generate an https://www.openapis.org[OpenAPI specification]; a broadly adopted industry standard to describe APIs.
+
+Run:
+
+[source, bash]
+----
+$ ./gradlew starter-api:classes
+----
+
+You can open the OPEN API specification in YAML format:
+
+[source, bash]
+----
+$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml
+----

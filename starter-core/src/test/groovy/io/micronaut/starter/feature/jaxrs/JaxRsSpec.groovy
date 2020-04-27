@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.jaxrs
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class JaxRsSpec extends BeanContextSpec {
     @Unroll
     void 'test jax-rs with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['jax-rs'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
@@ -26,7 +27,7 @@ class JaxRsSpec extends BeanContextSpec {
 
     void 'test maven jax-rs feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['jax-rs'], Language.JAVA), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.JAVA), []).render().toString()
 
         then:
         template.contains("""
@@ -52,7 +53,7 @@ class JaxRsSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(['jax-rs'], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -71,7 +72,7 @@ class JaxRsSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(buildProject(), getFeatures(['jax-rs'], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""

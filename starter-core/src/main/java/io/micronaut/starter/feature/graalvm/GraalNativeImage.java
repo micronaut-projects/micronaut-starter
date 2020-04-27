@@ -21,7 +21,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
@@ -51,11 +50,15 @@ public class GraalNativeImage implements Feature {
 
     protected boolean shouldApplyFeature(FeatureContext featureContext, Class feature) {
         if (feature == AwsLambdaCustomRuntime.class) {
-            if ((
-                    (featureContext.getApplicationType() == ApplicationType.FUNCTION && featureContext.isPresent(AwsLambda.class)) ||
-                    (featureContext.getApplicationType() == ApplicationType.DEFAULT && featureContext.isPresent(AwsApiGatewayLambdaProxy.class))
-            ) && awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
-                    !featureContext.isPresent(feature)) {
+            if (
+                    (
+                            featureContext.getApplicationType() == ApplicationType.FUNCTION ||
+                                    featureContext.getApplicationType() == ApplicationType.DEFAULT
+                    ) &&
+                            featureContext.isPresent(AwsLambda.class) &&
+                            awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
+                            !featureContext.isPresent(feature)
+            ) {
                     return true;
             }
         }
@@ -80,11 +83,12 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        ApplicationType applicationType = generatorContext.getApplicationType();
         RockerModel dockerfileRockerModel;
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
             dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
             RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
-            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel));
+            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 
         } else {
             dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
@@ -94,8 +98,7 @@ public class GraalNativeImage implements Feature {
         generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
 
         generatorContext.addTemplate("nativeImageProperties",
-                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties",
-                        nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
+                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties", nativeImageProperties.template(applicationType, generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
     }
@@ -106,7 +109,7 @@ public class GraalNativeImage implements Feature {
     }
 
     protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
-        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
+        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
     }
 
     @Override

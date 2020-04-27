@@ -125,7 +125,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
     @Unroll
     void 'test gradle aws-lambda-custom-runtime feature for language=#language and application: default'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
@@ -137,7 +137,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
     @Unroll
     void 'test gradle aws-lambda-custom-runtime feature for language=#language and application: function'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
@@ -149,7 +149,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
     @Unroll
     void 'test maven aws-lambda-custom-runtime feature for language=#language and application: #applicationType'(Language language, ApplicationType applicationType) {
         when:
-        String template = pom.template(buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.MAVEN,applicationType), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.MAVEN,applicationType), []).render().toString()
 
         then:
         template.contains("""

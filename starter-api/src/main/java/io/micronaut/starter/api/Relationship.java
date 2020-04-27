@@ -29,7 +29,8 @@ import java.util.Locale;
 public enum Relationship implements Named, CharSequence {
     SELF,
     CREATE,
-    PREVIEW;
+    PREVIEW,
+    DIFF;
 
     @NonNull
     @Override

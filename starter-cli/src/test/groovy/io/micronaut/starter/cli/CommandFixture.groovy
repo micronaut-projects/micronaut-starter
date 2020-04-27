@@ -31,10 +31,11 @@ trait CommandFixture {
         )
     }
 
-    void generateDefaultProject(Language lang,
-                                BuildTool buildTool = BuildTool.GRADLE,
-                                List<String> features = []) {
-        beanContext.getBean(ProjectGenerator).generate(ApplicationType.DEFAULT,
+    void generateProject(Language lang,
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         List<String> features = [],
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
                 features,
@@ -43,9 +44,10 @@ trait CommandFixture {
         )
     }
 
-    void generateDefaultProject(Options options,
-                                List<String> features = []) {
-        beanContext.getBean(ProjectGenerator).generate(ApplicationType.DEFAULT,
+    void generateProject(Options options,
+                         List<String> features = [],
+                         ApplicationType applicationType = ApplicationType.DEFAULT) {
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
                 features,

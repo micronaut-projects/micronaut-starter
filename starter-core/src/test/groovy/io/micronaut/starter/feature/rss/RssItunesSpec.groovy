@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.rss
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class RssItunesSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle rss-itunes-podcast feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['rss-itunes-podcast'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-itunespodcast")')
@@ -23,7 +24,7 @@ class RssItunesSpec extends BeanContextSpec {
     @Unroll
     void 'test maven rss-itunes-podcast feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['rss-itunes-podcast'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language), []).render().toString()
 
         then:
         template.contains("""

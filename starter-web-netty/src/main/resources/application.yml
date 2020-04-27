@@ -13,4 +13,11 @@ micronaut:
             - ^http(|s):\/\/micronaut\.io$
           allowedMethods:
             - GET
+gcp:
+  http:
+    client:
+      auth:
+        patterns:
+          - /analytics/**
+
 

@@ -53,6 +53,7 @@ public class Maven implements BuildFeature {
         generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
 
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
+                generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
                 generatorContext.getBuildProperties().getProperties()

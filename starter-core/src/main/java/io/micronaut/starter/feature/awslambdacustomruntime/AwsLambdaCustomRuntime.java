@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
 import com.fizzed.rocker.RockerModel;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -24,30 +25,32 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
+import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class AwsLambdaCustomRuntime implements ApplicationFeature {
+public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature {
+    public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
+
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
 
-    private final AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy;
+    private final AwsLambda awsLambda;
 
-    public AwsLambdaCustomRuntime(AwsApiGatewayLambdaProxy awsApiGatewayLambdaProxy) {
-        this.awsApiGatewayLambdaProxy = awsApiGatewayLambdaProxy;
+    public AwsLambdaCustomRuntime(AwsLambda awsLambda) {
+        this.awsLambda = awsLambda;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (awsApiGatewayLambdaProxy.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsApiGatewayLambdaProxy.class)) {
-            featureContext.addFeature(awsApiGatewayLambdaProxy);
+        if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
+            featureContext.addFeature(awsLambda);
         }
     }
 
@@ -71,32 +74,32 @@ public class AwsLambdaCustomRuntime implements ApplicationFeature {
         return "Adds support for deploying a Micronaut Function to a Custom AWS Lambda Runtime";
     }
 
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return (applicationType == ApplicationType.FUNCTION ||
-                applicationType == ApplicationType.DEFAULT);
-    }
-
     @SuppressWarnings("EmptyBlock")
     @Override
     public void apply(GeneratorContext generatorContext) {
         ApplicationFeature.super.apply(generatorContext);
-
+        ApplicationType applicationType = generatorContext.getApplicationType();
         Project project = generatorContext.getProject();
         if (generatorContext.getFeatures().isFeaturePresent(AwsLambda.class)) {
             addBookLambdaRuntime(generatorContext, project);
         }
-        RockerModel bootstrapRockerModel = bootstrap.template(generatorContext.getProject(), generatorContext.getBuildTool(), generatorContext.getFeatures());
+        addBootstrap(generatorContext, applicationType);
+    }
+
+    private void addBootstrap(GeneratorContext generatorContext, ApplicationType applicationType) {
+        RockerModel bootstrapRockerModel = bootstrap.template(applicationType, generatorContext.getProject(), generatorContext.getBuildTool(), generatorContext.getFeatures());
         generatorContext.addTemplate("bootstrap", new RockerTemplate("bootstrap", bootstrapRockerModel));
     }
 
     @Override
-    public String mainClassName(Project project, Features features) {
-        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
-            return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
-        }
+    @Nullable
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         if (features.isFeaturePresent(AwsLambda.class)) {
-            return project.getPackageName() + ".BookLambdaRuntime";
+            if (applicationType == ApplicationType.DEFAULT) {
+                return AwsLambdaCustomRuntime.MAIN_CLASS_NAME;
+            } else if (applicationType == ApplicationType.FUNCTION) {
+                return project.getPackageName() + ".BookLambdaRuntime";
+            }
         }
         throw new ConfigurationException("aws-lambda-custom-runtime should be used together with aws-lambda or aws-gateway-lambda-proxy");
     }

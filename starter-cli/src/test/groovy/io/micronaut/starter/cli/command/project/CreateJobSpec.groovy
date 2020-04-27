@@ -20,7 +20,7 @@ class CreateJobSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a job - #language.getName()"(Language language) {
-        generateDefaultProject(language)
+        generateProject(language)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateJobCommand command = new CreateJobCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

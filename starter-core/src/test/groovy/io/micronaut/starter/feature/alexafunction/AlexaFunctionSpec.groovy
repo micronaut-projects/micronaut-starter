@@ -40,7 +40,7 @@ class AlexaFunctionSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle alexa-function feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['alexa-function'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['alexa-function'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-alexa")')
@@ -52,7 +52,7 @@ class AlexaFunctionSpec extends BeanContextSpec {
     @Unroll
     void 'test maven alexa-function feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['alexa-function'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['alexa-function'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
 
         then:
         template.contains("""

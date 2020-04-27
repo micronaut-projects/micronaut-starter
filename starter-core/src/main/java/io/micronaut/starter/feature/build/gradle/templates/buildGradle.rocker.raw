@@ -3,8 +3,10 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
+@import io.micronaut.starter.application.ApplicationType
 
 @args (
+ApplicationType applicationType,
 Project project,
 Features features
 )
@@ -123,10 +125,14 @@ dependencies {
     @dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "implementation", null)
 }
 @if (features.contains("google-cloud-function")) {
+    @if (features.contains("google-cloud-function-http")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
     @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
+    }
+    } else {
+    @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "implementation", null)
     }
 }
 @if (features.contains("azure-function")) {
@@ -337,10 +343,10 @@ implementation("com.microsoft.azure.functions:azure-functions-java-library")
 @if (features.contains("alexa-function")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
-@if (features.contains("aws-lambda")) {
+@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut", "micronaut-function-aws", "implementation", null)
 }
-@if (features.contains("aws-api-gateway-lambda-proxy")) {
+@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "implementation", null)
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
@@ -420,7 +426,9 @@ test.classpath += configurations.developmentOnly
 @if (features.contains("google-cloud-function")) {
 mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
 } else {
-mainClassName = "@features.application().mainClassName(project, features)"
+@if (features.application().mainClassName(applicationType, project, features)!=null) {
+mainClassName = "@features.application().mainClassName(applicationType, project, features)"
+}
 }
 }
 

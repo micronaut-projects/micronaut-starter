@@ -1,0 +1,22 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import spock.lang.*
+
+class FunctionSpec extends Specification {
+
+    @@Shared @@AutoCleanup
+    Function function = new Function()
+
+    void "test function"() {
+        expect:"The function executes correctly"
+        true // test logic here
+    }
+}

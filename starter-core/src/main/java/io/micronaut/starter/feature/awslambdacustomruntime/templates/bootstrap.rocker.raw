@@ -1,8 +1,10 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.application.ApplicationType
 
 @args (
+ApplicationType applicationType,
 Project project,
 BuildTool buildTool,
 Features features
@@ -13,8 +15,8 @@ set -euo pipefail
 ./@project.getName() -Xmx128m -Djava.library.path=$(pwd)
 } else {
 @if (buildTool.equals(BuildTool.GRADLE)) {
-java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.application().mainClassName(project,features)
+java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.application().mainClassName(applicationType,project,features)
 } else {
-java -XX:TieredStopAtLevel=1 -noverify -cp @(project.getName()).jar @features.application().mainClassName(project,features)
+java -XX:TieredStopAtLevel=1 -noverify -cp @(project.getName()).jar @features.application().mainClassName(applicationType,project,features)
 }
 }

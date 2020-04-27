@@ -11,7 +11,7 @@ class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
     @Unroll
     void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
-        generateDefaultProject(language, buildTool, ['asciidoctor'])
+        generateProject(language, buildTool, ['asciidoctor'])
 
         when:
         if (buildTool == BuildTool.GRADLE) {

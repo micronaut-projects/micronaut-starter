@@ -53,6 +53,7 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
         generatorContext.addTemplate("build", new RockerTemplate("build.gradle", buildGradle.template(
+                generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures()
         )));

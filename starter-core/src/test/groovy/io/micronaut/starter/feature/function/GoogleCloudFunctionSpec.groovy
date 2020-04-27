@@ -55,10 +55,47 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         build.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))')
         build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
         build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
+        build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
+        !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !build.contains('implementation("io.micronaut:micronaut-http-client")')
         output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+        output.get("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+                .contains("HelloFunctionTest")
+        readme?.contains("Micronaut and Google Cloud Function")
+        readme?.contains(BuildTool.GRADLE.getJarDirectory())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'test gradle google cloud function feature for language=#language - raw function'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language),
+                ['google-cloud-function']
+        )
+        String build = output['build.gradle']
+        def readme = output["README.md"]
+
+        then:
+        build.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))')
+        build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
+        build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
+        !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
+        build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
+        !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
+        !build.contains('implementation("io.micronaut:micronaut-http-client")')
+        !output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
+        !output.containsKey("$testSrcDir/example/micronaut/HelloFunctionTest.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
         readme?.contains("Micronaut and Google Cloud Function")
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 

@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.elasticsearch
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class ElasticsearchSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle elasticsearch feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['elasticsearch'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-elasticsearch")')
@@ -24,7 +25,7 @@ class ElasticsearchSpec extends BeanContextSpec {
     @Unroll
     void 'test maven elasticsearch feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['elasticsearch'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language), []).render().toString()
 
         then:
         template.contains("""

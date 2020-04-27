@@ -21,6 +21,14 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinTest;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerSpock;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
@@ -42,7 +50,7 @@ import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class AwsLambda implements Feature, DefaultFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
 
@@ -62,17 +70,36 @@ public class AwsLambda implements Feature, DefaultFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return (applicationType == ApplicationType.FUNCTION);
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         Project project = generatorContext.getProject();
         addBook(generatorContext, project);
         addBookSaved(generatorContext, project);
-        addRequestHandler(generatorContext, project);
-        addTest(generatorContext, project);
+        ApplicationType applicationType = generatorContext.getApplicationType();
+        if (applicationType == ApplicationType.DEFAULT) {
+            addBookController(generatorContext, project);
+            addBookControllerTest(generatorContext, project);
+        } else if (applicationType == ApplicationType.FUNCTION) {
+            addRequestHandler(generatorContext, project);
+            addTest(generatorContext, project);
+        }
+    }
+
+    private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookController");
+        generatorContext.addTestTemplate("testBookController", testSource,
+                bookControllerJavaJunit.template(project),
+                bookControllerKotlinJunit.template(project),
+                bookControllerGroovyJunit.template(project),
+                bookControllerKotlinTest.template(project),
+                bookControllerSpock.template(project));
+    }
+
+    private void addBookController(GeneratorContext generatorContext, Project project) {
+        String bookControllerFile = generatorContext.getSourcePath("/{packagePath}/BookController");
+        generatorContext.addTemplate("bookController", bookControllerFile,
+                bookControllerJava.template(project),
+                bookControllerKotlin.template(project),
+                bookControllerGroovy.template(project));
     }
 
     private void addTest(GeneratorContext generatorContext, Project project) {
@@ -103,9 +130,7 @@ public class AwsLambda implements Feature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.FUNCTION && selectedFeatures.stream().noneMatch(feature ->
-                feature instanceof FunctionFeature && !feature.getName().equals(getName())
-        );
+        return applicationType == ApplicationType.FUNCTION;
     }
 
     @Override

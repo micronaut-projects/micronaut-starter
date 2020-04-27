@@ -1,0 +1,65 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.amazonaws.serverless.exceptions.ContainerInitializationException
+import com.amazonaws.serverless.proxy.internal.testutils.AwsProxyRequestBuilder
+import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse
+import com.amazonaws.services.lambda.runtime.Context
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.ObjectMapper
+import io.micronaut.http.HttpHeaders
+import io.micronaut.http.HttpMethod
+import io.micronaut.http.HttpStatus
+import io.micronaut.http.MediaType
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import io.micronaut.function.aws.proxy.MicronautLambdaHandler
+
+public class BookControllerTest {
+
+    private static MicronautLambdaHandler handler
+    private static Context lambdaContext = new MockLambdaContext()
+    private static ObjectMapper objectMapper
+
+    @@BeforeAll
+    public static void setupSpec() {
+        try {
+            handler = new MicronautLambdaHandler()
+            objectMapper = handler.applicationContext.getBean(ObjectMapper)
+
+        } catch (ContainerInitializationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @@AfterAll
+    public static void cleanupSpec() {
+        handler.applicationContext.close()
+    }
+
+    @@Test
+    void testSaveBook() throws JsonProcessingException {
+        Book book = new Book()
+        book.name = "Building Microservices"
+        String json = objectMapper.writeValueAsString(book)
+        AwsProxyRequest request = new AwsProxyRequestBuilder("/", HttpMethod.POST.toString())
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .body(json).build()
+        AwsProxyResponse response = handler.handleRequest(request, lambdaContext)
+        Assertions.assertEquals(HttpStatus.OK.code, response.statusCode)
+        BookSaved bookSaved = objectMapper.readValue(response.body, BookSaved)
+        Assertions.assertEquals(bookSaved.name, book.name);
+        Assertions.assertNotNull(bookSaved.isbn);
+    }
+}
