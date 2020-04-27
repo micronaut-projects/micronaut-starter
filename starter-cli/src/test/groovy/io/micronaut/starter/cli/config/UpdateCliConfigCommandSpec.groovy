@@ -18,7 +18,7 @@ class UpdateCliConfigCommandSpec extends CommandSpec implements CommandFixture {
     BeanContext beanContext = BeanContext.run()
 
     void "test old cli config conversion - gradle"() {
-        generateDefaultProject(Language.JAVA)
+        generateProject(Language.JAVA)
         File cliYaml = new File(dir, "micronaut-cli.yml").getCanonicalFile()
         //Replace the config with the old style
         cliYaml.write("""profile: service
@@ -59,7 +59,7 @@ features: \\[.*?\\]
     }
 
     void "test old cli config conversion - maven"() {
-        generateDefaultProject(Language.JAVA, BuildTool.MAVEN)
+        generateProject(Language.JAVA, BuildTool.MAVEN)
         File cliYaml = new File(dir, "micronaut-cli.yml").getCanonicalFile()
         //Replace the config with the old style
         cliYaml.write("""profile: service

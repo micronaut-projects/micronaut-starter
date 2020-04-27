@@ -20,7 +20,7 @@ class CreateClientSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a client - #language.getName()"(Language language) {
-        generateDefaultProject(language, BuildTool.GRADLE)
+        generateProject(language, BuildTool.GRADLE)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateClientCommand command = new CreateClientCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

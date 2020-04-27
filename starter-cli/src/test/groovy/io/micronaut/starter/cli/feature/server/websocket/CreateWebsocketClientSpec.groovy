@@ -20,7 +20,7 @@ class CreateWebsocketClientSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a websocket client - #language.getName()"(Language language) {
-        generateDefaultProject(language, BuildTool.GRADLE)
+        generateProject(language, BuildTool.GRADLE)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateWebsocketClientCommand command = new CreateWebsocketClientCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

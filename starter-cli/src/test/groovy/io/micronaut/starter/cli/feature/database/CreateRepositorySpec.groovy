@@ -19,7 +19,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating a repository - #language.getName()"(Language language) {
-        generateDefaultProject(language, BuildTool.GRADLE, ['data-jpa'])
+        generateProject(language, BuildTool.GRADLE, ['data-jpa'])
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateRepositoryCommand command = new CreateRepositoryCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -39,7 +39,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
     }
 
     void "test creating a repository with an invalid id type"() {
-        generateDefaultProject(Language.JAVA, BuildTool.GRADLE, ['data-jpa'])
+        generateProject(Language.JAVA, BuildTool.GRADLE, ['data-jpa'])
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateRepositoryCommand command = new CreateRepositoryCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

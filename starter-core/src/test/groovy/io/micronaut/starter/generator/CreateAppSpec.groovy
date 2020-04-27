@@ -9,7 +9,7 @@ class CreateAppSpec extends CommandSpec {
     @Unroll
     void 'test basic create-app for #lang and #build'(Language lang, BuildTool build) {
         given:
-        generateDefaultProject(lang, build)
+        generateProject(lang, build)
 
         when:
         if (build == BuildTool.GRADLE) {
