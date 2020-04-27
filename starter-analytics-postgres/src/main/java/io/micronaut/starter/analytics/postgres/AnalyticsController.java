@@ -83,7 +83,8 @@ public class AnalyticsController {
                 generated.getLanguage(),
                 generated.getBuildTool(),
                 generated.getTestFramework(),
-                generated.getJdkVersion()
+                generated.getJdkVersion(),
+                generated.getMicronautVersion()
         );
         Application saved = applicationRepository.save(application);
         List<Feature> features = generated.getSelectedFeatures().stream()
