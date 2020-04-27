@@ -8,6 +8,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
 
 trait CommandFixture {
@@ -26,10 +27,13 @@ trait CommandFixture {
         )
     }
 
-    void generateDefaultProject(Language lang, BuildTool buildTool = BuildTool.GRADLE, List<String> features = []) {
+    void generateDefaultProject(Language lang,
+                                BuildTool buildTool = BuildTool.GRADLE,
+                                List<String> features = [],
+                                TestFramework testFramework = null) {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.DEFAULT,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, null, buildTool),
+                new Options(lang, testFramework, buildTool),
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
