@@ -45,7 +45,7 @@ public class Rss implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.RSS;
     }
 }

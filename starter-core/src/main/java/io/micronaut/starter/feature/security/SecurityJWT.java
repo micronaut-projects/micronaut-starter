@@ -53,7 +53,7 @@ public class SecurityJWT implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.SECURITY;
     }
 }

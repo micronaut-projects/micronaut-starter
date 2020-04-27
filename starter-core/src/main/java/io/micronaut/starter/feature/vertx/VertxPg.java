@@ -56,7 +56,7 @@ public class VertxPg implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.DATABASE;
     }
 }

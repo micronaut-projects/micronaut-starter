@@ -66,7 +66,7 @@ public class Neo4jGorm implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.DATABASE;
     }
 

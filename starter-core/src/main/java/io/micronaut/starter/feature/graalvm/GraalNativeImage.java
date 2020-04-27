@@ -113,7 +113,7 @@ public class GraalNativeImage implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.PACKAGING;
     }
 }

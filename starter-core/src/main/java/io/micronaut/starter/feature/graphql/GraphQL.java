@@ -51,7 +51,7 @@ public class GraphQL implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.HTTP_SERVER;
     }
 }

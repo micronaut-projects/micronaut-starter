@@ -52,7 +52,7 @@ public class Jib implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.PACKAGING;
     }
 }

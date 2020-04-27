@@ -42,7 +42,7 @@ public interface DataFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.DATABASE;
     }
 }

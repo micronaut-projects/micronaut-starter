@@ -26,7 +26,7 @@ public interface ConfigurationFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.CONFIGURATION;
     }
 }

@@ -61,7 +61,7 @@ public abstract class JdbcFeature implements OneOfFeature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.DATABASE;
     }
 

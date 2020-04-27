@@ -121,7 +121,7 @@ public interface Feature extends Named, Ordered, Described {
     /**
      * @return The {@link Category} to which the feature belongs to.
      */
-    default Category getCategory() {
+    default String getCategory() {
         return Category.OTHER;
     }
 

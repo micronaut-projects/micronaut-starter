@@ -67,7 +67,7 @@ public class FileWatch implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.DEV_TOOLS;
     }
 }

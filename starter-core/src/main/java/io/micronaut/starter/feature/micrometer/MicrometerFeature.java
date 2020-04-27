@@ -49,7 +49,7 @@ public abstract class MicrometerFeature implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.TRACING;
     }
 }

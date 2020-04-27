@@ -32,7 +32,7 @@ public interface MigrationFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.DATABASE;
     }
 }

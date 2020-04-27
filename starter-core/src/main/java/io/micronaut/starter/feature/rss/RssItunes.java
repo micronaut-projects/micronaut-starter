@@ -45,7 +45,7 @@ public class RssItunes implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.RSS;
     }
 

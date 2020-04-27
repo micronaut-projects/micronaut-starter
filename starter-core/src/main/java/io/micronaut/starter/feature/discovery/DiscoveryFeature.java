@@ -32,7 +32,7 @@ public interface DiscoveryFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.SERVICE_DISCOVERY;
     }
 }

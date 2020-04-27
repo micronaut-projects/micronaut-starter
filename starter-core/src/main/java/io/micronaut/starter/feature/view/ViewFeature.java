@@ -32,7 +32,7 @@ public interface ViewFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.VIEW;
     }
 }

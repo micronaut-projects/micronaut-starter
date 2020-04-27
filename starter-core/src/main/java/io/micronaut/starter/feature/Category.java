@@ -15,52 +15,37 @@
  */
 package io.micronaut.starter.feature;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.core.naming.Named;
-
 /**
  * Category to which a feature belongs to.
  *
  * @author Álvaro Sánchez-Mariscal
  * @since 2.0.0
  */
-public enum Category implements Named {
+public class Category {
 
-    AWS                 ("Amazon Web Services"),
-    CACHE               ("Cache"),
-    CIRCUIT_BREAKER     ("Circuit Breaker"),
-    CONFIGURATION       ("Configuration"),
-    DATABASE            ("Database"),
-    DEV_TOOLS           ("Development Tools"),
-    DISTRIBUTED_CONFIG  ("Distributed Configuration"),
-    DOCUMENTATION       ("Documentation"),
-    FUNCTION            ("Cloud Function"),
-    HTTP_CLIENT         ("HTTP Client"),
-    HTTP_SERVER         ("HTTP Server"),
-    LOGGING             ("Logging"),
-    MANAGEMENT          ("Management"),
-    MESSAGING           ("Messaging"),
-    PACKAGING           ("Packaging"),
-    RSS                 ("RSS Feeds"),
-    SEARCH              ("Search Engine"),
-    SECURITY            ("Security"),
-    SERVICE_DISCOVERY   ("Service Discovery"),
-    TRACING             ("Distributed Tracing"),
-    VALIDATION          ("Validation"),
-    VIEW                ("View Rendering"),
+    public static final String AWS                  = "Amazon Web Services";
+    public static final String CACHE                = "Cache";
+    public static final String CIRCUIT_BREAKER      = "Circuit Breaker";
+    public static final String CONFIGURATION        = "Configuration";
+    public static final String DATABASE             = "Database";
+    public static final String DEV_TOOLS            = "Development Tools";
+    public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
+    public static final String DOCUMENTATION        = "Documentation";
+    public static final String FUNCTION             = "Cloud Function";
+    public static final String HTTP_CLIENT          = "HTTP Client";
+    public static final String HTTP_SERVER          = "HTTP Server";
+    public static final String LOGGING              = "Logging";
+    public static final String MANAGEMENT           = "Management";
+    public static final String MESSAGING            = "Messaging";
+    public static final String PACKAGING            = "Packaging";
+    public static final String RSS                  = "RSS Feeds";
+    public static final String SEARCH               = "Search Engine";
+    public static final String SECURITY             = "Security";
+    public static final String SERVICE_DISCOVERY    = "Service Discovery";
+    public static final String TRACING              = "Distributed Tracing";
+    public static final String VALIDATION           = "Validation";
+    public static final String VIEW                 = "View Rendering";
 
-    OTHER               ("Other");
-
-    private final String name;
-
-    Category(String name) {
-        this.name = name;
-    }
-
-    @NonNull
-    @Override
-    public String getName() {
-        return name;
-    }
+    public static final String OTHER                = "Other";
 
 }

@@ -45,7 +45,7 @@ public class AlexaHttpServer implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.AWS;
     }
 

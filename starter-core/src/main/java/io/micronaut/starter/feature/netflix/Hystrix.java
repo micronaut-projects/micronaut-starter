@@ -51,7 +51,7 @@ public class Hystrix implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.CIRCUIT_BREAKER;
     }
 }

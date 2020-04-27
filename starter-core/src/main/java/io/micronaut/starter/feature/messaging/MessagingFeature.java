@@ -33,7 +33,7 @@ public interface MessagingFeature extends Feature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.MESSAGING;
     }
 }

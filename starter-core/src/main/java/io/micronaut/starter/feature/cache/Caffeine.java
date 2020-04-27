@@ -45,7 +45,7 @@ public class Caffeine implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.CACHE;
     }
 }

@@ -113,7 +113,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.AWS;
     }
 }

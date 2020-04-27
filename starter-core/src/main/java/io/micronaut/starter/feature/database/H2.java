@@ -40,7 +40,7 @@ public class H2 implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.DATABASE;
     }
 

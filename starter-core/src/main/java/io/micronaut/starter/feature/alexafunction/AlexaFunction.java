@@ -48,7 +48,7 @@ public class AlexaFunction implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.AWS;
     }
 }

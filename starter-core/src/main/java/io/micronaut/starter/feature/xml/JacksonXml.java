@@ -45,7 +45,7 @@ public class JacksonXml implements Feature {
     }
 
     @Override
-    public Category getCategory() {
+    public String getCategory() {
         return Category.VIEW;
     }
 }

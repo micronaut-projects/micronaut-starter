@@ -32,7 +32,7 @@ public interface ReloadingFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.DEV_TOOLS;
     }
 }

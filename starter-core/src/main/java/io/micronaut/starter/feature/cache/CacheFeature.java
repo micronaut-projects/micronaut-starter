@@ -32,7 +32,7 @@ public interface CacheFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.CACHE;
     }
 }

@@ -32,7 +32,7 @@ public interface ServerFeature extends OneOfFeature {
     }
 
     @Override
-    default Category getCategory() {
+    default String getCategory() {
         return Category.HTTP_SERVER;
     }
 }
