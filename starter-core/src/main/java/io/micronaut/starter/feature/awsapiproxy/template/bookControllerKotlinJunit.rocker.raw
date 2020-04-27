@@ -18,6 +18,7 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 
 class BookRequestHandlerTest {
 

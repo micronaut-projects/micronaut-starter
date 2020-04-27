@@ -21,6 +21,7 @@ import io.micronaut.http.MediaType
 import spock.lang.Specification
 import spock.lang.Shared
 import spock.lang.AutoCleanup
+import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 
 class BookControllerSpec extends Specification {
 
