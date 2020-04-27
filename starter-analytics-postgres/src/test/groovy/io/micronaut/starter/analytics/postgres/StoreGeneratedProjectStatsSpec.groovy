@@ -16,6 +16,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import io.micronaut.test.annotation.MicronautTest
 import io.micronaut.test.support.TestPropertyProvider
 import org.testcontainers.containers.PostgreSQLContainer
@@ -83,6 +84,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         application.jdkVersion == generated.jdkVersion
         application.testFramework == generated.testFramework
         application.features.find { it.name == 'azure-function' }
+        application.micronautVersion == VersionInfo.micronautVersion
         application.dateCreated
 
         when:
