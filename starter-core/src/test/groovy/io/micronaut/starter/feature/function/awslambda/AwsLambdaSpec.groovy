@@ -20,24 +20,21 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
 
     @Unroll
-    void "aws-lambda does not support #description"(ApplicationType applicationType,
-                                                    String description) {
+    void "aws-lambda does not support #description"(ApplicationType applicationType, String description) {
         expect:
         !awsLambda.supports(applicationType)
 
         where:
-        applicationType << [
-                ApplicationType.DEFAULT,
-                ApplicationType.CLI,
-                ApplicationType.GRPC,
-                ApplicationType.MESSAGING
-        ]
+        applicationType << ApplicationType.values().toList() -  [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
         description = applicationType.name
     }
 
-    void "aws-lambda supports function application type"() {
+    void "aws-lambda supports function application type"(ApplicationType applicationType) {
         expect:
-        awsLambda.supports(ApplicationType.FUNCTION)
+        awsLambda.supports(applicationType)
+
+        where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
     }
 
     @Unroll
@@ -85,7 +82,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test maven aws-lambda feature for language=#language'(Language language) {
+    void 'function with maven and aws-lambda feature for language=#language'(Language language) {
         when:
         String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
 
@@ -150,6 +147,162 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'Application file is NOT generated for a default application type with gradle and features aws-lambda for language: #description'(Language language, String extension, String description) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['aws-lambda']
+        )
+
+        then:
+        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+
+        when:
+        def buildGradle = output['build.gradle']
+
+        then:
+        buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        description = language.name
+    }
+
+    @Unroll
+    void 'aws-lambda features includes dependency to micronaut-function-aws-api-proxy for function for gradle and language=#language'(Language language) {
+        when:
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
+
+        then:
+        template.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
+        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+
+        where:
+        language << Language.values()
+    }
+
+    @Unroll
+    void 'test maven micronaut-function-aws-api-proxy feature for language=#language'(Language language) {
+        when:
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), []).render().toString()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.aws</groupId>
+      <artifactId>micronaut-function-aws-api-proxy</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+
+        where:
+        language << Language.values()
+    }
+
+    @Unroll
+    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language),
+                ['aws-lambda', 'graalvm']
+        )
+        String build = output['build.gradle']
+
+        then:
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'app with maven and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['aws-lambda', 'graalvm']
+        )
+        String build = output['pom.xml']
+
+        then:
+        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+        build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
+        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'app with gradle and feature aws-lambda for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language),
+                ['aws-lambda']
+        )
+        String build = output['build.gradle']
+
+        then:
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+
+        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'app with maven and feature aws-lambda for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['aws-lambda']
+        )
+        String build = output['pom.xml']
+
+        then:
+        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+
+        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
 
         where:
         language << Language.values().toList()

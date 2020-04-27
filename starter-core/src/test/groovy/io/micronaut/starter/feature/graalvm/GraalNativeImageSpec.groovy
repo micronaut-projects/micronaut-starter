@@ -9,7 +9,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -219,12 +218,12 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         language << Language.values().toList()
     }
 
-    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-api-gateway-lambda-proxy" for language=#language'() {
+    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-lambda for language=#language'() {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
-                ['graalvm', 'aws-api-gateway-lambda-proxy']
+                ['graalvm', 'aws-lambda']
         )
 
         then:
@@ -235,12 +234,12 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         extension << Language.extensions()
     }
 
-    void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-api-gateway-lambda-proxy" for language=#language'() {
+    void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-lambda" for language=#language'() {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
-                ['graalvm', 'aws-api-gateway-lambda-proxy']
+                ['graalvm', 'aws-lambda']
         )
         String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
 

@@ -20,7 +20,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
@@ -50,11 +49,15 @@ public class GraalNativeImage implements Feature {
 
     protected boolean shouldApplyFeature(FeatureContext featureContext, Class feature) {
         if (feature == AwsLambdaCustomRuntime.class) {
-            if ((
-                    (featureContext.getApplicationType() == ApplicationType.FUNCTION && featureContext.isPresent(AwsLambda.class)) ||
-                    (featureContext.getApplicationType() == ApplicationType.DEFAULT && featureContext.isPresent(AwsApiGatewayLambdaProxy.class))
-            ) && awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
-                    !featureContext.isPresent(feature)) {
+            if (
+                    (
+                            featureContext.getApplicationType() == ApplicationType.FUNCTION ||
+                                    featureContext.getApplicationType() == ApplicationType.DEFAULT
+                    ) &&
+                            featureContext.isPresent(AwsLambda.class) &&
+                            awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
+                            !featureContext.isPresent(feature)
+            ) {
                     return true;
             }
         }
@@ -105,6 +108,6 @@ public class GraalNativeImage implements Feature {
     }
 
     protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
-        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsApiGatewayLambdaProxy.FEATURE_NAME_AWS_API_GATEWAY_LAMBDA_PROXY) || feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
+        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
     }
 }

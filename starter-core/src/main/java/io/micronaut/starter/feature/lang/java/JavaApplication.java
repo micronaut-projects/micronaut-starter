@@ -19,7 +19,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.awsapiproxy.AwsApiGatewayLambdaProxy;
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -29,8 +30,8 @@ public class JavaApplication implements JavaApplicationFeature {
 
     @Override
     public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
-            return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
+        if (applicationType == ApplicationType.DEFAULT && features.isFeaturePresent(AwsLambda.class)) {
+            return AwsLambdaCustomRuntime.MAIN_CLASS_NAME;
         }
         return project.getPackageName() + ".Application";
     }
@@ -56,9 +57,6 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
-            return false;
-        }
         return !generatorContext.getFeatures().hasFunctionFeature();
     }
 

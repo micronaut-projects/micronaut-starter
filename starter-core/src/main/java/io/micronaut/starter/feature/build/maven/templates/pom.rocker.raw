@@ -319,10 +319,10 @@ List<Property> properties
 @if (features.contains("alexa-function")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "compile", null)
 }
-@if (features.contains("aws-lambda")) {
+@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut", "micronaut-function-aws", "compile", null)
 }
-@if (features.contains("aws-api-gateway-lambda-proxy")) {
+@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null)
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
