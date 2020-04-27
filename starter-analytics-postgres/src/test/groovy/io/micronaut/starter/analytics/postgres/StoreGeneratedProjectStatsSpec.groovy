@@ -83,6 +83,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         application.jdkVersion == generated.jdkVersion
         application.testFramework == generated.testFramework
         application.features.find { it.name == 'azure-function' }
+        application.dateCreated
 
         when:
         def topFeatures = featureRepository.topFeatures()
