@@ -88,4 +88,8 @@ public class RequestInfo {
     public Locale getLocale() {
         return this.locale;
     }
+
+    public LinkDTO link(String uri) {
+        return new LinkDTO(getServerURL() + uri, false);
+    }
 }

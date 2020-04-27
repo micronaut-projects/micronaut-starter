@@ -167,6 +167,10 @@ public class ApplicationController implements ApplicationTypeOperations {
 
     private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures) {
         List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(requestInfo.getLocale(), type) : Collections.emptyList();
+        features.forEach(featureDTO -> featureDTO.addLink(
+                Relationship.DIFF,
+                requestInfo.link("/diff/" + type.getName() + "/feature/" + featureDTO.getName())
+        ));
         ApplicationTypeDTO dto = new ApplicationTypeDTO(
                 type, features, messageSource, MessageSource.MessageContext.of(requestInfo.getLocale())
         );
