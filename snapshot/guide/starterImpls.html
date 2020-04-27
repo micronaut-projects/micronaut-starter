@@ -86,22 +86,25 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#starterCLI"><strong>3.1</strong><span>CLI Application</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterNetty"><strong>3.2</strong><span>Web Application</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterApi"><strong>3.2</strong><span>OpenAPI Specification</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterServlet"><strong>3.3</strong><span>WAR Deployment</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterNetty"><strong>3.3</strong><span>Web Application</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudRun"><strong>3.4</strong><span>Google Cloud Run</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterServlet"><strong>3.4</strong><span>WAR Deployment</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudFunction"><strong>3.5</strong><span>Google Cloud Function</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudRun"><strong>3.5</strong><span>Google Cloud Run</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterLambda"><strong>3.6</strong><span>AWS Lambda</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudFunction"><strong>3.6</strong><span>Google Cloud Function</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterAzure"><strong>3.7</strong><span>Microsoft Azure</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterLambda"><strong>3.7</strong><span>AWS Lambda</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterAzure"><strong>3.8</strong><span>Microsoft Azure</span></a>
                     </div>
                     
                 </div>
@@ -190,7 +193,36 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.2 Web Application</h2>
+<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>3.2 OpenAPI Specification</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This project uses <a href="https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html">Micronaut&#8217;s OpenAPI</a> support to generate an <a href="https://www.openapis.org">OpenAPI specification</a>; a broadly adopted industry standard to describe APIs.</p>
+</div>
+<div class="paragraph">
+<p>Run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew starter-api:classes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can open the OPEN API specification in YAML format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml</code></pre>
+</div>
+</div>
+
+<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.3 Web Application</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
@@ -248,7 +280,7 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.3 WAR Deployment</h2>
+<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.4 WAR Deployment</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
@@ -301,7 +333,7 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.4 Google Cloud Run</h2>
+<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.5 Google Cloud Run</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
@@ -380,7 +412,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.6 Google Cloud Function</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
@@ -465,7 +497,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.6 AWS Lambda</h2>
+<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.7 AWS Lambda</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
@@ -514,7 +546,7 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 </div>
 </div>
 
-<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.7 Microsoft Azure</h2>
+<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.8 Microsoft Azure</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterAzure.adoc"'>

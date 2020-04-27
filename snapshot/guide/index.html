@@ -90,17 +90,19 @@
         
         <div class="toc-item" style="margin-left:10px" id="toc-item-starterCLI"><a href="#starterCLI"><strong>3.1</strong><span>CLI Application</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterNetty"><a href="#starterNetty"><strong>3.2</strong><span>Web Application</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterApi"><a href="#starterApi"><strong>3.2</strong><span>OpenAPI Specification</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterServlet"><a href="#starterServlet"><strong>3.3</strong><span>WAR Deployment</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterNetty"><a href="#starterNetty"><strong>3.3</strong><span>Web Application</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudRun"><a href="#starterCloudRun"><strong>3.4</strong><span>Google Cloud Run</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterServlet"><a href="#starterServlet"><strong>3.4</strong><span>WAR Deployment</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudFunction"><a href="#starterCloudFunction"><strong>3.5</strong><span>Google Cloud Function</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudRun"><a href="#starterCloudRun"><strong>3.5</strong><span>Google Cloud Run</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterLambda"><a href="#starterLambda"><strong>3.6</strong><span>AWS Lambda</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterCloudFunction"><a href="#starterCloudFunction"><strong>3.6</strong><span>Google Cloud Function</span></a></div>
         
-        <div class="toc-item" style="margin-left:10px" id="toc-item-starterAzure"><a href="#starterAzure"><strong>3.7</strong><span>Microsoft Azure</span></a></div>
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterLambda"><a href="#starterLambda"><strong>3.7</strong><span>AWS Lambda</span></a></div>
+        
+        <div class="toc-item" style="margin-left:10px" id="toc-item-starterAzure"><a href="#starterAzure"><strong>3.8</strong><span>Microsoft Azure</span></a></div>
         
         </div>
     </div>
@@ -426,7 +428,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-hikari, jdbc-dbcp, jdbc-tomcat, springloaded, jib, discovery-consul, aws-api-gateway-lambda-proxy, hibernate-gorm, micrometer-graphite, mongo-reactive, graalvm, hibernate-validator, http-client, micrometer-elastic, asciidoctor, micrometer-influx, data-jdbc, openapi, micrometer-kairos, azure-function, security-jwt, netty-server, micrometer-cloudwatch, logback, management, aws-lambda-custom-runtime, netflix-hystrix, neo4j-gorm, views-rocker, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, micrometer-dynatrace, kafka, file-watch, graphql, elasticsearch, micrometer-wavefront, cache-caffeine, rss-itunes-podcast, jetty-server, netflix-archaius, log4j2, postgres-reactive, kubernetes, cache-ehcache, micrometer-datadog, tracing-zipkin, google-cloud-function, hibernate-jpa, cassandra, micrometer-ganglia, cache-infinispan, micrometer-humio, mongo-gorm, neo4j-bolt, micrometer-appoptics, views-velocity, rabbitmq, views-soy, alexa-http-server, micrometer-atlas, views-thymeleaf, config-consul, rss, jax-rs, tracing-jaeger, tomcat-server, kafka-streams, micrometer-azure-monitor, jrebel, views-handlebars, micrometer-jmx, micrometer-stackdriver, micrometer-prometheus, views-freemarker, undertow-server, micrometer-signalfx, flyway, liquibase, discovery-eureka, data-jpa, micrometer-new-relic, netflix-ribbon, jmx, cache-hazelcast, micrometer-statsd, properties, yaml</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-hikari, jdbc-dbcp, springloaded, jib, discovery-consul, aws-api-gateway-lambda-proxy, hibernate-gorm, micrometer-graphite, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, micrometer-influx, data-jdbc, openapi, micrometer-kairos, azure-function, security-jwt, netty-server, micrometer-cloudwatch, logback, management, aws-lambda-custom-runtime, netflix-hystrix, neo4j-gorm, views-rocker, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, micrometer-dynatrace, kafka, file-watch, graphql, elasticsearch, micrometer-wavefront, cache-caffeine, rss-itunes-podcast, jetty-server, netflix-archaius, log4j2, postgres-reactive, kubernetes, cache-ehcache, micrometer-datadog, tracing-zipkin, google-cloud-function, hibernate-jpa, cassandra, micrometer-ganglia, cache-infinispan, micrometer-humio, mongo-gorm, neo4j-bolt, micrometer-appoptics, views-velocity, rabbitmq, views-soy, micrometer-elastic, alexa-http-server, micrometer-atlas, views-thymeleaf, config-consul, rss, jax-rs, tracing-jaeger, tomcat-server, kafka-streams, micrometer-azure-monitor, jrebel, views-handlebars, micrometer-jmx, micrometer-stackdriver, micrometer-prometheus, views-freemarker, undertow-server, micrometer-signalfx, flyway, liquibase, discovery-eureka, data-jpa, micrometer-new-relic, netflix-ribbon, jmx, cache-hazelcast, micrometer-statsd, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -513,7 +515,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-hikari, jdbc-dbcp, jdbc-tomcat, springloaded, jib, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, log4j2, postgres-reactive, cache-ehcache, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, kafka-streams, jrebel, flyway, liquibase, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-hikari, jdbc-dbcp, springloaded, jib, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, log4j2, postgres-reactive, cache-ehcache, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, kafka-streams, jrebel, flyway, liquibase, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -600,7 +602,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-hikari, jdbc-dbcp, jdbc-tomcat, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, azure-function, security-jwt, logback, aws-lambda-custom-runtime, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, google-cloud-function, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, alexa-function, config-consul, tracing-jaeger, aws-lambda, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-hikari, jdbc-dbcp, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, azure-function, security-jwt, logback, aws-lambda-custom-runtime, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, google-cloud-function, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, alexa-function, config-consul, tracing-jaeger, aws-lambda, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -687,7 +689,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-hikari, jdbc-dbcp, jdbc-tomcat, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, config-consul, tracing-jaeger, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-hikari, jdbc-dbcp, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, config-consul, tracing-jaeger, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -774,7 +776,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-hikari, jdbc-dbcp, jdbc-tomcat, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, config-consul, tracing-jaeger, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
+<p>The features to use. Possible values: jdbc-tomcat, jdbc-hikari, jdbc-dbcp, springloaded, jib, discovery-consul, hibernate-gorm, mongo-reactive, graalvm, hibernate-validator, http-client, asciidoctor, data-jdbc, security-jwt, logback, netflix-hystrix, neo4j-gorm, jackson-xml, vertx-mysql-client, vertx-pg-client, redis-lettuce, security-session, kafka, file-watch, graphql, elasticsearch, cache-caffeine, netflix-archaius, log4j2, postgres-reactive, cache-ehcache, tracing-zipkin, hibernate-jpa, cassandra, cache-infinispan, mongo-gorm, neo4j-bolt, rabbitmq, config-consul, tracing-jaeger, kafka-streams, jrebel, flyway, liquibase, discovery-eureka, data-jpa, netflix-ribbon, cache-hazelcast, properties, yaml</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -911,7 +913,36 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.2 Web Application</h2>
+<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>3.2 OpenAPI Specification</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This project uses <a href="https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html">Micronaut&#8217;s OpenAPI</a> support to generate an <a href="https://www.openapis.org">OpenAPI specification</a>; a broadly adopted industry standard to describe APIs.</p>
+</div>
+<div class="paragraph">
+<p>Run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew starter-api:classes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can open the OPEN API specification in YAML format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml</code></pre>
+</div>
+</div>
+
+<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.3 Web Application</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
@@ -969,7 +1000,7 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.3 WAR Deployment</h2>
+<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.4 WAR Deployment</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
@@ -1022,7 +1053,7 @@ Application generation commands are:</p>
 </div>
 </div>
 
-<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.4 Google Cloud Run</h2>
+<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.5 Google Cloud Run</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
@@ -1101,7 +1132,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.6 Google Cloud Function</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
@@ -1186,7 +1217,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.6 AWS Lambda</h2>
+<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.7 AWS Lambda</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
@@ -1235,7 +1266,7 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 </div>
 </div>
 
-<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.7 Microsoft Azure</h2>
+<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.8 Microsoft Azure</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterAzure.adoc"'>

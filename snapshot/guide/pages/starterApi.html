@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3.6 Google Cloud Function 2.0.0.BUILD-SNAPSHOT</title>
+    <title>3.2 OpenAPI Specification 2.0.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -74,7 +74,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>3.6 Google Cloud Function</h1>
+                    <h1>3.2 OpenAPI Specification</h1>
 
                     <p><strong>Version:</strong> 2.0.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -82,88 +82,32 @@ function addJsClass() {
                 
 
                 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.6 Google Cloud Function</h2>
+<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>3.2 OpenAPI Specification</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterApi.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>The subproject <code>starter-gcp-function</code> provides a function that can be deployed to Google Cloud Function.</p>
+<p>This project uses <a href="https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html">Micronaut&#8217;s OpenAPI</a> support to generate an <a href="https://www.openapis.org">OpenAPI specification</a>; a broadly adopted industry standard to describe APIs.</p>
 </div>
-<div class="sect2">
-<h3 id="_running_the_function_locally">Running the Function Locally</h3>
 <div class="paragraph">
-<p>To run the function locally run:</p>
+<p>Run:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-gcp-function:runFunction</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew starter-api:classes</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And then visit <a href="http://localhost:8081/application-types" class="bare">http://localhost:8081/application-types</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_continuous_deployment">Continuous Deployment</h3>
-<div class="paragraph">
-<p>Micronaut Starter API is continuously deployed to <a href="https://cloud.google.com/functions">Google Cloud Function</a> as a Serverless Java application.</p>
-</div>
-<div class="paragraph">
-<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
-</div>
-<div class="paragraph">
-<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploying_the_function_yourself">Deploying the Function Yourself</h3>
-<div class="paragraph">
-<p>To deploy the function first build the function with:</p>
+<p>You can open the OPEN API specification in YAML format:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew clean starter-gcp-function:shadowJar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then <code>cd</code> into the <code>starter-gcp-function/build/libs</code> directory (deployment has to be done from the location where the JAR lives):</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ cd starter-gcp-function/build/libs</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now run:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ gcloud alpha functions deploy micronaut-starter --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Choose unauthenticated access if you don&#8217;t need auth.</p>
-</div>
-<div class="paragraph">
-<p>To obtain the trigger URL do the following:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe micronaut-starter --format='value(httpsTrigger.url)')</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can then use this variable to test the function invocation:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ curl -i $YOUR_HTTP_TRIGGER_URL/create/app/example -o application.zip</code></pre>
-</div>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml</code></pre>
 </div>
 </div>
 

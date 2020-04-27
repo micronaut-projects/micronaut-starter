@@ -40,6 +40,7 @@ io.micronaut.starter.feature.alexafunction
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.awsapiproxy
+io.micronaut.starter.feature.awsapiproxy.template
 io.micronaut.starter.feature.awslambdacustomruntime
 io.micronaut.starter.feature.awslambdacustomruntime.templates
 io.micronaut.starter.feature.build
@@ -108,7 +109,6 @@ io.micronaut.starter.feature.vertx
 io.micronaut.starter.feature.view
 io.micronaut.starter.feature.xml
 io.micronaut.starter.io
-io.micronaut.starter.lambda
 io.micronaut.starter.netty
 io.micronaut.starter.netty.analytics
 io.micronaut.starter.options
