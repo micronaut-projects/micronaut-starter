@@ -1,0 +1,15 @@
+datasources:
+  default:
+    # Define the following for local development
+    #url: 'jdbc:postgresql://localhost/cli-analytics'
+    #username: 'postgres'
+    #password: 'secret'
+    driver-class-name: org.postgresql.Driver
+    dialect: POSTGRES
+    schema-generate: NONE
+---
+flyway:
+  enabled: enabled
+  datasources:
+    default:
+      locations: classpath:databasemigrations
