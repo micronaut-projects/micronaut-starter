@@ -72,7 +72,7 @@ public abstract class AbstractCreateController implements CreateOperation {
     @Override
     public HttpResponse<Writable> createApp(
             ApplicationType type,
-            @Pattern(regexp = "[\\w\\d-_]+") String name,
+            @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
