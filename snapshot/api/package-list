@@ -39,8 +39,6 @@ io.micronaut.starter.feature.alexa
 io.micronaut.starter.feature.alexafunction
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
-io.micronaut.starter.feature.awsapiproxy
-io.micronaut.starter.feature.awsapiproxy.template
 io.micronaut.starter.feature.awslambdacustomruntime
 io.micronaut.starter.feature.awslambdacustomruntime.templates
 io.micronaut.starter.feature.build
