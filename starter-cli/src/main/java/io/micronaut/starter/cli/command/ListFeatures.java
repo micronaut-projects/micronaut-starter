@@ -61,7 +61,7 @@ public class ListFeatures {
                 .max(Comparator.comparingInt(String::length))
                 .map(String::length).get() + 8;
 
-        Map<Category, List<Feature>> featuresByCategory = allFeatures.stream()
+        Map<String, List<Feature>> featuresByCategory = allFeatures.stream()
                 .sorted(Comparator.comparing(Feature::getName))
                 .collect(Collectors.groupingBy(Feature::getCategory));
         featuresByCategory = new TreeMap<>(featuresByCategory);
@@ -72,7 +72,7 @@ public class ListFeatures {
         consoleOutput.out("  " + new String(new char[width - 2]).replace("\0", "-") + "  ---------------");
 
         featuresByCategory.forEach((category, features) -> {
-            consoleOutput.out("  @|bold,underline,magenta " + category.getName() + "|@");
+            consoleOutput.out("  @|bold,underline,magenta " + category + "|@");
             listFeatures(consoleOutput, defaultFeatures, features, width);
             consoleOutput.out("");
         });
