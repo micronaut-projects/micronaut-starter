@@ -66,6 +66,7 @@ io.micronaut.starter.feature.function.azure.template
 io.micronaut.starter.feature.function.azure.template.raw
 io.micronaut.starter.feature.function.gcp
 io.micronaut.starter.feature.function.gcp.template
+io.micronaut.starter.feature.function.gcp.template.raw
 io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graalvm.template
 io.micronaut.starter.feature.graphql
