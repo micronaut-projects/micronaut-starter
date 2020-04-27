@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -29,9 +29,10 @@ import javax.inject.Singleton;
 public class JavaApplication implements JavaApplicationFeature {
 
     @Override
+    @Nullable
     public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        if (applicationType == ApplicationType.DEFAULT && features.isFeaturePresent(AwsLambda.class)) {
-            return AwsLambdaCustomRuntime.MAIN_CLASS_NAME;
+        if (features.isFeaturePresent(AwsLambda.class)) {
+            return null;
         }
         return project.getPackageName() + ".Application";
     }

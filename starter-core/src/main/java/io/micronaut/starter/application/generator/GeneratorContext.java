@@ -247,7 +247,10 @@ public class GeneratorContext {
 
     public void setMainClass(ApplicationType applicationType, ApplicationFeature applicationFeature) {
         if (getBuildTool() == BuildTool.MAVEN) {
-            getBuildProperties().put("exec.mainClass", applicationFeature.mainClassName(applicationType, getProject(), getFeatures()));
+            String mainClass = applicationFeature.mainClassName(applicationType, getProject(), getFeatures());
+            if (mainClass != null) {
+                getBuildProperties().put("exec.mainClass", mainClass);
+            }
         }
     }
 }

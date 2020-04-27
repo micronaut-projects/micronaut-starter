@@ -129,8 +129,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.FUNCTION && selectedFeatures.stream().noneMatch(feature ->
-                feature instanceof FunctionFeature && !feature.getName().equals(getName())
-        );
+        return applicationType == ApplicationType.FUNCTION;
     }
 }

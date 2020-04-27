@@ -136,10 +136,11 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
                 ['aws-lambda']
         )
         String build = output['pom.xml']
-        def readme = output["README.md"]
 
         then:
         build.contains('<artifactId>micronaut-function-aws</artifactId>')
+        !build.contains('<exec.mainClass>')
+        !build.contains('</exec.mainClass>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
         !build.contains('<artifactId>micronaut-http-client</artifactId>')
 
@@ -156,7 +157,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'Application file is NOT generated for a default application type with gradle and features aws-lambda for language: #description'(Language language, String extension, String description) {
+    void 'Application file is NOT generated for a default application type with gradle and features aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -171,12 +172,58 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         def buildGradle = output['build.gradle']
 
         then:
+        !buildGradle.contains('mainClassName')
+        //buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+    }
+
+    @Unroll
+    void 'Application file is NOT generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['aws-lambda', 'graalvm']
+        )
+
+        then:
+        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+
+        when:
+        def buildGradle = output['build.gradle']
+
+        then:
         buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
         language << Language.values().toList()
         extension << Language.extensions()
-        description = language.name
+    }
+
+    @Unroll
+    void 'Application file is NOT generated for a default application type with gradle and features aws-lambda and aws-lambda-custom-runtime for language: #language'(Language language, String extension) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                ['aws-lambda', 'aws-lambda-custom-runtime']
+        )
+
+        then:
+        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+
+        when:
+        def buildGradle = output['build.gradle']
+
+        then:
+        buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
     }
 
     @Unroll
@@ -235,6 +282,28 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
+    void 'app with maven and feature aws-lambda does not apply aws-lambda-custom-runtime for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['aws-lambda']
+        )
+        String build = output['pom.xml']
+
+        then:
+        !build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
+        !build.contains('<exec.mainClass>')
+        !build.contains('</exec.mainClass>')
+        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
     void 'app with maven and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
         when:
         def output = generate(
@@ -245,6 +314,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String build = output['pom.xml']
 
         then:
+        build.contains('<exec.mainClass>io.micronaut.function.aws.runtime.MicronautLambdaRuntime</exec.mainClass>')
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
         build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
@@ -252,9 +322,6 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
 
         where:
         language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
     }
 
     @Unroll

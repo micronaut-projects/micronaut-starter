@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
 import com.fizzed.rocker.RockerModel;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -90,6 +91,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
+    @Nullable
     public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         if (features.isFeaturePresent(AwsLambda.class)) {
             if (applicationType == ApplicationType.DEFAULT) {
