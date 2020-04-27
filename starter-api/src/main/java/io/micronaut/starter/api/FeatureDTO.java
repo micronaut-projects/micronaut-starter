@@ -57,7 +57,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
      * @param name The name
      * @param title The title
      * @param description The description
-     * @param category
+     * @param category The category
      */
     @Creator
     public FeatureDTO(String name, String title, String description, String category) {
