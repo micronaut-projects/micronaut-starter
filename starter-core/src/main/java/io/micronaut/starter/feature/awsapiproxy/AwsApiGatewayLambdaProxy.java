@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.awsapiproxy;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import javax.inject.Singleton;
 
@@ -45,5 +46,10 @@ public class AwsApiGatewayLambdaProxy implements FunctionFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.AWS;
     }
 }

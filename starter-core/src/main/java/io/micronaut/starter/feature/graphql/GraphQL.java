@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.graphql;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -49,4 +50,8 @@ public class GraphQL implements Feature {
         return true;
     }
 
+    @Override
+    public Category getCategory() {
+        return Category.HTTP_SERVER;
+    }
 }

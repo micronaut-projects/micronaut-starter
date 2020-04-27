@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.netflix;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -47,5 +48,10 @@ public class Hystrix implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.CIRCUIT_BREAKER;
     }
 }

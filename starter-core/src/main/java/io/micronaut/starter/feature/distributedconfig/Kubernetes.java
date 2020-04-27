@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.externalconfig;
+package io.micronaut.starter.feature.distributedconfig;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.externalconfig.template.k8sYaml;
+import io.micronaut.starter.feature.distributedconfig.template.k8sYaml;
 import io.micronaut.starter.feature.jib.Jib;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
@@ -26,7 +26,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import javax.inject.Singleton;
 
 @Singleton
-public class Kubernetes implements ExternalConfigFeature {
+public class Kubernetes implements DistributedConfigFeature {
 
     private final Jib jib;
     private final Management management;

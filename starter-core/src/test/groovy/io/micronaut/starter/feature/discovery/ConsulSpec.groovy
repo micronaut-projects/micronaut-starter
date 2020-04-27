@@ -7,12 +7,12 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class DiscoveryEurekaSpec extends BeanContextSpec {
+class ConsulSpec extends BeanContextSpec {
 
     @Unroll
-    void 'test gradle discovery-eureka feature for language=#language'() {
+    void 'test gradle discovery-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['discovery-eureka'], language)).render().toString()
+        String template = buildGradle.template(buildProject(), getFeatures(['discovery-consul'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
@@ -22,9 +22,9 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void 'test maven discovery-eureka feature for language=#language'() {
+    void 'test maven discovery-consul feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['discovery-eureka'], language), []).render().toString()
+        String template = pom.template(buildProject(), getFeatures(['discovery-consul'], language), []).render().toString()
 
         then:
         template.contains("""
@@ -39,13 +39,13 @@ class DiscoveryEurekaSpec extends BeanContextSpec {
         language << Language.values().toList()
     }
 
-    void 'test discovery-eureka configuration'() {
+    void 'test discovery-consul configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['discovery-eureka'])
+        GeneratorContext commandContext = buildGeneratorContext(['discovery-consul'])
 
         then:
-        commandContext.configuration.get('eureka.client.registration.enabled'.toString()) == true
-        commandContext.configuration.get('eureka.client.defaultZone') == '${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}'
+        commandContext.configuration.get('consul.client.registration.enabled'.toString()) == true
+        commandContext.configuration.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
     }
 
 }

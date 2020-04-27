@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.externalconfig
+package io.micronaut.starter.feature.distributedconfig
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -7,7 +7,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class ConfigConsulSpec extends BeanContextSpec {
+class ConsulSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle config-consul feature for language=#language'() {

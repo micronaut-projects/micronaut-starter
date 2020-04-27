@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
@@ -45,5 +46,10 @@ public abstract class MicrometerFeature implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.TRACING;
     }
 }

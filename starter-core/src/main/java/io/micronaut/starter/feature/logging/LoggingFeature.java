@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface LoggingFeature extends OneOfFeature {
@@ -22,5 +23,10 @@ public interface LoggingFeature extends OneOfFeature {
     @Override
     default Class<?> getFeatureClass() {
         return LoggingFeature.class;
+    }
+
+    @Override
+    default Category getCategory() {
+        return Category.LOGGING;
     }
 }

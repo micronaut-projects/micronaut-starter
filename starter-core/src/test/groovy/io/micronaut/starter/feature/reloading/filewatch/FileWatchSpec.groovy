@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.filewatch
+package io.micronaut.starter.feature.reloading.filewatch
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext

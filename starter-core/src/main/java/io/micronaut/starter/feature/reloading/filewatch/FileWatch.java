@@ -13,34 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.discovery;
+package io.micronaut.starter.feature.reloading.filewatch;
 
+import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.reloading.ReloadingFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class DiscoveryEureka implements DiscoveryFeature {
+public class FileWatch implements ReloadingFeature {
+
+    private final FileWatchOsx fileWatchOsx;
+
+    public FileWatch(FileWatchOsx fileWatchOsx) {
+        this.fileWatchOsx = fileWatchOsx;
+    }
 
     @Override
     public String getName() {
-        return "discovery-eureka";
+        return "file-watch";
     }
 
     @Override
     public String getTitle() {
-        return "Eureka Service Discovery";
+        return "File Watch Support";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Service Discovery with Eureka";
+        return "Adds automatic restarts and file watch";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (OperatingSystem.getCurrent().isMacOs()) {
+            featureContext.addFeature(fileWatchOsx);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("eureka.client.registration.enabled", true);
-        generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
+        generatorContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
+        generatorContext.getConfiguration().put("micronaut.io.watch.restart", true);
     }
 
 }

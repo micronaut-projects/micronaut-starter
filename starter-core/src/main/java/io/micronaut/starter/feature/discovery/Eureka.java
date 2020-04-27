@@ -13,34 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.externalconfig;
+package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class ConfigConsul implements ExternalConfigFeature {
+public class Eureka implements DiscoveryFeature {
 
     @Override
     public String getName() {
-        return "config-consul";
+        return "discovery-eureka";
     }
 
     @Override
     public String getTitle() {
-        return "Consul Distributed Configuration";
+        return "Eureka Service Discovery";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Consul (https://www.consul.io)";
+        return "Adds support for Service Discovery with Eureka";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        generatorContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
-        generatorContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        generatorContext.getConfiguration().put("eureka.client.registration.enabled", true);
+        generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
     }
+
 }

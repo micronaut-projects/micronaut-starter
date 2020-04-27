@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -105,5 +106,10 @@ public class AwsLambda implements Feature, DefaultFeature {
         return applicationType == ApplicationType.FUNCTION && selectedFeatures.stream().noneMatch(feature ->
                 feature instanceof FunctionFeature && !feature.getName().equals(getName())
         );
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.FUNCTION;
     }
 }

@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.externalconfig
+package io.micronaut.starter.feature.distributedconfig
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext

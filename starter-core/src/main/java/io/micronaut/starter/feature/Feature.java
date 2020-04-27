@@ -118,4 +118,11 @@ public interface Feature extends Named, Ordered, Described {
         return Optional.empty();
     }
 
+    /**
+     * @return The {@link Category} to which the feature belongs to.
+     */
+    default Category getCategory() {
+        return Category.OTHER;
+    }
+
 }

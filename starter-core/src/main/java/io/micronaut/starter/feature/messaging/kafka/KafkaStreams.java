@@ -16,14 +16,13 @@
 package io.micronaut.starter.feature.messaging.kafka;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class KafkaStreams implements Feature {
+public class KafkaStreams implements MessagingFeature {
 
     private final Kafka kafka;
 
@@ -54,8 +53,4 @@ public class KafkaStreams implements Feature {
         }
     }
 
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 }

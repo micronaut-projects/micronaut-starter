@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.rss;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -41,6 +42,11 @@ public class RssItunes implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.RSS;
     }
 
 }

@@ -21,7 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.externalconfig.ExternalConfigFeature;
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class AppName implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> appNameConfig;
-        if (generatorContext.isFeaturePresent(ExternalConfigFeature.class)) {
+        if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
             appNameConfig = generatorContext.getBootstrapConfig();
         } else {
             appNameConfig = generatorContext.getConfiguration();

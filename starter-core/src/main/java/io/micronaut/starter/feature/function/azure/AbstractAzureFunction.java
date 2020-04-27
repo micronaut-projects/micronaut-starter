@@ -21,7 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
-import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
+import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.*;
 import io.micronaut.starter.options.BuildTool;

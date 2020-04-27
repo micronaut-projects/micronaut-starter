@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
@@ -64,4 +65,10 @@ public class HibernateJpa implements Feature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
+
+    @Override
+    public Category getCategory() {
+        return Category.DATABASE;
+    }
+
 }

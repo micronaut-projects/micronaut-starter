@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.migration;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface MigrationFeature extends OneOfFeature {
@@ -28,5 +29,10 @@ public interface MigrationFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    default Category getCategory() {
+        return Category.DATABASE;
     }
 }

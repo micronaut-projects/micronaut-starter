@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.alexa;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -41,6 +42,11 @@ public class AlexaHttpServer implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for hosting a Custom Skill as a Web Service (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html).";
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.AWS;
     }
 
 }

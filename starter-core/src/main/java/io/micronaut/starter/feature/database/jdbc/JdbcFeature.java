@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database.jdbc;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
@@ -57,6 +58,11 @@ public abstract class JdbcFeature implements OneOfFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.DATABASE;
     }
 
 }

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 /**
@@ -29,5 +30,10 @@ public interface FunctionFeature extends Feature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.FUNCTION || applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    default Category getCategory() {
+        return Category.FUNCTION;
     }
 }
