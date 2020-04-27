@@ -611,9 +611,9 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
             <path>
-              <groupId>io.micronaut.picocli</groupId>
-              <artifactId>micronaut-picocli</artifactId>
-              <version>${micronaut.picocli.version}</version>
+              <groupId>info.picocli</groupId>
+              <artifactId>picocli-codegen</artifactId>
+              <version>${picocli.version}</version>
             </path>
 }
 @if (features.contains("data")) {
@@ -662,13 +662,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </path>
-}
-@if (features.contains("picocli")) {
-                <path>
-                  <groupId>io.micronaut.picocli</groupId>
-                  <artifactId>micronaut-picocli</artifactId>
-                  <version>${micronaut.picocli.version}</version>
                 </path>
 }
 @if (features.contains("data")) {
@@ -734,9 +727,9 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.picocli</groupId>
-                    <artifactId>micronaut-picocli</artifactId>
-                    <version>${micronaut.picocli.version}</version>
+                    <groupId>info.picocli</groupId>
+                    <artifactId>picocli-codegen</artifactId>
+                    <version>${picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {
@@ -800,13 +793,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("picocli")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.picocli</groupId>
-                  <artifactId>micronaut-picocli</artifactId>
-                  <version>${micronaut.picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {

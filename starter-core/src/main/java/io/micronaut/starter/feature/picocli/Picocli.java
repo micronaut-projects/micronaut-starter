@@ -58,7 +58,7 @@ public class Picocli implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("micronaut.picocli");
+            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("picocli");
             generatorContext.getBuildProperties().put(
                     entry.getKey(),
                     entry.getValue()
