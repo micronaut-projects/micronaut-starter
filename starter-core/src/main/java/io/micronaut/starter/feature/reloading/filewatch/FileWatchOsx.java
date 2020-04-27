@@ -15,12 +15,13 @@
  */
 package io.micronaut.starter.feature.reloading.filewatch;
 
-import io.micronaut.starter.feature.reloading.ReloadingFeature;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class FileWatchOsx implements ReloadingFeature {
+public class FileWatchOsx implements Feature {
 
     @Override
     public String getName() {
@@ -30,6 +31,11 @@ public class FileWatchOsx implements ReloadingFeature {
     @Override
     public boolean isVisible() {
         return false;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
 }
