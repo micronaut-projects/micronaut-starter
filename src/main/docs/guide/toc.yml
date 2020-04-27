@@ -7,6 +7,7 @@ commands:
 starterImpls:
   title: Micronaut Starter
   starterCLI: CLI Application
+  starterApi: OpenAPI Specification
   starterNetty: Web Application
   starterServlet: WAR Deployment
   starterCloudRun: Google Cloud Run
