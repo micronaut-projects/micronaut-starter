@@ -138,4 +138,57 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
         testSrcDir << Language.testSrcDirs()
     }
 
+    @Unroll
+    void 'app with gradle and feature aws-api-gateway-lambda-proxy for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language),
+                ['aws-api-gateway-lambda-proxy']
+        )
+        String build = output['build.gradle']
+
+        then:
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+
+        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'function with maven and feature aws-api-gateway-lambda-proxy for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['aws-api-gateway-lambda-proxy']
+        )
+        String build = output['pom.xml']
+
+        then:
+        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+
+        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
+        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
 }
