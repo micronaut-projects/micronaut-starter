@@ -70,7 +70,7 @@ public class Application {
         this.buildTool = Objects.requireNonNull(buildTool, "Build tool cannot be null");
         this.testFramework = Objects.requireNonNull(testFramework, "Test framework cannot be null");
         this.jdkVersion = Objects.requireNonNull(jdkVersion, "JDK version cannot be null");
-        this.micronautVersion = Objects.requireNonNull(micronautVersion,"Micronaut version cannot be null");
+        this.micronautVersion = Objects.requireNonNull(micronautVersion, "Micronaut version cannot be null");
     }
 
     /**
