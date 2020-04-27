@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.netflix
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class RibbonSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle netflix-ribbon feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['netflix-ribbon'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-ribbon'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-netflix-ribbon")')
@@ -24,7 +25,7 @@ class RibbonSpec extends BeanContextSpec {
     @Unroll
     void 'test maven netflix-ribbon feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['netflix-ribbon'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-ribbon'], language), []).render().toString()
 
         then:
         template.contains("""

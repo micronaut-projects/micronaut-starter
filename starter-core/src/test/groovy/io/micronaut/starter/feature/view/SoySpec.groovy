@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.view
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -11,7 +12,7 @@ class SoySpec extends BeanContextSpec {
     @Unroll
     void 'test gradle views-soy feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['views-soy'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-views-soy")')
@@ -24,7 +25,7 @@ class SoySpec extends BeanContextSpec {
     @Unroll
     void 'test maven views-soy feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['views-soy'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language), []).render().toString()
 
         then:
         template.contains("""

@@ -28,7 +28,7 @@ import javax.inject.Singleton;
 public class KotlinApplication implements KotlinApplicationFeature {
 
     @Override
-    public String mainClassName(Project project, Features features) {
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
             return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
         }

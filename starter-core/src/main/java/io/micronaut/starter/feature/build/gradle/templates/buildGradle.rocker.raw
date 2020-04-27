@@ -3,8 +3,10 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
+@import io.micronaut.starter.application.ApplicationType
 
 @args (
+ApplicationType applicationType,
 Project project,
 Features features
 )
@@ -424,7 +426,7 @@ test.classpath += configurations.developmentOnly
 @if (features.contains("google-cloud-function")) {
 mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
 } else {
-mainClassName = "@features.application().mainClassName(project, features)"
+mainClassName = "@features.application().mainClassName(applicationType, project, features)"
 }
 }
 

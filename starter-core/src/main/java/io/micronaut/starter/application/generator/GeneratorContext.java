@@ -245,9 +245,9 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
-    public void setMainClass(ApplicationFeature applicationFeature) {
+    public void setMainClass(ApplicationType applicationType, ApplicationFeature applicationFeature) {
         if (getBuildTool() == BuildTool.MAVEN) {
-            getBuildProperties().put("exec.mainClass", applicationFeature.mainClassName(getProject(), getFeatures()));
+            getBuildProperties().put("exec.mainClass", applicationFeature.mainClassName(applicationType, getProject(), getFeatures()));
         }
     }
 }

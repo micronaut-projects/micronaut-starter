@@ -4,8 +4,10 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
+@import io.micronaut.starter.application.ApplicationType
 
 @args (
+ApplicationType applicationType,
 Project project,
 Features features,
 List<Property> properties

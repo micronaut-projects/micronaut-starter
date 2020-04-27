@@ -28,7 +28,7 @@ import javax.inject.Singleton;
 public class PicocliJavaApplication implements JavaApplicationFeature {
 
     @Override
-    public String mainClassName(Project project, Features features) {
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         return project.getPackageName() + "." + project.getClassName() + "Command";
     }
 

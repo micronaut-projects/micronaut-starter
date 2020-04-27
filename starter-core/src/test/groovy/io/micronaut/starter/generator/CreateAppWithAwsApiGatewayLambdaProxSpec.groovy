@@ -1,5 +1,6 @@
 package io.micronaut.starter.generator
 
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
@@ -12,7 +13,7 @@ class CreateAppWithAwsApiGatewayLambdaProxSpec extends CommandSpec {
                                                                            BuildTool build,
                                                                            TestFramework testFramework) {
         given:
-        generateDefaultProject(lang, build, ['aws-api-gateway-lambda-proxy'], testFramework)
+        generateProject(lang, build, ['aws-api-gateway-lambda-proxy'], ApplicationType.DEFAULT, testFramework)
 
         when:
         if (build == BuildTool.GRADLE) {

@@ -79,6 +79,7 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        ApplicationType applicationType = generatorContext.getApplicationType();
         RockerModel dockerfileRockerModel;
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
             dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
@@ -93,8 +94,7 @@ public class GraalNativeImage implements Feature {
         generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
 
         generatorContext.addTemplate("nativeImageProperties",
-                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties",
-                        nativeImageProperties.template(generatorContext.getProject(), generatorContext.getFeatures())
+                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties", nativeImageProperties.template(applicationType, generatorContext.getProject(), generatorContext.getFeatures())
                 )
         );
     }

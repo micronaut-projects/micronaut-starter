@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.externalconfig
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class ConfigConsulSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle config-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['config-consul'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
@@ -23,7 +24,7 @@ class ConfigConsulSpec extends BeanContextSpec {
 
     void 'test gradle config-consul multiple features'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['config-consul', 'discovery-consul'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul'])).render().toString()
 
         then:
         template.count('implementation("io.micronaut:micronaut-discovery-client")') == 1
@@ -32,7 +33,7 @@ class ConfigConsulSpec extends BeanContextSpec {
     @Unroll
     void 'test maven config-consul feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['config-consul'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), []).render().toString()
 
         then:
         template.contains("""
@@ -49,7 +50,7 @@ class ConfigConsulSpec extends BeanContextSpec {
 
     void 'test maven config-consul multiple features'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['config-consul', 'discovery-consul']), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), []).render().toString()
 
         then:
         template.count("""

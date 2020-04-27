@@ -28,7 +28,7 @@ import javax.inject.Singleton;
 public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
-    public String mainClassName(Project project, Features features) {
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         return project.getPackageName() + "." + project.getClassName() + "Command";
     }
 

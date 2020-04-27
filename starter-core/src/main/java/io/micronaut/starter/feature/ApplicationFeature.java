@@ -15,12 +15,13 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 
 public interface ApplicationFeature extends Feature {
 
-    String mainClassName(Project project, Features features);
+    String mainClassName(ApplicationType applicationType, Project project, Features features);
 
     @Override
     default boolean isVisible() {
@@ -29,6 +30,6 @@ public interface ApplicationFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        generatorContext.setMainClass(this);
+        generatorContext.setMainClass(generatorContext.getApplicationType(), this);
     }
 }

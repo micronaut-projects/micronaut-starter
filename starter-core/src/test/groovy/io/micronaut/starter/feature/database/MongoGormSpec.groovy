@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.database
 
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
@@ -21,7 +22,7 @@ class MongoGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(["mongo-gorm"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"])).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-mongo-gorm")')
@@ -31,7 +32,7 @@ class MongoGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(buildProject(), getFeatures(["mongo-gorm"]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), []).render().toString()
 
         then:
         template.contains("""

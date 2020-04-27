@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.cassandra
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -12,7 +13,7 @@ class CassandraSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle cassandra feature for language=#language'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['cassandra'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cassandra'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-cassandra")')
@@ -24,7 +25,7 @@ class CassandraSpec extends BeanContextSpec {
     @Unroll
     void 'test maven cassandra feature for language=#language'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(['cassandra'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cassandra'], language), []).render().toString()
 
         then:
         template.contains("""

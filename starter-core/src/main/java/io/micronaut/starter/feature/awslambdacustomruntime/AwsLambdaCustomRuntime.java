@@ -80,17 +80,17 @@ public class AwsLambdaCustomRuntime implements ApplicationFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         ApplicationFeature.super.apply(generatorContext);
-
+        ApplicationType applicationType = generatorContext.getApplicationType();
         Project project = generatorContext.getProject();
         if (generatorContext.getFeatures().isFeaturePresent(AwsLambda.class)) {
             addBookLambdaRuntime(generatorContext, project);
         }
-        RockerModel bootstrapRockerModel = bootstrap.template(generatorContext.getProject(), generatorContext.getBuildTool(), generatorContext.getFeatures());
+        RockerModel bootstrapRockerModel = bootstrap.template(applicationType, generatorContext.getProject(), generatorContext.getBuildTool(), generatorContext.getFeatures());
         generatorContext.addTemplate("bootstrap", new RockerTemplate("bootstrap", bootstrapRockerModel));
     }
 
     @Override
-    public String mainClassName(Project project, Features features) {
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
         if (features.isFeaturePresent(AwsApiGatewayLambdaProxy.class)) {
             return AwsApiGatewayLambdaProxy.MAIN_CLASS_NAME;
         }

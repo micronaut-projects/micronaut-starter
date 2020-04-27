@@ -63,7 +63,7 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
     @Unroll
     void 'aws-api-gateway-lambda-proxy is the default feature for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['aws-api-gateway-lambda-proxy'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-api-gateway-lambda-proxy'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
@@ -77,7 +77,7 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
     @Unroll
     void 'test maven micronaut-function-aws-api-proxy feature for language=#language'(Language language) {
         when:
-        String template = pom.template(buildProject(), getFeatures(['aws-api-gateway-lambda-proxy'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-api-gateway-lambda-proxy'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), []).render().toString()
 
         then:
         template.contains("""

@@ -43,7 +43,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-function-aws")')
@@ -56,7 +56,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-function-aws")')
@@ -69,7 +69,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
-        String template = pom.template(buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
 
         then:
         template.contains("""
@@ -87,7 +87,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = pom.template(buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
 
         then:
         template.contains("""

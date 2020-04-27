@@ -31,7 +31,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test gradle graalvm feature'() {
         when:
-        String template = buildGradle.template(buildProject(), getFeatures(["graalvm"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"])).render().toString()
 
         then:
         template.contains('annotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -40,7 +40,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
+        template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
         template.contains('kapt(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
@@ -49,7 +49,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
-        template = buildGradle.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
+        template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
         template.count('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))') == 1
@@ -58,7 +58,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'test maven graalvm feature'() {
         when:
-        String template = pom.template(buildProject(), getFeatures(["graalvm"]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), []).render().toString()
 
         then:
         template.contains("""
@@ -77,7 +77,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
 
         then:
         template.contains("""
@@ -96,7 +96,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 """)
 
         when:
-        template = pom.template(buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
         template.contains("""
