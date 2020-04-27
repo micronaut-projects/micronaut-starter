@@ -19,6 +19,7 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
+import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 
 class BookRequestHandlerTest : StringSpec({
 
