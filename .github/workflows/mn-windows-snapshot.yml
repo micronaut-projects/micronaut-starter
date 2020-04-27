@@ -39,10 +39,10 @@ jobs:
         run: mn create-app test2
       - name: ZIP Archive
         run: |
-        New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
-        Move-Item -Path ./mn.exe -Destination "./mn-win-amd64-snapshot/bin"
-        Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
-        Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
+          New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
+          Move-Item -Path ./mn.exe -Destination "./mn-win-amd64-snapshot/bin"
+          Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
+          Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@master
