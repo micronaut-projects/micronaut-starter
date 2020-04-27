@@ -83,7 +83,7 @@ public class GraalNativeImage implements Feature {
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
             dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
             RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
-            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel));
+            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 
         } else {
             dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
