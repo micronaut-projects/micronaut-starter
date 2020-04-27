@@ -49,7 +49,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.name = feature.getName();
         this.title = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".title", messageContext, feature.getTitle());
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
-        this.category = feature.getCategory().getName();
+        this.category = feature.getCategory();
     }
 
     /**
