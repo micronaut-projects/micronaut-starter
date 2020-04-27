@@ -91,4 +91,51 @@ class AwsApiGatewayLambdaProxySpec extends BeanContextSpec implements CommandOut
         where:
         language << Language.values()
     }
+
+    @Unroll
+    void 'app with gradle and feature aws-api-gateway-lambda-proxy and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language),
+                ['aws-api-gateway-lambda-proxy', 'graalvm']
+        )
+        String build = output['build.gradle']
+
+        then:
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'app with maven and feature aws-api-gateway-lambda-proxy and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                ['aws-api-gateway-lambda-proxy', 'graalvm']
+        )
+        String build = output['pom.xml']
+
+        then:
+        build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
+        build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
+        !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
 }

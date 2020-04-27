@@ -43,12 +43,23 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getApplicationType() == ApplicationType.FUNCTION &&
-                featureContext.isPresent(AwsLambda.class) &&
-                awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
-                !featureContext.isPresent(AwsLambdaCustomRuntime.class)) {
+        if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
             featureContext.addFeature(awsLambdaCustomRuntime);
         }
+    }
+
+    protected boolean shouldApplyFeature(FeatureContext featureContext, Class feature) {
+        if (feature == AwsLambdaCustomRuntime.class) {
+            if ((
+                    (featureContext.getApplicationType() == ApplicationType.FUNCTION && featureContext.isPresent(AwsLambda.class)) ||
+                    (featureContext.getApplicationType() == ApplicationType.DEFAULT && featureContext.isPresent(AwsApiGatewayLambdaProxy.class))
+            ) && awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
+                    !featureContext.isPresent(feature)) {
+                    return true;
+            }
+        }
+        return false;
+
     }
 
     @Override
