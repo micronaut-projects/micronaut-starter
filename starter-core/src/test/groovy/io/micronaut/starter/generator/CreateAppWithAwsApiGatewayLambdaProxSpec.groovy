@@ -3,12 +3,10 @@ package io.micronaut.starter.generator
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import spock.lang.Ignore
 import spock.lang.Unroll
 
 class CreateAppWithAwsApiGatewayLambdaProxSpec extends CommandSpec {
 
-    @Ignore("Until AWS 2.0.0.M2 is released")
     @Unroll
     void 'create-app with features aws-api-gateway-proxy #lang and #build'(Language lang,
                                                                            BuildTool build,
@@ -20,11 +18,11 @@ class CreateAppWithAwsApiGatewayLambdaProxSpec extends CommandSpec {
         if (build == BuildTool.GRADLE) {
             executeGradleCommand('test')
         } else {
-            executeMavenCommand("mn:test")
+            executeMavenCommand("test")
         }
 
         then:
-        testOutputContains("BUILD SUCCESSFUL")
+        testOutputContains("BUILD SUCCESS")
 
         where:
         lang            | build             | testFramework
@@ -44,8 +42,5 @@ class CreateAppWithAwsApiGatewayLambdaProxSpec extends CommandSpec {
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.JUNIT
         Language.GROOVY | BuildTool.MAVEN  | null
         Language.GROOVY | BuildTool.MAVEN  | TestFramework.SPOCK
-
-
-
     }
 }
