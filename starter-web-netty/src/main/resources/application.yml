@@ -19,5 +19,3 @@ gcp:
       auth:
         patterns:
           - /analytics/**
-
-
