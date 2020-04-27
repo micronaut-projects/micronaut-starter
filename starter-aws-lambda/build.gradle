@@ -8,7 +8,7 @@ plugins {
 configurations.all {
     resolutionStrategy.eachDependency {
         if (it.requested.group == 'io.micronaut.aws') {
-            it.useVersion("2.0.0.M1")
+            it.useVersion("2.0.0.M2")
         }
         if (it.requested.group == 'io.micronaut') {
             it.useVersion(micronautVersion)
@@ -37,12 +37,12 @@ test {
     useJUnitPlatform()
 }
 
-mainClassName = "io.micronaut.starter.lambda.CustomMicronautLambdaRuntime"
+mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
 
 shadowJar {
     mergeServiceFiles()
     manifest {
-        attributes 'Main-Class': 'io.micronaut.starter.lambda.CustomMicronautLambdaRuntime'
+        attributes 'Main-Class': 'io.micronaut.function.aws.runtime.MicronautLambdaRuntime'
     }
     transform(Log4j2PluginsCacheFileTransformer)
 }
