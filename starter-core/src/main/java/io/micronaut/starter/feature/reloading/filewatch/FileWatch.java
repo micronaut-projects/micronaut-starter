@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.reloading.filewatch;
 import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 
@@ -65,4 +66,8 @@ public class FileWatch implements Feature {
         return true;
     }
 
+    @Override
+    public Category getCategory() {
+        return Category.DEV_TOOLS;
+    }
 }
