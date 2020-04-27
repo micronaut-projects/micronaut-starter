@@ -42,9 +42,9 @@ public class AzureRawFunction extends AbstractAzureFunction {
     }
 
     @Override
-    protected void applyTestTemplate(GeneratorContext generatorContext, Project project) {
+    protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
         if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
-            super.applyTestTemplate(generatorContext, project);
+            super.applyTestTemplate(generatorContext, project, name);
         }
     }
 

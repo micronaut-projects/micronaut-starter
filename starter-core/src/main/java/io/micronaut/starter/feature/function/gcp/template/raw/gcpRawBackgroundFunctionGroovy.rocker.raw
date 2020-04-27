@@ -1,0 +1,40 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.google.cloud.functions.*
+import io.micronaut.gcp.function.GoogleFunctionInitializer
+
+import javax.inject.*
+
+class Function extends GoogleFunctionInitializer // <1>
+        implements BackgroundFunction<PubSubMessage> { // <2>
+
+    @@Inject LoggingService loggingService // <3>
+
+    @@Override
+    void accept(PubSubMessage message, Context context) {
+        loggingService.logMessage(message)
+    }
+}
+
+class PubSubMessage {
+    String data
+    Map<String, String> attributes
+    String messageId
+    String publishTime
+}
+
+@@Singleton
+class LoggingService {
+
+    void logMessage(PubSubMessage message) {
+        // log the message
+    }
+}

@@ -81,12 +81,12 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-            applyTestTemplate(generatorContext, project);
+            applyTestTemplate(generatorContext, project, "HelloFunction");
         }
     }
 
-    protected void applyTestTemplate(GeneratorContext generatorContext, Project project) {
-        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HelloFunction");
+    protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
         generatorContext.addTestTemplate("testFunction", testSource,
                 javaJUnitTemplate(project),
                 kotlinJUnitTemplate(project),

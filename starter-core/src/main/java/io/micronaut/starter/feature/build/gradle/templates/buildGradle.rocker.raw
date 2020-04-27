@@ -123,10 +123,14 @@ dependencies {
     @dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "implementation", null)
 }
 @if (features.contains("google-cloud-function")) {
+    @if (features.contains("google-cloud-function-http")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
         // required due to a Spock compiler bug
     @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
+    }
+    } else {
+    @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "implementation", null)
     }
 }
 @if (features.contains("azure-function")) {
