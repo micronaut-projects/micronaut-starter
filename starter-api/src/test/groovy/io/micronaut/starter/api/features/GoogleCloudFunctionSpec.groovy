@@ -5,6 +5,7 @@ import io.micronaut.starter.api.preview.PreviewController
 import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
+import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
@@ -18,7 +19,7 @@ class GoogleCloudFunctionSpec extends Specification {
         def map = controller.previewApp(
                 ApplicationType.DEFAULT,
                 "test",
-                [GoogleCloudFunction.NAME]
+                [GoogleCloudRawFunction.NAME]
         )
 
         then:
