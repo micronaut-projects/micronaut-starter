@@ -16,7 +16,7 @@ class FeatureSpec extends BeanContextSpec {
         expect:
         //Default features cannot require a language because its inferred prior to them being applied
         //due to the language being necessary to determine if a feature should be applied by default
-        !feature.requiredLanguage.isPresent()
+        !(feature instanceof LanguageSpecificFeature)
 
         where:
         feature << beanContext.getBeansOfType(DefaultFeature).toList()
