@@ -12,11 +12,11 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test feature conflicts with language selection"() {
         when:
-        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new LanguageSpecificFeature() {
             String name = "test-feature"
             String description = "test desc"
             String title = "test title"
-            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+            Language requiredLanguage = Language.GROOVY
 
             @Override
             boolean supports(ApplicationType applicationType) {
@@ -31,21 +31,21 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validate(new Options(Language.JAVA, null, null), [new Feature() {
+        featureValidator.validate(new Options(Language.JAVA, null, null), [new LanguageSpecificFeature() {
             String name = "groovy-feature"
             String description = "groovy"
             String title = "groovy title"
-            Optional<Language> requiredLanguage = Optional.of(Language.GROOVY)
+            Language requiredLanguage = Language.GROOVY
 
             @Override
             boolean supports(ApplicationType applicationType) {
                 true
             }
-        }, new Feature() {
+        }, new LanguageSpecificFeature() {
             String name = "kotlin-feature"
             String description = "groovy"
             String title = "groovy title"
-            Optional<Language> requiredLanguage = Optional.of(Language.KOTLIN)
+            Language requiredLanguage = Language.KOTLIN
 
             @Override
             boolean supports(ApplicationType applicationType) {

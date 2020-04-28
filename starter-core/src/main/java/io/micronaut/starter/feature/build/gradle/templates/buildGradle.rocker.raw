@@ -144,7 +144,7 @@ dependencies {
     @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
     }
 } else {
-    @dependency.template(("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
+    @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
 }
 }
 @if (features.contains("http-client")) {
