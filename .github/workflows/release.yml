@@ -215,7 +215,7 @@ jobs:
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to Google Cloud Container Registry
         run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}
-      - name: Install beta commands and deploy on cloud run
+      - name: Deploy to Cloud Run
         env:
           release_version: ${{ steps.release_version.outputs.release_version }}
         run: |
@@ -223,3 +223,25 @@ jobs:
           gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
           version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
           gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+  analytics:
+    name: Release Analytics Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+      - name: Authenticate into Google Cloud Platform
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Configure Docker to use Google Cloud Platform
+        run: "gcloud auth configure-docker --quiet"
+      - name: Run Tests
+        run: ./gradlew clean starter-analytics-postgres:test
+      - name: Build Docker image
+        run:
+          ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
