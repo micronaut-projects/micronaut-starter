@@ -31,7 +31,6 @@ import picocli.CommandLine;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @CommandLine.Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
 public class FeatureDiffCommand extends CodeGenCommand {
@@ -58,7 +57,6 @@ public class FeatureDiffCommand extends CodeGenCommand {
     @Override
     public Integer call() throws Exception {
         String appName = FileSystemOutputHandler.getDefaultBaseDirectory().getName();
-        Consumer<String> writer = this::out;
         Project project = NameUtils.parse(config.getDefaultPackage() + "." + appName);
         Options options = new Options(config.getSourceLanguage(), config.getTestFramework(), config.getBuildTool());
         ApplicationType applicationType = config.getApplicationType();
@@ -70,7 +68,7 @@ public class FeatureDiffCommand extends CodeGenCommand {
                 applicationType,
                 options,
                 features,
-                writer
+                this
         );
 
         return 0;

@@ -123,7 +123,32 @@ public class DiffController implements DiffOperations {
                 featureDiffer.produceDiff(
                         projectGenerator,
                         generatorContext,
-                        s -> emitter.onNext(s + LINE_SEPARATOR)
+                        new ConsoleOutput() {
+                            @Override
+                            public void out(String message) {
+                                emitter.onNext(message + LINE_SEPARATOR);
+                            }
+
+                            @Override
+                            public void err(String message) {
+                                // will never be called
+                            }
+
+                            @Override
+                            public void warning(String message) {
+                                // will never be called
+                            }
+
+                            @Override
+                            public boolean showStacktrace() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean verbose() {
+                                return false;
+                            }
+                        }
                 );
                 emitter.onComplete();
             } catch (Exception e) {

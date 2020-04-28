@@ -31,7 +31,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * Methods for diffing projects and features.
@@ -50,7 +49,7 @@ public class FeatureDiffer {
      * @param applicationType The application type
      * @param options The options
      * @param features The features to diff
-     * @param writer The consumer to send output to
+     * @param consoleOutput The console output
      * @throws Exception If something does wrong
      */
     public void produceDiff(
@@ -59,29 +58,29 @@ public class FeatureDiffer {
             ApplicationType applicationType,
             Options options,
             List<String> features,
-            Consumer<String> writer) throws Exception {
+            ConsoleOutput consoleOutput) throws Exception {
 
         GeneratorContext generatorContext = projectGenerator.createGeneratorContext(
                 applicationType,
                 project,
                 options,
                 features,
-                ConsoleOutput.NOOP
+                consoleOutput
         );
-        produceDiff(projectGenerator, generatorContext, writer);
+        produceDiff(projectGenerator, generatorContext, consoleOutput);
     }
 
     /**
      * Produces a Diff for the given arguments.
      * @param projectGenerator The project generator
      * @param generatorContext The generator context
-     * @param writer The consumer to send output to
+     * @param consoleOutput The console output
      * @throws Exception If something does wrong
      */
     public void produceDiff(
             ProjectGenerator projectGenerator,
             GeneratorContext generatorContext,
-            Consumer<String> writer) throws Exception {
+            ConsoleOutput consoleOutput) throws Exception {
         MapOutputHandler outputHandler = new MapOutputHandler();
         Project project = generatorContext.getProject();
         ApplicationType applicationType = generatorContext.getApplicationType();
@@ -117,13 +116,20 @@ public class FeatureDiffer {
             List<String> newFileLines = toLines(newFile);
 
             Patch<String> diff = DiffUtils.diff(oldFileLines, newFileLines);
-            List<String> unifiedDiff = UnifiedDiffUtils.generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
+            List<String> unifiedDiff = UnifiedDiffUtils
+                    .generateUnifiedDiff(entry.getKey(), entry.getKey(), oldFileLines, diff, 3);
 
             if (!unifiedDiff.isEmpty()) {
                 for (String delta : unifiedDiff) {
-                    writer.accept(delta);
+                    if (delta.startsWith("+")) {
+                        consoleOutput.green(delta);
+                    } else if (delta.startsWith("-")) {
+                        consoleOutput.red(delta);
+                    } else {
+                        consoleOutput.out(delta);
+                    }
                 }
-                writer.accept("\n");
+                consoleOutput.out("\n");
             }
         }
 
@@ -137,9 +143,15 @@ public class FeatureDiffer {
 
             if (!unifiedDiff.isEmpty()) {
                 for (String delta : unifiedDiff) {
-                    writer.accept(delta);
+                    if (delta.startsWith("+")) {
+                        consoleOutput.green(delta);
+                    } else if (delta.startsWith("-")) {
+                        consoleOutput.red(delta);
+                    } else {
+                        consoleOutput.out(delta);
+                    }
                 }
-                writer.accept("\n");
+                consoleOutput.out("\n");
             }
         }
     }

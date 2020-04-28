@@ -36,6 +36,7 @@ public interface ConsoleOutput {
         public boolean verbose() {
             return false;
         }
+
     };
 
     void out(String message);
@@ -47,4 +48,12 @@ public interface ConsoleOutput {
     boolean showStacktrace();
 
     boolean verbose();
+
+    default void green(String message) {
+        out(message);
+    }
+
+    default void red(String message) {
+        out(message);
+    }
 }
