@@ -19,7 +19,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.AvailableFeatures;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.io.ConsoleOutput;
