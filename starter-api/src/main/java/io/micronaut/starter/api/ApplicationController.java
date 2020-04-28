@@ -52,7 +52,7 @@ import java.util.stream.Collectors;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Micronaut Starter",
-                version = "1.0",
+                version = "${api.version}",
                 description = "API for Creating Micronaut Applications",
                 license = @License(name = "Apache 2.0")
         )
