@@ -115,7 +115,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'deploy.sh script is created for a function with feature graalvm for language=#language'() {
+    void 'deploy.sh script is created for a function with feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
@@ -130,11 +130,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         deployscript.contains('docker run --rm --entrypoint cat foo  /home/application/function.zip > build/function.zip')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
     @Unroll
-    void 'deploy.sh script is not created for an default app with feature graalvm for language=#language'() {
+    void 'deploy.sh script is not created for an default app with feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -146,11 +146,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         !output.containsKey('deploy.sh')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
     @Unroll
-    void 'verify dockerfile for a default application type with maven and feature graalvm for language=#language'() {
+    void 'verify dockerfile for a default application type with maven and feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -171,11 +171,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
     @Unroll
-    void 'verify dockerfile for a default application type with gradle and feature graalvm for language=#language'() {
+    void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -196,10 +196,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
-    void 'verify native-image.properties for a default application type with gradle and feature graalvm for language=#language'() {
+    @Unroll
+    void 'verify native-image.properties for a default application type with gradle and feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -216,10 +217,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         nativeImageProperties.contains('-H:Class=example.micronaut.Application')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
-    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-lambda for language=#language'() {
+    @Unroll
+    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -231,11 +233,12 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
         extension << Language.extensions()
     }
 
-    void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-lambda" for language=#language'() {
+    @Unroll
+    void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-lambda" for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -256,11 +259,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         !output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
     @Unroll
-    void 'verify dockerfile for a function application type with gradle and feature graalvm for language=#language'() {
+    void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
@@ -286,11 +289,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
     }
 
     @Unroll
-    void 'verify dockerfile for a function application type with maven and feature graalvm for language=#language'() {
+    void 'verify dockerfile for a function application type with maven and feature graalvm for language: #language'() {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
@@ -315,7 +318,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
 
         where:
-        language << Language.values().toList()
+        language << supportedLanguages()
+    }
+
+    private List<Language> supportedLanguages() {
+        Language.values().toList()
     }
 
 }
