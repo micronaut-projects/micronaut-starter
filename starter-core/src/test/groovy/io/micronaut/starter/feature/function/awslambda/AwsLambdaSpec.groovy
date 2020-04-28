@@ -166,7 +166,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         )
 
         then:
-        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         when:
         def buildGradle = output['build.gradle']
@@ -196,7 +196,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         )
 
         then:
-        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         when:
         def buildGradle = output['build.gradle']
@@ -219,7 +219,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         )
 
         then:
-        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         when:
         def buildGradle = output['build.gradle']
