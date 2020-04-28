@@ -127,7 +127,7 @@ task copyShadowJar(type: Copy) {
     rename { String fileName -> "cli.jar" }
 }
 
-task exploded(type: Copy) {
+task exploded(type: Copy, dependsOn: ['distZip']) {
     from zipTree(distZip.outputs.files.singleFile)
     into "${project.buildDir}/exploded"
     eachFile { FileCopyDetails fcd ->

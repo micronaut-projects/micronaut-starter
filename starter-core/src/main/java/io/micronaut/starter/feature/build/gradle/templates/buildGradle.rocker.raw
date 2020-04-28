@@ -514,6 +514,9 @@ tasks.withType(JavaExec) {
 @if (features.contains("springloaded")) {
     jvmArgs('-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar')
 }
+@if (features.contains("file-watch")) {
+    jvmArgs('-Dmicronaut.io.watch.enabled=true')
+}
 @if (features.contains("jrebel")) {
     if (project.hasProperty('rebelAgent')) {
         jvmArgs(rebelAgent)
