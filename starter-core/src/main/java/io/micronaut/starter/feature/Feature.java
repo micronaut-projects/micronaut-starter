@@ -111,14 +111,6 @@ public interface Feature extends Named, Ordered, Described {
     }
 
     /**
-     * @return The language this feature requires, or empty if the feature can be used with
-     * any language.
-     */
-    default Optional<Language> getRequiredLanguage() {
-        return Optional.empty();
-    }
-
-    /**
      * @return The {@link Category} to which the feature belongs to.
      */
     default String getCategory() {

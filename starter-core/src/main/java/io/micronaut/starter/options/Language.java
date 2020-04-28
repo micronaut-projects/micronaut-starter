@@ -16,6 +16,7 @@
 package io.micronaut.starter.options;
 
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -68,10 +69,10 @@ public enum Language {
 
     public static Language infer(Set<Feature> features) {
         return features.stream()
-                .map(Feature::getRequiredLanguage)
-                .filter(Optional::isPresent)
+                .filter(LanguageSpecificFeature.class::isInstance)
+                .map(LanguageSpecificFeature.class::cast)
+                .map(LanguageSpecificFeature::getRequiredLanguage)
                 .findFirst()
-                .map(Optional::get)
                 .orElse(null);
     }
 

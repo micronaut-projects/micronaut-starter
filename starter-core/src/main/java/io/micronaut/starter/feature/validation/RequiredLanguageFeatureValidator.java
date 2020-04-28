@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Language;
@@ -29,7 +30,8 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
     public void validate(Options options, Set<Feature> features) {
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
-            feature.getRequiredLanguage().ifPresent(lang -> {
+            if (feature instanceof LanguageSpecificFeature) {
+                Language lang = ((LanguageSpecificFeature) feature).getRequiredLanguage();
                 requiredLanguages.compute(lang, (key, value) -> {
                     if (value == null) {
                         value = new HashSet<>();
@@ -37,7 +39,7 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
                     value.add(feature.getName());
                     return value;
                 });
-            });
+            }
         }
 
         Set<Language> languages = requiredLanguages.keySet();

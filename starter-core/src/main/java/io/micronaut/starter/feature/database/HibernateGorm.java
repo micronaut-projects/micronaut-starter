@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.options.Language;
 
@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Singleton
-public class HibernateGorm implements Feature {
+public class HibernateGorm implements LanguageSpecificFeature {
 
     private final H2 h2;
     private final HibernateValidator hibernateValidator;
@@ -54,8 +54,8 @@ public class HibernateGorm implements Feature {
     }
 
     @Override
-    public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.GROOVY);
+    public Language getRequiredLanguage() {
+        return Language.GROOVY;
     }
 
     @Override

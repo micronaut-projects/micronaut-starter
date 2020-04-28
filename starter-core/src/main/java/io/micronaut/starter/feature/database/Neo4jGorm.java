@@ -17,15 +17,14 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
-import java.util.Optional;
 
 @Singleton
-public class Neo4jGorm implements Feature {
+public class Neo4jGorm implements LanguageSpecificFeature {
 
     private final Neo4jBolt neo4jBolt;
 
@@ -49,8 +48,8 @@ public class Neo4jGorm implements Feature {
     }
 
     @Override
-    public Optional<Language> getRequiredLanguage() {
-        return Optional.of(Language.GROOVY);
+    public Language getRequiredLanguage() {
+        return Language.GROOVY;
     }
 
     @Override
