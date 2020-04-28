@@ -20,9 +20,6 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.Language;
-
-import java.util.Optional;
 
 /**
  * A feature is a class that affects the outcome of a generated

@@ -25,7 +25,6 @@ import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.Map;
-import java.util.Optional;
 
 @Singleton
 public class HibernateGorm implements LanguageSpecificFeature {
