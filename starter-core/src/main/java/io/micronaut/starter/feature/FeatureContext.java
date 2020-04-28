@@ -77,10 +77,6 @@ public class FeatureContext {
         }).collect(collectingAndThen(toSet(), Collections::unmodifiableSet));
     }
 
-    public List<Feature> getFeatures() {
-        return features;
-    }
-
     public Language getLanguage() {
         return options.getLanguage();
     }
@@ -99,10 +95,6 @@ public class FeatureContext {
 
     public Options getOptions() {
         return options;
-    }
-
-    public boolean hasApplicationFeature() {
-        return features.stream().anyMatch(feature -> feature instanceof ApplicationFeature);
     }
 
     /**
@@ -125,6 +117,7 @@ public class FeatureContext {
 
     public boolean isPresent(Class<? extends Feature> feature) {
         return features.stream()
+                .filter(f -> exclusions.stream().noneMatch(e -> e.test(f)))
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
     }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
@@ -42,7 +43,7 @@ public class Java implements LanguageFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.hasApplicationFeature()) {
+        if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
                     .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
