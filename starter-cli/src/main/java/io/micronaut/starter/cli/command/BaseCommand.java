@@ -47,8 +47,6 @@ public class BaseCommand implements ConsoleOutput {
         spec.commandLine().getErr().println(CommandLine.Help.Ansi.AUTO.string("@|bold,green " + message + "|@"));
     }
 
-
-
     @Override
     public void red(String message) {
         spec.commandLine().getErr().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red " + message + "|@"));
