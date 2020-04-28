@@ -61,6 +61,6 @@ public class JaxRs implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.HTTP_SERVER;
+        return Category.SERVER;
     }
 }

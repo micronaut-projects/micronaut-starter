@@ -33,6 +33,6 @@ public interface ServerFeature extends OneOfFeature {
 
     @Override
     default String getCategory() {
-        return Category.HTTP_SERVER;
+        return Category.SERVER;
     }
 }

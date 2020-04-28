@@ -32,8 +32,8 @@ public class Category {
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
     public static final String SERVERLESS           = "Serverless";
-    public static final String HTTP_CLIENT          = "HTTP Client";
-    public static final String HTTP_SERVER          = "HTTP Server";
+    public static final String CLIENT               = "Client";
+    public static final String SERVER               = "Server";
     public static final String LOGGING              = "Logging";
     public static final String MANAGEMENT           = "Management";
     public static final String MESSAGING            = "Messaging";

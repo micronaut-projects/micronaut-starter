@@ -53,6 +53,6 @@ public class Ribbon implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.HTTP_CLIENT;
+        return Category.CLIENT;
     }
 }

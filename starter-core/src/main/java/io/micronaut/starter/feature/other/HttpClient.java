@@ -56,6 +56,6 @@ public class HttpClient implements DefaultFeature {
 
     @Override
     public String getCategory() {
-        return Category.HTTP_CLIENT;
+        return Category.CLIENT;
     }
 }
