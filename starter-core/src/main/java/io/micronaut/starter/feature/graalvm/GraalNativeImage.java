@@ -55,7 +55,7 @@ public class GraalNativeImage implements Feature {
 
                 @Override
                 public Optional<String> getWarning() {
-                    return Optional.of("GraalVM native image could not be created because it does not support Groovy");
+                    return Optional.of("The GraalVM feature was removed because it does not support Groovy");
                 }
             });
         } else {
