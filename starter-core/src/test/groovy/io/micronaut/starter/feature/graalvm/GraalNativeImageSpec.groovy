@@ -241,6 +241,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['graalvm', 'aws-lambda']
         )
+
         String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
 
         then:
@@ -249,6 +250,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
         nativeImageProperties.contains('-H:Name=foo')
         nativeImageProperties.contains('-H:Class=io.micronaut.function.aws.runtime.MicronautLambdaRuntime')
+
+        and:
+        !output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
 
         where:
         language << Language.values().toList()

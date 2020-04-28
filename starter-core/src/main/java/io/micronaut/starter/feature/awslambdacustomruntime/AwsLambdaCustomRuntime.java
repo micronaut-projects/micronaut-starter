@@ -80,10 +80,15 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         ApplicationFeature.super.apply(generatorContext);
         ApplicationType applicationType = generatorContext.getApplicationType();
         Project project = generatorContext.getProject();
-        if (generatorContext.getFeatures().isFeaturePresent(AwsLambda.class)) {
+        if (shouldGenerateMainClassForRuntime(generatorContext)) {
             addBookLambdaRuntime(generatorContext, project);
         }
         addBootstrap(generatorContext, applicationType);
+    }
+
+    public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {
+        return generatorContext.getApplicationType() == ApplicationType.FUNCTION &&
+                generatorContext.getFeatures().isFeaturePresent(AwsLambda.class);
     }
 
     private void addBootstrap(GeneratorContext generatorContext, ApplicationType applicationType) {

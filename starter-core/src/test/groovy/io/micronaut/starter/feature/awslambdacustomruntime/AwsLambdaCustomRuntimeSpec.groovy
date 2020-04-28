@@ -27,6 +27,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['aws-lambda-custom-runtime']
         )
+        output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
         String bootstrap = output['bootstrap']
 
         then:
@@ -46,6 +47,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
                 ['aws-lambda-custom-runtime']
         )
+        output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
         String bootstrap = output['bootstrap']
 
         then:
@@ -101,11 +103,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         !awsLambdaCustomRuntime.supports(applicationType)
 
         where:
-        applicationType << [
-                ApplicationType.CLI,
-                ApplicationType.GRPC,
-                ApplicationType.MESSAGING
-        ]
+        applicationType << ApplicationType.values().toList() - [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
         description = applicationType.name
     }
 

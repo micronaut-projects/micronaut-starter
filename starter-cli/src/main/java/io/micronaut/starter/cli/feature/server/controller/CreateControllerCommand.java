@@ -78,11 +78,11 @@ public class CreateControllerCommand extends CodeGenCommand {
 
         RenderResult renderResult = null;
         if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}Controller.java", javaController.template(project)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate(Language.JAVA.getSrcDir() + "/{packagePath}/{className}Controller." + Language.JAVA.getExtension(), javaController.template(project)), overwrite);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Controller.groovy", groovyController.template(project)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate(Language.GROOVY.getSrcDir() + "/{packagePath}/{className}Controller." + Language.GROOVY.getExtension(), groovyController.template(project)), overwrite);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Controller.kt", kotlinController.template(project)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate(Language.KOTLIN.getSrcDir() + "/{packagePath}/{className}Controller." + Language.KOTLIN.getExtension(), kotlinController.template(project)), overwrite);
         }
 
         if (renderResult != null) {
@@ -98,16 +98,16 @@ public class CreateControllerCommand extends CodeGenCommand {
         renderResult = null;
         if (config.getTestFramework() == TestFramework.JUNIT) {
             if (config.getSourceLanguage() == Language.JAVA) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/java/{packagePath}/{className}ControllerTest.java", javaJunit.template(project)), overwrite);
+                renderResult = templateRenderer.render(new RockerTemplate(Language.JAVA.getTestSrcDir() + "/{packagePath}/{className}ControllerTest." + Language.JAVA.getExtension(), javaJunit.template(project)), overwrite);
             } else if (config.getSourceLanguage() == Language.GROOVY) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/{className}ControllerTest.groovy", groovyJunit.template(project)), overwrite);
+                renderResult = templateRenderer.render(new RockerTemplate(Language.GROOVY.getTestSrcDir() + "/{packagePath}/{className}ControllerTest." + Language.GROOVY.getExtension(), groovyJunit.template(project)), overwrite);
             } else if (config.getSourceLanguage() == Language.KOTLIN) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/kotlin/{packagePath}/{className}ControllerTest.kt", kotlinJunit.template(project)), overwrite);
+                renderResult = templateRenderer.render(new RockerTemplate(Language.KOTLIN.getTestSrcDir() + "/{packagePath}/{className}ControllerTest." + Language.KOTLIN.getExtension(), kotlinJunit.template(project)), overwrite);
             }
         } else if (config.getTestFramework() == TestFramework.SPOCK) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/{className}ControllerSpec.groovy", spock.template(project)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate(Language.GROOVY.getTestSrcDir() + "/{packagePath}/{className}ControllerSpec." + Language.GROOVY.getExtension(), spock.template(project)), overwrite);
         } else if (config.getTestFramework() == TestFramework.KOTLINTEST) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/test/kotlin/{packagePath}/{className}ControllerTest.kt", kotlinTest.template(project)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate(Language.KOTLIN.getTestSrcDir() + "/{packagePath}/{className}ControllerTest." + Language.KOTLIN.getExtension(), kotlinTest.template(project)), overwrite);
         }
 
         if (renderResult != null) {

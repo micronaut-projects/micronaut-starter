@@ -8,21 +8,23 @@ Project project
 package @project.getPackageName()
 }
 
+import com.amazonaws.services.lambda.runtime.RequestHandler
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import io.micronaut.function.aws.runtime.AbstractMicronautLambdaRuntime
 import java.net.MalformedURLException
 
 class BookLambdaRuntime : AbstractMicronautLambdaRuntime<APIGatewayProxyRequestEvent?, APIGatewayProxyResponseEvent?, Book?, BookSaved?>() {
-    @@Override
-    protected fun createHandler(vararg args: String?): Object {
+
+    override fun createRequestHandler(vararg args: String?): RequestHandler<Book?, BookSaved?>? {
         return BookRequestHandler()
     }
 
     companion object {
-        fun main(args: Array<String?>?) {
+        @@JvmStatic
+        fun main(vararg args: String) {
             try {
-                BookLambdaRuntime().run(args)
+                BookLambdaRuntime().run(*args)
             } catch (e: MalformedURLException) {
                 e.printStackTrace()
             }

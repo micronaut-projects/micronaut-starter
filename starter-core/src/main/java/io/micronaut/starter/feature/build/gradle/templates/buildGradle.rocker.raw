@@ -337,11 +337,11 @@ implementation("com.microsoft.azure.functions:azure-functions-java-library")
 @if (features.contains("file-watch-osx")) {
     @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", VersionInfo.getMicronautVersion())
 }
-@if (features.contains("alexa-http-server")) {
-    @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "implementation", null)
-}
-@if (features.contains("alexa-function")) {
+@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
+}
+@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-alexa")) {
+    @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "implementation", null)
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut", "micronaut-function-aws", "implementation", null)

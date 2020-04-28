@@ -1,16 +1,18 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
+import spock.lang.Unroll
 
 class CategorySpec extends BeanContextSpec {
 
-    void "all visible features are categorized"() {
-        given:
-        List<Feature> uncategorizedFeatures = beanContext.getBeansOfType(Feature)
-                .findAll { it.isVisible() && it.category == Category.OTHER }
-
+    @Unroll
+    void "#description is categorized"(Feature feature, String description) {
         expect:
-        uncategorizedFeatures.empty
+        feature.category != Category.OTHER
+
+        where:
+        feature << beanContext.getBeansOfType(Feature).findAll { it.isVisible() }
+        description = feature.name
     }
 
 }
