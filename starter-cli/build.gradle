@@ -133,6 +133,9 @@ task exploded(type: Copy) {
     eachFile { FileCopyDetails fcd ->
         fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
     }
+    onlyIf {
+        distZip.outputs.files.singleFile.exists()
+    }
 }
 
 task cleanup(type: Delete) {
