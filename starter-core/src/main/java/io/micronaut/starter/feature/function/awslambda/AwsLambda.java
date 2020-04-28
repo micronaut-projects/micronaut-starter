@@ -135,6 +135,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature {
 
     @Override
     public String getCategory() {
-        return Category.FUNCTION;
+        return Category.SERVERLESS;
     }
 }

@@ -50,6 +50,6 @@ public abstract class MicrometerFeature implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.TRACING;
+        return Category.MANAGEMENT;
     }
 }

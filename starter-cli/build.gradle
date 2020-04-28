@@ -129,10 +129,16 @@ task copyShadowJar(type: Copy) {
 
 task exploded(type: Copy) {
     from zipTree(distZip.outputs.files.singleFile)
-    into "${project.buildDir}/dist"
+    into "${project.buildDir}/exploded"
     eachFile { FileCopyDetails fcd ->
         fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
     }
 }
+
+task cleanup(type: Delete) {
+    delete "${project.rootProject.buildDir}/libs/cli.jar"
+    delete "${project.buildDir}/dist"
+}
+clean.dependsOn(['cleanup'])
 
 assemble.dependsOn('exploded')

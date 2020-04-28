@@ -34,6 +34,6 @@ public interface FunctionFeature extends Feature {
 
     @Override
     default String getCategory() {
-        return Category.FUNCTION;
+        return Category.SERVERLESS;
     }
 }

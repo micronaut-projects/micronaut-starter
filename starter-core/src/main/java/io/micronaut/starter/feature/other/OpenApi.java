@@ -40,7 +40,7 @@ public class OpenApi implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for OpenAPI";
+        return "Adds support for OpenAPI (Swagger)";
     }
 
     @Override
