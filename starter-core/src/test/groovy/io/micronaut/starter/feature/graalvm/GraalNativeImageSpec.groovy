@@ -9,7 +9,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -272,6 +271,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         then:
         dockerfile
+        !dockerfile.contains('maven')
+        !dockerfile.contains('mvn')
+        dockerfile.contains('FROM gradle:6.3.0-jdk8 as builder')
         dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/foo-*-all.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')
@@ -287,7 +289,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         language << Language.values().toList()
     }
 
-    @PendingFeature
     @Unroll
     void 'verify dockerfile for a function application type with maven and feature graalvm for language=#language'() {
         when:
@@ -301,6 +302,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         then:
         dockerfile
         !dockerfile.contains('gradle')
+        dockerfile.contains('FROM maven:3.6.3-openjdk-8')
         dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp target/foo-*.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')

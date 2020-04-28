@@ -5,12 +5,19 @@
 Project project,
 BuildTool buildTool
 )
-
+@if (buildTool.equals(BuildTool.GRADLE)) {
 FROM gradle:6.3.0-jdk8 as builder
 COPY --chown=gradle:gradle . /home/application
+} else {
+FROM maven:3.6.3-openjdk-8 as builder
+COPY . /home/application
+}
 WORKDIR /home/application
+@if (buildTool.equals(BuildTool.GRADLE)) {
 RUN ./gradlew build --no-daemon
-
+} else {
+RUN mvn package
+}
 FROM amazonlinux:2018.03.0.20191014.0 as graalvm
 
 ENV LANG=en_US.UTF-8
