@@ -24,8 +24,10 @@ import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.diff.FeatureDiffer;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.util.NameUtils;
 import io.reactivex.BackpressureStrategy;
@@ -92,26 +94,38 @@ public class DiffController implements DiffOperations {
             @Nullable JdkVersion javaVersion,
             @Parameter(hidden = true) RequestInfo requestInfo) {
 
+        ProjectGenerator projectGenerator;
+        GeneratorContext generatorContext;
+        try {
+            Project project = name != null ? NameUtils.parse(name) : this.project;
+            Options options = new Options(
+                    lang != null ? lang : Language.JAVA,
+                    test != null ? test : TestFramework.JUNIT,
+                    build != null ? build : BuildTool.GRADLE
+            );
+            projectGenerator = this.projectGenerator;
+            generatorContext = projectGenerator.createGeneratorContext(
+                    type,
+                    project,
+                    options,
+                    Collections.singletonList(feature),
+                    ConsoleOutput.NOOP
+            );
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
         return Flowable.create(emitter -> {
             try {
-                Project project = name != null ? NameUtils.parse(name) : this.project;
-                Options options = new Options(
-                        lang != null ? lang : Language.JAVA,
-                        test != null ? test : TestFramework.JUNIT,
-                        build != null ? build : BuildTool.GRADLE
-                );
-                ProjectGenerator projectGenerator = this.projectGenerator;
+                // empty string so there is at least some content
+                // if there is no difference
+                emitter.onNext("");
                 featureDiffer.produceDiff(
                         projectGenerator,
-                        project,
-                        type,
-                        options,
-                        Collections.singletonList(feature),
+                        generatorContext,
                         s -> emitter.onNext(s + LINE_SEPARATOR)
                 );
                 emitter.onComplete();
-            } catch (IllegalArgumentException e) {
-                emitter.onError(new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage()));
             } catch (Exception e) {
                 emitter.onError(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
             }

@@ -20,6 +20,7 @@ import com.github.difflib.UnifiedDiffUtils;
 import com.github.difflib.patch.Patch;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
@@ -59,12 +60,35 @@ public class FeatureDiffer {
             Options options,
             List<String> features,
             Consumer<String> writer) throws Exception {
-        MapOutputHandler outputHandler = new MapOutputHandler();
 
-        projectGenerator.generate(
+        GeneratorContext generatorContext = projectGenerator.createGeneratorContext(
                 applicationType,
                 project,
                 options,
+                features,
+                ConsoleOutput.NOOP
+        );
+        produceDiff(projectGenerator, generatorContext, writer);
+    }
+
+    /**
+     * Produces a Diff for the given arguments.
+     * @param projectGenerator The project generator
+     * @param generatorContext The generator context
+     * @param writer The consumer to send output to
+     * @throws Exception If something does wrong
+     */
+    public void produceDiff(
+            ProjectGenerator projectGenerator,
+            GeneratorContext generatorContext,
+            Consumer<String> writer) throws Exception {
+        MapOutputHandler outputHandler = new MapOutputHandler();
+        Project project = generatorContext.getProject();
+        ApplicationType applicationType = generatorContext.getApplicationType();
+        projectGenerator.generate(
+                applicationType,
+                project,
+                new Options(generatorContext.getLanguage(), generatorContext.getTestFramework(), generatorContext.getBuildTool(), generatorContext.getJdkVersion()),
                 Collections.emptyList(),
                 outputHandler,
                 ConsoleOutput.NOOP
@@ -72,7 +96,12 @@ public class FeatureDiffer {
         Map<String, String> oldProject = outputHandler.getProject();
 
         outputHandler = new MapOutputHandler();
-        projectGenerator.generate(applicationType, project, options, features, outputHandler, ConsoleOutput.NOOP);
+        projectGenerator.generate(
+                applicationType,
+                project,
+                outputHandler,
+                generatorContext
+        );
         Map<String, String> newProject = outputHandler.getProject();
 
         for (Map.Entry<String, String> entry: newProject.entrySet()) {

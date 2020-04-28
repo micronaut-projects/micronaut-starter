@@ -55,12 +55,22 @@ public class ProjectGenerator {
                          OutputHandler outputHandler,
                          ConsoleOutput consoleOutput) throws Exception {
 
-        GeneratorContext generatorContext = createGeneratorContext(applicationType, project, options, selectedFeatures, consoleOutput);
+        GeneratorContext generatorContext = createGeneratorContext(
+                applicationType,
+                project,
+                options,
+                selectedFeatures,
+                consoleOutput
+        );
 
         generate(applicationType, project, outputHandler, generatorContext);
     }
 
-    public void generate(ApplicationType applicationType, Project project, OutputHandler outputHandler, GeneratorContext generatorContext) throws Exception {
+    public void generate(
+            ApplicationType applicationType,
+            Project project,
+            OutputHandler outputHandler,
+            GeneratorContext generatorContext) throws Exception {
         List<String> features = new ArrayList<>(generatorContext.getFeatures().size());
         features.addAll(generatorContext.getFeatures());
         features.sort(Comparator.comparing(Function.identity()));
