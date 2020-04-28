@@ -21,16 +21,19 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.template.deploysh;
 import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
-import io.micronaut.starter.feature.graalvm.template.deploysh;
 import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
+import java.util.Optional;
 
 @Singleton
 public class GraalNativeImage implements Feature {
@@ -43,8 +46,22 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
-            featureContext.addFeature(awsLambdaCustomRuntime);
+        if (featureContext.getLanguage() == Language.GROOVY) {
+            featureContext.exclude(new FeaturePredicate() {
+                @Override
+                public boolean test(Feature feature) {
+                    return feature instanceof GraalNativeImage;
+                }
+
+                @Override
+                public Optional<String> getWarning() {
+                    return Optional.of("GraalVM native image could not be created because it does not support Groovy");
+                }
+            });
+        } else {
+            if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
+                featureContext.addFeature(awsLambdaCustomRuntime);
+            }
         }
     }
 

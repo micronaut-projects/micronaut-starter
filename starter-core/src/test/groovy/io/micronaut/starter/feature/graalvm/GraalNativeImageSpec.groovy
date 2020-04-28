@@ -46,13 +46,15 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         template.contains('kapt("io.micronaut:micronaut-graal")')
         template.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
+    }
 
+    void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
-        template.count('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))') == 1
-        template.contains('compileOnly("org.graalvm.nativeimage:svm")')
+        !template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
+        !template.contains('compileOnly("org.graalvm.nativeimage:svm")')
     }
 
     void 'test maven graalvm feature'() {
@@ -93,19 +95,21 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
                   <version>\${micronaut.version}</version>
                 </annotationProcessorPath>
 """)
+    }
 
+    void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
       <artifactId>svm</artifactId>
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-graal</artifactId>
@@ -234,7 +238,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         where:
         language << supportedLanguages()
-        extension << Language.extensions()
+        extension << supportedLanguages()*.extension
     }
 
     @Unroll
@@ -322,7 +326,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     }
 
     private List<Language> supportedLanguages() {
-        Language.values().toList()
+        Language.values().toList() - Language.GROOVY
     }
 
 }
