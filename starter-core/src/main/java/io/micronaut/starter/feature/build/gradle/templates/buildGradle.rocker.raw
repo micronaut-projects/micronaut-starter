@@ -128,7 +128,7 @@ dependencies {
     @if (features.contains("google-cloud-function-http")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
-        // required due to a Spock compiler bug
+    // required due to a Spock compiler bug
     @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
     }
     } else {
@@ -136,15 +136,15 @@ dependencies {
     }
 }
 @if (features.contains("azure-function")) {
-implementation("com.microsoft.azure.functions:azure-functions-java-library")
+    @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null)
 @if (features.contains("azure-function-http")) {
-    implementation("io.micronaut.azure:micronaut-azure-function-http")
+    @dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "implementation", null)
     @if (features.language().isGroovy() && features.testFramework().isSpock()) {
-        // required due to a Spock compiler bug
-    testImplementation("io.micronaut.servlet:micronaut-servlet-core")
+    // required due to a Spock compiler bug
+    @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
     }
 } else {
-    implementation("io.micronaut.azure:micronaut-azure-function")
+    @dependency.template(("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
 }
 }
 @if (features.contains("http-client")) {
@@ -524,6 +524,7 @@ tasks.withType(JavaExec) {
 }
 }
 }
+
 
 @if (features.contains("azure-function")) {
 azurefunctions {
