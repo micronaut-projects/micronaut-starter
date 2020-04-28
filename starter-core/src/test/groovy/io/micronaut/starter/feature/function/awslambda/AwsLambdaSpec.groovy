@@ -172,8 +172,14 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         def buildGradle = output['build.gradle']
 
         then:
+        !buildGradle.contains('id "application"')
         !buildGradle.contains('mainClassName')
-        //buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
+        if (language == Language.JAVA) {
+            assert buildGradle.contains('id "java"')
+        } else if (language == Language.GROOVY) {
+            assert buildGradle.contains('id "groovy"')
+        }
+
 
         where:
         language << Language.values().toList()

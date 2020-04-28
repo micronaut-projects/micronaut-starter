@@ -35,7 +35,7 @@ plugins {
 @if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "5.2.0"
 }
-@if (features.application() != null) {
+@if (features.application() != null && features.application().mainClassName(applicationType, project, features)!=null) {
     id "application"
 } else if (features.language().isJava()) {
     id "java"
