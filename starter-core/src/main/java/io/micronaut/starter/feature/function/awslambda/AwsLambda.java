@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
@@ -72,16 +73,22 @@ public class AwsLambda implements FunctionFeature, DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Project project = generatorContext.getProject();
-        addBook(generatorContext, project);
-        addBookSaved(generatorContext, project);
-        ApplicationType applicationType = generatorContext.getApplicationType();
-        if (applicationType == ApplicationType.DEFAULT) {
-            addBookController(generatorContext, project);
-            addBookControllerTest(generatorContext, project);
-        } else if (applicationType == ApplicationType.FUNCTION) {
-            addRequestHandler(generatorContext, project);
-            addTest(generatorContext, project);
+        if (shouldGenerateSources(generatorContext)) {
+            addBook(generatorContext, project);
+            addBookSaved(generatorContext, project);
+            ApplicationType applicationType = generatorContext.getApplicationType();
+            if (applicationType == ApplicationType.DEFAULT) {
+                addBookController(generatorContext, project);
+                addBookControllerTest(generatorContext, project);
+            } else if (applicationType == ApplicationType.FUNCTION) {
+                addRequestHandler(generatorContext, project);
+                addTest(generatorContext, project);
+            }
         }
+    }
+
+    boolean shouldGenerateSources(GeneratorContext generatorContext) {
+        return !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
     }
 
     private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
