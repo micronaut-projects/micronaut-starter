@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface ReloadingFeature extends OneOfFeature {
@@ -28,5 +29,10 @@ public interface ReloadingFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.DEV_TOOLS;
     }
 }

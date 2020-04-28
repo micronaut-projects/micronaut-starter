@@ -13,51 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.filewatch;
+package io.micronaut.starter.feature.database;
 
-import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class FileWatch implements Feature {
-
-    private final FileWatchOsx fileWatchOsx;
-
-    public FileWatch(FileWatchOsx fileWatchOsx) {
-        this.fileWatchOsx = fileWatchOsx;
-    }
+public class Cassandra implements Feature {
 
     @Override
     public String getName() {
-        return "file-watch";
+        return "cassandra";
     }
 
     @Override
     public String getTitle() {
-        return "File Watch Support";
+        return "Cassandra Driver";
     }
 
     @Override
     public String getDescription() {
-        return "Adds automatic restarts and file watch";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (OperatingSystem.getCurrent().isMacOs()) {
-            featureContext.addFeature(fileWatchOsx);
-        }
+        return "Adds support for Cassandra in the application";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
-        generatorContext.getConfiguration().put("micronaut.io.watch.restart", true);
+        generatorContext.getConfiguration().put("cassandra.default.clusterName", "\"myCluster\"");
+        generatorContext.getConfiguration().put("cassandra.default.contactPoint", "\"localhost\"");
+        generatorContext.getConfiguration().put("cassandra.default.port", 9042);
+        generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
+        generatorContext.getConfiguration().put("cassandra.default.ssl", true);
     }
 
     @Override
@@ -65,4 +54,8 @@ public class FileWatch implements Feature {
         return true;
     }
 
+    @Override
+    public String getCategory() {
+        return Category.DATABASE;
+    }
 }

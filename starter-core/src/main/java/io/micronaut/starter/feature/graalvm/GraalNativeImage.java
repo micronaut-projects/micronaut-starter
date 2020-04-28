@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.graalvm;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
@@ -109,5 +110,10 @@ public class GraalNativeImage implements Feature {
 
     protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
         return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.PACKAGING;
     }
 }

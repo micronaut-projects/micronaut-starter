@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 import java.util.LinkedHashMap;
@@ -38,5 +39,10 @@ public interface DataFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.DATABASE;
     }
 }

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
@@ -51,5 +52,10 @@ public class HttpClient implements DefaultFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.HTTP_CLIENT;
     }
 }

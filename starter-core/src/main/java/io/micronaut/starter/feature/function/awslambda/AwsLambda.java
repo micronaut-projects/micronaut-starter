@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.awslambda;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
@@ -130,5 +131,10 @@ public class AwsLambda implements FunctionFeature, DefaultFeature {
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.FUNCTION;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.FUNCTION;
     }
 }

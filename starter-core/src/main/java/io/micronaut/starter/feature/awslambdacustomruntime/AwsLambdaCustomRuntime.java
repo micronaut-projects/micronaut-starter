@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
@@ -109,5 +110,10 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
                 bookLambdaRuntimeJava.template(project),
                 bookLambdaRuntimeKotlin.template(project),
                 bookLambdaRuntimeGroovy.template(project));
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.AWS;
     }
 }

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.jib;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.ShadePlugin;
@@ -50,4 +51,8 @@ public class Jib implements Feature {
         return true;
     }
 
+    @Override
+    public String getCategory() {
+        return Category.PACKAGING;
+    }
 }

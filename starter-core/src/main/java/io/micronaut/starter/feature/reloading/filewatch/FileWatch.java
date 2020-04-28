@@ -13,62 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.externalconfig;
+package io.micronaut.starter.feature.reloading.filewatch;
 
+import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.externalconfig.template.k8sYaml;
-import io.micronaut.starter.feature.jib.Jib;
-import io.micronaut.starter.feature.other.Management;
-import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Kubernetes implements ExternalConfigFeature {
+public class FileWatch implements Feature {
 
-    private final Jib jib;
-    private final Management management;
+    private final FileWatchOsx fileWatchOsx;
 
-    public Kubernetes(Management management, Jib jib) {
-        this.management = management;
-        this.jib = jib;
+    public FileWatch(FileWatchOsx fileWatchOsx) {
+        this.fileWatchOsx = fileWatchOsx;
     }
 
     @Override
     public String getName() {
-        return "kubernetes";
+        return "file-watch";
     }
 
     @Override
     public String getTitle() {
-        return "Kubernetes Distributed Configuration";
+        return "File Watch Support";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Kubernetes";
+        return "Adds automatic restarts and file watch";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Management.class)) {
-            featureContext.addFeature(management);
-        }
-        if (!featureContext.isPresent(Jib.class)) {
-            featureContext.addFeature(jib);
+        if (OperatingSystem.getCurrent().isMacOs()) {
+            featureContext.addFeature(fileWatchOsx);
         }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        generatorContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(generatorContext.getProject())));
+        generatorContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
+        generatorContext.getConfiguration().put("micronaut.io.watch.restart", true);
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+        return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.DEV_TOOLS;
     }
 }

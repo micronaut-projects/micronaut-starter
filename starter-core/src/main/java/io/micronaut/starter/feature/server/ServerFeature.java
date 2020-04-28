@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.server;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface ServerFeature extends OneOfFeature {
@@ -28,5 +29,10 @@ public interface ServerFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.HTTP_SERVER;
     }
 }

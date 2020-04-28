@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.filewatch;
+package io.micronaut.starter.feature.function;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.server.template.groovyController;
 import io.micronaut.starter.feature.server.template.javaController;
 import io.micronaut.starter.feature.server.template.kotlinController;

@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.externalconfig;
+package io.micronaut.starter.feature.reloading.filewatch;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
-public interface ExternalConfigFeature extends Feature {
+import javax.inject.Singleton;
+
+@Singleton
+public class FileWatchOsx implements Feature {
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI;
+    public String getName() {
+        return "file-watch-osx";
     }
+
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
 }

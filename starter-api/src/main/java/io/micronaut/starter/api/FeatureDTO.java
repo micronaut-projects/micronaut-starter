@@ -37,6 +37,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String name;
     private final String title;
     private final String description;
+    private final String category;
 
     /**
      * Default constructor.
@@ -48,6 +49,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.name = feature.getName();
         this.title = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".title", messageContext, feature.getTitle());
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
+        this.category = feature.getCategory();
     }
 
     /**
@@ -55,12 +57,14 @@ public class FeatureDTO extends Linkable implements Named, Described {
      * @param name The name
      * @param title The title
      * @param description The description
+     * @param category The category
      */
     @Creator
-    public FeatureDTO(String name, String title, String description) {
+    public FeatureDTO(String name, String title, String description, String category) {
         this.name = name;
         this.title = title;
         this.description = description;
+        this.category = category;
     }
 
     /**
@@ -85,5 +89,13 @@ public class FeatureDTO extends Linkable implements Named, Described {
     @Schema(description = "A description of the feature")
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * @return The category to which this feature belongs to
+     */
+    @Schema(description = "The category to which this feature belongs to")
+    public String getCategory() {
+        return category;
     }
 }

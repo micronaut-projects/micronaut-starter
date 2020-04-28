@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.postgres;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -54,4 +55,8 @@ public class PostgresReactive implements Feature {
         return true;
     }
 
+    @Override
+    public String getCategory() {
+        return Category.DATABASE;
+    }
 }

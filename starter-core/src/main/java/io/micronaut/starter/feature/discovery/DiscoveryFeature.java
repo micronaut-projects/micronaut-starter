@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface DiscoveryFeature extends OneOfFeature {
@@ -28,5 +29,10 @@ public interface DiscoveryFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return applicationType != ApplicationType.CLI;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.SERVICE_DISCOVERY;
     }
 }

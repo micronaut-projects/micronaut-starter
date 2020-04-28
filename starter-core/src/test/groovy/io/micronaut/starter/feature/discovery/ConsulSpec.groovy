@@ -8,7 +8,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class DiscoveryConsulSpec extends BeanContextSpec {
+class ConsulSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle discovery-consul feature for language=#language'() {

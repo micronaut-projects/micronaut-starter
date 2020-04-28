@@ -15,12 +15,12 @@
  */
 package io.micronaut.starter.feature.netflix;
 
-import io.micronaut.starter.feature.externalconfig.ExternalConfigFeature;
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Archaius implements ExternalConfigFeature {
+public class Archaius implements DistributedConfigFeature {
 
     @Override
     public String getName() {

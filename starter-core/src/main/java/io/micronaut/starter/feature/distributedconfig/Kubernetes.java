@@ -13,62 +13,62 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.distributedconfig;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.distributedconfig.template.k8sYaml;
+import io.micronaut.starter.feature.jib.Jib;
+import io.micronaut.starter.feature.other.Management;
+import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class HibernateJpa implements Feature {
+public class Kubernetes implements DistributedConfigFeature {
 
-    private final JdbcFeature jdbcFeature;
+    private final Jib jib;
+    private final Management management;
 
-    public HibernateJpa(JdbcFeature jdbcFeature) {
-        this.jdbcFeature = jdbcFeature;
+    public Kubernetes(Management management, Jib jib) {
+        this.management = management;
+        this.jib = jib;
     }
 
     @Override
     public String getName() {
-        return "hibernate-jpa";
+        return "kubernetes";
     }
 
     @Override
     public String getTitle() {
-        return "Hibernate JPA";
+        return "Kubernetes Distributed Configuration";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Hibernate/JPA";
+        return "Adds support for Kubernetes";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(jdbcFeature);
+        if (!featureContext.isPresent(Management.class)) {
+            featureContext.addFeature(management);
+        }
+        if (!featureContext.isPresent(Jib.class)) {
+            featureContext.addFeature(jib);
         }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
+        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
+        generatorContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(generatorContext.getProject())));
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
-
-    @Override
-    public String getCategory() {
-        return Category.DATABASE;
-    }
-
 }

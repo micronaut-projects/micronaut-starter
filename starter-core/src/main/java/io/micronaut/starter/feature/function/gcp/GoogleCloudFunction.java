@@ -19,7 +19,7 @@ import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
+import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.gcp.template.*;
 import io.micronaut.starter.options.BuildTool;
 

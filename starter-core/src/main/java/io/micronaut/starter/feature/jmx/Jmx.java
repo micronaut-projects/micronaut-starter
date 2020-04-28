@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.jmx;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -41,5 +42,10 @@ public class Jmx implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.MANAGEMENT;
     }
 }

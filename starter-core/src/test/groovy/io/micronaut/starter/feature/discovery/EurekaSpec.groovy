@@ -8,7 +8,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class DiscoveryEurekaSpec extends BeanContextSpec {
+class EurekaSpec extends BeanContextSpec {
 
     @Unroll
     void 'test gradle discovery-eureka feature for language=#language'() {

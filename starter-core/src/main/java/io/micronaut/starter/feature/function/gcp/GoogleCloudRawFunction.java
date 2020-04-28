@@ -21,7 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.filewatch.AbstractFunctionFeature;
+import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.gcp.template.raw.*;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;

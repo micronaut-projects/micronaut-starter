@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -50,6 +51,11 @@ public class SecuritySession implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.SECURITY;
     }
 
 }

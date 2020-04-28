@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.cache;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
 public interface CacheFeature extends OneOfFeature {
@@ -28,5 +29,10 @@ public interface CacheFeature extends OneOfFeature {
     @Override
     default boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.CACHE;
     }
 }

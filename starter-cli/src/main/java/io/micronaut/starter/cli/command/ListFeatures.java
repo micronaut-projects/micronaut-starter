@@ -15,20 +15,18 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.application.ContextFactory;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.options.Options;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class ListFeatures {
 
@@ -62,13 +60,24 @@ public class ListFeatures {
                 .max(Comparator.comparingInt(String::length))
                 .map(String::length).get() + 8;
 
-        allFeatures.sort(Comparator.comparing(Feature::getName));
+        Map<String, List<Feature>> featuresByCategory = allFeatures.stream()
+                .sorted(Comparator.comparing(Feature::getName))
+                .collect(Collectors.groupingBy(Feature::getCategory));
+        featuresByCategory = new TreeMap<>(featuresByCategory);
 
         consoleOutput.out("Available Features");
         consoleOutput.out("@|blue (+)|@ denotes the feature is included by default");
         consoleOutput.out("  " + String.format("%1$-" + width + "s", "Name") + "Description");
         consoleOutput.out("  " + new String(new char[width - 2]).replace("\0", "-") + "  ---------------");
 
+        featuresByCategory.forEach((category, features) -> {
+            consoleOutput.out("  @|bold,underline,magenta " + category + "|@");
+            listFeatures(consoleOutput, defaultFeatures, features, width);
+            consoleOutput.out("");
+        });
+    }
+
+    private void listFeatures(ConsoleOutput consoleOutput, Set<Feature> defaultFeatures, List<Feature> allFeatures, int width) {
         for (Feature feature: allFeatures) {
             if (defaultFeatures.contains(feature)) {
                 String name = feature.getName() + " (+)";

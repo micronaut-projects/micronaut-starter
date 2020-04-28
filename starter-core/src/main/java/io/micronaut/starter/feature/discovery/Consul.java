@@ -20,7 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import javax.inject.Singleton;
 
 @Singleton
-public class DiscoveryConsul implements DiscoveryFeature {
+public class Consul implements DiscoveryFeature {
 
     @Override
     public String getName() {

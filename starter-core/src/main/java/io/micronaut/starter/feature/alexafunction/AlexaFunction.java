@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.alexafunction;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
@@ -44,5 +45,10 @@ public class AlexaFunction implements Feature {
         }
 
         return false;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.AWS;
     }
 }

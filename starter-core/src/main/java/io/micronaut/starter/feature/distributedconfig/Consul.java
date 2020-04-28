@@ -13,44 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.cassandra;
+package io.micronaut.starter.feature.distributedconfig;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Cassandra implements Feature {
+public class Consul implements DistributedConfigFeature {
 
     @Override
     public String getName() {
-        return "cassandra";
+        return "config-consul";
     }
 
     @Override
     public String getTitle() {
-        return "Cassandra Driver";
+        return "Consul Distributed Configuration";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Cassandra in the application";
+        return "Adds support for Distributed Configuration with Consul (https://www.consul.io)";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("cassandra.default.clusterName", "\"myCluster\"");
-        generatorContext.getConfiguration().put("cassandra.default.contactPoint", "\"localhost\"");
-        generatorContext.getConfiguration().put("cassandra.default.port", 9042);
-        generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
-        generatorContext.getConfiguration().put("cassandra.default.ssl", true);
+        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
+        generatorContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
+        generatorContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
     }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
 }

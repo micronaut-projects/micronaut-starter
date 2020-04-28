@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.filewatch;
+package io.micronaut.starter.feature.distributedconfig;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
-import javax.inject.Singleton;
-
-@Singleton
-public class FileWatchOsx implements Feature {
+public interface DistributedConfigFeature extends Feature {
 
     @Override
-    public String getName() {
-        return "file-watch-osx";
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType != ApplicationType.CLI;
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    default String getCategory() {
+        return Category.DISTRIBUTED_CONFIG;
     }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
 }
