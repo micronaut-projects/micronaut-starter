@@ -75,7 +75,11 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         bootstrap.contains('./foo -Xmx128m -Djava.library.path=$(pwd)')
 
         where:
-        language << Language.values().toList()
+        language << graalSupportedLanguages()
+    }
+
+    private List<Language> graalSupportedLanguages() {
+        Language.values().toList() - Language.GROOVY
     }
 
     @Unroll
@@ -94,7 +98,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         bootstrap.contains('./foo -Xmx128m -Djava.library.path=$(pwd)')
 
         where:
-        language << Language.values().toList()
+        language << graalSupportedLanguages()
     }
 
     @Unroll

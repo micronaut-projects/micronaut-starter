@@ -205,8 +205,8 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         buildGradle.contains('mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"')
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
+        language << graalSupportedLanguages()
+        extension << graalSupportedLanguages()*.extension
     }
 
     @Unroll
@@ -281,10 +281,14 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        language << graalSupportedLanguages()
+        extension << graalSupportedLanguages()*.extension
+        srcDir << graalSupportedLanguages()*.srcDir
+        testSrcDir << graalSupportedLanguages()*.testSrcDir
+    }
+
+    private List<Language> graalSupportedLanguages() {
+        Language.values().toList() - Language.GROOVY
     }
 
     @Unroll
@@ -327,7 +331,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         !build.contains('<artifactId>micronaut-http-client</artifactId>')
 
         where:
-        language << Language.values().toList()
+        language << graalSupportedLanguages()
     }
 
     @Unroll
