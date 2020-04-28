@@ -32,6 +32,8 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import java.io.OutputStream;
 import java.io.Writer;
@@ -93,6 +95,11 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Get("/")
     @Produces(MediaType.TEXT_PLAIN)
+    @ApiResponse(
+            responseCode = "200",
+            description = "A textual description of the API",
+            content = @Content(mediaType = "text/plain")
+    )
     HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         Collection<MediaType> accept = request.accept();
         if (accept.contains(MediaType.TEXT_HTML_TYPE)) {
