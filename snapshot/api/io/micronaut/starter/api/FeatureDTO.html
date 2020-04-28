@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -152,9 +152,10 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-java.lang.String-java.lang.String-java.lang.String-">FeatureDTO</a></span>(java.lang.String&nbsp;name,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#FeatureDTO-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">FeatureDTO</a></span>(java.lang.String&nbsp;name,
           java.lang.String&nbsp;title,
-          java.lang.String&nbsp;description)</code>
+          java.lang.String&nbsp;description,
+          java.lang.String&nbsp;category)</code>
 <div class="block">Default constructor.</div>
 </td>
 </tr>
@@ -175,13 +176,17 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getCategory--">getCategory</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getName--">getName</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureDTO.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
@@ -232,7 +237,7 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 </dl>
 </li>
 </ul>
-<a name="FeatureDTO-java.lang.String-java.lang.String-java.lang.String-">
+<a name="FeatureDTO-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -241,13 +246,15 @@ implements io.micronaut.core.naming.Named, io.micronaut.core.naming.Described</p
 <pre>@Creator
 public&nbsp;FeatureDTO(java.lang.String&nbsp;name,
                            java.lang.String&nbsp;title,
-                           java.lang.String&nbsp;description)</pre>
+                           java.lang.String&nbsp;description,
+                           java.lang.String&nbsp;category)</pre>
 <div class="block">Default constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - The name</dd>
 <dd><code>title</code> - The title</dd>
 <dd><code>description</code> - The description</dd>
+<dd><code>category</code> - The category</dd>
 </dl>
 </li>
 </ul>
@@ -290,7 +297,7 @@ public&nbsp;FeatureDTO(java.lang.String&nbsp;name,
 <a name="getDescription--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getDescription</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
@@ -299,6 +306,19 @@ public&nbsp;FeatureDTO(java.lang.String&nbsp;name,
 <dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The description of the feature</dd>
+</dl>
+</li>
+</ul>
+<a name="getCategory--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getCategory</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getCategory()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The category to which this feature belongs to</dd>
 </dl>
 </li>
 </ul>

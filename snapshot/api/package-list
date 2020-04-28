@@ -47,15 +47,13 @@ io.micronaut.starter.feature.build.gradle.templates
 io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
 io.micronaut.starter.feature.cache
-io.micronaut.starter.feature.cassandra
 io.micronaut.starter.feature.config
 io.micronaut.starter.feature.database
 io.micronaut.starter.feature.database.jdbc
 io.micronaut.starter.feature.discovery
+io.micronaut.starter.feature.distributedconfig
+io.micronaut.starter.feature.distributedconfig.template
 io.micronaut.starter.feature.elasticsearch
-io.micronaut.starter.feature.externalconfig
-io.micronaut.starter.feature.externalconfig.template
-io.micronaut.starter.feature.filewatch
 io.micronaut.starter.feature.function
 io.micronaut.starter.feature.function.awslambda
 io.micronaut.starter.feature.function.awslambda.template
@@ -97,6 +95,7 @@ io.micronaut.starter.feature.picocli.test.spock
 io.micronaut.starter.feature.postgres
 io.micronaut.starter.feature.redis
 io.micronaut.starter.feature.reloading
+io.micronaut.starter.feature.reloading.filewatch
 io.micronaut.starter.feature.rss
 io.micronaut.starter.feature.security
 io.micronaut.starter.feature.server
