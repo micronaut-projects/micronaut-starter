@@ -1,7 +1,7 @@
 {
   "resources": [
     {"pattern":"\\QMETA-INF/swagger\\E"},
-    {"pattern":"\\QMETA-INF/swagger/micronaut-starter-1.0.yml\\E"},
+    {"pattern":".*/swagger/micronaut-starter-.*yml"},
     {"pattern":"\\QMETA-INF/swagger/views/rapidoc/index.html\\E"},
     {"pattern":"\\QMETA-INF/swagger/views/swagger-ui/index.html\\E"}
   ]
