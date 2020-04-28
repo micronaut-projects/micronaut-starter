@@ -154,20 +154,20 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/diff/FeatureDiffer.html#produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.generator.GeneratorContext-java.util.function.Consumer-">produceDiff</a></span>(<a href="../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/diff/FeatureDiffer.html#produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.io.ConsoleOutput-">produceDiff</a></span>(<a href="../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
            <a href="../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
-           java.util.function.Consumer&lt;java.lang.String&gt;&nbsp;writer)</code>
+           <a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>
 <div class="block">Produces a Diff for the given arguments.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/diff/FeatureDiffer.html#produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-java.util.function.Consumer-">produceDiff</a></span>(<a href="../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/diff/FeatureDiffer.html#produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.ConsoleOutput-">produceDiff</a></span>(<a href="../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
            <a href="../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
            <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
            java.util.List&lt;java.lang.String&gt;&nbsp;features,
-           java.util.function.Consumer&lt;java.lang.String&gt;&nbsp;writer)</code>
+           <a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>
 <div class="block">Produces a Diff for the given arguments.</div>
 </td>
 </tr>
@@ -210,7 +210,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-java.util.function.Consumer-">
+<a name="produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.Project-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.ConsoleOutput-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -221,7 +221,7 @@ extends java.lang.Object</pre>
                         <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                         <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
                         java.util.List&lt;java.lang.String&gt;&nbsp;features,
-                        java.util.function.Consumer&lt;java.lang.String&gt;&nbsp;writer)
+                        <a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)
                  throws java.lang.Exception</pre>
 <div class="block">Produces a Diff for the given arguments.</div>
 <dl>
@@ -231,13 +231,13 @@ extends java.lang.Object</pre>
 <dd><code>applicationType</code> - The application type</dd>
 <dd><code>options</code> - The options</dd>
 <dd><code>features</code> - The features to diff</dd>
-<dd><code>writer</code> - The consumer to send output to</dd>
+<dd><code>consoleOutput</code> - The console output</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code> - If something does wrong</dd>
 </dl>
 </li>
 </ul>
-<a name="produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.generator.GeneratorContext-java.util.function.Consumer-">
+<a name="produceDiff-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.io.ConsoleOutput-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -245,14 +245,14 @@ extends java.lang.Object</pre>
 <h4>produceDiff</h4>
 <pre>public&nbsp;void&nbsp;produceDiff(<a href="../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
                         <a href="../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
-                        java.util.function.Consumer&lt;java.lang.String&gt;&nbsp;writer)
+                        <a href="../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)
                  throws java.lang.Exception</pre>
 <div class="block">Produces a Diff for the given arguments.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>projectGenerator</code> - The project generator</dd>
 <dd><code>generatorContext</code> - The generator context</dd>
-<dd><code>writer</code> - The consumer to send output to</dd>
+<dd><code>consoleOutput</code> - The console output</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code> - If something does wrong</dd>
 </dl>
