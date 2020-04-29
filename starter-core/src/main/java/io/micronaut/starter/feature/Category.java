@@ -34,6 +34,7 @@ public class Category {
     public static final String SERVERLESS           = "Serverless";
     public static final String CLIENT               = "Client";
     public static final String SERVER               = "Server";
+    public static final String LANGUAGES            = "Languages";
     public static final String LOGGING              = "Logging";
     public static final String MANAGEMENT           = "Management";
     public static final String MESSAGING            = "Messaging";

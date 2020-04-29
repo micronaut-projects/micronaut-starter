@@ -304,6 +304,9 @@ List<Property> properties
 @if (features.contains("redis-lettuce")) {
 @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
 }
+@if (features.contains("kotlin-extension-functions")) {
+@dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "compile", null)
+}
 @if (features.contains("stackdriver")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }

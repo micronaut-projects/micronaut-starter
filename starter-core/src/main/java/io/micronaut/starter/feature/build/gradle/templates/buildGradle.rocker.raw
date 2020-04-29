@@ -310,6 +310,9 @@ dependencies {
 @if (features.contains("stackdriver")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
 }
+@if (features.contains("kotlin-extension-functions")) {
+    @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "implementation", null)
+}
 @if (features.contains("reactor")) {
     @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)
 }
