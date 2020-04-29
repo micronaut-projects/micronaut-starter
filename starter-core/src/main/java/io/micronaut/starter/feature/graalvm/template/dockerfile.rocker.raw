@@ -1,9 +1,8 @@
 @import io.micronaut.starter.application.Project
-@import io.micronaut.starter.options.BuildTool
 
 @args (
 Project project,
-BuildTool buildTool
+String jarFile
 )
 
 FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
@@ -14,11 +13,7 @@ RUN gu install native-image
 COPY . /home/app/@project.getName()
 WORKDIR /home/app/@project.getName()
 
-@if (buildTool.equals(BuildTool.GRADLE)) {
-RUN native-image --no-server -cp build/libs/@project.getName()-*-all.jar
-} else {
-RUN native-image --no-server -cp target/@project.getName()-*.jar
-}
+RUN native-image --no-server -cp @jarFile
 
 FROM frolvlad/alpine-glibc
 RUN apk update && apk add libstdc++

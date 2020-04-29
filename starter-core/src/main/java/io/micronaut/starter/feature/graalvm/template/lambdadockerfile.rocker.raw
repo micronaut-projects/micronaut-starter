@@ -3,7 +3,8 @@
 
 @args (
 Project project,
-BuildTool buildTool
+BuildTool buildTool,
+String jarFile
 )
 @if (buildTool.equals(BuildTool.GRADLE)) {
 FROM gradle:6.3.0-jdk8 as builder
@@ -40,11 +41,7 @@ FROM graalvm
 COPY --from=builder /home/application/ /home/application/
 WORKDIR /home/application
 RUN /usr/lib/graalvm/bin/gu install native-image
-@if (buildTool.equals(BuildTool.GRADLE)) {
-RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/@project.getName()-*-all.jar
-} else {
-RUN /usr/lib/graalvm/bin/native-image --no-server -cp target/@project.getName()-*.jar
-}
+RUN /usr/lib/graalvm/bin/native-image --no-server -cp @jarFile
 RUN chmod 777 bootstrap
 RUN chmod 777 @project.getName()
 RUN zip -j function.zip bootstrap @project.getName()

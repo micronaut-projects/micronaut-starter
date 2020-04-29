@@ -18,10 +18,7 @@ package io.micronaut.starter.feature.graalvm;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.*;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.deploysh;
@@ -29,6 +26,7 @@ import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
 import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -102,14 +100,22 @@ public class GraalNativeImage implements Feature {
     public void apply(GeneratorContext generatorContext) {
         ApplicationType applicationType = generatorContext.getApplicationType();
         RockerModel dockerfileRockerModel;
+        String jarFile;
+        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+            jarFile = "build/libs/" + generatorContext.getProject().getName() + "-*-all.jar";
+        } else {
+            jarFile = "target/" + generatorContext.getProject().getName() + "-*.jar";
+        }
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
-            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile);
             RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
             generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 
         } else {
-            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool());
+            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile);
         }
+
+        //overrides the template from the Docker feature
         generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfileRockerModel));
 
         generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
