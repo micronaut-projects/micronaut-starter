@@ -16,17 +16,15 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
-public class SpringWeb implements Feature {
+public class SpringWeb extends SpringFeature {
+
+    public SpringWeb(Spring spring) {
+        super(spring);
+    }
 
     @Override
     public String getName() {
@@ -44,25 +42,10 @@ public class SpringWeb implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.spring");
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
-    }
-
-    @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
     }
 
-    @Override
-    public String getCategory() {
-        return Category.SPRING;
-    }
 }
 
 
