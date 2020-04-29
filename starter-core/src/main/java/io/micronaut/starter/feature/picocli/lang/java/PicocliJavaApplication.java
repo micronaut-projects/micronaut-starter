@@ -40,7 +40,7 @@ public class PicocliJavaApplication implements JavaApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "picocli-java-application";
     }
 
     @Override

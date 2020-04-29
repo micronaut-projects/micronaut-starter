@@ -39,7 +39,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "kotlin-application";
     }
 
     @Override

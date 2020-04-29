@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Indexed;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
@@ -31,6 +32,15 @@ import io.micronaut.starter.application.ApplicationType;
  */
 @Indexed(Feature.class)
 public interface Feature extends Named, Ordered, Described {
+
+    /**
+     * The name of the feature. It must be unique.
+     *
+     * @return the name of the feature
+     */
+    @NonNull
+    @Override
+    String getName();
 
     /**
      * @return The title of the feature

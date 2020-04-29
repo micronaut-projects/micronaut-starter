@@ -40,7 +40,7 @@ public class PicocliKotlinApplication implements KotlinApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "picocli-kotlin-application";
     }
 
     @Override
