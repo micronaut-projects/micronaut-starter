@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.cassandra
+package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
@@ -10,7 +10,7 @@ import spock.lang.Unroll
 class JooqSpec extends BeanContextSpec {
 
     @Unroll
-    void 'test gradle cassandra feature for language=#language'() {
+    void 'test gradle jooq feature for language=#language'() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jooq'], language)).render().toString()
 
@@ -22,7 +22,7 @@ class JooqSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void 'test maven cassandra feature for language=#language'() {
+    void 'test maven jooq feature for language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jooq'], language), []).render().toString()
 
