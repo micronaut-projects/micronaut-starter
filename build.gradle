@@ -43,6 +43,8 @@ subprojects { Project subproject ->
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
 
+    checkstyleMain.dependsOn('spotlessCheck')
+
     if (subproject.hasProperty("publish") && subproject.publish) {
         apply plugin:"java-library"
         apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
