@@ -86,7 +86,6 @@ io.micronaut.starter.feature.micrometer
 io.micronaut.starter.feature.migration
 io.micronaut.starter.feature.netflix
 io.micronaut.starter.feature.other
-io.micronaut.starter.feature.other.template
 io.micronaut.starter.feature.picocli
 io.micronaut.starter.feature.picocli.lang.groovy
 io.micronaut.starter.feature.picocli.lang.java
