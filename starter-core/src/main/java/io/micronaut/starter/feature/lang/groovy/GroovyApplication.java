@@ -39,7 +39,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "groovy-application";
     }
 
     @Override

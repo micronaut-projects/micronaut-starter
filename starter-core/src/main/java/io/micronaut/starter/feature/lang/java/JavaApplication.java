@@ -39,7 +39,7 @@ public class JavaApplication implements JavaApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "java-application";
     }
 
     @Override

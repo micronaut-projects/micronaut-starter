@@ -36,7 +36,9 @@ public class BaseAvailableFeatures implements AvailableFeatures {
                 .collect(Collectors.toMap(
                         Feature::getName,
                         Function.identity(),
-                        (u, v) -> null,
+                        (u, v) -> {
+                            throw new IllegalArgumentException("Duplicate feature found " + u.getName());
+                        },
                         LinkedHashMap::new));
     }
 

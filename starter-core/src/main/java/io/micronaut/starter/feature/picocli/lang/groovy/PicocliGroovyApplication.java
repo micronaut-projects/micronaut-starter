@@ -40,7 +40,7 @@ public class PicocliGroovyApplication implements GroovyApplicationFeature {
 
     @Override
     public String getName() {
-        return "application";
+        return "picocli-groovy-application";
     }
 
     @Override
