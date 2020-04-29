@@ -64,6 +64,8 @@ class KtorSpec extends BeanContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
+        !template.contains('<artifactId>micronaut-http-server-netty</artifactId>')
+
         where:
         language << supportedLanguages()
     }
@@ -92,6 +94,7 @@ class KtorSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
+        !template.contains('implementation "io.micronaut:micronaut-http-server-netty"')
 
         where:
         language << supportedLanguages()

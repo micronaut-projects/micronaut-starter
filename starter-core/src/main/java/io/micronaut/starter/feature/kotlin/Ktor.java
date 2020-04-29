@@ -15,18 +15,20 @@
  */
 package io.micronaut.starter.feature.kotlin;
 
+import com.sun.corba.se.spi.activation.Server;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.options.Language;
 import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Ktor implements Feature {
+public class Ktor implements ServerFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
