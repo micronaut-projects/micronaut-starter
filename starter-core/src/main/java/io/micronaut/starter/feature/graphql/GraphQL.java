@@ -41,11 +41,6 @@ public class GraphQL implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("#graphql.graphiql.enabled", true);
-    }
-
-    @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
