@@ -16,12 +16,20 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.feature.other.template.dockerfile;
 
 import javax.inject.Singleton;
+import java.util.Set;
 
 @Singleton
-public class Docker implements Feature {
+public class Docker implements DefaultFeature {
 
     @Override
     public String getName() {
@@ -40,6 +48,27 @@ public class Docker implements Feature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType != ApplicationType.FUNCTION;
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOW.getOrder();
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        String jarFile;
+        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+            jarFile = "build/libs/" + generatorContext.getProject().getName() + "-*-all.jar";
+        } else {
+            jarFile = "target/" + generatorContext.getProject().getName() + "-*.jar";
+        }
+        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfile.template(generatorContext.getProject(), jarFile)));
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return supports(applicationType);
     }
 }
