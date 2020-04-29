@@ -307,6 +307,9 @@ List<Property> properties
 @if (features.contains("kotlin-extension-functions")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "compile", null)
 }
+@if (features.contains("ktor")) {
+@dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
+}
 @if (features.contains("stackdriver")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }
