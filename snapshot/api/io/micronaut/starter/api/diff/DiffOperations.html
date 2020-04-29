@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6};
+var methods = {"i0":6,"i1":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -131,6 +131,19 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>io.reactivex.Flowable&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/diff/DiffOperations.html#diffApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">diffApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+       java.lang.String&nbsp;name,
+       java.util.List&lt;java.lang.String&gt;&nbsp;features,
+       <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+       <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;testFramework,
+       <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
+       <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+       <a href="../../../../../io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</code>
+<div class="block">Diffs the whole application for all selected features.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>io.reactivex.Flowable&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/diff/DiffOperations.html#diffFeature-io.micronaut.starter.application.ApplicationType-java.lang.String-java.lang.String-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">diffFeature</a></span>(@NotNull <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
            java.lang.String&nbsp;name,
            @NotBlank java.lang.String&nbsp;feature,
@@ -160,7 +173,7 @@ var activeTableTab = "activeTableTab";
 <a name="diffFeature-io.micronaut.starter.application.ApplicationType-java.lang.String-java.lang.String-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>diffFeature</h4>
 <pre>io.reactivex.Flowable&lt;java.lang.String&gt;&nbsp;diffFeature(@NotNull
@@ -185,6 +198,43 @@ var activeTableTab = "activeTableTab";
 <dd><code>type</code> - The application type</dd>
 <dd><code>name</code> - The project name</dd>
 <dd><code>feature</code> - The feature</dd>
+<dd><code>buildTool</code> - The build tool</dd>
+<dd><code>testFramework</code> - The test framework</dd>
+<dd><code>lang</code> - The lang</dd>
+<dd><code>requestInfo</code> - The request info</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>An HTTP response that emits a writable</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code></dd>
+</dl>
+</li>
+</ul>
+<a name="diffApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>diffApp</h4>
+<pre>io.reactivex.Flowable&lt;java.lang.String&gt;&nbsp;diffApp(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+                                                java.lang.String&nbsp;name,
+                                                @Nullable
+                                                java.util.List&lt;java.lang.String&gt;&nbsp;features,
+                                                @Nullable
+                                                <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
+                                                @Nullable
+                                                <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;testFramework,
+                                                @Nullable
+                                                <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
+                                                @Nullable
+                                                <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+                                                <a href="../../../../../io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)
+                                         throws java.io.IOException</pre>
+<div class="block">Diffs the whole application for all selected features.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - The application type</dd>
+<dd><code>name</code> - The name of the application</dd>
+<dd><code>features</code> - The features</dd>
 <dd><code>buildTool</code> - The build tool</dd>
 <dd><code>testFramework</code> - The test framework</dd>
 <dd><code>lang</code> - The lang</dd>
