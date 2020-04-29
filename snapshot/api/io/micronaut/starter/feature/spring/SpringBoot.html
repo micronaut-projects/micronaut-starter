@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../io/micronaut/starter/feature/spring/Spring.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../io/micronaut/starter/feature/spring/SpringWeb.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?io/micronaut/starter/feature/spring/SpringBoot.html" target="_top">Frames</a></li>
@@ -73,7 +73,7 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.io.micronaut.starter.feature.spring.SpringFeature">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -98,7 +98,12 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring">io.micronaut.starter.feature.spring.SpringFeature</a></li>
+<li>
+<ul class="inheritance">
 <li>io.micronaut.starter.feature.spring.SpringBoot</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -113,8 +118,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>@Singleton
 public class <span class="typeNameLabel">SpringBoot</span>
-extends java.lang.Object
-implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></pre>
+extends <a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring">SpringFeature</a></pre>
 </li>
 </ul>
 </div>
@@ -127,6 +131,13 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.io.micronaut.starter.feature.spring.SpringFeature">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;io.micronaut.starter.feature.spring.<a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring">SpringFeature</a></h3>
+<code><a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html#spring">spring</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.io.micronaut.core.order.Ordered">
 <!--   -->
@@ -148,7 +159,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#SpringBoot--">SpringBoot</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#SpringBoot-io.micronaut.starter.feature.spring.Spring-">SpringBoot</a></span>(<a href="../../../../../io/micronaut/starter/feature/spring/Spring.html" title="class in io.micronaut.starter.feature.spring">Spring</a>&nbsp;spring)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -166,32 +177,20 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>
-<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
- included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
- or added explicitly by another feature through <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#getCategory--">getCategory</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/spring/SpringBoot.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -199,6 +198,13 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.spring.SpringFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.spring.<a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring">SpringFeature</a></h3>
+<code><a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html#getCategory--">getCategory</a>, <a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -211,7 +217,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
 </ul>
 </li>
 </ul>
@@ -227,13 +233,13 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SpringBoot--">
+<a name="SpringBoot-io.micronaut.starter.feature.spring.Spring-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>SpringBoot</h4>
-<pre>public&nbsp;SpringBoot()</pre>
+<pre>public&nbsp;SpringBoot(<a href="../../../../../io/micronaut/starter/feature/spring/Spring.html" title="class in io.micronaut.starter.feature.spring">Spring</a>&nbsp;spring)</pre>
 </li>
 </ul>
 </li>
@@ -254,10 +260,6 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getName--">Feature</a></code></span></div>
 <div class="block">The name of the feature. It must be unique.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getName</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Named</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the name of the feature</dd>
 </dl>
@@ -271,8 +273,6 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <h4>getTitle</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getTitle()</pre>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The title of the feature</dd>
 </dl>
@@ -285,43 +285,12 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <li class="blockList">
 <h4>getDescription</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getDescription</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Described</code></dd>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>apply</h4>
-<pre>public&nbsp;void&nbsp;apply(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">Feature</a></code></span></div>
-<div class="block">If this method is called for a given feature that means the feature was explicitly selected,
- included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>,
- or added explicitly by another feature through <a href="../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.
-
- At this point the feature list is set and cannot change.
-
- This method can be implemented to modify the generated project. The feature can add templates
- by executing <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-"><code>GeneratorContext.addTemplate(String, io.micronaut.starter.template.Template)</code></a>, modify configuration
- by modifying <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getConfiguration--"><code>GeneratorContext.getConfiguration()</code></a> or <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBootstrapConfig--"><code>GeneratorContext.getBootstrapConfig()</code></a>, or modify build properties through <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--"><code>GeneratorContext.getBuildProperties()</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>generatorContext</code> - THe generator context</dd>
-</dl>
 </li>
 </ul>
 <a name="supports-io.micronaut.starter.application.ApplicationType-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>supports</h4>
 <pre>public&nbsp;boolean&nbsp;supports(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
@@ -330,27 +299,10 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
  application types. This method is not used for determining if a default feature
  should be applied.</div>
 <dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>applicationType</code> - The application type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>True if the feature can be selected by the user</dd>
-</dl>
-</li>
-</ul>
-<a name="getCategory--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getCategory</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getCategory()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getCategory--">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The <a href="../../../../../io/micronaut/starter/feature/Category.html" title="class in io.micronaut.starter.feature"><code>Category</code></a> to which the feature belongs to.</dd>
 </dl>
 </li>
 </ul>
@@ -382,7 +334,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../io/micronaut/starter/feature/spring/Spring.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../io/micronaut/starter/feature/spring/SpringWeb.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/feature/spring/SpringFeature.html" title="class in io.micronaut.starter.feature.spring"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?io/micronaut/starter/feature/spring/SpringBoot.html" target="_top">Frames</a></li>
@@ -407,7 +359,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.io.micronaut.starter.feature.spring.SpringFeature">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
