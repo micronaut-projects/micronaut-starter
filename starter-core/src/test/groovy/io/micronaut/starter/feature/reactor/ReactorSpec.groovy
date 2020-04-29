@@ -21,6 +21,13 @@ class ReactorSpec extends BeanContextSpec {
         Category.REACTIVE == reactor.category
     }
 
+    void "reactor title and description are different"() {
+        expect:
+        reactor.getTitle()
+        reactor.getDescription()
+        reactor.getTitle() != reactor.getDescription()
+    }
+
     @Unroll("feature reactor works for application type: #applicationType")
     void "feature reactor works for every type of application type"(ApplicationType applicationType) {
         expect:

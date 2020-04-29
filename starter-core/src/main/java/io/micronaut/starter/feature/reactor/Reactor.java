@@ -43,7 +43,7 @@ public class Reactor implements Feature {
 
     @Override
     public String getDescription() {
-        return "Reactor";
+        return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
     }
 
     @Override
