@@ -69,6 +69,7 @@ io.micronaut.starter.feature.graphql
 io.micronaut.starter.feature.grpc
 io.micronaut.starter.feature.grpc.template
 io.micronaut.starter.feature.jaxrs
+io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
 io.micronaut.starter.feature.lang
@@ -92,10 +93,12 @@ io.micronaut.starter.feature.picocli.test
 io.micronaut.starter.feature.picocli.test.junit
 io.micronaut.starter.feature.picocli.test.kotlintest
 io.micronaut.starter.feature.picocli.test.spock
+io.micronaut.starter.feature.reactor
 io.micronaut.starter.feature.redis
 io.micronaut.starter.feature.reloading
 io.micronaut.starter.feature.reloading.filewatch
 io.micronaut.starter.feature.rss
+io.micronaut.starter.feature.rxjava
 io.micronaut.starter.feature.security
 io.micronaut.starter.feature.server
 io.micronaut.starter.feature.server.template
