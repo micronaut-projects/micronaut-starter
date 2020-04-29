@@ -304,6 +304,9 @@ List<Property> properties
 @if (features.contains("redis-lettuce")) {
 @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "compile", null)
 }
+@if (features.contains("reactor")) {
+@dependency.template("io.micronaut.reactor", "micronaut-reactor", "compile", null)
+}
 @if (features.contains("rxjava3")) {
 @dependency.template("io.micronaut.rxjava3", "micronaut-rxjava3", "compile", null)
 }
