@@ -274,6 +274,9 @@ dependencies {
 @if (features.contains("hibernate-jpa")) {
     @dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "implementation", null)
 }
+@if (features.contains("jooq")) {
+    @dependency.template("io.micronaut.configuration", "micronaut-jooq", "implementation", null)
+}
 @if (features.contains("mongo-reactive")) {
     @dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "implementation", null)
 }

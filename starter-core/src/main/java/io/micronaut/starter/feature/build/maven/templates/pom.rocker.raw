@@ -250,6 +250,9 @@ List<Property> properties
 @if (features.contains("hibernate-jpa")) {
 @dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "compile", null)
 }
+@if (features.contains("jooq")) {
+@dependency.template("io.micronaut.configuration", "micronaut-jooq", "compile", null)
+}
 @if (features.contains("mongo-reactive")) {
 @dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "compile", null)
 }
