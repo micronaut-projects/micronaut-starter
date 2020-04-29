@@ -24,7 +24,23 @@ class DiffControllerSpec extends Specification {
     @Inject
     DiffClient diffClient
 
-    void 'test diff'() {
+    void 'test diff app'() {
+        when:
+        def result = diffClient.diffApp(
+                ApplicationType.DEFAULT,
+                "test",
+                ["azure-function"],
+                null,
+                null,
+                null,
+                null
+        )
+
+        then:
+        result.contains('+# Micronaut and Azure Function')
+    }
+
+    void 'test diff feature'() {
         when:
         def result = diffClient.diffFeature(
                 ApplicationType.DEFAULT,
@@ -70,5 +86,15 @@ class DiffControllerSpec extends Specification {
                 @Nullable TestFramework test,
                 @Nullable Language lang,
                 @Nullable JdkVersion javaVersion);
+
+
+        @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", consumes = MediaType.TEXT_PLAIN)
+        String diffApp(ApplicationType type,
+                       String name,
+                       @Nullable List<String> features,
+                       @Nullable BuildTool build,
+                       @Nullable TestFramework test,
+                       @Nullable Language lang,
+                       @Nullable JdkVersion javaVersion);
     }
 }

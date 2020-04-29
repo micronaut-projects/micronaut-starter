@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Operations for performing diffs.
@@ -52,6 +53,27 @@ public interface DiffOperations {
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,
+            @Nullable BuildTool buildTool,
+            @Nullable TestFramework testFramework,
+            @Nullable Language lang,
+            @Nullable JdkVersion javaVersion,
+            @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
+
+    /**
+     * Diffs the whole application for all selected features.
+     * @param type The application type
+     * @param name The name of the application
+     * @param features The features
+     * @param buildTool The build tool
+     * @param testFramework The test framework
+     * @param lang The lang
+     * @param requestInfo The request info
+     * @return An HTTP response that emits a writable
+     */
+    Flowable<String> diffApp(
+            ApplicationType type,
+            String name,
+            @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,

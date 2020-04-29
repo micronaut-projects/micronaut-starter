@@ -39,7 +39,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * A controller for performing Diffs.
@@ -115,6 +118,59 @@ public class DiffController implements DiffOperations {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
+        return diffFlowable(projectGenerator, generatorContext);
+    }
+
+    /**
+     * Diffs the whole application for all selected features.
+     * @param type The application type
+     * @param name The name of the application
+     * @param features The features
+     * @param build The build tool
+     * @param test The test framework
+     * @param lang The lang
+     * @param requestInfo The request info
+     * @return An HTTP response that emits a writable
+     */
+    @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MediaType.TEXT_PLAIN)
+    @Override
+    @ApiResponse(responseCode = "404", description = "If no difference is found")
+    @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
+    @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
+    public Flowable<String> diffApp(
+            ApplicationType type,
+            @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
+            @Nullable List<String> features,
+            @Nullable BuildTool build,
+            @Nullable TestFramework test,
+            @Nullable Language lang,
+            @Nullable JdkVersion javaVersion,
+            @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
+        ProjectGenerator projectGenerator;
+        GeneratorContext generatorContext;
+        try {
+            Project project = name != null ? NameUtils.parse(name) : this.project;
+            Options options = new Options(
+                    lang != null ? lang : Language.JAVA,
+                    test != null ? test : TestFramework.JUNIT,
+                    build != null ? build : BuildTool.GRADLE
+            );
+            projectGenerator = this.projectGenerator;
+            generatorContext = projectGenerator.createGeneratorContext(
+                    type,
+                    project,
+                    options,
+                    features != null ? features : Collections.emptyList(),
+                    ConsoleOutput.NOOP
+            );
+        } catch (IllegalArgumentException e) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+        return diffFlowable(projectGenerator, generatorContext);
+    }
+
+    private Flowable<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
         return Flowable.create(emitter -> {
             try {
                 // empty string so there is at least some content
@@ -155,7 +211,5 @@ public class DiffController implements DiffOperations {
                 emitter.onError(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
             }
         }, BackpressureStrategy.BUFFER);
-
-
     }
 }
