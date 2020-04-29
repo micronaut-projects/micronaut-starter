@@ -239,7 +239,7 @@ List<Property> properties
 @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "compile", null)
 }
 @if (features.contains("data-jpa")) {
-@dependency.template("io.micronaut.data", "micronaut-data-jpa", "compile", null)
+@dependency.template("io.micronaut.data", "micronaut-data-hibernate-jpa", "compile", null)
 }
 @if (features.contains("hibernate-validator")) {
 @dependency.template("io.micronaut.configuration", "micronaut-hibernate-validator", "compile", null)
