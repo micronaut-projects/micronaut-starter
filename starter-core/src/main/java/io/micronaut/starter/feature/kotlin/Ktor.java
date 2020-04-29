@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.kotlin;
 
-import com.sun.corba.se.spi.activation.Server;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
