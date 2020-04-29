@@ -2,13 +2,12 @@ package io.micronaut.starter.feature.jdbi
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle
+import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 
 class JdbiFeatureSpec extends BeanContextSpec {
 

@@ -38,6 +38,7 @@ public class Category {
     public static final String MANAGEMENT           = "Management";
     public static final String MESSAGING            = "Messaging";
     public static final String PACKAGING            = "Packaging";
+    public static final String REACTIVE             = "Reactive";
     public static final String SEARCH               = "Search Engine";
     public static final String SECURITY             = "Security";
     public static final String SERVICE_DISCOVERY    = "Service Discovery";
