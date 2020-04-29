@@ -307,6 +307,9 @@ dependencies {
 @if (features.contains("redis-lettuce")) {
     @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
+@if (features.contains("stackdriver")) {
+    @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
+}
 @if (features.contains("reactor")) {
     @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)
 }
