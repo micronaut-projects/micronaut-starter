@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.core.annotation.Indexed;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
@@ -28,6 +29,7 @@ import io.micronaut.starter.application.ApplicationType;
  * @author James Kleeh
  * @since 2.0.0
  */
+@Indexed(Feature.class)
 public interface Feature extends Named, Ordered, Described {
 
     /**
