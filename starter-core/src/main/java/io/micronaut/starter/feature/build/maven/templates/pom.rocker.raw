@@ -670,7 +670,7 @@ List<Property> properties
 }
 @if (features.contains("data")) {
             <path>
-              <groupId>io.micronaut</groupId>
+              <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
               <version>${micronaut.data.version}</version>
             </path>
@@ -739,7 +739,7 @@ List<Property> properties
 }
 @if (features.contains("data")) {
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.data</groupId>
                   <artifactId>micronaut-data-processor</artifactId>
                   <version>${micronaut.data.version}</version>
                 </path>
@@ -828,7 +828,7 @@ List<Property> properties
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
+                    <groupId>io.micronaut.data</groupId>
                     <artifactId>micronaut-data-processor</artifactId>
                     <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
@@ -912,7 +912,7 @@ List<Property> properties
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut</groupId>
+                    <groupId>io.micronaut.data</groupId>
                     <artifactId>micronaut-data-processor</artifactId>
                     <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>

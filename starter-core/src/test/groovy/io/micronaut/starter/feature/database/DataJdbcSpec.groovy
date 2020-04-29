@@ -39,7 +39,7 @@ class DataJdbcSpec extends BeanContextSpec {
         //src/main
         template.contains("""
             <path>
-              <groupId>io.micronaut</groupId>
+              <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
               <version>\${micronaut.data.version}</version>
             </path>
@@ -47,7 +47,7 @@ class DataJdbcSpec extends BeanContextSpec {
         //src/test
         template.contains("""
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.data</groupId>
                   <artifactId>micronaut-data-processor</artifactId>
                   <version>\${micronaut.data.version}</version>
                 </path>
