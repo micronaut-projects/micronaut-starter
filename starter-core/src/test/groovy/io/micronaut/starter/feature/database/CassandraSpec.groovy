@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.cassandra
+package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
