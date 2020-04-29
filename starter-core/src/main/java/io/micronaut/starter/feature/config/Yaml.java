@@ -35,13 +35,8 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "YAML Configuration";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Creates a YAML configuration file";
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
