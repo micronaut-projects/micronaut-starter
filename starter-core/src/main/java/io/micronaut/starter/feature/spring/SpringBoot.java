@@ -35,12 +35,12 @@ public class SpringBoot implements Feature {
 
     @Override
     public String getTitle() {
-        return "Spring Boot";
+        return "Spring Boot Annotations";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for using Spring Boot";
+        return "Adds support for using Spring Boot Annotations";
     }
 
     @Override

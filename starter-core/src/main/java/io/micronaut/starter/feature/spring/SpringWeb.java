@@ -35,7 +35,7 @@ public class SpringWeb implements Feature {
 
     @Override
     public String getTitle() {
-        return "Spring MVC Controllers";
+        return "Spring MVC Annotations";
     }
 
     @Override
