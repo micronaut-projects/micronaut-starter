@@ -425,6 +425,11 @@ dependencies {
     }
     @dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
 }
+@if (features.contains("spring-data-jpa")) {
+    @dependency.template("io.micronaut.data", "micronaut-data-spring", "implementation", null)
+    @dependency.template("io.micronaut.data", "micronaut-data-spring-jpa", "implementation", null)
+    @dependency.template("org.springframework", "spring-orm", "implementation", null)
+}
 @if (features.contains("log4j2")) {
     @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.12.1")
     @dependency.template("org.apache.logging.log4j", "log4j-api", "runtimeOnly", "2.12.1")
