@@ -1,0 +1,68 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.amazon.ask.dispatcher.request.handler.HandlerInput
+import com.amazon.ask.model.Intent
+import com.amazon.ask.model.IntentRequest
+import com.amazon.ask.model.RequestEnvelope
+import com.amazon.ask.model.Response
+import com.amazon.ask.model.ui.SimpleCard
+import com.amazon.ask.model.ui.SsmlOutputSpeech
+import io.micronaut.test.annotation.MicronautTest
+import javax.inject.Inject
+import spock.lang.Specification
+
+@@MicronautTest
+class FallbackIntentHandlerSpec extends Specification {
+
+    @@Inject
+    private FallbackIntentHandler handler
+
+    void "test FallbackIntentHandler"() {
+        when:
+        HandlerInput input = HandlerInput.builder()
+                .withRequestEnvelope(RequestEnvelope.builder()
+                        .withRequest(IntentRequest.builder()
+                                .withIntent(Intent.builder()
+                                        .withName("AMAZON.FallbackIntent")
+                                        .build())
+                                .build())
+                        .build()
+                ).build()
+        then:
+        handler.canHandle(input)
+
+        when:
+        Optional<Response> responseOptional = handler.handle(input)
+
+        then:
+        responseOptional.isPresent()
+
+        when:
+        Response response = responseOptional.get()
+
+        then:
+        response.outputSpeech instanceof SsmlOutputSpeech
+
+        when:
+        String speechText = "Sorry, I don't know that. You can say try saying help!"
+        String expectedSsml = "<speak>${speechText}</speak>".toString()
+
+        then:
+        expectedSsml == ((SsmlOutputSpeech) response.outputSpeech).ssml
+        response.reprompt.outputSpeech
+        response.reprompt.outputSpeech instanceof SsmlOutputSpeech
+        expectedSsml == ((SsmlOutputSpeech) response.reprompt.outputSpeech).ssml
+        response.card instanceof SimpleCard
+        "HelloWorld" == ((SimpleCard) response.card).title
+        speechText == ((SimpleCard) response.card).content
+        !response.shouldEndSession
+    }
+}

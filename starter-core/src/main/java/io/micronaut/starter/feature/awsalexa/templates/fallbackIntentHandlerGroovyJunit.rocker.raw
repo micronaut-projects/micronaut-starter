@@ -1,0 +1,59 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.amazon.ask.dispatcher.request.handler.HandlerInput
+import com.amazon.ask.model.Intent
+import com.amazon.ask.model.IntentRequest
+import com.amazon.ask.model.RequestEnvelope
+import com.amazon.ask.model.Response
+import com.amazon.ask.model.ui.SimpleCard
+import com.amazon.ask.model.ui.SsmlOutputSpeech
+import io.micronaut.test.annotation.MicronautTest
+import org.junit.jupiter.api.Test
+import javax.inject.Inject
+import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertFalse
+import static org.junit.jupiter.api.Assertions.assertNotNull
+import static org.junit.jupiter.api.Assertions.assertTrue
+
+@@MicronautTest
+class FallbackIntentHandlerTest {
+
+    @@Inject
+    private FallbackIntentHandler handler
+
+    @@Test
+    void testFallbackIntentHandler() {
+        HandlerInput input = HandlerInput.builder()
+                .withRequestEnvelope(RequestEnvelope.builder()
+                        .withRequest(IntentRequest.builder()
+                                .withIntent(Intent.builder()
+                                        .withName("AMAZON.FallbackIntent")
+                                        .build())
+                                .build())
+                        .build()
+                ).build()
+        assertTrue(handler.canHandle(input))
+        Optional<Response> responseOptional = handler.handle(input)
+        assertTrue(responseOptional.isPresent())
+        Response response = responseOptional.get()
+        assertTrue(response.outputSpeech instanceof SsmlOutputSpeech)
+        String speechText = "Sorry, I don't know that. You can say try saying help!"
+        String expectedSsml = "<speak>${speechText}</speak>".toString()
+        assertEquals(expectedSsml, ((SsmlOutputSpeech) response.outputSpeech).ssml)
+        assertNotNull(response.reprompt.outputSpeech)
+        assertTrue(response.reprompt.outputSpeech instanceof SsmlOutputSpeech)
+        assertEquals(expectedSsml,((SsmlOutputSpeech) response.reprompt.outputSpeech).ssml)
+        assertTrue(response.card instanceof SimpleCard)
+        assertEquals("HelloWorld", ((SimpleCard) response.card).title)
+        assertEquals(speechText, ((SimpleCard) response.card).content)
+        assertFalse(response.shouldEndSession)
+    }
+}

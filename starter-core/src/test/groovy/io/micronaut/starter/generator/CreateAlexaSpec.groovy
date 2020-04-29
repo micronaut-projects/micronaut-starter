@@ -9,7 +9,7 @@ import spock.lang.Unroll
 
 class CreateAlexaSpec  extends CommandSpec {
 
-    @Ignore("alexa-httpserver not resolved")
+    @Ignore("alexa-http-server not yet in bom")
     @Unroll
     void 'create-app with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                   List<String> features,
@@ -39,7 +39,6 @@ class CreateAlexaSpec  extends CommandSpec {
         ApplicationType.DEFAULT | ['aws-alexa'] | Language.GROOVY | BuildTool.MAVEN  | TestFramework.SPOCK
     }
 
-    @Ignore("no test yet")
     @Unroll
     void 'create-function-app with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                            List<String> features,
