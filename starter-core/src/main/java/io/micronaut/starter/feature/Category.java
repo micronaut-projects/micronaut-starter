@@ -47,5 +47,6 @@ public class Category {
     public static final String VALIDATION           = "Validation";
     public static final String VIEW                 = "View Rendering";
     public static final String OTHER                = "Other";
+    public static final String SPRING               = "Spring Framework";
 
 }

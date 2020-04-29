@@ -384,6 +384,12 @@ List<Property> properties
 @if (features.contains("jmx")) {
 @dependency.template("io.micronaut.configuration", "micronaut-jmx", "compile", null)
 }
+@if (features.contains("spring")) {
+@dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
+@if (features.language().isGroovy()) {
+@dependency.template("io.micronaut.spring", "micronaut-spring-annotation", "compile", null)
+}
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -657,6 +663,13 @@ List<Property> properties
               <version>${micronaut.jaxrs.version}</version>
             </path>
 }
+@if (features.contains("spring")) {
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-annotation</artifactId>
+              <version>${micronaut.spring.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -696,6 +709,13 @@ List<Property> properties
                   <groupId>io.micronaut.jaxrs</groupId>
                   <artifactId>micronaut-jaxrs-processor</artifactId>
                   <version>${micronaut.jaxrs.version}</version>
+                </path>
+}
+@if (features.contains("spring")) {
+                <path>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </path>
 }
               </annotationProcessorPaths>
@@ -773,6 +793,13 @@ List<Property> properties
                     <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
+@if (features.contains("spring")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.spring</groupId>
+                    <artifactId>micronaut-spring-annotation</artifactId>
+                    <version>${micronaut.spring.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -827,6 +854,13 @@ List<Property> properties
                     <groupId>io.micronaut.jaxrs</groupId>
                     <artifactId>micronaut-jaxrs-processor</artifactId>
                     <version>${micronaut.jaxrs.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("spring")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.spring</groupId>
+                    <artifactId>micronaut-spring-annotation</artifactId>
+                    <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>

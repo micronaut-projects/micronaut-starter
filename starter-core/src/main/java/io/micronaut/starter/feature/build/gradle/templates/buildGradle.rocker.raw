@@ -408,6 +408,9 @@ dependencies {
 @if (features.contains("jmx")) {
     @dependency.template("io.micronaut.configuration", "micronaut-jmx", "implementation", null)
 }
+@if (features.contains("spring")) {
+    @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
+}
 @if (features.contains("log4j2")) {
     @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.12.1")
     @dependency.template("org.apache.logging.log4j", "log4j-api", "runtimeOnly", "2.12.1")
