@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.kotlin
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
@@ -19,6 +20,12 @@ class KtorSpec extends BeanContextSpec {
     void "ktor belongs to Logging category"() {
         expect:
         Category.LANGUAGES == ktor.category
+    }
+
+    void "ktor requires kotlin"() {
+        expect:
+        ktor instanceof LanguageSpecificFeature
+        ktor.getRequiredLanguage() == Language.KOTLIN
     }
 
     void "ktor is visible"() {
@@ -71,18 +78,14 @@ class KtorSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void 'dependency is not included with maven and feature ktor for language=#language'(Language language) {
+    void 'exception for maven and feature ktor for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), []).render().toString()
 
         then:
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.kotlin</groupId>
-      <artifactId>micronaut-ktor</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+        IllegalArgumentException e = thrown()
+        e.message.contains("The selected features are incompatible")
+
         where:
         language << (Language.values().toList() - supportedLanguages())
     }
@@ -101,12 +104,13 @@ class KtorSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void 'dependency is not included with gradle and feature ktor for language=#language'(Language language) {
+    void 'exception with gradle and feature ktor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language)).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language)).render().toString()
 
         then:
-        !template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
+        IllegalArgumentException e = thrown()
+        e.message.contains("The selected features are incompatible")
 
         where:
         language << (Language.values().toList() - supportedLanguages())

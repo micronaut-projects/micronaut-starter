@@ -21,13 +21,14 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class KotlinExtensionFunctions implements Feature {
+public class KotlinExtensionFunctions implements Feature, LanguageSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -69,5 +70,10 @@ public class KotlinExtensionFunctions implements Feature {
 
     public String getCategory() {
         return Category.LANGUAGES;
+    }
+
+    @Override
+    public Language getRequiredLanguage() {
+        return Language.KOTLIN;
     }
 }
