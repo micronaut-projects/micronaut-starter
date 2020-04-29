@@ -2,12 +2,54 @@ package io.micronaut.starter.feature.spring
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class SpringBootSpec extends BeanContextSpec {
+
+    @Shared
+    @Subject
+    SpringBoot springBoot = beanContext.getBean(SpringBoot)
+
+    void 'spring-boot belongs to Spring category'() {
+        expect:
+        Category.SPRING == springBoot.category
+    }
+
+    void 'spring-boot is visible'() {
+        expect:
+        springBoot.visible
+    }
+
+    void 'spring-boot title and description are different'() {
+        expect:
+        springBoot.getTitle()
+        springBoot.getDescription()
+        springBoot.getTitle() != springBoot.getDescription()
+    }
+
+    @Unroll
+    void 'feature spring-boot supports every type of application type. applicationType=#applicationType'() {
+        expect:
+        springBoot.supports(applicationType)
+
+        where:
+        applicationType << ApplicationType.values().toList()
+    }
+
+    void 'test spring-boot features'() {
+        when:
+        Features features = getFeatures(['spring-boot'])
+
+        then:
+        features.contains('spring')
+    }
 
     @Unroll
     void 'test spring-boot with Gradle for language=#language'() {

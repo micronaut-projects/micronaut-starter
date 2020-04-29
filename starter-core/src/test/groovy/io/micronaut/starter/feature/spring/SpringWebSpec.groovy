@@ -2,12 +2,63 @@ package io.micronaut.starter.feature.spring
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class SpringWebSpec extends BeanContextSpec {
+
+    @Shared
+    @Subject
+    SpringWeb springWeb = beanContext.getBean(SpringWeb)
+
+    void 'spring-web belongs to Spring category'() {
+        expect:
+        Category.SPRING == springWeb.category
+    }
+
+    void 'spring-web is visible'() {
+        expect:
+        springWeb.visible
+    }
+
+    void 'spring-web title and description are different'() {
+        expect:
+        springWeb.getTitle()
+        springWeb.getDescription()
+        springWeb.getTitle() != springWeb.getDescription()
+    }
+
+    @Unroll
+    void 'feature spring-web does not support type: #applicationType'(ApplicationType applicationType) {
+        expect:
+        !springWeb.supports(applicationType)
+
+        where:
+        applicationType << (ApplicationType.values().toList() - ApplicationType.DEFAULT)
+    }
+
+    @Unroll
+    void 'feature spring-web supports #applicationType'(ApplicationType applicationType) {
+        expect:
+        springWeb.supports(applicationType)
+
+        where:
+        applicationType << [ApplicationType.DEFAULT]
+    }
+
+    void 'test spring-web features'() {
+        when:
+        Features features = getFeatures(['spring-web'])
+
+        then:
+        features.contains('spring')
+    }
 
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
