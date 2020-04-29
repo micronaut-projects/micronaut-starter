@@ -307,6 +307,9 @@ dependencies {
 @if (features.contains("redis-lettuce")) {
     @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
+@if (features.contains("rxjava1")) {
+    @dependency.template("io.micronaut.rxjava1", "micronaut-rxjava1", "implementation", null)
+}
 @if (features.contains("rxjava3")) {
     @dependency.template("io.micronaut.rxjava3", "micronaut-rxjava3", "implementation", null)
 }
