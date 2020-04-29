@@ -39,6 +39,42 @@ import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandle
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlin;
 
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinTest;
+
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinTest;
+
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinTest;
+
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinTest;
+
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinTest;
+
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovyJunit;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJunit;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinTest;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -67,12 +103,24 @@ public class AwsAlexa implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Project project = generatorContext.getProject();
+
         cancelIntentHandler(generatorContext, project);
+        cancelIntentHandlerTest(generatorContext, project);
+
         fallbackIntentHandler(generatorContext, project);
+        fallbackIntentHandlerTest(generatorContext, project);
+
         helpIntentHandler(generatorContext, project);
+        helpIntentHandlerTest(generatorContext, project);
+
         launchRequestIntentHandler(generatorContext, project);
+        launchRequestIntentHandlerTest(generatorContext, project);
+
         sessionEndedRequestIntentHandler(generatorContext, project);
+        sessionEndedIntentHandlerTest(generatorContext, project);
+
         stopIntentHandler(generatorContext, project);
+        stopIntentHandlerTest(generatorContext, project);
     }
 
     private void cancelIntentHandler(GeneratorContext generatorContext, Project project) {
@@ -121,6 +169,72 @@ public class AwsAlexa implements Feature {
                 stopIntentHandlerJava.template(project),
                 stopIntentHandlerKotlin.template(project),
                 stopIntentHandlerGroovy.template(project));
+    }
+
+    private void launchRequestIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String launchRequestIntentHandlerTest =  generatorContext.getTestSourcePath("/{packagePath}/LaunchRequestIntentHandler");
+        generatorContext.addTestTemplate("testLaunchRequestIntentHandler", launchRequestIntentHandlerTest,
+                launchRequestIntentHandlerJavaJunit.template(project),
+                launchRequestIntentHandlerKotlinJunit.template(project),
+                launchRequestIntentHandlerGroovyJunit.template(project),
+                launchRequestIntentHandlerKotlinTest.template(project),
+                launchRequestIntentHandlerGroovySpock.template(project)
+                );
+    }
+
+    private void cancelIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String cancelIntentHandlerTest =  generatorContext.getTestSourcePath("/{packagePath}/CancelIntentHandler");
+        generatorContext.addTestTemplate("testCancelIntentHandler", cancelIntentHandlerTest,
+            cancelIntentHandlerJavaJunit.template(project),
+            cancelIntentHandlerKotlinJunit.template(project),
+            cancelIntentHandlerGroovyJunit.template(project),
+            cancelIntentHandlerKotlinTest.template(project),
+            cancelIntentHandlerGroovySpock.template(project)
+        );
+    }
+
+    private void fallbackIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String fallbackIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/FallbackIntentHandler");
+        generatorContext.addTestTemplate("testFallbackIntentHandler", fallbackIntentHandlerTest,
+                fallbackIntentHandlerJavaJunit.template(project),
+                fallbackIntentHandlerKotlinJunit.template(project),
+                fallbackIntentHandlerGroovyJunit.template(project),
+                fallbackIntentHandlerKotlinTest.template(project),
+                fallbackIntentHandlerGroovySpock.template(project)
+        );
+    }
+
+    private void helpIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String helpIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/HelpIntentHandler");
+        generatorContext.addTestTemplate("testHelpIntentHandler", helpIntentHandlerTest,
+                helpIntentHandlerJavaJunit.template(project),
+                helpIntentHandlerKotlinJunit.template(project),
+                helpIntentHandlerGroovyJunit.template(project),
+                helpIntentHandlerKotlinTest.template(project),
+                helpIntentHandlerGroovySpock.template(project)
+        );
+    }
+
+    private void sessionEndedIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String sessionEndedIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/SessionEndedRequestIntentHandler");
+        generatorContext.addTestTemplate("testSessionEndedRequestIntentHandler", sessionEndedIntentHandlerTest,
+                sessionEndedRequestIntentHandlerJavaJunit.template(project),
+                sessionEndedRequestIntentHandlerKotlinJunit.template(project),
+                sessionEndedRequestIntentHandlerGroovyJunit.template(project),
+                sessionEndedRequestIntentHandlerKotlinTest.template(project),
+                sessionEndedRequestIntentHandlerGroovySpock.template(project)
+        );
+    }
+
+    private void stopIntentHandlerTest(GeneratorContext generatorContext, Project project) {
+        String stopIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/StopIntentHandler");
+        generatorContext.addTestTemplate("testStopIntentHandler", stopIntentHandlerTest,
+                stopIntentHandlerJavaJunit.template(project),
+                stopIntentHandlerKotlinJunit.template(project),
+                stopIntentHandlerGroovyJunit.template(project),
+                stopIntentHandlerKotlinTest.template(project),
+                stopIntentHandlerGroovySpock.template(project)
+        );
     }
 
     @Override
