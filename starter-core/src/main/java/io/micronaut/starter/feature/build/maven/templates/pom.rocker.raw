@@ -390,6 +390,14 @@ List<Property> properties
 @dependency.template("io.micronaut.spring", "micronaut-spring-annotation", "compile", null)
 }
 }
+@if (features.contains("spring-web")) {
+@dependency.template("org.springframework.boot", "spring-boot-starter-web", "compile", null)
+@dependency.template("io.micronaut", "micronaut-http-server", "compile", null)
+@dependency.template("io.micronaut.spring", "micronaut-spring-web", "runtime", null)
+@if (features.language().isGroovy()) {
+@dependency.template("io.micronaut.spring", "micronaut-spring-web-annotation", "compile", null)
+}
+}
 @if (features.contains("log4j2")) {
 @dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
 @dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
@@ -670,6 +678,13 @@ List<Property> properties
               <version>${micronaut.spring.version}</version>
             </path>
 }
+@if (features.contains("spring-web")) {
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-web-annotation</artifactId>
+              <version>${micronaut.spring.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -715,6 +730,13 @@ List<Property> properties
                 <path>
                   <groupId>io.micronaut.spring</groupId>
                   <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
+                </path>
+}
+@if (features.contains("spring-web")) {
+                <path>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
                   <version>${micronaut.spring.version}</version>
                 </path>
 }
@@ -800,6 +822,13 @@ List<Property> properties
                     <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
+@if (features.contains("spring-web")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.spring</groupId>
+                    <artifactId>micronaut-spring-web-annotation</artifactId>
+                    <version>${micronaut.spring.version}</version>
+                </annotationProcessorPath>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -860,6 +889,13 @@ List<Property> properties
                 <annotationProcessorPath>
                     <groupId>io.micronaut.spring</groupId>
                     <artifactId>micronaut-spring-annotation</artifactId>
+                    <version>${micronaut.spring.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("spring-web")) {
+                <annotationProcessorPath>
+                    <groupId>io.micronaut.spring</groupId>
+                    <artifactId>micronaut-spring-web-annotation</artifactId>
                     <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
