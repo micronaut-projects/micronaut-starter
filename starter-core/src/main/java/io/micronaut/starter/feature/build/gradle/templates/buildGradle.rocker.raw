@@ -307,6 +307,9 @@ dependencies {
 @if (features.contains("redis-lettuce")) {
     @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
+@if (features.contains("sql-jdbi")) {
+    @dependency.template("io.micronaut.configuration", "micronaut-jdbi", "implementation", null)
+}
 @if (features.contains("vertx-pg-client")) {
     @dependency.template("io.micronaut.configuration", "micronaut-vertx-pg-client", "implementation", null)
 }
