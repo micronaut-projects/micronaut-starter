@@ -28,9 +28,11 @@ import javax.inject.Singleton;
 public class HibernateJpa implements Feature {
 
     private final JdbcFeature jdbcFeature;
+    private final H2 defaultDbFeature;
 
-    public HibernateJpa(JdbcFeature jdbcFeature) {
+    public HibernateJpa(JdbcFeature jdbcFeature, H2 h2) {
         this.jdbcFeature = jdbcFeature;
+        this.defaultDbFeature = h2;
     }
 
     @Override
@@ -53,11 +55,13 @@ public class HibernateJpa implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
+        if (!featureContext.isPresent(H2.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
         generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }
 

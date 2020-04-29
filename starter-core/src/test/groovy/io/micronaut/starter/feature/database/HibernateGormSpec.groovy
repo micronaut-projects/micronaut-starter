@@ -71,7 +71,7 @@ class HibernateGormSpec extends BeanContextSpec {
         GeneratorContext ctx = buildGeneratorContext(['hibernate-gorm'])
 
         then:
-        ctx.configuration.containsKey("dataSource.url")
+        ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.containsKey("hibernate.hbm2ddl.auto")
         ctx.configuration.containsKey("hibernate.cache.queries")
     }

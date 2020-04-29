@@ -26,10 +26,12 @@ public class DataJpa implements DataFeature {
 
     private final Data data;
     private final JdbcFeature jdbcFeature;
+    private final H2 defaultDbFeature;
 
-    public DataJpa(Data data, JdbcFeature jdbcFeature) {
+    public DataJpa(Data data, JdbcFeature jdbcFeature, H2 h2) {
         this.data = data;
         this.jdbcFeature = jdbcFeature;
+        this.defaultDbFeature = h2;
     }
 
     @Override
@@ -53,11 +55,13 @@ public class DataJpa implements DataFeature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
+        if (!featureContext.isPresent(H2.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
         generatorContext.getConfiguration().putAll(getDatasourceConfig());
         generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }

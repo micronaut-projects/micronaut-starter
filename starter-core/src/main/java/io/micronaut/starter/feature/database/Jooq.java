@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -28,9 +27,11 @@ import javax.inject.Singleton;
 public class Jooq implements Feature {
 
     private final JdbcFeature jdbcFeature;
+    private final H2 defaultDbFeature;
 
-    public Jooq(JdbcFeature jdbcFeature) {
+    public Jooq(JdbcFeature jdbcFeature, H2 h2) {
         this.jdbcFeature = jdbcFeature;
+        this.defaultDbFeature = h2;
     }
 
     @Override
@@ -53,11 +54,9 @@ public class Jooq implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+        if (!featureContext.isPresent(H2.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
     }
 
     @Override

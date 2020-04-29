@@ -29,11 +29,11 @@ import java.util.Map;
 @Singleton
 public class HibernateGorm implements LanguageSpecificFeature {
 
-    private final H2 h2;
+    private final H2 defaultDbFeature;
     private final HibernateValidator hibernateValidator;
 
     public HibernateGorm(H2 h2, HibernateValidator hibernateValidator) {
-        this.h2 = h2;
+        this.defaultDbFeature = h2;
         this.hibernateValidator = hibernateValidator;
     }
 
@@ -60,7 +60,7 @@ public class HibernateGorm implements LanguageSpecificFeature {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(H2.class)) {
-            featureContext.addFeature(h2);
+            featureContext.addFeature(defaultDbFeature);
         }
         if (!featureContext.isPresent(HibernateValidator.class)) {
             featureContext.addFeature(hibernateValidator);
@@ -70,12 +70,8 @@ public class HibernateGorm implements LanguageSpecificFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config = generatorContext.getConfiguration();
-        config.put("dataSource.url", "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
-        config.put("dataSource.driverClassName", "org.h2.Driver");
-        config.put("dataSource.username", "sa");
-        config.put("dataSource.password", "");
         config.put("hibernate.hbm2ddl.auto", "update");
         config.put("hibernate.cache.queries", false);
         config.put("hibernate.cache.use_second_level_cache", false);
