@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,20 +156,26 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addHelpTemplate-io.micronaut.starter.template.Writable-">addHelpTemplate</a></span>(<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;writable)</code>
+<div class="block">Adds a template which will be consolidated into a single help file.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-java.lang.String-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">addTemplate</a></span>(java.lang.String&nbsp;templateName,
            java.lang.String&nbsp;triggerFile,
            com.fizzed.rocker.RockerModel&nbsp;javaTemplate,
            com.fizzed.rocker.RockerModel&nbsp;kotlinTemplate,
            com.fizzed.rocker.RockerModel&nbsp;groovyTemplate)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTemplate-java.lang.String-io.micronaut.starter.template.Template-">addTemplate</a></span>(java.lang.String&nbsp;name,
            <a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&nbsp;template)</code>
 <div class="block">Adds a template.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#addTestTemplate-java.lang.String-java.lang.String-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">addTestTemplate</a></span>(java.lang.String&nbsp;templateName,
                java.lang.String&nbsp;testSource,
@@ -179,63 +185,67 @@ extends java.lang.Object</pre>
                com.fizzed.rocker.RockerModel&nbsp;kotlinTestTemplate,
                com.fizzed.rocker.RockerModel&nbsp;spockTemplate)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#applyFeatures--">applyFeatures</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getApplicationType--">getApplicationType</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBootstrapConfig--">getBootstrapConfig</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/BuildProperties.html" title="class in io.micronaut.starter.build">BuildProperties</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildProperties--">getBuildProperties</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getBuildTool--">getBuildTool</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getConfiguration--">getConfiguration</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getFeatures--">getFeatures</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getHelpTemplates--">getHelpTemplates</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getJdkVersion--">getJdkVersion</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getLanguage--">getLanguage</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getProject--">getProject</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getSourcePath-java.lang.String-">getSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTemplates--">getTemplates</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestFramework--">getTestFramework</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestSourcePath-java.lang.String-">getTestSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestTemplate-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">getTestTemplate</a></span>(com.fizzed.rocker.RockerModel&nbsp;javaJUnitTemplate,
                com.fizzed.rocker.RockerModel&nbsp;kotlinJUnitTemplate,
@@ -243,17 +253,17 @@ extends java.lang.Object</pre>
                com.fizzed.rocker.RockerModel&nbsp;kotlinTestTemplate,
                com.fizzed.rocker.RockerModel&nbsp;spockTemplate)</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#isFeaturePresent-java.lang.Class-">isFeaturePresent</a></span>(java.lang.Class&lt;? extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#removeTemplate-java.lang.String-">removeTemplate</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Adds a template.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#setMainClass-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.feature.ApplicationFeature-">setMainClass</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
             <a href="../../../../../io/micronaut/starter/feature/ApplicationFeature.html" title="interface in io.micronaut.starter.feature">ApplicationFeature</a>&nbsp;applicationFeature)</code>&nbsp;</td>
@@ -330,6 +340,20 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a name="addHelpTemplate-io.micronaut.starter.template.Writable-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addHelpTemplate</h4>
+<pre>public&nbsp;void&nbsp;addHelpTemplate(<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;writable)</pre>
+<div class="block">Adds a template which will be consolidated into a single help file.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>writable</code> - The template</dd>
+</dl>
+</li>
+</ul>
 <a name="getBuildProperties--">
 <!--   -->
 </a>
@@ -380,6 +404,20 @@ public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getBoots
 <h4>getTemplates</h4>
 <pre>@NonNull
 public&nbsp;java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;&nbsp;getTemplates()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The templates</dd>
+</dl>
+</li>
+</ul>
+<a name="getHelpTemplates--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHelpTemplates</h4>
+<pre>@NonNull
+public&nbsp;java.util.List&lt;<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&gt;&nbsp;getHelpTemplates()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The templates</dd>
