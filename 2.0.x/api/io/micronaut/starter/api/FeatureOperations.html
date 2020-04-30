@@ -131,13 +131,14 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureOperations.html#getAllFeatures--">getAllFeatures</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureOperations.html#getAllFeatures-java.util.Locale-">getAllFeatures</a></span>(java.util.Locale&nbsp;locale)</code>
 <div class="block">List all the available features.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureOperations.html#getFeatures-io.micronaut.starter.application.ApplicationType-">getFeatures</a></span>(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/FeatureOperations.html#getFeatures-java.util.Locale-io.micronaut.starter.application.ApplicationType-">getFeatures</a></span>(java.util.Locale&nbsp;locale,
+           <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</code>
 <div class="block">A list of features applicable to the given application type.</div>
 </td>
 </tr>
@@ -156,30 +157,34 @@ var activeTableTab = "activeTableTab";
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getAllFeatures--">
+<a name="getAllFeatures-java.util.Locale-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllFeatures</h4>
-<pre>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;&nbsp;getAllFeatures()</pre>
+<pre>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;&nbsp;getAllFeatures(java.util.Locale&nbsp;locale)</pre>
 <div class="block">List all the available features.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>locale</code> - The locale</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The available features</dd>
 </dl>
 </li>
 </ul>
-<a name="getFeatures-io.micronaut.starter.application.ApplicationType-">
+<a name="getFeatures-java.util.Locale-io.micronaut.starter.application.ApplicationType-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getFeatures</h4>
-<pre>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;&nbsp;getFeatures(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</pre>
+<pre>java.util.List&lt;<a href="../../../../io/micronaut/starter/api/FeatureDTO.html" title="class in io.micronaut.starter.api">FeatureDTO</a>&gt;&nbsp;getFeatures(java.util.Locale&nbsp;locale,
+                                       <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type)</pre>
 <div class="block">A list of features applicable to the given application type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>locale</code> - The locale</dd>
 <dd><code>type</code> - The type</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The features</dd>

@@ -143,13 +143,16 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>default java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#appliesToByDefault--">appliesToByDefault</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>default int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#getOrder--">getOrder</a></span>()</code>
 <div class="block">The order of a feature controls the order in which it applies.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types.</div>
 </td>
 </tr>
 </table>
@@ -165,14 +168,7 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.naming.Named">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;io.micronaut.core.naming.Named</h3>
-<code>getName</code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getCategory--">getCategory</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getName--">getName</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
 </ul>
 </li>
 </ul>
@@ -212,16 +208,26 @@ extends <a href="../../../../../../io/micronaut/starter/feature/test/TestFeature
 </dl>
 </li>
 </ul>
-<a name="appliesToByDefault--">
+<a name="supports-io.micronaut.starter.application.ApplicationType-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>appliesToByDefault</h4>
-<pre>default&nbsp;java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&gt;&nbsp;appliesToByDefault()</pre>
+<h4>supports</h4>
+<pre>default&nbsp;boolean&nbsp;supports(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">Feature</a></code></span></div>
+<div class="block">This method must be implemented to ensure it is only selectable for the desired
+ application types. This method is not used for determining if a default feature
+ should be applied.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#appliesToByDefault--">appliesToByDefault</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>applicationType</code> - The application type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature can be selected by the user</dd>
 </dl>
 </li>
 </ul>

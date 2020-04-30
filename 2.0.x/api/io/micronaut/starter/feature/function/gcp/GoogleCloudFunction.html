@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudRawFunction.html" title="class in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html" target="_top">Frames</a></li>
@@ -98,7 +98,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">io.micronaut.starter.feature.filewatch.AbstractFunctionFeature</a></li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">io.micronaut.starter.feature.function.AbstractFunctionFeature</a></li>
 <li>
 <ul class="inheritance">
 <li>io.micronaut.starter.feature.function.gcp.GoogleCloudFunction</li>
@@ -118,7 +118,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>@Singleton
 public class <span class="typeNameLabel">GoogleCloudFunction</span>
-extends <a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></pre>
+extends <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></pre>
 <div class="block">A feature for supporting Google Cloud Function.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -205,7 +205,9 @@ extends <a href="../../../../../../io/micronaut/starter/feature/filewatch/Abstra
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#getName--">getName</a></span>()</code>
+<div class="block">The name of the feature.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
@@ -220,34 +222,41 @@ extends <a href="../../../../../../io/micronaut/starter/feature/filewatch/Abstra
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#isVisible--">isVisible</a></span>()</code>
+<div class="block">Some features should not be visible to the user because they are a common parent of other
+ selectable features, or they should always be applied, or any other reason.</div>
+</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#kotlinTestTemplate-io.micronaut.starter.application.Project-">kotlinTestTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#kotlinTestTemplate-io.micronaut.starter.application.Project-">kotlinTestTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">readmeTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext,
               <a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
               <a href="../../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.filewatch.AbstractFunctionFeature">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.AbstractFunctionFeature">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.filewatch.<a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#applyFunction-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.ApplicationType-">applyFunction</a>, <a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#applyTestTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-">applyTestTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#groovyControllerTemplate-io.micronaut.starter.application.Project-">groovyControllerTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#javaControllerTemplate-io.micronaut.starter.application.Project-">javaControllerTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinControllerTemplate-io.micronaut.starter.application.Project-">kotlinControllerTemplate</a></code></li>
+<h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.function.<a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#applyFunction-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.ApplicationType-">applyFunction</a>, <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#applyTestTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-java.lang.String-">applyTestTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#groovyControllerTemplate-io.micronaut.starter.application.Project-">groovyControllerTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#javaControllerTemplate-io.micronaut.starter.application.Project-">javaControllerTemplate</a>, <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#kotlinControllerTemplate-io.micronaut.starter.application.Project-">kotlinControllerTemplate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -261,14 +270,14 @@ extends <a href="../../../../../../io/micronaut/starter/feature/filewatch/Abstra
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.function.<a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html#getCategory--">getCategory</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.Feature">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code></li>
 </ul>
 </li>
 </ul>
@@ -330,6 +339,12 @@ extends <a href="../../../../../../io/micronaut/starter/feature/filewatch/Abstra
 <h4>getName</h4>
 <pre>@NonNull
 public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getName--">Feature</a></code></span></div>
+<div class="block">The name of the feature. It must be unique.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the name of the feature</dd>
+</dl>
 </li>
 </ul>
 <a name="getTitle--">
@@ -352,6 +367,22 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <li class="blockList">
 <h4>getDescription</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
+</li>
+</ul>
+<a name="isVisible--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isVisible</h4>
+<pre>public&nbsp;boolean&nbsp;isVisible()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">Feature</a></code></span></div>
+<div class="block">Some features should not be visible to the user because they are a common parent of other
+ selectable features, or they should always be applied, or any other reason.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>True if the feature should able to be selected by the user</dd>
+</dl>
 </li>
 </ul>
 <a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
@@ -388,7 +419,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
                                                        <a href="../../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">readmeTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.options.BuildTool-">readmeTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -401,7 +432,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;javaJUnitTemplate(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#javaJUnitTemplate-io.micronaut.starter.application.Project-">javaJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -414,7 +445,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;kotlinJUnitTemplate(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#kotlinJUnitTemplate-io.micronaut.starter.application.Project-">kotlinJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -427,7 +458,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;groovyJUnitTemplate(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#groovyJUnitTemplate-io.micronaut.starter.application.Project-">groovyJUnitTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -440,7 +471,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;kotlinTestTemplate(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#kotlinTestTemplate-io.micronaut.starter.application.Project-">kotlinTestTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#kotlinTestTemplate-io.micronaut.starter.application.Project-">kotlinTestTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -453,7 +484,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;spockTemplate(<a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#spockTemplate-io.micronaut.starter.application.Project-">spockTemplate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -466,7 +497,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>protected&nbsp;java.lang.String&nbsp;getRunCommand(<a href="../../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#getRunCommand-io.micronaut.starter.options.BuildTool-">getRunCommand</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -479,7 +510,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <pre>protected&nbsp;java.lang.String&nbsp;getBuildCommand(<a href="../../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/filewatch/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.filewatch">AbstractFunctionFeature</a></code></dd>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html#getBuildCommand-io.micronaut.starter.options.BuildTool-">getBuildCommand</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -511,7 +542,7 @@ public&nbsp;java.lang.String&nbsp;getName()</pre>
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudRawFunction.html" title="class in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/gcp/GoogleCloudFunction.html" target="_top">Frames</a></li>

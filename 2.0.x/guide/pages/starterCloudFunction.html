@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3.5 Google Cloud Function 2.0.0.M3</title>
+    <title>3.7 Google Cloud Function 2.0.0.M3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,7 +28,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Micronaut Starter
+        Micronaut Launch
     </div>
     <div class="navLinks">
         <ul>
@@ -44,7 +44,7 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/starterImpls.html"><strong>3</strong><span>Micronaut Launch</span></a>
                         </div>
                         
                     </div>
@@ -74,7 +74,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>3.5 Google Cloud Function</h1>
+                    <h1>3.7 Google Cloud Function</h1>
 
                     <p><strong>Version:</strong> 2.0.0.M3</p>
                 </div>
@@ -82,7 +82,7 @@ function addJsClass() {
                 
 
                 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.7 Google Cloud Function</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
@@ -111,13 +111,13 @@ function addJsClass() {
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.</p>
+<p>Micronaut Starter API is continuously deployed to <a href="https://cloud.google.com/functions">Google Cloud Function</a> as a Serverless Java application.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Worflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
 </div>
 <div class="paragraph">
-<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types</a></p>
+<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types</a></p>
 </div>
 </div>
 <div class="sect2">

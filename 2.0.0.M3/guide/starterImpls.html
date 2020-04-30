@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>3 Micronaut Starter 2.0.0.M3</title>
+    <title>3 Micronaut Launch 2.0.0.M3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -28,7 +28,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Micronaut Starter
+        Micronaut Launch
     </div>
     <div class="navLinks">
         <ul>
@@ -44,7 +44,7 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Launch</span></a>
                         </div>
                         
                     </div>
@@ -74,7 +74,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>3 Micronaut Starter</h1>
+                    <h1>3 Micronaut Launch</h1>
 
                     <p><strong>Version:</strong> 2.0.0.M3</p>
                 </div>
@@ -86,29 +86,35 @@ function addJsClass() {
                     <div class="toc-item" style="margin-left:0px"><a href="#starterCLI"><strong>3.1</strong><span>CLI Application</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterNetty"><strong>3.2</strong><span>Web Application</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterApi"><strong>3.2</strong><span>OpenAPI Specification</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterServlet"><strong>3.3</strong><span>WAR Deployment</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterNetty"><strong>3.3</strong><span>Web API Application</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudRun"><strong>3.4</strong><span>Google Cloud Run</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterUI"><strong>3.4</strong><span>Micronaut Launch React UI</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudFunction"><strong>3.5</strong><span>Google Cloud Function</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterServlet"><strong>3.5</strong><span>WAR Deployment</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterLambda"><strong>3.6</strong><span>AWS Lambda</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudRun"><strong>3.6</strong><span>Google Cloud Run</span></a>
                     </div>
                     
-                    <div class="toc-item" style="margin-left:0px"><a href="#starterAzure"><strong>3.7</strong><span>Microsoft Azure</span></a>
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterCloudFunction"><strong>3.7</strong><span>Google Cloud Function</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterLambda"><strong>3.8</strong><span>AWS Lambda</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0px"><a href="#starterAzure"><strong>3.9</strong><span>Microsoft Azure</span></a>
                     </div>
                     
                 </div>
                 
 
                 
-<h1 id="starterImpls"><a class="anchor" href="#starterImpls"></a>3 Micronaut Starter</h1>
+<h1 id="starterImpls"><a class="anchor" href="#starterImpls"></a>3 Micronaut Launch</h1>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls.adoc"'>
@@ -149,7 +155,7 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>The subproject <code>starter-web-cli</code> provides an implementation that can be run as a Command Line Application (CLI).</p>
+<p>The subproject <code>starter-cli</code> provides an implementation that can be run as a Command Line Application (CLI).</p>
 </div>
 <div class="sect2">
 <h3 id="_building_locally">Building Locally</h3>
@@ -158,7 +164,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-cli:assemble</code></pre>
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean micronaut-cli:assemble</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -166,7 +172,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-2.0.0.M3-all.jar</code></pre>
 </div>
 </div>
 </div>
@@ -177,7 +183,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/micronaut-cli-2.0.0.M3-all.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -190,7 +196,36 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.2 Web Application</h2>
+<h2 id="starterApi"><a class="anchor" href="#starterApi"></a>3.2 OpenAPI Specification</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterApi.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>This project uses <a href="https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html">Micronaut&#8217;s OpenAPI</a> support to generate an <a href="https://www.openapis.org">OpenAPI specification</a>; a broadly adopted industry standard to describe APIs.</p>
+</div>
+<div class="paragraph">
+<p>Run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ ./gradlew starter-api:classes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can open the OPEN API specification in YAML format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ open starter-api/build/classes/java/main/META-INF/swagger/micronaut-starter-1.0.yml</code></pre>
+</div>
+</div>
+
+<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>3.3 Web API Application</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
@@ -248,7 +283,20 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.3 WAR Deployment</h2>
+<h2 id="starterUI"><a class="anchor" href="#starterUI"></a>3.4 Micronaut Launch React UI</h2>
+
+<div class='contribute-btn'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterUI.adoc"'>
+        <i class='fa fa-pencil-square-o'></i> Improve this doc
+    </button>
+</div>
+
+
+<div class="paragraph">
+<p>The <a href="https://micronaut.io/launch">UI for Micronaut Launch</a> is written in React and the sources can be found <a href="https://github.com/micronaut-projects/static-website/tree/master/main/src/main/js/launch">here</a> as a separate project.</p>
+</div>
+
+<h2 id="starterServlet"><a class="anchor" href="#starterServlet"></a>3.5 WAR Deployment</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterServlet.adoc"'>
@@ -301,7 +349,7 @@ function addJsClass() {
 </div>
 </div>
 
-<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.4 Google Cloud Run</h2>
+<h2 id="starterCloudRun"><a class="anchor" href="#starterCloudRun"></a>3.6 Google Cloud Run</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudRun.adoc"'>
@@ -331,13 +379,13 @@ $ docker run -p 8080:8080 micronaut-starter</code></pre>
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed to Google Cloud Run as a native GraalVM application using Github Actions.</p>
+<p>Micronaut Starter is continuously deployed to <a href="https://cloud.google.com/run">Google Cloud Run</a> as a native GraalVM application using Github Actions.</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCR%22">Snapshot to GCR Workflow</a> (defined by <code>.github/workflows/gcr-snapshot.yml</code>) deploys the application on each commit and the application can be accessed at the following URL:</p>
 </div>
 <div class="paragraph">
-<p><a href="https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html" class="bare">https://micronaut-starter-staging-h2gn7na5bq-uc.a.run.app/swagger/views/swagger-ui/index.html</a></p>
+<p><a href="https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-ui/index.html" class="bare">https://micronaut-starter-staging-ucxwqnh6ka-uc.a.run.app/swagger/views/swagger-ui/index.html</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -372,7 +420,7 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
   ✓ Creating Revision...
   ✓ Routing traffic...
 Done.
-Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app</code></pre>
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-xxxxxxx-uc.a.run.app</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -380,7 +428,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.5 Google Cloud Function</h2>
+<h2 id="starterCloudFunction"><a class="anchor" href="#starterCloudFunction"></a>3.7 Google Cloud Function</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterCloudFunction.adoc"'>
@@ -409,13 +457,13 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed to Google Cloud Function as a Serverless Java application.</p>
+<p>Micronaut Starter API is continuously deployed to <a href="https://cloud.google.com/functions">Google Cloud Function</a> as a Serverless Java application.</p>
 </div>
 <div class="paragraph">
-<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Worflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+GCF%22">Snapshot to GCF Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
 </div>
 <div class="paragraph">
-<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-function-test1/application-types</a></p>
+<p><a href="https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types" class="bare">https://us-central1-micronaut-projects.cloudfunctions.net/micronaut-starter-staging/application-types</a></p>
 </div>
 </div>
 <div class="sect2">
@@ -465,7 +513,7 @@ Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed
 </div>
 </div>
 
-<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.6 AWS Lambda</h2>
+<h2 id="starterLambda"><a class="anchor" href="#starterLambda"></a>3.8 AWS Lambda</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterLambda.adoc"'>
@@ -504,7 +552,7 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>Micronaut Starter is continuously deployed by Github Actions to AWS Lambda as a Serverless GraalVM native application using a custom AWS Lambda Runtime .</p>
+<p>The Micronaut Starter API is continuously deployed by Github Actions to <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> as a Serverless GraalVM native application using a custom AWS Lambda Runtime .</p>
 </div>
 <div class="paragraph">
 <p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+AWS+Lambda%22">Snapshot to AWS Lambda Workflow</a> (defined by <code>.github/workflows/gcf-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
@@ -514,7 +562,7 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 </div>
 </div>
 
-<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.7 Microsoft Azure</h2>
+<h2 id="starterAzure"><a class="anchor" href="#starterAzure"></a>3.9 Microsoft Azure</h2>
 
 <div class='contribute-btn'>
     <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterAzure.adoc"'>
@@ -543,7 +591,13 @@ $ docker run --rm --entrypoint cat micronaut-starter  /home/application/function
 <div class="sect2">
 <h3 id="_continuous_deployment">Continuous Deployment</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>Micronaut Starter API is continuously deployed to <a href="https://azure.microsoft.com/en-us/services/functions/">Azure Function</a> as a Serverless Java application.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://github.com/micronaut-projects/micronaut-starter/actions?query=workflow%3A%22Snapshot+to+Azure+Function%22">Snapshot to Azure Workflow</a> (defined by <code>.github/workflows/azure-function-snapshot.yml</code>) deploys the application on each commit and the API can be accessed at the following URL:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://micronaut-starter.azurewebsites.net/api/application-types" class="bare">https://micronaut-starter.azurewebsites.net/api/application-types</a></p>
 </div>
 </div>
 <div class="sect2">

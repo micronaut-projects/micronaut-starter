@@ -175,7 +175,9 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/Kotlin.html#getName--">getName</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/Kotlin.html#getName--">getName</a></span>()</code>
+<div class="block">The name of the feature.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -209,14 +211,14 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.lang.<a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html" title="interface in io.micronaut.starter.feature.lang">LanguageFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isGroovy--">isGroovy</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isJava--">isJava</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isVisible--">isVisible</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isGroovy--">isGroovy</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isJava--">isJava</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#isVisible--">isVisible</a>, <a href="../../../../../../io/micronaut/starter/feature/lang/LanguageFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.Feature">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getRequiredLanguage--">getRequiredLanguage</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getCategory--">getCategory</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getDescription--">getDescription</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#getTitle--">getTitle</a></code></li>
 </ul>
 </li>
 </ul>
@@ -256,9 +258,15 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <li class="blockList">
 <h4>getName</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getName--">Feature</a></code></span></div>
+<div class="block">The name of the feature. It must be unique.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>getName</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.naming.Named</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the name of the feature</dd>
 </dl>
 </li>
 </ul>

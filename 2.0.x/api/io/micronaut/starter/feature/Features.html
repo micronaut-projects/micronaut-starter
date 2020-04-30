@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/starter/feature/FeaturePredicate.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/starter/feature/OneOfFeature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/starter/feature/LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/starter/feature/Features.html" target="_top">Frames</a></li>
@@ -165,8 +165,7 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#Features-io.micronaut.starter.application.ApplicationType-java.util.Set-io.micronaut.starter.options.Options-">Features</a></span>(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
-        java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#Features-java.util.Set-io.micronaut.starter.options.Options-">Features</a></span>(java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
         <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</code>&nbsp;</td>
 </tr>
 </table>
@@ -202,13 +201,17 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#isFunction--">isFunction</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#hasFunctionFeature--">hasFunctionFeature</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#isFeaturePresent-java.lang.Class-">isFeaturePresent</a></span>(java.lang.Class&lt;? extends <a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/feature/lang/LanguageFeature.html" title="interface in io.micronaut.starter.feature.lang">LanguageFeature</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#language--">language</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#testFramework--">testFramework</a></span>()</code>&nbsp;</td>
 </tr>
@@ -269,14 +272,13 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Features-io.micronaut.starter.application.ApplicationType-java.util.Set-io.micronaut.starter.options.Options-">
+<a name="Features-java.util.Set-io.micronaut.starter.options.Options-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Features</h4>
-<pre>public&nbsp;Features(<a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
-                java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
+<pre>public&nbsp;Features(java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
                 <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</pre>
 </li>
 </ul>
@@ -288,13 +290,13 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="isFunction--">
+<a name="hasFunctionFeature--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isFunction</h4>
-<pre>public&nbsp;boolean&nbsp;isFunction()</pre>
+<h4>hasFunctionFeature</h4>
+<pre>public&nbsp;boolean&nbsp;hasFunctionFeature()</pre>
 </li>
 </ul>
 <a name="build--">
@@ -345,10 +347,19 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <a name="getTargetJdk--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getTargetJdk</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getTargetJdk()</pre>
+</li>
+</ul>
+<a name="isFeaturePresent-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isFeaturePresent</h4>
+<pre>public&nbsp;boolean&nbsp;isFeaturePresent(java.lang.Class&lt;? extends <a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</pre>
 </li>
 </ul>
 </li>
@@ -379,7 +390,7 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../io/micronaut/starter/feature/FeaturePredicate.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../io/micronaut/starter/feature/OneOfFeature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/starter/feature/LanguageSpecificFeature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?io/micronaut/starter/feature/Features.html" target="_top">Frames</a></li>

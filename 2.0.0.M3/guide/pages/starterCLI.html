@@ -28,7 +28,7 @@ function addJsClass() {
 <div id="navigation">
     <div class="navTitle">
         
-        Micronaut Starter
+        Micronaut Launch
     </div>
     <div class="navLinks">
         <ul>
@@ -44,7 +44,7 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../../guide/starterImpls.html"><strong>3</strong><span>Micronaut Starter</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../../guide/starterImpls.html"><strong>3</strong><span>Micronaut Launch</span></a>
                         </div>
                         
                     </div>
@@ -92,7 +92,7 @@ function addJsClass() {
 
 
 <div class="paragraph">
-<p>The subproject <code>starter-web-cli</code> provides an implementation that can be run as a Command Line Application (CLI).</p>
+<p>The subproject <code>starter-cli</code> provides an implementation that can be run as a Command Line Application (CLI).</p>
 </div>
 <div class="sect2">
 <h3 id="_building_locally">Building Locally</h3>
@@ -101,7 +101,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-cli:assemble</code></pre>
+<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean micronaut-cli:assemble</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -109,7 +109,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-2.0.0.M3-all.jar</code></pre>
 </div>
 </div>
 </div>
@@ -120,7 +120,7 @@ function addJsClass() {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/starter-cli-2.0.0.M3-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/micronaut-cli-2.0.0.M3-all.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">

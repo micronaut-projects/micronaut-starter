@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":18,"i2":18,"i3":6};
+var methods = {"i0":6,"i1":18,"i2":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/starter/template/RockerTemplate.html" title="class in io.micronaut.starter.template"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/starter/template/RockerWritable.html" title="class in io.micronaut.starter.template"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/starter/template/TemplateModel.html" title="interface in io.micronaut.starter.template"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -98,12 +98,17 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Superinterfaces:</dt>
+<dd><a href="../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></dd>
+</dl>
+<dl>
 <dt>All Known Implementing Classes:</dt>
 <dd><a href="../../../../io/micronaut/starter/template/BinaryTemplate.html" title="class in io.micronaut.starter.template">BinaryTemplate</a>, <a href="../../../../io/micronaut/starter/template/PropertiesTemplate.html" title="class in io.micronaut.starter.template">PropertiesTemplate</a>, <a href="../../../../io/micronaut/starter/template/RockerTemplate.html" title="class in io.micronaut.starter.template">RockerTemplate</a>, <a href="../../../../io/micronaut/starter/template/URLTemplate.html" title="class in io.micronaut.starter.template">URLTemplate</a>, <a href="../../../../io/micronaut/starter/template/YamlTemplate.html" title="class in io.micronaut.starter.template">YamlTemplate</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="typeNameLabel">Template</span></pre>
+<pre>public interface <span class="typeNameLabel">Template</span>
+extends <a href="../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></pre>
 </li>
 </ul>
 </div>
@@ -134,11 +139,14 @@ var activeTableTab = "activeTableTab";
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/template/Template.html#isExecutable--">isExecutable</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/template/Template.html#write-java.io.OutputStream-">write</a></span>(java.io.OutputStream&nbsp;outputStream)</code>&nbsp;</td>
-</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.template.Writable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.template.<a href="../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></h3>
+<code><a href="../../../../io/micronaut/starter/template/Writable.html#write-java.io.OutputStream-">write</a></code></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -174,24 +182,10 @@ var activeTableTab = "activeTableTab";
 <a name="isExecutable--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>isExecutable</h4>
 <pre>default&nbsp;boolean&nbsp;isExecutable()</pre>
-</li>
-</ul>
-<a name="write-java.io.OutputStream-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>write</h4>
-<pre>void&nbsp;write(java.io.OutputStream&nbsp;outputStream)
-    throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-</dl>
 </li>
 </ul>
 </li>
@@ -221,7 +215,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../io/micronaut/starter/template/RockerTemplate.html" title="class in io.micronaut.starter.template"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../io/micronaut/starter/template/RockerWritable.html" title="class in io.micronaut.starter.template"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../io/micronaut/starter/template/TemplateModel.html" title="interface in io.micronaut.starter.template"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
