@@ -29,11 +29,11 @@ import java.util.Map;
 @Singleton
 public class HibernateGorm implements LanguageSpecificFeature {
 
-    private final H2 defaultDbFeature;
+    private final DatabaseDriverFeature defaultDbFeature;
     private final HibernateValidator hibernateValidator;
 
-    public HibernateGorm(H2 h2, HibernateValidator hibernateValidator) {
-        this.defaultDbFeature = h2;
+    public HibernateGorm(DatabaseDriverFeature defaultDbFeature, HibernateValidator hibernateValidator) {
+        this.defaultDbFeature = defaultDbFeature;
         this.hibernateValidator = hibernateValidator;
     }
 
@@ -59,7 +59,7 @@ public class HibernateGorm implements LanguageSpecificFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(H2.class)) {
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
             featureContext.addFeature(defaultDbFeature);
         }
         if (!featureContext.isPresent(HibernateValidator.class)) {

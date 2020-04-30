@@ -27,11 +27,11 @@ import javax.inject.Singleton;
 public class Jooq implements Feature {
 
     private final JdbcFeature jdbcFeature;
-    private final H2 defaultDbFeature;
+    private final DatabaseDriverFeature defaultDbFeature;
 
-    public Jooq(JdbcFeature jdbcFeature, H2 h2) {
+    public Jooq(JdbcFeature jdbcFeature, DatabaseDriverFeature defaultDbFeature) {
         this.jdbcFeature = jdbcFeature;
-        this.defaultDbFeature = h2;
+        this.defaultDbFeature = defaultDbFeature;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Jooq implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
-        if (!featureContext.isPresent(H2.class)) {
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
             featureContext.addFeature(defaultDbFeature);
         }
     }

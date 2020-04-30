@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.context.annotation.Primary;
 import io.micronaut.starter.application.generator.GeneratorContext;
 
 import java.util.LinkedHashMap;
@@ -23,28 +22,33 @@ import java.util.Map;
 import javax.inject.Singleton;
 
 @Singleton
-@Primary
-public class H2 implements DatabaseDriverFeature {
+public class PostgreSQL implements DatabaseDriverFeature {
 
     private static final Map<String, String> JDBC_CONFIG;
 
     static {
+        // postgres docker image uses default db name and username of postgres so we use the same
         String prefix = "datasources.default.";
         JDBC_CONFIG = new LinkedHashMap<>();
-        JDBC_CONFIG.put(prefix + "url", "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE");
-        JDBC_CONFIG.put(prefix + "driverClassName", "org.h2.Driver");
-        JDBC_CONFIG.put(prefix + "username", "sa");
+        JDBC_CONFIG.put(prefix + "url", "jdbc:postgresql://localhost:5432/postgres");
+        JDBC_CONFIG.put(prefix + "driverClassName", "org.postgresql.Driver");
+        JDBC_CONFIG.put(prefix + "username", "postgres");
         JDBC_CONFIG.put(prefix + "password", "");
     }
 
     @Override
     public String getName() {
-        return "h2";
+        return "postgres";
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    public String getTitle() {
+        return "PostgresSQL open source object-relational database system.";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds the PostgresSQL driver and default config.";
     }
 
     @Override
