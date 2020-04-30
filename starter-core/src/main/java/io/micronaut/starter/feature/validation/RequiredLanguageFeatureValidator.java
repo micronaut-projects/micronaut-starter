@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
@@ -27,7 +28,7 @@ import java.util.*;
 public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
     @Override
-    public void validate(Options options, Set<Feature> features) {
+    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
             if (feature instanceof LanguageSpecificFeature) {
@@ -56,5 +57,10 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
         if (options != null && requiredLanguage != null && requiredLanguage != options.getLanguage()) {
             throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s but %s was the selected language.", requiredLanguages.get(requiredLanguage), requiredLanguage, options.getLanguage()));
         }
+    }
+
+    @Override
+    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+
     }
 }

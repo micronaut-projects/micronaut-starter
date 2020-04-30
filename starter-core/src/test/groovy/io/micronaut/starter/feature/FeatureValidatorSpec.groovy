@@ -12,7 +12,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test feature conflicts with language selection"() {
         when:
-        featureValidator.validate(new Options(Language.JAVA, null, null), [new LanguageSpecificFeature() {
+        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
             String name = "test-feature"
             String description = "test desc"
             String title = "test title"
@@ -31,7 +31,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validate(new Options(Language.JAVA, null, null), [new LanguageSpecificFeature() {
+        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
             String name = "groovy-feature"
             String description = "groovy"
             String title = "groovy title"
@@ -62,7 +62,7 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     void "test one of"() {
         when:
-        featureValidator.validate(new Options(Language.JAVA, null, null), [new OneOfFeature() {
+        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new OneOfFeature() {
             String name = "a"
             String description = "groovy"
             String title = "groovy title"

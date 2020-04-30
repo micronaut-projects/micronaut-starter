@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
 
@@ -22,5 +23,7 @@ import java.util.Set;
 
 public interface FeatureValidator {
 
-    void validate(Options options, Set<Feature> features);
+    void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features);
+
+    void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features);
 }

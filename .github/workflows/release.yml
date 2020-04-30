@@ -22,33 +22,16 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
-#      - name: Publish to Bintray and Sonatype OSSRH
-#        env:
-#          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-#          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-#          GPG_FILE: ${{ secrets.GPG_FILE }}
-#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
-#      - name: Publish to Github Pages
-#        if: success()
-#        uses: micronaut-projects/github-pages-deploy-action@master
-#        env:
-#          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
-#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-#          BASE_BRANCH: master
-#          BRANCH: gh-pages
-#          FOLDER: build/docs
-#          VERSION: ${{ steps.release_version.outputs.release_version }}
-      - name: Run post-release
-        if: success()
-        uses: micronaut-projects/github-actions/post-release@master
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: SDKMAN release
-#        run: ./gradlew sdkMajorRelease --no-daemon
+      - name: Publish to Bintray and Sonatype OSSRH
+        env:
+          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          GPG_FILE: ${{ secrets.GPG_FILE }}
+        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -57,8 +40,28 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
+          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
           asset_content_type: application/zip
+      - name: Publish to Github Pages
+        if: success()
+        uses: micronaut-projects/github-pages-deploy-action@master
+        env:
+          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BASE_BRANCH: master
+          BRANCH: gh-pages
+          FOLDER: build/docs
+          VERSION: ${{ steps.release_version.outputs.release_version }}
+      - name: Run post-release
+        if: success()
+        uses: micronaut-projects/github-actions/post-release@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: SDKMAN release
+        env:
+          GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
+          GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
+        run: ./gradlew sdkMinorRelease --no-daemon
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
@@ -119,7 +122,7 @@ jobs:
           JAVA_HOME: ./graalvm/Contents/Home
         run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp micronaut-cli/build/libs/micronaut-cli-*-all.jar
+        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -229,6 +232,9 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Authenticate into Google Cloud Platform
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:

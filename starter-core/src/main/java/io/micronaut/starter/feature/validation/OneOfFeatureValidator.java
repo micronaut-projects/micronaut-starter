@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.OneOfFeature;
@@ -27,8 +28,7 @@ import java.util.stream.Collectors;
 @Singleton
 public class OneOfFeatureValidator implements FeatureValidator {
 
-    @Override
-    public void validate(Options options, Set<Feature> features) {
+    private void validate(Set<Feature> features) {
         Set<Class<?>> oneOfFeatures = features.stream()
                 .filter(feature -> feature instanceof OneOfFeature)
                 .map(OneOfFeature.class::cast)
@@ -44,5 +44,15 @@ public class OneOfFeatureValidator implements FeatureValidator {
                 throw new IllegalArgumentException(String.format("There can only be one of the following features selected: %s", matches));
             }
         }
+    }
+
+    @Override
+    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        validate(features);
+    }
+
+    @Override
+    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        validate(features);
     }
 }
