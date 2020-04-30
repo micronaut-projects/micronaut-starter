@@ -124,7 +124,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['graalvm', 'aws-lambda-custom-runtime']
         )
         String deployscript = output['deploy.sh']
@@ -143,7 +143,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['graalvm']
         )
 
@@ -181,23 +181,25 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         }
 
         where:
-        language << supportedLanguages()
-        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_11]
+        language        | jdkVersion
+        Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_11
+        Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_11
     }
 
     @Unroll
-    void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
+    void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language and jdkVersion: #jdkVersion'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
                 ['graalvm']
         )
         String dockerfile = output['Dockerfile']
 
         then:
         dockerfile
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
         dockerfile.contains('RUN native-image --no-server -cp build/libs/foo-*-all.jar')
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
@@ -212,8 +214,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         }
 
         where:
-        language << supportedLanguages()
-        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_11]
+        language        | jdkVersion
+        Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_11
+        Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_11
     }
 
     @Unroll
@@ -238,7 +243,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['graalvm']
         )
         String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
@@ -259,7 +264,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['graalvm', 'aws-lambda']
         )
 
@@ -276,7 +281,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['graalvm', 'aws-lambda']
         )
 
@@ -297,11 +302,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language'(Language language) {
+    void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
                 ['graalvm'] // it will uses aws-lambda as its the default feature for function
         )
         String dockerfile = output['Dockerfile']
@@ -317,20 +322,29 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
 
-        and: 'defaults to graalvm ce jdk8 image'
-        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        and: 'different graalvm image depending on JDK version'
+        if (jdkVersion == JdkVersion.JDK_8) {
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        } else if (jdkVersion == JdkVersion.JDK_11) {
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        }
 
         where:
-        language << supportedLanguages()
+        language        | jdkVersion
+        Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_11
+        Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_11
     }
 
     @Unroll
-    void 'verify dockerfile for a function application type with maven and feature graalvm for language: #language'() {
+    void 'verify dockerfile for a function application type with maven and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
                 ['graalvm'] // it will uses aws-lambda as its the default feature for function
         )
         String dockerfile = output['Dockerfile']
@@ -345,12 +359,21 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
 
-        and: 'defaults to graalvm ce jdk8 image'
-        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        and: 'different graalvm image depending on JDK version'
+        if (jdkVersion == JdkVersion.JDK_8) {
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        } else if (jdkVersion == JdkVersion.JDK_11) {
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        }
 
         where:
-        language << supportedLanguages()
+        language        | jdkVersion
+        Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_11
+        Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_11
     }
 
     private List<Language> supportedLanguages() {

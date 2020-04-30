@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -64,7 +65,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['graalvm']
         )
         String bootstrap = output['bootstrap']
@@ -87,7 +88,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['aws-lambda-custom-runtime', 'graalvm']
         )
         String bootstrap = output['bootstrap']
