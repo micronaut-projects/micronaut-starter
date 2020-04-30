@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.ConfigurationHelper;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;
@@ -30,9 +31,11 @@ import javax.inject.Singleton;
 public class JdbiFeature implements Feature {
 
     private final JdbcFeature jdbcFeature;
+    private final DatabaseDriverFeature defaultDbFeature;
 
-    public JdbiFeature(JdbcFeature jdbcFeature) {
+    public JdbiFeature(JdbcFeature jdbcFeature, DatabaseDriverFeature defaultDbFeature) {
         this.jdbcFeature = jdbcFeature;
+        this.defaultDbFeature = defaultDbFeature;
     }
 
     @Override
@@ -61,11 +64,15 @@ public class JdbiFeature implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+        DatabaseDriverFeature dbFeature = generatorContext.getFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
     }
 
     @Override

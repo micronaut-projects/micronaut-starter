@@ -29,7 +29,7 @@ public class ConfigurationHelper {
 
     public static Map<String, Object> jdbc(DatabaseDriverFeature dbFeature) {
         final String prefix = "datasources.default.";
-    	Map<String, Object> jdbcConfig = new LinkedHashMap<>();
+        Map<String, Object> jdbcConfig = new LinkedHashMap<>();
         jdbcConfig.put(prefix + "url", dbFeature.getJdbcUrl());
         jdbcConfig.put(prefix + "driverClassName", dbFeature.getDriverClass());
         jdbcConfig.put(prefix + "username", dbFeature.getDefaultUser());
