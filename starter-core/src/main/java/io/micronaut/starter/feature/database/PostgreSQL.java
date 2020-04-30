@@ -15,26 +15,10 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 import javax.inject.Singleton;
 
 @Singleton
 public class PostgreSQL implements DatabaseDriverFeature {
-
-    private static final Map<String, String> JDBC_CONFIG;
-
-    static {
-        // postgres docker image uses default db name and username of postgres so we use the same
-        String prefix = "datasources.default.";
-        JDBC_CONFIG = new LinkedHashMap<>();
-        JDBC_CONFIG.put(prefix + "url", "jdbc:postgresql://localhost:5432/postgres");
-        JDBC_CONFIG.put(prefix + "driverClassName", "org.postgresql.Driver");
-        JDBC_CONFIG.put(prefix + "username", "postgres");
-        JDBC_CONFIG.put(prefix + "password", "");
-    }
 
     @Override
     public String getName() {
@@ -52,8 +36,23 @@ public class PostgreSQL implements DatabaseDriverFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(JDBC_CONFIG);
+    public String getJdbcUrl() {
+        // postgres docker image uses default db name and username of postgres so we use the same
+        return "jdbc:postgresql://localhost:5432/postgres";
     }
 
+    @Override
+    public String getDriverClass() {
+        return "org.postgresql.Driver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "postgres";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
+    }
 }

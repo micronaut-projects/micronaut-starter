@@ -93,4 +93,14 @@ public class Features extends ArrayList<String> {
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
     }
+
+    public <T extends Feature> T getFeature(Class<T> feature) {
+        Objects.requireNonNull(feature, "The feature class cannot be null");
+        for (Feature f : featureList) {
+            if (feature.isInstance(f)) {
+                return (T) f;
+            }
+        }
+        return null;
+    }
 }

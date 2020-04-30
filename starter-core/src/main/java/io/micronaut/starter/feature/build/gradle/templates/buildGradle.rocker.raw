@@ -461,7 +461,7 @@ dependencies {
     @dependency.template("com.h2database", "h2", "runtimeOnly", null)
 }
 @if (features.contains("postgresql")) {
-    @dependency.template("org.postgresql", "postgresql", "implementation", "42.2.12")
+    @dependency.template("org.postgresql", "postgresql", "runtimeOnly", "42.2.12")
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)

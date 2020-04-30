@@ -35,4 +35,13 @@ public interface DatabaseDriverFeature extends OneOfFeature {
     default String getCategory() {
         return Category.DATABASE;
     }
+
+    String getJdbcUrl();
+
+    String getDriverClass();
+
+    String getDefaultUser();
+
+    String getDefaultPassword();
+
 }

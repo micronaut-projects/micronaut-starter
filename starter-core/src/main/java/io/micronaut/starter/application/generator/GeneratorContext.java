@@ -186,8 +186,11 @@ public class GeneratorContext {
     }
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {
-        Objects.requireNonNull(feature, "The feature class cannot be null");
         return features.isFeaturePresent(feature);
+    }
+
+    public <T extends Feature> T getFeature(Class<T> feature) {
+        return features.getFeature(feature);
     }
 
     public String getSourcePath(String path) {

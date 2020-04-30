@@ -26,4 +26,14 @@ public class ConfigurationHelper {
         JPA_DDL = new LinkedHashMap<>();
         JPA_DDL.put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
     }
+
+    public static Map<String, Object> jdbc(DatabaseDriverFeature dbFeature) {
+        final String prefix = "datasources.default.";
+    	Map<String, Object> jdbcConfig = new LinkedHashMap<>();
+        jdbcConfig.put(prefix + "url", dbFeature.getJdbcUrl());
+        jdbcConfig.put(prefix + "driverClassName", dbFeature.getDriverClass());
+        jdbcConfig.put(prefix + "username", dbFeature.getDefaultUser());
+        jdbcConfig.put(prefix + "password", dbFeature.getDefaultPassword());
+        return jdbcConfig;
+    }
 }

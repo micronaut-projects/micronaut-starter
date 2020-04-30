@@ -62,6 +62,8 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        DatabaseDriverFeature dbFeature = generatorContext.getFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
         generatorContext.getConfiguration().putAll(getDatasourceConfig());
     }
 }
