@@ -57,7 +57,7 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: mn-${{ steps.release_version.outputs.release_version }}.zip
+          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
           asset_content_type: application/zip
   linux:
     name: Release Linux Native CLI
@@ -119,7 +119,7 @@ jobs:
           JAVA_HOME: ./graalvm/Contents/Home
         run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp micronaut-cli/build/libs/micronaut-cli-*-all.jar
+        run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -229,6 +229,9 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v1
+      - name: Set the current release version
+        id: release_version
+        run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Authenticate into Google Cloud Platform
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
