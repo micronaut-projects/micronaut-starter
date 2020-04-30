@@ -17,13 +17,24 @@ package io.micronaut.starter.feature.jdbi;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.database.ConfigurationHelper;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class JdbiFeature implements Feature {
+
+    private final JdbcFeature jdbcFeature;
+
+    public JdbiFeature(JdbcFeature jdbcFeature) {
+        this.jdbcFeature = jdbcFeature;
+    }
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -43,6 +54,18 @@ public class JdbiFeature implements Feature {
     @Override
     public String getDescription() {
         return "Jdbi provides convenient, idiomatic access to relational data in Java. Micronaut's jdbi feature supports automatically configuring Jdbi library";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(JdbcFeature.class)) {
+            featureContext.addFeature(jdbcFeature);
+        }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
     }
 
     @Override
