@@ -15,27 +15,37 @@
  */
 package io.micronaut.starter.options;
 
+import io.micronaut.starter.application.Project;
+
 import javax.annotation.Nonnull;
 import java.util.Locale;
+import java.util.Objects;
 
 public enum BuildTool {
 
-    GRADLE("build/libs", "build.gradle"),
-    MAVEN("target", "pom.xml");
+    GRADLE("build/libs", "build.gradle", "-*-all.jar"),
+    MAVEN("target", "pom.xml", "-*.jar");
 
     private final String jarDirectory;
     private final String fileName;
+    private final String shadeJarPattern;
 
-    BuildTool(String jarDirectory, String fileName) {
+    BuildTool(String jarDirectory, String fileName, String shadeJarPattern) {
         this.jarDirectory = jarDirectory;
         this.fileName = fileName;
+        this.shadeJarPattern = shadeJarPattern;
     }
 
     public String getJarDirectory() {
         return jarDirectory;
     }
 
-    public String getFileName() {
+    public String getShadeJarDirectoryPattern(Project project) {
+        Objects.requireNonNull(project, "Project should not be null");
+        return getJarDirectory() + '/' + project.getName() + shadeJarPattern;
+    }
+
+    public String getBuildFileName() {
         return fileName;
     }
 

@@ -34,7 +34,7 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def output = generate(ApplicationType.DEFAULT, new Options(Language.GROOVY, TestFramework.SPOCK, build))
 
         expect:
-        output[build.fileName].contains(dependency)
+        output[build.buildFileName].contains(dependency)
 
         where:
         build            | dependency
