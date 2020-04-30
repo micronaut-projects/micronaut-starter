@@ -2,6 +2,7 @@ package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.application.ApplicationType
@@ -31,10 +32,11 @@ trait CommandFixture {
                          BuildTool buildTool = BuildTool.GRADLE,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
-                         TestFramework testFramework = null) {
+                         TestFramework testFramework = null,
+                         JdkVersion jdkVersion = JdkVersion.JDK_11) {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, testFramework, buildTool),
+                new Options(lang, testFramework, buildTool, jdkVersion),
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
