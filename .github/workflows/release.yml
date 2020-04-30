@@ -32,7 +32,7 @@ jobs:
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_FILE: ${{ secrets.GPG_FILE }}
 #        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
-      - run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs
+        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs
       - name: Publish to Github Pages
         if: success()
         uses: micronaut-projects/github-pages-deploy-action@master
