@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,14 +178,24 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.util.Optional&lt;java.net.URI&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#getRedirectUri--">getRedirectUri</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.util.Optional&lt;java.net.URL&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#getUrl--">getUrl</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#setPath-java.lang.String-">setPath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#setRedirectUri-java.net.URI-">setRedirectUri</a></span>(java.net.URI&nbsp;redirectUri)</code>
+<div class="block">Sets the URI to redirect to when visiting via the browser.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/api/StarterConfiguration.html#setUrl-java.net.URL-">setUrl</a></span>(java.net.URL&nbsp;url)</code>&nbsp;</td>
 </tr>
@@ -250,6 +260,34 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getRedirectUri--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRedirectUri</h4>
+<pre>public&nbsp;java.util.Optional&lt;java.net.URI&gt;&nbsp;getRedirectUri()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The URI to redirect to when visiting via the browser</dd>
+</dl>
+</li>
+</ul>
+<a name="setRedirectUri-java.net.URI-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRedirectUri</h4>
+<pre>public&nbsp;void&nbsp;setRedirectUri(@Nullable
+                           java.net.URI&nbsp;redirectUri)</pre>
+<div class="block">Sets the URI to redirect to when visiting via the browser.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>redirectUri</code> - The redirect URI</dd>
+</dl>
+</li>
+</ul>
 <a name="getUrl--">
 <!--   -->
 </a>
