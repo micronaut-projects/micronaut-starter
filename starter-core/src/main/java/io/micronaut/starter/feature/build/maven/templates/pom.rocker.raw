@@ -271,6 +271,12 @@ List<Property> properties
 @if (features.contains("security-session")) {
 @dependency.template("io.micronaut", "micronaut-security-session", "compile", null)
 }
+@if (features.contains("security-oauth2")) {
+@dependency.template("io.micronaut.configuration", "micronaut-security-oauth2", "compile", null)
+}
+@if (features.contains("security-ldap")) {
+@dependency.template("io.micronaut.configuration", "micronaut-security-ldap", "compile", null)
+}
 @if (features.contains("kafka")) {
 @dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
 }

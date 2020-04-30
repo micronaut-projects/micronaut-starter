@@ -295,6 +295,12 @@ dependencies {
 @if (features.contains("security-session")) {
     @dependency.template("io.micronaut", "micronaut-security-session", "implementation", null)
 }
+@if (features.contains("security-oauth2")) {
+    @dependency.template("io.micronaut.configuration", "micronaut-security-oauth2", "implementation", null)
+}
+@if (features.contains("security-ldap")) {
+    @dependency.template("io.micronaut.configuration", "micronaut-security-ldap", "implementation", null)
+}
 @if (features.contains("cassandra")) {
     @dependency.template("io.micronaut.configuration", "micronaut-cassandra", "implementation", null)
 }
