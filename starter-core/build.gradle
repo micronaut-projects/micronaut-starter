@@ -20,6 +20,10 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
+test {
+    forkEvery = 10
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
+}
 processResources.dependsOn('micronautVersionInfo')
 task micronautVersionInfo(type: WriteProperties) {
     outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
