@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -152,8 +152,15 @@ implements <a href="../../../../../io/micronaut/starter/feature/validation/Featu
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/validation/RequiredLanguageFeatureValidator.html#validate-io.micronaut.starter.options.Options-java.util.Set-">validate</a></span>(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-        java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/validation/RequiredLanguageFeatureValidator.html#validatePostProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">validatePostProcessing</a></span>(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                      <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+                      java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/validation/RequiredLanguageFeatureValidator.html#validatePreProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">validatePreProcessing</a></span>(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                     <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+                     java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -194,17 +201,33 @@ implements <a href="../../../../../io/micronaut/starter/feature/validation/Featu
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="validate-io.micronaut.starter.options.Options-java.util.Set-">
+<a name="validatePreProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validatePreProcessing</h4>
+<pre>public&nbsp;void&nbsp;validatePreProcessing(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                                  <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+                                  java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html#validatePreProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">validatePreProcessing</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html" title="interface in io.micronaut.starter.feature.validation">FeatureValidator</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="validatePostProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>validate</h4>
-<pre>public&nbsp;void&nbsp;validate(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-                     java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</pre>
+<h4>validatePostProcessing</h4>
+<pre>public&nbsp;void&nbsp;validatePostProcessing(<a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                                   <a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+                                   java.util.Set&lt;<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;features)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html#validate-io.micronaut.starter.options.Options-java.util.Set-">validate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html" title="interface in io.micronaut.starter.feature.validation">FeatureValidator</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html#validatePostProcessing-io.micronaut.starter.options.Options-io.micronaut.starter.application.ApplicationType-java.util.Set-">validatePostProcessing</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/validation/FeatureValidator.html" title="interface in io.micronaut.starter.feature.validation">FeatureValidator</a></code></dd>
 </dl>
 </li>
 </ul>
