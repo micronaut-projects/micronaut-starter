@@ -259,6 +259,9 @@ dependencies {
 @if (features.contains("jdbc-hikari")) {
     @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "implementation", null)
 }
+@if (features.contains("jdbc-ucp")) {
+    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-ucp", "implementation", null)
+}
 @if (features.contains("data-jpa")) {
     @dependency.template("io.micronaut.data", "micronaut-data-hibernate-jpa", "implementation", null)
 }
