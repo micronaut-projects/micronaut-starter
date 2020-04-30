@@ -102,8 +102,9 @@ public class ApplicationController implements ApplicationTypeOperations {
     )
     HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         Collection<MediaType> accept = request.accept();
-        if (accept.contains(MediaType.TEXT_HTML_TYPE)) {
-            return HttpResponse.permanentRedirect(URI.create("https://micronaut.io/launch"));
+        URI redirectURI = configuration.getRedirectUri().orElse(null);
+        if (accept.contains(MediaType.TEXT_HTML_TYPE) && redirectURI != null) {
+            return HttpResponse.permanentRedirect(redirectURI);
         } else {
             return HttpResponse.ok(new Writable() {
 

@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.api;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.env.Environment;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Optional;
 
@@ -34,6 +36,7 @@ public class StarterConfiguration {
 
     private URL url;
     private String path;
+    private URI redirectUri = URI.create("https://micronaut.io/launch");
 
     /**
      * Default constructor.
@@ -47,6 +50,21 @@ public class StarterConfiguration {
                 // ignore
             }
         }
+    }
+
+    /**
+     * @return The URI to redirect to when visiting via the browser
+     */
+    public Optional<URI> getRedirectUri() {
+        return Optional.ofNullable(redirectUri);
+    }
+
+    /**
+     * Sets the URI to redirect to when visiting via the browser.
+     * @param redirectUri The redirect URI
+     */
+    public void setRedirectUri(@Nullable URI redirectUri) {
+        this.redirectUri = redirectUri;
     }
 
     /**
