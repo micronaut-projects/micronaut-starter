@@ -15,16 +15,10 @@
  */
 package io.micronaut.starter.template;
 
-public interface Template extends Writable {
+import java.io.IOException;
+import java.io.OutputStream;
 
-    String getPath();
+public interface Writable {
 
-    default boolean isBinary() {
-        return false;
-    }
-
-    default boolean isExecutable() {
-        return false;
-    }
-
+    void write(OutputStream outputStream) throws IOException;
 }

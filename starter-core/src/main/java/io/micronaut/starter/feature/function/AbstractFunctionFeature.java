@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.server.template.kotlinController;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
 /**
  * Abstract function implementation.
@@ -50,9 +51,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
         BuildTool buildTool = generatorContext.getBuildTool();
 
 
-        generatorContext.addTemplate("readme", new RockerTemplate(
-                "README.md",
-                readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
+        generatorContext.addHelpTemplate(new RockerWritable(readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
 
         if (type == ApplicationType.DEFAULT) {
 

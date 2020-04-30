@@ -16,38 +16,21 @@
 package io.micronaut.starter.template;
 
 import com.fizzed.rocker.RockerModel;
+import com.fizzed.rocker.runtime.OutputStreamOutput;
 
 import java.io.OutputStream;
 
-public class RockerTemplate implements Template {
+public class RockerWritable implements Writable {
 
-    private final String path;
-    private final RockerWritable writable;
+    private final RockerModel model;
 
-    private final boolean executable;
-
-    public RockerTemplate(String path, RockerModel delegate) {
-        this(path, delegate, false);
-    }
-
-    public RockerTemplate(String path, RockerModel delegate, boolean executable) {
-        this.path = path;
-        this.writable = new RockerWritable(delegate);
-        this.executable = executable;
+    public RockerWritable(RockerModel model) {
+        this.model = model;
     }
 
     @Override
     public void write(OutputStream outputStream) {
-        writable.write(outputStream);
-    }
-
-    @Override
-    public String getPath() {
-        return path;
-    }
-
-    @Override
-    public boolean isExecutable() {
-        return executable;
+        model.render((contentType, charsetName) ->
+                new OutputStreamOutput(contentType, outputStream, charsetName));
     }
 }

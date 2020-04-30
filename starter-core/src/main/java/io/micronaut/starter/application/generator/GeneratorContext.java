@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
+import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
 import io.micronaut.starter.build.BuildProperties;
 
@@ -43,6 +44,7 @@ public class GeneratorContext {
     private final Map<String, Object> configuration = new LinkedHashMap<>();
     private final Map<String, Object> bootstrapConfig = new LinkedHashMap<>();
     private final Map<String, Template> templates = new LinkedHashMap<>();
+    private final List<Writable> helpTemplates = new ArrayList<>(8);
     private final ApplicationType command;
     private final Features features;
     private final Options options;
@@ -81,6 +83,15 @@ public class GeneratorContext {
     }
 
     /**
+     * Adds a template which will be consolidated into a single help file.
+     *
+     * @param writable The template
+     */
+    public void addHelpTemplate(Writable writable) {
+        helpTemplates.add(writable);
+    }
+
+    /**
      * @return The build properties
      */
     @NonNull public BuildProperties getBuildProperties() {
@@ -106,6 +117,13 @@ public class GeneratorContext {
      */
     @NonNull public Map<String, Template> getTemplates() {
         return Collections.unmodifiableMap(templates);
+    }
+
+    /**
+     * @return The templates
+     */
+    @NonNull public List<Writable> getHelpTemplates() {
+        return Collections.unmodifiableList(helpTemplates);
     }
 
     /**
