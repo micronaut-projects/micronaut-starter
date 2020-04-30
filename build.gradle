@@ -28,8 +28,7 @@ version project.projectVersion
 
 subprojects { Project subproject ->
     repositories {
-        maven { url "https://repo.grails.org/grails/core" }
-        maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+        jcenter()
     }
 
     version project.projectVersion

@@ -5,17 +5,6 @@ plugins {
     id "application"
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency {
-        if (it.requested.group == 'io.micronaut.aws') {
-            it.useVersion("2.0.0.M2")
-        }
-        if (it.requested.group == 'io.micronaut') {
-            it.useVersion(micronautVersion)
-        }
-    }
-}
-
 dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
