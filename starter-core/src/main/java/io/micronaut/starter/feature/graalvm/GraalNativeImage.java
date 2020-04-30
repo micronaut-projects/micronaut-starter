@@ -44,22 +44,8 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getLanguage() == Language.GROOVY) {
-            featureContext.exclude(new FeaturePredicate() {
-                @Override
-                public boolean test(Feature feature) {
-                    return feature instanceof GraalNativeImage;
-                }
-
-                @Override
-                public Optional<String> getWarning() {
-                    return Optional.of("The GraalVM feature was removed because it does not support Groovy");
-                }
-            });
-        } else {
-            if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
-                featureContext.addFeature(awsLambdaCustomRuntime);
-            }
+        if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
+            featureContext.addFeature(awsLambdaCustomRuntime);
         }
     }
 
@@ -98,10 +84,6 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getJdkVersion() != JdkVersion.JDK_8 && generatorContext.getJdkVersion() != JdkVersion.JDK_11) {
-            throw new IllegalArgumentException("GraalVM can't only be used with JDK 8 or JDK 11");
-        }
-
         ApplicationType applicationType = generatorContext.getApplicationType();
         RockerModel dockerfileRockerModel;
         String jarFile = generatorContext.getBuildTool()
