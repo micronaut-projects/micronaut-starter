@@ -24,6 +24,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: v${{ steps.release_notes.outputs.next_version }}
-          release_name: Micronaut Starter ${{ steps.release_notes.outputs.next_version }}
+          release_name: Micronaut Launch ${{ steps.release_notes.outputs.next_version }}
           bodyFromFile: CHANGELOG.md
           draft: true
