@@ -235,6 +235,9 @@ List<Property> properties
 @if (features.contains("jdbc-hikari")) {
 @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "compile", null)
 }
+@if (features.contains("jdbc-ucp")) {
+@dependency.template("io.micronaut.configuration", "micronaut-jdbc-ucp", "compile", null)
+}
 @if (features.contains("data-jdbc")) {
 @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "compile", null)
 }
