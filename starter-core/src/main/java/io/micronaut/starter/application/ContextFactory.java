@@ -39,7 +39,7 @@ public class ContextFactory {
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
                                                List<String> selectedFeatures,
-                                               ApplicationType command,
+                                               ApplicationType applicationType,
                                                Options options) {
         final Set<Feature> features = Collections.newSetFromMap(new IdentityHashMap<>(8));
         for (String name: selectedFeatures) {
@@ -56,12 +56,12 @@ public class ContextFactory {
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
-                .filter(f -> ((DefaultFeature) f).shouldApply(command, newOptions, features))
+                .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, newOptions, features))
                 .forEach(features::add);
 
-        featureValidator.validate(newOptions, features);
+        featureValidator.validatePreProcessing(newOptions, applicationType, features);
 
-        return new FeatureContext(newOptions, command, features);
+        return new FeatureContext(newOptions, applicationType, features);
     }
 
     public GeneratorContext createGeneratorContext(Project project,
@@ -71,7 +71,7 @@ public class ContextFactory {
 
         Set<Feature> featureList = featureContext.getFinalFeatures(consoleOutput);
 
-        featureValidator.validate(featureContext.getOptions(), featureList);
+        featureValidator.validatePostProcessing(featureContext.getOptions(), featureContext.getApplicationType(), featureList);
 
         return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureList);
     }
