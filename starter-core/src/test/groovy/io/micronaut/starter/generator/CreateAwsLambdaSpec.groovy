@@ -45,45 +45,5 @@ class CreateAwsLambdaSpec extends CommandSpec {
         ApplicationType.FUNCTION  | ['aws-lambda']                               | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
         ApplicationType.FUNCTION  | ['aws-lambda']                               | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
         ApplicationType.FUNCTION  | ['aws-lambda']                               | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.JAVA           | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
-        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
     }
 }

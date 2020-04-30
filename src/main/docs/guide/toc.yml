@@ -5,10 +5,11 @@ introduction:
 commands:
   title: Available commands
 starterImpls:
-  title: Micronaut Starter
+  title: Micronaut Launch
   starterCLI: CLI Application
   starterApi: OpenAPI Specification
-  starterNetty: Web Application
+  starterNetty: Web API Application
+  starterUI: Micronaut Launch React UI
   starterServlet: WAR Deployment
   starterCloudRun: Google Cloud Run
   starterCloudFunction: Google Cloud Function
