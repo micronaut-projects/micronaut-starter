@@ -15,7 +15,7 @@ class PostgresSQLSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language)).render().toString()
 
         then:
-        template.contains('implementation("org.postgresql:postgresql:42.2.12")')
+        template.contains('runtimeOnly("org.postgresql:postgresql:42.2.12")')
 
         where:
         language << Language.values().toList()
@@ -32,7 +32,7 @@ class PostgresSQLSpec extends BeanContextSpec {
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.2.12</version>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
 """)
 
