@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
 import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -97,6 +98,10 @@ public class GraalNativeImage implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getJdkVersion() != JdkVersion.JDK_8 && generatorContext.getJdkVersion() != JdkVersion.JDK_11) {
+            throw new IllegalArgumentException("GraalVM can't only be used with JDK 8 or JDK 11");
+        }
+
         ApplicationType applicationType = generatorContext.getApplicationType();
         RockerModel dockerfileRockerModel;
         String jarFile = generatorContext.getBuildTool()
@@ -107,7 +112,7 @@ public class GraalNativeImage implements Feature {
             generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 
         } else {
-            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile);
+            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile, generatorContext.getJdkVersion());
         }
 
         //overrides the template from the Docker feature

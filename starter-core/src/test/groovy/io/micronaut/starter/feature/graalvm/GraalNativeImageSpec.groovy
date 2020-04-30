@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -154,11 +155,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'verify dockerfile for a default application type with maven and feature graalvm for language: #language'(Language language) {
+    void 'verify dockerfile for a default application type with maven and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
                 ['graalvm']
         )
         String dockerfile = output['Dockerfile']
@@ -170,16 +171,22 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
-        and: 'defaults to graalvm ce jdk8 image'
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        and: 'different graalvm image depending on JDK version'
+        if (jdkVersion == JdkVersion.JDK_8) {
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        } else if (jdkVersion == JdkVersion.JDK_11) {
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        }
 
         where:
         language << supportedLanguages()
+        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_11]
     }
 
     @Unroll
-    void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language'(Language language) {
+    void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -195,12 +202,35 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
-        and: 'defaults to graalvm ce jdk8 image'
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        and: 'different graalvm image depending on JDK version'
+        if (jdkVersion == JdkVersion.JDK_8) {
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        } else if (jdkVersion == JdkVersion.JDK_11) {
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        }
 
         where:
         language << supportedLanguages()
+        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_11]
+    }
+
+    @Unroll
+    void 'it is not possible to use graalvm with JDK versions different than JDK8 or JDK11'(JdkVersion jdkVersion) {
+        when:
+        generate(
+            ApplicationType.DEFAULT,
+            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+            ['graalvm']
+        )
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == "GraalVM can't only be used with JDK 8 or JDK 11"
+
+        where:
+        jdkVersion << JdkVersion.values() - [JdkVersion.JDK_8, JdkVersion.JDK_11]
     }
 
     @Unroll
@@ -287,7 +317,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
 
-
         and: 'defaults to graalvm ce jdk8 image'
         !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
         !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
@@ -315,7 +344,6 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('RUN chmod 777 foo')
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
-
 
         and: 'defaults to graalvm ce jdk8 image'
         !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')

@@ -1,13 +1,17 @@
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.JdkVersion
 
 @args (
 Project project,
-String jarFile
+String jarFile,
+JdkVersion jdkVersion
 )
 
+@if (jdkVersion == JdkVersion.JDK_8) {
 FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
-# For JDK 11
-#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm
+} else if (jdkVersion == JdkVersion.JDK_11) {
+FROM oracle/graalvm-ce:20.0.0-java11 as graalvm
+}
 RUN gu install native-image
 
 COPY . /home/app/@project.getName()
