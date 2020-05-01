@@ -7,6 +7,6 @@ testlogger {
     showFailedStandardStreams true
 }
 test {
-    forkEvery = 10
     maxParallelForks = Runtime.getRuntime().availableProcessors()
 }
+    forkEvery = 100
