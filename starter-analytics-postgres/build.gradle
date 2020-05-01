@@ -1,4 +1,5 @@
 plugins {
+    id "com.adarshr.test-logger" version "2.0.0"
     id 'com.google.cloud.tools.jib' version '2.2.0'
     id "application"
 }
@@ -22,3 +23,5 @@ dependencies {
 }
 
 mainClassName = 'io.micronaut.starter.analytics.postgres.Main'
+
+apply from: "${rootProject.projectDir}/gradle/test.gradle"
