@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.database.jdbc;
 
 import io.micronaut.context.annotation.Primary;
-import io.micronaut.starter.feature.database.H2;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
 
@@ -24,8 +24,8 @@ import javax.inject.Singleton;
 @Primary
 public class Tomcat extends JdbcFeature {
 
-    public Tomcat(H2 h2) {
-        super(h2);
+    public Tomcat(DatabaseDriverFeature dbFeature) {
+        super(dbFeature);
     }
 
     @Override

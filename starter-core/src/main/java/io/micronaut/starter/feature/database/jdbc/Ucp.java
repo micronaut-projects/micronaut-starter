@@ -15,15 +15,15 @@
  */
 package io.micronaut.starter.feature.database.jdbc;
 
-import io.micronaut.starter.feature.database.H2;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class Ucp extends JdbcFeature {
 
-    public Ucp(H2 h2) {
-        super(h2);
+    public Ucp(DatabaseDriverFeature dbFeature) {
+        super(dbFeature);
     }
 
     @Override
