@@ -25,7 +25,7 @@ class CreateAwsLambdaGraalvmDefaultKotlinGradleJunitSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.JUNIT
+        applicationType         | features                  | lang            | build            | testFramework
+        ApplicationType.DEFAULT | ['aws-lambda', 'graalvm'] | Language.KOTLIN | BuildTool.GRADLE | TestFramework.JUNIT
     }
 }

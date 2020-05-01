@@ -25,7 +25,7 @@ class CreateAwsLambdaDefaultKotlinGradleKotlinTestSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda']                               | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
+        applicationType         | features       | lang            | build            | testFramework
+        ApplicationType.DEFAULT | ['aws-lambda'] | Language.KOTLIN | BuildTool.GRADLE | TestFramework.KOTLINTEST
     }
 }

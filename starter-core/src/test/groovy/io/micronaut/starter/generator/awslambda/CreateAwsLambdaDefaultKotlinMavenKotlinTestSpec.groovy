@@ -25,7 +25,7 @@ class CreateAwsLambdaDefaultKotlinMavenKotlinTestSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda']                               | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
+        applicationType         | features       | lang            | build           | testFramework
+        ApplicationType.DEFAULT | ['aws-lambda'] | Language.KOTLIN | BuildTool.MAVEN | TestFramework.KOTLINTEST
     }
 }

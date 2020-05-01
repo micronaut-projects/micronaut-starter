@@ -1,0 +1,12 @@
+testlogger {
+    theme 'standard-parallel'
+    showFullStackTraces true
+    showStandardStreams true
+    showPassedStandardStreams false
+    showSkippedStandardStreams false
+    showFailedStandardStreams true
+}
+test {
+    forkEvery = 10
+    maxParallelForks = Runtime.getRuntime().availableProcessors()
+}

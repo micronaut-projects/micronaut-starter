@@ -25,7 +25,7 @@ class CreateAwsLambdaGraalvmFunctionKotlinMavenJunitSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.FUNCTION  | ['aws-lambda', 'graalvm']                    | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.JUNIT
+        applicationType          | features                  | lang            | build           | testFramework
+        ApplicationType.FUNCTION | ['aws-lambda', 'graalvm'] | Language.KOTLIN | BuildTool.MAVEN | TestFramework.JUNIT
     }
 }

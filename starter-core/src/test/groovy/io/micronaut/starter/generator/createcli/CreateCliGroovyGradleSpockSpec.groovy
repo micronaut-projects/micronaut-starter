@@ -1,31 +1,36 @@
-package io.micronaut.starter.generator.awslambdagraalvm
+package io.micronaut.starter.generator.createcli
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaGraalvmDefaultGroovyGradleSpockSpec extends CommandSpec {
+class CreateCliGroovyGradleSpockSpec extends CommandSpec {
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                List<String> features,
                                                                                                                 Language lang,
-                                                                                                                BuildTool build,
+                                                                                                                BuildTool buildTool,
                                                                                                                 TestFramework testFramework) {
+
         given:
-        generateProject(lang, build, features, applicationType, testFramework)
+        generateCliProject(new Options(lang, testFramework, buildTool))
 
         when:
-        build == BuildTool.GRADLE ? executeGradleCommand('test') : executeMavenCommand("test")
+        if (buildTool == BuildTool.GRADLE) {
+            executeGradleCommand('test')
+        } else {
+            executeMavenCommand("compile test")
+        }
 
         then:
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType         | features                  | lang            | build            | testFramework
-        ApplicationType.DEFAULT | ['aws-lambda', 'graalvm'] | Language.GROOVY | BuildTool.GRADLE | TestFramework.SPOCK
+        applicationType     | lang                    | buildTool              | testFramework
+        ApplicationType.CLI | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
     }
 }
