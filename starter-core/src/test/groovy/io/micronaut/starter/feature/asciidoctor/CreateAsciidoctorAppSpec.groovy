@@ -1,11 +1,12 @@
-package io.micronaut.starter.generator.asciidoctor
+package io.micronaut.starter.feature.asciidoctor
 
+import io.micronaut.starter.fixture.CommandFixture
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateAsciidoctorKotlinMavenSpec extends CommandSpec {
+class CreateAsciidoctorAppSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
@@ -23,7 +24,7 @@ class CreateAsciidoctorKotlinMavenSpec extends CommandSpec {
         testOutputContains('BUILD SUCCESS')
 
         where:
-        language        | buildTool
-        Language.KOTLIN | BuildTool.MAVEN
+        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
     }
+
 }
