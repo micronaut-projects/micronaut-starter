@@ -1,6 +1,3 @@
-plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
-}
 dependencies {
     annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.4.5"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
@@ -35,5 +32,3 @@ task openApiProperties(type: WriteProperties) {
     )
 }
 compileJava.dependsOn(['openApiProperties'])
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"

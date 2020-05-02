@@ -13,6 +13,7 @@ buildscript {
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
         classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
+        classpath "com.adarshr:gradle-test-logger-plugin:2.0.0"
     }
 }
 
@@ -41,6 +42,7 @@ subprojects { Project subproject ->
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
+    apply plugin: "com.adarshr.test-logger"
 
     checkstyleMain.dependsOn('spotlessCheck')
 
@@ -117,6 +119,8 @@ subprojects { Project subproject ->
         options.encoding = "UTF-8"
         options.compilerArgs.add('-parameters')
     }
+
+    apply from: "${rootProject.projectDir}/gradle/test.gradle"
 
 }
 

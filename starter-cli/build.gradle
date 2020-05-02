@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "application"
     id "com.github.johnrengelman.shadow"
     id "io.micronaut.starter.rocker"
@@ -146,5 +145,3 @@ task cleanup(type: Delete) {
 clean.dependsOn(['cleanup'])
 
 assemble.dependsOn('exploded')
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"

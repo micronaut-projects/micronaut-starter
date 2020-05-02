@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "io.micronaut.starter.rocker"
 }
 
@@ -72,5 +71,3 @@ rocker {
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
     markAsGenerated null
 }
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"

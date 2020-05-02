@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
    id "com.microsoft.azure.azurefunctions" version "1.2.0"
 }
 
@@ -26,5 +25,3 @@ azurefunctions {
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"
