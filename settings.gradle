@@ -20,4 +20,7 @@ include 'starter-gcp-function'
 include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
 
+include 'starter-core-test'
+include 'starter-core-test-app'
+
 project(':starter-cli').name = "micronaut-cli"

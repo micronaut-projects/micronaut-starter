@@ -6,14 +6,14 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateAppKotlinMavenSpec extends CommandSpec {
+class CreateAppGroovyGradleSpec extends CommandSpec {
 
     @Unroll
-    void 'test basic create-app for #lang and #build'(ApplicationType applicationType,
+    void 'test basic create-app for #lang and #buildTool'(ApplicationType applicationType,
                                                       Language lang,
                                                       BuildTool buildTool) {
         given:
-        generateProject(lang, buildTool)
+        generateProject(lang, buildTool, ['random-port'])
 
         when:
         if (buildTool == BuildTool.GRADLE) {
@@ -27,6 +27,11 @@ class CreateAppKotlinMavenSpec extends CommandSpec {
 
         where:
         applicationType         | lang                    | buildTool
-        ApplicationType.DEFAULT | Language.KOTLIN | BuildTool.MAVEN
+        ApplicationType.DEFAULT | Language.GROOVY         | BuildTool.GRADLE
+    }
+
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-app-createappgroovygradlespec"
     }
 }

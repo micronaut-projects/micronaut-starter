@@ -1,0 +1,8 @@
+dependencies {
+    implementation("org.codehaus.groovy:groovy:$groovyVersion")
+    implementation("org.spockframework:spock-core:$spockVersion") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    compileOnly("io.micronaut:micronaut-inject-groovy")
+    implementation project(":starter-core")
+}
