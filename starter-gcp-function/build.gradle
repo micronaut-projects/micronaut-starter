@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "com.github.johnrengelman.shadow"
     id "application"
 }
@@ -51,6 +50,3 @@ task('runFunction', type: JavaExec, dependsOn: classes) {
 
     )
 }
-
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"
