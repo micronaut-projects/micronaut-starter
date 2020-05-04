@@ -4,14 +4,13 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.command.project.test.CreateTestCommand
 import io.micronaut.starter.generator.CommandSpec
-import io.micronaut.starter.generator.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateTestSpec extends CommandSpec {
+class CreateTestJavaGradleJunitSpec extends CommandSpec {
 
     @Unroll
     void "test create-test for #language and #testFramework and #buildTool"(Language language,
@@ -42,13 +41,13 @@ class CreateTestSpec extends CommandSpec {
         then:
         testOutputContains("BUILD SUCCESS")
 
-
         where:
-        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
+        language        | buildTool        | testFramework
+        Language.JAVA   | BuildTool.GRADLE  | TestFramework.JUNIT
     }
 
     @Override
     String getTempDirectoryPrefix() {
-        return "starter-core-test-createtest-createtestspec"
+        "starter-core-test-createtest-createtestjavagradlejunitspec"
     }
 }
