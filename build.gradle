@@ -48,21 +48,20 @@ subprojects { Project subproject ->
         apply plugin:"java-library"
         apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
         bintray.publish = true
+
+        jar {
+            manifest {
+                attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+                attributes('Implementation-Version': projectVersion)
+                attributes('Implementation-Title': title)
+            }
+        }
     } else {
         apply plugin: "java"
     }
 
-
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-
-    jar {
-        manifest {
-            attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-            attributes('Implementation-Version': projectVersion)
-            attributes('Implementation-Title': title)
-        }
-    }
 
     dependencies {
         annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
