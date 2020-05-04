@@ -7,7 +7,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaCustomRuntimeDefaultJavaMavenSpockSpec extends CommandSpec {
+class CreateAwsLambdaCustomRuntimeDefaultJavaMavenJunitSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambdacustomruntime-createawslambdacustomruntimedefaultjavamavenjunitspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -26,6 +30,6 @@ class CreateAwsLambdaCustomRuntimeDefaultJavaMavenSpockSpec extends CommandSpec 
 
         where:
         applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.SPOCK
+        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.JAVA           | BuildTool.MAVEN    | TestFramework.JUNIT
     }
 }

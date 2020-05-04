@@ -7,7 +7,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaCustomRuntimeDefaultKotlinMavenKotlinTestSpec extends CommandSpec {
+class CreateAwsLambdaCustomRuntimeFunctionGroovyMavenSpockSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambdacustomruntime-createawslambdacustomruntimefunctiongroovymavenspockspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -26,6 +30,6 @@ class CreateAwsLambdaCustomRuntimeDefaultKotlinMavenKotlinTestSpec extends Comma
 
         where:
         applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.KOTLIN         | BuildTool.MAVEN    | TestFramework.KOTLINTEST
+        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
     }
 }

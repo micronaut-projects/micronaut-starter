@@ -7,7 +7,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaCustomRuntimeDefaultGroovyGradleSpockSpec extends CommandSpec {
+class CreateAwsLambdaCustomRuntimeFunctionGroovyGradleSpockSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambdacustomruntime-createawslambdacustomruntimefunctiongroovygradlespockspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -26,6 +30,6 @@ class CreateAwsLambdaCustomRuntimeDefaultGroovyGradleSpockSpec extends CommandSp
 
         where:
         applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
+        ApplicationType.FUNCTION  | ['aws-lambda', 'aws-lambda-custom-runtime']  | Language.GROOVY         | BuildTool.GRADLE   | TestFramework.SPOCK
     }
 }
