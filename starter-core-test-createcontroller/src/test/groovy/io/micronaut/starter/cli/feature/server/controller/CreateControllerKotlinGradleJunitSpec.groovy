@@ -2,16 +2,14 @@ package io.micronaut.starter.cli.feature.server.controller
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.generator.CommandSpec
-import io.micronaut.starter.generator.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateControllerSpec extends CommandSpec {
+class CreateControllerKotlinGradleJunitSpec extends CommandSpec {
 
     @Unroll
     void "test creating a controller and running the test for #language and #testFramework and #buildTool"(Language language, BuildTool buildTool, TestFramework testFramework) {
@@ -43,11 +41,12 @@ class CreateControllerSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
+        language        | buildTool        | testFramework
+        Language.KOTLIN | BuildTool.GRADLE | TestFramework.JUNIT
     }
 
     @Override
     String getTempDirectoryPrefix() {
-        return "starter-core-test-createcontroller-createcontrollerspec"
+        "starter-core-test-createcontroller-createcontrollerkotlingradlejunitspec"
     }
 }
