@@ -15,7 +15,7 @@ class CreateGrpcKotlinGradleSpec extends CommandSpec {
     @Unroll
     void '#applicationType with #lang and #buildTool'(ApplicationType applicationType, Language lang, BuildTool buildTool) {
         given:
-        generateProject(lang, buildTool, [], applicationType)
+        generateProject(lang, buildTool, [RandomGrpcPort.NAME], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {
