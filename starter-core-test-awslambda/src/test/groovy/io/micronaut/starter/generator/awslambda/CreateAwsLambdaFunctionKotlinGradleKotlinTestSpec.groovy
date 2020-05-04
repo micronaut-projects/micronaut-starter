@@ -7,7 +7,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaFunctionGroovyMavenSpockSpec extends CommandSpec {
+class CreateAwsLambdaFunctionKotlinGradleKotlinTestSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambda-createawslambdafunctionkotlingradlekotlintestspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -26,6 +30,6 @@ class CreateAwsLambdaFunctionGroovyMavenSpockSpec extends CommandSpec {
 
         where:
         applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.FUNCTION  | ['aws-lambda']                               | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
+        ApplicationType.FUNCTION  | ['aws-lambda']                               | Language.KOTLIN         | BuildTool.GRADLE   | TestFramework.KOTLINTEST
     }
 }

@@ -8,6 +8,10 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class CreateAwsLambdaDefaultKotlinGradleKotlinTestSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambda-createawslambdadefaultkotlingradlekotlintestspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,

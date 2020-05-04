@@ -8,6 +8,10 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class CreateAwsLambdaDefaultKotlinMavenJunitSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambda-createawslambdadefaultkotlinmavenjunitspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
