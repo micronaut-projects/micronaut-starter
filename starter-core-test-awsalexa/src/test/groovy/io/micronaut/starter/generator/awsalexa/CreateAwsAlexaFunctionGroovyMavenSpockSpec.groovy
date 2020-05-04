@@ -7,7 +7,12 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsAlexaFunctionJavaMavenJunitSpec extends CommandSpec {
+class CreateAwsAlexaFunctionGroovyMavenSpockSpec extends CommandSpec {
+
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-awsalexa-createawsalexafunctiongroovymavenspockspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -25,7 +30,7 @@ class CreateAwsAlexaFunctionJavaMavenJunitSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType          | features      | lang          | build           | testFramework
-        ApplicationType.FUNCTION | ['aws-alexa'] | Language.JAVA | BuildTool.MAVEN | TestFramework.JUNIT
+        applicationType          | features      | lang            | build           | testFramework
+        ApplicationType.FUNCTION | ['aws-alexa'] | Language.GROOVY | BuildTool.MAVEN | TestFramework.SPOCK
     }
 }

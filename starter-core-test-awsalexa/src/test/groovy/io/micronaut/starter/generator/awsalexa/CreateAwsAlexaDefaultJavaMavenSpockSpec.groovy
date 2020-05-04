@@ -8,7 +8,11 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Ignore
 import spock.lang.Unroll
 
-class CreateAwsAlexaDefaultJavaGradleSpockSpec extends CommandSpec {
+class CreateAwsAlexaDefaultJavaMavenSpockSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-awsalexa-createawsalexadefaultjavamavenspockspec"
+    }
 
     @Ignore("alexa-httpserver not in bom")
     @Unroll
@@ -27,7 +31,7 @@ class CreateAwsAlexaDefaultJavaGradleSpockSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType         | features      | lang          | build            | testFramework
-        ApplicationType.DEFAULT | ['aws-alexa'] | Language.JAVA | BuildTool.GRADLE | TestFramework.SPOCK
+        applicationType         | features      | lang          | build           | testFramework
+        ApplicationType.DEFAULT | ['aws-alexa'] | Language.JAVA | BuildTool.MAVEN | TestFramework.SPOCK
     }
 }

@@ -5,12 +5,15 @@ import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import spock.lang.Ignore
 import spock.lang.Unroll
 
-class CreateAwsAlexaDefaultKotlinMavenKotlinTestSpec extends CommandSpec {
+class CreateAwsAlexaFunctionJavaGradleSpockSpec extends CommandSpec {
 
-    @Ignore("alexa-httpserver not in bom")
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-awsalexa-createawsalexafunctionjavagradlespockspec"
+    }
+
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 List<String> features,
@@ -27,7 +30,7 @@ class CreateAwsAlexaDefaultKotlinMavenKotlinTestSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType         | features      | lang            | build           | testFramework
-        ApplicationType.DEFAULT | ['aws-alexa'] | Language.KOTLIN | BuildTool.MAVEN | TestFramework.KOTLINTEST
+        applicationType          | features      | lang          | build            | testFramework
+        ApplicationType.FUNCTION | ['aws-alexa'] | Language.JAVA | BuildTool.GRADLE | TestFramework.SPOCK
     }
 }

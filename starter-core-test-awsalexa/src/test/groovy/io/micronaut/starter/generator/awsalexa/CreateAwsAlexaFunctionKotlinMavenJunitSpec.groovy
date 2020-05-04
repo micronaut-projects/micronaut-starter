@@ -8,6 +8,10 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class CreateAwsAlexaFunctionKotlinMavenJunitSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-awsalexa-createawsalexafunctionkotlinmavenjunitspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
