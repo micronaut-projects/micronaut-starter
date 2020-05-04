@@ -1,4 +1,0 @@
-dependencies {
-    testImplementation project(":starter-core-test")
-    testImplementation project(":starter-core")
-}
