@@ -13,7 +13,7 @@ class CreateCliKotlinGradleSpec extends CommandSpec {
     }
 
     @Unroll
-    void '#applicationType with #lang and #buildTool and test framework: #testFramework'(ApplicationType applicationType,
+    void '#applicationType with #lang and #buildTool'(ApplicationType applicationType,
                                                                                      Language lang,
                                                                                      BuildTool buildTool) {
 

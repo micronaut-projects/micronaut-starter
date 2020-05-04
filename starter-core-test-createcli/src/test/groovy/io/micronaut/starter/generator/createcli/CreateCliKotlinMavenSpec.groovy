@@ -13,9 +13,9 @@ class CreateCliKotlinMavenSpec extends CommandSpec {
     }
 
     @Unroll
-    void '#applicationType with features #lang and #buildTool and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                              Language lang,
-                                                                                              BuildTool buildTool) {
+    void '#applicationType with features #lang and #buildTool'(ApplicationType applicationType,
+                                                               Language lang,
+                                                               BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, [], applicationType)
 
