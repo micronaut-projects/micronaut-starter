@@ -7,15 +7,19 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateMessagingKafkaKotlinGradleSpec extends CommandSpec {
+class CreateMessagingKafkaGroovyGradleSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-messaging-createmessagingkafkagroovygradlespec"
+    }
 
     @Unroll
-    void 'test basic create-messaging-app for #feature and #language and #buildTool'(ApplicationType applicationType,
+    void 'test basic create-messaging-app for #feature and #lang and #buildTool'(ApplicationType applicationType,
                                                                                      String feature,
                                                                                      Language lang,
                                                                                      BuildTool buildTool) {
         given:
-        generateMessagingProject(lang, buildTool, [feature])
+        generateProject(lang, buildTool, [feature], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {
@@ -28,7 +32,7 @@ class CreateMessagingKafkaKotlinGradleSpec extends CommandSpec {
         testOutputContains("Startup completed")
 
         where:
-        applicationType         | feature    | lang          | buildTool
-        ApplicationType.DEFAULT | Kafka.NAME | Language.KOTLIN | BuildTool.GRADLE
+        applicationType           | feature    | lang            | buildTool
+        ApplicationType.MESSAGING | Kafka.NAME | Language.GROOVY | BuildTool.GRADLE
     }
 }

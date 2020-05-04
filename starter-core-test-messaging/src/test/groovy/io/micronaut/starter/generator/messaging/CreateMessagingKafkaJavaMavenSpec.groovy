@@ -1,21 +1,25 @@
 package io.micronaut.starter.generator.messaging
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
+import io.micronaut.starter.feature.messaging.kafka.Kafka
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateMessagingRabbitKotlinGradleSpec extends CommandSpec {
+class CreateMessagingKafkaJavaMavenSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-messaging-createmessagingkafkajavamavenspec"
+    }
 
     @Unroll
-    void 'test basic create-messaging-app for #feature and #language and #buildTool'(ApplicationType applicationType,
+    void 'test basic create-messaging-app for #feature and #lang and #buildTool'(ApplicationType applicationType,
                                                                                      String feature,
                                                                                      Language lang,
                                                                                      BuildTool buildTool) {
         given:
-        generateMessagingProject(lang, buildTool, [feature])
+        generateProject(lang, buildTool, [feature], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {
@@ -28,7 +32,7 @@ class CreateMessagingRabbitKotlinGradleSpec extends CommandSpec {
         testOutputContains("Startup completed")
 
         where:
-        applicationType         | feature       | lang          | buildTool
-        ApplicationType.DEFAULT | RabbitMQ.NAME | Language.KOTLIN | BuildTool.GRADLE
+        applicationType           | feature    | lang          | buildTool
+        ApplicationType.MESSAGING | Kafka.NAME | Language.JAVA | BuildTool.MAVEN
     }
 }
