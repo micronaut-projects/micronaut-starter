@@ -26,13 +26,13 @@ $ docker tag micronaut-starter gcr.io/[PROJECT ID]/micronaut-starter
 $ docker push gcr.io/[PROJECT ID]/micronaut-starter
 ```
 
-You are now ready to deploy your application:
+You are now ready to deploy your application :
 
 ```
-$ gcloud beta run deploy --image gcr.io/[PROJECT ID]/micronaut-starter 
+$ gcloud run deploy --image gcr.io/[PROJECT ID]/micronaut-starter --platform=managed --allow-unauthenticated
 ```
 
-Where `[PROJECT ID]` is replaced for your project ID. You should see output like the following:
+Where `[PROJECT ID]` is replaced for your project ID. You should be asked to specify a region and see output like the following:
 
 ```
 Service name: (micronaut-starter):
@@ -41,8 +41,9 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
 ✓ Deploying... Done.
   ✓ Creating Revision...
   ✓ Routing traffic...
+  ✓ Setting IAM Policy...
 Done.
-Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving 100 percent of traffic at https://micronaut-starter-9487r97234-uc.a.run.app
 ```
 
 The URL is the URL of your Cloud Run application.%
