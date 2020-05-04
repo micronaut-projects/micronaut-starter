@@ -23,5 +23,6 @@ include 'starter-analytics-postgres'
 include 'starter-core-test'
 include 'starter-core-test-app'
 include 'starter-core-test-asciidoctor'
+include 'starter-core-test-createcontroller'
 
 project(':starter-cli').name = "micronaut-cli"
