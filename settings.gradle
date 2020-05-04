@@ -24,5 +24,6 @@ include 'starter-core-test'
 include 'starter-core-test-app'
 include 'starter-core-test-asciidoctor'
 include 'starter-core-test-createcontroller'
+include 'starter-core-test-createtest'
 
 project(':starter-cli').name = "micronaut-cli"
