@@ -9,15 +9,19 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class CreateCliKotlinGradleKotlinTestSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-createcli-createclikotlingradlekotlintestspec"
+    }
 
     @Unroll
-    void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                               Language lang,
-                                                                                                               BuildTool buildTool,
-                                                                                                               TestFramework testFramework) {
+    void 'create-#applicationType with #lang and #buildTool and test framework: #testFramework'(ApplicationType applicationType,
+                                                                                            Language lang,
+                                                                                            BuildTool buildTool,
+                                                                                            TestFramework testFramework) {
 
         given:
-        generateCliProject(new Options(lang, testFramework, buildTool))
+        generateProject(lang, buildTool, [], applicationType, testFramework)
 
         when:
         if (buildTool == BuildTool.GRADLE) {

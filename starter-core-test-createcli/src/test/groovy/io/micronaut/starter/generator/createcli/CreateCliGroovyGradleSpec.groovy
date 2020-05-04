@@ -4,18 +4,20 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
-class CreateCliGroovyMavenSpec extends CommandSpec {
+class CreateCliGroovyGradleSpec extends CommandSpec {
+
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-createcli-createcligroovygradlespec"
+    }
 
     @Unroll
-    void '#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                        Language lang,
-                                                                                                        BuildTool buildTool) {
+    void '#applicationType with #lang and #buildTool'(ApplicationType applicationType, Language lang, BuildTool buildTool) {
 
         given:
-        generateCliProject(new Options(lang, null, buildTool))
+        generateProject(lang, buildTool, [], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {
@@ -29,6 +31,6 @@ class CreateCliGroovyMavenSpec extends CommandSpec {
 
         where:
         applicationType     | lang                    | buildTool
-        ApplicationType.CLI | Language.GROOVY         | BuildTool.MAVEN
+        ApplicationType.CLI | Language.GROOVY         | BuildTool.GRADLE
     }
 }
