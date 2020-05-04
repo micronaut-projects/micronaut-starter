@@ -44,8 +44,6 @@ subprojects { Project subproject ->
     apply from: rootProject.file('gradle/license.gradle')
     apply plugin: "com.adarshr.test-logger"
 
-    checkstyleMain.dependsOn('spotlessCheck')
-
     if (subproject.hasProperty("publish") && subproject.publish) {
         apply plugin:"java-library"
         apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
@@ -78,18 +76,6 @@ subprojects { Project subproject ->
         }
     }
 
-    checkstyle {
-        toolVersion = 8.16
-        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-
-        // Per submodule
-        maxErrors = 0
-        maxWarnings = 5
-
-        showViolations = true
-    }
-    checkstyleTest.enabled = false
-
     idea {
         module {
             outputDir file('build/classes/java/main')
@@ -102,6 +88,7 @@ subprojects { Project subproject ->
         options.compilerArgs.add('-parameters')
     }
 
+    apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
     apply from: "${rootProject.projectDir}/gradle/test.gradle"
 
 }
