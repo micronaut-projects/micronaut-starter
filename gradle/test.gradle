@@ -6,7 +6,7 @@ testlogger {
     showSkippedStandardStreams false
     showFailedStandardStreams true
 }
-test {
+tasks.withType(Test) {
     forkEvery = 100
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
 }
