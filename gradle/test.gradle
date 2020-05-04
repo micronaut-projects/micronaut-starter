@@ -9,4 +9,9 @@ testlogger {
 tasks.withType(Test) {
     forkEvery = 100
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+
+tasks.withType(Test) {
+    reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
+    reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
+}
 }
