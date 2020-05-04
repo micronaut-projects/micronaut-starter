@@ -1,12 +1,17 @@
 package io.micronaut.starter.generator.asciidoctor
 
-import io.micronaut.starter.application.ApplicationType
+
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateAsciidoctorGroovyMavenSpec extends CommandSpec {
+class CreateAsciidoctorJavaMavenSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-asciidoctor-createasciidoctorjavamavenspec"
+    }
+
     @Unroll
     void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
@@ -24,6 +29,6 @@ class CreateAsciidoctorGroovyMavenSpec extends CommandSpec {
 
         where:
         language        | buildTool
-        Language.GROOVY | BuildTool.MAVEN
+        Language.JAVA | BuildTool.MAVEN
     }
 }

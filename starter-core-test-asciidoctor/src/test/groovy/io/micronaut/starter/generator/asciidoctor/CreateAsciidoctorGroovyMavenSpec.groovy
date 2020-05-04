@@ -5,7 +5,12 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CreateAsciidoctorKotlinMavenSpec extends CommandSpec {
+class CreateAsciidoctorGroovyMavenSpec extends CommandSpec {
+
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-asciidoctor-createasciidoctorgroovymavenspec"
+    }
 
     @Unroll
     void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
@@ -24,6 +29,6 @@ class CreateAsciidoctorKotlinMavenSpec extends CommandSpec {
 
         where:
         language        | buildTool
-        Language.KOTLIN | BuildTool.MAVEN
+        Language.GROOVY | BuildTool.MAVEN
     }
 }

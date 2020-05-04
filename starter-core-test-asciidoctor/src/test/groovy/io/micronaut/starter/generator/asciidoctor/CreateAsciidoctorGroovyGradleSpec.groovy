@@ -1,13 +1,12 @@
 package io.micronaut.starter.generator.asciidoctor
 
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
-class CreateAsciidoctorKotlinGradleSpec extends CommandSpec {
+class CreateAsciidoctorGroovyGradleSpec extends CommandSpec {
+
     @Unroll
     void 'test create-app for asciidoctor feature with #language and #buildTool'(Language language, BuildTool buildTool) {
         given:
@@ -25,6 +24,11 @@ class CreateAsciidoctorKotlinGradleSpec extends CommandSpec {
 
         where:
         language        | buildTool
-        Language.KOTLIN | BuildTool.GRADLE
+        Language.GROOVY         | BuildTool.GRADLE
+    }
+
+    @Override
+    String getTempDirectoryPrefix() {
+        return "starter-core-test-asciidoctor-createasciidoctorgroovygradlespec"
     }
 }
