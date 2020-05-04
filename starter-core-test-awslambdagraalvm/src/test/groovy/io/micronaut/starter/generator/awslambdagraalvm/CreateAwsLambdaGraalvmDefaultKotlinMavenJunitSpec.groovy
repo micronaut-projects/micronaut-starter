@@ -7,7 +7,11 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class CreateAwsLambdaGraalvmDefaultGroovyMavenSpockSpec extends CommandSpec {
+class CreateAwsLambdaGraalvmDefaultKotlinMavenJunitSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-awslambdagraalvm-createawslambdagraalvmdefaultkotlinmavenjunitspec"
+    }
 
     @Unroll
     void 'create-#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
@@ -25,7 +29,7 @@ class CreateAwsLambdaGraalvmDefaultGroovyMavenSpockSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        applicationType           | features                                     | lang                    | build              | testFramework
-        ApplicationType.DEFAULT   | ['aws-lambda', 'graalvm']                    | Language.GROOVY         | BuildTool.MAVEN    | TestFramework.SPOCK
+        applicationType         | features                  | lang            | build           | testFramework
+        ApplicationType.DEFAULT | ['aws-lambda', 'graalvm'] | Language.KOTLIN | BuildTool.MAVEN | TestFramework.JUNIT
     }
 }
