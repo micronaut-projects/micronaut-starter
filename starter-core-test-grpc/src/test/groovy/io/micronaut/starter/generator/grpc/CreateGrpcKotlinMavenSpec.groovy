@@ -4,17 +4,18 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.generator.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
 class CreateGrpcKotlinMavenSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-grpc-creategrpckotlinmavenspec"
+    }
 
     @Unroll
-    void '#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                        Language lang,
-                                                                                                        BuildTool buildTool) {
+    void '#applicationType with #lang and #buildTool'(ApplicationType applicationType, Language lang, BuildTool buildTool) {
         given:
-        generateGrpcProject(lang, buildTool)
+        generateProject(lang, buildTool, [], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {

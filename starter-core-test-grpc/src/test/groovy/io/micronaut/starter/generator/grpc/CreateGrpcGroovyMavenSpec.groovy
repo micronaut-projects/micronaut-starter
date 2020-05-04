@@ -7,13 +7,15 @@ import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
 class CreateGrpcGroovyMavenSpec extends CommandSpec {
+    @Override
+    String getTempDirectoryPrefix() {
+        "starter-core-test-grpc-creategrpcgroovymavenspec"
+    }
 
     @Unroll
-    void '#applicationType with features #features #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                        Language lang,
-                                                                                                        BuildTool buildTool) {
+    void '#applicationType with #lang and #buildTool'(ApplicationType applicationType, Language lang, BuildTool buildTool) {
         given:
-        generateGrpcProject(lang, buildTool)
+        generateProject(lang, buildTool, [], applicationType)
 
         when:
         if (buildTool == BuildTool.GRADLE) {

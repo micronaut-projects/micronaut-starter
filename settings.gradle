@@ -26,5 +26,6 @@ include 'starter-core-test-asciidoctor'
 include 'starter-core-test-createcontroller'
 include 'starter-core-test-createtest'
 include 'starter-core-test-awsalexa'
+include 'starter-core-test-grpc'
 
 project(':starter-cli').name = "micronaut-cli"
