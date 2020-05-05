@@ -1,30 +1,23 @@
-package io.micronaut.starter.cli.command.project
+package io.micronaut.starter.cli.test
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.cli.CommandFixture
-import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.cli.command.project.test.CreateTestCommand
+import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import spock.lang.AutoCleanup
-import spock.lang.Shared
 import spock.lang.Unroll
 
-class CreateTestSpec extends CommandSpec implements CommandFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CreateTestSpec extends CommandSpec {
 
     @Unroll
-    void "test create-test for #language.getName() and #testFramework.getName() and #build.getName()"(Language language,
-                                                                                                      TestFramework testFramework,
-                                                                                                      BuildTool build) {
-        generateProject(new Options(language, testFramework, build))
+    void "test create-test for #language and #testFramework and #buildTool"(Language language,
+                                                                            BuildTool buildTool,
+                                                                            TestFramework testFramework) {
+        generateProject(language, buildTool, [] as List<String>, ApplicationType.DEFAULT, testFramework)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateTestCommand command = new CreateTestCommand(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
@@ -40,9 +33,9 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
-        if (build == BuildTool.GRADLE) {
+        if (buildTool == BuildTool.GRADLE) {
             executeGradleCommand("test")
-        } else if (build == BuildTool.MAVEN) {
+        } else if (buildTool == BuildTool.MAVEN) {
             executeMavenCommand("compile test")
         }
 
@@ -50,6 +43,11 @@ class CreateTestSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        [language, testFramework, build] << [Language.values(), TestFramework.values(), BuildTool.values()].combinations()
+        [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
+    }
+
+    @Override
+    String getTempDirectoryPrefix() {
+        "test-createtest"
     }
 }

@@ -1,7 +1,17 @@
-package io.micronaut.starter.generator
+package io.micronaut.starter.test
 
 import io.micronaut.context.BeanContext
-import io.micronaut.starter.fixture.CommandFixture
+import io.micronaut.core.util.functional.ThrowingSupplier
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.starter.io.ConsoleOutput
+import io.micronaut.starter.io.FileSystemOutputHandler
+import io.micronaut.starter.io.OutputHandler
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.NameUtils
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -10,13 +20,15 @@ import spock.util.environment.OperatingSystem
 
 import java.nio.file.Files
 
-abstract class CommandSpec extends Specification implements CommandFixture {
+abstract class CommandSpec extends Specification {
 
     @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
 
-    File dir = Files.createTempDirectory('mn-starter').toFile()
+    abstract String getTempDirectoryPrefix()
+
+    File dir
     StringBuilder output
     Process process
 
@@ -26,6 +38,7 @@ abstract class CommandSpec extends Specification implements CommandFixture {
     }
 
     void setup() {
+        dir = Files.createTempDirectory(tempDirectoryPrefix).toFile()
         output = new StringBuilder()
     }
 
@@ -84,5 +97,24 @@ abstract class CommandSpec extends Specification implements CommandFixture {
                 process.destroyForcibly()
             }
         }
+    }
+
+    void generateProject(Language lang,
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         List<String> features = [],
+                         ApplicationType applicationType = ApplicationType.DEFAULT,
+                         TestFramework testFramework = null) {
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
+                NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, testFramework, buildTool),
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
+
+
+    ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
+        return () -> new FileSystemOutputHandler(dir, consoleOutput)
     }
 }
