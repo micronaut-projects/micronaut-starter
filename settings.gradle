@@ -20,18 +20,8 @@ include 'starter-gcp-function'
 include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
 
+include 'test-core'
 include 'test-utils'
-include 'test-cli-createcontroller'
-include 'test-cli-createtest'
-
-include 'test-core-asciidoctor'
-include 'test-core-awslambda'
-include 'test-core-awslambdacustomruntime'
-include 'test-core-awslambdagraalvm'
-include 'test-core-grpc'
-include 'test-core-createcli'
-include 'test-core-app'
-include 'test-core-awsalexa'
-include 'test-core-messaging'
+include 'test-cli'
 
 project(':starter-cli').name = "micronaut-cli"

@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
-        run: ./gradlew check --continue -x test-core-asciidoctor:test -x test-core-asciidoctor:test -x test-core-awslambda:test -x test-core-awslambdacustomruntime:test -x test-core-awslambdagraalvm:test -x test-core-grpc:test -x test-core-createcli:test -x test-core-app:test -x test-core-awsalexa:test -x test-core-messaging:test -x test-cli-createtest:test -x test-cli-createcontroller:test
+        run: ./gradlew check --continue -x test-core:test -x test-cli:test
       - name: Verify CLI
         run: |
           ./gradlew micronaut-cli:assemble

@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
-        run: ./gradlew test-cli-createcontroller:test --continue
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateControllerSpec
   clicreatetest:
     runs-on: ubuntu-latest
     strategy:
@@ -50,7 +50,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
-        run: ./gradlew test-cli-createtest:test --continue
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateTestSpec
   coreapp:
     runs-on: ubuntu-latest
     strategy:
@@ -75,7 +75,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core-app:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAppSpec
   coreasciidoctor:
     runs-on: ubuntu-latest
     strategy:
@@ -100,7 +100,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run core-asciidoctor Tests
-        run: ./gradlew test-core-asciidoctor:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAsciidoctorSpec
   coreawsalexa:
     runs-on: ubuntu-latest
     strategy:
@@ -125,7 +125,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run AWS Alexa functional Tests
-        run: ./gradlew test-core-awsalexa:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAwsAlexaSpec
   coreawslambda:
     runs-on: ubuntu-latest
     strategy:
@@ -150,7 +150,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run Feature awslambda Functional Tests
-        run: ./gradlew test-core-awslambda:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAwsLambdaSpec
   coreawslambdacustomruntime:
     runs-on: ubuntu-latest
     strategy:
@@ -175,7 +175,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run Feature aws-lambda-custom-runtime Functional Tests
-        run: ./gradlew test-core-awslambdacustomruntime:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAwsLambdaCustomRuntimeSpec
   coreawslambdagraalvm:
     runs-on: ubuntu-latest
     strategy:
@@ -200,7 +200,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run Features aws-lambda, graalvm Functional Tests
-        run: ./gradlew test-core-awslambdagraalvm:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateAwsLambdaGraalvmSpec
   corecreatecli:
     runs-on: ubuntu-latest
     strategy:
@@ -225,7 +225,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run create-cli Functional Tests
-        run: ./gradlew test-core-createcli:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateCliSpec
   coregrpc:
     runs-on: ubuntu-latest
     strategy:
@@ -250,7 +250,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run grpc Functional Tests
-        run: ./gradlew test-core-grpc:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateGrpcSpec
   coremessaging:
     runs-on: ubuntu-latest
     strategy:
@@ -275,4 +275,4 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run messaging Functional Tests
-        run: ./gradlew test-core-messaging:test --continue
+        run: ./gradlew test-core:test --tests=io.micronaut.starter.core.test.CreateMessagingSpec
