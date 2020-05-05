@@ -25,7 +25,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
-        run: ./gradlew check --continue --refresh-dependencies
+        run: ./gradlew check --continue
       - name: Verify CLI
         run: |
           ./gradlew micronaut-cli:assemble
