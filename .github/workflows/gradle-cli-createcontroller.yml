@@ -1,4 +1,4 @@
-name: Java CI
+name: Func CLI Create-Controller
 on: [push, pull_request]
 jobs:
   build:

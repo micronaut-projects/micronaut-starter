@@ -1,4 +1,4 @@
-name: Java CI
+name: Func core app
 on: [push, pull_request]
 jobs:
   build:

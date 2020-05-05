@@ -1,4 +1,4 @@
-name: Java CI
+name: Func CLI create-test
 on: [push, pull_request]
 jobs:
   build:
