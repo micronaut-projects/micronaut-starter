@@ -119,4 +119,5 @@ io.micronaut.starter.options
 io.micronaut.starter.servlet
 io.micronaut.starter.template
 io.micronaut.starter.template.api
+io.micronaut.starter.test
 io.micronaut.starter.util
