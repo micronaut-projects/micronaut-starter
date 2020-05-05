@@ -1,4 +1,4 @@
-name: Func CLI Create-Controller
+name: Func cli Create-Controller
 on: [push, pull_request]
 jobs:
   build:

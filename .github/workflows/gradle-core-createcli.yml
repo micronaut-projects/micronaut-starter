@@ -1,4 +1,4 @@
-name: Func Core createcli
+name: Func core createcli
 on: [push, pull_request]
 jobs:
   build:

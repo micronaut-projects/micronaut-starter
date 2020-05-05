@@ -1,4 +1,4 @@
-name: Func CLI create-test
+name: Func cli create-test
 on: [push, pull_request]
 jobs:
   build:

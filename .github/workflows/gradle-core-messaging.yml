@@ -1,4 +1,4 @@
-name: Func Core messaging
+name: Func core messaging
 on: [push, pull_request]
 jobs:
   build:

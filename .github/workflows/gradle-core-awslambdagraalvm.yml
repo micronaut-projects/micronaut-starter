@@ -1,4 +1,4 @@
-name: Func Core awslambda graalvm
+name: Func core awslambda graalvm
 on: [push, pull_request]
 jobs:
   build:
