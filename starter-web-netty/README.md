@@ -16,6 +16,10 @@ Or with RapiDoc:
 
 http://localhost:8080/swagger/views/rapidoc/index.html
 
+To enable CORS for local development, you may specify the local host/port
+```cmd
+export CORS_ALLOWED_ORIGIN=https://localhost:3000 && ./gradlew starter-web-netty:run
+```
 ## Google Cloud Run Deployment
 
 From the project root build the docker image and push it to Google Container Registry:

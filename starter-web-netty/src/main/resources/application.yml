@@ -10,7 +10,7 @@ micronaut:
       configurations:
         web:
           allowedOrigins:
-            - ^http(|s):\/\/micronaut\.io$
+            - ${CORS_ALLOWED_ORIGIN:^http(|s):\/\/micronaut\.io$}
           allowedMethods:
             - GET
 gcp:
