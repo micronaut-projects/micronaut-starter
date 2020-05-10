@@ -148,17 +148,19 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html#createGeneratorContext-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.ConsoleOutput-">createGeneratorContext</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html#createGeneratorContext-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-java.util.List-io.micronaut.starter.io.ConsoleOutput-">createGeneratorContext</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                       <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
                       <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                      <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
                       java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
                       <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html#generate-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.OutputHandler-io.micronaut.starter.io.ConsoleOutput-">generate</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html#generate-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-java.util.List-io.micronaut.starter.io.OutputHandler-io.micronaut.starter.io.ConsoleOutput-">generate</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
         <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
         <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+        <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
         java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
         <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
         <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>&nbsp;</td>
@@ -210,7 +212,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="generate-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.OutputHandler-io.micronaut.starter.io.ConsoleOutput-">
+<a name="generate-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-java.util.List-io.micronaut.starter.io.OutputHandler-io.micronaut.starter.io.ConsoleOutput-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -219,6 +221,8 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;void&nbsp;generate(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                      <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
                      <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                     @Nullable
+                     <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
                      java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
                      <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
                      <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)
@@ -246,7 +250,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="createGeneratorContext-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-java.util.List-io.micronaut.starter.io.ConsoleOutput-">
+<a name="createGeneratorContext-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-java.util.List-io.micronaut.starter.io.ConsoleOutput-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -255,6 +259,8 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;createGeneratorContext(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
                                                <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
                                                <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                                               @Nullable
+                                               <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
                                                java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
                                                <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
 </li>

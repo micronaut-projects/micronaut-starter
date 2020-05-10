@@ -147,10 +147,11 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/application/ContextFactory.html#createFeatureContext-io.micronaut.starter.feature.AvailableFeatures-java.util.List-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-">createFeatureContext</a></span>(<a href="../../../../io/micronaut/starter/feature/AvailableFeatures.html" title="interface in io.micronaut.starter.feature">AvailableFeatures</a>&nbsp;availableFeatures,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/application/ContextFactory.html#createFeatureContext-io.micronaut.starter.feature.AvailableFeatures-java.util.List-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-">createFeatureContext</a></span>(<a href="../../../../io/micronaut/starter/feature/AvailableFeatures.html" title="interface in io.micronaut.starter.feature">AvailableFeatures</a>&nbsp;availableFeatures,
                     java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
                     <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                    <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</code>&nbsp;</td>
+                    <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                    <a href="../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a></code></td>
@@ -197,7 +198,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="createFeatureContext-io.micronaut.starter.feature.AvailableFeatures-java.util.List-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-">
+<a name="createFeatureContext-io.micronaut.starter.feature.AvailableFeatures-java.util.List-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-io.micronaut.starter.application.OperatingSystem-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -206,7 +207,9 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;<a href="../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;createFeatureContext(<a href="../../../../io/micronaut/starter/feature/AvailableFeatures.html" title="interface in io.micronaut.starter.feature">AvailableFeatures</a>&nbsp;availableFeatures,
                                            java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
                                            <a href="../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                                           <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</pre>
+                                           <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                                           @Nullable
+                                           <a href="../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem)</pre>
 </li>
 </ul>
 <a name="createGeneratorContext-io.micronaut.starter.application.Project-io.micronaut.starter.feature.FeatureContext-io.micronaut.starter.io.ConsoleOutput-">

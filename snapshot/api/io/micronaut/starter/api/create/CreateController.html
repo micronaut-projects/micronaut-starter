@@ -182,25 +182,27 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">createApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
          java.lang.String&nbsp;name,
          java.util.List&lt;java.lang.String&gt;&nbsp;features,
          <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
          <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
          <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
-         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion)</code>
+         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+         java.lang.String&nbsp;userAgent)</code>
 <div class="block">Creates an application, generating a ZIP file as the response.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#createZip-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">createZip</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateController.html#createZip-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createZip</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
          @Pattern(regexp="[\\w\\d-_]+") @NotBlank java.lang.String&nbsp;name,
          java.util.List&lt;java.lang.String&gt;&nbsp;features,
          <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
          <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
          <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
-         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion)</code>
+         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+         java.lang.String&nbsp;userAgent)</code>
 <div class="block">Creates the default application type using the name of the given Zip.</div>
 </td>
 </tr>
@@ -210,7 +212,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.api.create.<a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></h3>
-<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getFilename-io.micronaut.starter.application.Project-">getFilename</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getFilename-io.micronaut.starter.application.Project-">getFilename</a>, <a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getOperatingSystem-java.lang.String-">getOperatingSystem</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -257,7 +259,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">
+<a name="createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -272,13 +274,15 @@ public&nbsp;io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;&
                                                                                                                                                                                          <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
                                                                                                                                                                                          <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
                                                                                                                                                                                          <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
-                                                                                                                                                                                         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion)</pre>
+                                                                                                                                                                                         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+                                                                                                                                                                                         @Nullable
+                                                                                                                                                                                         java.lang.String&nbsp;userAgent)</pre>
 <div class="block">Creates an application, generating a ZIP file as the response.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">createApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">createApp</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The application type The application type</dd>
 <dd><code>name</code> - The name of the application The name of the application</dd>
@@ -291,7 +295,7 @@ public&nbsp;io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;&
 </dl>
 </li>
 </ul>
-<a name="createZip-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-">
+<a name="createZip-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -312,7 +316,9 @@ public&nbsp;io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;&
                                                                                                                                                                         @Nullable
                                                                                                                                                                         <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
                                                                                                                                                                         @Nullable
-                                                                                                                                                                        <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion)</pre>
+                                                                                                                                                                        <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
+                                                                                                                                                                        @Nullable @Header(value="User-Agent")
+                                                                                                                                                                        java.lang.String&nbsp;userAgent)</pre>
 <div class="block">Creates the default application type using the name of the given Zip.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

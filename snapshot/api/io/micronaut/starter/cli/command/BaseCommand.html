@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -188,26 +188,30 @@ implements <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" t
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#err-java.lang.String-">err</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#green-java.lang.String-">green</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#getOperatingSystem--">getOperatingSystem</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#out-java.lang.String-">out</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#green-java.lang.String-">green</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#red-java.lang.String-">red</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#out-java.lang.String-">out</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#showStacktrace--">showStacktrace</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#red-java.lang.String-">red</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#verbose--">verbose</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#showStacktrace--">showStacktrace</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#verbose--">verbose</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/cli/command/BaseCommand.html#warning-java.lang.String-">warning</a></span>(java.lang.String&nbsp;message)</code>&nbsp;</td>
 </tr>
@@ -357,7 +361,7 @@ implements <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" t
 <a name="verbose--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>verbose</h4>
 <pre>public&nbsp;boolean&nbsp;verbose()</pre>
@@ -365,6 +369,16 @@ implements <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" t
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html#verbose--">verbose</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a></code></dd>
 </dl>
+</li>
+</ul>
+<a name="getOperatingSystem--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getOperatingSystem</h4>
+<pre>@Nullable
+public&nbsp;<a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;getOperatingSystem()</pre>
 </li>
 </ul>
 </li>
