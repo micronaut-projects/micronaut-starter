@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.api;
 
 import io.micronaut.core.util.StringUtils;
@@ -13,7 +28,6 @@ public class UserAgentParser {
     private static final Pattern[] MACOS_PATTERNS = new Pattern[] { Pattern.compile("(?:Mac[ +]?|; )OS[ +]X"), Pattern.compile("Darwin"), Pattern.compile("Mac_PowerPC") };
     private static final Pattern[] LINUX_PATTERNS = new Pattern[] { Pattern.compile("Linux"), Pattern.compile("Ubuntu|Kubuntu|CentOS|Slackware|Gentoo|openSUSE|SUSE|Red Hat|Fedora|Mageia|(?:Free|Open|Net|\\b)BSD") };
     private static final Pattern[] SOLARIS_PATTERNS = new Pattern[] { Pattern.compile("SunOS") };
-
 
     public static OperatingSystem getOperatingSystem(String userAgent) {
         if (StringUtils.isNotEmpty(userAgent)) {

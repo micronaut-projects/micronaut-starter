@@ -22,7 +22,6 @@ import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
-import io.micronaut.http.annotation.Header;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;

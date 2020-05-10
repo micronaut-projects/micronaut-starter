@@ -25,7 +25,6 @@ import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Locale;
 import java.util.Set;
 
 @Singleton
