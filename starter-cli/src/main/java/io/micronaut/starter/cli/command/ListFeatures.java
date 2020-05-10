@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.cli.command;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
@@ -32,24 +34,29 @@ public class ListFeatures {
 
     private final AvailableFeatures availableFeatures;
     private final Options options;
-    private final ApplicationType command;
+    private final ApplicationType applicationType;
+    private final OperatingSystem operatingSystem;
     private final ContextFactory contextFactory;
 
     public ListFeatures(AvailableFeatures availableFeatures,
                         Options options,
-                        ApplicationType command,
+                        ApplicationType applicationType,
+                        @Nullable OperatingSystem operatingSystem,
                         ContextFactory contextFactory) {
         this.availableFeatures = availableFeatures;
         this.options = options;
-        this.command = command;
+        this.applicationType = applicationType;
+        this.operatingSystem = operatingSystem;
         this.contextFactory = contextFactory;
     }
 
     void output(ConsoleOutput consoleOutput) {
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures,
                 Collections.emptyList(),
-                command,
-                options);
+                applicationType,
+                options,
+                operatingSystem
+                );
         GeneratorContext generatorContext = contextFactory.createGeneratorContext(null, featureContext, ConsoleOutput.NOOP);
 
         Set<Feature> defaultFeatures = generatorContext.getFeatures().getFeatures();

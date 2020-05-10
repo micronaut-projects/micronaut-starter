@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.application.generator;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.BeanContext;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.Project;
@@ -51,6 +53,7 @@ public class ProjectGenerator {
     public void generate(ApplicationType applicationType,
                          Project project,
                          Options options,
+                         @Nullable OperatingSystem operatingSystem,
                          List<String> selectedFeatures,
                          OutputHandler outputHandler,
                          ConsoleOutput consoleOutput) throws Exception {
@@ -59,6 +62,7 @@ public class ProjectGenerator {
                 applicationType,
                 project,
                 options,
+                operatingSystem,
                 selectedFeatures,
                 consoleOutput
         );
@@ -96,10 +100,16 @@ public class ProjectGenerator {
         }
     }
 
-    public GeneratorContext createGeneratorContext(ApplicationType applicationType, Project project, Options options, List<String> selectedFeatures, ConsoleOutput consoleOutput) {
+    public GeneratorContext createGeneratorContext(
+            ApplicationType applicationType,
+            Project project,
+            Options options,
+            @Nullable OperatingSystem operatingSystem,
+            List<String> selectedFeatures,
+            ConsoleOutput consoleOutput) {
         AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(applicationType.getName()));
 
-        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options);
+        FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options, operatingSystem);
         return contextFactory.createGeneratorContext(project, featureContext, consoleOutput);
     }
 

@@ -22,6 +22,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.RequestInfo;
+import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -111,6 +112,7 @@ public class DiffController implements DiffOperations {
                     type,
                     project,
                     options,
+                    UserAgentParser.getOperatingSystem(requestInfo.getUserAgent()),
                     Collections.singletonList(feature),
                     ConsoleOutput.NOOP
             );
@@ -160,6 +162,7 @@ public class DiffController implements DiffOperations {
                     type,
                     project,
                     options,
+                    UserAgentParser.getOperatingSystem(requestInfo.getUserAgent()),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP
             );

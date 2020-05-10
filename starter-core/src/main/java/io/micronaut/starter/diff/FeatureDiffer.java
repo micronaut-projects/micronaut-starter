@@ -18,7 +18,9 @@ package io.micronaut.starter.diff;
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
 import com.github.difflib.patch.Patch;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
@@ -57,6 +59,7 @@ public class FeatureDiffer {
             Project project,
             ApplicationType applicationType,
             Options options,
+            @Nullable OperatingSystem operatingSystem,
             List<String> features,
             ConsoleOutput consoleOutput) throws Exception {
 
@@ -64,6 +67,7 @@ public class FeatureDiffer {
                 applicationType,
                 project,
                 options,
+                operatingSystem,
                 features,
                 consoleOutput
         );
@@ -88,6 +92,7 @@ public class FeatureDiffer {
                 applicationType,
                 project,
                 new Options(generatorContext.getLanguage(), generatorContext.getTestFramework(), generatorContext.getBuildTool(), generatorContext.getJdkVersion()),
+                generatorContext.getOperatingSystem(),
                 Collections.emptyList(),
                 outputHandler,
                 ConsoleOutput.NOOP

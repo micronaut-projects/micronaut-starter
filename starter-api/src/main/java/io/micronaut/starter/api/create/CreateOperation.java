@@ -16,7 +16,9 @@
 package io.micronaut.starter.api.create;
 
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -51,6 +53,7 @@ public interface CreateOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            @Nullable JdkVersion javaVersion
+            @Nullable JdkVersion javaVersion,
+            @Header(HttpHeaders.USER_AGENT) String userAgent
     );
 }

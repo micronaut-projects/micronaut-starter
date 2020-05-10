@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -37,6 +38,7 @@ class FeatureSpec extends BeanContextSpec {
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
                                               new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
+                                              OperatingSystem.LINUX,
                                               [feature] as Set
         )
         commandCtx.applyFeatures()

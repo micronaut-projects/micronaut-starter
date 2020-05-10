@@ -3,6 +3,7 @@ package io.micronaut.starter.fixture
 import groovy.transform.CompileStatic
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.MapOutputHandler
@@ -18,6 +19,7 @@ trait CommandOutputFixture {
         beanContext.getBean(ProjectGenerator).generate(type,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
+                OperatingSystem.LINUX,
                 features,
                 handler,
                 ConsoleOutput.NOOP
@@ -32,6 +34,7 @@ trait CommandOutputFixture {
         beanContext.getBean(ProjectGenerator).generate(type,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
+                OperatingSystem.LINUX,
                 features,
                 handler,
                 ConsoleOutput.NOOP

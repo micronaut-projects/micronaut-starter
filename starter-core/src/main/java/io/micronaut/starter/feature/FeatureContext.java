@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.application.ApplicationType;
@@ -26,7 +28,8 @@ import static java.util.stream.Collectors.*;
 
 public class FeatureContext {
 
-    private final ApplicationType command;
+    private final ApplicationType applicationType;
+    private final OperatingSystem operatingSystem;
     private final Set<Feature> selectedFeatures;
     private final Options options;
     private final List<Feature> features = new ArrayList<>();
@@ -34,9 +37,11 @@ public class FeatureContext {
     private ListIterator<Feature> iterator;
 
     public FeatureContext(Options options,
-                          ApplicationType command,
+                          ApplicationType applicationType,
+                          @Nullable OperatingSystem operatingSystem,
                           Set<Feature> selectedFeatures) {
-        this.command = command;
+        this.applicationType = applicationType;
+        this.operatingSystem = operatingSystem;
         this.selectedFeatures = selectedFeatures;
         if (options.getTestFramework() == null) {
             TestFramework testFramework = selectedFeatures.stream()
@@ -112,7 +117,7 @@ public class FeatureContext {
     }
 
     public ApplicationType getApplicationType() {
-        return command;
+        return applicationType;
     }
 
     public boolean isPresent(Class<? extends Feature> feature) {
@@ -120,5 +125,9 @@ public class FeatureContext {
                 .filter(f -> exclusions.stream().noneMatch(e -> e.test(f)))
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
+    }
+
+    public OperatingSystem getOperatingSystem() {
+        return operatingSystem;
     }
 }

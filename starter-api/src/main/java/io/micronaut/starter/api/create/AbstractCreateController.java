@@ -22,8 +22,11 @@ import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.http.exceptions.HttpStatusException;
+import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
@@ -77,7 +80,8 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
-            @Nullable JdkVersion javaVersion) {
+            @Nullable JdkVersion javaVersion,
+            String userAgent) {
         Project project;
         try {
             project = NameUtils.parse(name);
@@ -91,6 +95,7 @@ public abstract class AbstractCreateController implements CreateOperation {
                     type,
                     project,
                     new Options(lang, testFramework, buildTool == null ? BuildTool.GRADLE : buildTool, javaVersion != null ? javaVersion : JdkVersion.JDK_8),
+                    getOperatingSystem(userAgent),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP
             );
@@ -134,5 +139,9 @@ public abstract class AbstractCreateController implements CreateOperation {
      */
     protected @Nonnull String getFilename(@NonNull Project project) {
         return project.getName() + ".zip";
+    }
+
+    protected OperatingSystem getOperatingSystem(String userAgent) {
+        return UserAgentParser.getOperatingSystem(userAgent);
     }
 }
