@@ -13,6 +13,7 @@ buildscript {
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
         classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
+        classpath "com.adarshr:gradle-test-logger-plugin:2.0.0"
     }
 }
 
@@ -41,46 +42,24 @@ subprojects { Project subproject ->
     apply plugin: 'idea'
     apply plugin: 'checkstyle'
     apply from: rootProject.file('gradle/license.gradle')
-
-    checkstyleMain.dependsOn('spotlessCheck')
+    apply plugin: "com.adarshr.test-logger"
 
     if (subproject.hasProperty("publish") && subproject.publish) {
         apply plugin:"java-library"
         apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
         bintray.publish = true
-    } else {
-        apply plugin: "java"
-    }
 
+        jar {
+            manifest {
+                attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
+                attributes('Implementation-Version': projectVersion)
+                attributes('Implementation-Title': title)
+            }
+        }
+    }
 
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
-
-    jar {
-        manifest {
-            attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-            attributes('Implementation-Version': projectVersion)
-            attributes('Implementation-Title': title)
-        }
-    }
-
-    tasks.withType(Test) {
-        useJUnitPlatform()
-        jvmArgs '-Duser.country=US'
-        jvmArgs '-Duser.language=en'
-        testLogging {
-            exceptionFormat = 'full'
-        }
-        afterSuite {
-            System.out.print(".")
-            System.out.flush()
-        }
-        maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-        maxHeapSize = "2G"
-
-        reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
-        reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
-    }
 
     dependencies {
         annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
@@ -94,18 +73,6 @@ subprojects { Project subproject ->
         }
     }
 
-    checkstyle {
-        toolVersion = 8.16
-        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-
-        // Per submodule
-        maxErrors = 0
-        maxWarnings = 5
-
-        showViolations = true
-    }
-    checkstyleTest.enabled = false
-
     idea {
         module {
             outputDir file('build/classes/java/main')
@@ -117,6 +84,9 @@ subprojects { Project subproject ->
         options.encoding = "UTF-8"
         options.compilerArgs.add('-parameters')
     }
+
+    apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
+    apply from: "${rootProject.projectDir}/gradle/test.gradle"
 
 }
 

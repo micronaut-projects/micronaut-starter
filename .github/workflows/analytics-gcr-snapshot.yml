@@ -18,7 +18,7 @@ jobs:
       - name: Configure Docker to use Google Cloud Platform
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
-        run: ./gradlew clean starter-analytics-postgres:test
+        run: ./gradlew starter-analytics-postgres:test
       - name: Build Docker image
         run:
           ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:snapshot

@@ -1,9 +1,13 @@
 # Micronaut Starter
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.micronaut.starter/micronaut-starter.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.micronaut.starter/micronaut-starter)
+[![Maven Central](https://img.shields.io/maven-central/v/io.micronaut.starter/micronaut-starter-core.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.micronaut.starter/micronaut-starter-core)
 [![Build Status](https://github.com/micronaut-projects/micronaut-starter/workflows/Java%20CI/badge.svg)](https://github.com/micronaut-projects/micronaut-starter/actions)
 
 Generates Micronaut applications.
+
+## UI
+
+[Micronaut Launch](https://micronaut.io/launch)
 
 ## Documentation
 
@@ -24,5 +28,6 @@ A release is performed with the following steps:
 * [Publish the draft release](https://github.com/micronaut-projects/micronaut-aws/releases). There should be already a draft release created, edit and publish it. The Git Tag should start with `v`. For example `v1.0.0`.
 * [Monitor the Workflow](https://github.com/micronaut-projects/micronaut-aws/actions?query=workflow%3ARelease) to check it passed successfully.
 * Celebrate!
+
 
 

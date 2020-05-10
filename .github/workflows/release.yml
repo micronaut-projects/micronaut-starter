@@ -81,7 +81,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm
-        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
+        run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
@@ -120,7 +120,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
+        run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
@@ -205,7 +205,7 @@ jobs:
         id: release_version
         run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Run Tests
-        run: ./gradlew clean starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+        run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
       - name: Build Docker image
         run: |
           docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} -f DockerfileCloudRun
@@ -243,7 +243,7 @@ jobs:
       - name: Configure Docker to use Google Cloud Platform
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
-        run: ./gradlew clean starter-analytics-postgres:test
+        run: ./gradlew starter-analytics-postgres:test
       - name: Build Docker image
         run:
           ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}

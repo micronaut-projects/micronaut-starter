@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "application"
     id "war"
 }
@@ -34,5 +33,3 @@ test {
 
 run.classpath += configurations.developmentOnly
 //run.jvmArgs("-agentlib:native-image-agent=config-output-dir=tmp")
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"
