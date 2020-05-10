@@ -107,6 +107,7 @@ abstract class CommandSpec extends Specification {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
+                io.micronaut.starter.application.OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
