@@ -93,7 +93,7 @@ jobs:
           mkdir -p "mn-linux-amd64-${VERSION}/bin"
           mv ./mn "mn-linux-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-linux-amd64-${VERSION}/"
-          tar -pcf "mn-linux-amd64-${VERSION}.tar.gz" "mn-linux-amd64-${VERSION}"
+          zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -101,9 +101,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_content_type: application/tar+gzip
+          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   macos:
     name: Release OS X Native CLI
     runs-on: macOS-latest
@@ -132,7 +132,7 @@ jobs:
           mkdir -p "mn-darwin-amd64-${VERSION}/bin"
           mv ./mn "mn-darwin-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
-          tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
+          zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -140,9 +140,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_content_type: application/tar+gzip
+          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
