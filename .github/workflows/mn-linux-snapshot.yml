@@ -31,11 +31,11 @@ jobs:
           mkdir -p mn-linux-amd64-snapshot/bin
           mv ./mn mn-linux-amd64-snapshot/bin
           cp ./LICENSE mn-linux-amd64-snapshot/
-          tar -pcf mn-linux-amd64-snapshot.tar.gz mn-linux-amd64-snapshot
+          zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot 
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v1
         with:
           name: mn-linux-amd64-snapshot
-          path: mn-linux-amd64-snapshot.tar.gz
+          path: mn-linux-amd64-snapshot.zip
 
