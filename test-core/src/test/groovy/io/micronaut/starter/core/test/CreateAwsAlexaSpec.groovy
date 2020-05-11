@@ -30,7 +30,6 @@ class CreateAwsAlexaSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        //TODO use default also when alexa gets included in the bom. [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values(), BuildTool.values(), TestFramework.values()].combinations()
-        [applicationType, lang, build, testFramework] << [[ApplicationType.FUNCTION], Language.values(), BuildTool.values(), TestFramework.values()].combinations()
+        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values(), BuildTool.values(), TestFramework.values()].combinations()
     }
 }
