@@ -30,6 +30,7 @@ version project.projectVersion
 subprojects { Project subproject ->
     repositories {
         jcenter()
+        maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
 
     version project.projectVersion
