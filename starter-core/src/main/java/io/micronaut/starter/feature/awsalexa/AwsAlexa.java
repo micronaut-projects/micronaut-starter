@@ -74,11 +74,13 @@ import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovySp
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class AwsAlexa implements Feature {
+public class AwsAlexa implements Feature, CloudFeature {
 
     @Override
     public String getName() {
@@ -240,5 +242,10 @@ public class AwsAlexa implements Feature {
     @Override
     public String getCategory() {
         return Category.IOT;
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AWS;
     }
 }

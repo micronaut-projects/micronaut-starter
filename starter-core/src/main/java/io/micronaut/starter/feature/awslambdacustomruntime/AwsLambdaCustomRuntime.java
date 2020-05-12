@@ -29,6 +29,8 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaR
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.template.RockerTemplate;
@@ -36,7 +38,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import javax.inject.Singleton;
 
 @Singleton
-public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature {
+public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
@@ -120,5 +122,10 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AWS;
     }
 }
