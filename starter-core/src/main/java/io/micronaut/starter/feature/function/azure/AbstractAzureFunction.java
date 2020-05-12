@@ -22,6 +22,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.function.azure.template.raw.*;
 import io.micronaut.starter.options.BuildTool;
@@ -33,7 +35,7 @@ import io.micronaut.starter.template.URLTemplate;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractAzureFunction extends AbstractFunctionFeature {
+public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements CloudFeature {
 
     public static final String NAME = "azure-function";
 
@@ -146,4 +148,10 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature {
             return "gradlew clean azureFunctionsDeploy";
         }
     }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AZURE;
+    }
+
 }

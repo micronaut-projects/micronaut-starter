@@ -24,6 +24,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
 
         then:
         build.contains('id "com.microsoft.azure.azurefunctions"')
+        !build.contains('implementation("io.micronaut:micronaut-function-aws")')
         !build.contains('implementation("io.micronaut.azure:micronaut-azure-function-http")')
         build.contains('implementation("io.micronaut.azure:micronaut-azure-function")')
         build.contains('implementation("com.microsoft.azure.functions:azure-functions-java-library")')
@@ -35,6 +36,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
+        !output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         !output.containsKey("$srcDir/example/micronaut/HelloController.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.get("$srcDir/example/micronaut/Function.$extension".toString())
