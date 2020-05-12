@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,14 +107,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a></dd>
+<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a></dd>
 </dl>
 <hr>
 <br>
 <pre>@Singleton
 public class <span class="typeNameLabel">AwsLambda</span>
 extends java.lang.Object
-implements <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a></pre>
+implements <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></pre>
 </li>
 </ul>
 </div>
@@ -189,20 +189,24 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getCategory--">getCategory</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getCloud--">getCloud</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
@@ -389,7 +393,7 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <a name="getCategory--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getCategory</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getCategory()</pre>
@@ -400,6 +404,19 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html#getCategory--">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../../../../io/micronaut/starter/feature/Category.html" title="class in io.micronaut.starter.feature"><code>Category</code></a> to which the feature belongs to.</dd>
+</dl>
+</li>
+</ul>
+<a name="getCloud--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getCloud</h4>
+<pre>public&nbsp;<a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a>&nbsp;getCloud()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html#getCloud--">getCloud</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code></dd>
 </dl>
 </li>
 </ul>
