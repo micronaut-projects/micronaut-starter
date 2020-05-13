@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.micronaut.starter.cli.feature.messaging.nats;
 
 import io.micronaut.context.annotation.Parameter;
@@ -31,9 +30,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-/**
- * @author jgrimm
- */
 @CommandLine.Command(name = "create-nats-listener", description = "Creates a listener interface for Nats.io")
 @Prototype
 public class CreateNatsListener extends CodeGenCommand {
