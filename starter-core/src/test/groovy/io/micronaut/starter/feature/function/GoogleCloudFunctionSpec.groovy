@@ -52,7 +52,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         def readme = output["README.md"]
 
         then:
-        build.contains('compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))')
         build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
         build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
         build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
@@ -86,7 +85,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFi
         def readme = output["README.md"]
 
         then:
-        build.contains('compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))')
         build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
         build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')

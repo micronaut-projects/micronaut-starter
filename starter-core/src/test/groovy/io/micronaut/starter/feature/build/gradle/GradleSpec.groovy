@@ -6,6 +6,9 @@ import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.VersionInfo
+import spock.lang.Ignore
+import spock.lang.IgnoreIf
 
 class GradleSpec extends BeanContextSpec {
 
@@ -33,9 +36,10 @@ class GradleSpec extends BeanContextSpec {
     void "test annotation processor dependencies"() {
         when:
         String template = annotationProcessors.template(getFeatures([])).render().toString()
+        String platform = VersionInfo.micronautVersion.endsWith("SNAPSHOT") ? "enforcedPlatform" : "platform"
 
         then:
-        template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains("annotationProcessor($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
         template.contains('annotationProcessor("io.micronaut:micronaut-inject-java")')
         template.contains('annotationProcessor("io.micronaut:micronaut-validation")')
 
@@ -43,7 +47,8 @@ class GradleSpec extends BeanContextSpec {
         template = annotationProcessors.template(getFeatures([], Language.KOTLIN)).render().toString()
 
         then:
-        template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+
+        template.contains("kapt($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
         template.contains('kapt("io.micronaut:micronaut-inject-java")')
         template.contains('kapt("io.micronaut:micronaut-validation")')
 
@@ -51,7 +56,7 @@ class GradleSpec extends BeanContextSpec {
         template = annotationProcessors.template(getFeatures([], Language.GROOVY)).render().toString()
 
         then:
-        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
+        template.contains("compileOnly($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
         template.contains('compileOnly("io.micronaut:micronaut-inject-groovy")')
     }
 
