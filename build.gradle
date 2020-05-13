@@ -62,6 +62,20 @@ subprojects { Project subproject ->
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { DependencyResolveDetails details ->
+                //multiple actions can be specified
+                if (details.requested.group == "org.codehaus.groovy") {
+                    details.useVersion(groovyVersion)
+                }
+                if (details.requested.name == "spock-core") {
+                    details.useVersion(spockVersion)
+                }
+            }
+        }
+    }
+
     dependencies {
         annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
         implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
