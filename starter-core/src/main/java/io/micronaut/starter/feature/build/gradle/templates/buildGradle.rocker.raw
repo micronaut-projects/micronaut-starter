@@ -375,6 +375,9 @@ dependencies {
 @if (features.contains("rabbitmq")) {
     @dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "implementation", null)
 }
+@if (features.contains("nats")) {
+    @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
+}
 @if (features.contains("file-watch-osx")) {
     @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", VersionInfo.getMicronautVersion())
 }

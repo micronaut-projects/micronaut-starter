@@ -2,6 +2,7 @@ package io.micronaut.starter.core.test
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.messaging.kafka.Kafka
+import io.micronaut.starter.feature.messaging.nats.Nats
 import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
@@ -34,6 +35,6 @@ class CreateMessagingSpec extends CommandSpec {
         testOutputContains("Startup completed")
 
         where:
-        [lang, buildTool, feature] << [Language.values(), BuildTool.values(), [Kafka.NAME, RabbitMQ.NAME]].combinations()
+        [lang, buildTool, feature] << [Language.values(), BuildTool.values(), [Kafka.NAME, RabbitMQ.NAME, Nats.NAME]].combinations()
     }
 }

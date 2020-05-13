@@ -51,5 +51,6 @@ sourceLanguage: java
         "grpc"               | ApplicationType.GRPC
         "kafka"              | ApplicationType.MESSAGING
         "rabbitmq"           | ApplicationType.MESSAGING
+        "nats"               | ApplicationType.MESSAGING
     }
 }
