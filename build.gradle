@@ -63,10 +63,10 @@ subprojects { Project subproject ->
     targetCompatibility = '1.8'
 
     dependencies {
-        annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-        implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+        annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+        implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
         annotationProcessor "io.micronaut:micronaut-inject-java"
-        testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+        testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
         testAnnotationProcessor "io.micronaut:micronaut-inject-java"
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
         testImplementation("org.spockframework:spock-core:$spockVersion") {
