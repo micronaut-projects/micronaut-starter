@@ -70,10 +70,7 @@ public class HibernateGorm implements LanguageSpecificFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config = generatorContext.getConfiguration();
-        DatabaseDriverFeature dbFeature = generatorContext.getFeature(DatabaseDriverFeature.class);
-        if (dbFeature == null) {
-            dbFeature = defaultDbFeature;
-        }
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         config.put("dataSource.url", dbFeature.getJdbcUrl());
         config.put("dataSource.driverClassName", dbFeature.getDriverClass());
         config.put("dataSource.username", dbFeature.getDefaultUser());

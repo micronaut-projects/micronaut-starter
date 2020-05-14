@@ -10,6 +10,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
+import java.util.stream.Collectors
+
 class FeatureSpec extends BeanContextSpec {
 
     @Unroll
@@ -39,7 +41,7 @@ class FeatureSpec extends BeanContextSpec {
                                               ApplicationType.DEFAULT,
                                               new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
                                               OperatingSystem.LINUX,
-                                              [feature] as Set
+                                              getFeatures([feature]).getFeatures()
         )
         commandCtx.applyFeatures()
 
@@ -57,6 +59,9 @@ class FeatureSpec extends BeanContextSpec {
                 })
 
         where:
-        feature << beanContext.getBeansOfType(Feature)
+        feature << beanContext.getBeansOfType(Feature).stream()
+                .filter(f -> f.isVisible())
+                .map(f -> f.getName())
+                .collect(Collectors.toList())
     }
 }

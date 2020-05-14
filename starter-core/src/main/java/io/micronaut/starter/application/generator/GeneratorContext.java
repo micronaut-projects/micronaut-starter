@@ -199,8 +199,12 @@ public class GeneratorContext {
         return features.isFeaturePresent(feature);
     }
 
-    public <T extends Feature> T getFeature(Class<T> feature) {
+    public <T extends Feature> Optional<T> getFeature(Class<T> feature) {
         return features.getFeature(feature);
+    }
+
+    public <T extends Feature> T getRequiredFeature(Class<T> feature) {
+        return features.getRequiredFeature(feature);
     }
 
     public String getSourcePath(String path) {

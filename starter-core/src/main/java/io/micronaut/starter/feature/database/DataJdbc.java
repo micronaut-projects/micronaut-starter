@@ -26,12 +26,10 @@ public class DataJdbc implements DataFeature {
 
     private final Data data;
     private final JdbcFeature jdbcFeature;
-    private final DatabaseDriverFeature defaultDbFeature;
 
-    public DataJdbc(Data data, JdbcFeature jdbcFeature, DatabaseDriverFeature defaultDbFeature) {
+    public DataJdbc(Data data, JdbcFeature jdbcFeature) {
         this.data = data;
         this.jdbcFeature = jdbcFeature;
-        this.defaultDbFeature = defaultDbFeature;
     }
 
     @Override
@@ -55,16 +53,12 @@ public class DataJdbc implements DataFeature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
-        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
-            featureContext.addFeature(defaultDbFeature);
-        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        DatabaseDriverFeature dbFeature = generatorContext.getFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(
-            ConfigurationHelper.jdbc(dbFeature == null ? defaultDbFeature : dbFeature));
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
         generatorContext.getConfiguration().putAll(getDatasourceConfig());
     }
 }
