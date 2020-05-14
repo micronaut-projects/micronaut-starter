@@ -518,7 +518,12 @@ java {
 @if (features.language().isJava()) {
 tasks.withType(JavaCompile){
     options.encoding = "UTF-8"
-    options.compilerArgs.add('-parameters')
+    options.compilerArgs.addAll([
+        '-parameters',
+        // enables incremental compilation
+        '-Amicronaut.processing.incremental=true',
+        '-Amicronaut.processing.annotations=@project.getPackageName().*'
+    ])
 }
 }
 @if (features.language().isKotlin() || features.testFramework().isKotlinTest()) {
