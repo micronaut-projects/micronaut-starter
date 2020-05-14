@@ -81,7 +81,11 @@ configurations {
 dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
 @if (!features.language().isGroovy() && (features.contains("graalvm") || features.contains("google-cloud-function"))) {
+    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
+    compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
+    } else {
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    }
 }
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
@@ -90,7 +94,11 @@ dependencies {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
     @dependency.template("com.google.cloud.functions.invoker", "java-function-invoker", "invoker", VersionInfo.getDependencyVersion("google.function.invoker").getValue())
 }
+    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
+    implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
+    } else {
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    }
     @dependency.template("io.micronaut", "micronaut-inject", "implementation", null)
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null)
 @if (features.language().isKotlin()) {

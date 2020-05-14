@@ -1,6 +1,7 @@
 package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.ProjectGenerator
@@ -21,6 +22,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -35,6 +37,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -45,6 +48,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.GRPC,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -55,6 +59,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.MESSAGING,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool, Collections.emptyMap()),
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP

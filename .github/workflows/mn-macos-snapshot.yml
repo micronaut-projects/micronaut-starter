@@ -17,7 +17,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
+        run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
@@ -31,11 +31,11 @@ jobs:
           mkdir -p mn-darwin-amd64-snapshot/bin
           mv ./mn mn-darwin-amd64-snapshot/bin
           cp ./LICENSE mn-darwin-amd64-snapshot/
-          tar -pcf mn-darwin-amd64-snapshot.tar.gz mn-darwin-amd64-snapshot
+          zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v1
         with:
           name: mn-darwin-amd64-snapshot
-          path: mn-darwin-amd64-snapshot.tar.gz
+          path: mn-darwin-amd64-snapshot.zip
 

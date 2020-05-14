@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
@@ -24,7 +25,6 @@ import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Locale;
 import java.util.Set;
 
 @Singleton
@@ -52,9 +52,9 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        String osName = System.getProperty("os.name");
+        OperatingSystem operatingSystem = generatorContext.getOperatingSystem();
         boolean jansi = false;
-        if (osName == null || !osName.toLowerCase(Locale.ENGLISH).contains("windows")) {
+        if (operatingSystem != OperatingSystem.WINDOWS) {
             jansi = true;
         }
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));

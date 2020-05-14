@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.cli.command;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.CommonOptionsMixin;
 import picocli.CommandLine;
@@ -58,6 +60,22 @@ public class BaseCommand implements ConsoleOutput {
 
     public boolean verbose() {
         return commonOptions.verbose;
+    }
+
+    @Nullable
+    public OperatingSystem getOperatingSystem() {
+        io.micronaut.context.condition.OperatingSystem operatingSystem = io.micronaut.context.condition.OperatingSystem.getCurrent();
+        if (operatingSystem.isMacOs()) {
+            return OperatingSystem.MACOS;
+        } else if (operatingSystem.isLinux()) {
+            return OperatingSystem.LINUX;
+        } else if (operatingSystem.isWindows()) {
+            return OperatingSystem.WINDOWS;
+        } else if (operatingSystem.isSolaris()) {
+            return OperatingSystem.SOLARIS;
+        } else {
+            return null;
+        }
     }
 
 }

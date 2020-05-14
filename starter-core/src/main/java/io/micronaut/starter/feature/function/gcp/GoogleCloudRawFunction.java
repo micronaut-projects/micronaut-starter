@@ -22,6 +22,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.raw.*;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -30,7 +32,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import javax.inject.Singleton;
 
 @Singleton
-public class GoogleCloudRawFunction extends AbstractFunctionFeature {
+public class GoogleCloudRawFunction extends AbstractFunctionFeature implements CloudFeature {
     public static final String NAME = "google-cloud-function";
 
     private final GoogleCloudFunction googleCloudFunction;
@@ -142,5 +144,10 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature {
     @Override
     public RockerModel spockTemplate(Project project) {
         return gcpRawFunctionSpock.template(project);
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.GCP;
     }
 }

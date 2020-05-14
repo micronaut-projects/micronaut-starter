@@ -81,7 +81,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm
-        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
+        run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
@@ -93,7 +93,7 @@ jobs:
           mkdir -p "mn-linux-amd64-${VERSION}/bin"
           mv ./mn "mn-linux-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-linux-amd64-${VERSION}/"
-          tar -pcf "mn-linux-amd64-${VERSION}.tar.gz" "mn-linux-amd64-${VERSION}"
+          zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -101,9 +101,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_content_type: application/tar+gzip
+          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   macos:
     name: Release OS X Native CLI
     runs-on: macOS-latest
@@ -120,7 +120,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew clean micronaut-cli:shadowJar --no-daemon
+        run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback --no-server -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
@@ -132,7 +132,7 @@ jobs:
           mkdir -p "mn-darwin-amd64-${VERSION}/bin"
           mv ./mn "mn-darwin-amd64-${VERSION}/bin"
           cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
-          tar -pcf "mn-darwin-amd64-${VERSION}.tar.gz" "mn-darwin-amd64-${VERSION}"
+          zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -140,9 +140,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.tar.gz
-          asset_content_type: application/tar+gzip
+          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+          asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
@@ -205,7 +205,7 @@ jobs:
         id: release_version
         run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Run Tests
-        run: ./gradlew clean starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+        run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
       - name: Build Docker image
         run: |
           docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} -f DockerfileCloudRun
@@ -243,7 +243,7 @@ jobs:
       - name: Configure Docker to use Google Cloud Platform
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
-        run: ./gradlew clean starter-analytics-postgres:test
+        run: ./gradlew starter-analytics-postgres:test
       - name: Build Docker image
         run:
           ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}

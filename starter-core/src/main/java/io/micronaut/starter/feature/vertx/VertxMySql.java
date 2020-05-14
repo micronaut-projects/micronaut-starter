@@ -42,7 +42,7 @@ public class VertxMySql implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("vertx.mysql.client.port", 5432);
+        generatorContext.getConfiguration().put("vertx.mysql.client.port", 3306);
         generatorContext.getConfiguration().put("vertx.mysql.client.host", "the-host");
         generatorContext.getConfiguration().put("vertx.mysql.client.database", "the-db");
         generatorContext.getConfiguration().put("vertx.mysql.client.database.user", "user");

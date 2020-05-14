@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.application;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -40,7 +41,8 @@ public class ContextFactory {
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
                                                List<String> selectedFeatures,
                                                ApplicationType applicationType,
-                                               Options options) {
+                                               Options options,
+                                               @Nullable OperatingSystem operatingSystem) {
         final Set<Feature> features = Collections.newSetFromMap(new IdentityHashMap<>(8));
         for (String name: selectedFeatures) {
             Feature feature = availableFeatures.findFeature(name).orElse(null);
@@ -61,7 +63,7 @@ public class ContextFactory {
 
         featureValidator.validatePreProcessing(newOptions, applicationType, features);
 
-        return new FeatureContext(newOptions, applicationType, features);
+        return new FeatureContext(newOptions, applicationType, operatingSystem, features);
     }
 
     public GeneratorContext createGeneratorContext(Project project,
@@ -73,7 +75,7 @@ public class ContextFactory {
 
         featureValidator.validatePostProcessing(featureContext.getOptions(), featureContext.getApplicationType(), featureList);
 
-        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureList);
+        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {

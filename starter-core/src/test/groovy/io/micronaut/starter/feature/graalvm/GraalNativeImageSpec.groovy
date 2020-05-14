@@ -33,18 +33,14 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"])).render().toString()
 
         then:
-        template.contains('annotationProcessor(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
-        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
         template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
-        template.contains('kapt(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('kapt("io.micronaut:micronaut-graal")')
-        template.contains('compileOnly(platform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
     }
 

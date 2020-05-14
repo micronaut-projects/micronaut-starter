@@ -1,7 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
 
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "com.github.johnrengelman.shadow"
     id "application"
 }
@@ -20,9 +19,8 @@ dependencies {
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
 }
-// use JUnit 5 platform
+
 test {
     useJUnitPlatform()
 }
@@ -36,5 +34,3 @@ shadowJar {
     }
     transform(Log4j2PluginsCacheFileTransformer)
 }
-
-apply from: "${rootProject.projectDir}/gradle/test.gradle"

@@ -11,7 +11,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v1
       - name: Build the JAR
-        run: ./gradlew clean starter-api:test starter-gcp-function:test starter-gcp-function:shadowJar
+        run: ./gradlew starter-api:test starter-gcp-function:test starter-gcp-function:shadowJar
       - name: Authenticate into Google Cloud Platform
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:

@@ -30,20 +30,22 @@ import java.util.Objects;
 @Hidden
 public class RequestInfo {
 
-    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/", Locale.ENGLISH);
+    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/", Locale.ENGLISH, "");
 
     private final String serverURL;
     private final String currentPath;
     private final Locale locale;
+    private final String userAgent;
 
     /**
      * Default constructor.
      * @param serverURL The URL
      * @param locale The locale
      */
-    public RequestInfo(String serverURL, String path, Locale locale) {
+    public RequestInfo(String serverURL, String path, Locale locale, String userAgent) {
         this.serverURL = Objects.requireNonNull(serverURL, "URL cannot be null");
         this.locale = locale;
+        this.userAgent = userAgent;
         this.currentPath = serverURL + Objects.requireNonNull(path, "Path cannot be null");
     }
 
@@ -91,5 +93,9 @@ public class RequestInfo {
 
     public LinkDTO link(String uri) {
         return new LinkDTO(getServerURL() + uri, false);
+    }
+
+    public String getUserAgent() {
+        return userAgent;
     }
 }

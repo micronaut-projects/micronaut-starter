@@ -8,31 +8,31 @@ Project project
 package @project.getPackageName()
 }
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull
+import static org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
 
-public class BookRequestHandlerTest {
+class BookRequestHandlerTest {
 
-    private static BookMicronautRequestHandler bookMicronautRequestHandler;
+    private static BookRequestHandler bookRequestHandler
 
     @@BeforeAll
-    public static void setupServer() {
-        bookMicronautRequestHandler = new BookMicronautRequestHandler()
+    static void setupServer() {
+        bookRequestHandler = new BookRequestHandler()
     }
 
     @@AfterAll
     public static void stopServer() {
-        bookMicronautRequestHandler?.applicationContext.close()
+        bookRequestHandler?.applicationContext.close()
     }
 
     @@Test
     public void testHandler() {
         Book book = new Book()
         book.name = 'Building Microservices'
-        BookSaved bookSaved = bookMicronautRequestHandler.execute(book)
+        BookSaved bookSaved = bookRequestHandler.execute(book)
         assertEquals(bookSaved.name, book.name);
         assertNotNull(bookSaved.isbn);
     }

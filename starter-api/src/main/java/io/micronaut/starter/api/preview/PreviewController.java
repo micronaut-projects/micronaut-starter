@@ -38,7 +38,6 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -93,6 +92,7 @@ public class PreviewController extends AbstractCreateController implements Previ
                             test,
                             build == null ? BuildTool.GRADLE : build,
                             javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
+                    getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,
                     ConsoleOutput.NOOP);
@@ -109,19 +109,4 @@ public class PreviewController extends AbstractCreateController implements Previ
         }
     }
 
-    public PreviewDTO previewApp(
-            ApplicationType type,
-            String name,
-            @Nullable List<String> features) throws IOException {
-        return previewApp(
-                type,
-                name,
-                features,
-                null,
-                null,
-                null,
-                null,
-                new RequestInfo("http://localhost", "", Locale.ENGLISH)
-        );
-    }
 }
