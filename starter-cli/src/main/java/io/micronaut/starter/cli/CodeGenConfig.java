@@ -146,7 +146,7 @@ public class CodeGenConfig {
                         codeGenConfig.setApplicationType(ApplicationType.FUNCTION);
                     } else if (profile.equals("grpc")) {
                         codeGenConfig.setApplicationType(ApplicationType.GRPC);
-                    } else if (profile.equals("kafka") || profile.equals("rabbitmq") || profile.equals("nats")) {
+                    } else if (profile.equals("kafka") || profile.equals("rabbitmq")) {
                         codeGenConfig.setApplicationType(ApplicationType.MESSAGING);
                     } else {
                         return null;

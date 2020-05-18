@@ -21,6 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
+import java.util.Collections;
+
 @Singleton
 public class Nats implements MessagingFeature {
 
@@ -43,7 +45,7 @@ public class Nats implements MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put ("nats.addresses", "['nats://localhost:4222']");
+        generatorContext.getConfiguration().put("nats.addresses", Collections.singletonList("nats://localhost:4222"));
     }
 
     @Override
