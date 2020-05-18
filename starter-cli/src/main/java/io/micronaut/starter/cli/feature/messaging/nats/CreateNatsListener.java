@@ -18,17 +18,22 @@ package io.micronaut.starter.cli.feature.messaging.nats;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.nats.template.listener.groovyListener;
 import io.micronaut.starter.cli.feature.messaging.nats.template.listener.javaListener;
 import io.micronaut.starter.cli.feature.messaging.nats.template.listener.kotlinListener;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+
+import java.io.IOException;
 
 @CommandLine.Command(name = "create-nats-listener", description = "Creates a listener interface for Nats.io")
 @Prototype
@@ -40,6 +45,12 @@ public class CreateNatsListener extends CodeGenCommand {
 
     public CreateNatsListener(@Parameter CodeGenConfig config) {
         super(config);
+    }
+
+    public CreateNatsListener(CodeGenConfig config,
+                          ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                          ConsoleOutput consoleOutput) {
+        super(config, outputHandlerSupplier, consoleOutput);
     }
 
     @Override

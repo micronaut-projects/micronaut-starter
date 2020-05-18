@@ -18,17 +18,22 @@ package io.micronaut.starter.cli.feature.messaging.nats;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.nats.template.producer.groovyProducer;
 import io.micronaut.starter.cli.feature.messaging.nats.template.producer.javaProducer;
 import io.micronaut.starter.cli.feature.messaging.nats.template.producer.kotlinProducer;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+
+import java.io.IOException;
 
 @CommandLine.Command(name = "create-nats-producer", description = "Creates a producer class for Nats.io")
 @Prototype
@@ -40,6 +45,12 @@ public class CreateNatsProducer extends CodeGenCommand {
 
     public CreateNatsProducer(@Parameter CodeGenConfig config) {
         super(config);
+    }
+
+    public CreateNatsProducer(CodeGenConfig config,
+                              ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                              ConsoleOutput consoleOutput) {
+        super(config, outputHandlerSupplier, consoleOutput);
     }
 
     @Override
