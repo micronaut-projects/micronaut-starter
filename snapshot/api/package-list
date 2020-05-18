@@ -25,6 +25,9 @@ io.micronaut.starter.cli.feature.grpc.template
 io.micronaut.starter.cli.feature.messaging.kafka
 io.micronaut.starter.cli.feature.messaging.kafka.template.listener
 io.micronaut.starter.cli.feature.messaging.kafka.template.producer
+io.micronaut.starter.cli.feature.messaging.nats
+io.micronaut.starter.cli.feature.messaging.nats.template.listener
+io.micronaut.starter.cli.feature.messaging.nats.template.producer
 io.micronaut.starter.cli.feature.messaging.rabbitmq
 io.micronaut.starter.cli.feature.messaging.rabbitmq.template.listener
 io.micronaut.starter.cli.feature.messaging.rabbitmq.template.producer
@@ -81,6 +84,7 @@ io.micronaut.starter.feature.logging
 io.micronaut.starter.feature.logging.template
 io.micronaut.starter.feature.messaging
 io.micronaut.starter.feature.messaging.kafka
+io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
 io.micronaut.starter.feature.migration
