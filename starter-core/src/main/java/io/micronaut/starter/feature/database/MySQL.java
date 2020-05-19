@@ -20,38 +20,37 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class PostgreSQL implements DatabaseDriverFeature {
+public class MySQL implements DatabaseDriverFeature {
 
     @Override
     @NonNull
     public String getName() {
-        return "postgres";
+        return "mysql";
     }
 
     @Override
     public String getTitle() {
-        return "PostgresSQL open source object-relational database system.";
+        return "MySQL open source database system.";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the PostgresSQL driver and default config.";
+        return "Adds the MySQL driver and default config.";
     }
 
     @Override
     public String getJdbcUrl() {
-        // postgres docker image uses default db name and username of postgres so we use the same
-        return "jdbc:postgresql://localhost:5432/postgres";
+        return "jdbc:mysql://localhost:3306/db";
     }
 
     @Override
     public String getDriverClass() {
-        return "org.postgresql.Driver";
+        return "com.mysql.jdbc.Driver";
     }
 
     @Override
     public String getDefaultUser() {
-        return "postgres";
+        return "root";
     }
 
     @Override

@@ -21,6 +21,16 @@ trait ContextFixture {
 
     abstract BeanContext getBeanContext()
 
+    String getGradleAnnotationProcessorScope(Language language) {
+        if (language == Language.JAVA) {
+            "annotationProcessor"
+        } else if (language == Language.KOTLIN) {
+            "kapt"
+        } else if (language == Language.GROOVY) {
+            "compileOnly"
+        }
+    }
+
     Features getFeatures(List<String> features,
                          Language language = null,
                          TestFramework testFramework = null,

@@ -20,11 +20,18 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class SecurityOAuth2 implements Feature {
+
+    private final SecurityAnnotations securityAnnotations;
+
+    public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
+        this.securityAnnotations = securityAnnotations;
+    }
 
     @NonNull
     @Override
@@ -40,6 +47,13 @@ public class SecurityOAuth2 implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for authentication with OAuth 2.0 providers";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(SecurityAnnotations.class)) {
+            featureContext.addFeature(securityAnnotations);
+        }
     }
 
     @Override

@@ -19,11 +19,18 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class SecurityLdap implements Feature {
+
+    private final SecurityAnnotations securityAnnotations;
+
+    public SecurityLdap(SecurityAnnotations securityAnnotations) {
+        this.securityAnnotations = securityAnnotations;
+    }
 
     @NonNull
     @Override
@@ -39,6 +46,13 @@ public class SecurityLdap implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for authentication with LDAP servers";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(SecurityAnnotations.class)) {
+            featureContext.addFeature(securityAnnotations);
+        }
     }
 
     @Override

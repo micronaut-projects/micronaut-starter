@@ -6,6 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class SecurityJTWSpec extends BeanContextSpec {
@@ -16,6 +17,7 @@ class SecurityJTWSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language)).render().toString()
 
         then:
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
         template.contains('implementation("io.micronaut:micronaut-security-jwt")')
 
         where:
@@ -35,10 +37,40 @@ class SecurityJTWSpec extends BeanContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
+        if (language == Language.JAVA) {
+            assert template.contains("""
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-security-annotations</artifactId>
+              <version>\${micronaut.security.version}</version>
+            </path>
+""")
+            assert template.contains("""
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </path>
+""")
+        } else if (language == Language.KOTLIN) {
+            assert template.count("""
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </annotationProcessorPath>
+""") == 2
+        } else if (language == Language.GROOVY) {
+            assert true
+        } else {
+            assert false
+        }
 
         where:
         language << Language.values().toList()
     }
+
+
 
     void 'test security-jwt configuration'() {
         when:

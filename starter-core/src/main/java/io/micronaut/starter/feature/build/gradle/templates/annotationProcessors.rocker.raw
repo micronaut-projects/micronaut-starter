@@ -41,3 +41,6 @@ Features features
 @if (features.contains("spring-boot")) {
 @annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-boot\"")
 }
+@if (features.contains("security-annotations")) {
+@annotationProcessor.template(features, "\"io.micronaut:micronaut-security-annotations\"")
+}
