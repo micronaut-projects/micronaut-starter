@@ -58,9 +58,9 @@ class OpenApiSpec extends BeanContextSpec {
 """)
         template.contains("""
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.configuration</groupId>
-                    <artifactId>micronaut-openapi</artifactId>
-                    <version>\${micronaut.openapi.version}</version>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-openapi</artifactId>
+                  <version>\${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
 """)
 

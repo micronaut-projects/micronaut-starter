@@ -65,9 +65,9 @@ class JaxRsSpec extends BeanContextSpec {
 """)
         template.count("""
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.jaxrs</groupId>
-                    <artifactId>micronaut-jaxrs-processor</artifactId>
-                    <version>\${micronaut.jaxrs.version}</version>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>\${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 """) == 2
 

@@ -579,88 +579,88 @@ List<Property> properties
 }
 @if (features.contains("google-cloud-function")) {
        <plugin>
-          <groupId>com.google.cloud.functions</groupId>
-          <artifactId>function-maven-plugin</artifactId>
-          <configuration>
-            <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
-          </configuration>
+         <groupId>com.google.cloud.functions</groupId>
+         <artifactId>function-maven-plugin</artifactId>
+         <configuration>
+           <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
+         </configuration>
         </plugin>
 }
 @if (features.contains("azure-function")) {
         <plugin>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure-functions-maven-plugin</artifactId>
-            <version>1.4.1</version>
-            <configuration>
-                <resourceGroup>${functionResourceGroup}</resourceGroup>
-                <appName>${functionAppName}</appName>
-                <region>${functionAppRegion}</region>
-                <appSettings>
-                    <property>
-                        <name>WEBSITE_RUN_FROM_PACKAGE</name>
-                        <value>1</value>
-                    </property>
-                    <property>
-                        <name>FUNCTIONS_EXTENSION_VERSION</name>
-                        <value>~2</value>
-                    </property>
-                </appSettings>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>package-functions</id>
-                    <goals>
-                        <goal>package</goal>
-                    </goals>
-                </execution>
-            </executions>
+          <groupId>com.microsoft.azure</groupId>
+          <artifactId>azure-functions-maven-plugin</artifactId>
+          <version>1.4.1</version>
+          <configuration>
+            <resourceGroup>${functionResourceGroup}</resourceGroup>
+            <appName>${functionAppName}</appName>
+            <region>${functionAppRegion}</region>
+            <appSettings>
+              <property>
+                <name>WEBSITE_RUN_FROM_PACKAGE</name>
+                <value>1</value>
+              </property>
+              <property>
+                <name>FUNCTIONS_EXTENSION_VERSION</name>
+                <value>~2</value>
+              </property>
+            </appSettings>
+          </configuration>
+          <executions>
+            <execution>
+              <id>package-functions</id>
+              <goals>
+                <goal>package</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-resources</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <overwrite>true</overwrite>
-                        <outputDirectory>${stagingDirectory}</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}</directory>
-                                <includes>
-                                    <include>host.json</include>
-                                    <include>local.settings.json</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <overwrite>true</overwrite>
+                <outputDirectory>${stagingDirectory}</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>${project.basedir}</directory>
+                    <includes>
+                      <include>host.json</include>
+                      <include>local.settings.json</include>
+                    </includes>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-dependencies</id>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${stagingDirectory}/lib</outputDirectory>
-                        <overWriteReleases>false</overWriteReleases>
-                        <overWriteSnapshots>false</overWriteSnapshots>
-                        <overWriteIfNewer>true</overWriteIfNewer>
-                        <includeScope>runtime</includeScope>
-                        <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
-                    </configuration>
-                </execution>
-            </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${stagingDirectory}/lib</outputDirectory>
+                <overWriteReleases>false</overWriteReleases>
+                <overWriteSnapshots>false</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+                <includeScope>runtime</includeScope>
+                <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 }
 @if (features.language().isJava()) {
@@ -860,51 +860,51 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
                 <annotationProcessorPath>
-                    <groupId>info.picocli</groupId>
-                    <artifactId>picocli-codegen</artifactId>
-                    <version>${picocli.version}</version>
+                  <groupId>info.picocli</groupId>
+                  <artifactId>picocli-codegen</artifactId>
+                  <version>${picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.data</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut.data</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("openapi")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.configuration</groupId>
-                    <artifactId>micronaut-openapi</artifactId>
-                    <version>${micronaut.openapi.version}</version>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-openapi</artifactId>
+                  <version>${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.jaxrs</groupId>
-                    <artifactId>micronaut-jaxrs-processor</artifactId>
-                    <version>${micronaut.jaxrs.version}</version>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-web")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-web-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-boot")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-boot</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-boot</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("security-annotations")) {
@@ -958,37 +958,37 @@ List<Property> properties
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.data</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut.data</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.jaxrs</groupId>
-                    <artifactId>micronaut-jaxrs-processor</artifactId>
-                    <version>${micronaut.jaxrs.version}</version>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-web")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-web-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-boot")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-boot</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-boot</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("security-annotations")) {
