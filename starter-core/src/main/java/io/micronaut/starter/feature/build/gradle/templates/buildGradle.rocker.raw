@@ -316,7 +316,7 @@ dependencies {
     @dependency.template("io.micronaut.configuration", "micronaut-security-ldap", "implementation", null)
 }
 @if (features.contains("cassandra")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-cassandra", "implementation", null)
+    @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)
 }
 @if (features.contains("elasticsearch")) {
     @dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "implementation", null)
