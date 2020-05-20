@@ -26,7 +26,7 @@ class MongoGormSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-mongo-gorm")')
-        template.contains('implementation("io.micronaut.configuration:micronaut-mongo-reactive")')
+        template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
         template.contains("testImplementation(\"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\")")
     }
 
@@ -44,7 +44,7 @@ class MongoGormSpec extends BeanContextSpec {
 """)
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.mongodb</groupId>
       <artifactId>micronaut-mongo-reactive</artifactId>
       <scope>compile</scope>
     </dependency>
