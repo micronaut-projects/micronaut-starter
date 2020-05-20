@@ -167,8 +167,8 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
         and: 'defaults to graalvm ce jdk8 image'
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+        dockerfile.contains('#FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
 
         where:
         language << supportedLanguages()
@@ -186,14 +186,14 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         then:
         dockerfile
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
+        dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
         dockerfile.contains('RUN native-image --no-server -cp build/libs/foo-*-all.jar')
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
         and: 'defaults to graalvm ce jdk8 image'
-        dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+        dockerfile.contains('#FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
 
         where:
         language << supportedLanguages()
@@ -285,8 +285,8 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
 
         and: 'defaults to graalvm ce jdk8 image'
-        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+        !dockerfile.contains('#FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
 
         where:
         language << supportedLanguages()
@@ -314,8 +314,8 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
 
         and: 'defaults to graalvm ce jdk8 image'
-        !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-        !dockerfile.contains('#FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+        !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+        !dockerfile.contains('#FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
 
         where:
         language << supportedLanguages()
