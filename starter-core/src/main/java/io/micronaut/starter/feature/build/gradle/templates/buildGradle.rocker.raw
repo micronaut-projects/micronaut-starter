@@ -289,7 +289,10 @@ dependencies {
     @dependency.template("io.micronaut.configuration", "micronaut-jooq", "implementation", null)
 }
 @if (features.contains("mongo-reactive")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "implementation", null)
+    @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
+}
+@if (features.contains("mongo-sync")) {
+    @dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "implementation", null)
 }
 @if (features.contains("mongo-gorm")) {
     @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "implementation", null)
@@ -482,7 +485,7 @@ dependencies {
 }
 
 @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())
-@if (features.contains("mongo-reactive")) {
+@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
     @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
 }
 @if (features.contains("google-cloud-function")) {
