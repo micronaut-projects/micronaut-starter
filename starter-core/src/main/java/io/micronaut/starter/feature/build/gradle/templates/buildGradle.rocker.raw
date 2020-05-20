@@ -41,7 +41,7 @@ plugins {
     id "java"
 }
 @if (features.contains("grpc")) {
-    id "com.google.protobuf" version "0.8.10"
+    id "com.google.protobuf" version "0.8.12"
 }
 @if (features.contains("jib")) {
     id "com.google.cloud.tools.jib" version "2.1.0"
@@ -56,8 +56,8 @@ group "@project.getPackageName()"
 
 @if (features.contains("grpc")) {
 ext {
-    protocVersion="3.5.1"
-    grpcVersion="1.18.0"
+    protocVersion="3.12.0"
+    grpcVersion="1.29.0"
 }
 }
 
