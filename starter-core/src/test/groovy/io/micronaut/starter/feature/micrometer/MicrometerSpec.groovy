@@ -21,7 +21,7 @@ class MicrometerSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), features).render().toString()
 
         then:
-        template.contains("implementation(\"io.micronaut.configuration:${dependency}\")")
+        template.contains("implementation(\"io.micronaut.micrometer:${dependency}\")")
 
         where:
         micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
@@ -34,11 +34,11 @@ class MicrometerSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-    implementation("io.micronaut.configuration:micronaut-micrometer-core")
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-atlas")
-    implementation("io.micronaut.configuration:micronaut-micrometer-registry-influx")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-atlas")
+    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-influx")
 """)
-        template.count("io.micronaut.configuration:micronaut-micrometer-core") == 1
+        template.count("io.micronaut.micrometer:micronaut-micrometer-core") == 1
     }
 
     @Unroll
@@ -53,7 +53,7 @@ class MicrometerSpec extends BeanContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.micrometer</groupId>
       <artifactId>$dependency</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -71,17 +71,17 @@ class MicrometerSpec extends BeanContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.micrometer</groupId>
       <artifactId>micronaut-micrometer-core</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.micrometer</groupId>
       <artifactId>micronaut-micrometer-registry-atlas</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.micrometer</groupId>
       <artifactId>micronaut-micrometer-registry-influx</artifactId>
       <scope>compile</scope>
     </dependency>

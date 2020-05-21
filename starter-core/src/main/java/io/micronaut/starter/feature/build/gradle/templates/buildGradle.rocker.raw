@@ -174,64 +174,64 @@ dependencies {
     @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "implementation", null)
 }
 @if (features.contains("micrometer")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-core", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-core", "implementation", null)
 }
 @if (features.contains("micrometer-appoptics")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-appoptics", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-appoptics", "implementation", null)
 }
 @if (features.contains("micrometer-atlas")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-atlas", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", "implementation", null)
 }
 @if (features.contains("micrometer-azure-monitor")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-azure-monitor", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-azure-monitor", "implementation", null)
 }
 @if (features.contains("micrometer-cloudwatch")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-cloudwatch", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-cloudwatch", "implementation", null)
 }
 @if (features.contains("micrometer-datadog")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-datadog", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-datadog", "implementation", null)
 }
 @if (features.contains("micrometer-dynatrace")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-dynatrace", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-dynatrace", "implementation", null)
 }
 @if (features.contains("micrometer-elastic")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-elastic", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-elastic", "implementation", null)
 }
 @if (features.contains("micrometer-ganglia")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-ganglia", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-ganglia", "implementation", null)
 }
 @if (features.contains("micrometer-graphite")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-graphite", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-graphite", "implementation", null)
 }
 @if (features.contains("micrometer-humio")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-humio", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-humio", "implementation", null)
 }
 @if (features.contains("micrometer-influx")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-influx", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", "implementation", null)
 }
 @if (features.contains("micrometer-jmx")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-jmx", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-jmx", "implementation", null)
 }
 @if (features.contains("micrometer-kairos")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-kairos", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-kairos", "implementation", null)
 }
 @if (features.contains("micrometer-new-relic")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-new-relic", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-new-relic", "implementation", null)
 }
 @if (features.contains("micrometer-prometheus")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-prometheus", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-prometheus", "implementation", null)
 }
 @if (features.contains("micrometer-signalfx")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-signalfx", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-signalfx", "implementation", null)
 }
 @if (features.contains("micrometer-stackdriver")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-stackdriver", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-stackdriver", "implementation", null)
 }
 @if (features.contains("micrometer-statsd")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-statsd", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-statsd", "implementation", null)
 }
 @if (features.contains("micrometer-wavefront")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-wavefront", "implementation", null)
+    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "implementation", null)
 }
 @if (features.contains("netflix-archaius")) {
     @dependency.template("io.micronaut.configuration", "micronaut-netflix-archaius", "implementation", null)
