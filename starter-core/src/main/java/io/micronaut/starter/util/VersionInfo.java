@@ -46,7 +46,10 @@ public class VersionInfo {
     public static String getStarterVersion() {
         Package aPackage = VersionInfo.class.getPackage();
         if (aPackage != null) {
-            return aPackage.getImplementationVersion();
+            String implementationVersion = aPackage.getImplementationVersion();
+            if (implementationVersion != null) {
+                return implementationVersion;
+            }
         }
         return getMicronautVersion();
     }
