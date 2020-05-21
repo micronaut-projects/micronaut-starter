@@ -9,9 +9,17 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import org.apache.maven.cli.MavenCli
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
+import spock.lang.Shared
 import spock.lang.Unroll
 
+import java.nio.charset.StandardCharsets
+
 class CreateControllerSpec extends CommandSpec {
+    @Shared GradleRunner gradleRunner = GradleRunner.create()
+    @Shared MavenCli cli = new MavenCli()
 
     @Unroll
     void "test creating a controller and running the test for #language and #testFramework and #buildTool"(Language language,
@@ -35,14 +43,15 @@ class CreateControllerSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
+        String output = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand("test")
+            output = executeGradle("test").getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
-            executeMavenCommand("test")
+            output = executeMaven("test")
         }
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output?.contains("BUILD SUCCESS")
 
         where:
         [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
@@ -51,5 +60,21 @@ class CreateControllerSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         "test-createcontroller-createcontrollergroovygradlejunitspec"
+    }
+
+    BuildResult executeGradle(String command) {
+        BuildResult result =
+                gradleRunner.withProjectDir(dir)
+                            .withArguments(command)
+                            .build()
+        return result
+    }
+
+    String executeMaven(String command) {
+        System.setProperty("maven.multiModuleProjectDirectory", dir.absolutePath)
+        def bytesOut = new ByteArrayOutputStream()
+        PrintStream output = new PrintStream(bytesOut)
+        cli.doMain(command.split(' '), dir.absolutePath, output, output)
+        return bytesOut.toString(StandardCharsets.UTF_8)
     }
 }
