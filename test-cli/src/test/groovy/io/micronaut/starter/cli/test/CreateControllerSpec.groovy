@@ -75,6 +75,6 @@ class CreateControllerSpec extends CommandSpec {
         def bytesOut = new ByteArrayOutputStream()
         PrintStream output = new PrintStream(bytesOut)
         cli.doMain(command.split(' '), dir.absolutePath, output, output)
-        return bytesOut.toString(StandardCharsets.UTF_8)
+        return new String(bytesOut.toByteArray(), StandardCharsets.UTF_8)
     }
 }
