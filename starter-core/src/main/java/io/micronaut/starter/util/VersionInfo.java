@@ -40,6 +40,17 @@ public class VersionInfo {
         }
     }
 
+    /**
+     * @return The starter version
+     */
+    public static String getStarterVersion() {
+        Package aPackage = VersionInfo.class.getPackage();
+        if (aPackage != null) {
+            return aPackage.getImplementationVersion();
+        }
+        return getMicronautVersion();
+    }
+
     public static String getMicronautVersion() {
         Object micronautVersion = VERSIONS.get("micronaut.version");
         if (micronautVersion != null) {
