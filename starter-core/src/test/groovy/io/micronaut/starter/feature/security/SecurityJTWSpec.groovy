@@ -77,8 +77,10 @@ class SecurityJTWSpec extends BeanContextSpec {
         GeneratorContext commandContext = buildGeneratorContext(['security-jwt'])
 
         then:
-        commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true
-        commandContext.configuration.get('micronaut.security.endpoints.oauth.enabled'.toString()) == true
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.login.enabled')
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.logout.enabled')
+        commandContext.configuration.containsKey('micronaut.security.authentication')
+        commandContext.configuration.get('micronaut.security.authentication') == 'bearer'
         commandContext.configuration.get('micronaut.security.token.jwt.signatures.secret.generator.secret'.toString()) == '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
     }
 }

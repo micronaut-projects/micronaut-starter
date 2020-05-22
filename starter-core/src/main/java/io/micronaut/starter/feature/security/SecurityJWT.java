@@ -56,8 +56,7 @@ public class SecurityJWT implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.oauth.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.authentication", "bearer");
         generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
     }
 
