@@ -56,10 +56,7 @@ public class SecuritySession implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
-        generatorContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
+        generatorContext.getConfiguration().put("micronaut.security.authentication", "session");
     }
 
     @Override
