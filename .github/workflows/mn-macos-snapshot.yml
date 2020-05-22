@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v1
       - name: Install GraalVM
         env:
-          GRAAL_VERSION: 20.0.0
+          GRAAL_VERSION: 20.1.0
           GRAAL_OS: darwin-amd64
         run: ./install-graal.sh
       - name: Install Native Image

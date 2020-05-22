@@ -59,7 +59,7 @@ abstract class CommandSpec extends Specification {
     }
 
     PollingConditions getDefaultPollingConditions() {
-        new PollingConditions(timeout: 120, initialDelay: 3, delay: 1, factor: 1)
+        new PollingConditions(timeout: 180, initialDelay: 3, delay: 1, factor: 1)
     }
 
     void testOutputContains(String value) {
