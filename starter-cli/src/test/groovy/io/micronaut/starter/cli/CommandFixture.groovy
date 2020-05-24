@@ -20,19 +20,6 @@ trait CommandFixture {
 
     abstract File getDir()
 
-    void generateCliProject(Language lang,
-                            BuildTool buildTool = BuildTool.GRADLE,
-                            List<String> features = []) {
-        beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
-                NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, null, buildTool),
-                OperatingSystem.LINUX,
-                features,
-                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
-                ConsoleOutput.NOOP
-        )
-    }
-
     void generateProject(Language lang,
                          BuildTool buildTool = BuildTool.GRADLE,
                          List<String> features = [],
