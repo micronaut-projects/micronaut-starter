@@ -330,7 +330,7 @@ dependencies {
 @if (features.contains("redis-lettuce")) {
     @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
-@if (features.contains("stackdriver")) {
+@if (features.contains("gcp-cloud-trace")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
 }
 @if (features.contains("kotlin-extension-functions")) {
