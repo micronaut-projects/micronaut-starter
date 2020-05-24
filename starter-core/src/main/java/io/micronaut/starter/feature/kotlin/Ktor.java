@@ -26,7 +26,6 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.options.Language;
@@ -93,9 +92,6 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     @Override
     @Nullable
     public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        if (features.isFeaturePresent(AwsLambda.class)) {
-            return null;
-        }
         return project.getPackageName() + ".Application";
     }
 
@@ -123,5 +119,4 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     public boolean isVisible() {
         return true;
     }
-
 }
