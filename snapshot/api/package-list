@@ -76,6 +76,7 @@ io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
 io.micronaut.starter.feature.kotlin
+io.micronaut.starter.feature.kotlin.templates
 io.micronaut.starter.feature.lang
 io.micronaut.starter.feature.lang.groovy
 io.micronaut.starter.feature.lang.java
