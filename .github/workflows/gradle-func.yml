@@ -26,6 +26,106 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
         run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateControllerSpec
+  clicreatenatslistener:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '14']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run cli create-nats-listener command Functional Tests
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateNatsListenerSpec
+  clicreatebean:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '14']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run cli create-bean command Functional Tests
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateBeanSpec
+  clicreatejob:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '14']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run cli create-job command Functional Tests
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateJobSpec
+  clicreatenatsproducer:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '14']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run cli create-nats-producer command Functional Tests
+        run: ./gradlew test-cli:test --tests=io.micronaut.starter.cli.test.CreateNatsProducerSpec
   clicreatetest:
     runs-on: ubuntu-latest
     strategy:
