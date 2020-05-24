@@ -99,20 +99,15 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 
-            generatorContext.addTemplate("application", new RockerTemplate( "src/main/kotlin/{packagePath}/Application.kt",
-                    applicationKotlin.template(generatorContext.getProject())));
+            generatorContext.addTemplate("application", new RockerTemplate("src/main/kotlin/{packagePath}/Application.kt", applicationKotlin.template(generatorContext.getProject())));
 
-        generatorContext.addTemplate("homeRoute", new RockerTemplate( "src/main/kotlin/{packagePath}/HomeRoute.kt",
-                homeRouteKotlin.template(generatorContext.getProject())));
+        generatorContext.addTemplate("homeRoute", new RockerTemplate("src/main/kotlin/{packagePath}/HomeRoute.kt", homeRouteKotlin.template(generatorContext.getProject())));
 
-        generatorContext.addTemplate("jacksonFeature", new RockerTemplate( "src/main/kotlin/{packagePath}/JacksonFeature.kt",
-                jacksonFeatureKotlin.template(generatorContext.getProject())));
+        generatorContext.addTemplate("jacksonFeature", new RockerTemplate("src/main/kotlin/{packagePath}/JacksonFeature.kt", jacksonFeatureKotlin.template(generatorContext.getProject())));
 
-        generatorContext.addTemplate("nameTransformer", new RockerTemplate( "src/main/kotlin/{packagePath}/NameTransformer.kt",
-                nameTransformerKotlin.template(generatorContext.getProject())));
+        generatorContext.addTemplate("nameTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/NameTransformer.kt", nameTransformerKotlin.template(generatorContext.getProject())));
 
-        generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate( "src/main/kotlin/{packagePath}/UppercaseTransformer.kt",
-                uppercaseTransformerKotlin.template(generatorContext.getProject())));
+        generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/UppercaseTransformer.kt", uppercaseTransformerKotlin.template(generatorContext.getProject())));
     }
 
     @Override
