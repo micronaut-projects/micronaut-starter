@@ -95,6 +95,14 @@ class KtorSpec extends BeanContextSpec implements CommandOutputFixture {
     </dependency>
 """)
         and:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.kotlin</groupId>
+      <artifactId>micronaut-kotlin-runtime</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        and:
         !template.contains('<artifactId>micronaut-http-server-netty</artifactId>')
 
         where:
@@ -124,7 +132,7 @@ class KtorSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
         template.contains("implementation(\"io.ktor:ktor-server-netty:${KTOR_VERSION}\")".toString())
         template.contains("implementation(\"io.ktor:ktor-jackson:${KTOR_VERSION}\")".toString())
-
+        template.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
         !template.contains('implementation "io.micronaut:micronaut-http-server-netty"')
 
         where:

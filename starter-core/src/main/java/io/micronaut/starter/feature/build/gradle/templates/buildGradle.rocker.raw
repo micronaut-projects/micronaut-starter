@@ -104,6 +104,7 @@ dependencies {
 @if (features.language().isKotlin()) {
     @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "implementation", "${kotlinVersion}")
     @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "implementation", "${kotlinVersion}")
+    @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "implementation", null)
 }
 @if (features.language().isGroovy()) {
     @dependency.template("io.micronaut", "micronaut-runtime-groovy", "implementation", null)
