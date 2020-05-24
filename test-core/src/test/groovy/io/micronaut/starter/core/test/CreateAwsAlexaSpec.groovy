@@ -1,6 +1,7 @@
 package io.micronaut.starter.core.test
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -30,6 +31,6 @@ class CreateAwsAlexaSpec extends CommandSpec {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values(), BuildTool.values(), TestFramework.values()].combinations()
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])
     }
 }

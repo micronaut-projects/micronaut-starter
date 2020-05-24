@@ -2,7 +2,6 @@ package io.micronaut.starter.test
 
 import groovy.transform.AutoFinal
 import groovy.transform.Memoized
-import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
 @AutoFinal
@@ -13,6 +12,6 @@ class LanguageBuildCombinations {
      */
     @Memoized
     static List combinations(List<String> features = null) {
-        features ? [Language.values(), BuildTool.values(), features].combinations() : [Language.values(), BuildTool.values()].combinations()
+        features ? [Language.values(), BuildToolCombinations.buildTools, features].combinations() : [Language.values(), BuildToolCombinations.buildTools].combinations()
     }
 }
