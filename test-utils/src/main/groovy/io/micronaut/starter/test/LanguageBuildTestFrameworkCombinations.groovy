@@ -15,6 +15,10 @@ class LanguageBuildTestFrameworkCombinations {
      */
     @Memoized
     static List combinations(List<String> features = null) {
-        features ? [Language.values(), BuildToolCombinations.buildTools, TestFramework.values(), features].combinations() : [Language.values(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        (
+                features ? [Language.values(), BuildToolCombinations.buildTools, TestFramework.values(), features].combinations() : [Language.values(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        ).findAll { !(it[0] == Language.GROOVY && it[1] == BuildTool.MAVEN) }
+                .findAll { !(it[0] == Language.GROOVY && it[2] == TestFramework.KOTLINTEST) }
+
     }
 }
