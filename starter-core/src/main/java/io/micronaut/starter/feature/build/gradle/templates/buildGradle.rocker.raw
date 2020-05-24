@@ -66,8 +66,8 @@ repositories {
     jcenter()
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    maven { url "https://repo.grails.org/grails/core" }
     }
-
 }
 
 configurations {
@@ -338,6 +338,8 @@ dependencies {
 }
 @if (features.contains("ktor")) {
     @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "implementation", null)
+    @dependency.template("io.ktor", "ktor-server-netty", "implementation", "1.3.2")
+    @dependency.template("io.ktor", "ktor-jackson", "implementation", "1.3.2")
 }
 @if (features.contains("reactor")) {
     @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)

@@ -16,19 +16,31 @@
 package io.micronaut.starter.feature.kotlin;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
+import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
+import io.micronaut.starter.feature.kotlin.templates.jacksonFeatureKotlin;
+import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
+import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
 import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Ktor implements ServerFeature, LanguageSpecificFeature {
+public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -77,4 +89,39 @@ public class Ktor implements ServerFeature, LanguageSpecificFeature {
     public Language getRequiredLanguage() {
         return Language.KOTLIN;
     }
+
+    @Override
+    @Nullable
+    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
+        if (features.isFeaturePresent(AwsLambda.class)) {
+            return null;
+        }
+        return project.getPackageName() + ".Application";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        KotlinApplicationFeature.super.apply(generatorContext);
+
+            generatorContext.addTemplate("application", new RockerTemplate( "src/main/kotlin/{packagePath}/Application.kt",
+                    applicationKotlin.template(generatorContext.getProject())));
+
+        generatorContext.addTemplate("homeRoute", new RockerTemplate( "src/main/kotlin/{packagePath}/HomeRoute.kt",
+                homeRouteKotlin.template(generatorContext.getProject())));
+
+        generatorContext.addTemplate("jacksonFeature", new RockerTemplate( "src/main/kotlin/{packagePath}/JacksonFeature.kt",
+                jacksonFeatureKotlin.template(generatorContext.getProject())));
+
+        generatorContext.addTemplate("nameTransformer", new RockerTemplate( "src/main/kotlin/{packagePath}/NameTransformer.kt",
+                nameTransformerKotlin.template(generatorContext.getProject())));
+
+        generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate( "src/main/kotlin/{packagePath}/UppercaseTransformer.kt",
+                uppercaseTransformerKotlin.template(generatorContext.getProject())));
+    }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
+
 }

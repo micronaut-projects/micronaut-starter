@@ -327,6 +327,8 @@ List<Property> properties
 }
 @if (features.contains("ktor")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
+@dependency.template("io.ktor", "ktor-server-netty", "compile", "1.3.2")
+@dependency.template("io.ktor", "ktor-jackson", "compile", "1.3.2")
 }
 @if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
