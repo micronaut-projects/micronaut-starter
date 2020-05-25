@@ -50,7 +50,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'GraalVM is not supported in Groovy applications'
     }
 
@@ -99,7 +99,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'GraalVM is not supported in Groovy applications'
     }
 
@@ -215,7 +215,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         )
 
         then:
-        def e = thrown(IllegalArgumentException)
+        IllegalArgumentException e = thrown()
         e.message == 'GraalVM only supports JDK 8 and 11'
 
         where:
