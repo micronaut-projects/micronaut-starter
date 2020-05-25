@@ -88,7 +88,7 @@ public class GraalNativeImage implements Feature {
         String jarFile = generatorContext.getBuildTool()
                                          .getShadeJarDirectoryPattern(generatorContext.getProject());
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
-            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile);
+            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile, generatorContext.getJdkVersion());
             RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
             generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 

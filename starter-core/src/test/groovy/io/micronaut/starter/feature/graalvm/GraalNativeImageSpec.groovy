@@ -157,11 +157,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:
@@ -190,11 +190,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:
@@ -286,12 +286,12 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
+    void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language, jdkVersion: #jdkVersion'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
             ApplicationType.FUNCTION,
             new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-            ['graalvm'] // it will uses aws-lambda as its the default feature for function
+            ['graalvm'] // it will use aws-lambda as its the default feature for function
         )
         String dockerfile = output['Dockerfile']
 
@@ -299,20 +299,24 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         dockerfile
         !dockerfile.contains('maven')
         !dockerfile.contains('mvn')
-        dockerfile.contains('FROM gradle:6.3.0-jdk8 as builder')
         dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/foo-*-all.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
+        dockerfile.contains('ENV GRAAL_VERSION 20.1.0')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('ENV JDK_VERSION java8')
+            assert dockerfile.contains('FROM gradle:6.3.0-jdk8 as builder')
+            assert !dockerfile.contains('ENV JDK_VERSION java11')
+            assert !dockerfile.contains('FROM gradle:6.3.0-jdk11 as builder')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('ENV JDK_VERSION java8')
+            assert !dockerfile.contains('FROM gradle:6.3.0-jdk8 as builder')
+            assert dockerfile.contains('ENV JDK_VERSION java11')
+            assert dockerfile.contains('FROM gradle:6.3.0-jdk11 as builder')
         }
 
         where:
@@ -336,20 +340,24 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         then:
         dockerfile
         !dockerfile.contains('gradle')
-        dockerfile.contains('FROM maven:3.6.3-openjdk-8')
         dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp target/foo-*.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
+        dockerfile.contains('ENV GRAAL_VERSION 20.1.0')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('ENV JDK_VERSION java8')
+            assert dockerfile.contains('FROM maven:3.6.3-openjdk-8 as builder')
+            assert !dockerfile.contains('ENV JDK_VERSION java11')
+            assert !dockerfile.contains('FROM maven:3.6.3-openjdk-11 as builder')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('ENV JDK_VERSION java8')
+            assert !dockerfile.contains('FROM maven:3.6.3-openjdk-8 as builder')
+            assert dockerfile.contains('ENV JDK_VERSION java11')
+            assert dockerfile.contains('FROM maven:3.6.3-openjdk-11 as builder')
         }
 
         where:
