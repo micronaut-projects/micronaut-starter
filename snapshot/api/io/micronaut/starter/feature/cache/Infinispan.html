@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -179,11 +179,19 @@ implements <a href="../../../../../io/micronaut/starter/feature/cache/CacheFeatu
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/cache/Infinispan.html#getMicronautDocumentation--">getMicronautDocumentation</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/cache/Infinispan.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/cache/Infinispan.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/cache/Infinispan.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
@@ -292,7 +300,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/cache/CacheFeatu
 <a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;void&nbsp;apply(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
@@ -311,6 +319,36 @@ implements <a href="../../../../../io/micronaut/starter/feature/cache/CacheFeatu
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
+</dl>
+</li>
+</ul>
+<a name="getThirdPartyDocumentation--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getThirdPartyDocumentation</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getThirdPartyDocumentation()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns a link to third party. E.g. https://hazelcast.org</dd>
+</dl>
+</li>
+</ul>
+<a name="getMicronautDocumentation--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getMicronautDocumentation</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getMicronautDocumentation()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getMicronautDocumentation--">getMicronautDocumentation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast</dd>
 </dl>
 </li>
 </ul>
