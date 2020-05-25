@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -183,39 +183,43 @@ implements <a href="../../../../../io/micronaut/starter/feature/lang/kotlin/Kotl
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#getMicronautDocumentation--">getMicronautDocumentation</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#getRequiredLanguage--">getRequiredLanguage</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#isVisible--">isVisible</a></span>()</code>
 <div class="block">Some features should not be visible to the user because they are a common parent of other
  selectable features, or they should always be applied, or any other reason.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#mainClassName-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.feature.Features-">mainClassName</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
              <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
              <a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/kotlin/Ktor.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -242,7 +246,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/lang/kotlin/Kotl
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getMicronautDocumentation--">getMicronautDocumentation</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></code></li>
 </ul>
 </li>
 </ul>
@@ -451,7 +455,7 @@ public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../io/micro
 <a name="isVisible--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isVisible</h4>
 <pre>public&nbsp;boolean&nbsp;isVisible()</pre>
@@ -465,6 +469,21 @@ public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../io/micro
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>True if the feature should able to be selected by the user</dd>
+</dl>
+</li>
+</ul>
+<a name="getMicronautDocumentation--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getMicronautDocumentation</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getMicronautDocumentation()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getMicronautDocumentation--">getMicronautDocumentation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast</dd>
 </dl>
 </li>
 </ul>
