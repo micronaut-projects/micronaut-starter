@@ -56,8 +56,9 @@ public class Jooq implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JDBC_H2);
+    public void apply(GeneratorContext generatorContext) {  
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
     }
 
     @Override

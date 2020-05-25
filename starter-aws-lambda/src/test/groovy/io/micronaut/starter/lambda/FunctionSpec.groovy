@@ -19,6 +19,7 @@ import spock.lang.Specification
 import java.nio.charset.StandardCharsets
 
 class FunctionSpec extends Specification {
+
     @Shared
     @AutoCleanup
     MicronautLambdaHandler handler = new MicronautLambdaHandler()

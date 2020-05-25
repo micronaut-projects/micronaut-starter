@@ -1,3 +1,13 @@
+plugins {
+    id "com.gradle.enterprise" version "3.2.1"
+}
+gradleEnterprise {
+    buildScan {
+        termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+        termsOfServiceAgree = 'yes'
+    }
+}
+
 rootProject.name = 'micronaut-starter'
 
 include 'starter-core'
@@ -9,5 +19,9 @@ include 'starter-azure-function'
 include 'starter-gcp-function'
 include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
+
+include 'test-core'
+include 'test-utils'
+include 'test-cli'
 
 project(':starter-cli').name = "micronaut-cli"

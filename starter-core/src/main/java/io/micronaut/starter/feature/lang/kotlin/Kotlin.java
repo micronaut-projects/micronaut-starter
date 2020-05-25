@@ -46,7 +46,7 @@ public class Kotlin implements LanguageFeature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
-                    .filter(f -> f.supports(featureContext.getApplicationType()))
+                    .filter(f -> !f.isVisible() && f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }

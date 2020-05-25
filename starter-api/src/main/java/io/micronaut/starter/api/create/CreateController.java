@@ -15,12 +15,14 @@
  */
 package io.micronaut.starter.api.create;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.options.BuildTool;
@@ -30,7 +32,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.List;
@@ -79,8 +80,9 @@ public class CreateController extends AbstractCreateController implements Create
             BuildTool build,
             TestFramework test,
             Language lang,
-            JdkVersion javaVersion) {
-        return super.createApp(type, name, features, build, test, lang, javaVersion);
+            JdkVersion javaVersion,
+            @Nullable String userAgent) {
+        return super.createApp(type, name, features, build, test, lang, javaVersion, userAgent);
     }
 
     /**
@@ -107,7 +109,8 @@ public class CreateController extends AbstractCreateController implements Create
             @Nullable BuildTool build,
             @Nullable TestFramework test,
             @Nullable Language lang,
-            @Nullable JdkVersion javaVersion) {
-        return super.createApp(type, name, features, build, test, lang, javaVersion);
+            @Nullable JdkVersion javaVersion,
+            @Nullable @Header("User-Agent") String userAgent) {
+        return super.createApp(type, name, features, build, test, lang, javaVersion, userAgent);
     }
 }

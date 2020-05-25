@@ -138,9 +138,9 @@ class SpringWebSpec extends BeanContextSpec {
 """)
         template.count("""
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-web-annotation</artifactId>
-                    <version>\${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
+                  <version>\${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 """) == 2
 

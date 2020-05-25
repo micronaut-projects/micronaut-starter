@@ -2,7 +2,6 @@ package io.micronaut.starter.feature.security
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -16,6 +15,7 @@ class SecurityLdapSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language)).render().toString()
 
         then:
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
         template.contains('implementation("io.micronaut.configuration:micronaut-security-ldap")')
 
         where:
@@ -35,6 +35,34 @@ class SecurityLdapSpec extends BeanContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
+        if (language == Language.JAVA) {
+            assert template.contains("""
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-security-annotations</artifactId>
+              <version>\${micronaut.security.version}</version>
+            </path>
+""")
+            assert template.contains("""
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </path>
+""")
+        } else if (language == Language.KOTLIN) {
+            assert template.count("""
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </annotationProcessorPath>
+""") == 2
+        } else if (language == Language.GROOVY) {
+            assert true
+        } else {
+            assert false
+        }
 
         where:
         language << Language.values().toList()

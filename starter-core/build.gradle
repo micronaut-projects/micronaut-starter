@@ -1,5 +1,4 @@
 plugins {
-    id "com.adarshr.test-logger" version "2.0.0"
     id "io.micronaut.starter.rocker"
 }
 
@@ -17,13 +16,10 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.github.java-diff-utils:java-diff-utils:4.5"
     implementation "org.yaml:snakeyaml:1.26"
+    implementation 'com.typesafe:config:1.4.0'
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
-test {
-    forkEvery = 10
-    maxParallelForks = Runtime.getRuntime().availableProcessors()
-}
 processResources.dependsOn('micronautVersionInfo')
 task micronautVersionInfo(type: WriteProperties) {
     outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
@@ -75,13 +71,4 @@ rocker {
     suffixRegex null
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
     markAsGenerated null
-}
-
-testlogger {
-    theme 'standard-parallel'
-    showFullStackTraces true
-    showStandardStreams true
-    showPassedStandardStreams false
-    showSkippedStandardStreams false
-    showFailedStandardStreams true
 }

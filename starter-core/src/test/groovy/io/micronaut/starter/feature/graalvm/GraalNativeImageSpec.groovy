@@ -34,18 +34,14 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"])).render().toString()
 
         then:
-        template.contains('annotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
-        template.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
 
         when:
         template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
 
         then:
-        template.contains('kapt(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('kapt("io.micronaut:micronaut-graal")')
-        template.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:\$micronautVersion"))')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
     }
 
@@ -123,9 +119,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'deploy.sh script is created for a function with feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['graalvm', 'aws-lambda-custom-runtime']
+            ApplicationType.FUNCTION,
+            new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+            ['graalvm', 'aws-lambda-custom-runtime']
         )
         String deployscript = output['deploy.sh']
 
@@ -142,9 +138,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'deploy.sh script is not created for an default app with feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['graalvm']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
+            ['graalvm']
         )
 
         then:
@@ -158,9 +154,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify dockerfile for a default application type with maven and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
-                ['graalvm']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
+            ['graalvm']
         )
         String dockerfile = output['Dockerfile']
 
@@ -173,11 +169,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:
@@ -192,9 +188,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify dockerfile for a default application type with gradle and feature graalvm for language: #language and jdkVersion: #jdkVersion'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['graalvm']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+            ['graalvm']
         )
         String dockerfile = output['Dockerfile']
 
@@ -206,11 +202,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:
@@ -242,9 +238,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify native-image.properties for a default application type with gradle and feature graalvm for language: #language'(Language language) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['graalvm']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            ['graalvm']
         )
         String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
 
@@ -263,9 +259,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['graalvm', 'aws-lambda']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            ['graalvm', 'aws-lambda']
         )
 
         then:
@@ -280,9 +276,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify native-image.properties for a default application type with gradle and feature graalvm and aws-lambda" for language: #language'(Language language) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['graalvm', 'aws-lambda']
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            ['graalvm', 'aws-lambda']
         )
 
         String nativeImageProperties = output['src/main/resources/META-INF/native-image/example.micronaut/foo-application/native-image.properties']
@@ -305,9 +301,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify dockerfile for a function application type with gradle and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['graalvm'] // it will uses aws-lambda as its the default feature for function
+            ApplicationType.FUNCTION,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+            ['graalvm'] // it will uses aws-lambda as its the default feature for function
         )
         String dockerfile = output['Dockerfile']
 
@@ -324,11 +320,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:
@@ -343,9 +339,9 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
     void 'verify dockerfile for a function application type with maven and feature graalvm for language: #language'(Language language, JdkVersion jdkVersion) {
         when:
         def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
-                ['graalvm'] // it will uses aws-lambda as its the default feature for function
+            ApplicationType.FUNCTION,
+            new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, jdkVersion),
+            ['graalvm'] // it will uses aws-lambda as its the default feature for function
         )
         String dockerfile = output['Dockerfile']
 
@@ -361,11 +357,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         } else if (jdkVersion == JdkVersion.JDK_11) {
-            !dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java8 as graalvm')
-            dockerfile.contains('FROM oracle/graalvm-ce:20.0.0-java11 as graalvm')
+            !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
+            dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
 
         where:

@@ -19,11 +19,18 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class SecurityJWT implements Feature {
+
+    private final SecurityAnnotations securityAnnotations;
+
+    public SecurityJWT(SecurityAnnotations securityAnnotations) {
+        this.securityAnnotations = securityAnnotations;
+    }
 
     @Override
     public String getName() {
@@ -41,9 +48,15 @@ public class SecurityJWT implements Feature {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(SecurityAnnotations.class)) {
+            featureContext.addFeature(securityAnnotations);
+        }
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.oauth.enabled", true);
+        generatorContext.getConfiguration().put("micronaut.security.authentication", "bearer");
         generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
     }
 

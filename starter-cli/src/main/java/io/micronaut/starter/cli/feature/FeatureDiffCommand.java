@@ -67,6 +67,7 @@ public class FeatureDiffCommand extends CodeGenCommand {
                 project,
                 applicationType,
                 options,
+                getOperatingSystem(),
                 features,
                 this
         );

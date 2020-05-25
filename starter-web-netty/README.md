@@ -16,6 +16,10 @@ Or with RapiDoc:
 
 http://localhost:8080/swagger/views/rapidoc/index.html
 
+To enable CORS for local development, you may specify the local host/port
+```cmd
+export CORS_ALLOWED_ORIGIN=https://localhost:3000 && ./gradlew starter-web-netty:run
+```
 ## Google Cloud Run Deployment
 
 From the project root build the docker image and push it to Google Container Registry:
@@ -29,7 +33,7 @@ $ docker push gcr.io/[PROJECT ID]/micronaut-starter
 You are now ready to deploy your application:
 
 ```
-$ gcloud beta run deploy --image gcr.io/[PROJECT ID]/micronaut-starter 
+$ gcloud run deploy --image gcr.io/[PROJECT ID]/micronaut-starter --platform=managed --allow-unauthenticated
 ```
 
 Where `[PROJECT ID]` is replaced for your project ID. You should see output like the following:
@@ -41,8 +45,9 @@ Deploying container to Cloud Run service [micronaut-starter] in project [PROJECT
 ✓ Deploying... Done.
   ✓ Creating Revision...
   ✓ Routing traffic...
+  ✓ Setting IAM Policy..
 Done.
-Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving traffic at https://micronaut-starter-9487r97234-uc.a.run.app
+Service [micronaut-starter] revision [micronaut-starter-00004] has been deployed and is serving 100 percent of traffic at https://micronaut-starter-9487r97234-uc.a.run.app
 ```
 
 The URL is the URL of your Cloud Run application.%

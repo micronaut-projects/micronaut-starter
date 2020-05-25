@@ -6,6 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class SecurityJTWSpec extends BeanContextSpec {
@@ -16,6 +17,7 @@ class SecurityJTWSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language)).render().toString()
 
         then:
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
         template.contains('implementation("io.micronaut:micronaut-security-jwt")')
 
         where:
@@ -35,18 +37,50 @@ class SecurityJTWSpec extends BeanContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
+        if (language == Language.JAVA) {
+            assert template.contains("""
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-security-annotations</artifactId>
+              <version>\${micronaut.security.version}</version>
+            </path>
+""")
+            assert template.contains("""
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </path>
+""")
+        } else if (language == Language.KOTLIN) {
+            assert template.count("""
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </annotationProcessorPath>
+""") == 2
+        } else if (language == Language.GROOVY) {
+            assert true
+        } else {
+            assert false
+        }
 
         where:
         language << Language.values().toList()
     }
+
+
 
     void 'test security-jwt configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['security-jwt'])
 
         then:
-        commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true
-        commandContext.configuration.get('micronaut.security.endpoints.oauth.enabled'.toString()) == true
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.login.enabled')
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.logout.enabled')
+        commandContext.configuration.containsKey('micronaut.security.authentication')
+        commandContext.configuration.get('micronaut.security.authentication') == 'bearer'
         commandContext.configuration.get('micronaut.security.token.jwt.signatures.secret.generator.secret'.toString()) == '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
     }
 }

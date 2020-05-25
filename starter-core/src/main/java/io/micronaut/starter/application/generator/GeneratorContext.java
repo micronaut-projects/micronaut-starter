@@ -17,7 +17,8 @@ package io.micronaut.starter.application.generator;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.feature.ApplicationFeature;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
@@ -40,6 +41,7 @@ import java.util.*;
 public class GeneratorContext {
 
     private final Project project;
+    private final OperatingSystem operatingSystem;
     private final BuildProperties buildProperties = new BuildProperties();
     private final Map<String, Object> configuration = new LinkedHashMap<>();
     private final Map<String, Object> bootstrapConfig = new LinkedHashMap<>();
@@ -52,9 +54,11 @@ public class GeneratorContext {
     public GeneratorContext(Project project,
                             ApplicationType type,
                             Options options,
+                            @Nullable OperatingSystem operatingSystem,
                             Set<Feature> features) {
         this.command = type;
         this.project = project;
+        this.operatingSystem = operatingSystem;
         this.features = new Features(features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
@@ -168,12 +172,18 @@ public class GeneratorContext {
         return features;
     }
 
-
     /**
      * @return The JDK version
      */
     @NonNull public JdkVersion getJdkVersion() {
         return options.getJavaVersion();
+    }
+
+    /**
+     * @return The current OS
+     */
+    @Nullable public OperatingSystem getOperatingSystem() {
+        return operatingSystem;
     }
 
     public void applyFeatures() {
@@ -186,8 +196,15 @@ public class GeneratorContext {
     }
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {
-        Objects.requireNonNull(feature, "The feature class cannot be null");
         return features.isFeaturePresent(feature);
+    }
+
+    public <T extends Feature> Optional<T> getFeature(Class<T> feature) {
+        return features.getFeature(feature);
+    }
+
+    public <T extends Feature> T getRequiredFeature(Class<T> feature) {
+        return features.getRequiredFeature(feature);
     }
 
     public String getSourcePath(String path) {
@@ -263,12 +280,4 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
-    public void setMainClass(ApplicationType applicationType, ApplicationFeature applicationFeature) {
-        if (getBuildTool() == BuildTool.MAVEN) {
-            String mainClass = applicationFeature.mainClassName(applicationType, getProject(), getFeatures());
-            if (mainClass != null) {
-                getBuildProperties().put("exec.mainClass", mainClass);
-            }
-        }
-    }
 }

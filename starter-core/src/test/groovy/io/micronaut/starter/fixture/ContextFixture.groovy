@@ -2,6 +2,7 @@ package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -19,6 +20,16 @@ import io.micronaut.starter.options.TestFramework
 trait ContextFixture {
 
     abstract BeanContext getBeanContext()
+
+    String getGradleAnnotationProcessorScope(Language language) {
+        if (language == Language.JAVA) {
+            "annotationProcessor"
+        } else if (language == Language.KOTLIN) {
+            "kapt"
+        } else if (language == Language.GROOVY) {
+            "compileOnly"
+        }
+    }
 
     Features getFeatures(List<String> features,
                          Language language = null,
@@ -50,7 +61,8 @@ trait ContextFixture {
         factory.createFeatureContext(availableFeatures,
                 selectedFeatures,
                 applicationType,
-                options)
+                options,
+                OperatingSystem.LINUX)
     }
 
     GeneratorContext buildGeneratorContext(List<String> selectedFeatures,

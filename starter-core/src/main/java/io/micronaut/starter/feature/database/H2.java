@@ -15,14 +15,13 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.context.annotation.Primary;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class H2 implements Feature {
+@Primary
+public class H2 implements DatabaseDriverFeature {
 
     @Override
     public String getName() {
@@ -35,13 +34,23 @@ public class H2 implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+    public String getJdbcUrl() {
+        return "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE";
     }
 
     @Override
-    public String getCategory() {
-        return Category.DATABASE;
+    public String getDriverClass() {
+        return "org.h2.Driver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "sa";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
     }
 
 }

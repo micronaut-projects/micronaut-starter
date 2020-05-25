@@ -8,9 +8,9 @@ JdkVersion jdkVersion
 )
 
 @if (jdkVersion == JdkVersion.JDK_8) {
-FROM oracle/graalvm-ce:20.0.0-java8 as graalvm
+FROM oracle/graalvm-ce:20.1.0-java8 as graalvm
 } else if (jdkVersion == JdkVersion.JDK_11) {
-FROM oracle/graalvm-ce:20.0.0-java11 as graalvm
+FROM oracle/graalvm-ce:20.1.0-java11 as graalvm
 }
 RUN gu install native-image
 

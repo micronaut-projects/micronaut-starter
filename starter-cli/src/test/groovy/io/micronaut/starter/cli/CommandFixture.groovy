@@ -3,6 +3,7 @@ package io.micronaut.starter.cli
 import io.micronaut.context.BeanContext
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
@@ -19,18 +20,6 @@ trait CommandFixture {
 
     abstract File getDir()
 
-    void generateCliProject(Language lang,
-                            BuildTool buildTool = BuildTool.GRADLE,
-                            List<String> features = []) {
-        beanContext.getBean(ProjectGenerator).generate(ApplicationType.CLI,
-                NameUtils.parse("example.micronaut.foo"),
-                new Options(lang, null, buildTool),
-                features,
-                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
-                ConsoleOutput.NOOP
-        )
-    }
-
     void generateProject(Language lang,
                          BuildTool buildTool = BuildTool.GRADLE,
                          List<String> features = [],
@@ -38,6 +27,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -50,6 +40,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
@@ -62,6 +53,7 @@ trait CommandFixture {
         beanContext.getBean(ProjectGenerator).generate(ApplicationType.GRPC,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, null, buildTool),
+                OperatingSystem.LINUX,
                 features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP

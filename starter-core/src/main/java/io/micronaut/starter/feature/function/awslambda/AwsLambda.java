@@ -22,6 +22,8 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
@@ -51,7 +53,7 @@ import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
 
@@ -137,11 +139,18 @@ public class AwsLambda implements FunctionFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.FUNCTION;
+        return applicationType == ApplicationType.FUNCTION &&
+                selectedFeatures.stream().filter(feature -> feature instanceof CloudFeature)
+                        .noneMatch(cloudFeature -> ((CloudFeature) cloudFeature).getCloud() != getCloud());
     }
 
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AWS;
     }
 }

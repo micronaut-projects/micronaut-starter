@@ -16,6 +16,7 @@ class SecuritySessionSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language)).render().toString()
 
         then:
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
         template.contains('implementation("io.micronaut:micronaut-security-session")')
 
         where:
@@ -35,6 +36,34 @@ class SecuritySessionSpec extends BeanContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
+        if (language == Language.JAVA) {
+            assert template.contains("""
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-security-annotations</artifactId>
+              <version>\${micronaut.security.version}</version>
+            </path>
+""")
+            assert template.contains("""
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </path>
+""")
+        } else if (language == Language.KOTLIN) {
+            assert template.count("""
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>\${micronaut.security.version}</version>
+                </annotationProcessorPath>
+""") == 2
+        } else if (language == Language.GROOVY) {
+            assert true
+        } else {
+            assert false
+        }
 
         where:
         language << Language.values().toList()
@@ -45,9 +74,11 @@ class SecuritySessionSpec extends BeanContextSpec {
         GeneratorContext commandContext = buildGeneratorContext(['security-session'])
 
         then:
-        commandContext.configuration.get('micronaut.security.endpoints.login.enabled'.toString()) == true
-        commandContext.configuration.get('micronaut.security.endpoints.logout.enabled'.toString()) == true
-        commandContext.configuration.get('micronaut.security.session.loginSuccessTargetUrl'.toString()) == '/'
-        commandContext.configuration.get('micronaut.security.session.loginFailureTargetUrl'.toString()) == '/'
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.login.enabled')
+        !commandContext.configuration.containsKey('micronaut.security.endpoints.logout.enabled')
+        !commandContext.configuration.containsKey('micronaut.security.session.loginSuccessTargetUrl')
+        !commandContext.configuration.containsKey('micronaut.security.session.loginFailureTargetUrl')
+        commandContext.configuration.containsKey('micronaut.security.authentication')
+        commandContext.configuration.get('micronaut.security.authentication') == 'session'
     }
 }

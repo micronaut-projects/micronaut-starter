@@ -21,16 +21,16 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
-import io.micronaut.starter.feature.database.H2;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import java.util.LinkedHashMap;
 
 public abstract class JdbcFeature implements OneOfFeature {
 
-    private final H2 h2;
+    private final DatabaseDriverFeature defaultDbFeature;
 
-    public JdbcFeature(H2 h2) {
-        this.h2 = h2;
+    public JdbcFeature(DatabaseDriverFeature defaultDbFeature) {
+        this.defaultDbFeature = defaultDbFeature;
     }
 
     @Override
@@ -45,8 +45,8 @@ public abstract class JdbcFeature implements OneOfFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(H2.class)) {
-            featureContext.addFeature(h2);
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
+            featureContext.addFeature(defaultDbFeature);
         }
     }
 

@@ -19,11 +19,18 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class SecuritySession implements Feature {
+
+    private final SecurityAnnotations securityAnnotations;
+
+    public SecuritySession(SecurityAnnotations securityAnnotations) {
+        this.securityAnnotations = securityAnnotations;
+    }
 
     @Override
     public String getName() {
@@ -41,11 +48,15 @@ public class SecuritySession implements Feature {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(SecurityAnnotations.class)) {
+            featureContext.addFeature(securityAnnotations);
+        }
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.login.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.endpoints.logout.enabled", true);
-        generatorContext.getConfiguration().put("micronaut.security.session.loginSuccessTargetUrl", "/");
-        generatorContext.getConfiguration().put("micronaut.security.session.loginFailureTargetUrl", "/");
+        generatorContext.getConfiguration().put("micronaut.security.authentication", "session");
     }
 
     @Override

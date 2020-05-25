@@ -1,0 +1,13 @@
+checkstyle {
+    toolVersion = 8.16
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+
+    // Per submodule
+    maxErrors = 0
+    maxWarnings = 5
+
+    showViolations = true
+}
+checkstyleTest.enabled = false
+checkstyleMain.dependsOn('spotlessCheck')
+

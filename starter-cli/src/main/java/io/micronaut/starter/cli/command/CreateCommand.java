@@ -93,7 +93,11 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @Override
     public Integer call() throws Exception {
         if (listFeatures) {
-            new ListFeatures(availableFeatures, new Options(lang, test, build, getJdkVersion()), applicationType, contextFactory).output(this);
+            new ListFeatures(availableFeatures,
+                    new Options(lang, test, build, getJdkVersion()),
+                    applicationType,
+                    getOperatingSystem(),
+                    contextFactory).output(this);
             return 0;
         }
 
@@ -118,7 +122,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
         Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
 
-        projectGenerator.generate(applicationType, project, options, getSelectedFeatures(), outputHandler, this);
+        projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }
 
     private JdkVersion getJdkVersion() {

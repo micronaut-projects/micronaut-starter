@@ -57,15 +57,12 @@ class SpringBootSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language)).render().toString()
 
         then:
-        template.contains("$scope(\"io.micronaut.spring:micronaut-spring-boot\")")
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
         template.contains('runtime("io.micronaut.spring:micronaut-spring-boot")')
 
         where:
-        language        | scope
-        Language.JAVA   | "annotationProcessor"
-        Language.KOTLIN | "kapt"
-        Language.GROOVY | "compileOnly"
+        language << Language.values().toList()
     }
 
     void 'test maven spring-boot feature'() {
@@ -118,9 +115,9 @@ class SpringBootSpec extends BeanContextSpec {
 """)
         template.count("""
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-boot</artifactId>
-                    <version>\${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-boot</artifactId>
+                  <version>\${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 """) == 2
 

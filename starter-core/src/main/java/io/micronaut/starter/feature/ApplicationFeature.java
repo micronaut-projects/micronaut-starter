@@ -19,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
 
@@ -32,6 +33,14 @@ public interface ApplicationFeature extends Feature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        generatorContext.setMainClass(generatorContext.getApplicationType(), this);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            String mainClass = mainClassName(
+                    generatorContext.getApplicationType(),
+                    generatorContext.getProject(),
+                    generatorContext.getFeatures());
+            if (mainClass != null) {
+                generatorContext.getBuildProperties().put("exec.mainClass", mainClass);
+            }
+        }
     }
 }

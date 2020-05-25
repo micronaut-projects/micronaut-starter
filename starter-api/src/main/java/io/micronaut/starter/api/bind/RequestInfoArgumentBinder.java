@@ -18,6 +18,7 @@ package io.micronaut.starter.api.bind;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.io.socket.SocketUtils;
 import io.micronaut.core.type.Argument;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.bind.binders.TypedRequestArgumentBinder;
 import io.micronaut.starter.api.RequestInfo;
@@ -55,7 +56,7 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
     @Override
     public BindingResult<RequestInfo> bind(ArgumentConversionContext<RequestInfo> context, HttpRequest<?> source) {
         String url = resolveUrl(source);
-        return () -> Optional.of(new RequestInfo(url, source.getPath(), source.getLocale().orElse(Locale.ENGLISH)));
+        return () -> Optional.of(new RequestInfo(url, source.getPath(), source.getLocale().orElse(Locale.ENGLISH), source.getHeaders().get(HttpHeaders.USER_AGENT)));
     }
 
     private String resolveUrl(HttpRequest<?> request) {

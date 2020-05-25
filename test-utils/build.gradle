@@ -1,0 +1,7 @@
+dependencies {
+    implementation("org.codehaus.groovy:groovy:$groovyVersion")
+    implementation("org.spockframework:spock-core:$spockVersion") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+    implementation project(":starter-core")
+}

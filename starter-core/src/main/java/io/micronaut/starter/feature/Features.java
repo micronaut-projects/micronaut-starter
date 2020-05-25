@@ -25,6 +25,7 @@ import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -92,5 +93,25 @@ public class Features extends ArrayList<String> {
         return getFeatures().stream()
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
+    }
+
+    public <T extends Feature> Optional<T> getFeature(Class<T> feature) {
+        Objects.requireNonNull(feature, "The feature class cannot be null");
+        for (Feature f : featureList) {
+            if (feature.isInstance(f)) {
+                return Optional.of((T) f);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public <T extends Feature> T getRequiredFeature(Class<T> feature) {
+        Objects.requireNonNull(feature, "The feature class cannot be null");
+        for (Feature f : featureList) {
+            if (feature.isInstance(f)) {
+                return (T) f;
+            }
+        }
+        throw new IllegalStateException(String.format("The required feature type %s does not exist", feature.getName()));
     }
 }

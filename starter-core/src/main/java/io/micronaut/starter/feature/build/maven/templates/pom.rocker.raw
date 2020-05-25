@@ -101,6 +101,7 @@ List<Property> properties
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
+@dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "compile", null)
 }
 @if (features.contains("graalvm")) {
 @dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
@@ -142,64 +143,64 @@ List<Property> properties
 @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "compile", null)
 }
 @if (features.contains("micrometer")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-core", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-core", "compile", null)
 }
 @if (features.contains("micrometer-appoptics")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-appoptics", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-appoptics", "compile", null)
 }
 @if (features.contains("micrometer-atlas")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-atlas", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", "compile", null)
 }
 @if (features.contains("micrometer-azure-monitor")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-azure-monitor", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-azure-monitor", "compile", null)
 }
 @if (features.contains("micrometer-cloudwatch")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-cloudwatch", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-cloudwatch", "compile", null)
 }
 @if (features.contains("micrometer-datadog")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-datadog", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-datadog", "compile", null)
 }
 @if (features.contains("micrometer-dynatrace")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-dynatrace", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-dynatrace", "compile", null)
 }
 @if (features.contains("micrometer-elastic")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-elastic", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-elastic", "compile", null)
 }
 @if (features.contains("micrometer-ganglia")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-ganglia", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-ganglia", "compile", null)
 }
 @if (features.contains("micrometer-graphite")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-graphite", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-graphite", "compile", null)
 }
 @if (features.contains("micrometer-humio")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-humio", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-humio", "compile", null)
 }
 @if (features.contains("micrometer-influx")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-influx", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", "compile", null)
 }
 @if (features.contains("micrometer-jmx")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-jmx", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-jmx", "compile", null)
 }
 @if (features.contains("micrometer-kairos")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-kairos", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-kairos", "compile", null)
 }
 @if (features.contains("micrometer-new-relic")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-new-relic", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-new-relic", "compile", null)
 }
 @if (features.contains("micrometer-prometheus")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-prometheus", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-prometheus", "compile", null)
 }
 @if (features.contains("micrometer-signalfx")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-signalfx", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-signalfx", "compile", null)
 }
 @if (features.contains("micrometer-stackdriver")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-stackdriver", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-stackdriver", "compile", null)
 }
 @if (features.contains("micrometer-statsd")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-statsd", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-statsd", "compile", null)
 }
 @if (features.contains("micrometer-wavefront")) {
-@dependency.template("io.micronaut.configuration", "micronaut-micrometer-registry-wavefront", "compile", null)
+@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "compile", null)
 }
 @if (features.contains("netflix-archaius")) {
 @dependency.template("io.micronaut.configuration", "micronaut-netflix-archaius", "compile", null)
@@ -235,6 +236,9 @@ List<Property> properties
 @if (features.contains("jdbc-hikari")) {
 @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "compile", null)
 }
+@if (features.contains("jdbc-ucp")) {
+@dependency.template("io.micronaut.configuration", "micronaut-jdbc-ucp", "compile", null)
+}
 @if (features.contains("data-jdbc")) {
 @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "compile", null)
 }
@@ -254,7 +258,10 @@ List<Property> properties
 @dependency.template("io.micronaut.configuration", "micronaut-jooq", "compile", null)
 }
 @if (features.contains("mongo-reactive")) {
-@dependency.template("io.micronaut.configuration", "micronaut-mongo-reactive", "compile", null)
+@dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "compile", null)
+}
+@if (features.contains("mongo-sync")) {
+@dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "compile", null)
 }
 @if (features.contains("mongo-gorm")) {
 @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
@@ -286,8 +293,11 @@ List<Property> properties
 @if (features.contains("rabbitmq")) {
 @dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "compile", null)
 }
+@if (features.contains("nats")) {
+@dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
+}
 @if (features.contains("cassandra")) {
-@dependency.template("io.micronaut.configuration", "micronaut-cassandra", "compile", null)
+@dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
 }
 @if (features.contains("elasticsearch")) {
 @dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "compile", null)
@@ -318,8 +328,10 @@ List<Property> properties
 }
 @if (features.contains("ktor")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
+@dependency.template("io.ktor", "ktor-server-netty", "compile", "1.3.2")
+@dependency.template("io.ktor", "ktor-jackson", "compile", "1.3.2")
 }
-@if (features.contains("stackdriver")) {
+@if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }
 @if (features.contains("reactor")) {
@@ -440,6 +452,12 @@ List<Property> properties
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
 }
+@if (features.contains("postgres")) {
+@dependency.template("org.postgresql", "postgresql", "runtime", "42.2.12")
+}
+@if (features.contains("mysql")) {
+@dependency.template("mysql", "mysql-connector-java", "runtime", "8.0.20")
+}
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }
@@ -471,7 +489,7 @@ List<Property> properties
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
-@if (features.contains("mongo-reactive")) {
+@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
 @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
 }
 @if (features.contains("neo4j-bolt")) {
@@ -567,88 +585,88 @@ List<Property> properties
 }
 @if (features.contains("google-cloud-function")) {
        <plugin>
-          <groupId>com.google.cloud.functions</groupId>
-          <artifactId>function-maven-plugin</artifactId>
-          <configuration>
-            <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
-          </configuration>
+         <groupId>com.google.cloud.functions</groupId>
+         <artifactId>function-maven-plugin</artifactId>
+         <configuration>
+           <functionTarget>io.micronaut.gcp.function.http.HttpFunction</functionTarget>
+         </configuration>
         </plugin>
 }
 @if (features.contains("azure-function")) {
         <plugin>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>azure-functions-maven-plugin</artifactId>
-            <version>1.4.1</version>
-            <configuration>
-                <resourceGroup>${functionResourceGroup}</resourceGroup>
-                <appName>${functionAppName}</appName>
-                <region>${functionAppRegion}</region>
-                <appSettings>
-                    <property>
-                        <name>WEBSITE_RUN_FROM_PACKAGE</name>
-                        <value>1</value>
-                    </property>
-                    <property>
-                        <name>FUNCTIONS_EXTENSION_VERSION</name>
-                        <value>~2</value>
-                    </property>
-                </appSettings>
-            </configuration>
-            <executions>
-                <execution>
-                    <id>package-functions</id>
-                    <goals>
-                        <goal>package</goal>
-                    </goals>
-                </execution>
-            </executions>
+          <groupId>com.microsoft.azure</groupId>
+          <artifactId>azure-functions-maven-plugin</artifactId>
+          <version>1.4.1</version>
+          <configuration>
+            <resourceGroup>${functionResourceGroup}</resourceGroup>
+            <appName>${functionAppName}</appName>
+            <region>${functionAppRegion}</region>
+            <appSettings>
+              <property>
+                <name>WEBSITE_RUN_FROM_PACKAGE</name>
+                <value>1</value>
+              </property>
+              <property>
+                <name>FUNCTIONS_EXTENSION_VERSION</name>
+                <value>~2</value>
+              </property>
+            </appSettings>
+          </configuration>
+          <executions>
+            <execution>
+              <id>package-functions</id>
+              <goals>
+                <goal>package</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-resources</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                        <overwrite>true</overwrite>
-                        <outputDirectory>${stagingDirectory}</outputDirectory>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}</directory>
-                                <includes>
-                                    <include>host.json</include>
-                                    <include>local.settings.json</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </configuration>
-                </execution>
-            </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-resources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <overwrite>true</overwrite>
+                <outputDirectory>${stagingDirectory}</outputDirectory>
+                <resources>
+                  <resource>
+                    <directory>${project.basedir}</directory>
+                    <includes>
+                      <include>host.json</include>
+                      <include>local.settings.json</include>
+                    </includes>
+                  </resource>
+                </resources>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-                <execution>
-                    <id>copy-dependencies</id>
-                    <phase>prepare-package</phase>
-                    <goals>
-                        <goal>copy-dependencies</goal>
-                    </goals>
-                    <configuration>
-                        <outputDirectory>${stagingDirectory}/lib</outputDirectory>
-                        <overWriteReleases>false</overWriteReleases>
-                        <overWriteSnapshots>false</overWriteSnapshots>
-                        <overWriteIfNewer>true</overWriteIfNewer>
-                        <includeScope>runtime</includeScope>
-                        <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
-                    </configuration>
-                </execution>
-            </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-dependencies</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>copy-dependencies</goal>
+              </goals>
+              <configuration>
+                <outputDirectory>${stagingDirectory}/lib</outputDirectory>
+                <overWriteReleases>false</overWriteReleases>
+                <overWriteSnapshots>false</overWriteSnapshots>
+                <overWriteIfNewer>true</overWriteIfNewer>
+                <includeScope>runtime</includeScope>
+                <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 }
 @if (features.language().isJava()) {
@@ -723,6 +741,13 @@ List<Property> properties
               <version>${micronaut.spring.version}</version>
             </path>
 }
+@if (features.contains("security-annotations")) {
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-security-annotations</artifactId>
+              <version>${micronaut.security.version}</version>
+            </path>
+}
           </annotationProcessorPaths>
         </configuration>
         <executions>
@@ -785,6 +810,13 @@ List<Property> properties
                   <version>${micronaut.spring.version}</version>
                 </path>
 }
+@if (features.contains("security-annotations")) {
+                <path>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>${micronaut.security.version}</version>
+                </path>
+}
               </annotationProcessorPaths>
             </configuration>
           </execution>
@@ -834,51 +866,58 @@ List<Property> properties
 }
 @if (features.contains("picocli")) {
                 <annotationProcessorPath>
-                    <groupId>info.picocli</groupId>
-                    <artifactId>picocli-codegen</artifactId>
-                    <version>${picocli.version}</version>
+                  <groupId>info.picocli</groupId>
+                  <artifactId>picocli-codegen</artifactId>
+                  <version>${picocli.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.data</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut.data</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("openapi")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.configuration</groupId>
-                    <artifactId>micronaut-openapi</artifactId>
-                    <version>${micronaut.openapi.version}</version>
+                  <groupId>io.micronaut.configuration</groupId>
+                  <artifactId>micronaut-openapi</artifactId>
+                  <version>${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.jaxrs</groupId>
-                    <artifactId>micronaut-jaxrs-processor</artifactId>
-                    <version>${micronaut.jaxrs.version}</version>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-web")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-web-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-boot")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-boot</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-boot</artifactId>
+                  <version>${micronaut.spring.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("security-annotations")) {
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>${micronaut.security.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -925,37 +964,44 @@ List<Property> properties
 }
 @if (features.contains("data")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.data</groupId>
-                    <artifactId>micronaut-data-processor</artifactId>
-                    <version>${micronaut.data.version}</version>
+                  <groupId>io.micronaut.data</groupId>
+                  <artifactId>micronaut-data-processor</artifactId>
+                  <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.jaxrs</groupId>
-                    <artifactId>micronaut-jaxrs-processor</artifactId>
-                    <version>${micronaut.jaxrs.version}</version>
+                  <groupId>io.micronaut.jaxrs</groupId>
+                  <artifactId>micronaut-jaxrs-processor</artifactId>
+                  <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-web")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-web-annotation</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-web-annotation</artifactId>
+                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring-boot")) {
                 <annotationProcessorPath>
-                    <groupId>io.micronaut.spring</groupId>
-                    <artifactId>micronaut-spring-boot</artifactId>
-                    <version>${micronaut.spring.version}</version>
+                  <groupId>io.micronaut.spring</groupId>
+                  <artifactId>micronaut-spring-boot</artifactId>
+                  <version>${micronaut.spring.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("security-annotations")) {
+                <annotationProcessorPath>
+                  <groupId>io.micronaut</groupId>
+                  <artifactId>micronaut-security-annotations</artifactId>
+                  <version>${micronaut.security.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -1173,7 +1219,7 @@ List<Property> properties
                 </outputTarget>
                 <outputTarget>
                   <type>grpc-java</type>
-                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.17.1</pluginArtifact>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.29.0</pluginArtifact>
                 </outputTarget>
               </outputTargets>
             </configuration>

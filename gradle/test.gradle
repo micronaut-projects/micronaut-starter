@@ -1,0 +1,27 @@
+testlogger {
+    theme 'standard-parallel'
+    showFullStackTraces true
+    showStandardStreams true
+    showPassedStandardStreams false
+    showSkippedStandardStreams false
+    showFailedStandardStreams true
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    jvmArgs '-Duser.country=US'
+    jvmArgs '-Duser.language=en'
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    afterSuite {
+        System.out.print(".")
+        System.out.flush()
+    }
+    forkEvery = 100
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    maxHeapSize = "2G"
+
+    reports.html.enabled = !System.getenv("GITHUB_ACTIONS")
+    reports.junitXml.enabled = !System.getenv("GITHUB_ACTIONS")
+}

@@ -63,7 +63,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
                 TestFramework.SPOCK,
                 JdkVersion.JDK_9
         )
-        generated.setSelectedFeatures([new SelectedFeature("azure-function")])
+        generated.setSelectedFeatures([new SelectedFeature("google-cloud-function")])
 
         when:
         HttpStatus status = client.applicationGenerated(
@@ -83,7 +83,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         application.buildTool == generated.buildTool
         application.jdkVersion == generated.jdkVersion
         application.testFramework == generated.testFramework
-        application.features.find { it.name == 'azure-function' }
+        application.features.find { it.name == 'google-cloud-function' }
         application.micronautVersion == VersionInfo.micronautVersion
         application.dateCreated
 
@@ -92,7 +92,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
 
         then:
         !topFeatures.isEmpty()
-        topFeatures[0].name == 'azure-function'
+        topFeatures[0].name == 'google-cloud-function'
         topFeatures[0].total == 1
 
         when:

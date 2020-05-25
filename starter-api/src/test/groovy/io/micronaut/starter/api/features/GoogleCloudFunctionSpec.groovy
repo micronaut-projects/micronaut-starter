@@ -13,13 +13,20 @@ import javax.inject.Inject
 
 @MicronautTest
 class GoogleCloudFunctionSpec extends Specification {
+
     @Inject PreviewController controller
+
     void "test google cloud function files"() {
         when:
         def map = controller.previewApp(
                 ApplicationType.DEFAULT,
                 "test",
-                [GoogleCloudRawFunction.NAME]
+                [GoogleCloudRawFunction.NAME],
+                null,
+                null,
+                null,
+                null,
+                new RequestInfo("http://localhost", "", Locale.ENGLISH, "")
         )
 
         then:
