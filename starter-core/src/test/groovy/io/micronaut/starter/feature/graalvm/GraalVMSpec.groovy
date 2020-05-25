@@ -10,10 +10,12 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
+@Requires({ jvm.isJava8() || jvm.isJava11() })
 class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Subject
