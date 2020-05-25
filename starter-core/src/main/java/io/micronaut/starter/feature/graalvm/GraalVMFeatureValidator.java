@@ -26,7 +26,7 @@ import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class GraalFeatureValidator implements FeatureValidator {
+public class GraalVMFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
@@ -35,7 +35,7 @@ public class GraalFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GraalNativeImage)) {
+        if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
             if (options.getLanguage() == Language.GROOVY) {
                 throw new IllegalArgumentException("GraalVM is not supported in Groovy applications");
             }

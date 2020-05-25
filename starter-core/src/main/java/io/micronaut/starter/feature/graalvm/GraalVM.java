@@ -33,11 +33,11 @@ import io.micronaut.starter.template.RockerTemplate;
 import javax.inject.Singleton;
 
 @Singleton
-public class GraalNativeImage implements Feature {
+public class GraalVM implements Feature {
 
     private final AwsLambdaCustomRuntime awsLambdaCustomRuntime;
 
-    public GraalNativeImage(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
+    public GraalVM(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
         this.awsLambdaCustomRuntime = awsLambdaCustomRuntime;
     }
 

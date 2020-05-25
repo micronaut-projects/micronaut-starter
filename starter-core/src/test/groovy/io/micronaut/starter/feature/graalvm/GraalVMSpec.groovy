@@ -14,11 +14,11 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixture {
+class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Subject
     @Shared
-    GraalNativeImage graalNativeImage = beanContext.getBean(GraalNativeImage)
+    GraalVM graalNativeImage = beanContext.getBean(GraalVM)
 
     @Unroll("feature graalvm works for application type: #applicationType")
     void "feature graalvm works for every type of application type"(ApplicationType applicationType) {
