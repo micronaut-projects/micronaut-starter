@@ -2,6 +2,7 @@ package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -35,13 +36,16 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void "test #feature.name does not add an unmodifiable map to config"() {
+    void "test #feature does not add an unmodifiable map to config"(String feature) {
         when:
+        Language lang = languageForFeature(feature)
+        JdkVersion javaVersion = javaVersionForFeature(feature)
+        Options options = new Options(lang, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
-                                              new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE),
+                                              options,
                                               OperatingSystem.LINUX,
-                                              getFeatures([feature]).getFeatures()
+                                              getFeatures([feature], options).getFeatures()
         )
         commandCtx.applyFeatures()
 
@@ -63,5 +67,19 @@ class FeatureSpec extends BeanContextSpec {
                 .filter(f -> f.isVisible())
                 .map(f -> f.getName())
                 .collect(Collectors.toList())
+    }
+    
+    private Language languageForFeature(String feature) {
+        if (feature.endsWith('-gorm')) {
+            return Language.GROOVY
+        }
+        if (feature == 'ktor' || feature == 'kotlin-extension-functions' || feature == 'config4k') {
+            return Language.KOTLIN
+        }
+        Language.JAVA
+    }
+
+    private JdkVersion javaVersionForFeature(String feature) {
+        feature == 'azure-function' ? JdkVersion.JDK_8 : JdkVersion.JDK_11
     }
 }
