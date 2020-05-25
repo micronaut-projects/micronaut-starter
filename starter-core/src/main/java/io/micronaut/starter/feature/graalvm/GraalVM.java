@@ -18,7 +18,9 @@ package io.micronaut.starter.feature.graalvm;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.*;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.template.deploysh;
@@ -26,39 +28,23 @@ import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
 import io.micronaut.starter.feature.graalvm.template.dockerfile;
 import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
 import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Optional;
 
 @Singleton
-public class GraalNativeImage implements Feature {
+public class GraalVM implements Feature {
 
     private final AwsLambdaCustomRuntime awsLambdaCustomRuntime;
 
-    public GraalNativeImage(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
+    public GraalVM(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
         this.awsLambdaCustomRuntime = awsLambdaCustomRuntime;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getLanguage() == Language.GROOVY) {
-            featureContext.exclude(new FeaturePredicate() {
-                @Override
-                public boolean test(Feature feature) {
-                    return feature instanceof GraalNativeImage;
-                }
-
-                @Override
-                public Optional<String> getWarning() {
-                    return Optional.of("The GraalVM feature was removed because it does not support Groovy");
-                }
-            });
-        } else {
-            if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
-                featureContext.addFeature(awsLambdaCustomRuntime);
-            }
+        if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
+            featureContext.addFeature(awsLambdaCustomRuntime);
         }
     }
 
@@ -102,12 +88,12 @@ public class GraalNativeImage implements Feature {
         String jarFile = generatorContext.getBuildTool()
                                          .getShadeJarDirectoryPattern(generatorContext.getProject());
         if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
-            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile);
+            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile, generatorContext.getJdkVersion());
             RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
             generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
 
         } else {
-            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile);
+            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile, generatorContext.getJdkVersion());
         }
 
         //overrides the template from the Docker feature

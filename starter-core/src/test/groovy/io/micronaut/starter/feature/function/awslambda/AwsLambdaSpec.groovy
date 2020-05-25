@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -191,7 +192,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['aws-lambda', 'graalvm']
         )
 
@@ -214,7 +215,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['aws-lambda', 'aws-lambda-custom-runtime']
         )
 
@@ -269,7 +270,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['aws-lambda', 'graalvm']
         )
         String build = output['build.gradle']
@@ -318,7 +319,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['aws-lambda', 'graalvm']
         )
         String build = output['pom.xml']

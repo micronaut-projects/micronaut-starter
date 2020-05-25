@@ -1,13 +1,13 @@
 package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
@@ -51,24 +51,24 @@ class FeatureSpec extends BeanContextSpec {
 
         then:
         commandCtx.configuration.values().stream()
-                .filter(val -> val instanceof Map)
-                .map(val -> (Map) val)
-                .noneMatch((Map m) -> {
-                    try {
-                        m.put("hello", "world")
-                        return false
-                    } catch (UnsupportedOperationException e) {
-                        return true
-                    }
-                })
+            .filter(val -> val instanceof Map)
+            .map(val -> (Map) val)
+            .noneMatch((Map m) -> {
+                try {
+                    m.put("hello", "world")
+                    return false
+                } catch (UnsupportedOperationException e) {
+                    return true
+                }
+            })
 
         where:
         feature << beanContext.getBeansOfType(Feature).stream()
-                .filter(f -> f.isVisible())
-                .map(f -> f.getName())
-                .collect(Collectors.toList())
+            .filter(f -> f.isVisible())
+            .map(f -> f.getName())
+            .collect(Collectors.toList())
     }
-    
+
     private Language languageForFeature(String feature) {
         if (feature.endsWith('-gorm')) {
             return Language.GROOVY

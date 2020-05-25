@@ -11,7 +11,6 @@ import spock.lang.Specification
 
 import javax.annotation.Nullable
 import javax.inject.Inject
-import java.util.zip.ZipInputStream
 
 @MicronautTest
 class CreateControllerSpec extends Specification {
@@ -46,7 +45,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with groovy"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], null, null, Language.GROOVY)
+        def bytes = client.createApp("test", ['flyway'], null, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "Application.groovy")
@@ -54,7 +53,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with maven"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.MAVEN, null, Language.GROOVY)
+        def bytes = client.createApp("test", ['flyway'], BuildTool.MAVEN, null, Language.GROOVY)
 
         then:
         ZipUtil.containsFile(bytes, "pom.xml")
@@ -62,7 +61,7 @@ class CreateControllerSpec extends Specification {
 
     void "test create app with spock"() {
         when:
-        def bytes = client.createApp("test", ['graalvm'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY)
+        def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY)
 
         then:
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock-core")
