@@ -47,11 +47,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
 
         then:
-        !template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
-        !template.contains('compileOnly("org.graalvm.nativeimage:svm")')
+        def e = thrown(IllegalArgumentException)
+        e.message == 'GraalVM is not supported in Groovy applications'
     }
 
     void 'test maven graalvm feature'() {
@@ -96,23 +96,11 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
     void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
 
         then:
-        !template.contains("""
-    <dependency>
-      <groupId>org.graalvm.nativeimage</groupId>
-      <artifactId>svm</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-graal</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        def e = thrown(IllegalArgumentException)
+        e.message == 'GraalVM is not supported in Groovy applications'
     }
 
     @Unroll
@@ -228,7 +216,7 @@ class GraalNativeImageSpec extends BeanContextSpec implements CommandOutputFixtu
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == "GraalVM can't only be used with JDK 8 or JDK 11"
+        e.message == 'GraalVM only supports JDK 8 and 11'
 
         where:
         jdkVersion << JdkVersion.values() - [JdkVersion.JDK_8, JdkVersion.JDK_11]
