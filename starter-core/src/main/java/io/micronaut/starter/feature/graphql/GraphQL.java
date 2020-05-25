@@ -43,9 +43,9 @@ public class GraphQL implements Feature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
-
+    
     @Override
     public String getCategory() {
-        return Category.SERVER;
+        return Category.API;
     }
 }

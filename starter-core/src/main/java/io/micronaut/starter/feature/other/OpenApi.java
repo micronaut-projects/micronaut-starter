@@ -61,6 +61,6 @@ public class OpenApi implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.SERVER;
+        return Category.API;
     }
 }

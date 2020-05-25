@@ -2,12 +2,24 @@ package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class OpenApiSpec extends BeanContextSpec {
+
+    @Shared
+    @Subject
+    OpenApi openApi = beanContext.getBean(OpenApi)
+
+    void "openApi belongs to API category"() {
+        expect:
+        Category.API == openApi.category
+    }
 
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
