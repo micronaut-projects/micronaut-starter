@@ -81,7 +81,7 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
 
     @Override
     public String getCategory() {
-        return Category.LANGUAGES;
+        return Category.SERVER;
     }
 
     @Override

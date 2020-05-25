@@ -24,7 +24,7 @@ class KtorSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "ktor belongs to Logging category"() {
         expect:
-        Category.LANGUAGES == ktor.category
+        Category.SERVER == ktor.category
     }
 
     void "ktor requires kotlin"() {
