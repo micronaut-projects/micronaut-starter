@@ -69,4 +69,9 @@ public class Springloaded implements ReloadingFeature {
         generatorContext.addTemplate("springLoadedJar",
                 new BinaryTemplate("agent/" + JAR_NAME, classLoader.getResource("springloaded/" + JAR_NAME)));
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#springloaded";
+    }
 }

@@ -34,4 +34,9 @@ public class Jetty implements ServerFeature {
     public String getDescription() {
         return "Adds support for a Jetty server";
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#jetty";
+    }
 }

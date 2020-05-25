@@ -42,4 +42,9 @@ public class Tomcat extends JdbcFeature {
     public String getDescription() {
         return "Configures SQL DataSource instances using Tomcat Connection Pool";
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc";
+    }
 }

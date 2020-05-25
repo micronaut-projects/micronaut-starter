@@ -114,4 +114,9 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     public boolean isVisible() {
         return true;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-kotlin/latest/guide/index.html#ktor";
+    }
 }

@@ -49,4 +49,14 @@ public class CloudTrace implements Feature {
     public String getCategory() {
         return Category.LOGGING;
     }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://cloud.google.com/trace";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#tracing";
+    }
 }

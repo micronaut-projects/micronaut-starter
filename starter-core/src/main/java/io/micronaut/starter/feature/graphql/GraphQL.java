@@ -48,4 +48,9 @@ public class GraphQL implements Feature {
     public String getCategory() {
         return Category.API;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-graphql/latest/guide/index.html";
+    }
 }

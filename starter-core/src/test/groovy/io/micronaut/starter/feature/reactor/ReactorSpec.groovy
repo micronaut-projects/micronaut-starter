@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.reactor
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
@@ -10,7 +11,17 @@ import spock.lang.Unroll
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 
-class ReactorSpec extends BeanContextSpec {
+class ReactorSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    void 'test readme.md with feature reactor contains links to micronaut docs'() {
+        when:
+        def output = generate(['reactor'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html")
+    }
 
     @Subject
     @Shared

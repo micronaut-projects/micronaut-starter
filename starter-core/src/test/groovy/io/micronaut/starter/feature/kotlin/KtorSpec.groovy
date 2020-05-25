@@ -6,21 +6,34 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 
-class KtorSpec extends BeanContextSpec implements CommandOutputFixture {
+class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     static final String KTOR_VERSION = '1.3.2'
 
     @Subject
     @Shared
     Ktor ktor = beanContext.getBean(Ktor)
+
+    void 'test readme.md with feature ktor contains links to micronaut docs'() {
+        when:
+        Options options = new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE)
+        def output = generate(ApplicationType.DEFAULT, options, ['ktor'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-kotlin/latest/guide/index.html#ktor")
+    }
 
     void "ktor belongs to Logging category"() {
         expect:

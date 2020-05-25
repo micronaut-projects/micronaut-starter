@@ -7,8 +7,19 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 
-class HibernateJpaSpec extends BeanContextSpec {
+class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    void 'test readme.md with feature hibernate-jpa contains links to micronaut docs'() {
+        when:
+        def output = generate(['hibernate-jpa'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate")
+    }
 
     void "test hibernate jpa features"() {
         when:

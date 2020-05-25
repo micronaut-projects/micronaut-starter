@@ -71,4 +71,9 @@ public class Kubernetes implements DistributedConfigFeature {
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html";
+    }
 }
