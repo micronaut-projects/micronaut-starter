@@ -10,6 +10,7 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
 
     @Unroll
     void "#language #buildTool #testFramework combination expected"(Language language, BuildTool buildTool, TestFramework testFramework) {
+
         expect:
         LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework])
 
@@ -22,16 +23,17 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
         Language.GROOVY | BuildTool.GRADLE | TestFramework.SPOCK
         Language.KOTLIN | BuildTool.GRADLE | TestFramework.KOTLINTEST
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.JUNIT
-        Language.GROOVY | BuildTool.MAVEN  | TestFramework.JUNIT
+        //Language.GROOVY | BuildTool.MAVEN  | TestFramework.JUNIT
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.JUNIT
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.SPOCK
-        Language.GROOVY | BuildTool.MAVEN  | TestFramework.SPOCK
+        //Language.GROOVY | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.KOTLINTEST
         Language.KOTLIN | BuildTool.GRADLE | TestFramework.SPOCK
         Language.JAVA   | BuildTool.GRADLE | TestFramework.KOTLINTEST
-        Language.GROOVY | BuildTool.GRADLE | TestFramework.KOTLINTEST
+        //Language.GROOVY | BuildTool.GRADLE | TestFramework.KOTLINTEST
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.KOTLINTEST
-        Language.GROOVY | BuildTool.MAVEN  | TestFramework.KOTLINTEST
+        //Language.GROOVY | BuildTool.MAVEN  | TestFramework.KOTLINTEST
+
     }
 }

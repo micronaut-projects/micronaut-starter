@@ -98,7 +98,7 @@ class Application {
         testOutputContains("Startup completed")
 
         where:
-        build << BuildToolCombinations.buildTools
+        build << BuildToolCombinations.buildTools.findAll { it != BuildTool.MAVEN }
     }
 
     @Unroll
