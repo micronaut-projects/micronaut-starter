@@ -13,8 +13,6 @@ class LanguageBuildCombinations {
      */
     @Memoized
     static List combinations(List<String> features = null) {
-        (
-                features ? [Language.values(), BuildToolCombinations.buildTools, features].combinations() : [Language.values(), BuildToolCombinations.buildTools].combinations()
-        ).findAll { !(it[0] == Language.GROOVY && it[1] == BuildTool.MAVEN) }
+        features ? [Language.values(), BuildToolCombinations.buildTools, features].combinations() : [Language.values(), BuildToolCombinations.buildTools].combinations()
     }
 }
