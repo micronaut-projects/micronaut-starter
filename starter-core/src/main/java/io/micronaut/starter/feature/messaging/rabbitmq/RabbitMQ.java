@@ -50,4 +50,9 @@ public class RabbitMQ implements MessagingFeature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-rabbitmq/latest/guide/index.html";
+    }
 }

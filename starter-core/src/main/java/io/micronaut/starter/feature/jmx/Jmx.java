@@ -48,4 +48,9 @@ public class Jmx implements Feature {
     public String getCategory() {
         return Category.MANAGEMENT;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-jmx/latest/guide/index.html";
+    }
 }

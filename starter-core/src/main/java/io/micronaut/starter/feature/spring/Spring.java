@@ -63,6 +63,11 @@ public class Spring implements Feature {
     public String getCategory() {
         return Category.SPRING;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html";
+    }
 }
 
 

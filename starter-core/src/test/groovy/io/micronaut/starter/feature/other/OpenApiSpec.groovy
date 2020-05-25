@@ -5,16 +5,27 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class OpenApiSpec extends BeanContextSpec {
-
+class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Shared
     @Subject
     OpenApi openApi = beanContext.getBean(OpenApi)
+
+    void 'test readme.md with feature openapi contains links to micronaut docs'() {
+        when:
+        def output = generate(['openapi'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://www.openapis.org")
+        readme.contains("https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html")
+    }
 
     void "openApi belongs to API category"() {
         expect:

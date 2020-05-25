@@ -153,4 +153,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
     public Cloud getCloud() {
         return Cloud.AWS;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda";
+    }
 }

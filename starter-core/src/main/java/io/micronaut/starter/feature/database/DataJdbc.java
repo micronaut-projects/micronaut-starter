@@ -61,4 +61,9 @@ public class DataJdbc implements DataFeature {
         generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
         generatorContext.getConfiguration().putAll(getDatasourceConfig());
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-data/latest/guide/index.html#jdbc";
+    }
 }

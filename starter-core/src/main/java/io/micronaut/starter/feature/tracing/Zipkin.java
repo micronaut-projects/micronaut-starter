@@ -34,7 +34,7 @@ public class Zipkin implements TracingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for distributed tracing with Zipkin (https://zipkin.io)";
+        return "Adds support for distributed tracing with Zipkin";
     }
 
     @Override
@@ -42,5 +42,15 @@ public class Zipkin implements TracingFeature {
         generatorContext.getConfiguration().put("tracing.zipkin.enabled", true);
         generatorContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
         generatorContext.getConfiguration().put("tracing.zipkin.sampler.probability", 0.1);
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://zipkin.io";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#zipkin";
     }
 }

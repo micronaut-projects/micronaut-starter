@@ -34,12 +34,22 @@ public class Jaeger implements TracingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for distributed tracing with Jaeger (https://www.jaegertracing.io)";
+        return "Adds support for distributed tracing with Jaeger";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("tracing.jaeger.enabled", true);
         generatorContext.getConfiguration().put("tracing.jaeger.sampler.probability", 0.1);
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#jaeger";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.jaegertracing.io";
     }
 }

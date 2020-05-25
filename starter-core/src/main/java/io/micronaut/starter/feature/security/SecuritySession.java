@@ -69,4 +69,8 @@ public class SecuritySession implements Feature {
         return Category.SECURITY;
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#session";
+    }
 }

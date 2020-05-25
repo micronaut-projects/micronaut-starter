@@ -48,4 +48,9 @@ public class Management implements Feature {
     public String getCategory() {
         return Category.MANAGEMENT;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#management";
+    }
 }

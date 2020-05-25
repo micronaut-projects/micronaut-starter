@@ -150,4 +150,9 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
     public Cloud getCloud() {
         return Cloud.GCP;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#simpleFunctions";
+    }
 }

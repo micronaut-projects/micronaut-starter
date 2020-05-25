@@ -4,10 +4,21 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class RssItunesSpec extends BeanContextSpec {
+class RssItunesSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    void 'test readme.md with feature rss-itunes-podcast contains links to micronaut docs'() {
+        when:
+        def output = generate(['rss-itunes-podcast'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-rss/latest/guide/index.html#itunespodcast")
+    }
 
     @Unroll
     void 'test gradle rss-itunes-podcast feature for language=#language'() {

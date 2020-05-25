@@ -36,7 +36,7 @@ public class Caffeine implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Caffeine (https://github.com/ben-manes/caffeine)";
+        return "Adds support for cache using Caffeine";
     }
 
     @Override
@@ -47,5 +47,15 @@ public class Caffeine implements Feature {
     @Override
     public String getCategory() {
         return Category.CACHE;
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/ben-manes/caffeine";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html";
     }
 }

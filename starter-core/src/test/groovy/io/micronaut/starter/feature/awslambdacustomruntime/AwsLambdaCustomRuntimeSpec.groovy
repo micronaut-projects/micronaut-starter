@@ -14,11 +14,21 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutputFixture {
+class AwsLambdaCustomRuntimeSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
     AwsLambdaCustomRuntime awsLambdaCustomRuntime = beanContext.getBean(AwsLambdaCustomRuntime)
+
+    void 'test readme.md with feature aws-lambda-custom-runtime contains links to micronaut docs'() {
+        when:
+        def output = generate(['aws-lambda-custom-runtime'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes")
+    }
 
     @Unroll
     void 'verify bootstrap for a function application type with gradle and feature aws-lambda-custom-runtime for language=#language'() {

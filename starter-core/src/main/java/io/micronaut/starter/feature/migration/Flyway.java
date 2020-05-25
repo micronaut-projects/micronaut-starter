@@ -35,5 +35,14 @@ public class Flyway implements MigrationFeature {
         return "Adds support for Flyway database migrations (https://flywaydb.org/)";
     }
 
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://flywaydb.org/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html";
+    }
 }
 

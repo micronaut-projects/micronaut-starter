@@ -36,7 +36,7 @@ public class JacksonXml implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for using Jackson XML serialization/deserialization (https://github.com/FasterXML/jackson-dataformat-xml)";
+        return "Adds support for using Jackson XML serialization/deserialization";
     }
 
     @Override
@@ -48,4 +48,15 @@ public class JacksonXml implements Feature {
     public String getCategory() {
         return Category.VIEW;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-jackson-xml/latest/guide/index.html";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/FasterXML/jackson-dataformat-xml";
+    }
+
 }

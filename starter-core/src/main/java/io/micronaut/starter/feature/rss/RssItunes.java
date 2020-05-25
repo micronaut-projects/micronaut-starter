@@ -49,4 +49,8 @@ public class RssItunes implements Feature {
         return Category.VIEW;
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-rss/latest/guide/index.html#itunespodcast";
+    }
 }

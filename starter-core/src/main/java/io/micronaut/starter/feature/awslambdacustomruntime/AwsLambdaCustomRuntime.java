@@ -128,4 +128,14 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public Cloud getCloud() {
         return Cloud.AWS;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.aws.amazon.com/lambda/latest/dg/runtimes-custom.html";
+    }
 }

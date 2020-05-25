@@ -1,0 +1,21 @@
+@import io.micronaut.starter.feature.Feature
+
+@args (
+Feature feature
+)
+
+@if (feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null) {
+
+## Feature @feature.getName() documentation
+
+    @if (feature.getMicronautDocumentation() != null) {
+
+- [Micronaut @feature.getTitle() documentation](@feature.getMicronautDocumentation())
+
+    }
+    @if (feature.getThirdPartyDocumentation() != null) {
+
+- [@feature.getThirdPartyDocumentation()](@feature.getThirdPartyDocumentation())
+
+    }
+}º

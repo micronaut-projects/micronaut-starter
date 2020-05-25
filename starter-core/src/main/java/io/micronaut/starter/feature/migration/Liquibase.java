@@ -32,7 +32,15 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Liquibase database migrations (http://www.liquibase.org/)";
+        return "Adds support for Liquibase database migrations";
     }
 
+    public String getThirdPartyDocumentation() {
+        return "http://www.liquibase.org/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html";
+    }
 }

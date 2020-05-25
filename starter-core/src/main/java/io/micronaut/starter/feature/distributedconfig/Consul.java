@@ -34,7 +34,7 @@ public class Consul implements DistributedConfigFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Consul (https://www.consul.io)";
+        return "Adds support for Distributed Configuration with Consul";
     }
 
     @Override
@@ -42,5 +42,15 @@ public class Consul implements DistributedConfigFeature {
         generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
         generatorContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
         generatorContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.consul.io";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#distributedConfigurationConsul";
     }
 }

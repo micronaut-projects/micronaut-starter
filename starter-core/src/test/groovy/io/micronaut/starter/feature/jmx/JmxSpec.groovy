@@ -4,10 +4,23 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class JmxSpec extends BeanContextSpec {
+class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    @Unroll
+    void 'test readme.md contains links to jmx and micronaut docs'() {
+        when:
+        def output = generate(['jmx'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-jmx/latest/guide/index.html")
+    }
+
 
     @Unroll
     void 'test gradle jmx feature for language=#language'() {

@@ -21,7 +21,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.other.template.readme;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
 
@@ -30,6 +32,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Singleton
 public class Readme implements DefaultFeature {
@@ -47,8 +50,9 @@ public class Readme implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null).collect(Collectors.toList());
         List<Writable> helpTemplates = generatorContext.getHelpTemplates();
-        if (helpTemplates.size() > 0) {
+        if (!helpTemplates.isEmpty() || !featuresWithDocumentationLinks.isEmpty()) {
             generatorContext.addTemplate("readme", new Template() {
                 @Override
                 public String getPath() {
@@ -58,6 +62,11 @@ public class Readme implements DefaultFeature {
                 @Override
                 public void write(OutputStream outputStream) throws IOException {
                     for (Writable writable : generatorContext.getHelpTemplates()) {
+                        writable.write(outputStream);
+                    }
+
+                    for (Feature feature : featuresWithDocumentationLinks) {
+                        Writable writable = new RockerWritable(readme.template(feature));
                         writable.write(outputStream);
                     }
                 }
@@ -79,4 +88,5 @@ public class Readme implements DefaultFeature {
     public int getOrder() {
         return FeaturePhase.HIGHEST.getOrder();
     }
+
 }

@@ -34,12 +34,22 @@ public class Consul implements DiscoveryFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Service Discovery with Consul (https://www.consul.io)";
+        return "Adds support for Service Discovery with Consul";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
         generatorContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.consul.io";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryConsul";
     }
 }

@@ -20,6 +20,16 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Subject
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
 
+    void 'test readme.md with feature aws-lambda contains links to micronaut docs'() {
+        when:
+        def output = generate(['aws-lambda'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda")
+    }
+
     @Unroll
     void "aws-lambda does not support #description"(ApplicationType applicationType, String description) {
         expect:
