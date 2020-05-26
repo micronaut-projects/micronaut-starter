@@ -53,4 +53,9 @@ public class H2 implements DatabaseDriverFeature {
         return "";
     }
 
+    @Override
+    public String getDataDialect() {
+        return "H2";
+    }
+
 }

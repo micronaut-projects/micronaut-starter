@@ -82,5 +82,20 @@ class DataJpaSpec extends BeanContextSpec {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.containsKey("jpa.default.properties.hibernate.hbm2ddl.auto")
+        ctx.configuration.get("datasources.default.dialect") == "H2"
+
+        when:
+        ctx = buildGeneratorContext(['data-jpa', 'postgres'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "POSTGRES"
+
+        when:
+        ctx = buildGeneratorContext(['data-jpa', 'mysql'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
     }
 }

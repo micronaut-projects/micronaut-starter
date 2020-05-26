@@ -44,4 +44,6 @@ public interface DatabaseDriverFeature extends OneOfFeature {
 
     String getDefaultPassword();
 
+    String getDataDialect();
+
 }

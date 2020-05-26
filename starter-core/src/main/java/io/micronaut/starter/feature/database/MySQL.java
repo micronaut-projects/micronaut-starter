@@ -57,4 +57,9 @@ public class MySQL implements DatabaseDriverFeature {
     public String getDefaultPassword() {
         return "";
     }
+
+    @Override
+    public String getDataDialect() {
+        return "MYSQL";
+    }
 }

@@ -92,5 +92,20 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "H2"
+
+        when:
+        ctx = buildGeneratorContext(['data-jdbc', 'postgres'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "POSTGRES"
+
+        when:
+        ctx = buildGeneratorContext(['data-jdbc', 'mysql'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
     }
 }
