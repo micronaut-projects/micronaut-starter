@@ -34,11 +34,11 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def pom = output['pom.xml']
 
         then:
-        buildGradle.contains('mainClassName = "example.micronaut.ApplicationKt"')
+
 
         if (buildTool == BuildTool.GRADLE) {
             assert buildGradle
-            assert buildGradle.contains('mainClassName = "example.micronaut.Application"')
+            assert buildGradle.contains('mainClassName = "example.micronaut.ApplicationKt"')
             assert buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
         } else if (buildTool == BuildTool.MAVEN) {
             assert pom.contains("""
