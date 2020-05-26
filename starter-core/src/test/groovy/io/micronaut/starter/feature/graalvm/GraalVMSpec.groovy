@@ -161,7 +161,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         if (jdkVersion == JdkVersion.JDK_8) {
             assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
             assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
-        } else if (jdkVersion == JdkVersion.JDK_11) {
+        } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
             assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
             assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
@@ -169,8 +169,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         language        | jdkVersion
         Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_9
+        Language.JAVA   | JdkVersion.JDK_10
         Language.JAVA   | JdkVersion.JDK_11
         Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_9
+        Language.KOTLIN | JdkVersion.JDK_10
         Language.KOTLIN | JdkVersion.JDK_11
     }
 
@@ -194,7 +198,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         if (jdkVersion == JdkVersion.JDK_8) {
             assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
             assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
-        } else if (jdkVersion == JdkVersion.JDK_11) {
+        } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
             assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
             assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
         }
@@ -202,13 +206,17 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         language        | jdkVersion
         Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_9
+        Language.JAVA   | JdkVersion.JDK_10
         Language.JAVA   | JdkVersion.JDK_11
         Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_9
+        Language.KOTLIN | JdkVersion.JDK_10
         Language.KOTLIN | JdkVersion.JDK_11
     }
 
     @Unroll
-    void 'it is not possible to use graalvm with JDK versions different than JDK8 or JDK11'(JdkVersion jdkVersion) {
+    void 'it is not possible to use graalvm with JDK versions different than JDK8 through JDK11'(JdkVersion jdkVersion) {
         when:
         generate(
             ApplicationType.DEFAULT,
@@ -218,10 +226,10 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         IllegalArgumentException e = thrown()
-        e.message == 'GraalVM only supports JDK 8 and 11'
+        e.message == 'GraalVM only supports up to JDK 11'
 
         where:
-        jdkVersion << JdkVersion.values() - [JdkVersion.JDK_8, JdkVersion.JDK_11]
+        jdkVersion << JdkVersion.values() - [JdkVersion.JDK_8, JdkVersion.JDK_9, JdkVersion.JDK_10, JdkVersion.JDK_11]
     }
 
     @Unroll
@@ -324,8 +332,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         language        | jdkVersion
         Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_9
+        Language.JAVA   | JdkVersion.JDK_10
         Language.JAVA   | JdkVersion.JDK_11
         Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_9
+        Language.KOTLIN | JdkVersion.JDK_10
         Language.KOTLIN | JdkVersion.JDK_11
     }
 
@@ -355,7 +367,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
             assert dockerfile.contains('FROM maven:3.6.3-openjdk-8 as builder')
             assert !dockerfile.contains('ENV JDK_VERSION java11')
             assert !dockerfile.contains('FROM maven:3.6.3-openjdk-11 as builder')
-        } else if (jdkVersion == JdkVersion.JDK_11) {
+        } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
             assert !dockerfile.contains('ENV JDK_VERSION java8')
             assert !dockerfile.contains('FROM maven:3.6.3-openjdk-8 as builder')
             assert dockerfile.contains('ENV JDK_VERSION java11')
@@ -365,8 +377,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         language        | jdkVersion
         Language.JAVA   | JdkVersion.JDK_8
+        Language.JAVA   | JdkVersion.JDK_9
+        Language.JAVA   | JdkVersion.JDK_10
         Language.JAVA   | JdkVersion.JDK_11
         Language.KOTLIN | JdkVersion.JDK_8
+        Language.KOTLIN | JdkVersion.JDK_9
+        Language.KOTLIN | JdkVersion.JDK_10
         Language.KOTLIN | JdkVersion.JDK_11
     }
 

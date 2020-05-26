@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
@@ -23,6 +25,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -49,6 +52,13 @@ public class Groovy implements LanguageFeature {
                     .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
+        }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
     }
 
