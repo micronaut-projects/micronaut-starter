@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -12,11 +13,31 @@ import spock.lang.Unroll
 class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Unroll
+    void "#jdkVersion not supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+        when:
+        generate(
+                applicationType,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                [feature],
+        )
+        then:
+        IllegalArgumentException e = thrown()
+        e.message == 'The Azure Functions runtime only supports Java SE 8 LTS (zulu8.31.0.2-jre8.0.181-win_x64).'
+
+        where:
+        [applicationType, jdkVersion, feature] << [
+                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
+                ((JdkVersion.values() as List<JdkVersion>) - [JdkVersion.JDK_8]) as List<JdkVersion>,
+                ['azure-function']
+        ].combinations()
+    }
+
+    @Unroll
     void 'test gradle raw azure function feature for language=#language'() {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
                 ['azure-function']
         )
         String build = output['build.gradle']
@@ -57,7 +78,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
                 ['azure-function']
         )
         String build = output['build.gradle']
@@ -96,7 +117,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
                 ['azure-function']
         )
         String build = output['pom.xml']

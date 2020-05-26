@@ -70,4 +70,9 @@ public class Jooq implements Feature {
     public String getCategory() {
         return Category.DATABASE;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq";
+    }
 }

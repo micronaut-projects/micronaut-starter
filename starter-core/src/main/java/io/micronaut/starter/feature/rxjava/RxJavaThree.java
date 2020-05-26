@@ -49,4 +49,9 @@ public class RxJavaThree implements Feature {
     public String getCategory() {
         return Category.REACTIVE;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-rxjava3/snapshot/guide/index.html";
+    }
 }

@@ -48,4 +48,9 @@ public class HibernateValidator implements Feature {
     public String getCategory() {
         return Category.VALIDATION;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-hibernate-validator/latest/guide/index.html";
+    }
 }

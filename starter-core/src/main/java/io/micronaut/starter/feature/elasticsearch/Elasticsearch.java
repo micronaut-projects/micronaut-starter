@@ -54,4 +54,9 @@ public class Elasticsearch implements Feature {
     public String getCategory() {
         return Category.SEARCH;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-elasticsearch/latest/guide/index.html";
+    }
 }

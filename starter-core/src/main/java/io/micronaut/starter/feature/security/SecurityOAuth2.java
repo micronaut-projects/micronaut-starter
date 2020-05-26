@@ -72,4 +72,9 @@ public class SecurityOAuth2 implements Feature {
     public String getCategory() {
         return Category.SECURITY;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth";
+    }
 }

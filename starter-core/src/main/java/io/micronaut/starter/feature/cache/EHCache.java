@@ -34,12 +34,22 @@ public class EHCache implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using EHCache (https://www.ehcache.org/)";
+        return "Adds support for cache using EHCache";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.caches.my-cache.maximumSize", 20);
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.ehcache.org/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#ehcache";
     }
 
 }

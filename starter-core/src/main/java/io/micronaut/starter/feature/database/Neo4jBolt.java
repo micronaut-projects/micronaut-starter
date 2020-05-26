@@ -55,4 +55,8 @@ public class Neo4jBolt implements Feature {
         return Category.DATABASE;
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-neo4j/latest/guide/index.html";
+    }
 }

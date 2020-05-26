@@ -58,4 +58,9 @@ public class PostgreSQL implements DatabaseDriverFeature {
     public String getDefaultPassword() {
         return "";
     }
+
+    @Override
+    public String getDataDialect() {
+        return "POSTGRES";
+    }
 }

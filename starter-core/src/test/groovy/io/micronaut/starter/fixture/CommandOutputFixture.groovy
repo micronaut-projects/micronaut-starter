@@ -27,6 +27,9 @@ trait CommandOutputFixture {
         handler.getProject()
     }
 
+    Map<String, String> generate(List<String> features = []) {
+        generate(ApplicationType.DEFAULT, features)
+    }
 
     Map<String, String> generate(ApplicationType type , List<String> features = []) {
         def handler = new MapOutputHandler()

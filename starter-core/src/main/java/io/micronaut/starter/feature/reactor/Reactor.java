@@ -50,4 +50,9 @@ public class Reactor implements Feature {
     public String getCategory() {
         return Category.REACTIVE;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html";
+    }
 }

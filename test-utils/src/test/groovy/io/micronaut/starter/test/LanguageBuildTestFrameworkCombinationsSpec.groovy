@@ -10,7 +10,6 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
 
     @Unroll
     void "#language #buildTool #testFramework combination expected"(Language language, BuildTool buildTool, TestFramework testFramework) {
-
         expect:
         LanguageBuildTestFrameworkCombinations.combinations().contains([language, buildTool, testFramework])
 
@@ -34,6 +33,5 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.KOTLINTEST
         Language.GROOVY | BuildTool.MAVEN  | TestFramework.KOTLINTEST
-
     }
 }

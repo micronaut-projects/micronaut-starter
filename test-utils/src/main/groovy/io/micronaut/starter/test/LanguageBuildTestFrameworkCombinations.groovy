@@ -15,6 +15,6 @@ class LanguageBuildTestFrameworkCombinations {
      */
     @Memoized
     static List combinations(List<String> features = null) {
-        features ? [Language.values(), BuildTool.values(), TestFramework.values(), features].combinations() : [Language.values(), BuildTool.values(), TestFramework.values()].combinations()
+        features ? [Language.values(), BuildToolCombinations.buildTools, TestFramework.values(), features].combinations() : [Language.values(), BuildToolCombinations.buildTools, TestFramework.values()].combinations()
     }
 }

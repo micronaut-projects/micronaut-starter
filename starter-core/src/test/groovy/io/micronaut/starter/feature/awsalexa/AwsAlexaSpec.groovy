@@ -19,6 +19,16 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Subject
     AwsAlexa alexaFunction = beanContext.getBean(AwsAlexa)
 
+    void 'test readme.md with feature aws-alexa  contains links to micronaut docs'() {
+        when:
+        def output = generate(['aws-alexa'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#alexa")
+    }
+
     @Unroll
     void "aws-alexa does not support #description"(ApplicationType applicationType,
                                                         String description) {

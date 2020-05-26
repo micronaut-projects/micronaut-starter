@@ -23,7 +23,7 @@ import io.micronaut.starter.feature.Feature;
 import javax.inject.Singleton;
 
 @Singleton
-public class Stackdriver implements Feature {
+public class CloudTrace implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -32,21 +32,31 @@ public class Stackdriver implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "stackdriver";
+        return "gcp-cloud-trace";
     }
 
     @Override
     public String getTitle() {
-        return "stackdriver";
+        return "Cloud Trace - Google Cloud Operations";
     }
 
     @Override
     public String getDescription() {
-        return "Integrates Micronaut with Stackdriver Trace.";
+        return "Integrates Micronaut with Cloud Trace from Google Cloud Operations (formerly Stackdriver)";
     }
 
     @Override
     public String getCategory() {
         return Category.LOGGING;
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://cloud.google.com/trace";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#tracing";
     }
 }

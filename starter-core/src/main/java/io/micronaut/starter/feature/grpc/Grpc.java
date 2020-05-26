@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.grpc;
 
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
@@ -52,5 +53,10 @@ public class Grpc implements DefaultFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.API;
     }
 }

@@ -6,6 +6,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -13,11 +14,21 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutputFixture {
+class AwsLambdaCustomRuntimeSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
     AwsLambdaCustomRuntime awsLambdaCustomRuntime = beanContext.getBean(AwsLambdaCustomRuntime)
+
+    void 'test readme.md with feature aws-lambda-custom-runtime contains links to micronaut docs'() {
+        when:
+        def output = generate(['aws-lambda-custom-runtime'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes")
+    }
 
     @Unroll
     void 'verify bootstrap for a function application type with gradle and feature aws-lambda-custom-runtime for language=#language'() {
@@ -64,7 +75,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['graalvm']
         )
         String bootstrap = output['bootstrap']
@@ -87,7 +98,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec implements CommandOutpu
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
                 ['aws-lambda-custom-runtime', 'graalvm']
         )
         String bootstrap = output['bootstrap']

@@ -29,10 +29,10 @@ public interface DataFeature extends OneOfFeature {
         return DataFeature.class;
     }
 
-    default Map<String, Object> getDatasourceConfig() {
+    default Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
         Map<String, Object> conf = new LinkedHashMap<>();
         conf.put("datasources.default.schema-generate", "CREATE_DROP");
-        conf.put("datasources.default.dialect", "H2");
+        conf.put("datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
     }
 

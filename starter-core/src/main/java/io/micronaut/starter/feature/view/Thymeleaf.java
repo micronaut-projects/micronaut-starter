@@ -32,6 +32,16 @@ public class Thymeleaf implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Thymeleaf as a Server Side View Rendering (https://www.thymeleaf.org/)";
+        return "Adds support for Thymeleaf as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.thymeleaf.org/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#thymeleaf";
     }
 }

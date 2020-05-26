@@ -58,4 +58,9 @@ public class HttpClient implements DefaultFeature {
     public String getCategory() {
         return Category.CLIENT;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#httpClient";
+    }
 }

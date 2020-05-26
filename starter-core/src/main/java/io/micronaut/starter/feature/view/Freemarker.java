@@ -32,6 +32,16 @@ public class Freemarker implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Apache Freemarker as a Server Side View Rendering (https://freemarker.apache.org)";
+        return "Adds support for Apache Freemarker as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://freemarker.apache.org";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#freemarker";
     }
 }

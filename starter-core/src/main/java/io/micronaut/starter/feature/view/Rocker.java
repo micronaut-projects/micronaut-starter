@@ -32,6 +32,16 @@ public class Rocker implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Rocker as a Server Side View Rendering (https://github.com/fizzed/rocker)";
+        return "Adds support for Rocker as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/fizzed/rocker";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker";
     }
 }

@@ -26,6 +26,9 @@ TestFeature testFeature
     kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
     testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    @if (language.isGroovy()) {
+        @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
+    }
     @dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "testImplementation", null)
     @dependency.template("io.mockk", "mockk", "testImplementation", "1.9.3")
     @dependency.template("io.kotlintest", "kotlintest-runner-junit5", "testImplementation", "3.3.2")

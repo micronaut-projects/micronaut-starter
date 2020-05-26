@@ -64,4 +64,9 @@ public class AzureRawFunction extends AbstractAzureFunction {
                     spockTemplate(project));
         }
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#simpleAzureFunctions";
+    }
 }

@@ -5,10 +5,23 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class HazelcastSpec extends BeanContextSpec {
+class HazelcastSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Unroll
+    void 'test readme.md contains links to hazelcast and micronaut docs'() {
+        when:
+        def output = generate(['cache-hazelcast'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://hazelcast.org/")
+        readme.contains("https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast")
+    }
 
     @Unroll
     void 'test gradle cache-hazelcast feature for language=#language'() {

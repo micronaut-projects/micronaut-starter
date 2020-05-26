@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.Unroll
 
 class CreateMessagingSpec extends CommandSpec {
@@ -35,6 +36,6 @@ class CreateMessagingSpec extends CommandSpec {
         testOutputContains("Startup completed")
 
         where:
-        [lang, buildTool, feature] << [Language.values(), BuildTool.values(), [Kafka.NAME, RabbitMQ.NAME, Nats.NAME]].combinations()
+        [lang, buildTool, feature] << LanguageBuildCombinations.combinations([Kafka.NAME, RabbitMQ.NAME, Nats.NAME])
     }
 }

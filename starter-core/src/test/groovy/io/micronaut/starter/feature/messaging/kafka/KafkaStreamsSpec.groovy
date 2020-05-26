@@ -6,8 +6,19 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 
-class KafkaStreamsSpec extends BeanContextSpec {
+class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    void 'test readme.md with feature kafka-streams contains links to micronaut docs'() {
+        when:
+        def output = generate(['kafka-streams'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html#kafkaStream")
+    }
 
     void "test kafka-streams features"() {
         when:

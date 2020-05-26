@@ -43,4 +43,8 @@ public class Eureka implements DiscoveryFeature {
         generatorContext.getConfiguration().put("eureka.client.defaultZone", "${EUREKA_HOST:localhost}:${EUREKA_PORT:8761}");
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryEureka";
+    }
 }

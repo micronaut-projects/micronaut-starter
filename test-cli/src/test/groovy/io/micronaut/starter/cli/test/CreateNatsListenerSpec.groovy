@@ -1,29 +1,26 @@
-package io.micronaut.starter.cli.feature.messaging.nats
+package io.micronaut.starter.cli.test
 
 import io.micronaut.context.BeanContext
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.cli.CommandFixture
-import io.micronaut.starter.cli.CommandSpec
+import io.micronaut.starter.cli.feature.messaging.nats.CreateNatsListener
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.Unroll
 
-class CreateNatsProducerSpec extends CommandSpec implements CommandFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class CreateNatsListenerSpec extends CommandSpec {
 
     @Unroll
     void "test the project compiles after creating a listener #language - #buildTool"(Language language, BuildTool buildTool) {
         given:
-        generateProject(new Options(language, buildTool), ['nats'])
+        generateProject(language, buildTool, ['nats'] as List<String>)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
-        CreateNatsProducer command = new CreateNatsProducer(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
-        command.producerName = "Greeting"
+        CreateNatsListener command = new CreateNatsListener(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)
+        command.listenerName = "Greeting"
 
         expect:
         command.applies()
@@ -32,7 +29,7 @@ class CreateNatsProducerSpec extends CommandSpec implements CommandFixture {
         command.call()
 
         then:
-        1 * consoleOutput.out({ it.contains("Rendered Nats producer") })
+        1 * consoleOutput.out({ it.contains("Rendered Nats listener") })
 
         when:
         if (buildTool == BuildTool.GRADLE) {
@@ -45,7 +42,12 @@ class CreateNatsProducerSpec extends CommandSpec implements CommandFixture {
         testOutputContains("BUILD SUCCESS")
 
         where:
-        [language, buildTool] << [Language.values(), BuildTool.values()].combinations()
+        [language, buildTool] << LanguageBuildCombinations.combinations()
+    }
+
+    @Override
+    String getTempDirectoryPrefix() {
+        "test-createNatsListener"
     }
 
 }

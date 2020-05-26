@@ -89,12 +89,12 @@ public class AwsAlexa implements Feature, CloudFeature {
 
     @Override
     public String getTitle() {
-        return "Alexa Skill as Function";
+        return "Alexa Skills";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for hosting a Custom Alexa Skill as an AWS Lambda function (https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-an-aws-lambda-function.html).";
+        return "Adds support for building Alexa Skills with Micronaut.";
     }
 
     @Override
@@ -247,5 +247,10 @@ public class AwsAlexa implements Feature, CloudFeature {
     @Override
     public Cloud getCloud() {
         return Cloud.AWS;
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#alexa";
     }
 }

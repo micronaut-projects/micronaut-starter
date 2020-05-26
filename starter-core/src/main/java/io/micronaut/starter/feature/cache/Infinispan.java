@@ -34,7 +34,7 @@ public class Infinispan implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Infinispan (https://infinispan.org/)";
+        return "Adds support for cache using Infinispan";
     }
 
     @Override
@@ -43,4 +43,13 @@ public class Infinispan implements CacheFeature {
         generatorContext.getConfiguration().put("infinispan.client.hotrod.server.port", 10222);
     }
 
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://infinispan.org/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#infinispan";
+    }
 }

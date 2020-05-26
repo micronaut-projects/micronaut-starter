@@ -50,4 +50,9 @@ public class RxJavaOne implements Feature {
     public String getCategory() {
         return Category.REACTIVE;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-rxjava1/latest/guide/index.html";
+    }
 }

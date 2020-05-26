@@ -55,4 +55,9 @@ public class Ribbon implements Feature {
     public String getCategory() {
         return Category.CLIENT;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#netflixRibbon";
+    }
 }

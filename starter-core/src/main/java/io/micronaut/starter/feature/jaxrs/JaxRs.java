@@ -63,4 +63,9 @@ public class JaxRs implements Feature {
     public String getCategory() {
         return Category.SERVER;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-jaxrs/latest/guide/index.html";
+    }
 }

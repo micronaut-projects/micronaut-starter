@@ -6,8 +6,19 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 
-class DataJdbcSpec extends BeanContextSpec {
+class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    void 'test readme.md with feature data-jdbc contains links to micronaut docs'() {
+        when:
+        def output = generate(['data-jdbc'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-data/latest/guide/index.html#jdbc")
+    }
 
     void "test data jdbc features"() {
         when:
@@ -81,5 +92,20 @@ class DataJdbcSpec extends BeanContextSpec {
 
         then:
         ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "H2"
+
+        when:
+        ctx = buildGeneratorContext(['data-jdbc', 'postgres'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "POSTGRES"
+
+        when:
+        ctx = buildGeneratorContext(['data-jdbc', 'mysql'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
     }
 }

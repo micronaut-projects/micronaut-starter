@@ -45,4 +45,9 @@ public class Jrebel implements ReloadingFeature {
             generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
         }
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://docs.micronaut.io/latest/guide/index.html#jrebel";
+    }
 }

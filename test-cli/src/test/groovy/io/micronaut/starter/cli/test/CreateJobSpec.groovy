@@ -1,22 +1,13 @@
-package io.micronaut.starter.cli.command.project
+package io.micronaut.starter.cli.test
 
-import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
-import io.micronaut.starter.cli.CommandFixture
-import io.micronaut.starter.cli.CommandSpec
-import io.micronaut.starter.cli.command.project.bean.CreateBeanCommand
 import io.micronaut.starter.cli.command.project.job.CreateJobCommand
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Language
-import spock.lang.AutoCleanup
-import spock.lang.Shared
+import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 
-class CreateJobSpec extends CommandSpec implements CommandFixture {
-
-    @Shared
-    @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+class CreateJobSpec extends CommandSpec {
 
     @Unroll
     void "test creating a job - #language.getName()"(Language language) {
@@ -39,4 +30,8 @@ class CreateJobSpec extends CommandSpec implements CommandFixture {
         language << Language.values()
     }
 
+    @Override
+    String getTempDirectoryPrefix() {
+        "test-createJob"
+    }
 }

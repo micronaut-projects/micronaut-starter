@@ -53,4 +53,8 @@ public class KafkaStreams implements MessagingFeature {
         }
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html#kafkaStream";
+    }
 }

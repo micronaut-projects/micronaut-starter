@@ -32,6 +32,16 @@ public class Velocity implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Apache Velocity as a Server Side View Rendering (http://velocity.apache.org)";
+        return "Adds support for Apache Velocity as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://velocity.apache.org";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#velocity";
     }
 }

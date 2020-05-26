@@ -1,16 +1,13 @@
 package io.micronaut.starter.api
 
-import edu.umd.cs.findbugs.annotations.NonNull
-import edu.umd.cs.findbugs.annotations.Nullable
+
 import io.micronaut.context.i18n.ResourceBundleMessageSource
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.graalvm.GraalNativeImage
 import io.micronaut.test.annotation.MicronautTest
-import io.swagger.v3.oas.annotations.Parameter
 import spock.lang.Specification
 
 import javax.inject.Inject

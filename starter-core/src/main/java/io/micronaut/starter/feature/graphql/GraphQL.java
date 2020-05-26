@@ -43,9 +43,14 @@ public class GraphQL implements Feature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
-
+    
     @Override
     public String getCategory() {
-        return Category.SERVER;
+        return Category.API;
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-graphql/latest/guide/index.html";
     }
 }

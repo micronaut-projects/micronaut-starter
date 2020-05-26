@@ -59,7 +59,7 @@ public class DataJpa implements DataFeature {
     public void apply(GeneratorContext generatorContext) {
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
-        generatorContext.getConfiguration().putAll(getDatasourceConfig());
+        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
         generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
     }
 }

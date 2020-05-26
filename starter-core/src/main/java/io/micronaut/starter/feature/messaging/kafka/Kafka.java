@@ -55,4 +55,9 @@ public class Kafka implements DefaultFeature, MessagingFeature {
         return applicationType == ApplicationType.MESSAGING &&
                 selectedFeatures.stream().noneMatch(feature -> feature instanceof MessagingFeature);
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html";
+    }
 }

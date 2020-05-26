@@ -32,6 +32,16 @@ public class Handlebars implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Handlebars as a Server Side View Rendering (http://jknack.github.io/handlebars.java)";
+        return "Adds support for Handlebars as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://jknack.github.io/handlebars.java/";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#handlebars";
     }
 }

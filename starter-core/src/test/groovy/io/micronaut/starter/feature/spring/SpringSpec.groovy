@@ -5,16 +5,28 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringSpec extends BeanContextSpec {
+class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
     Spring spring = beanContext.getBean(Spring)
+
+    void 'test readme.md with feature spring contains links to micronaut docs'() {
+        when:
+        def output = generate(['spring'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html")
+    }
+
 
     void 'spring belongs to Spring category'() {
         expect:

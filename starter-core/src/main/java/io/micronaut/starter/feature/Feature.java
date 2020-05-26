@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.annotation.Indexed;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
@@ -126,4 +127,21 @@ public interface Feature extends Named, Ordered, Described {
         return Category.OTHER;
     }
 
+    /**
+     *
+     * @return Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast
+     */
+    @Nullable
+    default String getMicronautDocumentation() {
+        return null;
+    }
+
+    /**
+     *
+     * @return Returns a link to third party. E.g. https://hazelcast.org
+     */
+    @Nullable
+    default String getThirdPartyDocumentation() {
+        return null;
+    }
 }

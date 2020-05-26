@@ -5,10 +5,21 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class KubernetesSpec extends BeanContextSpec {
+class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    void 'test readme.md with feature kubernetes contains links to micronaut docs'() {
+        when:
+        def output = generate(['kubernetes'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html")
+    }
 
     @Unroll
     void 'test gradle kubernetes feature for language=#language'() {

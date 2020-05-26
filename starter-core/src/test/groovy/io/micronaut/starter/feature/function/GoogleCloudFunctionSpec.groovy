@@ -11,14 +11,22 @@ import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 
-class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
     GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
+
+    void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
+        when:
+        def output = generate(['google-cloud-function'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#cloudFunction")
+    }
 
     @Unroll
     void "google-cloud-function does not support #description"(ApplicationType applicationType, String description) {

@@ -61,6 +61,16 @@ public class OpenApi implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.SERVER;
+        return Category.API;
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.openapis.org";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-openapi/latest/guide/index.html";
     }
 }

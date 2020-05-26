@@ -34,7 +34,7 @@ public class Hazelcast implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Hazelcast (https://hazelcast.org/)";
+        return "Adds support for cache using Hazelcast";
     }
 
     @Override
@@ -42,4 +42,12 @@ public class Hazelcast implements CacheFeature {
         generatorContext.getConfiguration().put("hazelcast.network.addresses", "['121.0.0.1:5701']");
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast";
+    }
+
+    public String getThirdPartyDocumentation() {
+        return "https://hazelcast.org/";
+    }
 }

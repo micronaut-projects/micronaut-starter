@@ -32,6 +32,16 @@ public class Soy implements ViewFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Soy (Closure Templates) as a Server Side View Rendering (https://github.com/google/closure-templates)";
+        return "Adds support for Soy (Closure Templates) as a Server Side View Rendering";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/google/closure-templates";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#soy";
     }
 }

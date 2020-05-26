@@ -1,16 +1,26 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.options.JdkVersion
 
 @args (
 Project project,
 BuildTool buildTool,
-String jarFile
+String jarFile,
+JdkVersion jdkVersion
 )
 @if (buildTool.equals(BuildTool.GRADLE)) {
+  @if (jdkVersion == JdkVersion.JDK_8) {
 FROM gradle:6.3.0-jdk8 as builder
+  } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
+FROM gradle:6.3.0-jdk11 as builder
+  }
 COPY --chown=gradle:gradle . /home/application
 } else {
+  @if (jdkVersion == JdkVersion.JDK_8) {
 FROM maven:3.6.3-openjdk-8 as builder
+  } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
+FROM maven:3.6.3-openjdk-11 as builder
+  }
 COPY . /home/application
 }
 WORKDIR /home/application
@@ -26,7 +36,11 @@ ENV LANG=en_US.UTF-8
 RUN yum install -y gcc gcc-c++ libc6-dev  zlib1g-dev curl bash zlib zlib-devel zip
 
 ENV GRAAL_VERSION 20.1.0
+@if (jdkVersion == JdkVersion.JDK_8) {
 ENV JDK_VERSION java8
+} else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
+ENV JDK_VERSION java11
+}
 ENV GRAAL_FILENAME graalvm-ce-${JDK_VERSION}-linux-amd64-${GRAAL_VERSION}.tar.gz
 
 RUN curl -4 -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-${GRAAL_VERSION}/${GRAAL_FILENAME} -o /tmp/${GRAAL_FILENAME}

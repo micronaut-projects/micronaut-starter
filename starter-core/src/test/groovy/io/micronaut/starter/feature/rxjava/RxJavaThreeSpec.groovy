@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.rxjava
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -10,7 +11,17 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class RxJavaThreeSpec extends BeanContextSpec {
+class RxJavaThreeSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    void 'test readme.md with feature rxjava3 contains links to micronaut docs'() {
+        when:
+        def output = generate(['rxjava3'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-rxjava3/snapshot/guide/index.html")
+    }
 
     @Subject
     @Shared

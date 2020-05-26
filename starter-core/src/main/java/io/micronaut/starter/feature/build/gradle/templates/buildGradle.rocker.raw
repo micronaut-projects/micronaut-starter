@@ -67,7 +67,6 @@ repositories {
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
-
 }
 
 configurations {
@@ -104,6 +103,7 @@ dependencies {
 @if (features.language().isKotlin()) {
     @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "implementation", "${kotlinVersion}")
     @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "implementation", "${kotlinVersion}")
+    @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "implementation", null)
 }
 @if (features.language().isGroovy()) {
     @dependency.template("io.micronaut", "micronaut-runtime-groovy", "implementation", null)
@@ -330,7 +330,7 @@ dependencies {
 @if (features.contains("redis-lettuce")) {
     @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
 }
-@if (features.contains("stackdriver")) {
+@if (features.contains("gcp-cloud-trace")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
 }
 @if (features.contains("kotlin-extension-functions")) {
@@ -338,6 +338,8 @@ dependencies {
 }
 @if (features.contains("ktor")) {
     @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "implementation", null)
+    @dependency.template("io.ktor", "ktor-server-netty", "implementation", "1.3.2")
+    @dependency.template("io.ktor", "ktor-jackson", "implementation", "1.3.2")
 }
 @if (features.contains("reactor")) {
     @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)
@@ -509,12 +511,9 @@ mainClassName = "@features.application().mainClassName(applicationType, project,
 }
 
 
-@if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
-}
-
 }
 
 java {

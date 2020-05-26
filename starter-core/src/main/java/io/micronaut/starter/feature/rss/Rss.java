@@ -48,4 +48,9 @@ public class Rss implements Feature {
     public String getCategory() {
         return Category.VIEW;
     }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-rss/latest/guide/index.html#whatsNew";
+    }
 }
