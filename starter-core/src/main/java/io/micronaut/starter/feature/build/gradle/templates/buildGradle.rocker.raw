@@ -511,12 +511,9 @@ mainClassName = "@features.application().mainClassName(applicationType, project,
 }
 
 
-@if (features.testFramework().isJunit() || features.testFramework().isKotlinTest()) {
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
-}
-
 }
 
 java {
