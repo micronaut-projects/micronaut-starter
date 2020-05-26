@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6,"i2":6,"i3":6,"i4":18,"i5":6,"i6":18};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":6,"i4":6,"i5":18,"i6":6,"i7":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -148,25 +148,29 @@ extends <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.html" 
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDataDialect--">getDataDialect</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>default java.lang.Class&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getFeatureClass--">getFeatureClass</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getJdbcUrl--">getJdbcUrl</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -274,10 +278,19 @@ extends <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.html" 
 <a name="getDefaultPassword--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getDefaultPassword</h4>
 <pre>java.lang.String&nbsp;getDefaultPassword()</pre>
+</li>
+</ul>
+<a name="getDataDialect--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDataDialect</h4>
+<pre>java.lang.String&nbsp;getDataDialect()</pre>
 </li>
 </ul>
 </li>
