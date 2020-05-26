@@ -35,7 +35,12 @@ dependencies {
     implementation "org.fusesource.jansi:jansi:1.15"
     implementation "org.yaml:snakeyaml:1.26"
 
+    implementation 'org.shredzone.acme4j:acme4j-client:2.9'
+    implementation 'org.shredzone.acme4j:acme4j-utils:2.9'
+
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
+
+    testImplementation "org.testcontainers:spock:1.13.0"
 }
 
 mainClassName = "io.micronaut.starter.cli.MicronautStarter"

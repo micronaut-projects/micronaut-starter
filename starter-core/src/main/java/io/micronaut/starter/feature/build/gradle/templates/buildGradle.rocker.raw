@@ -325,6 +325,9 @@ dependencies {
 @if (features.contains("graphql")) {
     @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
 }
+@if (features.contains("acme")) {
+    implementation "io.micronaut.acme:micronaut-acme"
+}
 @if (features.contains("postgres-reactive")) {
     @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "implementation", null)
 }
