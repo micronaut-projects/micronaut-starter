@@ -24,6 +24,6 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def buildGradle = output['build.gradle']
 
         then:
-        buildGradle.contains('mainClassName = "example.micronaut.Application"')
+        buildGradle.contains('mainClassName = "example.micronaut.ApplicationKt"')
     }
 }
