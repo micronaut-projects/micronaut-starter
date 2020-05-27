@@ -124,16 +124,11 @@ package example.micronaut
 
 import io.micronaut.runtime.Micronaut
 
-object Application {
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val ctx = Micronaut.build()
-                .packages("example.micronaut")
-                .mainClass(Application.javaClass)
-                .start()
-        ctx.getBean(example.micronaut.Greeting::class.java)
-    }
+fun main(args: Array<String>) {
+    val ctx = Micronaut.build()
+            .packages("example.micronaut")
+            .start()
+    ctx.getBean(example.micronaut.Greeting::class.java)
 }
 """)
         if (build == BuildTool.GRADLE) {
