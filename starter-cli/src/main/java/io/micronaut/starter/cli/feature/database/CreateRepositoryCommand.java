@@ -22,7 +22,6 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
@@ -43,7 +42,6 @@ import java.util.Objects;
 public class CreateRepositoryCommand extends CodeGenCommand {
 
     private static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
-    private final List<DatabaseDriverFeature> driverFeatures;
 
     @ReflectiveAccess
     @CommandLine.Parameters(index = "0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
@@ -52,6 +50,8 @@ public class CreateRepositoryCommand extends CodeGenCommand {
     @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--idType"}, description = "Specify custom id type [Integer, Long, String] or full package name [ie. com.corp.Book] - Defaults to Long")
     String idType = "Long";
+
+    private final List<DatabaseDriverFeature> driverFeatures;
 
     @Inject
     public CreateRepositoryCommand(@Parameter CodeGenConfig config, List<DatabaseDriverFeature> driverFeatures) {
