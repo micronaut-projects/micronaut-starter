@@ -26,6 +26,11 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
 
         then:
         buildGradle.contains('mainClassName = "example.micronaut.Application"')
+
+        and: 'implementation compileOnly testImplementation use the same policy'
+        buildGradle.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
     }
 
     @Unroll

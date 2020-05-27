@@ -40,6 +40,13 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
             assert buildGradle
             assert buildGradle.contains('mainClassName = "example.micronaut.ApplicationKt"')
             assert buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
+
+            // implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
+            assert buildGradle.contains('kapt(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+            assert buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+            assert buildGradle.contains('kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+            assert buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+
         } else if (buildTool == BuildTool.MAVEN) {
             assert pom.contains("""
     <dependency>

@@ -34,6 +34,12 @@ class JavaApplicationSpec extends Specification implements ProjectFixture, Conte
 
         then:
         buildGradle.contains('mainClassName = "example.micronaut.Application"')
+
+        and: 'implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
+        buildGradle.contains('annotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains('testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
     }
 
     void "test java application"() {
