@@ -171,12 +171,14 @@ extends <a href="../../../../../../io/micronaut/starter/cli/command/CodeGenComma
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/cli/feature/database/CreateRepositoryCommand.html#CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-">CreateRepositoryCommand</a></span>(<a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/cli/feature/database/CreateRepositoryCommand.html#CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-java.util.List-">CreateRepositoryCommand</a></span>(<a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+                       java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&gt;&nbsp;driverFeatures)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/cli/feature/database/CreateRepositoryCommand.html#CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-">CreateRepositoryCommand</a></span>(<a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/cli/feature/database/CreateRepositoryCommand.html#CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-java.util.List-">CreateRepositoryCommand</a></span>(<a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
                        io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
-                       <a href="../../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</code>&nbsp;</td>
+                       <a href="../../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput,
+                       java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&gt;&nbsp;driverFeatures)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -237,7 +239,7 @@ extends <a href="../../../../../../io/micronaut/starter/cli/command/CodeGenComma
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-">
+<a name="CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -245,10 +247,11 @@ extends <a href="../../../../../../io/micronaut/starter/cli/command/CodeGenComma
 <h4>CreateRepositoryCommand</h4>
 <pre>@Inject
 public&nbsp;CreateRepositoryCommand(@Parameter
-                                       <a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config)</pre>
+                                       <a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
+                                       java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&gt;&nbsp;driverFeatures)</pre>
 </li>
 </ul>
-<a name="CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-">
+<a name="CreateRepositoryCommand-io.micronaut.starter.cli.CodeGenConfig-io.micronaut.core.util.functional.ThrowingSupplier-io.micronaut.starter.io.ConsoleOutput-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -256,7 +259,8 @@ public&nbsp;CreateRepositoryCommand(@Parameter
 <h4>CreateRepositoryCommand</h4>
 <pre>public&nbsp;CreateRepositoryCommand(<a href="../../../../../../io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a>&nbsp;config,
                                io.micronaut.core.util.functional.ThrowingSupplier&lt;<a href="../../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>,java.io.IOException&gt;&nbsp;outputHandlerSupplier,
-                               <a href="../../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
+                               <a href="../../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput,
+                               java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&gt;&nbsp;driverFeatures)</pre>
 </li>
 </ul>
 </li>
