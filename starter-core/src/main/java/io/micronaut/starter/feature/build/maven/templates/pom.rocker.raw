@@ -273,6 +273,9 @@ List<Property> properties
 @if (features.contains("neo4j-gorm")) {
 @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "compile", null)
 }
+@if (features.contains("security")) {
+@dependency.template("io.micronaut", "micronaut-security", "compile", null)
+}
 @if (features.contains("security-jwt")) {
 @dependency.template("io.micronaut", "micronaut-security-jwt", "compile", null)
 }

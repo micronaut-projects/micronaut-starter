@@ -303,6 +303,9 @@ dependencies {
 @if (features.contains("neo4j-gorm")) {
     @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "implementation", null)
 }
+@if (features.contains("security")) {
+    @dependency.template("io.micronaut", "micronaut-security", "implementation", null)
+}
 @if (features.contains("security-jwt")) {
     @dependency.template("io.micronaut", "micronaut-security-jwt", "implementation", null)
 }
