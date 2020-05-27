@@ -12,12 +12,16 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
+import org.apache.maven.cli.MavenCli
+import org.gradle.testkit.runner.BuildResult
+import org.gradle.testkit.runner.GradleRunner
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 import spock.util.environment.OperatingSystem
 
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
 abstract class CommandSpec extends Specification {
@@ -25,6 +29,8 @@ abstract class CommandSpec extends Specification {
     @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
+    @Shared GradleRunner gradleRunner = GradleRunner.create()
+    @Shared MavenCli cli = new MavenCli()
 
     abstract String getTempDirectoryPrefix()
 
@@ -33,7 +39,7 @@ abstract class CommandSpec extends Specification {
     Process process
 
     void setupSpec() {
-        Thread shutdownHook = new Thread(this::killProcess)
+        Thread shutdownHook = new Thread({ killProcess() } as Runnable)
         Runtime.runtime.addShutdownHook(shutdownHook)
     }
 
@@ -45,6 +51,32 @@ abstract class CommandSpec extends Specification {
     void cleanup() {
         dir.delete()
         killProcess()
+    }
+
+    String executeBuild(BuildTool buildTool, String command) {
+        String output = null
+        if (buildTool == BuildTool.GRADLE) {
+            output = executeGradle(command).getOutput()
+        } else if (buildTool == BuildTool.MAVEN) {
+            output = executeMaven(command)
+        }
+        return output
+    }
+
+    BuildResult executeGradle(String command) {
+        BuildResult result =
+                gradleRunner.withProjectDir(dir)
+                        .withArguments(command)
+                        .build()
+        return result
+    }
+
+    String executeMaven(String command) {
+        System.setProperty("maven.multiModuleProjectDirectory", dir.absolutePath)
+        def bytesOut = new ByteArrayOutputStream()
+        PrintStream output = new PrintStream(bytesOut)
+        cli.doMain(command.split(' '), dir.absolutePath, output, output)
+        return new String(bytesOut.toByteArray(), StandardCharsets.UTF_8)
     }
 
     void executeGradleCommand(String command) {
@@ -116,6 +148,7 @@ abstract class CommandSpec extends Specification {
 
 
     ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
-        return () -> new FileSystemOutputHandler(dir, consoleOutput)
+        return { -> new FileSystemOutputHandler(dir, consoleOutput)}
     }
+
 }
