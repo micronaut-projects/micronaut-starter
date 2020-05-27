@@ -29,8 +29,13 @@ public class H2 implements DatabaseDriverFeature {
     }
 
     @Override
-    public boolean isVisible() {
-        return false;
+    public String getTitle() {
+        return "H2 open source database system.";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds the H2 driver and default config.";
     }
 
     @Override

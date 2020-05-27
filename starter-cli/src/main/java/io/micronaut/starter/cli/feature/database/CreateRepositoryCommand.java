@@ -22,6 +22,8 @@ import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
@@ -34,12 +36,14 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @CommandLine.Command(name = "create-repository", description = "Creates a repository")
 @Prototype
 public class CreateRepositoryCommand extends CodeGenCommand {
 
     private static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
+    private final List<DatabaseDriverFeature> driverFeatures;
 
     @ReflectiveAccess
     @CommandLine.Parameters(index = "0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
@@ -50,12 +54,17 @@ public class CreateRepositoryCommand extends CodeGenCommand {
     String idType = "Long";
 
     @Inject
-    public CreateRepositoryCommand(@Parameter CodeGenConfig config) {
+    public CreateRepositoryCommand(@Parameter CodeGenConfig config, List<DatabaseDriverFeature> driverFeatures) {
         super(config);
+        this.driverFeatures = driverFeatures;
     }
 
-    public CreateRepositoryCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateRepositoryCommand(CodeGenConfig config,
+                                   ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                   ConsoleOutput consoleOutput,
+                                   List<DatabaseDriverFeature> driverFeatures) {
         super(config, outputHandlerSupplier, consoleOutput);
+        this.driverFeatures = driverFeatures;
     }
 
     @Override
@@ -79,13 +88,28 @@ public class CreateRepositoryCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
 
+
+        String dialect = jdbcRepository ? config.getFeatures().stream()
+                .map(name -> {
+                    for (DatabaseDriverFeature feature: driverFeatures) {
+                        if (feature.getName().equals(name)) {
+                            return feature;
+                        }
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .findFirst()
+                .map(DatabaseDriverFeature::getDataDialect)
+                .orElse(null) : null;
+
         RenderResult renderResult = null;
         if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}Repository.java", javaRepository.template(project, idTypeImport, idType, jdbcRepository)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}Repository.java", javaRepository.template(project, idTypeImport, idType, jdbcRepository, dialect)), overwrite);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Repository.groovy", groovyRepository.template(project, idTypeImport, idType, jdbcRepository)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Repository.groovy", groovyRepository.template(project, idTypeImport, idType, jdbcRepository, dialect)), overwrite);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Repository.kt", kotlinRepository.template(project, idTypeImport, idType, jdbcRepository)), overwrite);
+            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Repository.kt", kotlinRepository.template(project, idTypeImport, idType, jdbcRepository, dialect)), overwrite);
         }
 
         if (renderResult != null) {

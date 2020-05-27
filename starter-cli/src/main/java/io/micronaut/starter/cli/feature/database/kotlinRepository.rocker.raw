@@ -4,7 +4,8 @@
 Project project,
 String idTypeImport,
 String idType,
-Boolean jdbcRepository
+Boolean jdbcRepository,
+String dialect
 )
 
 @if (project.getPackageName() != null) {
@@ -25,7 +26,11 @@ import io.micronaut.data.model.query.builder.sql.Dialect
 
 
 @if (jdbcRepository) {
+@if (dialect != null) {
+@@JdbcRepository(dialect = "@dialect")
+} else {
 @@JdbcRepository
+}
 } else {
 @@Repository
 }
