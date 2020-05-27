@@ -556,6 +556,12 @@ compileTestKotlin {
         javaParameters = true
     }
 }
+kapt {
+    arguments {
+        arg("micronaut.processing.incremental", true)
+        arg("micronaut.processing.annotations", "@project.getPackageName().*")
+    }
+}
 }
 
 @if (features.language().isGroovy()) {

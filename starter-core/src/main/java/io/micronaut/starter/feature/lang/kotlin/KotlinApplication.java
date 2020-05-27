@@ -34,7 +34,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
         if (features.isFeaturePresent(AwsLambda.class)) {
             return null;
         }
-        return project.getPackageName() + ".Application";
+        return project.getPackageName() + ".ApplicationKt";
     }
 
     @Override
