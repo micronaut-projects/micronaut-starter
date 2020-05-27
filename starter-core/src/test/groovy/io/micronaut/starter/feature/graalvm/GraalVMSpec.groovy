@@ -245,7 +245,6 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         nativeImageProperties
 
-        nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
         nativeImageProperties.contains('-H:Name=foo')
         nativeImageProperties.contains('-H:Class=example.micronaut.Application')
 
@@ -284,7 +283,6 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         nativeImageProperties
 
-        nativeImageProperties.contains('-H:IncludeResources=logback.xml|application.yml|bootstrap.yml')
         nativeImageProperties.contains('-H:Name=foo')
         nativeImageProperties.contains('-H:Class=io.micronaut.function.aws.runtime.MicronautLambdaRuntime')
 
