@@ -468,6 +468,9 @@ List<Property> properties
 @if (features.contains("oracle")) {
 @dependency.template("com.oracle.ojdbc", "ojdbc8", "runtime", "19.3.0.0")
 }
+@if (features.contains("sqlserver")) {
+@dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", "7.4.1.jre8")
+}
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }

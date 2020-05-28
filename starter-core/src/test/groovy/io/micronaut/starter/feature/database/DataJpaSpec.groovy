@@ -111,5 +111,12 @@ class DataJpaSpec extends BeanContextSpec {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "ORACLE"
+
+        when:
+        ctx = buildGeneratorContext(['data-jpa', 'sqlserver'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
     }
 }
