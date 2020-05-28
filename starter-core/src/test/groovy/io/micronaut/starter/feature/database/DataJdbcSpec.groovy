@@ -114,5 +114,12 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "MYSQL"
+
+        when:
+        ctx = buildGeneratorContext(['data-jdbc', 'oracle'])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.get("datasources.default.dialect") == "ORACLE"
     }
 }

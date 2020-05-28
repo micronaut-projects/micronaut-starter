@@ -488,6 +488,9 @@ dependencies {
 @if (features.contains("mariadb")) {
     @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", "2.6.0")
 }
+@if (features.contains("oracle")) {
+    @dependency.template("com.oracle.ojdbc", "ojdbc8", "runtimeOnly", "19.3.0.0")
+}
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
 }
