@@ -27,7 +27,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         features.contains("data")
         features.contains("h2")
-        features.contains("jdbc-tomcat")
+        features.contains("jdbc-hikari")
         features.contains("data-jdbc")
     }
 
@@ -38,7 +38,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
         template.contains('implementation("io.micronaut.data:micronaut-data-jdbc")')
-        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-tomcat")')
+        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-hikari")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
@@ -73,7 +73,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         template.contains("""
     <dependency>
       <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-jdbc-tomcat</artifactId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
