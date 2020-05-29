@@ -105,10 +105,10 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
                 </annotationProcessorPath>
 """)
         template.contains("""
-              <compilerArgs>
-                <arg>-Amicronaut.processing.group=example.micronaut</arg>
-                <arg>-Amicronaut.processing.module=foo</arg>
-              </compilerArgs>
+              <annotationProcessorArgs>
+                <annotationProcessorArg>micronaut.processing.group=example.micronaut</annotationProcessorArg>
+                <annotationProcessorArg>micronaut.processing.module=foo</annotationProcessorArg>
+              </annotationProcessorArgs>
 """)
     }
 
