@@ -381,7 +381,7 @@ dependencies {
     @dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "implementation", null)
 }
 @if (features.contains("rabbitmq")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "implementation", null)
+    @dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "implementation", null)
 }
 @if (features.contains("nats")) {
     @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)

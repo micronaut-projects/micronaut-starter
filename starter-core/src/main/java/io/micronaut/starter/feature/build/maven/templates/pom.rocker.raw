@@ -295,7 +295,7 @@ List<Property> properties
 @dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "compile", null)
 }
 @if (features.contains("rabbitmq")) {
-@dependency.template("io.micronaut.configuration", "micronaut-rabbitmq", "compile", null)
+@dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "compile", null)
 }
 @if (features.contains("nats")) {
 @dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
