@@ -13,32 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database.jdbc;
+package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Tomcat extends JdbcFeature {
-
-    public Tomcat(DatabaseDriverFeature dbFeature) {
-        super(dbFeature);
-    }
+public class SQLServer implements DatabaseDriverFeature {
 
     @Override
+    @NonNull
     public String getName() {
-        return "jdbc-tomcat";
+        return "sqlserver";
     }
 
     @Override
     public String getTitle() {
-        return "Tomcat JDBC Connection Pool";
+        return "Microsoft SQL Server.";
     }
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Tomcat Connection Pool";
+        return "Adds the SQL Server driver and default config.";
     }
 
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:sqlserver://localhost:1433;databaseName=tempdb";
+    }
+
+    @Override
+    public String getDriverClass() {
+        return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "sa";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
+    }
+
+    @Override
+    public String getDataDialect() {
+        return "SQL_SERVER";
+    }
 }

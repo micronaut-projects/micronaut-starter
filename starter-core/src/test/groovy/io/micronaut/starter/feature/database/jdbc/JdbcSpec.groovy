@@ -5,9 +5,10 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import spock.lang.Unroll
 
-class JdbcSpec extends BeanContextSpec {
+class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Unroll
     void "test gradle jdbc feature #jdbcFeature"() {
@@ -62,6 +63,20 @@ class JdbcSpec extends BeanContextSpec {
 
         then:
         ctx.configuration.containsKey("datasources.default")
+
+        where:
+        jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name
+    }
+
+    @Unroll
+    void 'test readme.md with feature #jdbcFeature contains links to micronaut docs'() {
+        when:
+        def output = generate([jdbcFeature])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc")
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name

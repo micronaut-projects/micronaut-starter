@@ -7,31 +7,31 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class PostgreSQLSpec extends BeanContextSpec {
+class MariaDBSpec extends BeanContextSpec {
 
     @Unroll
-    void 'test gradle postgres feature for language=#language'() {
+    void 'test gradle mariadb feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language)).render().toString()
 
         then:
-        template.contains('runtimeOnly("org.postgresql:postgresql:42.2.12")')
+        template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client:2.6.0")')
 
         where:
         language << Language.values().toList()
     }
 
     @Unroll
-    void 'test maven postgres feature for language=#language'() {
+    void 'test maven mariadb feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), []).render().toString()
 
         then:
         template.contains("""
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.2.12</version>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>2.6.0</version>
       <scope>runtime</scope>
     </dependency>
 """)

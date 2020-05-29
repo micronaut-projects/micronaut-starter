@@ -15,11 +15,13 @@
  */
 package io.micronaut.starter.feature.database.jdbc;
 
+import io.micronaut.context.annotation.Primary;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
+@Primary
 public class Hikari extends JdbcFeature {
 
     public Hikari(DatabaseDriverFeature dbFeature) {
