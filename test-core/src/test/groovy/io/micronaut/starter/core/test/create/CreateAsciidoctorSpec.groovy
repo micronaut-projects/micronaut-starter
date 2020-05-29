@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test
+package io.micronaut.starter.core.test.create
 
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool

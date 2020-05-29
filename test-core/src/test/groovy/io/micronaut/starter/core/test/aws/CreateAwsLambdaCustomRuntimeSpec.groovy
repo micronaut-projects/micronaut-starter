@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test
+package io.micronaut.starter.core.test.aws
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.test.ApplicationTypeCombinations
