@@ -38,6 +38,8 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
+        template.contains('-Amicronaut.processing.group=example.micronaut')
+        template.contains('-Amicronaut.processing.module=foo')
 
         when:
         template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
@@ -45,6 +47,8 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('kapt("io.micronaut:micronaut-graal")')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
+        template.contains('arg("micronaut.processing.group", "example.micronaut")')
+        template.contains('arg("micronaut.processing.module", "foo")')
     }
 
     void 'graalvm feature not supported for groovy and gradle'() {
@@ -75,6 +79,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
               <version>\${micronaut.version}</version>
             </path>
 """)
+        template.contains("""
+          <compilerArgs>
+            <arg>-Amicronaut.processing.group=example.micronaut</arg>
+            <arg>-Amicronaut.processing.module=foo</arg>
+          </compilerArgs>
+""")
 
         when:
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
@@ -93,6 +103,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
                   <artifactId>micronaut-graal</artifactId>
                   <version>\${micronaut.version}</version>
                 </annotationProcessorPath>
+""")
+        template.contains("""
+              <annotationProcessorArgs>
+                <annotationProcessorArg>micronaut.processing.group=example.micronaut</annotationProcessorArg>
+                <annotationProcessorArg>micronaut.processing.module=foo</annotationProcessorArg>
+              </annotationProcessorArgs>
 """)
     }
 
