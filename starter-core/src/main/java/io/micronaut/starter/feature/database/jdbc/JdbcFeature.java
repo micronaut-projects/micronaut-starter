@@ -65,4 +65,9 @@ public abstract class JdbcFeature implements OneOfFeature {
         return Category.DATABASE;
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc";
+    }
+
 }
