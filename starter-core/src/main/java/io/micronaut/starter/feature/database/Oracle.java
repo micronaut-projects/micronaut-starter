@@ -13,32 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database.jdbc;
+package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Tomcat extends JdbcFeature {
-
-    public Tomcat(DatabaseDriverFeature dbFeature) {
-        super(dbFeature);
-    }
+public class Oracle implements DatabaseDriverFeature {
 
     @Override
+    @NonNull
     public String getName() {
-        return "jdbc-tomcat";
+        return "oracle";
     }
 
     @Override
     public String getTitle() {
-        return "Tomcat JDBC Connection Pool";
+        return "Oracle Database Server.";
     }
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Tomcat Connection Pool";
+        return "Adds the Oracle driver and default config.";
     }
 
+    @Override
+    public String getJdbcUrl() {
+        return "jdbc:oracle:thin:@localhost:1521/xe";
+    }
+
+    @Override
+    public String getDriverClass() {
+        return "oracle.jdbc.OracleDriver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "system";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "oracle";
+    }
+
+    @Override
+    public String getDataDialect() {
+        return "ORACLE";
+    }
 }

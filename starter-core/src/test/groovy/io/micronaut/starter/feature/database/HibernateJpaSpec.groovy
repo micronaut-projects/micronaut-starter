@@ -27,7 +27,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
         then:
         features.contains("h2")
-        features.contains("jdbc-tomcat")
+        features.contains("jdbc-hikari")
         features.contains("hibernate-jpa")
     }
 
@@ -55,7 +55,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
         template.contains("""
     <dependency>
       <groupId>io.micronaut.configuration</groupId>
-      <artifactId>micronaut-jdbc-tomcat</artifactId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
