@@ -8,7 +8,7 @@
     package @project.getPackageName();
 }
 
-import io.micronaut.configuration.rabbitmq.annotation.RabbitListener;
+import io.micronaut.rabbitmq.annotation.RabbitListener;
 
 @@RabbitListener
 public class @project.getClassName() {

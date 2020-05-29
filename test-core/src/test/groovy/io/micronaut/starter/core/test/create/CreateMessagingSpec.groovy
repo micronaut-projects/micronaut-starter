@@ -4,9 +4,9 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.messaging.kafka.Kafka
 import io.micronaut.starter.feature.messaging.nats.Nats
 import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
-import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.Unroll
 

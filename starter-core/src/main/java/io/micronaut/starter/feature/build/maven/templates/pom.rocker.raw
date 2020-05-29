@@ -49,8 +49,8 @@ List<Property> properties
     </repository>
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     <repository>
-          <id>jfrog-snapshots</id>
-          <url>https://oss.jfrog.org/oss-snapshot-local</url>
+      <id>jfrog-snapshots</id>
+      <url>https://oss.jfrog.org/oss-snapshot-local</url>
     </repository>
     }
 
