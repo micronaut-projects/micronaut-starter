@@ -24,7 +24,7 @@ class RabbitMQSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["rabbitmq"])).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-rabbitmq")')
+        template.contains('implementation("io.micronaut.rabbitmq:micronaut-rabbitmq")')
     }
 
     void "test dependencies are present for maven"() {
@@ -34,7 +34,7 @@ class RabbitMQSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.rabbitmq</groupId>
       <artifactId>micronaut-rabbitmq</artifactId>
       <scope>compile</scope>
     </dependency>
