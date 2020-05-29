@@ -50,7 +50,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --parallel --continue --tests=io.micronaut.starter.core.test.create.*
+        run: ./gradlew test-core:test --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
   test-aws:
     runs-on: ubuntu-latest
     strategy:
@@ -75,5 +75,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --parallel --continue --tests=io.micronaut.starter.core.test.aws.*
+        run: ./gradlew test-core:test --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
 
