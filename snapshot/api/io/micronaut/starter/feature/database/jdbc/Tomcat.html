@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -117,7 +117,6 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>@Singleton
- @Primary
 public class <span class="typeNameLabel">Tomcat</span>
 extends <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a></pre>
 </li>
@@ -176,15 +175,11 @@ extends <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Jd
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Tomcat.html#getMicronautDocumentation--">getMicronautDocumentation</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Tomcat.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Tomcat.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
@@ -194,7 +189,7 @@ extends <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Jd
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.database.jdbc.<a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getCategory--">getCategory</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getCategory--">getCategory</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getMicronautDocumentation--">getMicronautDocumentation</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -272,23 +267,10 @@ extends <a href="../../../../../../io/micronaut/starter/feature/database/jdbc/Jd
 <a name="getDescription--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getDescription</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getDescription()</pre>
-</li>
-</ul>
-<a name="getMicronautDocumentation--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getMicronautDocumentation</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getMicronautDocumentation()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast</dd>
-</dl>
 </li>
 </ul>
 </li>
