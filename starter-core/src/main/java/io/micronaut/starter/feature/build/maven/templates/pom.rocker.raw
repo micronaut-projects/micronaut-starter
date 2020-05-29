@@ -753,12 +753,10 @@ List<Property> properties
             </path>
 }
           </annotationProcessorPaths>
-@if (features.contains("graalvm")) {
           <compilerArgs>
             <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
             <arg>-Amicronaut.processing.module=@project.getPropertyName()</arg>
           </compilerArgs>
-}
         </configuration>
         <executions>
           <execution>
@@ -931,12 +929,10 @@ List<Property> properties
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
-@if (features.contains("graalvm")) {
               <compilerArgs>
                 <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
                 <arg>-Amicronaut.processing.module=@project.getPropertyName()</arg>
               </compilerArgs>
-}
             </configuration>
           </execution>
           <execution>

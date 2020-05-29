@@ -534,10 +534,8 @@ tasks.withType(JavaCompile) {
         // enables incremental compilation
         '-Amicronaut.processing.incremental=true',
         '-Amicronaut.processing.annotations=@project.getPackageName().*',
-      @if (features.contains("graalvm")) {
         '-Amicronaut.processing.group=@project.getPackageName()',
         '-Amicronaut.processing.module=@project.getPropertyName()',
-      }
     ])
 }
 }
@@ -564,10 +562,8 @@ kapt {
     arguments {
         arg("micronaut.processing.incremental", true)
         arg("micronaut.processing.annotations", "@project.getPackageName().*")
-      @if (features.contains("graalvm")) {
         arg("micronaut.processing.group", "@project.getPackageName()")
         arg("micronaut.processing.module", "@project.getPropertyName()")
-      }
     }
 }
 }
