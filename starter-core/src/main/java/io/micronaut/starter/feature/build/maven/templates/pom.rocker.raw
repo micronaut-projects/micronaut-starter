@@ -762,6 +762,10 @@ List<Property> properties
             </path>
 }
           </annotationProcessorPaths>
+          <compilerArgs>
+            <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
+            <arg>-Amicronaut.processing.module=@project.getPropertyName()</arg>
+          </compilerArgs>
         </configuration>
         <executions>
           <execution>
@@ -934,6 +938,10 @@ List<Property> properties
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
+              <annotationProcessorArgs>
+                <annotationProcessorArg>micronaut.processing.group=@project.getPackageName()</annotationProcessorArg>
+                <annotationProcessorArg>micronaut.processing.module=@project.getPropertyName()</annotationProcessorArg>
+              </annotationProcessorArgs>
             </configuration>
           </execution>
           <execution>
