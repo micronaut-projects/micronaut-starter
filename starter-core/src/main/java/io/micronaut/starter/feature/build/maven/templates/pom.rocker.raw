@@ -134,6 +134,9 @@ List<Property> properties
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
 }
+@if (features.contains("multi-tenancy")) {
+@dependency.template("io.micronaut", "micronaut-multitenancy", "compile", null)
+}
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
 @dependency.template("io.micronaut", "micronaut-discovery-client", "compile", null)
 }

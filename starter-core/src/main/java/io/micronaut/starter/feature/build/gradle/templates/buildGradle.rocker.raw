@@ -164,6 +164,9 @@ dependencies {
 @if (features.contains("management")) {
     @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
 }
+@if (features.contains("multi-tenancy")) {
+    @dependency.template("io.micronaut", "micronaut-multitenancy", "implementation", null)
+}
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
     @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
 }
