@@ -23,7 +23,6 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.feature.kotlin.Ktor;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.Config4kTemplate;
 
@@ -50,7 +49,7 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
             featureContext.exclude(new FeaturePredicate() {
                 @Override
                 public boolean test(Feature feature) {
-                    return feature instanceof Ktor;
+                    return feature instanceof Config4k;
                 }
 
                 @Override
