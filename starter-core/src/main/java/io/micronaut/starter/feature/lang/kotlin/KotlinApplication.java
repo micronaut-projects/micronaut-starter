@@ -66,13 +66,13 @@ public class KotlinApplication implements KotlinApplicationFeature {
                             new RockerTemplate(testSourcePath,
                                     kotlinJunit.template(generatorContext.getProject()))
                     );
-                    break;
+                break;
                 case SPOCK:
                     generatorContext.addTemplate("applicationTest",
                             new RockerTemplate(testSourcePath,
                                     spock.template(generatorContext.getProject()))
                     );
-                    break;
+                break;
                 case KOTLINTEST:
                 default:
                     generatorContext.addTemplate("applicationTest",

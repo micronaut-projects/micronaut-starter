@@ -66,12 +66,13 @@ public class GroovyApplication implements GroovyApplicationFeature {
                             new RockerTemplate(testSourcePath,
                                     groovyJunit.template(generatorContext.getProject()))
                     );
-                    break;
+                break;
                 case KOTLINTEST:
                     generatorContext.addTemplate("applicationTest",
                             new RockerTemplate(testSourcePath,
                                     kotlinTest.template(generatorContext.getProject()))
                     );
+                break;
                 case SPOCK:
                 default:
                     generatorContext.addTemplate("applicationTest",

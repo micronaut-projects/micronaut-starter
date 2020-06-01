@@ -72,6 +72,7 @@ public class JavaApplication implements JavaApplicationFeature {
                             new RockerTemplate(testSourcePath,
                                     kotlinTest.template(generatorContext.getProject()))
                     );
+                break;
                 case JUNIT:
                 default:
                     generatorContext.addTemplate("applicationTest",
