@@ -73,7 +73,7 @@ abstract class CommandSpec extends Specification {
         StringBuilder output = new StringBuilder()
         def thread = process.consumeProcessOutputStream(output)
         try {
-            thread.join(Duration.ofSeconds(30).toMillis())
+            thread.join(Duration.ofSeconds(120).toMillis())
         } catch (InterruptedException e) {
         }
 
