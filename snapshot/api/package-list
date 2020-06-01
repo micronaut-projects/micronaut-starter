@@ -89,6 +89,7 @@ io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
 io.micronaut.starter.feature.migration
+io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
 io.micronaut.starter.feature.other
 io.micronaut.starter.feature.other.template
@@ -112,6 +113,7 @@ io.micronaut.starter.feature.server.template
 io.micronaut.starter.feature.spring
 io.micronaut.starter.feature.stackdriver
 io.micronaut.starter.feature.test
+io.micronaut.starter.feature.test.template
 io.micronaut.starter.feature.tracing
 io.micronaut.starter.feature.validation
 io.micronaut.starter.feature.vertx
