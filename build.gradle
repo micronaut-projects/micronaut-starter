@@ -90,11 +90,6 @@ subprojects { Project subproject ->
     dependencies {
         if (project.name.startsWith("test-")) {
             implementation gradleTestKit()
-            implementation 'org.apache.maven:maven-embedder:3.0.5'
-            implementation 'org.sonatype.aether:aether-connector-wagon:1.13.1', {
-                exclude group:'org.apache.maven.wagon', module:'wagon-provider-api'
-            }
-            implementation 'org.apache.maven.wagon:wagon-http:2.5'
         } else {
             annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
             implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")

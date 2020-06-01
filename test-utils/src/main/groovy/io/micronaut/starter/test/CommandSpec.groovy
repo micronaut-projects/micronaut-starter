@@ -12,15 +12,12 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
-import org.apache.maven.cli.MavenCli
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.environment.OperatingSystem
-
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.time.Duration
 
@@ -30,7 +27,6 @@ abstract class CommandSpec extends Specification {
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
     @Shared GradleRunner gradleRunner = GradleRunner.create()
-    @Shared MavenCli cli = new MavenCli()
 
     abstract String getTempDirectoryPrefix()
 
@@ -49,7 +45,7 @@ abstract class CommandSpec extends Specification {
         if (buildTool == BuildTool.GRADLE) {
             output = executeGradle(command).getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
-            output = executeMavenEmbedded(command)
+            output = executeMaven(command)
         }
         return output
     }
@@ -60,14 +56,6 @@ abstract class CommandSpec extends Specification {
                         .withArguments(command.split(' '))
                         .build()
         return result
-    }
-
-    String executeMavenEmbedded(String command) {
-        System.setProperty("maven.multiModuleProjectDirectory", dir.absolutePath)
-        def bytesOut = new ByteArrayOutputStream()
-        PrintStream output = new PrintStream(bytesOut)
-        cli.doMain(command.split(' '), dir.absolutePath, output, output)
-        return new String(bytesOut.toByteArray(), StandardCharsets.UTF_8)
     }
 
     String executeMaven(String command) {
