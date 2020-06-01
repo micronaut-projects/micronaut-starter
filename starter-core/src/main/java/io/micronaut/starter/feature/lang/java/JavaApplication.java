@@ -61,12 +61,6 @@ public class JavaApplication implements JavaApplicationFeature {
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
             switch (testFramework) {
-                case JUNIT:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                            javaJunit.template(generatorContext.getProject()))
-                    );
-                break;
                 case SPOCK:
                     generatorContext.addTemplate("applicationTest",
                             new RockerTemplate(testSourcePath,
@@ -78,6 +72,13 @@ public class JavaApplication implements JavaApplicationFeature {
                             new RockerTemplate(testSourcePath,
                                     kotlinTest.template(generatorContext.getProject()))
                     );
+                case JUNIT:
+                default:
+                    generatorContext.addTemplate("applicationTest",
+                            new RockerTemplate(testSourcePath,
+                                    javaJunit.template(generatorContext.getProject()))
+                    );
+                    break;
             }
 
         }

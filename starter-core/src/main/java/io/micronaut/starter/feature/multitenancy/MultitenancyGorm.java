@@ -22,7 +22,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.feature.kotlin.Ktor;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;

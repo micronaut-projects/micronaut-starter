@@ -21,7 +21,6 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -75,6 +74,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
                     );
                     break;
                 case KOTLINTEST:
+                default:
                     generatorContext.addTemplate("applicationTest",
                             new RockerTemplate(testSourcePath,
                                     kotlinTest.template(generatorContext.getProject()))
