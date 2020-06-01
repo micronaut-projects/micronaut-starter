@@ -47,7 +47,7 @@ public class Application {
         if (build == BuildTool.GRADLE) {
             output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            output = executeMavenEmbedded("compile test")
+            output = executeMaven("compile test")
         }
 
         then:
@@ -93,7 +93,7 @@ class Application {
         if (build == BuildTool.GRADLE) {
             output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            output = executeMavenEmbedded("compile test")
+            output = executeMaven("compile test")
         }
 
         then:
@@ -137,7 +137,7 @@ fun main(args: Array<String>) {
         if (build == BuildTool.GRADLE) {
             output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            output = executeMavenEmbedded("compile test")
+            output = executeMaven("compile test")
         }
 
         then:

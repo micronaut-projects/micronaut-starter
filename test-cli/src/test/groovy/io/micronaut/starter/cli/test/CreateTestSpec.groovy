@@ -37,7 +37,7 @@ class CreateTestSpec extends CommandSpec {
         if (buildTool == BuildTool.GRADLE) {
             result = executeGradle("test")?.output
         } else if (buildTool == BuildTool.MAVEN) {
-            result = executeMavenEmbedded("compile test")
+            result = executeMaven("compile test")
         }
 
         then:
