@@ -11,13 +11,13 @@ package @project.getPackageName()
 
 import io.kotlintest.specs.StringSpec
 import io.micronaut.context.ApplicationContext
-import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
 
 @@MicronautTest
-class @project.getClassName()Test(private val embeddedServer: EmbeddedServer): StringSpec({
+class @project.getClassName()Test(private val application: EmbeddedApplication<*>): StringSpec({
 
     "test the server is running" {
-        assert(embeddedServer.isRunning())
+        assert(application.isRunning())
     }
 })

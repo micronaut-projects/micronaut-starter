@@ -1,6 +1,5 @@
 package io.micronaut.starter.cli.test
 
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.feature.messaging.nats.CreateNatsProducer
 import io.micronaut.starter.io.ConsoleOutput
@@ -31,14 +30,15 @@ class CreateNatsProducerSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered Nats producer") })
 
         when:
+        String output = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand("classes")
+            output = executeGradle("classes")?.output
         } else if (buildTool == BuildTool.MAVEN) {
-            executeMavenCommand("compile")
+            output = executeMaven("compile")
         }
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output?.contains("BUILD SUCCESS")
 
         where:
         [language, buildTool] << LanguageBuildCombinations.combinations()

@@ -26,14 +26,10 @@ class CreateMessagingSpec extends CommandSpec {
         generateProject(lang, buildTool, [feature], applicationType)
 
         when:
-        if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand('run')
-        } else {
-            executeMavenCommand("mn:run")
-        }
+        String output = executeBuild(buildTool, "test")
 
         then:
-        testOutputContains("Startup completed")
+        output.contains("BUILD SUCCESS")
 
         where:
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations([Kafka.NAME, RabbitMQ.NAME, Nats.NAME])

@@ -9,7 +9,7 @@ package @project.getPackageName();
 }
 
 
-import io.micronaut.runtime.server.EmbeddedServer;
+import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -20,11 +20,11 @@ import javax.inject.Inject;
 public class @project.getClassName()Test {
 
     @@Inject
-    EmbeddedServer embeddedServer;
+    EmbeddedApplication application;
 
     @@Test
     void testItWorks() {
-        Assertions.assertTrue(embeddedServer.isRunning());
+        Assertions.assertTrue(application.isRunning());
     }
 
 }

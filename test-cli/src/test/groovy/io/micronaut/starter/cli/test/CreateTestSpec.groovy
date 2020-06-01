@@ -33,14 +33,15 @@ class CreateTestSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
+        String result = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand("test")
+            result = executeGradle("test")?.output
         } else if (buildTool == BuildTool.MAVEN) {
-            executeMavenCommand("compile test")
+            result = executeMaven("compile test")
         }
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        result?.contains("BUILD SUCCESS")
 
         where:
         [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()

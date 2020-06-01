@@ -14,14 +14,15 @@ class CreateAsciidoctorSpec extends CommandSpec {
         generateProject(language, buildTool, ['asciidoctor'])
 
         when:
+        String output = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand('asciidoctor')
+            output = executeGradle('asciidoctor').output
         } else {
-            executeMavenCommand("generate-resources")
+            output = executeMaven("generate-resources")
         }
 
         then:
-        testOutputContains('BUILD SUCCESS')
+        output?.contains('BUILD SUCCESS')
 
         where:
         [language, buildTool] << LanguageBuildCombinations.combinations()

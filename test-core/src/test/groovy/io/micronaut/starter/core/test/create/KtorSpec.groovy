@@ -11,26 +11,16 @@ import spock.util.concurrent.PollingConditions
 
 class KtorSpec extends CommandSpec {
 
-    @Override
-    PollingConditions getDefaultPollingConditions() {
-        new PollingConditions(timeout: 15)
-    }
-
-    @PendingFeature(reason = "micronaut-kotlin is not in maven central")
     @Unroll
     void 'create-app with feature ktor for #lang and #buildTool starts successfully'(Language lang, BuildTool buildTool) {
         given:
         generateProject(lang, buildTool, ['ktor'] as List<String>, ApplicationType.DEFAULT)
 
         when:
-        if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand('run')
-        } else {
-            executeMavenCommand("mn:run")
-        }
+        String output = executeBuild(buildTool, "test")
 
         then:
-        testOutputContains("Startup completed")
+        output.contains("BUILD SUCCESS")
 
         where:
         [lang, buildTool] << [[Language.KOTLIN], BuildToolCombinations.buildTools].combinations()

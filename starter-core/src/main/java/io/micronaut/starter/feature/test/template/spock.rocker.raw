@@ -9,7 +9,7 @@ package @project.getPackageName()
 }
 
 
-import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 import javax.inject.Inject
@@ -18,11 +18,11 @@ import javax.inject.Inject
 class @project.getClassName()Spec extends Specification {
 
     @@Inject
-    EmbeddedServer embeddedServer
+    EmbeddedApplication application
 
     void 'test it works'() {
         expect:
-        embeddedServer.running
+        application.running
     }
 
 }

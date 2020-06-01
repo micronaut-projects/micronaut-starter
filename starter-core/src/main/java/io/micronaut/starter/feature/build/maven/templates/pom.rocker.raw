@@ -47,13 +47,18 @@ List<Property> properties
       <id>jcenter.bintray.com</id>
       <url>https://jcenter.bintray.com</url>
     </repository>
+    @if (VersionInfo.getStarterVersion().endsWith("-SNAPSHOT")) {
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    }
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     <repository>
       <id>jfrog-snapshots</id>
       <url>https://oss.jfrog.org/oss-snapshot-local</url>
     </repository>
     }
-
   </repositories>
 
   <dependencies>
@@ -1270,7 +1275,21 @@ List<Property> properties
         <enabled>false</enabled>
       </snapshots>
     </pluginRepository>
+    @if (VersionInfo.getStarterVersion().endsWith("-SNAPSHOT")) {
+    <pluginRepository>
+       <id>central</id>
+       <url>https://repo.maven.apache.org/maven2</url>
+    </pluginRepository>
+    }
   </pluginRepositories>
+} else if (VersionInfo.getStarterVersion().endsWith("-SNAPSHOT")) {
+    <pluginRepositories>
+       <pluginRepository>
+           <id>central</id>
+           <url>https://repo.maven.apache.org/maven2</url>
+       </pluginRepository>
+    </pluginRepositories>
 }
+
 
 </project>

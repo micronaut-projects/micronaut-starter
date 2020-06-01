@@ -62,26 +62,41 @@ subprojects { Project subproject ->
     sourceCompatibility = '1.8'
     targetCompatibility = '1.8'
 
+
     configurations.all {
         resolutionStrategy {
             eachDependency { DependencyResolveDetails details ->
-                //multiple actions can be specified
-                if (details.requested.group == "org.codehaus.groovy") {
-                    details.useVersion(groovyVersion)
-                }
-                if (details.requested.name == "spock-core") {
-                    details.useVersion(spockVersion)
+                if (project.name.startsWith("test-")) {
+                    // Gradle TestKit needs Groovy 2.5
+                    if (details.requested.group == "org.codehaus.groovy") {
+                        details.useVersion("2.5.11")
+                    }
+                    if (details.requested.name == "spock-core") {
+                        details.useVersion("1.3-groovy-2.5")
+                    }
+                } else {
+                    //multiple actions can be specified
+                    if (details.requested.group == "org.codehaus.groovy") {
+                        details.useVersion(groovyVersion)
+                    }
+                    if (details.requested.name == "spock-core") {
+                        details.useVersion(spockVersion)
+                    }
                 }
             }
         }
     }
 
     dependencies {
-        annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-        implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-        annotationProcessor "io.micronaut:micronaut-inject-java"
-        testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-        testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+        if (project.name.startsWith("test-")) {
+            implementation gradleTestKit()
+        } else {
+            annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            annotationProcessor "io.micronaut:micronaut-inject-java"
+            testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+        }
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
         testImplementation("org.spockframework:spock-core:$spockVersion") {
             exclude group: "org.codehaus.groovy", module: "groovy-all"
@@ -101,7 +116,9 @@ subprojects { Project subproject ->
     }
 
     apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
-    apply from: "${rootProject.projectDir}/gradle/test.gradle"
+    if (!project.name.startsWith("test-")) {
+        apply from: "${rootProject.projectDir}/gradle/test.gradle"
+    }
 
 }
 

@@ -8,7 +8,9 @@ testlogger {
 }
 
 tasks.withType(Test) {
-    useJUnitPlatform()
+    if (project.name != 'test-cli') {
+        useJUnitPlatform()
+    }
     jvmArgs '-Duser.country=US'
     jvmArgs '-Duser.language=en'
     testLogging {

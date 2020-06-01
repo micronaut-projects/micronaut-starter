@@ -32,14 +32,15 @@ class CreateNatsListenerSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered Nats listener") })
 
         when:
+        String output = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand("classes")
+            output = executeGradle("classes")?.output
         } else if (buildTool == BuildTool.MAVEN) {
-            executeMavenCommand("compile")
+            output = executeMaven("compile")
         }
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output?.contains("BUILD SUCCESS")
 
         where:
         [language, buildTool] << LanguageBuildCombinations.combinations()

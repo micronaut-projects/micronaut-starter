@@ -20,14 +20,10 @@ class CreateGrpcSpec extends CommandSpec {
         generateProject(lang, buildTool, [], applicationType)
 
         when:
-        if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand('run')
-        } else {
-            executeMavenCommand("mn:run")
-        }
+        String output = executeBuild(buildTool, "test")
 
         then:
-        testOutputContains("Startup completed")
+        output.contains("BUILD SUCCESS")
 
         where:
         [lang, buildTool] << LanguageBuildCombinations.combinations()

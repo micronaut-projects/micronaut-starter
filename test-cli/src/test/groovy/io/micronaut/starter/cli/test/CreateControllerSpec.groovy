@@ -3,12 +3,12 @@ package io.micronaut.starter.cli.test
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.feature.server.controller.CreateControllerCommand
-import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import spock.lang.Unroll
 
 class CreateControllerSpec extends CommandSpec {
@@ -35,14 +35,10 @@ class CreateControllerSpec extends CommandSpec {
         1 * consoleOutput.out({ it.contains("Rendered test") })
 
         when:
-        if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand("test")
-        } else if (buildTool == BuildTool.MAVEN) {
-            executeMavenCommand("test")
-        }
+        String output = executeBuild(buildTool, "test")
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output?.contains("BUILD SUCCESS")
 
         where:
         [language, buildTool, testFramework] << LanguageBuildTestFrameworkCombinations.combinations()
@@ -52,4 +48,6 @@ class CreateControllerSpec extends CommandSpec {
     String getTempDirectoryPrefix() {
         "test-createcontroller-createcontrollergroovygradlejunitspec"
     }
+
+
 }
