@@ -21,13 +21,13 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
-        build == BuildTool.GRADLE ? executeGradleCommand('test') : executeMavenCommand("test")
+        String output = executeBuild(build, "test")
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language> - [Language.GROOVY], BuildToolCombinations.buildTools, TestFramework.values()].combinations()
+        [applicationType, lang, build, testFramework] << [[ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() - [Language.GROOVY], BuildToolCombinations.buildTools, TestFramework.values()].combinations()
 
     }
 

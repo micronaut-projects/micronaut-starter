@@ -14,12 +14,6 @@ configurations.all {
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":micronaut-cli")
-    testImplementation gradleTestKit()
-    testImplementation 'org.apache.maven:maven-embedder:3.0.5'
-    testImplementation 'org.sonatype.aether:aether-connector-wagon:1.13.1', {
-        exclude group:'org.apache.maven.wagon', module:'wagon-provider-api'
-    }
-    testImplementation 'org.apache.maven.wagon:wagon-http:2.5'
 }
 
 tasks.withType(Test) {

@@ -14,10 +14,10 @@ class CreateAppSpec extends CommandSpec {
         generateProject(lang, buildTool, [])
 
         when:
-        String output = executeBuild(buildTool, buildTool == BuildTool.GRADLE ? "run" : "mn:run")
+        String output = executeBuild(buildTool, "test")
 
         then:
-        output.contains("Startup completed")
+        output.contains("BUILD SUCCESS")
 
         where:
         [lang, buildTool] << LanguageBuildCombinations.combinations()

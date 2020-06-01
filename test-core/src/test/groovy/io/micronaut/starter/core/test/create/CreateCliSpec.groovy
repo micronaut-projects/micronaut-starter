@@ -21,14 +21,15 @@ class CreateCliSpec extends CommandSpec {
         generateProject(lang, buildTool, [], applicationType)
 
         when:
+        String output = null
         if (buildTool == BuildTool.GRADLE) {
-            executeGradleCommand('run --args="-v"')
+            output = executeGradle('run --args="-v"').output
         } else {
-            executeMavenCommand("mn:run -Dmn.appArgs=-v")
+            output = executeMaven("mn:run -Dmn.appArgs=-v")
         }
 
         then:
-        testOutputContains("Hi")
+        output?.contains("Hi")
 
         where:
         [lang, buildTool] << LanguageBuildCombinations.combinations()

@@ -24,10 +24,10 @@ class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
-        build == BuildTool.GRADLE ? executeGradleCommand('test') : executeMavenCommand("test")
+        String output = executeBuild(build, "test")
 
         then:
-        testOutputContains("BUILD SUCCESS")
+        output.contains("BUILD SUCCESS")
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION])

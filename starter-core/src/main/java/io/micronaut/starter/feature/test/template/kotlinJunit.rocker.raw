@@ -8,23 +8,21 @@ Project project
 package @project.getPackageName()
 }
 
-
-import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-
 import javax.inject.Inject
 
 @@MicronautTest
 class @project.getClassName()Test {
 
     @@Inject
-    EmbeddedServer embeddedServer
+    lateinit var application: EmbeddedApplication<*>
 
     @@Test
-    void testItWorks() {
-        Assertions.assertTrue(embeddedServer.running)
+    fun testItWorks() {
+        Assertions.assertTrue(application.isRunning)
     }
 
 }

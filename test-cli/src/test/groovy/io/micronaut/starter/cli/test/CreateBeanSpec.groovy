@@ -43,14 +43,15 @@ public class Application {
     }
 }
 """)
+        String output = null
         if (build == BuildTool.GRADLE) {
-            executeGradleCommand("run")
+            output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            executeMavenCommand("mn:run")
+            output = executeMavenEmbedded("compile test")
         }
 
         then:
-        testOutputContains("Startup completed")
+        output?.contains("BUILD SUCCESS")
 
         where:
         build << BuildToolCombinations.buildTools
@@ -88,14 +89,15 @@ class Application {
     }
 }
 """)
+        String output = null
         if (build == BuildTool.GRADLE) {
-            executeGradleCommand("run")
+            output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            executeMavenCommand("mn:run")
+            output = executeMavenEmbedded("compile test")
         }
 
         then:
-        testOutputContains("Startup completed")
+        output?.contains("BUILD SUCCESS")
 
         where:
         build << BuildToolCombinations.buildTools
@@ -131,14 +133,15 @@ fun main(args: Array<String>) {
     ctx.getBean(example.micronaut.Greeting::class.java)
 }
 """)
+        String output = null
         if (build == BuildTool.GRADLE) {
-            executeGradleCommand("run")
+            output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
-            executeMavenCommand("mn:run")
+            output = executeMavenEmbedded("compile test")
         }
 
         then:
-        testOutputContains("Startup completed")
+        output?.contains("BUILD SUCCESS")
 
         where:
         build << BuildToolCombinations.buildTools

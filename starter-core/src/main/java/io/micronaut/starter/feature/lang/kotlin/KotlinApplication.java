@@ -21,6 +21,11 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.test.template.groovyJunit;
+import io.micronaut.starter.feature.test.template.kotlinJunit;
+import io.micronaut.starter.feature.test.template.kotlinTest;
+import io.micronaut.starter.feature.test.template.spock;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -54,6 +59,27 @@ public class KotlinApplication implements KotlinApplicationFeature {
         if (shouldGenerateApplicationFile(generatorContext)) {
             generatorContext.addTemplate("application", new RockerTemplate(getPath(),
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+            TestFramework testFramework = generatorContext.getTestFramework();
+            String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
+            switch (testFramework) {
+                case JUNIT:
+                    generatorContext.addTemplate("applicationTest",
+                            new RockerTemplate(testSourcePath,
+                                    kotlinJunit.template(generatorContext.getProject()))
+                    );
+                    break;
+                case SPOCK:
+                    generatorContext.addTemplate("applicationTest",
+                            new RockerTemplate(testSourcePath,
+                                    spock.template(generatorContext.getProject()))
+                    );
+                    break;
+                case KOTLINTEST:
+                    generatorContext.addTemplate("applicationTest",
+                            new RockerTemplate(testSourcePath,
+                                    kotlinTest.template(generatorContext.getProject()))
+                    );
+            }
         }
     }
 
