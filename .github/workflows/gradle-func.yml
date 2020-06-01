@@ -11,15 +11,15 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          key: ${{ runner.os }}-gradle-functional-tests-${{ matrix.java }}-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
-            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-gradle-functional-tests-
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-functional-tests-${{ matrix.java }}-${{ hashFiles('**/*.gradle') }}
           restore-keys: |
-            ${{ runner.os }}-maven-
+            ${{ runner.os }}-maven-functional-tests-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
