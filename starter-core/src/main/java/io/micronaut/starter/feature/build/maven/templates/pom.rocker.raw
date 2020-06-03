@@ -234,7 +234,7 @@ List<Property> properties
 @dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
 }
 @if (features.contains("flyway")) {
-@dependency.template("io.micronaut.configuration", "micronaut-flyway", "compile", null)
+@dependency.template("io.micronaut.flyway", "micronaut-flyway", "compile", null)
 }
 @if (features.contains("liquibase")) {
 @dependency.template("io.micronaut.configuration", "micronaut-liquibase", "compile", null)

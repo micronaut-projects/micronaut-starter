@@ -25,7 +25,7 @@ class FlywaySpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway'])).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-flyway")')
+        template.contains('implementation("io.micronaut.flyway:micronaut-flyway")')
     }
 
     void "test the dependency is added to the maven build"() {
@@ -35,7 +35,7 @@ class FlywaySpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.flyway</groupId>
       <artifactId>micronaut-flyway</artifactId>
       <scope>compile</scope>
     </dependency>

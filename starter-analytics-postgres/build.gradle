@@ -13,7 +13,7 @@ dependencies {
     implementation 'org.postgresql:postgresql:42.2.12'
     implementation 'com.google.cloud.sql:postgres-socket-factory:1.0.15'
     implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
-    implementation 'io.micronaut.configuration:micronaut-flyway'
+    implementation 'io.micronaut.flyway:micronaut-flyway'
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"

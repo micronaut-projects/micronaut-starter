@@ -259,7 +259,7 @@ dependencies {
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
 }
 @if (features.contains("flyway")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-flyway", "implementation", null)
+    @dependency.template("io.micronaut.flyway", "micronaut-flyway", "implementation", null)
 }
 @if (features.contains("liquibase")) {
     @dependency.template("io.micronaut.configuration", "micronaut-liquibase", "implementation", null)
