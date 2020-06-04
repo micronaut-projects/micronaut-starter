@@ -27,8 +27,7 @@ class ThymeleafSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-thymeleaf'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-views-thymeleaf")')
-        template.contains('runtime("org.thymeleaf:thymeleaf:3.0.11.RELEASE")')
+        template.contains('implementation("io.micronaut.views:micronaut-views-thymeleaf")')
 
         where:
         language << Language.values().toList()
@@ -42,15 +41,9 @@ class ThymeleafSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.views</groupId>
       <artifactId>micronaut-views-thymeleaf</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.thymeleaf</groupId>
-      <artifactId>thymeleaf</artifactId>
-      <version>3.0.11.RELEASE</version>
-      <scope>runtime</scope>
     </dependency>
 """)
 

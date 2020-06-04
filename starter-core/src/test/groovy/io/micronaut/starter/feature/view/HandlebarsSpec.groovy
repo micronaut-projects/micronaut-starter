@@ -27,8 +27,7 @@ class HandlebarsSpec extends BeanContextSpec  implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-handlebars'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-views-handlebars")')
-        template.contains('runtime("com.github.jknack:handlebars:4.1.2")')
+        template.contains('implementation("io.micronaut.views:micronaut-views-handlebars")')
 
         where:
         language << Language.values().toList()
@@ -42,15 +41,9 @@ class HandlebarsSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.views</groupId>
       <artifactId>micronaut-views-handlebars</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.jknack</groupId>
-      <artifactId>handlebars</artifactId>
-      <version>4.1.2</version>
-      <scope>runtime</scope>
     </dependency>
 """)
 

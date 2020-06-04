@@ -27,8 +27,7 @@ class SoySpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-views-soy")')
-        template.contains('implementation("com.google.template:soy:2019-09-03")')
+        template.contains('implementation("io.micronaut.views:micronaut-views-soy")')
 
         where:
         language << Language.values().toList()
@@ -42,14 +41,8 @@ class SoySpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.views</groupId>
       <artifactId>micronaut-views-soy</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.template</groupId>
-      <artifactId>soy</artifactId>
-      <version>2019-09-03</version>
       <scope>compile</scope>
     </dependency>
 """)

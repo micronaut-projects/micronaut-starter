@@ -27,8 +27,7 @@ class FreemarkerSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-freemarker'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-views-freemarker")')
-        template.contains('runtime("org.freemarker:freemarker:2.3.28")')
+        template.contains('implementation("io.micronaut.views:micronaut-views-freemarker")')
 
         where:
         language << Language.values().toList()
@@ -42,15 +41,9 @@ class FreemarkerSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.views</groupId>
       <artifactId>micronaut-views-freemarker</artifactId>
       <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.freemarker</groupId>
-      <artifactId>freemarker</artifactId>
-      <version>2.3.28</version>
-      <scope>runtime</scope>
     </dependency>
 """)
 

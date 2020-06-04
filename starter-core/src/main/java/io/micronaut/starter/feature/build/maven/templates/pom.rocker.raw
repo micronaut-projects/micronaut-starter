@@ -386,27 +386,22 @@ List<Property> properties
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null)
 }
 @if (features.contains("views-thymeleaf")) {
-@dependency.template("io.micronaut", "micronaut-views-thymeleaf", "compile", null)
-@dependency.template("org.thymeleaf", "thymeleaf", "runtime", "3.0.11.RELEASE")
+@dependency.template("io.micronaut.views", "micronaut-views-thymeleaf", "compile", null)
 }
 @if (features.contains("views-handlebars")) {
-@dependency.template("io.micronaut", "micronaut-views-handlebars", "compile", null)
-@dependency.template("com.github.jknack", "handlebars", "runtime", "4.1.2")
+@dependency.template("io.micronaut.views", "micronaut-views-handlebars", "compile", null)
 }
 @if (features.contains("views-velocity")) {
-@dependency.template("io.micronaut", "micronaut-views-velocity", "compile", null)
-@dependency.template("org.apache.velocity", "velocity-engine-core", "runtime", "2.0")
+@dependency.template("io.micronaut.views", "micronaut-views-velocity", "compile", null)
 }
 @if (features.contains("views-freemarker")) {
-@dependency.template("io.micronaut", "micronaut-views-freemarker", "compile", null)
-@dependency.template("org.freemarker", "freemarker", "runtime", "2.3.28")
+@dependency.template("io.micronaut.views", "micronaut-views-freemarker", "compile", null)
 }
 @if (features.contains("views-rocker")) {
-@dependency.template("io.micronaut", "micronaut-views-rocker", "compile", null)
+@dependency.template("io.micronaut.views", "micronaut-views-rocker", "compile", null)
 }
 @if (features.contains("views-soy")) {
-@dependency.template("io.micronaut", "micronaut-views-soy", "compile", null)
-@dependency.template("com.google.template", "soy", "compile", "2019-09-03")
+@dependency.template("io.micronaut.views", "micronaut-views-soy", "compile", null)
 }
 @if (features.contains("rss")) {
 @dependency.template("io.micronaut.configuration", "micronaut-rss", "compile", null)
