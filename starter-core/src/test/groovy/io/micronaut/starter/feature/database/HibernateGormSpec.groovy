@@ -26,7 +26,7 @@ class HibernateGormSpec extends BeanContextSpec {
 
         then:
         template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-gorm")')
-        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-validator")')
+        template.contains('implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
         template.contains("runtimeOnly(\"org.apache.tomcat:tomcat-jdbc\")")
     }
@@ -45,7 +45,7 @@ class HibernateGormSpec extends BeanContextSpec {
 """)
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.beanvalidation</groupId>
       <artifactId>micronaut-hibernate-validator</artifactId>
       <scope>compile</scope>
     </dependency>

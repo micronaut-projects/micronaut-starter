@@ -283,7 +283,7 @@ dependencies {
     @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "implementation", null)
 }
 @if (features.contains("hibernate-validator")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-validator", "implementation", null)
+    @dependency.template("io.micronaut.beanvalidation", "micronaut-hibernate-validator", "implementation", null)
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "implementation", null)
