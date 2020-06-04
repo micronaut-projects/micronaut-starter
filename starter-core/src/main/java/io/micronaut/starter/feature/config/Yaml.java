@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
@@ -24,6 +25,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.YamlTemplate;
 
 import javax.inject.Singleton;
+import java.util.Map;
 import java.util.Set;
 
 @Singleton
@@ -54,6 +56,12 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
         generatorContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", generatorContext.getConfiguration()));
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
             generatorContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", generatorContext.getBootstrapConfig()));
+        }
+        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
+        if (!envConfigs.isEmpty()) {
+            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
+                generatorContext.addTemplate("yamlConfig" + StringUtils.capitalize(envConfig.getKey()), new YamlTemplate("src/main/resources/application-" + envConfig.getKey() + ".yml", envConfig.getValue()));
+            }
         }
     }
 

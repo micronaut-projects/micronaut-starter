@@ -15,13 +15,14 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.PropertiesTemplate;
-import io.micronaut.starter.template.YamlTemplate;
 
 import javax.inject.Singleton;
+import java.util.Map;
 
 @Singleton
 public class Properties implements ConfigurationFeature {
@@ -50,7 +51,13 @@ public class Properties implements ConfigurationFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("propertiesConfig", new PropertiesTemplate("src/main/resources/application.properties", generatorContext.getConfiguration()));
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
-            generatorContext.addTemplate("propertiesBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
+            generatorContext.addTemplate("propertiesBootstrapConfig", new PropertiesTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
+        }
+        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
+        if (!envConfigs.isEmpty()) {
+            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
+                generatorContext.addTemplate("propertiesConfig" + StringUtils.capitalize(envConfig.getKey()), new PropertiesTemplate("src/main/resources/application-" + envConfig.getKey() + ".properties", envConfig.getValue()));
+            }
         }
     }
 

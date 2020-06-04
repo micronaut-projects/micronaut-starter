@@ -2,8 +2,10 @@ package io.micronaut.starter.feature.config
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.io.MapOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -11,7 +13,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class Config4kSpec  extends BeanContextSpec implements CommandOutputFixture {
+class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -42,21 +44,16 @@ class Config4kSpec  extends BeanContextSpec implements CommandOutputFixture {
         description = applicationType.name
     }
 
-    @Unroll
-    void 'application.conf is generated for config4k feature and #buildTool'(BuildTool buildTool) {
+    void "test configuration files generated for config4k feature"() {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, buildTool),
-                ['config4k']
-        )
+        GeneratorContext generatorContext = buildGeneratorContext(['config4k'], {context ->
+            context.getBootstrapConfig().put("abc", 123)
+            context.getEnvConfiguration("test").put("abc", 456)
+            context.getEnvConfiguration("prod").put("abc", 789)
+        }, new Options(Language.KOTLIN, null, BuildTool.GRADLE))
+        def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
-        output.containsKey("src/main/resources/application.conf")
-        !output.containsKey("src/main/resources/application.yaml")
-        !output.containsKey("src/main/resources/application.properties")
-
-        and:
         output["src/main/resources/application.conf"] == '''\
 micronaut {
     application {
@@ -64,8 +61,14 @@ micronaut {
     }
 }
 '''
-
-        where:
-        buildTool << BuildTool.values()
+        output["src/main/resources/bootstrap.conf"] == '''\
+abc=123
+'''
+        output["src/main/resources/application-test.conf"] == '''\
+abc=456
+'''
+        output["src/main/resources/application-prod.conf"] == '''\
+abc=789
+'''
     }
 }
