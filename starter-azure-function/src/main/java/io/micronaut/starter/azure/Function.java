@@ -31,7 +31,7 @@ public class Function extends AzureHttpFunction {
                     methods = {HttpMethod.GET, HttpMethod.POST},
                     route = "{*route}",
                     authLevel = AuthorizationLevel.ANONYMOUS)
-                    HttpRequestMessage<Optional<byte[]>> request,
+                    HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
         return super.route(request, context);
     }
