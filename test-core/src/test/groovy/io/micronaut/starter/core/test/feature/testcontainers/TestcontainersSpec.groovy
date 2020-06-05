@@ -44,7 +44,7 @@ class TestcontainersSpec extends CommandSpec {
         [buildTool, driverFeature] << [
                 BuildTool.values().toList(),
                 beanContext.streamOfType(DatabaseDriverFeature)
-                        .filter({ f ->  f.name != "h2" })
+                        .filter({ f ->  !f.embedded() })
                         .collect(Collectors.toList())
         ].combinations()
     }
