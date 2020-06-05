@@ -4,6 +4,7 @@ import groovy.transform.CompileStatic
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.MapOutputHandler
@@ -31,7 +32,7 @@ trait CommandOutputFixture {
         generate(ApplicationType.DEFAULT, features)
     }
 
-    Map<String, String> generate(ApplicationType type , List<String> features = []) {
+    Map<String, String> generate(ApplicationType type, List<String> features = []) {
         def handler = new MapOutputHandler()
         Options options = new Options()
         beanContext.getBean(ProjectGenerator).generate(type,
@@ -41,6 +42,16 @@ trait CommandOutputFixture {
                 features,
                 handler,
                 ConsoleOutput.NOOP
+        )
+        handler.getProject()
+    }
+
+    Map<String, String> generate(ApplicationType type, GeneratorContext generatorContext) {
+        def handler = new MapOutputHandler()
+        beanContext.getBean(ProjectGenerator).generate(type,
+                NameUtils.parse("example.micronaut.foo"),
+                handler,
+                generatorContext
         )
         handler.getProject()
     }

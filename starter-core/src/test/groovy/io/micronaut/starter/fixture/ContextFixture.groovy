@@ -17,6 +17,9 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
+import java.util.function.Consumer
+import java.util.function.Supplier
+
 trait ContextFixture {
 
     abstract BeanContext getBeanContext()
@@ -71,9 +74,25 @@ trait ContextFixture {
         if (this instanceof ProjectFixture) {
             ContextFactory factory = beanContext.getBean(ContextFactory)
             FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
-            GeneratorContext commandContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
-            commandContext.applyFeatures()
-            return commandContext
+            GeneratorContext generatorContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
+            generatorContext.applyFeatures()
+            return generatorContext
+        } else {
+            throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
+        }
+    }
+
+    GeneratorContext buildGeneratorContext(List<String> selectedFeatures,
+                                           Consumer<GeneratorContext> mutate,
+                                           Options options = new Options(null, null, BuildTool.GRADLE),
+                                           ApplicationType applicationType = ApplicationType.DEFAULT) {
+        if (this instanceof ProjectFixture) {
+            ContextFactory factory = beanContext.getBean(ContextFactory)
+            FeatureContext featureContext = buildFeatureContext(selectedFeatures, options, applicationType)
+            GeneratorContext generatorContext = factory.createGeneratorContext(((ProjectFixture) this).buildProject(), featureContext, ConsoleOutput.NOOP)
+            mutate.accept(generatorContext)
+            generatorContext.applyFeatures()
+            return generatorContext
         } else {
             throw new IllegalStateException("Cannot get generator context without implementing ProjectFixture")
         }

@@ -44,6 +44,7 @@ public class GeneratorContext {
     private final OperatingSystem operatingSystem;
     private final BuildProperties buildProperties = new BuildProperties();
     private final Map<String, Object> configuration = new LinkedHashMap<>();
+    private final Map<String, Map<String, Object>> environmentConfiguration = new LinkedHashMap<>();
     private final Map<String, Object> bootstrapConfig = new LinkedHashMap<>();
     private final Map<String, Template> templates = new LinkedHashMap<>();
     private final List<Writable> helpTemplates = new ArrayList<>(8);
@@ -107,6 +108,20 @@ public class GeneratorContext {
      */
     @NonNull public Map<String, Object> getConfiguration() {
         return configuration;
+    }
+
+    /**
+     * @return The configuration
+     */
+    @NonNull public Map<String, Object> getEnvConfiguration(String env) {
+        return environmentConfiguration.computeIfAbsent(env, (k) -> new LinkedHashMap<>());
+    }
+
+    /**
+     * @return The configuration
+     */
+    @NonNull public Map<String, Map<String, Object>> getEnvConfigurations() {
+        return environmentConfiguration;
     }
 
     /**
