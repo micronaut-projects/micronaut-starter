@@ -279,7 +279,7 @@ List<Property> properties
 @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
 }
 @if (features.contains("neo4j-bolt")) {
-@dependency.template("io.micronaut.configuration", "micronaut-neo4j-bolt", "compile", null)
+@dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "compile", null)
 }
 @if (features.contains("neo4j-gorm")) {
 @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "compile", null)
@@ -315,7 +315,7 @@ List<Property> properties
 @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
 }
 @if (features.contains("elasticsearch")) {
-@dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "compile", null)
+@dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "compile", null)
 }
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)

@@ -304,7 +304,7 @@ dependencies {
     @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "implementation", null)
 }
 @if (features.contains("neo4j-bolt")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-neo4j-bolt", "implementation", null)
+    @dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "implementation", null)
 }
 @if (features.contains("neo4j-gorm")) {
     @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "implementation", null)
@@ -328,7 +328,7 @@ dependencies {
     @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)
 }
 @if (features.contains("elasticsearch")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-elasticsearch", "implementation", null)
+    @dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "implementation", null)
 }
 @if (features.contains("graphql")) {
     @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
