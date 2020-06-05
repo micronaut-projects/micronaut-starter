@@ -27,7 +27,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-elasticsearch")')
+        template.contains('implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")')
 
         where:
         language << Language.values().toList()
@@ -41,7 +41,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.elasticsearch</groupId>
       <artifactId>micronaut-elasticsearch</artifactId>
       <scope>compile</scope>
     </dependency>
