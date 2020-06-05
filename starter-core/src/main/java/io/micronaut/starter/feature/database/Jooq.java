@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -53,12 +52,6 @@ public class Jooq implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {  
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
     }
 
     @Override

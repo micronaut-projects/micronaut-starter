@@ -509,6 +509,23 @@ dependencies {
 @if (features.contains("neo4j-bolt")) {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntime", null)
 }
+@if (features.contains("testcontainers")) {
+@if (features.contains("mysql")) {
+    @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", "1.14.3")
+}
+@if (features.contains("postgres")) {
+    @dependency.template("org.testcontainers", "postgresql", "testRuntimeOnly", "1.14.3")
+}
+@if (features.contains("mariadb")) {
+    @dependency.template("org.testcontainers", "mariadb", "testRuntimeOnly", "1.14.3")
+}
+@if (features.contains("oracle")) {
+    @dependency.template("org.testcontainers", "oracle-xe", "testRuntimeOnly", "1.14.3")
+}
+@if (features.contains("sqlserver")) {
+    @dependency.template("org.testcontainers", "mssqlserver", "testRuntimeOnly", "1.14.3")
+}
+}
 }
 
 test.classpath += configurations.developmentOnly

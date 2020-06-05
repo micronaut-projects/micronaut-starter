@@ -63,4 +63,8 @@ public class H2 implements DatabaseDriverFeature {
         return "H2";
     }
 
+    @Override
+    public boolean embedded() {
+        return true;
+    }
 }

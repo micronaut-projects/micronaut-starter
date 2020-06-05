@@ -17,12 +17,9 @@ package io.micronaut.starter.feature.jdbi;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.database.ConfigurationHelper;
-import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;
@@ -62,12 +59,6 @@ public class JdbiFeature implements Feature {
         if (!featureContext.isPresent(JdbcFeature.class)) {
             featureContext.addFeature(jdbcFeature);
         }
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
     }
 
     @Override

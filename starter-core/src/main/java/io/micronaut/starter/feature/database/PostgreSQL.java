@@ -63,4 +63,9 @@ public class PostgreSQL implements DatabaseDriverFeature {
     public String getDataDialect() {
         return "POSTGRES";
     }
+
+    @Override
+    public boolean embedded() {
+        return false;
+    }
 }

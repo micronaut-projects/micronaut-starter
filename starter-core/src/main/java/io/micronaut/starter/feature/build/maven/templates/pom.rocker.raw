@@ -514,6 +514,23 @@ List<Property> properties
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
+@if (features.contains("testcontainers")) {
+@if (features.contains("mysql")) {
+@dependency.template("org.testcontainers", "mysql", "test", "1.14.3")
+}
+@if (features.contains("postgres")) {
+@dependency.template("org.testcontainers", "postgresql", "test", "1.14.3")
+}
+@if (features.contains("mariadb")) {
+@dependency.template("org.testcontainers", "mariadb", "test", "1.14.3")
+}
+@if (features.contains("oracle")) {
+@dependency.template("org.testcontainers", "oracle-xe", "test", "1.14.3")
+}
+@if (features.contains("sqlserver")) {
+@dependency.template("org.testcontainers", "mssqlserver", "test", "1.14.3")
+}
+}
   </dependencies>
 
   <build>

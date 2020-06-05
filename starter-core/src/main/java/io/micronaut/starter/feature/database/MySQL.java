@@ -62,4 +62,9 @@ public class MySQL implements DatabaseDriverFeature {
     public String getDataDialect() {
         return "MYSQL";
     }
+
+    @Override
+    public boolean embedded() {
+        return false;
+    }
 }

@@ -1,0 +1,22 @@
+package example.test;
+
+import io.micronaut.test.annotation.MicronautTest;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import javax.inject.Inject;
+
+@@MicronautTest
+public class BookRepositoryTest {
+
+    @@Inject BookRepository bookRepository;
+
+    @@Test
+    void testCreatingABook() {
+        Book book = new Book();
+        book.setTitle("Moby Dick");
+        bookRepository.save(book);
+
+        Assertions.assertNotNull(book.getId());
+    }
+}

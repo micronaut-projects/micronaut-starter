@@ -62,4 +62,9 @@ public class SQLServer implements DatabaseDriverFeature {
     public String getDataDialect() {
         return "SQL_SERVER";
     }
+
+    @Override
+    public boolean embedded() {
+        return false;
+    }
 }

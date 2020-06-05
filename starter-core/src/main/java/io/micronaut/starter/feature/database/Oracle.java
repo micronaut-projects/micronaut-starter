@@ -62,4 +62,9 @@ public class Oracle implements DatabaseDriverFeature {
     public String getDataDialect() {
         return "ORACLE";
     }
+
+    @Override
+    public boolean embedded() {
+        return false;
+    }
 }

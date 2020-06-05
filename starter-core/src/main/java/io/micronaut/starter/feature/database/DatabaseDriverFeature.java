@@ -36,6 +36,8 @@ public interface DatabaseDriverFeature extends OneOfFeature {
         return Category.DATABASE;
     }
 
+    boolean embedded();
+
     String getJdbcUrl();
 
     String getDriverClass();
