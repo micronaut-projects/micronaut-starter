@@ -54,16 +54,16 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
         return Category.DATABASE;
     }
 
-    abstract boolean embedded();
+    public abstract boolean embedded();
 
-    abstract public String getJdbcUrl();
+    public abstract String getJdbcUrl();
 
-    abstract public String getDriverClass();
+    public abstract String getDriverClass();
 
-    abstract public String getDefaultUser();
+    public abstract String getDefaultUser();
 
-    abstract public String getDefaultPassword();
+    public abstract String getDefaultPassword();
 
-    abstract public String getDataDialect();
+    public abstract String getDataDialect();
 
 }
