@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class MySQL implements DatabaseDriverFeature {
+public class MySQL extends DatabaseDriverFeature {
+
+    public MySQL(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull

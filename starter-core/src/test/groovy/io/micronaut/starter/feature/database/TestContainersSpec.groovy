@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 
@@ -133,6 +134,19 @@ class TestContainersSpec extends BeanContextSpec {
         then:
         gradleTemplate.contains("org.testcontainers")
         mavenTemplate.contains("org.testcontainers")
+
+        where:
+        driverFeature <<  beanContext.streamOfType(DatabaseDriverFeature)
+                .filter({ f ->  !f.embedded() })
+                .collect(Collectors.toList())
+    }
+
+    void "test all non embedded drivers apply the test containers feature"() {
+        when:
+        Features features = getFeatures([driverFeature.getName()])
+
+        then:
+        features.contains("testcontainers")
 
         where:
         driverFeature <<  beanContext.streamOfType(DatabaseDriverFeature)

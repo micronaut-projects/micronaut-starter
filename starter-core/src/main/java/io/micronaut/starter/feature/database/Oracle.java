@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class Oracle implements DatabaseDriverFeature {
+public class Oracle extends DatabaseDriverFeature {
+
+    public Oracle(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull

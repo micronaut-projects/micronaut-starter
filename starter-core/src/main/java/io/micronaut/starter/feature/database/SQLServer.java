@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class SQLServer implements DatabaseDriverFeature {
+public class SQLServer extends DatabaseDriverFeature {
+
+    public SQLServer(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull
