@@ -8,15 +8,15 @@ jobs:
         java: ['8', '11', '14']
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.m2/repository
-          key: ${{ runner.os }}-test-cli-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-test-cli-
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#            ~/.m2/repository
+#          key: ${{ runner.os }}-test-cli-${{ hashFiles('**/*.gradle') }}
+#          restore-keys: |
+#            ${{ runner.os }}-test-cli-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -30,15 +30,15 @@ jobs:
         java: ['8', '11', '14']
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.m2/repository
-          key: ${{ runner.os }}-test-core-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-test-core-
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#            ~/.m2/repository
+#          key: ${{ runner.os }}-test-core-${{ hashFiles('**/*.gradle') }}
+#          restore-keys: |
+#            ${{ runner.os }}-test-core-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -52,15 +52,15 @@ jobs:
         java: ['8', '11', '14']
     steps:
       - uses: actions/checkout@v1
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.m2/repository
-          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-test-aws-
+#      - uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#            ~/.m2/repository
+#          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
+#          restore-keys: |
+#            ${{ runner.os }}-test-aws-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
