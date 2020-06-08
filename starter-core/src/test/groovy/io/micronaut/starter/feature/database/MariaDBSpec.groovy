@@ -15,7 +15,7 @@ class MariaDBSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language)).render().toString()
 
         then:
-        template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client:2.6.0")')
+        template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client")')
 
         where:
         language << Language.values().toList()
@@ -31,7 +31,6 @@ class MariaDBSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
-      <version>2.6.0</version>
       <scope>runtime</scope>
     </dependency>
 """)

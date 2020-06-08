@@ -18,7 +18,6 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 
 class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
 
-    static final String KTOR_VERSION = '1.3.2'
 
     @Subject
     @Shared
@@ -94,7 +93,6 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     <dependency>
       <groupId>io.ktor</groupId>
       <artifactId>ktor-server-netty</artifactId>
-      <version>1.3.2</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -103,7 +101,6 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     <dependency>
       <groupId>io.ktor</groupId>
       <artifactId>ktor-jackson</artifactId>
-      <version>1.3.2</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -143,8 +140,8 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("mainClassName = \"example.micronaut.Application\"")
         template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
-        template.contains("implementation(\"io.ktor:ktor-server-netty:${KTOR_VERSION}\")".toString())
-        template.contains("implementation(\"io.ktor:ktor-jackson:${KTOR_VERSION}\")".toString())
+        template.contains("implementation(\"io.ktor:ktor-server-netty\")".toString())
+        template.contains("implementation(\"io.ktor:ktor-jackson\")".toString())
         template.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
         !template.contains('implementation "io.micronaut:micronaut-http-server-netty"')
 

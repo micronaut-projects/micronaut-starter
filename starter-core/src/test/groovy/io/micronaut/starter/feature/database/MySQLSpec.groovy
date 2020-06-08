@@ -15,7 +15,7 @@ class MySQLSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mysql'], language)).render().toString()
 
         then:
-        template.contains('runtimeOnly("mysql:mysql-connector-java:8.0.20")')
+        template.contains('runtimeOnly("mysql:mysql-connector-java")')
 
         where:
         language << Language.values().toList()
@@ -31,7 +31,6 @@ class MySQLSpec extends BeanContextSpec {
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.20</version>
       <scope>runtime</scope>
     </dependency>
 """)

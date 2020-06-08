@@ -15,7 +15,7 @@ class SQLServerSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sqlserver'], language)).render().toString()
 
         then:
-        template.contains('runtimeOnly("com.microsoft.sqlserver:mssql-jdbc:8.2.2.jre8")')
+        template.contains('runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")')
 
         where:
         language << Language.values().toList()
@@ -31,7 +31,6 @@ class SQLServerSpec extends BeanContextSpec {
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>8.2.2.jre8</version>
       <scope>runtime</scope>
     </dependency>
 """)
