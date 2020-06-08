@@ -54,7 +54,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-function-aws")')
+        template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
 
         where:
         language << Language.values()
@@ -67,7 +67,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-function-aws")')
+        template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
 
         where:
         language << Language.values()
@@ -82,7 +82,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.aws</groupId>
       <artifactId>micronaut-function-aws</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -100,7 +100,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.aws</groupId>
       <artifactId>micronaut-function-aws</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -122,7 +122,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         def readme = output["README.md"]
 
         then:
-        build.contains('implementation("io.micronaut:micronaut-function-aws")')
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
