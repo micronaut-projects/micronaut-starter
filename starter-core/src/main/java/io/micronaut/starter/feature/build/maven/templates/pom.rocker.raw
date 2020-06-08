@@ -377,7 +377,7 @@ List<Property> properties
 @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "compile", null)
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut", "micronaut-function-aws", "compile", null)
+@dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null)
 }
 @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null)
