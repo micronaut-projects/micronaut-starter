@@ -262,7 +262,7 @@ dependencies {
     @dependency.template("io.micronaut.flyway", "micronaut-flyway", "implementation", null)
 }
 @if (features.contains("liquibase")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-liquibase", "implementation", null)
+    @dependency.template("io.micronaut.liquibase", "micronaut-liquibase", "implementation", null)
 }
 @if (features.contains("jdbc-dbcp")) {
     @dependency.template("io.micronaut.configuration", "micronaut-jdbc-dbcp", "implementation", null)

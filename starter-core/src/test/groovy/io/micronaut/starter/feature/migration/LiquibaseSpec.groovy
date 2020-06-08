@@ -15,17 +15,16 @@ class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains("http://www.liquibase.org")
+        readme.contains("https://www.liquibase.org")
         readme.contains("https://micronaut-projects.github.io/micronaut-liquibase/latest/guide/index.html")
     }
-
 
     void "test the dependency is added to the gradle build"() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['liquibase'])).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-liquibase")')
+        template.contains('implementation("io.micronaut.liquibase:micronaut-liquibase")')
     }
 
     void "test the dependency is added to the maven build"() {
@@ -35,7 +34,7 @@ class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.liquibase</groupId>
       <artifactId>micronaut-liquibase</artifactId>
       <scope>compile</scope>
     </dependency>
