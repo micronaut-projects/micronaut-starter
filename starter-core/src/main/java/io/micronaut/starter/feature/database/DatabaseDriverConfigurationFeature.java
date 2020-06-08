@@ -17,6 +17,9 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.feature.Feature;
 
+/**
+ * A feature that configures a datasource with a driver
+ */
 public interface DatabaseDriverConfigurationFeature extends Feature {
 
     String getUrlKey();
