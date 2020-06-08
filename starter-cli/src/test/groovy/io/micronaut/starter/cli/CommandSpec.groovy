@@ -50,9 +50,9 @@ class CommandSpec extends Specification {
     void executeMavenCommand(String command) {
         StringBuilder mavenCommand = new StringBuilder()
         if (OperatingSystem.current.isWindows()) {
-            mavenCommand.append("mvnw.bat")
+            mavenCommand.append("mvnw.bat -U")
         } else {
-            mavenCommand.append("./mvnw")
+            mavenCommand.append("./mvnw -U")
         }
         mavenCommand.append(" ").append(command)
         executeCommand(mavenCommand)
