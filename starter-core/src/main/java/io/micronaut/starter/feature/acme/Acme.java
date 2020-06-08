@@ -64,6 +64,6 @@ public class Acme implements OneOfFeature {
 
     @Override
     public String getCategory() {
-        return Category.OTHER;
+        return Category.SSL;
     }
 }

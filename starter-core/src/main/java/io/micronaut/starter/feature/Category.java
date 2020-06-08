@@ -43,6 +43,7 @@ public class Category {
     public static final String SEARCH               = "Search Engine";
     public static final String SECURITY             = "Security";
     public static final String SERVICE_DISCOVERY    = "Service Discovery";
+    public static final String SSL                  = "SSL";
     public static final String TRACING              = "Distributed Tracing";
     public static final String VALIDATION           = "Validation";
     public static final String VIEW                 = "View Rendering";
