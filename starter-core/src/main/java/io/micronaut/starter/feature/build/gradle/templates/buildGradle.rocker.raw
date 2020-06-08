@@ -402,7 +402,7 @@ dependencies {
     @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "implementation", null)
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-    @dependency.template("io.micronaut", "micronaut-function-aws", "implementation", null)
+    @dependency.template("io.micronaut.aws", "micronaut-function-aws", "implementation", null)
 }
 @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "implementation", null)
