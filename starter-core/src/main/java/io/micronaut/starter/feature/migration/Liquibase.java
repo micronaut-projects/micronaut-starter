@@ -36,7 +36,7 @@ public class Liquibase implements MigrationFeature {
     }
 
     public String getThirdPartyDocumentation() {
-        return "http://www.liquibase.org/";
+        return "https://www.liquibase.org/";
     }
 
     @Override
