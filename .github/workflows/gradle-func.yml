@@ -22,7 +22,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
-        run: ./gradlew test-cli:test --parallel --continue
+        run: ./gradlew test-cli:test --refresh-dependencies --parallel --continue
   test-core:
     runs-on: ubuntu-latest
     strategy:
@@ -44,7 +44,7 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
+        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
   test-aws:
     runs-on: ubuntu-latest
     strategy:
@@ -66,5 +66,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
+        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
 
