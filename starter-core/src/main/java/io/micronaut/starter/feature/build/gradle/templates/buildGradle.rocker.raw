@@ -347,8 +347,8 @@ dependencies {
 }
 @if (features.contains("ktor")) {
     @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "implementation", null)
-    @dependency.template("io.ktor", "ktor-server-netty", "implementation", "1.3.2")
-    @dependency.template("io.ktor", "ktor-jackson", "implementation", "1.3.2")
+    @dependency.template("io.ktor", "ktor-server-netty", "implementation", null)
+    @dependency.template("io.ktor", "ktor-jackson", "implementation", null)
 }
 @if (features.contains("reactor")) {
     @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)
@@ -472,28 +472,28 @@ dependencies {
     @dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtimeOnly", "2.12.1")
 }
 @if (features.contains("logback")) {
-    @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", "1.2.3")
+    @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
 }
 @if (features.language().isKotlin()) {
-    @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", "2.9.8")
+    @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null)
 }
 @if (features.contains("h2")) {
     @dependency.template("com.h2database", "h2", "runtimeOnly", null)
 }
 @if (features.contains("postgres")) {
-    @dependency.template("org.postgresql", "postgresql", "runtimeOnly", "42.2.12")
+    @dependency.template("org.postgresql", "postgresql", "runtimeOnly", null)
 }
 @if (features.contains("mysql")) {
-    @dependency.template("mysql", "mysql-connector-java", "runtimeOnly", "8.0.20")
+    @dependency.template("mysql", "mysql-connector-java", "runtimeOnly", null)
 }
 @if (features.contains("mariadb")) {
-    @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", "2.6.0")
+    @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", null)
 }
 @if (features.contains("oracle")) {
-    @dependency.template("com.oracle.ojdbc", "ojdbc8", "runtimeOnly", "19.3.0.0")
+    @dependency.template("com.oracle.ojdbc", "ojdbc8", "runtimeOnly", null)
 }
 @if (features.contains("sqlserver")) {
-    @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", "8.2.2.jre8")
+    @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", null)
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)

@@ -343,8 +343,8 @@ List<Property> properties
 }
 @if (features.contains("ktor")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
-@dependency.template("io.ktor", "ktor-server-netty", "compile", "1.3.2")
-@dependency.template("io.ktor", "ktor-jackson", "compile", "1.3.2")
+@dependency.template("io.ktor", "ktor-server-netty", "compile", null)
+@dependency.template("io.ktor", "ktor-jackson", "compile", null)
 }
 @if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
@@ -457,31 +457,31 @@ List<Property> properties
 @dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtime", "2.12.1")
 }
 @if (features.contains("logback")) {
-@dependency.template("ch.qos.logback", "logback-classic", "runtime", "1.2.3")
+@dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
 }
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
 }
 @if (features.contains("postgres")) {
-@dependency.template("org.postgresql", "postgresql", "runtime", "42.2.12")
+@dependency.template("org.postgresql", "postgresql", "runtime", null)
 }
 @if (features.contains("mysql")) {
-@dependency.template("mysql", "mysql-connector-java", "runtime", "8.0.20")
+@dependency.template("mysql", "mysql-connector-java", "runtime", null)
 }
 @if (features.contains("mariadb")) {
-@dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", "2.6.0")
+@dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", null)
 }
 @if (features.contains("oracle")) {
-@dependency.template("com.oracle.ojdbc", "ojdbc8", "runtime", "19.3.0.0")
+@dependency.template("com.oracle.ojdbc", "ojdbc8", "runtime", null)
 }
 @if (features.contains("sqlserver")) {
-@dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", "8.2.2.jre8")
+@dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", null)
 }
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }
 @if (features.language().isKotlin()) {
-@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", "2.9.8")
+@dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null)
 }
 @if (features.testFramework().isJunit()) {
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
