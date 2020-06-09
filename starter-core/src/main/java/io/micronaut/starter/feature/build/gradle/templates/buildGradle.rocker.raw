@@ -310,19 +310,19 @@ dependencies {
     @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "implementation", null)
 }
 @if (features.contains("security")) {
-    @dependency.template("io.micronaut", "micronaut-security", "implementation", null)
+    @dependency.template("io.micronaut.security", "micronaut-security", "implementation", null)
 }
 @if (features.contains("security-jwt")) {
-    @dependency.template("io.micronaut", "micronaut-security-jwt", "implementation", null)
+    @dependency.template("io.micronaut.security", "micronaut-security-jwt", "implementation", null)
 }
 @if (features.contains("security-session")) {
-    @dependency.template("io.micronaut", "micronaut-security-session", "implementation", null)
+    @dependency.template("io.micronaut.security", "micronaut-security-session", "implementation", null)
 }
 @if (features.contains("security-oauth2")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-security-oauth2", "implementation", null)
+    @dependency.template("io.micronaut.security", "micronaut-security-oauth2", "implementation", null)
 }
 @if (features.contains("security-ldap")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-security-ldap", "implementation", null)
+    @dependency.template("io.micronaut.security", "micronaut-security-ldap", "implementation", null)
 }
 @if (features.contains("cassandra")) {
     @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)

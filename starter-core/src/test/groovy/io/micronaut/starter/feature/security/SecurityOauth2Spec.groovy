@@ -27,8 +27,8 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-oauth2'], language)).render().toString()
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut.configuration:micronaut-security-oauth2")')
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
+        template.contains('implementation("io.micronaut.security:micronaut-security-oauth2")')
 
         where:
         language << Language.values().toList()
@@ -42,7 +42,7 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.security</groupId>
       <artifactId>micronaut-security-oauth2</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -50,14 +50,14 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         if (language == Language.JAVA) {
             assert template.contains("""
             <path>
-              <groupId>io.micronaut</groupId>
+              <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
 """)
             assert template.contains("""
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </path>
@@ -65,7 +65,7 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         } else if (language == Language.KOTLIN) {
             assert template.count("""
                 <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </annotationProcessorPath>

@@ -28,8 +28,8 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language)).render().toString()
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut:micronaut-security-session")')
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
+        template.contains('implementation("io.micronaut.security:micronaut-security-session")')
 
         where:
         language << Language.values().toList()
@@ -43,7 +43,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.security</groupId>
       <artifactId>micronaut-security-session</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -51,14 +51,14 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
         if (language == Language.JAVA) {
             assert template.contains("""
             <path>
-              <groupId>io.micronaut</groupId>
+              <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
 """)
             assert template.contains("""
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </path>
@@ -66,7 +66,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
         } else if (language == Language.KOTLIN) {
             assert template.count("""
                 <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </annotationProcessorPath>

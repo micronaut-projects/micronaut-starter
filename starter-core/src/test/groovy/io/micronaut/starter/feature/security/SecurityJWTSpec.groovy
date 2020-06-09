@@ -9,7 +9,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecurityJTWSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature security-jwt contains links to micronaut docs'() {
         when:
@@ -27,8 +27,8 @@ class SecurityJTWSpec extends BeanContextSpec  implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language)).render().toString()
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut:micronaut-security-jwt")')
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
+        template.contains('implementation("io.micronaut.security:micronaut-security-jwt")')
 
         where:
         language << Language.values().toList()
@@ -42,7 +42,7 @@ class SecurityJTWSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.security</groupId>
       <artifactId>micronaut-security-jwt</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -50,14 +50,14 @@ class SecurityJTWSpec extends BeanContextSpec  implements CommandOutputFixture {
         if (language == Language.JAVA) {
             assert template.contains("""
             <path>
-              <groupId>io.micronaut</groupId>
+              <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
 """)
             assert template.contains("""
                 <path>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </path>
@@ -65,7 +65,7 @@ class SecurityJTWSpec extends BeanContextSpec  implements CommandOutputFixture {
         } else if (language == Language.KOTLIN) {
             assert template.count("""
                 <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
+                  <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>\${micronaut.security.version}</version>
                 </annotationProcessorPath>
