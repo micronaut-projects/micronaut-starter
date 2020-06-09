@@ -15,7 +15,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle'])).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:oracle-xe:1.14.3")')
+        template.contains('testRuntimeOnly("org.testcontainers:oracle-xe")')
     }
 
     void "test mysql dependency is present for gradle"() {
@@ -23,7 +23,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql'])).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mysql:1.14.3")')
+        template.contains('testRuntimeOnly("org.testcontainers:mysql")')
     }
 
     void "test postgres dependency is present for gradle"() {
@@ -31,7 +31,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres'])).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:postgresql:1.14.3")')
+        template.contains('testRuntimeOnly("org.testcontainers:postgresql")')
     }
 
     void "test mariadb dependency is present for gradle"() {
@@ -39,7 +39,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb'])).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mariadb:1.14.3")')
+        template.contains('testRuntimeOnly("org.testcontainers:mariadb")')
     }
 
     void "test sqlserver dependency is present for gradle"() {
@@ -47,7 +47,15 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver'])).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mssqlserver:1.14.3")')
+        template.contains('testRuntimeOnly("org.testcontainers:mssqlserver")')
+    }
+
+    void "test bom is present for gradle"() {
+        when:
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers'])).render().toString()
+
+        then:
+        template.contains("testImplementation(platform(\"org.testcontainers:testcontainers-bom:1.14.3\"))")
     }
 
     void "test oracle dependency is present for maven"() {
@@ -59,11 +67,9 @@ class TestContainersSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>oracle-xe</artifactId>
-      <version>1.14.3</version>
       <scope>test</scope>
     </dependency>
 """)
-
     }
 
     void "test mysql dependency is present for maven"() {
@@ -75,7 +81,6 @@ class TestContainersSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>mysql</artifactId>
-      <version>1.14.3</version>
       <scope>test</scope>
     </dependency>
 """)
@@ -90,7 +95,6 @@ class TestContainersSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>1.14.3</version>
       <scope>test</scope>
     </dependency>
 """)
@@ -105,7 +109,6 @@ class TestContainersSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>mariadb</artifactId>
-      <version>1.14.3</version>
       <scope>test</scope>
     </dependency>
 """)
@@ -120,9 +123,28 @@ class TestContainersSpec extends BeanContextSpec {
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>mssqlserver</artifactId>
-      <version>1.14.3</version>
       <scope>test</scope>
     </dependency>
+""")
+    }
+
+    void "test bom is present for maven"() {
+        when:
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), []).render().toString()
+
+        then:
+        template.contains("""
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.testcontainers</groupId>
+        <artifactId>testcontainers-bom</artifactId>
+        <version>1.14.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 """)
     }
 
