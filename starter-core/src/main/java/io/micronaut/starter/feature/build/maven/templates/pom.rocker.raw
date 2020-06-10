@@ -158,7 +158,7 @@ List<Property> properties
 @dependency.template("io.micronaut", "micronaut-multitenancy", "compile", null)
 }
 @if (features.contains("multi-tenancy-gorm")) {
-@dependency.template("io.micronaut.configuration", "micronaut-multitenancy-gorm", "compile", null)
+@dependency.template("io.micronaut.groovy", "micronaut-multitenancy-gorm", "compile", null)
 }
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
 @dependency.template("io.micronaut", "micronaut-discovery-client", "compile", null)
@@ -276,7 +276,7 @@ List<Property> properties
 @dependency.template("io.micronaut.beanvalidation", "micronaut-hibernate-validator", "compile", null)
 }
 @if (features.contains("hibernate-gorm")) {
-@dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "compile", null)
+@dependency.template("io.micronaut.groovy", "micronaut-hibernate-gorm", "compile", null)
 }
 @if (features.contains("hibernate-jpa")) {
 @dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa", "compile", null)
@@ -291,13 +291,13 @@ List<Property> properties
 @dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "compile", null)
 }
 @if (features.contains("mongo-gorm")) {
-@dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "compile", null)
+@dependency.template("io.micronaut.groovy", "micronaut-mongo-gorm", "compile", null)
 }
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "compile", null)
 }
 @if (features.contains("neo4j-gorm")) {
-@dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "compile", null)
+@dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "compile", null)
 }
 @if (features.contains("security")) {
 @dependency.template("io.micronaut.security", "micronaut-security", "compile", null)
