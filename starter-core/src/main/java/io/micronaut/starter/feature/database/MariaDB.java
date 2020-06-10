@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class MariaDB implements DatabaseDriverFeature {
+public class MariaDB extends DatabaseDriverFeature {
+
+    public MariaDB(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull
@@ -61,5 +65,10 @@ public class MariaDB implements DatabaseDriverFeature {
     @Override
     public String getDataDialect() {
         return "MYSQL";
+    }
+
+    @Override
+    public boolean embedded() {
+        return false;
     }
 }

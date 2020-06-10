@@ -17,33 +17,53 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 
-public interface DatabaseDriverFeature extends OneOfFeature {
+public abstract class DatabaseDriverFeature implements OneOfFeature {
+
+    private final TestContainers testContainers;
+
+    public DatabaseDriverFeature() {
+        this.testContainers = null;
+    }
+
+    public DatabaseDriverFeature(TestContainers testContainers) {
+        this.testContainers = testContainers;
+    }
 
     @Override
-    default Class<?> getFeatureClass() {
+    public Class<?> getFeatureClass() {
         return DatabaseDriverFeature.class;
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
+    public boolean supports(ApplicationType applicationType) {
         return true;
     }
 
     @Override
-    default String getCategory() {
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
+            featureContext.addFeature(testContainers);
+        }
+    }
+
+    @Override
+    public String getCategory() {
         return Category.DATABASE;
     }
 
-    String getJdbcUrl();
+    public abstract boolean embedded();
 
-    String getDriverClass();
+    public abstract String getJdbcUrl();
 
-    String getDefaultUser();
+    public abstract String getDriverClass();
 
-    String getDefaultPassword();
+    public abstract String getDefaultUser();
 
-    String getDataDialect();
+    public abstract String getDefaultPassword();
+
+    public abstract String getDataDialect();
 
 }

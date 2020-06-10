@@ -17,6 +17,7 @@ package io.micronaut.starter.io;
 
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.template.Template;
+import io.micronaut.starter.template.Writable;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,6 +75,16 @@ public class FileSystemOutputHandler implements OutputHandler {
 
     @Override
     public void write(String path, Template contents) throws IOException {
+        File targetFile = write(path, (Writable) contents);
+
+        if (contents.isExecutable()) {
+            if (!targetFile.setExecutable(true, true)) {
+                console.warning("Failed to set " + path + " to be executable");
+            }
+        }
+    }
+
+    public File write(String path, Writable contents) throws IOException {
         if ('/' != File.separatorChar) {
             path = path.replace('/', File.separatorChar);
         }
@@ -84,12 +95,7 @@ public class FileSystemOutputHandler implements OutputHandler {
         try (OutputStream os = Files.newOutputStream(targetFile.toPath())) {
             contents.write(os);
         }
-
-        if (contents.isExecutable()) {
-            if (!targetFile.setExecutable(true, true)) {
-                console.warning("Failed to set " + path + " to be executable");
-            }
-        }
+        return targetFile;
     }
 
     @Override

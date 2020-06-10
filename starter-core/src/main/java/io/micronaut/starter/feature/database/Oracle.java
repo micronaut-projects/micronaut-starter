@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class Oracle implements DatabaseDriverFeature {
+public class Oracle extends DatabaseDriverFeature {
+
+    public Oracle(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull
@@ -61,5 +65,10 @@ public class Oracle implements DatabaseDriverFeature {
     @Override
     public String getDataDialect() {
         return "ORACLE";
+    }
+
+    @Override
+    public boolean embedded() {
+        return false;
     }
 }

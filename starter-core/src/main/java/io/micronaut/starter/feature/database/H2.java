@@ -21,7 +21,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @Primary
-public class H2 implements DatabaseDriverFeature {
+public class H2 extends DatabaseDriverFeature {
 
     @Override
     public String getName() {
@@ -63,4 +63,8 @@ public class H2 implements DatabaseDriverFeature {
         return "H2";
     }
 
+    @Override
+    public boolean embedded() {
+        return true;
+    }
 }

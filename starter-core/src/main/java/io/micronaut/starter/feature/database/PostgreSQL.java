@@ -20,7 +20,11 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.inject.Singleton;
 
 @Singleton
-public class PostgreSQL implements DatabaseDriverFeature {
+public class PostgreSQL extends DatabaseDriverFeature {
+
+    public PostgreSQL(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     @NonNull
@@ -62,5 +66,10 @@ public class PostgreSQL implements DatabaseDriverFeature {
     @Override
     public String getDataDialect() {
         return "POSTGRES";
+    }
+
+    @Override
+    public boolean embedded() {
+        return false;
     }
 }

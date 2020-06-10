@@ -27,7 +27,13 @@ import javax.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class HibernateGorm implements LanguageSpecificFeature {
+public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverConfigurationFeature {
+
+    private static final String PREFIX = "dataSource.";
+    private static final String URL_KEY = PREFIX + "url";
+    private static final String DRIVER_KEY = PREFIX + "driverClassName";
+    private static final String USERNAME_KEY = PREFIX + "username";
+    private static final String PASSWORD_KEY = PREFIX + "password";
 
     private final DatabaseDriverFeature defaultDbFeature;
     private final HibernateValidator hibernateValidator;
@@ -71,10 +77,10 @@ public class HibernateGorm implements LanguageSpecificFeature {
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config = generatorContext.getConfiguration();
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        config.put("dataSource.url", dbFeature.getJdbcUrl());
-        config.put("dataSource.driverClassName", dbFeature.getDriverClass());
-        config.put("dataSource.username", dbFeature.getDefaultUser());
-        config.put("dataSource.password", dbFeature.getDefaultPassword());
+        config.put(getUrlKey(), dbFeature.getJdbcUrl());
+        config.put(getDriverKey(), dbFeature.getDriverClass());
+        config.put(getUsernameKey(), dbFeature.getDefaultUser());
+        config.put(getPasswordKey(), dbFeature.getDefaultPassword());
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
         config.put("hibernate.hbm2ddl.auto", "update");
@@ -86,6 +92,26 @@ public class HibernateGorm implements LanguageSpecificFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getUrlKey() {
+        return URL_KEY;
+    }
+
+    @Override
+    public String getDriverKey() {
+        return DRIVER_KEY;
+    }
+
+    @Override
+    public String getUsernameKey() {
+        return USERNAME_KEY;
+    }
+
+    @Override
+    public String getPasswordKey() {
+        return PASSWORD_KEY;
     }
 
     @Override

@@ -21,11 +21,19 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.database.DatabaseDriverConfigurationFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
-public abstract class JdbcFeature implements OneOfFeature {
+public abstract class JdbcFeature implements OneOfFeature, DatabaseDriverConfigurationFeature {
+
+    private static final String PREFIX = "datasources.default.";
+    private static final String URL_KEY = PREFIX + "url";
+    private static final String DRIVER_KEY = PREFIX + "driverClassName";
+    private static final String USERNAME_KEY = PREFIX + "username";
+    private static final String PASSWORD_KEY = PREFIX + "password";
 
     private final DatabaseDriverFeature defaultDbFeature;
 
@@ -52,7 +60,14 @@ public abstract class JdbcFeature implements OneOfFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("datasources.default", new LinkedHashMap<>());
+        generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
+            Map<String, Object> jdbcConfig = new LinkedHashMap<>();
+            jdbcConfig.put(getUrlKey(), dbFeature.getJdbcUrl());
+            jdbcConfig.put(getDriverKey(), dbFeature.getDriverClass());
+            jdbcConfig.put(getUsernameKey(), dbFeature.getDefaultUser());
+            jdbcConfig.put(getPasswordKey(), dbFeature.getDefaultPassword());
+            generatorContext.getConfiguration().putAll(jdbcConfig);
+        });
     }
 
     @Override
@@ -70,4 +85,19 @@ public abstract class JdbcFeature implements OneOfFeature {
         return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc";
     }
 
+    public String getUrlKey() {
+        return URL_KEY;
+    }
+
+    public String getDriverKey() {
+        return DRIVER_KEY;
+    }
+
+    public String getUsernameKey() {
+        return USERNAME_KEY;
+    }
+
+    public String getPasswordKey() {
+        return PASSWORD_KEY;
+    }
 }
