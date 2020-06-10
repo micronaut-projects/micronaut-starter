@@ -131,7 +131,7 @@ List<Property> properties
 }
 }
 @if (features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-runtime-groovy", "compile", null)
+@dependency.template("io.micronaut.groovy", "micronaut-runtime-groovy", "compile", null)
 } else {
 @dependency.template("io.micronaut", "micronaut-runtime", "compile", null)
 }
