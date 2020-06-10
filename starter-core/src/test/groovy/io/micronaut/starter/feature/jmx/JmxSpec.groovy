@@ -28,7 +28,7 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-jmx")')
+        template.contains('implementation("io.micronaut.jmx:micronaut-jmx")')
 
         where:
         language << Language.values().toList()
@@ -42,7 +42,7 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.jmx</groupId>
       <artifactId>micronaut-jmx</artifactId>
       <scope>compile</scope>
     </dependency>

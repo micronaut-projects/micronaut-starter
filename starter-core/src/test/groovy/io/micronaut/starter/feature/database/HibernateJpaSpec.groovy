@@ -36,7 +36,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"])).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-hibernate-jpa")')
+        template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
@@ -47,14 +47,14 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-hibernate-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>

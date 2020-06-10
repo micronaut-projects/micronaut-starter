@@ -16,7 +16,7 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([jdbcFeature])).render().toString()
 
         then:
-        template.contains("implementation(\"io.micronaut.configuration:micronaut-${jdbcFeature}\")")
+        template.contains("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")")
         template.contains("runtimeOnly(\"com.h2database:h2\")")
 
         where:
@@ -31,7 +31,7 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-${jdbcFeature}</artifactId>
       <scope>compile</scope>
     </dependency>

@@ -43,7 +43,7 @@ class JdbiFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbi</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -59,7 +59,7 @@ class JdbiFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-jdbi")')
+        template.contains('implementation("io.micronaut.sql:micronaut-jdbi")')
 
         where:
         language << Language.values()

@@ -26,7 +26,7 @@ class JooqSpec extends BeanContextSpec  implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jooq'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-jooq")')
+        template.contains('implementation("io.micronaut.sql:micronaut-jooq")')
 
         where:
         language << Language.values().toList()
@@ -40,7 +40,7 @@ class JooqSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jooq</artifactId>
       <scope>compile</scope>
     </dependency>

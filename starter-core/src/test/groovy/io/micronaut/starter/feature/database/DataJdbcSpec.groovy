@@ -38,7 +38,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
         template.contains('implementation("io.micronaut.data:micronaut-data-jdbc")')
-        template.contains('implementation("io.micronaut.configuration:micronaut-jdbc-hikari")')
+        template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
     }
 
@@ -72,7 +72,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>

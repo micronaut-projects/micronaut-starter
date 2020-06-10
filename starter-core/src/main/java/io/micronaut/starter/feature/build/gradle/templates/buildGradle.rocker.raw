@@ -265,16 +265,16 @@ dependencies {
     @dependency.template("io.micronaut.liquibase", "micronaut-liquibase", "implementation", null)
 }
 @if (features.contains("jdbc-dbcp")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-dbcp", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jdbc-dbcp", "implementation", null)
 }
 @if (features.contains("jdbc-tomcat")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-tomcat", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jdbc-tomcat", "implementation", null)
 }
 @if (features.contains("jdbc-hikari")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-hikari", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jdbc-hikari", "implementation", null)
 }
 @if (features.contains("jdbc-ucp")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jdbc-ucp", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jdbc-ucp", "implementation", null)
 }
 @if (features.contains("data-jpa")) {
     @dependency.template("io.micronaut.data", "micronaut-data-hibernate-jpa", "implementation", null)
@@ -289,10 +289,10 @@ dependencies {
     @dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "implementation", null)
 }
 @if (features.contains("hibernate-jpa")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-jpa", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa", "implementation", null)
 }
 @if (features.contains("jooq")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jooq", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jooq", "implementation", null)
 }
 @if (features.contains("mongo-reactive")) {
     @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
@@ -334,10 +334,10 @@ dependencies {
     @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
 }
 @if (features.contains("postgres-reactive")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-postgres-reactive", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "implementation", null)
 }
 @if (features.contains("redis-lettuce")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-redis-lettuce", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-redis-lettuce", "implementation", null)
 }
 @if (features.contains("gcp-cloud-trace")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
@@ -360,13 +360,13 @@ dependencies {
     @dependency.template("io.micronaut.rxjava3", "micronaut-rxjava3", "implementation", null)
 }
 @if (features.contains("sql-jdbi")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jdbi", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-jdbi", "implementation", null)
 }
 @if (features.contains("vertx-pg-client")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-vertx-pg-client", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-vertx-pg-client", "implementation", null)
 }
 @if (features.contains("vertx-mysql-client")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-vertx-mysql-client", "implementation", null)
+    @dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "implementation", null)
 }
 @if (features.contains("cache-caffeine")) {
     @dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "implementation", null)
@@ -441,7 +441,7 @@ dependencies {
     @dependency.template("io.micronaut.jaxrs", "micronaut-jaxrs-server", "implementation", null)
 }
 @if (features.contains("jmx")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-jmx", "implementation", null)
+    @dependency.template("io.micronaut.jmx", "micronaut-jmx", "implementation", null)
 }
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
