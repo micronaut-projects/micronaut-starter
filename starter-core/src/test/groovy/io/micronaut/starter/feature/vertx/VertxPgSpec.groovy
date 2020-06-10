@@ -16,7 +16,7 @@ class VertxPgSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-vertx-pg-client")')
+        template.contains('implementation("io.micronaut.sql:micronaut-vertx-pg-client")')
 
         where:
         language << Language.values().toList()
@@ -30,7 +30,7 @@ class VertxPgSpec extends BeanContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-vertx-pg-client</artifactId>
       <scope>compile</scope>
     </dependency>

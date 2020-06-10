@@ -337,7 +337,7 @@ dependencies {
     @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "implementation", null)
 }
 @if (features.contains("redis-lettuce")) {
-    @dependency.template("io.micronaut.sql", "micronaut-redis-lettuce", "implementation", null)
+    @dependency.template("io.micronaut.redis", "micronaut-redis-lettuce", "implementation", null)
 }
 @if (features.contains("gcp-cloud-trace")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
