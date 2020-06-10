@@ -58,8 +58,8 @@ public class DataJpa implements DataFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.jdbc(dbFeature));
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
-        generatorContext.getConfiguration().putAll(ConfigurationHelper.JPA_DDL);
+        generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+
     }
 }

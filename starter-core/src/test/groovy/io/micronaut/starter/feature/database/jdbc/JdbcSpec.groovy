@@ -62,7 +62,7 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
         GeneratorContext ctx = buildGeneratorContext([jdbcFeature])
 
         then:
-        ctx.configuration.containsKey("datasources.default")
+        ctx.configuration.containsKey("datasources.default.url")
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name

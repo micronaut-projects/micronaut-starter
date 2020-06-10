@@ -55,7 +55,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains('@JdbcRepository(dialect = "H2")\n')
+        output.text.contains('@JdbcRepository(dialect = Dialect.H2)\n')
         1 * consoleOutput.out({ it.contains("Rendered repository") })
 
         where:
@@ -77,7 +77,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
         then:
         exitCode == 0
         output.exists()
-        output.text.contains('@JdbcRepository(dialect = "' + driverFeature.getDataDialect() + '")\n')
+        output.text.contains('@JdbcRepository(dialect = Dialect.' + driverFeature.getDataDialect() + ')\n')
         1 * consoleOutput.out({ it.contains("Rendered repository") })
 
         where:
