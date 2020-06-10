@@ -419,10 +419,10 @@ List<Property> properties
 @dependency.template("io.micronaut.views", "micronaut-views-soy", "compile", null)
 }
 @if (features.contains("rss")) {
-@dependency.template("io.micronaut.configuration", "micronaut-rss", "compile", null)
+@dependency.template("io.micronaut.rss", "micronaut-rss", "compile", null)
 }
 @if (features.contains("rss-itunes-podcast")) {
-@dependency.template("io.micronaut.configuration", "micronaut-itunespodcast", "compile", null)
+@dependency.template("io.micronaut.rss", "micronaut-itunespodcast", "compile", null)
 }
 @if (features.contains("jackson-xml")) {
 @dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "compile", null)
