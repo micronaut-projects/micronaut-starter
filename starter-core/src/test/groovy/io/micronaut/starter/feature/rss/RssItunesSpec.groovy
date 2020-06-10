@@ -26,7 +26,7 @@ class RssItunesSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-itunespodcast")')
+        template.contains('implementation("io.micronaut.rss:micronaut-itunespodcast")')
 
         where:
         language << Language.values().toList()
@@ -40,7 +40,7 @@ class RssItunesSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.rss</groupId>
       <artifactId>micronaut-itunespodcast</artifactId>
       <scope>compile</scope>
     </dependency>

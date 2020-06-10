@@ -429,10 +429,10 @@ dependencies {
     @dependency.template("io.micronaut.views", "micronaut-views-soy", "implementation", null)
 }
 @if (features.contains("rss")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-rss", "implementation", null)
+    @dependency.template("io.micronaut.rss", "micronaut-rss", "implementation", null)
 }
 @if (features.contains("rss-itunes-podcast")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-itunespodcast", "implementation", null)
+    @dependency.template("io.micronaut.rss", "micronaut-itunespodcast", "implementation", null)
 }
 @if (features.contains("jackson-xml")) {
     @dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "implementation", null)
