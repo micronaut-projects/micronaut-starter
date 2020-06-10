@@ -24,7 +24,7 @@ class Neo4jGormSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"])).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-neo4j-gorm")')
+        template.contains('implementation("io.micronaut.groovy:micronaut-neo4j-gorm")')
         template.contains('implementation("io.micronaut.neo4j:micronaut-neo4j-bolt")')
         template.contains("testRuntime(\"org.neo4j.test:neo4j-harness\")")
     }
@@ -36,7 +36,7 @@ class Neo4jGormSpec extends BeanContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.groovy</groupId>
       <artifactId>micronaut-neo4j-gorm</artifactId>
       <scope>compile</scope>
     </dependency>

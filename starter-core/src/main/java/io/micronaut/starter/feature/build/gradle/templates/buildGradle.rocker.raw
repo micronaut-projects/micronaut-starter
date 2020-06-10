@@ -168,7 +168,7 @@ dependencies {
     @dependency.template("io.micronaut", "micronaut-multitenancy", "implementation", null)
 }
 @if (features.contains("multi-tenancy-gorm")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-multitenancy-gorm", "implementation", null)
+    @dependency.template("io.micronaut.groovy", "micronaut-multitenancy-gorm", "implementation", null)
 }
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
     @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
@@ -286,7 +286,7 @@ dependencies {
     @dependency.template("io.micronaut.beanvalidation", "micronaut-hibernate-validator", "implementation", null)
 }
 @if (features.contains("hibernate-gorm")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-hibernate-gorm", "implementation", null)
+    @dependency.template("io.micronaut.groovy", "micronaut-hibernate-gorm", "implementation", null)
 }
 @if (features.contains("hibernate-jpa")) {
     @dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa", "implementation", null)
@@ -301,13 +301,13 @@ dependencies {
     @dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "implementation", null)
 }
 @if (features.contains("mongo-gorm")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-mongo-gorm", "implementation", null)
+    @dependency.template("io.micronaut.groovy", "micronaut-mongo-gorm", "implementation", null)
 }
 @if (features.contains("neo4j-bolt")) {
     @dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "implementation", null)
 }
 @if (features.contains("neo4j-gorm")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-neo4j-gorm", "implementation", null)
+    @dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "implementation", null)
 }
 @if (features.contains("security")) {
     @dependency.template("io.micronaut.security", "micronaut-security", "implementation", null)
