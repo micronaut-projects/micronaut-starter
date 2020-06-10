@@ -27,7 +27,7 @@ class HystrixSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-hystrix'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-netflix-hystrix")')
+        template.contains('implementation("io.micronaut.netflix:micronaut-netflix-hystrix")')
 
         where:
         language << Language.values().toList()
@@ -41,7 +41,7 @@ class HystrixSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.netflix</groupId>
       <artifactId>micronaut-netflix-hystrix</artifactId>
       <scope>compile</scope>
     </dependency>

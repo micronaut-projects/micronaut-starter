@@ -240,13 +240,13 @@ dependencies {
     @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "implementation", null)
 }
 @if (features.contains("netflix-archaius")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-netflix-archaius", "implementation", null)
+    @dependency.template("io.micronaut.netflix", "micronaut-netflix-archaius", "implementation", null)
 }
 @if (features.contains("netflix-hystrix")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-netflix-hystrix", "implementation", null)
+    @dependency.template("io.micronaut.netflix", "micronaut-netflix-hystrix", "implementation", null)
 }
 @if (features.contains("netflix-ribbon")) {
-    @dependency.template("io.micronaut.configuration", "micronaut-netflix-ribbon", "implementation", null)
+    @dependency.template("io.micronaut.netflix", "micronaut-netflix-ribbon", "implementation", null)
 }
 @if (features.contains("tracing-zipkin")) {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)

@@ -27,7 +27,7 @@ class RibbonSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-ribbon'], language)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.configuration:micronaut-netflix-ribbon")')
+        template.contains('implementation("io.micronaut.netflix:micronaut-netflix-ribbon")')
 
         where:
         language << Language.values().toList()
@@ -41,7 +41,7 @@ class RibbonSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.netflix</groupId>
       <artifactId>micronaut-netflix-ribbon</artifactId>
       <scope>compile</scope>
     </dependency>

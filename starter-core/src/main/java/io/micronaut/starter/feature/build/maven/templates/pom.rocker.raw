@@ -215,13 +215,13 @@ List<Property> properties
 @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "compile", null)
 }
 @if (features.contains("netflix-archaius")) {
-@dependency.template("io.micronaut.configuration", "micronaut-netflix-archaius", "compile", null)
+@dependency.template("io.micronaut.netflix", "micronaut-netflix-archaius", "compile", null)
 }
 @if (features.contains("netflix-hystrix")) {
-@dependency.template("io.micronaut.configuration", "micronaut-netflix-hystrix", "compile", null)
+@dependency.template("io.micronaut.netflix", "micronaut-netflix-hystrix", "compile", null)
 }
 @if (features.contains("netflix-ribbon")) {
-@dependency.template("io.micronaut.configuration", "micronaut-netflix-ribbon", "compile", null)
+@dependency.template("io.micronaut.netflix", "micronaut-netflix-ribbon", "compile", null)
 }
 @if (features.contains("tracing-zipkin")) {
 @dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
