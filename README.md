@@ -5,9 +5,38 @@
 
 Generates Micronaut applications.
 
+## Installation
+
+The CLI application comes in various flavours from a universal Java applications to native applications for Windows, Linux and OS X. These are available for direct download on the [releases page](https://github.com/micronaut-projects/micronaut-starter/releases). For installation see the [Micronaut documentation](https://docs.micronaut.io/2.0.x/guide/index.html#buildCLI).
+
+If you prefer not to install an application to create Micronaut applications you can do so with `curl` directly from the API:
+
+```bash
+$ curl https://launch.micronaut.io/demo.zip -o demo.zip
+$ unzip demo.zip -d demo
+$ cd demo
+$ ./gradlew run
+```
+
+Run `curl https://launch.micronaut.io` for more information on how to use the API or see the API documentation referenced below.
+
 ## UI
 
-[Micronaut Launch](https://micronaut.io/launch)
+If you prefer a browser based user interface you can visit [Micronaut Launch](https://micronaut.io/launch).
+
+The user interface is [written in React](https://github.com/micronaut-projects/static-website/tree/master/main/src/main/js/launch) and is a static single page application that simply interacts with the https://launch.micronaut.io API.
+
+## API
+
+API documentation for the production instance can be found at:
+
+* [Swagger / OpenAPI Doc](https://launch.micronaut.io/swagger/views/swagger-ui/index.html)
+* [RAPI Doc](https://launch.micronaut.io/swagger/views/rapidoc/index.html)
+
+API documentation for the snapshot /development instance can be found at:
+
+* [Swagger / OpenAPI Doc](https://snapshot.micronaut.io/swagger/views/swagger-ui/index.html)
+* [RAPI Doc](https://snapshot.micronaut.io/swagger/views/rapidoc/index.html)
 
 ## Documentation
 
