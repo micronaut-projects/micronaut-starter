@@ -37,6 +37,11 @@ public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (featureContext.getLanguage() == Language.GROOVY) {
             if (!featureContext.isPresent(Multitenancy.class)) {

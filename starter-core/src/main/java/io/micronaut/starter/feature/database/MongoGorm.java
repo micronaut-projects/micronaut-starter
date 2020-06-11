@@ -33,6 +33,11 @@ public class MongoGorm implements LanguageSpecificFeature {
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return "mongo-gorm";
     }

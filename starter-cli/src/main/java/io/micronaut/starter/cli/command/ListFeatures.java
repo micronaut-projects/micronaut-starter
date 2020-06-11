@@ -86,11 +86,15 @@ public class ListFeatures {
 
     private void listFeatures(ConsoleOutput consoleOutput, Set<Feature> defaultFeatures, List<Feature> allFeatures, int width) {
         for (Feature feature: allFeatures) {
+            String name = feature.getName();
+            if (feature.isPreview()) {
+                name += " [PREVIEW]";
+            }
             if (defaultFeatures.contains(feature)) {
-                String name = feature.getName() + " (+)";
+                name += " (+)";
                 consoleOutput.out("@|blue   " + String.format("%1$-" + width + "s", name) + feature.getDescription() + "|@");
             } else {
-                consoleOutput.out("  " + String.format("%1$-" + width + "s", feature.getName()) + feature.getDescription());
+                consoleOutput.out("  " + String.format("%1$-" + width + "s", name) + feature.getDescription());
             }
         }
     }

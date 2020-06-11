@@ -44,6 +44,11 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return "hibernate-gorm";
     }

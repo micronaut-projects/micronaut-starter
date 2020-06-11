@@ -38,6 +38,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String title;
     private final String description;
     private final String category;
+    private final boolean preview;
 
     /**
      * Default constructor.
@@ -50,6 +51,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.title = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".title", messageContext, feature.getTitle());
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
+        this.preview = feature.isPreview();
     }
 
     /**
@@ -65,6 +67,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.title = title;
         this.description = description;
         this.category = category;
+        this.preview = false;
     }
 
     /**
@@ -97,5 +100,13 @@ public class FeatureDTO extends Linkable implements Named, Described {
     @Schema(description = "The category to which this feature belongs to")
     public String getCategory() {
         return category;
+    }
+
+    /**
+     * @return Is the feature a preview status feature
+     */
+    @Schema(description = "Indicates whether the feature is a preview feature and subject to change")
+    public boolean isPreview() {
+        return preview;
     }
 }

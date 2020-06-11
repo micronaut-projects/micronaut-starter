@@ -33,6 +33,7 @@ class FeatureControllerSpec extends Specification {
 
         then:
         graal.description == 'crear aplicaciones nativas'
+        !graal.isPreview()
     }
 
     void "test list features for application type"() {

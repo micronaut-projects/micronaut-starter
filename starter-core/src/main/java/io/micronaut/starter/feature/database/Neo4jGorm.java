@@ -33,6 +33,11 @@ public class Neo4jGorm implements LanguageSpecificFeature {
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return "neo4j-gorm";
     }

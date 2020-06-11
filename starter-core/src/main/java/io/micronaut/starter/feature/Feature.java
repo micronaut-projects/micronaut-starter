@@ -44,6 +44,13 @@ public interface Feature extends Named, Ordered, Described {
     String getName();
 
     /**
+     * @return Indicates the feature is in preview status and is subject to change.
+     */
+    default boolean isPreview() {
+        return false;
+    }
+
+    /**
      * @return The title of the feature
      */
     default String getTitle() {
