@@ -56,7 +56,7 @@ group "@project.getPackageName()"
 
 repositories {
     jcenter()
-    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
+    @if (VersionInfo.isMicronautSnapshot()) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
 }
@@ -72,7 +72,7 @@ configurations {
 dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
 @if (!features.language().isGroovy() && (features.contains("graalvm") || features.contains("google-cloud-function"))) {
-    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
+    @if (VersionInfo.isMicronautSnapshot()) {
     compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
     compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
@@ -85,7 +85,7 @@ dependencies {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
     @dependency.template("com.google.cloud.functions.invoker", "java-function-invoker", "invoker", VersionInfo.getDependencyVersion("google.function.invoker").getValue())
 }
-    @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
+    @if (VersionInfo.isMicronautSnapshot()) {
     implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
     implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))

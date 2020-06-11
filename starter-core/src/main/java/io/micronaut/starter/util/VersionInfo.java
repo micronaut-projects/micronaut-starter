@@ -54,6 +54,20 @@ public class VersionInfo {
         return getMicronautVersion();
     }
 
+    /**
+     * @return Checks whether the starter is a snapshot version.
+     */
+    public static boolean isStarterSnapshot() {
+        return getStarterVersion().endsWith("-SNAPSHOT");
+    }
+
+    /**
+     * @return Checks whether micronaut is a snapshot version.
+     */
+    public static boolean isMicronautSnapshot() {
+        return getMicronautVersion().endsWith("-SNAPSHOT");
+    }
+
     public static String getMicronautVersion() {
         Object micronautVersion = VERSIONS.get("micronaut.version");
         if (micronautVersion != null) {
