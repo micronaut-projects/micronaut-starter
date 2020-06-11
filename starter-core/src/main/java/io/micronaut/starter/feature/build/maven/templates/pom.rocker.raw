@@ -1278,7 +1278,7 @@ List<Property> properties
                 </outputTarget>
                 <outputTarget>
                   <type>grpc-java</type>
-                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.29.0</pluginArtifact>
+                  <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.30.0</pluginArtifact>
                 </outputTarget>
               </outputTargets>
             </configuration>
