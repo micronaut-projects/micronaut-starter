@@ -56,8 +56,8 @@ group "@project.getPackageName()"
 
 @if (features.contains("grpc")) {
 ext {
-    protocVersion="3.12.0"
-    grpcVersion="1.29.0"
+    protocVersion="3.12.2"
+    grpcVersion="1.30.0"
 }
 }
 
