@@ -54,14 +54,6 @@ plugins {
 version "0.1"
 group "@project.getPackageName()"
 
-@if (features.contains("grpc")) {
-ext {
-    protocVersion="3.12.2"
-    grpcVersion="1.30.0"
-}
-}
-
-
 repositories {
     jcenter()
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
@@ -681,9 +673,9 @@ sourceSets {
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:${protocVersion}" }
+    protoc { artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")" }
     plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}" }
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")" }
     }
     generateProtoTasks {
         all()*.plugins { grpc {} }

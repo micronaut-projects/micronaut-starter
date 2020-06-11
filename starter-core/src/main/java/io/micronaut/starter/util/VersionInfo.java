@@ -75,6 +75,20 @@ public class VersionInfo {
     }
 
     /**
+     * Get a dependency version from the BOM for the given ID.
+     * @param id The ID
+     * @return The dependency version as a string
+     */
+    public static @NonNull String getBomVersion(String id) {
+        String key = id + ".version";
+        Object version = VERSIONS.get(key);
+        if (version != null) {
+            return version.toString();
+        }
+        throw new IllegalArgumentException("Could not get version for ID " + id);
+    }
+
+    /**
      * Get a dependency version for the given ID.
      * @param id The ID
      * @return The dependency version
