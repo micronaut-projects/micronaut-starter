@@ -20,7 +20,6 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

@@ -12,10 +12,6 @@ import spock.lang.Ignore
 
 class PicocliSpec extends BeanContextSpec {
 
-    @Ignore("""
-        We've switched to set automatically JUnit 5 for Kotlin projects if no test framework is selected.
-        Ignoring this test temporarily ignored until this is done https://github.com/micronaut-projects/micronaut-starter/issues/261
-""")
     void "test the test features are applied"() {
         when:
         Options options = new Options(Language.JAVA, null, BuildTool.GRADLE)
@@ -52,10 +48,10 @@ class PicocliSpec extends BeanContextSpec {
 
         then:
         features.contains("picocli")
-        features.contains("picocli-kotlintest")
-        features.contains("kotlintest")
-        generatorContext.getTemplates().containsKey("picocliKotlinTest")
-        !features.contains("picocli-junit")
+        features.contains("picocli-junit")
+        features.contains("junit")
+        generatorContext.getTemplates().containsKey("picocliJunitTest")
+        !features.contains("picocli-kotlintest")
         !features.contains("picocli-spock")
         !generatorContext.getTemplates().containsKey("testDir")
 
