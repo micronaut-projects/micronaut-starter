@@ -555,7 +555,7 @@ tasks.withType(JavaCompile) {
         '-Amicronaut.processing.incremental=true',
         '-Amicronaut.processing.annotations=@project.getPackageName().*',
         '-Amicronaut.processing.group=@project.getPackageName()',
-        '-Amicronaut.processing.module=@project.getPropertyName()',
+        '-Amicronaut.processing.module=@project.getName()',
     ])
 }
 }

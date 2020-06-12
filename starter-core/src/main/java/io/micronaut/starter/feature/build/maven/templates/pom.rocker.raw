@@ -802,7 +802,7 @@ List<Property> properties
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
-            <arg>-Amicronaut.processing.module=@project.getPropertyName()</arg>
+            <arg>-Amicronaut.processing.module=@project.getName()</arg>
           </compilerArgs>
         </configuration>
         <executions>
