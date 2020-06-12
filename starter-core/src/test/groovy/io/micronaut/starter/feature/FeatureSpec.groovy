@@ -36,16 +36,19 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void "test #feature does not add an unmodifiable map to config"(String feature) {
+    void "test #feature does not add an unmodifiable map to config"(Feature feature) {
         when:
-        Language lang = languageForFeature(feature)
-        JdkVersion javaVersion = javaVersionForFeature(feature)
-        Options options = new Options(lang, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
+        JdkVersion javaVersion = javaVersionForFeature(feature.getName())
+        Language language = Language.JAVA
+        if (feature instanceof LanguageSpecificFeature) {
+            language = ((LanguageSpecificFeature) feature).getRequiredLanguage();
+        }
+        Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
                                               options,
                                               OperatingSystem.LINUX,
-                                              getFeatures([feature], options).getFeatures()
+                                              getFeatures([feature.getName()], options).getFeatures()
         )
         commandCtx.applyFeatures()
 
@@ -65,18 +68,7 @@ class FeatureSpec extends BeanContextSpec {
         where:
         feature << beanContext.getBeansOfType(Feature).stream()
             .filter(f -> f.isVisible())
-            .map(f -> f.getName())
             .collect(Collectors.toList())
-    }
-
-    private Language languageForFeature(String feature) {
-        if (feature.endsWith('-gorm')) {
-            return Language.GROOVY
-        }
-        if (feature == 'ktor' || feature == 'kotlin-extension-functions' || feature == 'config4k') {
-            return Language.KOTLIN
-        }
-        Language.JAVA
     }
 
     private JdkVersion javaVersionForFeature(String feature) {
