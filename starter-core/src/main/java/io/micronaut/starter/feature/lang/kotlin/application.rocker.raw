@@ -9,22 +9,21 @@ import io.micronaut.runtime.Micronaut.*
 @if (features.contains("openapi")) {
 import io.swagger.v3.oas.annotations.*
 import io.swagger.v3.oas.annotations.info.*
-}
 
-@if (features.contains("openapi")) {
 @@OpenAPIDefinition(
     info = @@Info(
             title = "@project.getName()",
             version = "0.0"
     )
 )
+object Api {
 }
-object Application {
 }
+
 
 fun main(args: Array<String>) {
 	build()
-		.mainClass(Application::class.java)
+	    .args(*args)
 		.packages("@project.getPackageName()")
 		.start()
 }
