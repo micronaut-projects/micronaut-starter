@@ -725,6 +725,8 @@ List<Property> properties
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
+          <!-- Uncomment to enable incremental compilation -->
+          <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
           <annotationProcessorPaths>
             <path>
               <groupId>io.micronaut</groupId>
