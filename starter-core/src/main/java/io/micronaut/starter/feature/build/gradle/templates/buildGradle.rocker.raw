@@ -554,8 +554,8 @@ tasks.withType(JavaCompile) {
         // enables incremental compilation
         '-Amicronaut.processing.incremental=true',
         '-Amicronaut.processing.annotations=@project.getPackageName().*',
-        '-Amicronaut.processing.group=@project.getPackageName()',
-        '-Amicronaut.processing.module=@project.getName()',
+        "-Amicronaut.processing.group=$project.group",
+        "-Amicronaut.processing.module=$project.name",
     ])
 }
 }
