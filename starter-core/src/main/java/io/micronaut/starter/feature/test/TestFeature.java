@@ -72,8 +72,12 @@ public interface TestFeature extends DefaultFeature {
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
+        return supports(applicationType) &&
+                (
+                        options.getTestFramework() == getTestFramework() ||
+                        (options.getTestFramework() == null && options.getLanguage() == Language.KOTLIN && getTestFramework() == TestFramework.JUNIT) ||
+                        (options.getTestFramework() == null && options.getLanguage() != Language.KOTLIN && options.getLanguage() == getDefaultLanguage())
+                );
     }
 
     @Override
