@@ -34,7 +34,6 @@ public class PicocliSpock implements PicocliTestFeature {
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        generatorContext.removeTemplate("testDir");
         generatorContext.addTemplate("picocliSpock", getTemplate(generatorContext.getProject()));
     }
 

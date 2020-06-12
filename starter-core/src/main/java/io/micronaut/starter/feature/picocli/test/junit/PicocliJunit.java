@@ -34,7 +34,6 @@ public class PicocliJunit implements PicocliTestFeature {
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        generatorContext.removeTemplate("testDir");
         generatorContext.addTemplate("picocliJunitTest", getTemplate(generatorContext.getLanguage(), generatorContext.getProject()));
     }
 

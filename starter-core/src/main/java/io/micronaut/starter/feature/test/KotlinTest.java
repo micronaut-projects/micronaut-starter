@@ -36,7 +36,6 @@ public class KotlinTest implements TestFeature {
         generatorContext.addTemplate("kotlinTestConfig",
                 new URLTemplate("src/test/kotlin/io/kotlintest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotlintest/ProjectConfig.kt")));
-        generatorContext.addTemplate("testDir", new URLTemplate("src/test/kotlin/{packageName}/.gitkeep", classLoader.getResource(".gitkeep")));
     }
 
     @Override
