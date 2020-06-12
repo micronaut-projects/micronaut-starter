@@ -38,8 +38,8 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('annotationProcessor("io.micronaut:micronaut-graal")')
         template.contains('compileOnly("org.graalvm.nativeimage:svm")')
-        template.contains('-Amicronaut.processing.group=example.micronaut')
-        template.contains('-Amicronaut.processing.module=foo')
+        template.contains('-Amicronaut.processing.group=$project.group')
+        template.contains('-Amicronaut.processing.module=$project.name')
 
         when:
         template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN)).render().toString()
