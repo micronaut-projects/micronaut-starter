@@ -21,6 +21,8 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
+import java.util.Collections;
+import java.util.List;
 
 @Singleton
 public class KotlinTest implements TestFeature {
@@ -44,8 +46,8 @@ public class KotlinTest implements TestFeature {
     }
 
     @Override
-    public Language getDefaultLanguage() {
-        return Language.KOTLIN;
+    public List<Language> getDefaultLanguages() {
+        return Collections.emptyList();
     }
 
 }

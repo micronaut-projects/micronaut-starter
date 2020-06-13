@@ -8,6 +8,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Ignore
 
 class PicocliSpec extends BeanContextSpec {
 
@@ -47,10 +48,10 @@ class PicocliSpec extends BeanContextSpec {
 
         then:
         features.contains("picocli")
-        features.contains("picocli-kotlintest")
-        features.contains("kotlintest")
-        generatorContext.getTemplates().containsKey("picocliKotlinTest")
-        !features.contains("picocli-junit")
+        features.contains("picocli-junit")
+        features.contains("junit")
+        generatorContext.getTemplates().containsKey("picocliJunitTest")
+        !features.contains("picocli-kotlintest")
         !features.contains("picocli-spock")
         !generatorContext.getTemplates().containsKey("testDir")
 

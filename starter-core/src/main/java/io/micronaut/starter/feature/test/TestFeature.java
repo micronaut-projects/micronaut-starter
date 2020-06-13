@@ -26,6 +26,7 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 
+import java.util.List;
 import java.util.Set;
 
 public interface TestFeature extends DefaultFeature {
@@ -54,7 +55,7 @@ public interface TestFeature extends DefaultFeature {
 
     TestFramework getTestFramework();
 
-    Language getDefaultLanguage();
+    List<Language> getDefaultLanguages();
 
     default boolean isJunit() {
         return getTestFramework() == TestFramework.JUNIT;
@@ -73,7 +74,7 @@ public interface TestFeature extends DefaultFeature {
                                 Options options,
                                 Set<Feature> selectedFeatures) {
         return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && options.getLanguage() == getDefaultLanguage()));
+                (options.getTestFramework() == null && getDefaultLanguages().contains(options.getLanguage())));
     }
 
     @Override

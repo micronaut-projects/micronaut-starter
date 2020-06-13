@@ -20,6 +20,8 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
+import java.util.Arrays;
+import java.util.List;
 
 @Singleton
 public class Junit implements TestFeature {
@@ -40,8 +42,8 @@ public class Junit implements TestFeature {
     }
 
     @Override
-    public Language getDefaultLanguage() {
-        return Language.JAVA;
+    public List<Language> getDefaultLanguages() {
+        return Arrays.asList(Language.JAVA, Language.KOTLIN);
     }
 
 }
