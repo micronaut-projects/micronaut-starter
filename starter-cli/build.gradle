@@ -26,9 +26,9 @@ dependencies {
     api project(":starter-core")
     api "info.picocli:picocli:${picocliVersion}"
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
-    api "com.fizzed:rocker-runtime:1.2.3"
+    api "com.fizzed:rocker-runtime:1.3.0"
 
-    runtime "org.slf4j:slf4j-nop:1.7.30"
+    implementation "org.slf4j:slf4j-nop:1.7.30"
 
     compileOnly "org.graalvm.nativeimage:svm"
 
