@@ -30,15 +30,14 @@ jobs:
         java: ['8', '11', '14']
     steps:
       - uses: actions/checkout@v1
-#      - uses: actions/cache@v2
-#        with:
-#          path: |
-#            ~/.gradle/caches
-#            ~/.gradle/wrapper
-#            ~/.m2/repository
-#          key: ${{ runner.os }}-test-core-${{ hashFiles('**/*.gradle') }}
-#          restore-keys: |
-#            ${{ runner.os }}-test-core-
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-test-core-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-test-core-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -52,19 +51,38 @@ jobs:
         java: ['8', '11', '14']
     steps:
       - uses: actions/checkout@v1
-#      - uses: actions/cache@v2
-#        with:
-#          path: |
-#            ~/.gradle/caches
-#            ~/.gradle/wrapper
-#            ~/.m2/repository
-#          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
-#          restore-keys: |
-#            ${{ runner.os }}-test-aws-
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-test-aws-
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
-
+  test-containers:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '14']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-test-aws-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run app Functional Tests
+        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.testcontainers.*"

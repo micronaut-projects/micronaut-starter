@@ -55,6 +55,7 @@ version "0.1"
 group "@project.getPackageName()"
 
 repositories {
+    mavenCentral()
     jcenter()
     @if (VersionInfo.isMicronautSnapshot()) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }

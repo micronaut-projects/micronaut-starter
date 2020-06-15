@@ -7,10 +7,14 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: groovy'() {
+        given:
+        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
+
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -28,9 +32,9 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         buildGradle.contains('mainClassName = "example.micronaut.Application"')
 
         and: 'implementation compileOnly testImplementation use the same policy'
-        buildGradle.contains('compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-        buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-        buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains("compileOnly($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("testImplementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
     }
 
     @Unroll

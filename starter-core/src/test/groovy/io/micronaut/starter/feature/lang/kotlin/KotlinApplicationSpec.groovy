@@ -8,6 +8,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -19,6 +20,9 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
 
     @Unroll
     void 'Application file is generated for a default application type with #buildTool and language: kotlin'(BuildTool buildTool) {
+        given:
+        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
+
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -42,10 +46,10 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
             assert buildGradle.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")')
 
             // implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
-            assert buildGradle.contains('kapt(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-            assert buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-            assert buildGradle.contains('kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-            assert buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+            assert buildGradle.contains("kapt($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+            assert buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+            assert buildGradle.contains("kaptTest($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+            assert buildGradle.contains("testImplementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
 
         } else if (buildTool == BuildTool.MAVEN) {
             assert pom.contains("""

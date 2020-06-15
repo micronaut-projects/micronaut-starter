@@ -10,6 +10,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.util.VersionInfo
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -19,6 +20,9 @@ class JavaApplicationSpec extends Specification implements ProjectFixture, Conte
     @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
 
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: java'() {
+        given:
+        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
+
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -36,10 +40,10 @@ class JavaApplicationSpec extends Specification implements ProjectFixture, Conte
         buildGradle.contains('mainClassName = "example.micronaut.Application"')
 
         and: 'implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
-        buildGradle.contains('annotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-        buildGradle.contains('implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-        buildGradle.contains('testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
-        buildGradle.contains('testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")')
+        buildGradle.contains("annotationProcessor($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("testAnnotationProcessor($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("testImplementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
     }
 
     void "test java application"() {
