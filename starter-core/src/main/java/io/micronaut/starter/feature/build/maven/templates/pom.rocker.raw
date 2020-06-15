@@ -436,6 +436,9 @@ List<Property> properties
 @dependency.template("io.micronaut.spring", "micronaut-spring-annotation", "compile", null)
 }
 }
+@if (features.contains("spring-tx")) {
+@dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa-spring", "compile", null)
+}
 @if (features.contains("spring-web")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter-web", "compile", null)
 @dependency.template("io.micronaut", "micronaut-http-server", "compile", null)

@@ -438,6 +438,9 @@ dependencies {
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
 }
+@if (features.contains("spring-tx")) {
+    @dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa-spring", "implementation", null)
+}
 @if (features.contains("spring-web")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter-web", "implementation", null)
     @dependency.template("io.micronaut", "micronaut-http-server", "implementation", null)
