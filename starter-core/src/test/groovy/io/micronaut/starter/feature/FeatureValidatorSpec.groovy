@@ -2,9 +2,15 @@ package io.micronaut.starter.feature
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.acme.Acme
+import io.micronaut.starter.feature.kotlin.Ktor
+import io.micronaut.starter.feature.server.Netty
+import io.micronaut.starter.feature.server.ServerFeature
+import io.micronaut.starter.feature.server.Tomcat
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
+import spock.lang.Unroll
 
 class FeatureValidatorSpec extends BeanContextSpec {
 
@@ -87,6 +93,26 @@ class FeatureValidatorSpec extends BeanContextSpec {
         then:
         def ex = thrown(IllegalArgumentException)
         ex.message.contains("There can only be one of the following features selected: [a, b]")
+    }
+
+    @Unroll
+    void "test acme : #serverType"() {
+        given:
+        def language = serverType instanceof Ktor ? Language.KOTLIN : Language.JAVA
+
+        when:
+        featureValidator.validatePreProcessing(new Options(language, null, null), ApplicationType.DEFAULT, [
+                new Acme(),
+                serverType
+        ] as Set)
+
+        then:
+        def ex = thrown(IllegalArgumentException)
+        ex.message.contains("Acme only supports Netty")
+
+        where:
+        serverType << beanContext.getBeansOfType(ServerFeature).findAll{!(it instanceof Netty)}
+
     }
 
 }
