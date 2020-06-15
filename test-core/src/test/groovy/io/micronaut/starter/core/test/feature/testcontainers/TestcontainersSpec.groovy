@@ -10,10 +10,13 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 import io.micronaut.starter.core.test.feature.testcontainers.book
+import org.spockframework.runtime.extension.builtin.PreconditionContext
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 import java.util.stream.Collectors
 
+@IgnoreIf({PreconditionContext it -> it.javaVersion > 11})
 class TestcontainersSpec extends CommandSpec {
 
     @Override
