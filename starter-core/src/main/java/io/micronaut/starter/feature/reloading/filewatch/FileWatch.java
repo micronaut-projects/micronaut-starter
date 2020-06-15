@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.reloading.filewatch;
 
 import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
