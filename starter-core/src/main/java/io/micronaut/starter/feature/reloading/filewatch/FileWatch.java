@@ -19,13 +19,16 @@ import io.micronaut.context.condition.OperatingSystem;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.Set;
 
 @Singleton
-public class FileWatch implements Feature {
+public class FileWatch implements DefaultFeature {
 
     private final FileWatchOsx fileWatchOsx;
 
@@ -56,12 +59,6 @@ public class FileWatch implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.io.watch.paths", "src/main");
-        generatorContext.getConfiguration().put("micronaut.io.watch.restart", true);
-    }
-
-    @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
@@ -69,5 +66,10 @@ public class FileWatch implements Feature {
     @Override
     public String getCategory() {
         return Category.DEV_TOOLS;
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return true;
     }
 }

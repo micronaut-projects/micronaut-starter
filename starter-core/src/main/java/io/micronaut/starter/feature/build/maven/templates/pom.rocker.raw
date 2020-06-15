@@ -382,9 +382,6 @@ List<Property> properties
 @if (features.contains("vertx-mysql-client")) {
 @dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "compile", null)
 }
-@if (features.contains("file-watch-osx")) {
-@dependency.template("io.micronaut", "micronaut-runtime-osx", "provided", VersionInfo.getMicronautVersion())
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "compile", null)
 }

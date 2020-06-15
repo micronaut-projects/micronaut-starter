@@ -628,7 +628,13 @@ tasks.withType(JavaExec) {
     jvmArgs('-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar')
 }
 @if (features.contains("file-watch")) {
-    jvmArgs('-Dmicronaut.io.watch.enabled=true')
+    if (gradle.startParameter.continuous) {
+        systemProperties(
+            'micronaut.io.watch.restart':'true',
+            'micronaut.io.watch.enabled':'true',
+            "micronaut.io.watch.paths":"src/main"
+        )
+    }
 }
 @if (features.contains("jrebel")) {
     if (project.hasProperty('rebelAgent')) {
