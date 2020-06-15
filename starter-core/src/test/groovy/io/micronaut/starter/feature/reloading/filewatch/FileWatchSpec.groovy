@@ -17,7 +17,7 @@ class FileWatchSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], language)).render().toString()
 
         then:
-        template.contains("developmentOnly(\"io.micronaut:micronaut-runtime-osx:${VersionInfo.micronautVersion}\")")
+        template.contains('developmentOnly("io.micronaut:micronaut-runtime-osx:$micronautVersion")')
 
         where:
         language << Language.values().toList()

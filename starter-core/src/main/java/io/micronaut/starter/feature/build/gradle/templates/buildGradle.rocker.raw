@@ -385,7 +385,7 @@ dependencies {
     @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
 }
 @if (features.contains("file-watch-osx")) {
-    @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", VersionInfo.getMicronautVersion())
+    @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", "$micronautVersion")
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
