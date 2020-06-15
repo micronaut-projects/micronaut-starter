@@ -18,12 +18,12 @@ package io.micronaut.starter.feature.acme;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Acme implements OneOfFeature {
+public class Acme implements Feature {
 
     @Override
     public String getName() {
@@ -53,13 +53,8 @@ public class Acme implements OneOfFeature {
     }
 
     @Override
-    public Class<?> getFeatureClass() {
-        return Acme.class;
-    }
-
-    @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
