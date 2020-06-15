@@ -38,7 +38,7 @@ class TestcontainersSpec extends CommandSpec {
         }
 
         then:
-        driverFeature.getName() == "oracle" || output?.contains("BUILD SUCCESS")
+        output?.contains("BUILD SUCCESS")
 
         where:
         [buildTool, driverFeature] << [
