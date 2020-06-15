@@ -538,6 +538,9 @@ mainClassName = "@features.application().mainClassName(applicationType, project,
 // use JUnit 5 platform
 test {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'full'
+    }
 }
 
 java {

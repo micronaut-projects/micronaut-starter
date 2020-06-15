@@ -24,7 +24,7 @@ class TestcontainersSpec extends CommandSpec {
     @Unroll
     void "test running tests with testcontainers with #buildTool and #driverFeature.getName()"(BuildTool buildTool, DatabaseDriverFeature driverFeature) {
         when:
-        generateProject(Language.JAVA, buildTool, ["data-jdbc", "testcontainers", driverFeature.getName()])
+        generateProject(Language.JAVA, buildTool, ["data-jdbc", driverFeature.getName()])
         def fsoh = new FileSystemOutputHandler(dir, ConsoleOutput.NOOP)
         fsoh.write("src/main/java/example/micronaut/BookRepository.java", new RockerWritable(bookRepository.template(driverFeature.getDataDialect())))
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
