@@ -34,8 +34,7 @@ import spock.lang.Shared
 
 import java.time.Duration
 
-@Ignore
-class CliBaseSpec extends CommandSpec implements CommandFixture {
+abstract class CliBaseSpec extends CommandSpec implements CommandFixture {
     private static final Logger log = LoggerFactory.getLogger(CliBaseSpec.class)
 
     @Shared
