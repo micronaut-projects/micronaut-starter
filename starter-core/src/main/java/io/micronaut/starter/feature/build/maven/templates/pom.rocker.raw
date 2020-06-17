@@ -331,6 +331,11 @@ List<Property> properties
 }
 @if (features.contains("elasticsearch")) {
 @dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "compile", null)
+  @if (features.contains("graalvm")) {
+@dependency.template("org.slf4j", "log4j-over-slf4j", "runtime", "1.7.30")
+@dependency.template("org.apache.logging.log4j", "log4j-api", "compile", "2.13.3")
+@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.13.3")
+  }
 }
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)

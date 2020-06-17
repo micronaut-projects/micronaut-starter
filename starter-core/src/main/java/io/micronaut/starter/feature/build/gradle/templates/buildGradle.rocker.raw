@@ -322,6 +322,11 @@ dependencies {
 }
 @if (features.contains("elasticsearch")) {
     @dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "implementation", null)
+  @if (features.contains("graalvm")) {
+    @dependency.template("org.slf4j", "log4j-over-slf4j", "runtimeOnly", "1.7.30")
+    @dependency.template("org.apache.logging.log4j", "log4j-api", "implementation", "2.13.3")
+    @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.13.3")
+  }
 }
 @if (features.contains("graphql")) {
     @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
