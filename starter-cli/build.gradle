@@ -3,7 +3,7 @@ plugins {
     id "com.github.johnrengelman.shadow"
     id "io.micronaut.starter.rocker"
     id 'org.asciidoctor.convert' version '1.6.1' apply false
-    id "io.sdkman.vendors" version "1.2.1"
+    id "io.sdkman.vendors" version "2.0.0"
 }
 
 ext {
@@ -117,8 +117,12 @@ sdkman {
     consumerToken = System.getenv("GVM_SDKVENDOR_TOKEN") ?: project.hasProperty("gvmSdkvendorToken") ? project.gvmSdkvendorToken : ''
     candidate = "micronaut"
     version = project.version
-    url = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/micronaut-cli-${project.version}.zip"
     hashtag = "#micronautfw"
+    platforms = [
+            "MAC_OSX":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
+            "WINDOWS_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-win-amd64-v${project.version}.zip",
+            "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
+    ]
 }
 
 task copyShadowJar(type: Copy) {
