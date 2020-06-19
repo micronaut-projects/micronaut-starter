@@ -19,6 +19,7 @@ io.micronaut.starter.cli.command.project.job
 io.micronaut.starter.cli.command.project.test
 io.micronaut.starter.cli.config
 io.micronaut.starter.cli.feature
+io.micronaut.starter.cli.feature.acme
 io.micronaut.starter.cli.feature.database
 io.micronaut.starter.cli.feature.grpc
 io.micronaut.starter.cli.feature.grpc.template
@@ -38,6 +39,7 @@ io.micronaut.starter.cli.feature.server.websocket
 io.micronaut.starter.cli.util
 io.micronaut.starter.diff
 io.micronaut.starter.feature
+io.micronaut.starter.feature.acme
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.awsalexa
