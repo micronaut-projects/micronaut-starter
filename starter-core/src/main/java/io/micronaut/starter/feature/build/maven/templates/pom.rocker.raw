@@ -340,6 +340,9 @@ List<Property> properties
 @if (features.contains("graphql")) {
 @dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
 }
+@if (features.contains("acme")) {
+@dependency.template("io.micronaut.acme", "micronaut-acme", "compile", null)
+}
 @if (features.contains("cache-caffeine")) {
 @dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
 }
