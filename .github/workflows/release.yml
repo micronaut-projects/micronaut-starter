@@ -22,16 +22,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
-      - name: Publish to Bintray and Sonatype OSSRH
+      - name: Publish to Bintray
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-          GPG_FILE: ${{ secrets.GPG_FILE }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew bintrayUpload docs publish closeAndReleaseRepository
+        run: ./gradlew bintrayUpload docs
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
