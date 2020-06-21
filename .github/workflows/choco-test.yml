@@ -22,6 +22,7 @@ jobs:
           $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
           echo $SHA
 
+          ${{ steps.release_version.outputs.release_version }}
           (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>${{ steps.release_version.outputs.release_version }}</version>" | Set-Content ./micronaut.nuspec
           Get-Content ./micronaut.nuspec
 
