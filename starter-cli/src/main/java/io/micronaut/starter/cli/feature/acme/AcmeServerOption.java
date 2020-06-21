@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.feature.acme;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
 import picocli.CommandLine;
 
 /**
@@ -26,12 +27,15 @@ public final class AcmeServerOption {
 
     public static final String LE_STAGING_URL = "https://acme-staging-v02.api.letsencrypt.org/directory";
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-u", "--url"}, required = true, description = "URL of ACME server to use")
     private String serverUrl;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"--lets-encrypt-prod"}, required = true, description = "Use the Let's Encrypt prod URL.")
     private boolean letsEncryptProd;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"--lets-encrypt-staging"}, required = true, description = "Use the Let's Encrypt staging URL")
     private boolean letsEncryptStaging;
 

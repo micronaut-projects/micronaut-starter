@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.acme;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -44,12 +45,16 @@ import static picocli.CommandLine.Help.Visibility;
 )
 @Prototype
 public class CreateKeyPair extends CodeGenCommand {
+
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-k", "--key-dir"}, showDefaultValue = Visibility.ALWAYS, defaultValue = "src/main/resources", description = "Custom location on disk to put the key to be used with this account.")
     String keyDir;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-n", "--key-name"}, required = true, description = "Name of the key to be created")
     String keyName;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-s", "--key-size"}, showDefaultValue = Visibility.ALWAYS, defaultValue = "4096", description = "Size of the key to be generated")
     int keySize;
 
