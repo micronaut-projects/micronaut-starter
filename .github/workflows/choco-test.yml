@@ -15,24 +15,18 @@ jobs:
 #        run: echo ::set-output name=release_version::${GITHUB_REF:11}
         run: echo ::set-output name=release_version::1.2.3
       - name: Download ZIP
-#        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
-        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/v2.0.0.RC1/mn-win-amd64-v2.0.0.RC1.zip -O mn.zip
-      - name: Calculate SHA256
-        id: sha
-        run: |
-          s=$(sha256sum mn.zip | awk  '{ print $1 }')
-          echo "SHA256 is: $s"
-          echo ::set-output name=sha::${s}
+        run: Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/v2.0.0.RC1/mn-win-amd64-v2.0.0.RC1.zip -OutFile 'mn.zip'
       - name: Update versions and checksum
         working-directory: chocolatey
-        env:
-          SHA: ${{ steps.sha.outputs.sha }}
         run: |
+          $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
+          echo $SHA
+
           (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>${{ steps.release_version.outputs.release_version }}</version>" | Set-Content ./micronaut.nuspec
           Get-Content ./micronaut.nuspec
 
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '${{ steps.release_version.outputs.release_version }}'" | Set-Content ./tools/chocolateyinstall.ps1
-          (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$Env:SHA'" | Set-Content ./tools/chocolateyinstall.ps1
+          (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
           Get-Content ./tools/chocolateyinstall.ps1
       - name: Create package
         working-directory: chocolatey
