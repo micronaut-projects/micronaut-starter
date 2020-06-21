@@ -6,7 +6,7 @@ on:
     paths:
       - ".github/workflows/choco-test.yml"
 jobs:
-  homebrew:
+  chocolatey:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
@@ -14,11 +14,11 @@ jobs:
         id: release_version
 #        run: echo ::set-output name=release_version::${GITHUB_REF:11}
         run: echo ::set-output name=release_version::1.2.3
-      - name: Download ZIP
-        run: Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/v2.0.0.RC1/mn-win-amd64-v2.0.0.RC1.zip -OutFile 'mn.zip'
-      - name: Update versions and checksum
+      - name: Download ZIP, update versions and checksum
         working-directory: chocolatey
         run: |
+          Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/v2.0.0.RC1/mn-win-amd64-v2.0.0.RC1.zip -OutFile 'mn.zip'
+
           $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
           echo $SHA
 
