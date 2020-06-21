@@ -28,8 +28,9 @@ jobs:
           SHA: ${{ steps.sha.outputs.sha }}
         run: |
           #sed -i -e "s/version.*/version '${GITHUB_REF:12}'/" Casks/micronaut.rb
-          sed -i -e "s/version.*/version '2.0.0.RC1'/" Casks/micronaut.rb
-          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+          sed -i -e "s/version.*/version '1.2.3'/" Casks/micronaut.rb
+          #sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+          sed -i -e "s/sha256.*/sha256 '4.5.6'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
 #      - uses: stefanzweifel/git-auto-commit-action@v4
 #        with:
