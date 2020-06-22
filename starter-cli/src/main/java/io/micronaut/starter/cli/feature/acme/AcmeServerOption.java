@@ -39,6 +39,9 @@ public final class AcmeServerOption {
     @CommandLine.Option(names = {"--lets-encrypt-staging"}, required = true, description = "Use the Let's Encrypt staging URL")
     private boolean letsEncryptStaging;
 
+    public AcmeServerOption() {
+    }
+
     /**
      * Obtains the configured server url.
      *
