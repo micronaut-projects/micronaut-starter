@@ -19,6 +19,7 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
@@ -57,6 +58,7 @@ import java.util.function.BiFunction;
     CommonOptionsMixin.class,
     TestFrameworkCandidates.class,
     TestFrameworkConverter.class,
+    AcmeServerOption.class
 })
 public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 

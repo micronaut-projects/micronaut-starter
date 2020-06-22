@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.acme;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.io.ConsoleOutput;
@@ -39,9 +40,11 @@ import java.security.KeyPair;
 )
 @Prototype
 public final class CreateAccount extends CreateKeyPair {
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
     String email;
 
+    @ReflectiveAccess
     @CommandLine.ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
     AcmeServerOption acmeServerOption;
 

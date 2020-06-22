@@ -17,6 +17,7 @@ package io.micronaut.starter.cli.feature.acme;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -44,12 +45,15 @@ import java.security.KeyPair;
 )
 @Prototype
 public final class DeactivateAccount extends CodeGenCommand {
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-n", "--key-name"}, showDefaultValue = CommandLine.Help.Visibility.ALWAYS, description = "Name of the key to be used")
     String keyName;
 
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-k", "--key-dir"}, showDefaultValue = CommandLine.Help.Visibility.ALWAYS, defaultValue = "src/main/resources", description = "Directory to find the key to be used for this account.")
     String keyDir;
 
+    @ReflectiveAccess
     @CommandLine.ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
     AcmeServerOption acmeServerOption;
 
