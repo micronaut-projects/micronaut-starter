@@ -163,19 +163,11 @@ mn&gt;</code></pre>
 <div class="sect2">
 <h3 id="_install_with_homebrew">Install with Homebrew</h3>
 <div class="paragraph">
-<p>Before installing make sure you have latest Homebrew updates.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew update</code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>In order to install Micronaut, run following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew install micronaut</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew cask install micronaut-projects/tap/micronaut</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -194,58 +186,20 @@ mn&gt;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_install_with_macports">Install with MacPorts</h3>
+<h3 id="_install_with_chocolatey">Install with Chocolatey</h3>
 <div class="paragraph">
-<p>Before installing it is recommended to sync the latest Portfiles.</p>
+<p>If using Windows, you can use <a href="https://chocolatey.org">Chocolatey</a> to install the Micronaut CLI:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port sync</code></pre>
+<pre>choco install micronaut</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In order to install Micronaut, run following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sudo port install micronaut</code></pre>
-</div>
+<p>Check the <a href="https://chocolatey.org/packages/micronaut">micronaut package page</a> for more information.</p>
 </div>
 <div class="paragraph">
-<p>You can find more information about MacPorts usage on their <a href="https://www.macports.org">homepage</a>.</p>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
-| Starting interactive mode...
-| Enter a command name to run. Use TAB for completion:
-mn&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_install_through_binary_on_windows">Install through Binary on Windows</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Download the latest binary from <a href="http://micronaut.io/download.html">Micronaut Website</a></p>
-</li>
-<li>
-<p>Extract the binary to appropriate location (For example: <code>C:\micronaut</code>)</p>
-</li>
-<li>
-<p>Create an environment variable <code>MICRONAUT_HOME</code> which points to the installation directory i.e. <code>C:\micronaut</code></p>
-</li>
-<li>
-<p>Update the <code>PATH</code> environment variable, append <code>%MICRONAUT_HOME%\bin</code>.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI from the command prompt as follows:</p>
+<p>You should now be able to run the Micronaut CLI from the command prompt or Powershell by running <code>mn</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
