@@ -22,7 +22,16 @@ jobs:
           #$Version = "${{ github.event.release.tag_name }}".substring(1)
           $Version = "v2.0.0.RC1".substring(1)
           echo $Version
-          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>$Version</version>" | Set-Content ./micronaut.nuspec
+
+          #Fix semver
+          $NugetVersion = $Version
+          $Parts = $Version.Split(".")
+          if ($Parts.Count -eq 4) {
+            $NugetVersion = $Parts[0] + "." + $Parts[1] + "." + $Parts[2] + "-" + $Parts[3]
+          }
+          echo $NugetVersion
+
+          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>$NugetVersion</version>" | Set-Content ./micronaut.nuspec
           Get-Content ./micronaut.nuspec
 
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
