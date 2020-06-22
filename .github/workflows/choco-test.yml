@@ -22,10 +22,10 @@ jobs:
           #$Version = "${{ github.event.release.tag_name }}".substring(1)
           $Version = "v2.0.0.RC1".substring(1)
           echo $Version
-          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>${{ steps.release_version.outputs.release_version }}</version>" | Set-Content ./micronaut.nuspec
+          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>$Version</version>" | Set-Content ./micronaut.nuspec
           Get-Content ./micronaut.nuspec
 
-          (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '${{ steps.release_version.outputs.release_version }}'" | Set-Content ./tools/chocolateyinstall.ps1
+          (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
           Get-Content ./tools/chocolateyinstall.ps1
       - name: Create package
