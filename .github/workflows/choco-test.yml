@@ -46,7 +46,7 @@ jobs:
         env:
           API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
         run: |
-          choco apikey --key $API_KEY --source https://push.chocolatey.org/
+          choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push *.nupkg --source https://push.chocolatey.org/
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
