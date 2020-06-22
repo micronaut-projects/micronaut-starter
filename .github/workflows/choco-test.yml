@@ -41,15 +41,15 @@ jobs:
         working-directory: chocolatey
         run: |
           choco pack
-#      - name: Push package
-#        working-directory: chocolatey
-#        env:
-#          API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
-#        run: |
-#          choco apikey --key $API_KEY --source https://push.chocolatey.org/
-#          choco push *.nupkg --source https://push.chocolatey.org/
-#      - uses: stefanzweifel/git-auto-commit-action@v4
-#        with:
-#          commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
-#          commit_user_name: micronaut-build
-#          commit_user_email: micronaut-build@users.noreply.github.com
+      - name: Push package
+        working-directory: chocolatey
+        env:
+          API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+        run: |
+          choco apikey --key $API_KEY --source https://push.chocolatey.org/
+          choco push *.nupkg --source https://push.chocolatey.org/
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
+          commit_user_name: micronaut-build
+          commit_user_email: micronaut-build@users.noreply.github.com
