@@ -47,7 +47,7 @@ jobs:
           API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
-          choco push *.nupkg --source https://push.chocolatey.org/
+          choco push .\*.nupkg --source https://push.chocolatey.org/
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
