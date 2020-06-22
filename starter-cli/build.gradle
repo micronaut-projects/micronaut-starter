@@ -41,6 +41,7 @@ dependencies {
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 
     testImplementation "org.testcontainers:spock:1.13.0"
+    testImplementation 'org.reflections:reflections:0.9.12'
 }
 
 mainClassName = "io.micronaut.starter.cli.MicronautStarter"
