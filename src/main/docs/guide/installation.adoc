@@ -38,18 +38,11 @@ mn>
 
 === Install with Homebrew
 
-Before installing make sure you have latest Homebrew updates.
-
-[source,bash]
-----
-$ brew update
-----
-
 In order to install Micronaut, run following command:
 
 [source,bash]
 ----
-$ brew install micronaut
+$ brew cask install micronaut-projects/tap/micronaut
 ----
 
 You can find more information about Homebrew usage on their https://brew.sh/[homepage].
@@ -64,42 +57,17 @@ $ mn
 mn>
 ----
 
-=== Install with MacPorts
+=== Install with Chocolatey
 
-Before installing it is recommended to sync the latest Portfiles.
+If using Windows, you can use https://chocolatey.org[Chocolatey] to install the Micronaut CLI:
 
-[source,bash]
 ----
-$ sudo port sync
-----
-
-In order to install Micronaut, run following command:
-
-[source,bash]
-----
-$ sudo port install micronaut
+choco install micronaut
 ----
 
-You can find more information about MacPorts usage on their https://www.macports.org[homepage].
+Check the https://chocolatey.org/packages/micronaut[micronaut package page] for more information.
 
-You should now be able to run the Micronaut CLI.
-
-[source,bash]
-----
-$ mn
-| Starting interactive mode...
-| Enter a command name to run. Use TAB for completion:
-mn>
-----
-
-=== Install through Binary on Windows
-
-* Download the latest binary from http://micronaut.io/download.html[Micronaut Website]
-* Extract the binary to appropriate location (For example: `C:\micronaut`)
-* Create an environment variable `MICRONAUT_HOME` which points to the installation directory i.e. `C:\micronaut`
-* Update the `PATH` environment variable, append `%MICRONAUT_HOME%\bin`.
-
-You should now be able to run the Micronaut CLI from the command prompt as follows:
+You should now be able to run the Micronaut CLI from the command prompt or Powershell by running `mn`:
 
 [source,bash]
 ----
