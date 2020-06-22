@@ -10,19 +10,17 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Set the current release version
-        id: release_version
-#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-        run: echo ::set-output name=release_version::1.2.3
       - name: Download ZIP, update versions and checksum
         working-directory: chocolatey
         run: |
+          #Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -OutFile 'mn.zip'
           Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/v2.0.0.RC1/mn-win-amd64-v2.0.0.RC1.zip -OutFile 'mn.zip'
 
           $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
           echo $SHA
 
-          $Version = ${{ steps.release_version.outputs.release_version }}
+          #$Version = "${{ github.event.release.tag_name }}".substring(1)
+          $Version = "v2.0.0.RC1".substring(1)
           echo $Version
           (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>${{ steps.release_version.outputs.release_version }}</version>" | Set-Content ./micronaut.nuspec
           Get-Content ./micronaut.nuspec
