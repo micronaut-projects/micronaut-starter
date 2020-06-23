@@ -51,9 +51,14 @@ jobs:
           VERSION: ${{ steps.release_version.outputs.release_version }}
       - name: Run post-release
         if: success()
+        id: post_release
         uses: micronaut-projects/github-actions/post-release@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Back to Micronaut snapshot
+        run: |
+          echo "Setting new Micronaut snapshot version"
+          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}.BUILD-SNAPSHOT/" gradle.properties
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
