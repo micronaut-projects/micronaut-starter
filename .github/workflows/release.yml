@@ -318,6 +318,7 @@ jobs:
     runs-on: windows-latest
     needs: windows
     steps:
+      - uses: actions/checkout@v2
       - name: Download ZIP, update versions and checksum
         id: choco
         working-directory: chocolatey
@@ -347,8 +348,7 @@ jobs:
           echo "::set-output name=nuget_version::$NugetVersion"
       - name: Create package
         working-directory: chocolatey
-        run: |
-          choco pack
+        run: choco pack
       - name: Push package
         working-directory: chocolatey
         env:
