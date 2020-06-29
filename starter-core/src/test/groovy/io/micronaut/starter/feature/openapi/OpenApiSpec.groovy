@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.other
+package io.micronaut.starter.feature.openapi
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -105,5 +106,28 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+    }
+
+    @Requires({ jvm.isJava8() || jvm.isJava11() })
+    void 'test resource-config is generated with graalvm feature'() {
+        when:
+        def output = generate(['openapi', 'graalvm'])
+        def resourceConfigJson = output["src/main/resources/META-INF/native-image/example.micronaut/foo-application/resource-config.json"]
+
+        then:
+        resourceConfigJson.contains('{"pattern":"\\\\QMETA-INF/swagger\\\\E"}')
+        resourceConfigJson.contains('{"pattern":".*/swagger/foo-.*yml"}')
+        resourceConfigJson.contains('{"pattern":"\\\\QMETA-INF/swagger/views/rapidoc/index.html\\\\E"}')
+        resourceConfigJson.contains('{"pattern":"\\\\QMETA-INF/swagger/views/redoc/index.html\\\\E"}')
+        resourceConfigJson.contains('{"pattern":"\\\\QMETA-INF/swagger/views/swagger-ui/index.html\\\\E"}')
+    }
+
+    void 'test resource-config is not generated without graalvm feature'() {
+        when:
+        def output = generate(['openapi'])
+        def resourceConfigJson = output["src/main/resources/META-INF/native-image/example.micronaut/foo-application/resource-config.json"]
+
+        then:
+        !resourceConfigJson
     }
 }

@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.other;
+package io.micronaut.starter.feature.openapi;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.feature.openapi.template.resourceConfigJson;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
@@ -55,6 +58,13 @@ public class OpenApi implements Feature {
             generatorContext.getBuildProperties().put(
                     dependencyVersion.getKey(),
                     dependencyVersion.getValue()
+            );
+        }
+
+        if (generatorContext.isFeaturePresent(GraalVM.class)) {
+            generatorContext.addTemplate("resourceConfigJson",
+                    new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/resource-config.json", resourceConfigJson.template(generatorContext.getProject())
+                    )
             );
         }
     }

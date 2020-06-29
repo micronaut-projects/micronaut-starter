@@ -1,0 +1,15 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+{
+  "resources": [
+    {"pattern":"\\QMETA-INF/swagger\\E"},
+    {"pattern":".*/swagger/@project.getName()-.*yml"},
+    {"pattern":"\\QMETA-INF/swagger/views/rapidoc/index.html\\E"},
+    {"pattern":"\\QMETA-INF/swagger/views/redoc/index.html\\E"}
+    {"pattern":"\\QMETA-INF/swagger/views/swagger-ui/index.html\\E"}
+  ]
+}
