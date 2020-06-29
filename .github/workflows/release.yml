@@ -59,6 +59,11 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}.BUILD-SNAPSHOT/" gradle.properties
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Back Micronaut version to snapshot
+          commit_user_name: micronaut-build
+          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
@@ -311,7 +316,7 @@ jobs:
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
-          commit_user_email: micronaut-build@users.noreply.github.com
+          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
 
   chocolatey:
     name: Bump Chocolatey package
@@ -362,4 +367,4 @@ jobs:
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
-          commit_user_email: micronaut-build@users.noreply.github.com
+          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
