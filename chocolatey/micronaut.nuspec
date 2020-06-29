@@ -19,6 +19,7 @@
     <tags>micronaut java groovy kotlin maven gradle junit spock kotest</tags>
     <summary>Micronaut CLI</summary>
     <description>A modern, JVM-based, full-stack framework for building modular, easily testable microservice and serverless applications</description>
+    <releaseNotes>https://github.com/micronaut-projects/micronaut-starter/releases</releaseNotes>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />
