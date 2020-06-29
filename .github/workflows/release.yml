@@ -319,6 +319,8 @@ jobs:
     needs: windows
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: master
       - name: Download ZIP, update versions and checksum
         id: choco
         working-directory: chocolatey
