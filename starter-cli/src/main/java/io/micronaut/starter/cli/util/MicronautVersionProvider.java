@@ -45,8 +45,7 @@ public class MicronautVersionProvider implements IVersionProvider {
 
     public String[] getVersion() {
         return new String[] {
-                "Micronaut Version: " + VersionInfo.getMicronautVersion(),
-                "JVM Version: " + System.getProperty("java.version")
+                "Micronaut Version: " + VersionInfo.getMicronautVersion()
         };
     }
 }
