@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.1
       - name: Download labels.yml
         run: curl -O https://raw.githubusercontent.com/micronaut-projects/micronaut-build/master/labels.yml
       - uses: micnncim/action-label-syncer@v1
