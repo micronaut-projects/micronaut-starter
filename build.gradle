@@ -6,7 +6,7 @@ buildscript {
         classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath "io.spring.nohttp:nohttp-gradle:0.0.4.RELEASE"
+        classpath "io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE"
         classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
         classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
