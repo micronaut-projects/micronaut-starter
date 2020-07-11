@@ -7,7 +7,7 @@ jobs:
     name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.1
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
       - name: Set the current release version
         id: release_version
         run: |
@@ -115,7 +115,7 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
       - name: Set the current release version
         id: release_version
         run: |
@@ -159,7 +159,7 @@ jobs:
     name: Release Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.3.1
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-windows-amd64-20.1.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
@@ -213,7 +213,7 @@ jobs:
     needs: [linux, macos, windows]
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
       - name: Set the current release version
         id: release_version
         run: |
@@ -230,7 +230,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
       - name: Set the current release version
         id: release_version
         run: |
@@ -264,7 +264,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2.3.1
       - name: Set the current release version
         id: release_version
         run: |
@@ -294,7 +294,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.1
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -325,7 +325,7 @@ jobs:
     runs-on: windows-latest
     needs: windows
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.1
         with:
           ref: master
       - name: Download ZIP, update versions and checksum

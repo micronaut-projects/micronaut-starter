@@ -80,6 +80,10 @@ public class Features extends ArrayList<String> {
         return featureList;
     }
 
+    public JdkVersion javaVersion() {
+        return javaVersion;
+    }
+
     public String getTargetJdk() {
         if (language().isJava() && testFramework().isJunit()) {
             return VersionInfo.toJdkVersion(javaVersion.majorVersion());

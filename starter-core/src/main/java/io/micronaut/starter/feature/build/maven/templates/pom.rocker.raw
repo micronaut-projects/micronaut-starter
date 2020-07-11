@@ -5,6 +5,7 @@
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.build.Property
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.options.JdkVersion
 
 @args (
 ApplicationType applicationType,
@@ -28,7 +29,7 @@ List<Property> properties
   </parent>
 
   <properties>
-    <jdk.version>@features.getTargetJdk()</jdk.version>
+    <jdk.version>@features.getTargetJdk()</jdk.version>    
 @for (Property prop : properties) {
 @if (prop.isComment()) {
     <!--@prop.getComment()-->
