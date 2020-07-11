@@ -43,11 +43,6 @@ public interface TestFeature extends DefaultFeature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            BuildProperties props = generatorContext.getBuildProperties();
-            props.put("maven-surefire-plugin.version", "2.22.2");
-            props.put("maven-failsafe-plugin.version", "2.22.2");
-        }
         doApply(generatorContext);
     }
 
