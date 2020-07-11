@@ -6,9 +6,40 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.util.VersionInfo
 
 class MavenSpec extends BeanContextSpec {
 
+    void "test use defaults from parent pom"() {
+        when:
+        Features features = getFeatures([], null, null, BuildTool.MAVEN)
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+
+        then:
+        template.contains("""
+  <parent>
+    <groupId>io.micronaut</groupId>
+    <artifactId>micronaut-parent</artifactId>
+    <version>${VersionInfo.micronautVersion}</version>
+  </parent>
+""")
+
+        // There are no Maven specific properties defined, all of them are inherited from parent pom.
+        !template.contains('<maven.compiler.target>')
+        !template.contains('<maven.compiler.source>')
+        !template.contains('<project.build.sourceEncoding>')
+        !template.contains('<project.reporting.outputEncoding>')
+
+        // Simple failsafe plugin declaration without any special configuration.
+        // The default configuration is inherited from parent pom.
+        template.contains("""
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+""")
+    }
+    
     void "test annotation processor dependencies"() {
         when:
         Features features = getFeatures([], null, null, BuildTool.MAVEN)

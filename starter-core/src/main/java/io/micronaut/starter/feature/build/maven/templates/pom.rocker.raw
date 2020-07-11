@@ -29,10 +29,6 @@ List<Property> properties
 
   <properties>
     <jdk.version>@features.getTargetJdk()</jdk.version>
-    <maven.compiler.target>${jdk.version}</maven.compiler.target>
-    <maven.compiler.source>${jdk.version}</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 @for (Property prop : properties) {
 @if (prop.isComment()) {
     <!--@prop.getComment()-->
@@ -583,7 +579,6 @@ List<Property> properties
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
 @if (features.testFramework().isJunit() || features.testFramework().isSpock()) {
         <configuration>
           <detail>true</detail>
@@ -610,15 +605,6 @@ List<Property> properties
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>${maven-failsafe-plugin.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
 @if (features.contains("views-rocker")) {
       <plugin>
