@@ -17,7 +17,7 @@ dependencies {
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "org.testcontainers:postgresql:1.13.0"
+    testImplementation "org.testcontainers:postgresql:1.14.3"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
 }
 
