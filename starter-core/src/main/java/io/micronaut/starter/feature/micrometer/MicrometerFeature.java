@@ -15,11 +15,16 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
+import io.micronaut.core.naming.NameUtils;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public abstract class MicrometerFeature implements Feature {
 
@@ -51,5 +56,10 @@ public abstract class MicrometerFeature implements Feature {
     @Override
     public String getCategory() {
         return Category.MANAGEMENT;
+    }
+
+    @Override
+    public String getTitle() {
+        return Arrays.stream(StringUtils.tokenizeToStringArray(getName(), "-")).map(NameUtils::capitalize).collect(Collectors.joining(" "));
     }
 }
