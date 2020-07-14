@@ -1,5 +1,5 @@
 plugins {
-   id "com.microsoft.azure.azurefunctions" version "1.2.0"
+   id "com.microsoft.azure.azurefunctions" version "1.4.0"
 }
 
 dependencies {
