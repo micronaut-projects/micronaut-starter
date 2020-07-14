@@ -33,11 +33,6 @@ public class Kairos extends MicrometerFeature {
     }
 
     @Override
-    public String getTitle() {
-        return "Micrometer Kairos";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Kairos reporter)";
     }
