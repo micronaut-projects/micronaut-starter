@@ -22,7 +22,7 @@ dependencies {
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation 'com.google.cloud.functions:functions-framework-api:1.0.1'
     testImplementation "io.micronaut.test:micronaut-test-spock"
-    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.0-alpha-2-rc4'
+    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.0-beta1'
 }
 test.classpath += configurations.developmentOnly
 
