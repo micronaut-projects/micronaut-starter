@@ -25,6 +25,7 @@ public class Category {
     public static final String API                  = "API";
     public static final String IOT                  = "Internet of Things";
     public static final String CACHE                = "Cache";
+    public static final String CLOUD                = "Cloud";
     public static final String RESILIENCE           = "Resilience";
     public static final String CONFIGURATION        = "Configuration";
     public static final String DATABASE             = "Database";

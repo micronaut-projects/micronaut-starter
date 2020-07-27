@@ -13,45 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.distributedconfig;
+package io.micronaut.starter.feature.k8s;
 
+import javax.inject.Singleton;
+
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.distributedconfig.template.k8sYaml;
 import io.micronaut.starter.feature.jib.Jib;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
-
+/**
+ * Adds Kubernetes configuration to an application.
+ *
+ * @author graemerocher
+ * @since 2.0.1
+ */
 @Singleton
-public class Kubernetes implements DistributedConfigFeature {
+public class Kubernetes implements Feature {
 
     private final Jib jib;
     private final Management management;
 
-    public Kubernetes(Management management, Jib jib) {
-        this.management = management;
+    public Kubernetes(Jib jib, Management management) {
         this.jib = jib;
+        this.management = management;
     }
 
+    @NonNull
     @Override
     public String getName() {
-        return "config-kubernetes";
+        return "kubernetes";
     }
 
     @Override
     public String getTitle() {
-        return "Kubernetes Distributed Configuration";
+        return "Kubernetes Support";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Kubernetes ConfigMap";
+        return "Generates a k8s deployment descriptor for deployment to Kubernetes";
     }
 
     @Override
+    public String getCategory() {
+        return Category.CLOUD;
+    }
+
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(Management.class)) {
             featureContext.addFeature(management);
@@ -63,17 +78,23 @@ public class Kubernetes implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
         generatorContext.addTemplate("k8sYaml", new RockerTemplate("k8s.yml", k8sYaml.template(generatorContext.getProject())));
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT;
+        return applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.GRPC;
     }
 
+    @Nullable
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html";
+    }
+
+    @Nullable
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://kubernetes.io/docs/home/";
     }
 }

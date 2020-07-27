@@ -9,7 +9,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
+class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature kubernetes contains links to micronaut docs'() {
         when:
@@ -63,4 +63,13 @@ class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
         commandContext.templates.get('k8sYaml')
     }
 
+
+    void 'test kubernetes no distributed config'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(['kubernetes'])
+
+        then:
+        commandContext.bootstrapConfig.get('micronaut.config-client.enabled'.toString()) == null
+        commandContext.templates.get('k8sYaml')
+    }
 }
