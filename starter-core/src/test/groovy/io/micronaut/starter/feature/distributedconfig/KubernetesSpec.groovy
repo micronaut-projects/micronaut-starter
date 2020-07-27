@@ -13,7 +13,7 @@ class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature kubernetes contains links to micronaut docs'() {
         when:
-        def output = generate(['kubernetes'])
+        def output = generate(['config-kubernetes'])
         def readme = output["README.md"]
 
         then:
@@ -24,7 +24,7 @@ class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle kubernetes feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kubernetes'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language)).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
@@ -38,7 +38,7 @@ class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven kubernetes feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kubernetes'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), []).render().toString()
 
         then:
         template.contains("""
@@ -55,7 +55,7 @@ class KubernetesSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test kubernetes configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['kubernetes'])
+        GeneratorContext commandContext = buildGeneratorContext(['config-kubernetes'])
 
         then:
         commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'
