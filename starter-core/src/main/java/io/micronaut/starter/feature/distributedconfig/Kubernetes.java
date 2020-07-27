@@ -38,7 +38,7 @@ public class Kubernetes implements DistributedConfigFeature {
 
     @Override
     public String getName() {
-        return "kubernetes";
+        return "config-kubernetes";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Kubernetes implements DistributedConfigFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Kubernetes";
+        return "Adds support for Distributed Configuration with Kubernetes ConfigMap";
     }
 
     @Override

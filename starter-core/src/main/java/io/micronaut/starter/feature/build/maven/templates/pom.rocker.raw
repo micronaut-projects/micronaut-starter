@@ -169,7 +169,7 @@ List<Property> properties
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
 @dependency.template("io.micronaut", "micronaut-discovery-client", "compile", null)
 }
-@if (features.contains("kubernetes")) {
+@if (features.contains("config-kubernetes")) {
 @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "compile", null)
 }
 @if (features.contains("micrometer")) {
