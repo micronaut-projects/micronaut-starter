@@ -621,11 +621,12 @@ task('runFunction', type: JavaExec, dependsOn: classes) {
     main = 'com.google.cloud.functions.invoker.runner.Invoker'
     classpath(configurations.invoker)
     args(
-            '--target', 'io.micronaut.gcp.function.http.HttpFunction',
-            '--classpath', (configurations.runtimeClasspath + sourceSets.main.output).asPath,
-            '--port', 8080
-
+        '--target', 'io.micronaut.gcp.function.http.HttpFunction',
+        '--port', 8080
     )
+    doFirst {
+        args('--classpath', files(configurations.runtimeClasspath, sourceSets.main.output).asPath)
+    }
 }
 }
 
