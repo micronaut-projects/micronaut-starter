@@ -45,7 +45,7 @@ jobs:
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@2.1.0
+        uses: actions/upload-artifact@v2.1.1
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip
