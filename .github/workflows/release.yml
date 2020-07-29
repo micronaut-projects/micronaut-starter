@@ -56,6 +56,8 @@ jobs:
           VERSION: ${{ steps.release_version.outputs.release_version }}
       - name: Run post-release
         if: success()
+        id: post_release
+        continue-on-error: true
         uses: micronaut-projects/github-actions/post-release@master
         env:
           MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
