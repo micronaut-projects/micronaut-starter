@@ -210,24 +210,24 @@ jobs:
           asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
           asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
           asset_content_type: application/zip
-  sdkman:
-    name: Release to SDKMAN!
-    runs-on: ubuntu-latest
-    needs: [linux, macos, windows]
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
-      - name: SDKMAN release
-        env:
-          GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
-          GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
-        run: ./gradlew sdkMajorRelease --no-daemon
+#  sdkman:
+#    name: Release to SDKMAN!
+#    runs-on: ubuntu-latest
+#    needs: [linux, macos, windows]
+#    steps:
+#      - name: Checkout the repository
+#        uses: actions/checkout@v2.3.1
+#      - name: Set the current release version
+#        id: release_version
+#        run: |
+#          release_version=${GITHUB_REF:11}
+#          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+#          echo ::set-output name=release_version::${release_version}
+#      - name: SDKMAN release
+#        env:
+#          GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
+#          GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
+#        run: ./gradlew sdkMajorRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
