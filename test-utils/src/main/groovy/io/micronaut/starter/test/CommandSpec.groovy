@@ -60,7 +60,7 @@ abstract class CommandSpec extends Specification {
 
     String executeMaven(String command) {
         if (OperatingSystem.current.isWindows()) {
-            command = "mvnw.bat " + command
+            command = dir.getAbsolutePath()+"\\"+"mvnw.bat " + command
         } else {
             command = "./mvnw " + command
         }
@@ -68,6 +68,7 @@ abstract class CommandSpec extends Specification {
         ProcessBuilder pb = new ProcessBuilder(args)
         Map<String, String> env = pb.environment()
         env["JAVA_HOME"] = System.getenv("JAVA_HOME")
+
         Process process = pb.directory(dir).start()
 
         StringBuilder output = new StringBuilder()
