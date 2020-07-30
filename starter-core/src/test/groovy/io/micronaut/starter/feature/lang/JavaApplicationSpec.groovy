@@ -22,7 +22,7 @@ class JavaApplicationSpec extends Specification implements ProjectFixture, Conte
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: java'() {
         given:
         def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
-
+        def testPolicy = "enforcedPlatform"
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -42,8 +42,8 @@ class JavaApplicationSpec extends Specification implements ProjectFixture, Conte
         and: 'implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
         buildGradle.contains("annotationProcessor($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
         buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-        buildGradle.contains("testAnnotationProcessor($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-        buildGradle.contains("testImplementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("testAnnotationProcessor($testPolicy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains("testImplementation($testPolicy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
     }
 
     void "test java application"() {

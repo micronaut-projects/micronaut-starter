@@ -34,7 +34,7 @@ jobs:
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot 
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@2.1.0
+        uses: actions/upload-artifact@v2.1.1
         with:
           name: mn-linux-amd64-snapshot
           path: mn-linux-amd64-snapshot.zip

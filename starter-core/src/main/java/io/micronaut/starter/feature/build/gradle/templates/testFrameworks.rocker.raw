@@ -13,21 +13,21 @@ TestFeature testFeature
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    testAnnotationProcessor(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testAnnotationProcessor(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
     @dependency.template("io.micronaut", "micronaut-inject-java", "testAnnotationProcessor", null)
 } else if (language.isKotlin()) {
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
 }
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
 @if (language.isGroovy()) {
     @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
@@ -39,13 +39,13 @@ TestFeature testFeature
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    kaptTest(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
     @dependency.template("io.micronaut", "micronaut-inject-java", "kaptTest", null)
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
     @if (language.isGroovy()) {
         @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
@@ -57,7 +57,7 @@ TestFeature testFeature
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
-    testImplementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
+    testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     }
     @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
     testImplementation("org.spockframework:spock-core") {

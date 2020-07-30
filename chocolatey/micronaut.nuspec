@@ -9,7 +9,7 @@
     <title>micronaut (Install)</title>
     <authors>Micronaut team</authors>
     <projectUrl>https://micronaut.io</projectUrl>
-    <iconUrl>https://cdn.jsdelivr.net/gh/micronaut-projects/static-website@master/main/src/main/resources/assets/images/favicon-196x196.png</iconUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/micronaut-projects/static-website@master/assets/images/favicon-196x196.png</iconUrl>
     <copyright>2017-2020 original authors</copyright>
     <licenseUrl>https://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -19,6 +19,7 @@
     <tags>micronaut java groovy kotlin maven gradle junit spock kotest</tags>
     <summary>Micronaut CLI</summary>
     <description>A modern, JVM-based, full-stack framework for building modular, easily testable microservice and serverless applications</description>
+    <releaseNotes>https://github.com/micronaut-projects/micronaut-starter/releases</releaseNotes>
   </metadata>
   <files>
     <file src="tools\**" target="tools" />
