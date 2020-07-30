@@ -5,11 +5,13 @@
 Project project,
 Features features,
 String runCommand,
-String buildCommand
+String buildCommand,
+boolean isFunction
 )
 
 # Micronaut and Google Cloud Function
 
+@if(!isFunction){
 ## Running the function locally
 
 ```cmd
@@ -17,7 +19,7 @@ String buildCommand
 ```
 
 And visit http://localhost:8080/hello
-
+}
 ## Deploying the function
 
 First build the function with:
@@ -35,7 +37,11 @@ $ cd @features.build().getJarDirectory()
 Now run:
 
 ```bash
-$ gcloud alpha functions deploy @project.getName() --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
+@if(isFunction){
+$ gcloud functions deploy @project.getName() --entry-point @if(project.getPackageName() != null){@(project.getPackageName()).}Function --runtime java11 --trigger-http
+} else {
+$ gcloud functions deploy @project.getName() --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
+}
 ```
 
 Choose unauthenticated access if you don't need auth.
@@ -43,7 +49,7 @@ Choose unauthenticated access if you don't need auth.
 To obtain the trigger URL do the following:
 
 ```bash
-$ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe @project.getName() --format='value(httpsTrigger.url)')
+$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe @project.getName() --format='value(httpsTrigger.url)')
 ```
 
 You can then use this variable to test the function invocation:
