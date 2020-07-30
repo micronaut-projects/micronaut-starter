@@ -7,17 +7,22 @@ jobs:
     name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: gradle/wrapper-validation-action@v1
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          ref: ${{ github.head_ref }}
       - name: Set the current release version
         id: release_version
         run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Run pre-release
         uses: micronaut-projects/github-actions/pre-release@master
+        env:
+          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
@@ -54,6 +59,8 @@ jobs:
         id: post_release
         continue-on-error: true
         uses: micronaut-projects/github-actions/post-release@master
+        env:
+          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Back to Micronaut snapshot
@@ -73,8 +80,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -119,8 +128,10 @@ jobs:
     runs-on: macOS-latest
     needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -165,7 +176,10 @@ jobs:
     runs-on: windows-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-windows-amd64-20.1.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
@@ -218,8 +232,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [linux, macos, windows]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -236,8 +252,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -271,8 +289,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -302,7 +322,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -327,13 +347,15 @@ jobs:
           commit_user_name: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
           commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+
   chocolatey:
     name: Bump Chocolatey package
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2
         with:
+          token: ${{ secrets.GH_TOKEN }}
           ref: master
       - name: Download ZIP, update versions and checksum
         id: choco
