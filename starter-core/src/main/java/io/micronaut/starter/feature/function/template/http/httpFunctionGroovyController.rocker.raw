@@ -1,0 +1,56 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Body
+
+
+@@Controller("/")
+class @project.getClassName()Controller {
+
+    @@Get(uri="/", produces="text/plain")
+    String index() {
+        "Example Response"
+    }
+
+    @@Post(uri="/", produces="application/json")
+    SampleReturnMessage postMethod(@@Body SampleInputMessage inputMessage){
+      SampleReturnMessage retMessage = new SampleReturnMessage()
+      retMessage.setReturnMessage("Hello "+inputMessage.getName()+", thank you for sending the message")
+      return retMessage
+    }
+
+
+}
+
+
+class SampleInputMessage{
+    private String name
+    String getName() {
+        return name
+    }
+    void setName(String name) {
+        this.name = name
+    }
+}
+
+
+class SampleReturnMessage{
+    private String returnMessage
+    String getReturnMessage() {
+        return returnMessage
+    }
+    void setReturnMessage(String returnMessage) {
+        this.returnMessage = returnMessage
+    }
+}

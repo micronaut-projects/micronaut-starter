@@ -18,7 +18,7 @@ boolean isFunction
 ./@runCommand
 ```
 
-And visit http://localhost:8080/hello
+And visit http://localhost:8080/
 }
 ## Deploying the function
 
@@ -55,5 +55,5 @@ $ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe @project.getName() --format=
 You can then use this variable to test the function invocation:
 
 ```bash
-$ curl -i $YOUR_HTTP_TRIGGER_URL/hello
+$ curl -i $YOUR_HTTP_TRIGGER_URL/
 ```%
