@@ -10,7 +10,7 @@ dependencies {
     implementation "io.micronaut:micronaut-http-server-netty"
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     implementation("io.micronaut.data:micronaut-data-jdbc")
-    implementation 'org.postgresql:postgresql:42.2.12'
+    implementation 'org.postgresql:postgresql:42.2.14'
     implementation 'com.google.cloud.sql:postgres-socket-factory:1.0.16'
     implementation "io.micronaut.sql:micronaut-jdbc-hikari"
     implementation 'io.micronaut.flyway:micronaut-flyway'
