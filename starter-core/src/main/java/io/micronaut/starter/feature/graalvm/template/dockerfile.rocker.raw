@@ -20,7 +20,8 @@ WORKDIR /home/app/@project.getName()
 RUN native-image --no-server -cp @jarFile
 
 FROM frolvlad/alpine-glibc
-RUN apk update && apk add libstdc++
+RUN apk update && apk add libstdc++ tini
 EXPOSE 8080
 COPY --from=graalvm /home/app/@project.getName()/@project.getName() /app/@project.getName()
-ENTRYPOINT ["/app/@project.getName()"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["/app/@project.getName()"]
