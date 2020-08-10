@@ -83,7 +83,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec  implements CommandOutp
         then:
         bootstrap.contains('#!/bin/sh')
         bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('./foo -Xmx512m')
+        bootstrap.contains('./foo -Xmx512m -Djava.library.path=$(pwd)')
 
         where:
         language << graalSupportedLanguages()
