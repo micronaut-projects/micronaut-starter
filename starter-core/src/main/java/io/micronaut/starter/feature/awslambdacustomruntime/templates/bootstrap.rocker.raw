@@ -12,7 +12,7 @@ Features features
 #!/bin/sh
 set -euo pipefail
 @if (features.contains("graalvm")) {
-./@project.getName() -Xmx128m -Djava.library.path=$(pwd)
+./@project.getName() -Xmx128m
 } else {
 @if (buildTool.equals(BuildTool.GRADLE)) {
 java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.application().mainClassName(applicationType,project,features)
