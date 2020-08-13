@@ -31,8 +31,6 @@ class @project.getClassName()Controller {
       retMessage.setReturnMessage("Hello ${inputMessage.name}, thank you for sending the message")
       retMessage
     }
-
-
 }
 
 class SampleInputMessage{
