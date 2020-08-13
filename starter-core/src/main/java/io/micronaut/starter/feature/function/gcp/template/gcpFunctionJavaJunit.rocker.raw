@@ -28,7 +28,7 @@ public class @project.getClassName()FunctionTest {
         try (HttpFunction function = new HttpFunction()) {
             SampleInputMessage sampleInputMessage = new SampleInputMessage();
             sampleInputMessage.setName("Test Name");
-            HttpRequest request = HttpRequest.POST("/", sampleInputMessage);
+            HttpRequest request = HttpRequest.POST("/", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE);
             GoogleHttpResponse response = function.invoke(request);
             assertEquals(HttpStatus.OK, response.getStatus());
         }
