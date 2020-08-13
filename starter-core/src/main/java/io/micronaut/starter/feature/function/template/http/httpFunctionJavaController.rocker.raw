@@ -11,7 +11,7 @@ package @project.getPackageName();
 
 import io.micronaut.http.annotation.*;
 
-@@Controller("/")
+@@Controller
 public class @project.getClassName()Controller {
 
     @@Get(uri="/", produces="text/plain")
