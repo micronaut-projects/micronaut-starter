@@ -18,7 +18,7 @@ class @project.getClassName()FunctionTest {
     @@Test
     fun testFunction() {
         HttpFunction().use { function ->
-           val response = function.invoke(HttpMethod.GET, "/")
+           val response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
             Assertions.assertEquals(HttpStatus.OK, response.status)
         }
     }
@@ -28,7 +28,7 @@ class @project.getClassName()FunctionTest {
     fun testPost(){
         HttpFunction().use { function ->
             val input = SampleInputMessage("Test Name")
-            val request = HttpRequest.POST("/", input).contentType(MediaType.APPLICATION_JSON_TYPE)
+            val request = HttpRequest.POST("/@project.getPropertyName()", input).contentType(MediaType.APPLICATION_JSON_TYPE)
             val response = function.invoke(request)
             Assertions.assertEquals(HttpStatus.OK, response.status)
         }

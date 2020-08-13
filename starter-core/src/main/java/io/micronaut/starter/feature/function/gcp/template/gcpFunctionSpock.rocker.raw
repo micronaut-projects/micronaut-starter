@@ -19,7 +19,7 @@ class @project.getClassName()FunctionSpec extends Specification {
 
     void "test function"() {
         when:"The function is executed"
-        GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/")
+        GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
 
         then:"The response is correct"
         response.status == HttpStatus.OK
@@ -28,7 +28,7 @@ class @project.getClassName()FunctionSpec extends Specification {
     void "test post function"() {
         when:"The POST function is executed"
         SampleInputMessage sampleInputMessage = new SampleInputMessage("Test Name")
-        HttpRequest request = HttpRequest.POST("/", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE)
+        HttpRequest request = HttpRequest.POST("/@project.getPropertyName()", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE)
         GoogleHttpResponse response = function.invoke(request)
 
         then:"The response is correct"

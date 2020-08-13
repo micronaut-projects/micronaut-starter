@@ -17,7 +17,7 @@ import io.micronaut.http.annotation.Produces
 import io.micronaut.http.MediaType
 import io.micronaut.core.annotation.Introspected
 
-@@Controller
+@@Controller("/@project.getPropertyName()")
 class @project.getClassName()Controller {
 
     @@Produces(MediaType.TEXT_PLAIN)
