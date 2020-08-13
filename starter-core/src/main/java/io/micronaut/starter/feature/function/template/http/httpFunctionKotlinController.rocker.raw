@@ -23,7 +23,7 @@ class @project.getClassName()Controller {
         return "Example Response"
     }
 
-    @@Post(produces=["application/json"])
+    @@Post
     fun post(@@Body inputMessage: SampleInputMessage?): SampleReturnMessage?{
         val retMessage = SampleReturnMessage()
 

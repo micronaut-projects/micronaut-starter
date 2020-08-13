@@ -19,7 +19,7 @@ public class @project.getClassName()Controller {
         return "Example Response";
     }
 
-    @@Post(uri="/", produces="application/json")
+    @@Post
     public SampleReturnMessage postMethod(@@Body SampleInputMessage inputMessage){
       SampleReturnMessage retMessage = new SampleReturnMessage();
       retMessage.setReturnMessage(String.format("Hello %s, thank you for sending the message", inputMessage.getName()));
