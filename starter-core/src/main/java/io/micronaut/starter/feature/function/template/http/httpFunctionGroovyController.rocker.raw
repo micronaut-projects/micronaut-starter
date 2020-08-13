@@ -27,9 +27,7 @@ class @project.getClassName()Controller {
 
     @@Post
     SampleReturnMessage postMethod(@@Body SampleInputMessage inputMessage){
-      SampleReturnMessage retMessage = new SampleReturnMessage()
-      retMessage.setReturnMessage("Hello ${inputMessage.name}, thank you for sending the message")
-      retMessage
+      new SampleReturnMessage(returnMessage: "Hello ${inputMessage.name}, thank you for sending the message")
     }
 }
 
