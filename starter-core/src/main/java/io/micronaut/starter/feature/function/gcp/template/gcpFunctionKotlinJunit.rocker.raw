@@ -19,7 +19,7 @@ class @project.getClassName()FunctionTest {
     fun testFunction() {
         HttpFunction().use { function ->
            val response = function.invoke(HttpMethod.GET, "/")
-           Assertions.assertEquals(HttpStatus.OK, response.getStatus());
+            Assertions.assertEquals(HttpStatus.OK, response.status)
         }
     }
 
@@ -31,7 +31,7 @@ class @project.getClassName()FunctionTest {
             input.name = "Test Name"
             val request = HttpRequest.POST("/", input).contentType(MediaType.APPLICATION_JSON_TYPE)
             val response = function.invoke(request)
-            Assertions.assertEquals(HttpStatus.OK, response.getStatus());
+            Assertions.assertEquals(HttpStatus.OK, response.status)
         }
     }
 }
