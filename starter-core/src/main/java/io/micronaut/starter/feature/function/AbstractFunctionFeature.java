@@ -55,10 +55,11 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
         if (type == ApplicationType.DEFAULT) {
 
-            Project project = generatorContext.getProject().withClassName("Hello");
+            final String className = "Hello";
+            Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();
-            String sourceFile = generatorContext.getSourcePath("/{packagePath}/HelloController");
+            String sourceFile = generatorContext.getSourcePath("/{packagePath}/" + className + "Controller");
 
             switch (language) {
                 case GROOVY:
@@ -79,7 +80,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-            applyTestTemplate(generatorContext, project, "HelloFunction");
+            applyTestTemplate(generatorContext, project,  className + "Function");
         }
     }
 
