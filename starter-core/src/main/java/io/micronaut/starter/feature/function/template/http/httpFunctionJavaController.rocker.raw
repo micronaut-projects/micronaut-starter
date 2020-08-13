@@ -34,6 +34,14 @@ public class @project.getClassName()Controller {
 @@Introspected
 class SampleInputMessage{
     private String name;
+
+    public SampleInputMessage() {
+    }
+
+    public SampleInputMessage(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

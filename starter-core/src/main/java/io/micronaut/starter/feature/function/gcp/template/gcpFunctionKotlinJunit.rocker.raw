@@ -27,8 +27,7 @@ class @project.getClassName()FunctionTest {
     @@Test
     fun testPost(){
         HttpFunction().use { function ->
-            val input = SampleInputMessage()
-            input.name = "Test Name"
+            val input = SampleInputMessage("Test Name")
             val request = HttpRequest.POST("/", input).contentType(MediaType.APPLICATION_JSON_TYPE)
             val response = function.invoke(request)
             Assertions.assertEquals(HttpStatus.OK, response.status)

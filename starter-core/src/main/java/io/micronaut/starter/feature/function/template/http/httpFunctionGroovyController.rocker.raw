@@ -16,6 +16,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.MediaType
 import io.micronaut.core.annotation.Introspected
+import groovy.transform.TupleConstructor
 
 @@Controller
 class @project.getClassName()Controller {
@@ -32,6 +33,7 @@ class @project.getClassName()Controller {
     }
 }
 
+@@TupleConstructor
 @@Introspected
 class SampleInputMessage{
     String name

@@ -16,6 +16,7 @@ import io.micronaut.http.annotation.Body
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.MediaType
+import io.micronaut.core.annotation.Introspected
 
 @@Controller
 class @project.getClassName()Controller {
@@ -27,19 +28,13 @@ class @project.getClassName()Controller {
     }
 
     @@Post
-    fun post(@@Body inputMessage: SampleInputMessage?): SampleReturnMessage?{
-        val retMessage = SampleReturnMessage()
-
-        retMessage.returnMessage = "Hello ${inputMessage?.name}, thank you for sending the message"
-        return retMessage
+    fun post(@@Body inputMessage: SampleInputMessage): SampleReturnMessage {
+        return SampleReturnMessage("Hello ${inputMessage.name}, thank you for sending the message")
     }
 }
 
-class SampleInputMessage{
-    var name: String? = null
-}
+@@Introspected
+data class SampleInputMessage(val name: String)
 
-
-class SampleReturnMessage{
-    var  returnMessage: String? = null
-}
+@@Introspected
+data class SampleReturnMessage(val returnMessage: String)
