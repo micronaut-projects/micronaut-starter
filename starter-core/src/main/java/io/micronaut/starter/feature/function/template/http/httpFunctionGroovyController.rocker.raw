@@ -35,24 +35,10 @@ class @project.getClassName()Controller {
 
 }
 
-
 class SampleInputMessage{
-    private String name
-    String getName() {
-        return name
-    }
-    void setName(String name) {
-        this.name = name
-    }
+    String name
 }
 
-
 class SampleReturnMessage{
-    private String returnMessage
-    String getReturnMessage() {
-        return returnMessage
-    }
-    void setReturnMessage(String returnMessage) {
-        this.returnMessage = returnMessage
-    }
+    String returnMessage
 }
