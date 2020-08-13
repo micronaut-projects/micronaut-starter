@@ -29,7 +29,7 @@ class @project.getClassName()Controller {
     SampleReturnMessage postMethod(@@Body SampleInputMessage inputMessage){
       SampleReturnMessage retMessage = new SampleReturnMessage()
       retMessage.setReturnMessage("Hello "+inputMessage.getName()+", thank you for sending the message")
-      return retMessage
+      retMessage
     }
 
 
