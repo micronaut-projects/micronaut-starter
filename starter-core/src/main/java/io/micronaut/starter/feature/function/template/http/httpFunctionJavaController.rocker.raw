@@ -12,6 +12,7 @@ package @project.getPackageName();
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.MediaType;
+import io.micronaut.core.annotation.Introspected;
 
 @@Controller
 public class @project.getClassName()Controller {
@@ -30,6 +31,7 @@ public class @project.getClassName()Controller {
     }
 }
 
+@@Introspected
 class SampleInputMessage{
     private String name;
     public String getName() {
@@ -40,7 +42,7 @@ class SampleInputMessage{
     }
 }
 
-
+@@Introspected
 class SampleReturnMessage{
     private String returnMessage;
     public String getReturnMessage() {
