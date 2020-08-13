@@ -22,8 +22,9 @@ class @project.getClassName()FunctionTest {
             assertEquals(HttpStatus.OK, response.status)
         }
     }
+
     @@Test
-    public void testPost(){
+    void testPost(){
         new HttpFunction().withCloseable { HttpFunction function ->
             SampleInputMessage sampleInputMessage = new SampleInputMessage()
             sampleInputMessage.setName("Test Name")
