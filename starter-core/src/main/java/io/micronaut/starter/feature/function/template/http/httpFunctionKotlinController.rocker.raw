@@ -30,7 +30,7 @@ class @project.getClassName()Controller {
     fun post(@@Body inputMessage: SampleInputMessage?): SampleReturnMessage?{
         val retMessage = SampleReturnMessage()
 
-        retMessage.returnMessage = "Hello "+inputMessage?.name+", thank you for sending the message"
+        retMessage.returnMessage = "Hello ${inputMessage?.name}, thank you for sending the message"
         return retMessage
     }
 }
