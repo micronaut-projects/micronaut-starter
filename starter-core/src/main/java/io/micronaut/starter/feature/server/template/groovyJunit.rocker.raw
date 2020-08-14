@@ -24,7 +24,7 @@ public class @project.getClassName()ControllerTest {
     RxHttpClient client
 
     @@Test
-    public void testIndex() throws Exception {
+    void testIndex() throws Exception {
         assert client.toBlocking().exchange("/@project.getPropertyName()").status() == HttpStatus.OK
     }
 }

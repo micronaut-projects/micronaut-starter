@@ -29,7 +29,7 @@ class BookRequestHandlerTest {
     }
 
     @@Test
-    public void testHandler() {
+    void testHandler() {
         Book book = new Book()
         book.name = 'Building Microservices'
         BookSaved bookSaved = bookRequestHandler.execute(book)
