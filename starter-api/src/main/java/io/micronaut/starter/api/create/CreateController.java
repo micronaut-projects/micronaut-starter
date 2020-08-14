@@ -42,7 +42,7 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-@Controller("/")
+@Controller
 public class CreateController extends AbstractCreateController implements CreateOperation {
 
     /**
