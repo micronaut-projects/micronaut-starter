@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
@@ -73,8 +72,7 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
         return gcpFunctionReadme.template(project,
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),
-                getBuildCommand(buildTool),
-                generatorContext.getApplicationType() == ApplicationType.FUNCTION
+                getBuildCommand(buildTool)
         );
     }
 
