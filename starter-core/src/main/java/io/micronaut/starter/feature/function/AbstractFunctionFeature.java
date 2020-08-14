@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -53,9 +54,10 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
         generatorContext.addHelpTemplate(new RockerWritable(readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
 
+
         if (type == ApplicationType.DEFAULT) {
 
-            final String className = "Hello";
+            final String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();
@@ -80,7 +82,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-            applyTestTemplate(generatorContext, project,  className + "Function");
+            applyTestTemplate(generatorContext, project, className + "Function");
         }
     }
 
