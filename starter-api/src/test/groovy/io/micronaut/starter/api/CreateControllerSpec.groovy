@@ -1,5 +1,6 @@
 package io.micronaut.starter.api
 
+import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse
@@ -15,7 +16,6 @@ import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.annotation.Nullable
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -16,10 +16,21 @@ import io.micronaut.gcp.function.http.*
 class @project.getClassName()FunctionTest {
 
     @@Test
-    void testFunction() {
+    void testGet() {
         new HttpFunction().withCloseable { HttpFunction function ->
            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
-            assert response.status == HttpStatus.OK
+            assertEquals(HttpStatus.OK, response.status)
+        }
+    }
+
+    @@Test
+    void testPost(){
+        new HttpFunction().withCloseable { HttpFunction function ->
+            SampleInputMessage sampleInputMessage = new SampleInputMessage()
+            sampleInputMessage.setName("Test Name")
+            HttpRequest request = HttpRequest.POST("/@project.getPropertyName()", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE)
+            GoogleHttpResponse response = function.invoke(request)
+            assertEquals(HttpStatus.OK, response.status)
         }
     }
 }

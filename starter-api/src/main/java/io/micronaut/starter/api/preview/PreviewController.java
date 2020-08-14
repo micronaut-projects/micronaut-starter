@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -34,7 +35,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;

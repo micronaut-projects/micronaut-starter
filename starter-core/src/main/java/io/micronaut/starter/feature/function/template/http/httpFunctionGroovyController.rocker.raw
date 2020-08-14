@@ -1,0 +1,45 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+
+import io.micronaut.http.annotation.Controller
+import io.micronaut.http.annotation.Get
+import io.micronaut.http.annotation.Post
+import io.micronaut.http.annotation.Body
+import io.micronaut.http.annotation.Produces
+import io.micronaut.http.MediaType
+import io.micronaut.core.annotation.Introspected
+import groovy.transform.TupleConstructor
+
+@@Controller("/@project.getPropertyName()")
+class @project.getClassName()Controller {
+
+    @@Produces(MediaType.TEXT_PLAIN)
+    @@Get
+    String index() {
+        "Example Response"
+    }
+
+    @@Post
+    SampleReturnMessage postMethod(@@Body SampleInputMessage inputMessage){
+      new SampleReturnMessage(returnMessage: "Hello ${inputMessage.name}, thank you for sending the message")
+    }
+}
+
+@@TupleConstructor
+@@Introspected
+class SampleInputMessage{
+    String name
+}
+
+@@Introspected
+class SampleReturnMessage{
+    String returnMessage
+}

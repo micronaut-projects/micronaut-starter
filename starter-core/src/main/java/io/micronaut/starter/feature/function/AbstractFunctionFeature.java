@@ -19,10 +19,10 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
+import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
+import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.server.template.groovyController;
-import io.micronaut.starter.feature.server.template.javaController;
-import io.micronaut.starter.feature.server.template.kotlinController;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -37,15 +37,15 @@ import io.micronaut.starter.template.RockerWritable;
 public abstract class AbstractFunctionFeature implements FunctionFeature {
 
     protected RockerModel javaControllerTemplate(Project project) {
-        return javaController.template(project);
+        return httpFunctionJavaController.template(project);
     }
 
     protected RockerModel kotlinControllerTemplate(Project project) {
-        return kotlinController.template(project);
+        return httpFunctionKotlinController.template(project);
     }
 
     protected RockerModel groovyControllerTemplate(Project project) {
-        return groovyController.template(project);
+        return httpFunctionGroovyController.template(project);
     }
 
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {

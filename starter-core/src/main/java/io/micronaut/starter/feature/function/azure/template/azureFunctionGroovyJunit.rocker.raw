@@ -23,8 +23,7 @@ class @project.getClassName()FunctionTest {
             HttpRequestMessageBuilder.AzureHttpResponseMessage response =
                 function.request(HttpMethod.GET, "/@project.getPropertyName()")
                         .invoke()
-
-            assert response.status == HttpStatus.OK
+            assertEquals(HttpStatus.OK, response.status)
         }
     }
 }
