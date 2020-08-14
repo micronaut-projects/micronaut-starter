@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.application;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.naming.Named;
 
-import javax.annotation.Nonnull;
 import java.util.Locale;
 
 public enum ApplicationType implements Named {
@@ -51,7 +51,7 @@ public enum ApplicationType implements Named {
         return description;
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);

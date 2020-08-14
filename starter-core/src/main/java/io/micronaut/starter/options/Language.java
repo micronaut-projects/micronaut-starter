@@ -15,10 +15,10 @@
  */
 package io.micronaut.starter.options;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public enum Language {
@@ -81,7 +81,7 @@ public enum Language {
         return getName();
     }
 
-    @Nonnull
+    @NonNull
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }

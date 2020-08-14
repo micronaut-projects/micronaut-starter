@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.ApplicationType;
@@ -23,7 +24,6 @@ import io.micronaut.starter.application.FunctionAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import picocli.CommandLine;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class CreateFunctionCommand extends CreateCommand {
         super(availableFeatures, contextFactory, ApplicationType.FUNCTION, projectGenerator);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     protected List<String> getSelectedFeatures() {
         return features;

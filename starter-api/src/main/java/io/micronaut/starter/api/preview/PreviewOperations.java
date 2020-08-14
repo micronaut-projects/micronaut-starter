@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
@@ -23,7 +24,6 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.Parameter;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.List;
 

@@ -1,5 +1,6 @@
 package io.micronaut.starter.netty
 
+import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.options.BuildTool
@@ -9,7 +10,6 @@ import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.annotation.Nullable
 import javax.inject.Inject
 
 @MicronautTest
