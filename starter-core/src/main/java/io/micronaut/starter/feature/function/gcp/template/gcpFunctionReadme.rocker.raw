@@ -18,8 +18,8 @@ boolean isFunction
 ./@runCommand
 ```
 
-And visit http://localhost:8080/hello
-}
+And visit http://localhost:8080/@project.getPropertyName()
+
 ## Deploying the function
 
 First build the function with:
@@ -49,11 +49,11 @@ Choose unauthenticated access if you don't need auth.
 To obtain the trigger URL do the following:
 
 ```bash
-$ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe @project.getName() --format='value(httpsTrigger.url)')
+$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe @project.getName() --format='value(httpsTrigger.url)')
 ```
 
 You can then use this variable to test the function invocation:
 
 ```bash
-$ curl -i $YOUR_HTTP_TRIGGER_URL/hello
+$ curl -i $YOUR_HTTP_TRIGGER_URL/@project.getPropertyName()
 ```%
