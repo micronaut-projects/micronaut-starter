@@ -53,6 +53,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class AbstractCreateController implements CreateOperation {
+    public static final String MICRONAUT = "micronaut";
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
     protected final ProjectGenerator projectGenerator;
@@ -80,6 +81,9 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
             String userAgent) {
+        if (name.equalsIgnoreCase(MICRONAUT)) {
+            throw new HttpStatusException(HttpStatus.BAD_REQUEST, "project name cannot be " + name);
+        }
         Project project;
         try {
             project = NameUtils.parse(name);
