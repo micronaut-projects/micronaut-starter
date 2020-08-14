@@ -16,7 +16,7 @@ String buildCommand
 ./@runCommand
 ```
 
-And visit http://localhost:8080/hello
+And visit http://localhost:8080/@project.getPropertyName()
 
 ## Deploying the function
 
@@ -49,5 +49,5 @@ $ YOUR_HTTP_TRIGGER_URL=$(gcloud alpha functions describe @project.getName() --f
 You can then use this variable to test the function invocation:
 
 ```bash
-$ curl -i $YOUR_HTTP_TRIGGER_URL/hello
+$ curl -i $YOUR_HTTP_TRIGGER_URL/@project.getPropertyName()
 ```%
