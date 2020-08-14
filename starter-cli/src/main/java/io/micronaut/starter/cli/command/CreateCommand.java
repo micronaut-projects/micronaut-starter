@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
@@ -29,7 +30,6 @@ import io.micronaut.starter.util.NameUtils;
 import io.micronaut.starter.util.VersionInfo;
 import picocli.CommandLine;
 
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +84,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     /**
      * @return The selected features.
      */
-    protected abstract @Nonnull List<String> getSelectedFeatures();
+    protected abstract @NonNull List<String> getSelectedFeatures();
 
     protected Map<String, Object> getAdditionalOptions() {
         return Collections.emptyMap();

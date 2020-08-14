@@ -16,6 +16,7 @@
 package io.micronaut.starter.api.create;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
@@ -37,8 +38,6 @@ import io.micronaut.starter.util.NameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -136,7 +135,7 @@ public abstract class AbstractCreateController implements CreateOperation {
      * @return The file name to return.
      * @param project The project
      */
-    protected @Nonnull String getFilename(@NonNull Project project) {
+    protected @NonNull String getFilename(@NonNull Project project) {
         return project.getName() + ".zip";
     }
 

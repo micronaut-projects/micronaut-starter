@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.options;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.Project;
 
-import javax.annotation.Nonnull;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -54,7 +54,7 @@ public enum BuildTool {
         return getName();
     }
 
-    @Nonnull
+    @NonNull
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }

@@ -15,7 +15,8 @@
  */
 package io.micronaut.starter.options;
 
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 import java.util.Locale;
 
 public enum TestFramework {
@@ -28,7 +29,7 @@ public enum TestFramework {
         return this.name().toLowerCase();
     }
 
-    @Nonnull
+    @NonNull
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);
     }

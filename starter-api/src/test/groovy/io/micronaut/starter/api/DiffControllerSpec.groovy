@@ -1,6 +1,7 @@
 package io.micronaut.starter.api
 
 import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get
@@ -14,7 +15,6 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.annotation.Nullable
 import javax.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull

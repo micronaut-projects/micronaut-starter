@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.create;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
@@ -25,7 +26,6 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 /**

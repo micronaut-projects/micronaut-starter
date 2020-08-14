@@ -16,6 +16,7 @@
 package io.micronaut.starter.api.diff;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
@@ -25,7 +26,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
 
-import javax.annotation.Nullable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
