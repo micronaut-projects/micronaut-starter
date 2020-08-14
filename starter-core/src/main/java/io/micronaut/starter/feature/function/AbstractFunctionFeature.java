@@ -54,10 +54,10 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
         generatorContext.addHelpTemplate(new RockerWritable(readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
 
-        String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
 
         if (type == ApplicationType.DEFAULT) {
 
+            final String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
             Project project = generatorContext.getProject().withClassName(className);
 
             Language language = generatorContext.getLanguage();

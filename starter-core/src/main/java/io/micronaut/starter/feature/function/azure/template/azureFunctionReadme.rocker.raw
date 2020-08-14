@@ -28,7 +28,7 @@ az account set -s <your subscription id>
 ./@runCommand
 ```
 
-And visit http://localhost:7071/api/hello
+And visit http://localhost:7071/api/@project.getPropertyName()
 
 ## Deploying the function
 
