@@ -20,26 +20,30 @@ import io.micronaut.starter.util.NameUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Project {
+public class Project extends ProjectIdentifier {
 
-    private final String packageName;
+    public static final String PACKAGE_NAME = "packageName";
+    public static final String PACKAGE_PATH = "packagePath";
+    public static final String CLASS_NAME = "className";
+    public static final String NATURAL_NAME = "naturalName";
+    public static final String PROPERTY_NAME = "propertyName";
+    public static final String NAME = "name";
     private final String packagePath;
     private final String className;
     private final String naturalName;
     private final String propertyName;
-    private final String name;
 
-    public Project(String packageName, String packagePath, String className, String naturalName, String propertyName, String name) {
-        this.packageName = packageName;
+    public Project(String packageName,
+                   String packagePath,
+                   String className,
+                   String naturalName,
+                   String propertyName,
+                   String name) {
+        super(packageName, name);
         this.packagePath = packagePath;
         this.className = className;
         this.naturalName = naturalName;
         this.propertyName = propertyName;
-        this.name = name;
-    }
-
-    public String getPackageName() {
-        return packageName;
     }
 
     public String getPackagePath() {
@@ -58,18 +62,14 @@ public class Project {
         return propertyName;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Map<String, String> getProperties() {
         Map<String, String> properties = new HashMap<>();
-        properties.put("packageName", packageName);
-        properties.put("packagePath", packagePath);
-        properties.put("className", className);
-        properties.put("naturalName", naturalName);
-        properties.put("propertyName", propertyName);
-        properties.put("name", name);
+        properties.put(PACKAGE_NAME, getPackageName());
+        properties.put(PACKAGE_PATH, packagePath);
+        properties.put(CLASS_NAME, className);
+        properties.put(NATURAL_NAME, naturalName);
+        properties.put(PROPERTY_NAME, propertyName);
+        properties.put(NAME, getName());
         return properties;
     }
 
@@ -80,12 +80,12 @@ public class Project {
      */
     public Project withClassName(String className) {
         return new Project(
-                packageName,
+                getPackageName(),
                 packagePath,
                 className,
                 naturalName,
                 NameUtils.getPropertyName(className),
-                name
+                getName()
         );
     }
 }

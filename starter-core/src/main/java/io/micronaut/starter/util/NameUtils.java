@@ -15,29 +15,31 @@
  */
 package io.micronaut.starter.util;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.ProjectIdentifier;
 
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public final class NameUtils {
-
+    public static final String MICRONAUT = "micronaut";
     private static final String PROPERTY_SET_PREFIX = "set";
     private static final String PROPERTY_GET_PREFIX = "get";
 
     private static final Pattern SERVICE_ID_REGEX = Pattern.compile("[\\p{javaLowerCase}\\d-]+");
-
+    
     private NameUtils() {
     }
 
-    public static Project parse(String name) throws IllegalArgumentException {
+    public static ProjectIdentifier parseProjectIdentifier(String name) throws IllegalArgumentException {
         String packageName;
         String appName;
         String[] parts = name.split("\\.");
         if (parts.length == 1) {
             appName = parts[0];
-            packageName = createValidPackageName(appName);
+            packageName = createPackageName(appName);
         } else {
             if (parts.length == 0) {
                 throw new IllegalArgumentException("Cannot create a valid package name for [" + name + "]. Please specify a name that is also a valid Java package.");
@@ -45,10 +47,29 @@ public final class NameUtils {
             int lastIdx = parts.length - 1;
             appName = parts[lastIdx];
             packageName = Arrays.stream(parts).limit(lastIdx).collect(Collectors.joining("."));
-            if (!isValidJavaPackage(packageName)) {
-                throw new IllegalArgumentException("Cannot create a valid package name for [" + name + "]. Please specify a name that is also a valid Java package.");
-            }
         }
+        if (!isValidJavaPackage(packageName)) {
+            throw new IllegalArgumentException("Cannot create a valid package name for [" + packageName + "]. Please specify a name that is also a valid Java package.");
+        }
+        if (!isValidAppName(appName)) {
+            throw new IllegalArgumentException(appName + " is not a valid app name");
+        }
+        return new ProjectIdentifier(packageName, appName);
+    }
+
+    /**
+     * verifies the app is not blank, null or matches {@literal micronaut}
+     * @param appName Application's name
+     * @return True if it is valid
+     */
+    public static boolean isValidAppName(String appName) {
+        return !StringUtils.isEmpty(appName) && !appName.equalsIgnoreCase(MICRONAUT);
+    }
+
+    public static Project parse(String name) throws IllegalArgumentException {
+        ProjectIdentifier projectIdentifier = parseProjectIdentifier(name);
+        String packageName = projectIdentifier.getPackageName();
+        String appName = projectIdentifier.getName();
         String packagePath = packageName.replace('.', '/');
         String className = getNameFromScript(appName);
         String naturalName = getNaturalName(appName);
@@ -57,7 +78,7 @@ public final class NameUtils {
         return new Project(packageName, packagePath, className, naturalName, propertyName, appName);
     }
 
-    private static String createValidPackageName(String appName) {
+    private static String createPackageName(String appName) {
         StringBuilder packageNameBuilder = new StringBuilder();
         for (char c: appName.toCharArray()) {
             if (c == '-') {
@@ -67,11 +88,7 @@ public final class NameUtils {
                 packageNameBuilder.append(c);
             }
         }
-        String packageName = packageNameBuilder.toString();
-        if (!isValidJavaPackage(packageName)) {
-            throw new IllegalArgumentException("Cannot create a valid package name for [" + appName + "]. Please specify a name that is also a valid Java package.");
-        }
-        return packageName;
+        return packageNameBuilder.toString();
     }
 
     /**
