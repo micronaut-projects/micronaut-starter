@@ -22,12 +22,12 @@ import java.util.Map;
 
 public class Project extends ProjectIdentifier {
 
-    public static final String PACKAGE_NAME = "packageName";
-    public static final String PACKAGE_PATH = "packagePath";
-    public static final String CLASS_NAME = "className";
-    public static final String NATURAL_NAME = "naturalName";
-    public static final String PROPERTY_NAME = "propertyName";
-    public static final String NAME = "name";
+    private static final String PACKAGE_NAME = "packageName";
+    private static final String PACKAGE_PATH = "packagePath";
+    private static final String CLASS_NAME = "className";
+    private static final String NATURAL_NAME = "naturalName";
+    private static final String PROPERTY_NAME = "propertyName";
+    private static final String NAME = "name";
     private final String packagePath;
     private final String className;
     private final String naturalName;
