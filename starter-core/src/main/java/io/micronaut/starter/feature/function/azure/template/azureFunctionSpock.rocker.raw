@@ -21,7 +21,7 @@ class @project.getClassName()FunctionSpec extends Specification {
     void "test function"() {
         when:"The function is executed"
         HttpRequestMessageBuilder.AzureHttpResponseMessage response =
-            function.request(HttpMethod.GET, "/hello")
+            function.request(HttpMethod.GET, "/@project.getPropertyName()")
                     .invoke()
 
 
