@@ -19,6 +19,7 @@ boolean isFunction
 ```
 
 And visit http://localhost:8080/@project.getPropertyName()
+}
 
 ## Deploying the function
 
