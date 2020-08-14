@@ -20,6 +20,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
+import io.micronaut.starter.util.NameUtils;
 
 public abstract class MicrometerFeature implements Feature {
 
@@ -51,5 +52,10 @@ public abstract class MicrometerFeature implements Feature {
     @Override
     public String getCategory() {
         return Category.MANAGEMENT;
+    }
+
+    @Override
+    public String getTitle() {
+        return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
     }
 }

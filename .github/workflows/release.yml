@@ -7,17 +7,22 @@ jobs:
     name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: gradle/wrapper-validation-action@v1
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          ref: ${{ github.head_ref }}
       - name: Set the current release version
         id: release_version
         run: echo ::set-output name=release_version::${GITHUB_REF:11}
       - name: Run pre-release
         uses: micronaut-projects/github-actions/pre-release@master
+        env:
+          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
@@ -52,31 +57,39 @@ jobs:
       - name: Run post-release
         if: success()
         id: post_release
+        continue-on-error: true
         uses: micronaut-projects/github-actions/post-release@master
+        env:
+          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Back to Micronaut snapshot
+        continue-on-error: true
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}.BUILD-SNAPSHOT/" gradle.properties
       - uses: stefanzweifel/git-auto-commit-action@v4
+        continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
           commit_user_name: micronaut-build
-          commit_author: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}        
+          echo ::set-output name=release_version::${release_version}
       - name: Install GraalVM
         env:
           GRAAL_VERSION: 20.1.0
@@ -113,15 +126,18 @@ jobs:
   macos:
     name: Release OS X Native CLI
     runs-on: macOS-latest
+    needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
           release_version=${GITHUB_REF:11}
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}        
+          echo ::set-output name=release_version::${release_version}
       - name: Install GraalVM
         env:
           GRAAL_VERSION: 20.1.0
@@ -158,8 +174,12 @@ jobs:
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
+    needs: [build]
     steps:
-      - uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-windows-amd64-20.1.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
@@ -212,8 +232,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [linux, macos, windows]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -228,9 +250,12 @@ jobs:
   gcr:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -262,9 +287,12 @@ jobs:
   analytics:
     name: Release Analytics Job
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v2.3.1
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
         id: release_version
         run: |
@@ -290,11 +318,11 @@ jobs:
 
   homebrew:
     name: Update Homebrew cask
-    needs: macos
+    needs: [macos]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.1
+        uses: actions/checkout@v2.3.2
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -317,16 +345,17 @@ jobs:
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
-          commit_author: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
 
   chocolatey:
     name: Bump Chocolatey package
     runs-on: windows-latest
-    needs: windows
+    needs: [windows]
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
         with:
+          token: ${{ secrets.GH_TOKEN }}
           ref: master
       - name: Download ZIP, update versions and checksum
         id: choco
@@ -369,5 +398,5 @@ jobs:
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
-          commit_author: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>

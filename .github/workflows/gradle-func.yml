@@ -7,7 +7,7 @@ jobs:
       matrix:
         java: ['8', '11', '14']
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
 #      - uses: actions/cache@v2
 #        with:
 #          path: |
@@ -29,7 +29,7 @@ jobs:
       matrix:
         java: ['8', '11', '14']
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
       - uses: actions/cache@v2
         with:
           path: |
@@ -50,7 +50,7 @@ jobs:
       matrix:
         java: ['8', '11', '14']
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
       - uses: actions/cache@v2
         with:
           path: |
@@ -71,7 +71,7 @@ jobs:
       matrix:
         java: ['8', '11', '14']
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
       - uses: actions/cache@v2
         with:
           path: |

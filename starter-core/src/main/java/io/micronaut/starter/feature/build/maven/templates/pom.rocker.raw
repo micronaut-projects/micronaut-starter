@@ -169,7 +169,7 @@ List<Property> properties
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
 @dependency.template("io.micronaut", "micronaut-discovery-client", "compile", null)
 }
-@if (features.contains("kubernetes")) {
+@if (features.contains("config-kubernetes")) {
 @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "compile", null)
 }
 @if (features.contains("micrometer")) {
@@ -583,32 +583,27 @@ List<Property> properties
         <artifactId>maven-shade-plugin</artifactId>
       </plugin>
 }
+@if (features.testFramework().isKotlinTest() || features.testFramework().isSpock()) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-@if (features.testFramework().isJunit() || features.testFramework().isSpock()) {
-        <configuration>
-          <detail>true</detail>
-          <includes>
-            <include>%regex[.*]</include>
-          </includes>
-        </configuration>
-} else if (features.testFramework().isKotlinTest()) {
         <configuration>
           <includes>
             <include>**/*Spec.*</include>
             <include>**/*Test.*</include>
           </includes>
         </configuration>
+@if (features.testFramework().isKotlinTest()) {
         <dependencies>
           <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.3.1</version>
+            <version>${junit5.version}</version>
           </dependency>
         </dependencies>
 }
       </plugin>
+}
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>

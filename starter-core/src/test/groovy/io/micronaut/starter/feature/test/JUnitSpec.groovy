@@ -11,7 +11,7 @@ class JUnitSpec extends BeanContextSpec {
 
     void "test junit with different languages"() {
         given:
-        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
+        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "enforcedPlatform"
 
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([])).render().toString()

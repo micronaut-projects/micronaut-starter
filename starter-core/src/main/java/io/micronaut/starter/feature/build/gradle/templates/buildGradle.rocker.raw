@@ -128,10 +128,6 @@ dependencies {
 @if (features.contains("google-cloud-function")) {
     @if (features.contains("google-cloud-function-http")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
-    @if (features.language().isGroovy() && features.testFramework().isSpock()) {
-    // required due to a Spock compiler bug
-    @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
-    }
     } else {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "implementation", null)
     }
@@ -140,10 +136,6 @@ dependencies {
     @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null)
 @if (features.contains("azure-function-http")) {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "implementation", null)
-    @if (features.language().isGroovy() && features.testFramework().isSpock()) {
-    // required due to a Spock compiler bug
-    @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "testImplementation", null)
-    }
 } else {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
 }
@@ -169,7 +161,7 @@ dependencies {
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
     @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
 }
-@if (features.contains("kubernetes")) {
+@if (features.contains("config-kubernetes")) {
     @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "implementation", null)
 }
 @if (features.contains("micrometer")) {
@@ -621,11 +613,12 @@ task('runFunction', type: JavaExec, dependsOn: classes) {
     main = 'com.google.cloud.functions.invoker.runner.Invoker'
     classpath(configurations.invoker)
     args(
-            '--target', 'io.micronaut.gcp.function.http.HttpFunction',
-            '--classpath', (configurations.runtimeClasspath + sourceSets.main.output).asPath,
-            '--port', 8080
-
+        '--target', 'io.micronaut.gcp.function.http.HttpFunction',
+        '--port', 8080
     )
+    doFirst {
+        args('--classpath', files(configurations.runtimeClasspath, sourceSets.main.output).asPath)
+    }
 }
 }
 

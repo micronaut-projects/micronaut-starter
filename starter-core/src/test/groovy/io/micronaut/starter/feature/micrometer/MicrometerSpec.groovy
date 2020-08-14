@@ -111,4 +111,18 @@ class MicrometerSpec extends BeanContextSpec {
         features.containsAll(['micrometer-appoptics', 'micrometer', 'management'])
     }
 
+    void 'test title conversion is done properly'() {
+        when: 'a feature with one word'
+        Atlas atlas = beanContext.getBean(Atlas)
+
+        then: 'the title is correct'
+        atlas.title == 'Micrometer Atlas'
+
+        when: 'a feature with two words in the name'
+        NewRelic newRelic = beanContext.getBean(NewRelic)
+
+        then: 'the title is correct'
+        newRelic.title == 'Micrometer New Relic'
+    }
+
 }

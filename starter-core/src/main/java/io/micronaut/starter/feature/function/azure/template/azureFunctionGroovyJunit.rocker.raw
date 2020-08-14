@@ -21,7 +21,7 @@ class @project.getClassName()FunctionTest {
     void testFunction() {
         new Function().withCloseable { Function function ->
             HttpRequestMessageBuilder.AzureHttpResponseMessage response =
-                function.request(HttpMethod.GET, "/hello")
+                function.request(HttpMethod.GET, "/@project.getPropertyName()")
                         .invoke()
 
             assert response.status == HttpStatus.OK

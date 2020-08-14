@@ -7,7 +7,7 @@ plugins {
 }
 
 ext {
-    picocliVersion = '4.2.0'
+    picocliVersion = '4.5.0'
 }
 
 configurations {
@@ -35,8 +35,8 @@ dependencies {
     implementation "org.fusesource.jansi:jansi:1.18"
     implementation "org.yaml:snakeyaml:1.26"
 
-    implementation 'org.shredzone.acme4j:acme4j-client:2.9'
-    implementation 'org.shredzone.acme4j:acme4j-utils:2.9'
+    implementation 'org.shredzone.acme4j:acme4j-client:2.10'
+    implementation 'org.shredzone.acme4j:acme4j-utils:2.10'
 
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 

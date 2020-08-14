@@ -22,6 +22,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
     void 'Application file is generated for a default application type with #buildTool and language: kotlin'(BuildTool buildTool) {
         given:
         def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
+        def testPolicy = "enforcedPlatform"
 
         when:
         def output = generate(
@@ -48,8 +49,8 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
             // implementation testAnnotationProcessor annotationProcessor testImplementation use the same policy'
             assert buildGradle.contains("kapt($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
             assert buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-            assert buildGradle.contains("kaptTest($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-            assert buildGradle.contains("testImplementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+            assert buildGradle.contains("kaptTest($testPolicy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+            assert buildGradle.contains("testImplementation($testPolicy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
 
         } else if (buildTool == BuildTool.MAVEN) {
             assert pom.contains("""

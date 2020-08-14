@@ -1,4 +1,4 @@
-name: Release Notes
+name: Changelogs
 on:
   pull_request:
     types: [closed]

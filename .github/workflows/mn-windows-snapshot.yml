@@ -5,7 +5,7 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.3.1
+      - uses: actions/checkout@v2.3.2
       - name: Download GraalVM
         run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-windows-amd64-20.1.0.zip -OutFile 'graal.zip'
       - name: Install GraalVM
@@ -45,7 +45,7 @@ jobs:
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@2.1.0
+        uses: actions/upload-artifact@v2.1.4
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip

@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.micrometer;
 
-import io.micronaut.core.naming.NameUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
@@ -31,11 +30,6 @@ public class Statsd extends MicrometerFeature {
     @Override
     public String getName() {
         return "micrometer-statsd";
-    }
-
-    @Override
-    public String getTitle() {
-        return NameUtils.camelCase(getName());
     }
 
     @Override
