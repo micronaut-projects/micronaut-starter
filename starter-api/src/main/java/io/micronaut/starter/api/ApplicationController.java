@@ -59,7 +59,7 @@ import java.util.stream.Collectors;
                 license = @License(name = "Apache 2.0")
         )
 )
-@Controller("/")
+@Controller
 public class ApplicationController implements ApplicationTypeOperations {
 
     private final FeatureOperations featureOperations;
