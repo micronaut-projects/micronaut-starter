@@ -37,6 +37,7 @@ import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
 
+    public static final String MICRONAUT = "micronaut";
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
@@ -103,6 +104,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
         if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("Specify an application name or use --inplace to create an application in the current directory");
+        }
+
+        if (name.equalsIgnoreCase(MICRONAUT)) {
+            throw new CommandLine.ParameterException(this.spec.commandLine(), MICRONAUT + " is not a valid application name\n");
         }
 
         Project project = NameUtils.parse(name);
