@@ -23,6 +23,7 @@ import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
@@ -79,7 +80,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
-            String userAgent) {
+            @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent) {
         Project project;
         try {
             project = NameUtils.parse(name);

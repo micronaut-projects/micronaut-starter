@@ -19,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -75,13 +76,13 @@ public class CreateController extends AbstractCreateController implements Create
     )
     public HttpResponse<Writable> createApp(
             ApplicationType type,
-            String name,
+            @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
-            BuildTool build,
-            TestFramework test,
-            Language lang,
-            JdkVersion javaVersion,
-            @Nullable String userAgent) {
+            @Nullable BuildTool build,
+            @Nullable TestFramework test,
+            @Nullable Language lang,
+            @Nullable JdkVersion javaVersion,
+            @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent) {
         return super.createApp(type, name, features, build, test, lang, javaVersion, userAgent);
     }
 
