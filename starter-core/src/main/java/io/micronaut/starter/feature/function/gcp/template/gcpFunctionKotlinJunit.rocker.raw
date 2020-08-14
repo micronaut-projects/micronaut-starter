@@ -5,7 +5,7 @@ Project project
 )
 
 @if (project.getPackageName() != null) {
-package @project.getPackageName();
+package @project.getPackageName()
 }
 
 import io.micronaut.http.*
@@ -19,7 +19,18 @@ class @project.getClassName()FunctionTest {
     fun testFunction() {
         HttpFunction().use { function ->
            val response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
-           Assertions.assertEquals(HttpStatus.OK, response.getStatus());
+            Assertions.assertEquals(HttpStatus.OK, response.status)
+        }
+    }
+
+
+    @@Test
+    fun testPost(){
+        HttpFunction().use { function ->
+            val input = SampleInputMessage("Test Name")
+            val request = HttpRequest.POST("/@project.getPropertyName()", input).contentType(MediaType.APPLICATION_JSON_TYPE)
+            val response = function.invoke(request)
+            Assertions.assertEquals(HttpStatus.OK, response.status)
         }
     }
 }
