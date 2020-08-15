@@ -53,7 +53,6 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class AbstractCreateController implements CreateOperation {
-
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
     protected final ProjectGenerator projectGenerator;
     private final ApplicationEventPublisher eventPublisher;

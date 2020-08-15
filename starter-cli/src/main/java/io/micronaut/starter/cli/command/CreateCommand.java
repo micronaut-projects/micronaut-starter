@@ -36,7 +36,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
-
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
@@ -100,12 +99,12 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
                     contextFactory).output(this);
             return 0;
         }
-
-        if (StringUtils.isEmpty(name)) {
-            throw new IllegalArgumentException("Specify an application name or use --inplace to create an application in the current directory");
+        Project project;
+        try {
+            project = NameUtils.parse(name);
+        } catch (IllegalArgumentException e) {
+            throw new CommandLine.ParameterException(this.spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
         }
-
-        Project project = NameUtils.parse(name);
 
         OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
 

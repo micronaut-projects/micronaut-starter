@@ -40,6 +40,8 @@ dependencies {
 
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 
+    testImplementation("io.micronaut.picocli:micronaut-picocli")
+
     testImplementation "org.testcontainers:spock:1.14.3"
     testImplementation 'org.reflections:reflections:0.9.12'
 }
