@@ -132,7 +132,7 @@ var activeTableTab = "activeTableTab";
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
-         java.lang.String&nbsp;name,
+         @Pattern(regexp="[\\w\\d-_\\.]+") java.lang.String&nbsp;name,
          java.util.List&lt;java.lang.String&gt;&nbsp;features,
          <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
          <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;testFramework,
@@ -164,7 +164,8 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>createApp</h4>
 <pre>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;&nbsp;createApp(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
-                                                                        java.lang.String&nbsp;name,
+                                                                        @Pattern(regexp="[\\w\\d-_\\.]+")
+                                                                        @Pattern(regexp="[\\w\\d-_\\.]+") java.lang.String&nbsp;name,
                                                                         @Nullable
                                                                         java.util.List&lt;java.lang.String&gt;&nbsp;features,
                                                                         @Nullable
@@ -175,7 +176,7 @@ var activeTableTab = "activeTableTab";
                                                                         <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
                                                                         @Nullable
                                                                         <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
-                                                                        @Header(value="User-Agent")
+                                                                        @Nullable @Header(value="User-Agent")
                                                                         java.lang.String&nbsp;userAgent)</pre>
 <div class="block">Creates an application.</div>
 <dl>
