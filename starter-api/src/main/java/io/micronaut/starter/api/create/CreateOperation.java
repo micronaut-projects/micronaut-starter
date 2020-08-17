@@ -26,6 +26,7 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
@@ -48,12 +49,12 @@ public interface CreateOperation {
      */
     HttpResponse<Writable> createApp(
             ApplicationType type,
-            String name,
+            @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
-            @Header(HttpHeaders.USER_AGENT) String userAgent
+            @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent
     );
 }
