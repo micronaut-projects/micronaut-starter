@@ -169,17 +169,17 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         dockerfile
         !dockerfile.contains('gradle')
-        dockerfile.contains('RUN native-image --no-server -cp target/foo-*.jar')
+        dockerfile.contains('RUN native-image -cp target/foo-*.jar')
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java8 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java11 as graalvm')
         } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
-            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java8 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java11 as graalvm')
         }
 
         where:
@@ -206,17 +206,17 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         dockerfile
-        dockerfile.contains('RUN native-image --no-server -cp build/libs/foo-*-all.jar')
+        dockerfile.contains('RUN native-image -cp build/libs/foo-*-all.jar')
         dockerfile.contains('COPY --from=graalvm /home/app/foo/foo /app/foo')
         dockerfile.contains('ENTRYPOINT ["/app/foo"]')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
-            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java8 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java11 as graalvm')
         } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
-            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java8 as graalvm')
-            assert dockerfile.contains('FROM oracle/graalvm-ce:20.1.0-java11 as graalvm')
+            assert !dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java8 as graalvm')
+            assert dockerfile.contains('FROM oracle/graalvm-ce:20.2.0-java11 as graalvm')
         }
 
         where:
@@ -323,12 +323,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         dockerfile
         !dockerfile.contains('maven')
         !dockerfile.contains('mvn')
-        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp build/libs/foo-*-all.jar')
+        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image -cp build/libs/foo-*-all.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
-        dockerfile.contains('ENV GRAAL_VERSION 20.1.0')
+        dockerfile.contains('ENV GRAAL_VERSION 20.2.0')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {
@@ -368,12 +368,12 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         dockerfile
         !dockerfile.contains('gradle')
-        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image --no-server -cp target/foo-*.jar')
+        dockerfile.contains('RUN /usr/lib/graalvm/bin/native-image -cp target/foo-*.jar')
         dockerfile.contains('RUN chmod 777 bootstrap')
         dockerfile.contains('RUN chmod 777 foo')
         dockerfile.contains('RUN zip -j function.zip bootstrap foo')
         dockerfile.contains('ENTRYPOINT ["/home/application/foo"]')
-        dockerfile.contains('ENV GRAAL_VERSION 20.1.0')
+        dockerfile.contains('ENV GRAAL_VERSION 20.2.0')
 
         and: 'different graalvm image depending on JDK version'
         if (jdkVersion == JdkVersion.JDK_8) {

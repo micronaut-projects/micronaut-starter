@@ -35,7 +35,7 @@ ENV LANG=en_US.UTF-8
 
 RUN yum install -y gcc gcc-c++ libc6-dev  zlib1g-dev curl bash zlib zlib-devel zip
 
-ENV GRAAL_VERSION 20.1.0
+ENV GRAAL_VERSION 20.2.0
 @if (jdkVersion == JdkVersion.JDK_8) {
 ENV JDK_VERSION java8
 } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
@@ -55,7 +55,7 @@ FROM graalvm
 COPY --from=builder /home/application/ /home/application/
 WORKDIR /home/application
 RUN /usr/lib/graalvm/bin/gu install native-image
-RUN /usr/lib/graalvm/bin/native-image --no-server -cp @jarFile
+RUN /usr/lib/graalvm/bin/native-image -cp @jarFile
 RUN chmod 777 bootstrap
 RUN chmod 777 @project.getName()
 RUN zip -j function.zip bootstrap @project.getName()

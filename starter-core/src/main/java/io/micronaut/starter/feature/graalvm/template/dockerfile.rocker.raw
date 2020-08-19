@@ -8,16 +8,16 @@ JdkVersion jdkVersion
 )
 
 @if (jdkVersion == JdkVersion.JDK_8) {
-FROM oracle/graalvm-ce:20.1.0-java8 as graalvm
+FROM oracle/graalvm-ce:20.2.0-java8 as graalvm
 } else if (jdkVersion.majorVersion() <= JdkVersion.JDK_11.majorVersion()) {
-FROM oracle/graalvm-ce:20.1.0-java11 as graalvm
+FROM oracle/graalvm-ce:20.2.0-java11 as graalvm
 }
 RUN gu install native-image
 
 COPY . /home/app/@project.getName()
 WORKDIR /home/app/@project.getName()
 
-RUN native-image --no-server -cp @jarFile
+RUN native-image -cp @jarFile
 
 FROM frolvlad/alpine-glibc
 RUN apk update && apk add libstdc++

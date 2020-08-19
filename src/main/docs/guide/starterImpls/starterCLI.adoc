@@ -22,7 +22,7 @@ Install GraalVM and Native Image. Follow the steps in the previous section to bu
 
 [source,bash,subs="attributes"]
 ----
-native-image --no-server --no-fallback -cp starter-cli/build/libs/micronaut-cli-{version}-all.jar
+native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-{version}-all.jar
 ----
 
 This will produce the `mn` executable which you can start with:
