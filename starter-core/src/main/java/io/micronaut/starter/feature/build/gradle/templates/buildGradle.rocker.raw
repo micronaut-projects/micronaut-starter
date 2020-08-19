@@ -483,7 +483,7 @@ dependencies {
     @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", null)
 }
 @if (features.contains("oracle")) {
-    @dependency.template("com.oracle.ojdbc", "ojdbc8", "runtimeOnly", null)
+    @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtimeOnly", null)
 }
 @if (features.contains("sqlserver")) {
     @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", null)

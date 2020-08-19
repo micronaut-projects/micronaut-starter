@@ -15,7 +15,7 @@ class OracleSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle'], language)).render().toString()
 
         then:
-        template.contains('runtimeOnly("com.oracle.ojdbc:ojdbc8")')
+        template.contains('runtimeOnly("com.oracle.database.jdbc:ojdbc8")')
 
         where:
         language << Language.values().toList()
@@ -29,7 +29,7 @@ class OracleSpec extends BeanContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>com.oracle.ojdbc</groupId>
+      <groupId>com.oracle.database.jdbc</groupId>
       <artifactId>ojdbc8</artifactId>
       <scope>runtime</scope>
     </dependency>
