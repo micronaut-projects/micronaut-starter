@@ -495,7 +495,7 @@ List<Property> properties
 @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", null)
 }
 @if (features.contains("oracle")) {
-@dependency.template("com.oracle.ojdbc", "ojdbc8", "runtime", null)
+@dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtime", null)
 }
 @if (features.contains("sqlserver")) {
 @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", null)
