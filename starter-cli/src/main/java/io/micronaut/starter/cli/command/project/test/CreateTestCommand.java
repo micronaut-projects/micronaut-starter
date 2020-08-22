@@ -87,6 +87,11 @@ public class CreateTestCommand extends CodeGenCommand {
             public RockerModel kotlinTest() {
                 return kotlinTest.template(getProject());
             }
+
+            @Override
+            public RockerModel koTest() {
+                return koTest.template(getProject());
+            }
         };
         RockerModel rockerModel = testRockerModelProvider.findModel(config.getSourceLanguage(), config.getTestFramework());
         String testPath = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());

@@ -45,36 +45,42 @@ import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKoTest;
 
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovySpock;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKoTest;
 
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovySpock;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKoTest;
 
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovySpock;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKoTest;
 
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovySpock;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKoTest;
 
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovySpock;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinTest;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKoTest;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.options.TestRockerModelProvider;
@@ -189,6 +195,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             }
 
             @Override
+            public RockerModel koTest() {
+                return launchRequestIntentHandlerKoTest.template(getProject());
+            }
+
+            @Override
             public RockerModel javaJunit() {
                 return launchRequestIntentHandlerJavaJunit.template(getProject());
             }
@@ -217,6 +228,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             @Override
             public RockerModel kotlinTest() {
                 return cancelIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel koTest() {
+                return cancelIntentHandlerKoTest.template(getProject());
             }
 
             @Override
@@ -251,6 +267,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             }
 
             @Override
+            public RockerModel koTest() {
+                return fallbackIntentHandlerKoTest.template(getProject());
+            }
+
+            @Override
             public RockerModel javaJunit() {
                 return fallbackIntentHandlerJavaJunit.template(getProject());
             }
@@ -279,6 +300,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             @Override
             public RockerModel kotlinTest() {
                 return helpIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel koTest() {
+                return helpIntentHandlerKoTest.template(getProject());
             }
 
             @Override
@@ -311,6 +337,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             @Override
             public RockerModel kotlinTest() {
                 return sessionEndedRequestIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel koTest() {
+                return sessionEndedRequestIntentHandlerKoTest.template(getProject());
             }
 
             @Override
@@ -358,6 +389,11 @@ public class AwsAlexa implements Feature, CloudFeature {
             @Override
             public RockerModel kotlinTest() {
                 return stopIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel koTest() {
+                return stopIntentHandlerKoTest.template(getProject());
             }
         };
 

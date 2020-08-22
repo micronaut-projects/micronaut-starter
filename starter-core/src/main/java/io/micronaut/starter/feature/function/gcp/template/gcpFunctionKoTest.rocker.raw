@@ -1,0 +1,24 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.micronaut.gcp.function.http.*
+import io.micronaut.http.*
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+class @project.getClassName()FunctionTest : StringSpec({
+
+    "test function" {
+       HttpFunction().use { function ->
+           val response = function.invoke(HttpMethod.GET, "/@project.getPropertyName()")
+           response.status shouldBe HttpStatus.OK
+        }
+    }
+})

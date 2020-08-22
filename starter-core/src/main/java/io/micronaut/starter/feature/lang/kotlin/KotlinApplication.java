@@ -22,6 +22,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -86,6 +87,11 @@ public class KotlinApplication implements KotlinApplicationFeature {
                 @Override
                 public RockerModel kotlinTest() {
                     return kotlinTest.template(generatorContext.getProject());
+                }
+
+                @Override
+                public RockerModel koTest() {
+                    return koTest.template(generatorContext.getProject());
                 }
             };
             generatorContext.addTemplate("applicationTest",

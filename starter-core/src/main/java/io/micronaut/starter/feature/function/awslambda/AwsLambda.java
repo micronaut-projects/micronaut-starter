@@ -32,6 +32,7 @@ import io.micronaut.starter.feature.function.awslambda.template.bookControllerJa
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinTest;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKoTest;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerSpock;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
@@ -43,6 +44,7 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJavaJunit;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKoTest;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinTest;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerSpock;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
@@ -109,6 +111,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
             }
 
             @Override
+            public RockerModel koTest() {
+                return bookControllerKoTest.template(getProject());
+            }
+
+            @Override
             public RockerModel javaJunit() {
                 return bookControllerJavaJunit.template(getProject());
             }
@@ -145,6 +152,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
             @Override
             public RockerModel kotlinTest() {
                 return awsLambdaBookRequestHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel koTest() {
+                return awsLambdaBookRequestHandlerKoTest.template(getProject());
             }
 
             @Override

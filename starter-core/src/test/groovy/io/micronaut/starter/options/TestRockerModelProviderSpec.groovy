@@ -22,6 +22,10 @@ class TestRockerModelProviderSpec extends Specification {
                 return null
             }
 
+            RockerModel koTest() {
+                return null
+            }
+
             @Override
             RockerModel javaJunit() {
                 return null
@@ -48,4 +52,3 @@ class TestRockerModelProviderSpec extends Specification {
         [language, testFramework] << [Language.values(), TestFramework.values()].combinations()
     }
 }
-

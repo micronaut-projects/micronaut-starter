@@ -18,7 +18,7 @@ plugins {
 @if (features.language().isJava()) {
     id "com.diffplug.eclipse.apt" version "3.22.0"
 }
-@if (features.language().isKotlin() || features.testFramework().isKotlinTest()) {
+@if (features.language().isKotlin() || features.testFramework().isKotlinTest() || features.testFramework().isKoTest()) {
     id "org.jetbrains.kotlin.jvm" version "1.3.72"
     id "org.jetbrains.kotlin.kapt" version "1.3.72"
     id "org.jetbrains.kotlin.plugin.allopen" version "1.3.72"
@@ -564,7 +564,7 @@ tasks.withType(JavaCompile) {
     ])
 }
 }
-@if (features.language().isKotlin() || features.testFramework().isKotlinTest()) {
+@if (features.language().isKotlin() || features.testFramework().isKotlinTest() || features.testFramework().isKoTest()) {
 allOpen {
     annotation("io.micronaut.aop.Around")
 }

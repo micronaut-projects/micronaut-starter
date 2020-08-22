@@ -16,12 +16,12 @@
 package io.micronaut.starter.options;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-
 import java.util.Locale;
 
 public enum TestFramework {
     JUNIT,
     SPOCK,
+    KOTEST,
     KOTLINTEST;
 
     @Override
@@ -38,6 +38,7 @@ public enum TestFramework {
         switch (this) {
             case SPOCK:
                 return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
+            case KOTEST:
             case KOTLINTEST:
                 return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
             case JUNIT:

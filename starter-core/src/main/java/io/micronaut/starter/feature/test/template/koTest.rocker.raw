@@ -8,15 +8,14 @@ Project project
 package @project.getPackageName()
 }
 
-import io.kotlintest.specs.StringSpec
-import io.micronaut.context.ApplicationContext
 import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.annotation.MicronautTest
+import io.kotest.core.spec.style.StringSpec
 
 @@MicronautTest
 class @project.getClassName()Test(private val application: EmbeddedApplication<*>): StringSpec({
 
     "test the server is running" {
-        assert(application.isRunning())
+        assert(application.isRunning)
     }
 })

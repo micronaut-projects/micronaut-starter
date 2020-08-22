@@ -111,6 +111,11 @@ public class CreateControllerCommand extends CodeGenCommand {
             }
 
             @Override
+            public RockerModel koTest() {
+                return koTest.template(getProject());
+            }
+
+            @Override
             public RockerModel javaJunit() {
                 return javaJunit.template(getProject());
             }

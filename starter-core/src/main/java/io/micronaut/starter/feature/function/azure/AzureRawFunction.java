@@ -70,6 +70,11 @@ public class AzureRawFunction extends AbstractAzureFunction {
                 }
 
                 @Override
+                public RockerModel koTest() {
+                    return koTestTemplate(getProject());
+                }
+
+                @Override
                 public RockerModel javaJunit() {
                     return javaJUnitTemplate(getProject());
                 }

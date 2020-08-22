@@ -62,6 +62,10 @@ public interface TestFeature extends DefaultFeature {
         return getTestFramework() == TestFramework.KOTLINTEST;
     }
 
+    default boolean isKoTest() {
+        return getTestFramework() == TestFramework.KOTEST;
+    }
+
     @Override
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,

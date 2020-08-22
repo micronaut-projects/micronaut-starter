@@ -127,6 +127,11 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     @Override
+    protected RockerModel koTestTemplate(Project project) {
+        return azureRawFunctionKoTest.template(project);
+    }
+
+    @Override
     public RockerModel spockTemplate(Project project) {
         return azureRawFunctionSpock.template(project);
     }

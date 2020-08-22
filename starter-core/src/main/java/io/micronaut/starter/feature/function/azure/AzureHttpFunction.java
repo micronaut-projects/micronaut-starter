@@ -60,6 +60,11 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
     }
 
     @Override
+    protected RockerModel koTestTemplate(Project project) {
+        return azureFunctionKoTest.template(project);
+    }
+
+    @Override
     public RockerModel spockTemplate(Project project) {
         return azureFunctionSpock.template(project);
     }

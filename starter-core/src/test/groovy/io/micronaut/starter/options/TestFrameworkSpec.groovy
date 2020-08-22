@@ -24,7 +24,9 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.KOTLIN | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.GROOVY | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
+        Language.JAVA   | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
+        Language.KOTLIN | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
+        Language.GROOVY | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
         path = '/{packagePath}/{className}'
     }
-
 }

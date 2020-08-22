@@ -33,5 +33,11 @@ class LanguageBuildTestFrameworkCombinationsSpec extends Specification {
         Language.KOTLIN | BuildTool.MAVEN  | TestFramework.SPOCK
         Language.JAVA   | BuildTool.MAVEN  | TestFramework.KOTLINTEST
         Language.GROOVY | BuildTool.MAVEN  | TestFramework.KOTLINTEST
+        Language.JAVA   | BuildTool.GRADLE | TestFramework.KOTEST
+        Language.KOTLIN | BuildTool.GRADLE | TestFramework.KOTEST
+        Language.GROOVY | BuildTool.GRADLE | TestFramework.KOTEST
+        Language.JAVA   | BuildTool.MAVEN  | TestFramework.KOTEST
+        Language.KOTLIN | BuildTool.MAVEN  | TestFramework.KOTEST
+        Language.GROOVY | BuildTool.MAVEN  | TestFramework.KOTEST
     }
 }
