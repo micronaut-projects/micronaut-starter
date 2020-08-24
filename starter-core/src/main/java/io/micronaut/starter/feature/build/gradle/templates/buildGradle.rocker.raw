@@ -493,6 +493,10 @@ dependencies {
 }
 
 @io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())
+
+@if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
+    @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null)
+}
 @if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
     @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
 }
