@@ -6,7 +6,7 @@ String artifact
 )
 
 @if (features.language().isJava()) {
-@if (features.testFramework().isKotlinTest() || features.testFramework().isKoTest()) {
+@if (features.testFramework().isKoTest()) {
     kapt(@artifact)
 } else {
     annotationProcessor(@artifact)

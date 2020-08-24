@@ -96,11 +96,6 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
             }
 
             @Override
-            public RockerModel kotlinTest() {
-                return kotlinTestTemplate(getProject());
-            }
-
-            @Override
             public RockerModel koTest() {
                 return koTestTemplate(getProject());
             }
@@ -134,8 +129,6 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected abstract RockerModel kotlinJUnitTemplate(Project project);
 
     protected abstract RockerModel groovyJUnitTemplate(Project project);
-
-    protected abstract RockerModel kotlinTestTemplate(Project project);
 
     protected abstract RockerModel koTestTemplate(Project project);
 

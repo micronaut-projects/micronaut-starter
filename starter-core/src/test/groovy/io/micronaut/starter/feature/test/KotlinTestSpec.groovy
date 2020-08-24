@@ -11,7 +11,7 @@ class KotlinTestSpec extends BeanContextSpec {
 
     void 'test maven configure unit tests'() {
         given:
-        Features features = getFeatures([], null, TestFramework.KOTLINTEST, BuildTool.MAVEN)
+        Features features = getFeatures([], null, TestFramework.KOTEST, BuildTool.MAVEN)
 
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()

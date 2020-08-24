@@ -106,11 +106,6 @@ public class CreateControllerCommand extends CodeGenCommand {
             }
 
             @Override
-            public RockerModel kotlinTest() {
-                return kotlinTest.template(getProject());
-            }
-
-            @Override
             public RockerModel koTest() {
                 return koTest.template(getProject());
             }

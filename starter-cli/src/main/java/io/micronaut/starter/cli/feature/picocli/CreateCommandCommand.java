@@ -27,7 +27,6 @@ import io.micronaut.starter.feature.picocli.lang.groovy.PicocliGroovyApplication
 import io.micronaut.starter.feature.picocli.lang.java.PicocliJavaApplication;
 import io.micronaut.starter.feature.picocli.lang.kotlin.PicocliKotlinApplication;
 import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
-import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.kotest.PicocliKoTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
 import io.micronaut.starter.options.JunitRockerModelProvider;
@@ -56,7 +55,6 @@ public class CreateCommandCommand extends CodeGenCommand {
     private final PicocliKotlinApplication kotlinApplication;
     private final PicocliJunit junit;
     private final PicocliSpock spock;
-    private final PicocliKotlinTest kotlinTest;
     private final PicocliKoTest koTest;
 
     public CreateCommandCommand(@Parameter CodeGenConfig config,
@@ -65,13 +63,11 @@ public class CreateCommandCommand extends CodeGenCommand {
                                 PicocliKotlinApplication kotlinApplication,
                                 PicocliJunit junit,
                                 PicocliSpock spock,
-                                PicocliKotlinTest kotlinTest,
                                 PicocliKoTest koTest) {
         super(config);
         this.javaApplication = javaApplication;
         this.junit = junit;
         this.spock = spock;
-        this.kotlinTest = kotlinTest;
         this.koTest = koTest;
         this.groovyApplication = groovyApplication;
         this.kotlinApplication = kotlinApplication;
@@ -111,7 +107,6 @@ public class CreateCommandCommand extends CodeGenCommand {
         Language defaultLanguageForTestFramework = null;
         switch (config.getTestFramework()) {
             case KOTEST:
-            case KOTLINTEST:
                 defaultLanguageForTestFramework = Language.KOTLIN;
                 supportedLanguagesForTestFramework.add(defaultLanguageForTestFramework);
                 break;
@@ -139,11 +134,6 @@ public class CreateCommandCommand extends CodeGenCommand {
             @Override
             public RockerModel spock() {
                 return spock.getModel(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinTest() {
-                return kotlinTest.getModel(getProject());
             }
 
             @Override

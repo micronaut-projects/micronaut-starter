@@ -27,7 +27,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, TestFramework.KOTLINTEST, buildTool),
+                new Options(Language.KOTLIN, TestFramework.KOTEST, buildTool),
                 []
         )
 

@@ -35,7 +35,7 @@ TestFeature testFeature
     @dependency.template("org.junit.jupiter", "junit-jupiter-api", "testImplementation", null)
     @dependency.template("io.micronaut.test", "micronaut-test-junit5", "testImplementation", null)
     @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "testRuntimeOnly", null)
-} else if (testFeature.isKotlinTest() || testFeature.isKoTest()) {
+} else if (testFeature.isKoTest()) {
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
@@ -51,15 +51,9 @@ TestFeature testFeature
         @dependency.template("io.micronaut", "micronaut-inject-groovy", "testImplementation", null)
     }
     @dependency.template("io.mockk", "mockk", "testImplementation", "1.9.3")
-@if (testFeature.isKotlinTest()) {
-    @dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "testImplementation", null)
-    @dependency.template("io.kotlintest", "kotlintest-runner-junit5", "testImplementation", "3.3.2")
-} else if (testFeature.isKoTest()) {
     @dependency.template("io.micronaut.test", "micronaut-test-kotest", "testImplementation", null)
     @dependency.template("io.kotest", "kotest-runner-junit5-jvm", "testImplementation", "4.1.3")
     @dependency.template("io.kotest", "kotest-assertions-core-jvm", "testImplementation", "4.1.3")
-}
-
 } else if (testFeature.isSpock()) {
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     testImplementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))

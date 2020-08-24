@@ -17,11 +17,6 @@ class TestRockerModelProviderSpec extends Specification {
                 return null
             }
 
-            @Override
-            RockerModel kotlinTest() {
-                return null
-            }
-
             RockerModel koTest() {
                 return null
             }

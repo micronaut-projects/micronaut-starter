@@ -94,11 +94,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
     }
 
     @Override
-    public RockerModel kotlinTestTemplate(Project project) {
-        return gcpFunctionKotlinTest.template(project);
-    }
-
-    @Override
     protected RockerModel koTestTemplate(Project project) {
         return gcpFunctionKoTest.template(project);
     }
