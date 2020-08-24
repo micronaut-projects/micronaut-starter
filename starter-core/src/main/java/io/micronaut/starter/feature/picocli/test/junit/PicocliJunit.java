@@ -15,9 +15,11 @@
  */
 package io.micronaut.starter.feature.picocli.test.junit;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
+import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -49,19 +51,33 @@ public class PicocliJunit implements PicocliTestFeature {
         return Arrays.asList(Language.JAVA, Language.KOTLIN);
     }
 
+    public JunitRockerModelProvider getJunitRockerModelProvider(Project project) {
+        return new JunitRockerModelProvider(project) {
+            @Override
+            public RockerModel javaJunit() {
+                return picocliJunitTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return picocliGroovyJunitTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return picocliKotlinJunitTest.template(getProject());
+            }
+        };
+    }
+
+    public RockerModel getModel(Language language, Project project) {
+        JunitRockerModelProvider junitRockerModelProvider = getJunitRockerModelProvider(project);
+        return junitRockerModelProvider.findJunitModel(language);
+    }
+
     public RockerTemplate getTemplate(Language language, Project project) {
-
-        String testSource =  getTestFramework().getSourcePath("/{packagePath}/{className}Command", language);
-
-        if (language == Language.JAVA) {
-            return new RockerTemplate(testSource, picocliJunitTest.template(project));
-        } else if (language == Language.GROOVY) {
-            return new RockerTemplate(testSource, picocliGroovyJunitTest.template(project));
-        } else if (language == Language.KOTLIN) {
-            return new RockerTemplate(testSource, picocliKotlinJunitTest.template(project));
-        } else {
-            return null;
-        }
+        String testSource =  getTestFramework().getSourcePath(PATH, language);
+        return new RockerTemplate(testSource, getModel(language, project));
     }
 
 }

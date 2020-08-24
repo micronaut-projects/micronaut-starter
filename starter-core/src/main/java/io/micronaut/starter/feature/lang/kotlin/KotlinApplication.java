@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -24,6 +25,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.spock;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -60,26 +62,35 @@ public class KotlinApplication implements KotlinApplicationFeature {
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            switch (testFramework) {
-                case JUNIT:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    kotlinJunit.template(generatorContext.getProject()))
-                    );
-                break;
-                case SPOCK:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    spock.template(generatorContext.getProject()))
-                    );
-                break;
-                case KOTLINTEST:
-                default:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    kotlinTest.template(generatorContext.getProject()))
-                    );
-            }
+            TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(generatorContext.getProject()) {
+                @Override
+                public RockerModel javaJunit() {
+                    return kotlinJunit.template(generatorContext.getProject());
+                }
+
+                @Override
+                public RockerModel groovyJunit() {
+                    return kotlinJunit.template(generatorContext.getProject());
+                }
+
+                @Override
+                public RockerModel kotlinJunit() {
+                    return kotlinJunit.template(generatorContext.getProject());
+                }
+
+                @Override
+                public RockerModel spock() {
+                    return spock.template(generatorContext.getProject());
+                }
+
+                @Override
+                public RockerModel kotlinTest() {
+                    return kotlinTest.template(generatorContext.getProject());
+                }
+            };
+            generatorContext.addTemplate("applicationTest",
+                    new RockerTemplate(testSourcePath, testRockerModelProvider.findModel(generatorContext.getLanguage(), testFramework))
+            );
         }
     }
 

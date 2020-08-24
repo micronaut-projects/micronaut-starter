@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command.project.test;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -25,8 +26,7 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.test.template.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
@@ -61,20 +61,37 @@ public class CreateTestCommand extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
-        RenderResult renderResult = null;
-        if (config.getTestFramework() == TestFramework.JUNIT) {
-            if (config.getSourceLanguage() == Language.JAVA) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/java/{packagePath}/{className}Test.java", javaJunit.template(project)), overwrite);
-            } else if (config.getSourceLanguage() == Language.GROOVY) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/{className}Test.groovy", groovyJunit.template(project)), overwrite);
-            } else if (config.getSourceLanguage() == Language.KOTLIN) {
-                renderResult = templateRenderer.render(new RockerTemplate("src/test/kotlin/{packagePath}/{className}Test.kt", kotlinJunit.template(project)), overwrite);
+        final String path = "/{packagePath}/{className}";
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel javaJunit() {
+                return javaJunit.template(getProject());
             }
-        } else if (config.getTestFramework() == TestFramework.SPOCK) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/test/groovy/{packagePath}/{className}Spec.groovy", spock.template(project)), overwrite);
-        } else if (config.getTestFramework() == TestFramework.KOTLINTEST) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/test/kotlin/{packagePath}/{className}Test.kt", kotlinTest.template(project)), overwrite);
-        }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return groovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return kotlinJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel spock() {
+                return spock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return kotlinTest.template(getProject());
+            }
+        };
+        RockerModel rockerModel = testRockerModelProvider.findModel(config.getSourceLanguage(), config.getTestFramework());
+        String testPath = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());
+        RockerTemplate rockerTemplate = new RockerTemplate(testPath, rockerModel);
+        RenderResult renderResult = templateRenderer.render(rockerTemplate);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {

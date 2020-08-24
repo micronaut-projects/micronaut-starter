@@ -15,11 +15,13 @@
  */
 package io.micronaut.starter.feature.function.azure;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.options.TestRockerModelProvider;
 
 import javax.inject.Singleton;
 
@@ -56,12 +58,33 @@ public class AzureRawFunction extends AbstractAzureFunction {
             Project project = generatorContext.getProject();
 
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
-            generatorContext.addTestTemplate("testFunction", testSource,
-                    javaJUnitTemplate(project),
-                    kotlinJUnitTemplate(project),
-                    groovyJUnitTemplate(project),
-                    kotlinTestTemplate(project),
-                    spockTemplate(project));
+            TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+                @Override
+                public RockerModel spock() {
+                    return spockTemplate(getProject());
+                }
+
+                @Override
+                public RockerModel kotlinTest() {
+                    return kotlinTestTemplate(getProject());
+                }
+
+                @Override
+                public RockerModel javaJunit() {
+                    return javaJUnitTemplate(getProject());
+                }
+
+                @Override
+                public RockerModel groovyJunit() {
+                    return groovyJUnitTemplate(getProject());
+                }
+
+                @Override
+                public RockerModel kotlinJunit() {
+                    return kotlinJUnitTemplate(getProject());
+                }
+            };
+            generatorContext.addTemplate("testFunction", testSource, testRockerModelProvider);
         }
     }
 

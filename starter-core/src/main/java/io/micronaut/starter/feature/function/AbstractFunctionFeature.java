@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinCon
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
@@ -88,12 +89,33 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
-        generatorContext.addTestTemplate("testFunction", testSource,
-                javaJUnitTemplate(project),
-                kotlinJUnitTemplate(project),
-                groovyJUnitTemplate(project),
-                kotlinTestTemplate(project),
-                spockTemplate(project));
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return spockTemplate(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return kotlinTestTemplate(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return javaJUnitTemplate(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return groovyJUnitTemplate(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return kotlinJUnitTemplate(getProject());
+            }
+        };
+        generatorContext.addTemplate("testFunction", testSource, testRockerModelProvider);
     }
 
     protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);

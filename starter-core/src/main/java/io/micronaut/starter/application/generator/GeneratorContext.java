@@ -244,45 +244,10 @@ public class GeneratorContext {
         }
     }
 
-    public void addTestTemplate(String templateName,
-                                String testSource,
-                                RockerModel javaJUnitTemplate,
-                                RockerModel kotlinJUnitTemplate,
-                                RockerModel groovyJUnitTemplate,
-                                RockerModel kotlinTestTemplate,
-                                RockerModel spockTemplate) {
-        RockerModel testTemplate = getTestTemplate(javaJUnitTemplate,
-                kotlinJUnitTemplate, groovyJUnitTemplate, kotlinTestTemplate, spockTemplate);
-        if (testTemplate != null) {
-            addTemplate(templateName, new RockerTemplate(testSource, testTemplate));
-        }
-    }
-
-    public RockerModel getTestTemplate(RockerModel javaJUnitTemplate,
-                                       RockerModel kotlinJUnitTemplate,
-                                       RockerModel groovyJUnitTemplate,
-                                       RockerModel kotlinTestTemplate,
-                                       RockerModel spockTemplate) {
-        TestFramework testFramework = getTestFramework();
-        Language language = getLanguage();
-        switch (testFramework) {
-            case SPOCK:
-                return spockTemplate;
-
-            case KOTLINTEST:
-                return kotlinTestTemplate;
-
-            case JUNIT:
-            default:
-                switch (language) {
-                    case GROOVY:
-                        return groovyJUnitTemplate;
-                    case KOTLIN:
-                        return kotlinJUnitTemplate;
-                    case JAVA:
-                    default:
-                        return javaJUnitTemplate;
-                }
+    public void addTemplate(String name, String path, TestRockerModelProvider testRockerModelProvider) {
+        RockerModel rockerModel = testRockerModelProvider.findModel(getLanguage(), getTestFramework());
+        if (rockerModel != null) {
+            addTemplate(name, new RockerTemplate(path, rockerModel));
         }
     }
 

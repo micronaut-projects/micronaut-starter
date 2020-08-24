@@ -21,6 +21,8 @@ import io.micronaut.starter.feature.test.TestFeature;
 
 public interface PicocliTestFeature extends TestFeature {
 
+    String PATH = "/{packagePath}/{className}Command";
+
     @Override
     default int getOrder() {
         return FeaturePhase.TEST.getOrder() + 10;

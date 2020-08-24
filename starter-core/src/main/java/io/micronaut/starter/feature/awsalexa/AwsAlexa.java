@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.awsalexa;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -76,6 +77,7 @@ import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJu
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinTest;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.options.TestRockerModelProvider;
 
 import javax.inject.Singleton;
 
@@ -175,68 +177,191 @@ public class AwsAlexa implements Feature, CloudFeature {
 
     private void launchRequestIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String launchRequestIntentHandlerTest =  generatorContext.getTestSourcePath("/{packagePath}/LaunchRequestIntentHandler");
-        generatorContext.addTestTemplate("testLaunchRequestIntentHandler", launchRequestIntentHandlerTest,
-                launchRequestIntentHandlerJavaJunit.template(project),
-                launchRequestIntentHandlerKotlinJunit.template(project),
-                launchRequestIntentHandlerGroovyJunit.template(project),
-                launchRequestIntentHandlerKotlinTest.template(project),
-                launchRequestIntentHandlerGroovySpock.template(project)
-                );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return launchRequestIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return launchRequestIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return launchRequestIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return launchRequestIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return launchRequestIntentHandlerKotlinJunit.template(getProject());
+            }
+        };
+        generatorContext.addTemplate("testLaunchRequestIntentHandler", launchRequestIntentHandlerTest, testRockerModelProvider);
     }
 
     private void cancelIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String cancelIntentHandlerTest =  generatorContext.getTestSourcePath("/{packagePath}/CancelIntentHandler");
-        generatorContext.addTestTemplate("testCancelIntentHandler", cancelIntentHandlerTest,
-            cancelIntentHandlerJavaJunit.template(project),
-            cancelIntentHandlerKotlinJunit.template(project),
-            cancelIntentHandlerGroovyJunit.template(project),
-            cancelIntentHandlerKotlinTest.template(project),
-            cancelIntentHandlerGroovySpock.template(project)
-        );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return cancelIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return cancelIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return cancelIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return cancelIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return cancelIntentHandlerKotlinJunit.template(getProject());
+            }
+        };
+        generatorContext.addTemplate("testCancelIntentHandler", cancelIntentHandlerTest, testRockerModelProvider);
     }
 
     private void fallbackIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String fallbackIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/FallbackIntentHandler");
-        generatorContext.addTestTemplate("testFallbackIntentHandler", fallbackIntentHandlerTest,
-                fallbackIntentHandlerJavaJunit.template(project),
-                fallbackIntentHandlerKotlinJunit.template(project),
-                fallbackIntentHandlerGroovyJunit.template(project),
-                fallbackIntentHandlerKotlinTest.template(project),
-                fallbackIntentHandlerGroovySpock.template(project)
-        );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return fallbackIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return fallbackIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return fallbackIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return fallbackIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return fallbackIntentHandlerKotlinJunit.template(getProject());
+            }
+        };
+        generatorContext.addTemplate("testFallbackIntentHandler", fallbackIntentHandlerTest, testRockerModelProvider);
     }
 
     private void helpIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String helpIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/HelpIntentHandler");
-        generatorContext.addTestTemplate("testHelpIntentHandler", helpIntentHandlerTest,
-                helpIntentHandlerJavaJunit.template(project),
-                helpIntentHandlerKotlinJunit.template(project),
-                helpIntentHandlerGroovyJunit.template(project),
-                helpIntentHandlerKotlinTest.template(project),
-                helpIntentHandlerGroovySpock.template(project)
-        );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return helpIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return helpIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return helpIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return helpIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return helpIntentHandlerKotlinJunit.template(getProject());
+            }
+        };
+        generatorContext.addTemplate("testHelpIntentHandler", helpIntentHandlerTest, testRockerModelProvider);
+
     }
 
     private void sessionEndedIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String sessionEndedIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/SessionEndedRequestIntentHandler");
-        generatorContext.addTestTemplate("testSessionEndedRequestIntentHandler", sessionEndedIntentHandlerTest,
-                sessionEndedRequestIntentHandlerJavaJunit.template(project),
-                sessionEndedRequestIntentHandlerKotlinJunit.template(project),
-                sessionEndedRequestIntentHandlerGroovyJunit.template(project),
-                sessionEndedRequestIntentHandlerKotlinTest.template(project),
-                sessionEndedRequestIntentHandlerGroovySpock.template(project)
-        );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel spock() {
+                return sessionEndedRequestIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return sessionEndedRequestIntentHandlerKotlinTest.template(getProject());
+            }
+
+            @Override
+            public RockerModel javaJunit() {
+                return sessionEndedRequestIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return sessionEndedRequestIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return sessionEndedRequestIntentHandlerKotlinJunit.template(getProject());
+            }
+        };
+        generatorContext.addTemplate("testSessionEndedRequestIntentHandler", sessionEndedIntentHandlerTest, testRockerModelProvider);
+
     }
 
     private void stopIntentHandlerTest(GeneratorContext generatorContext, Project project) {
         String stopIntentHandlerTest = generatorContext.getTestSourcePath("/{packagePath}/StopIntentHandler");
-        generatorContext.addTestTemplate("testStopIntentHandler", stopIntentHandlerTest,
-                stopIntentHandlerJavaJunit.template(project),
-                stopIntentHandlerKotlinJunit.template(project),
-                stopIntentHandlerGroovyJunit.template(project),
-                stopIntentHandlerKotlinTest.template(project),
-                stopIntentHandlerGroovySpock.template(project)
-        );
+        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
+            @Override
+            public RockerModel javaJunit() {
+                return stopIntentHandlerJavaJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel groovyJunit() {
+                return stopIntentHandlerGroovyJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinJunit() {
+                return stopIntentHandlerKotlinJunit.template(getProject());
+            }
+
+            @Override
+            public RockerModel spock() {
+                return stopIntentHandlerGroovySpock.template(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return stopIntentHandlerKotlinTest.template(getProject());
+            }
+        };
+
+        generatorContext.addTemplate("testStopIntentHandler", stopIntentHandlerTest, testRockerModelProvider);
     }
 
     @Override

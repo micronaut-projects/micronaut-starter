@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli.test.spock;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
@@ -49,8 +50,12 @@ public class PicocliSpock implements PicocliTestFeature {
         return Collections.singletonList(Language.GROOVY);
     }
 
+    public RockerModel getModel(Project project) {
+        return picocliSpockTest.template(project);
+    }
+
     public RockerTemplate getTemplate(Project project) {
-        return new RockerTemplate(getTestFramework().getSourcePath("/{packagePath}/{className}Command", Language.GROOVY), picocliSpockTest.template(project));
+        return new RockerTemplate(getTestFramework().getSourcePath(PATH, Language.GROOVY), getModel(project));
     }
 
 }

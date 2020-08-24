@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.picocli.test.kotlintest;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
@@ -49,8 +50,11 @@ public class PicocliKotlinTest implements PicocliTestFeature {
         return Collections.emptyList();
     }
 
-    public RockerTemplate getTemplate(Project project) {
-        return new RockerTemplate(getTestFramework().getSourcePath("/{packagePath}/{className}Command", Language.KOTLIN), picocliKotlinTestTest.template(project));
+    public RockerModel getModel(Project project) {
+        return picocliKotlinTestTest.template(project);
     }
 
+    public RockerTemplate getTemplate(Project project) {
+        return new RockerTemplate(getTestFramework().getSourcePath(PATH, Language.KOTLIN), getModel(project));
+    }
 }

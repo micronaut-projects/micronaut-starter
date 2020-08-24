@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -24,6 +25,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.spock;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -60,28 +62,36 @@ public class JavaApplication implements JavaApplicationFeature {
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            switch (testFramework) {
-                case SPOCK:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    spock.template(generatorContext.getProject()))
-                    );
-                break;
-                case KOTLINTEST:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    kotlinTest.template(generatorContext.getProject()))
-                    );
-                break;
-                case JUNIT:
-                default:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    javaJunit.template(generatorContext.getProject()))
-                    );
-                    break;
-            }
+            TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(generatorContext.getProject()) {
+                @Override
+                public RockerModel javaJunit() {
+                    return javaJunit.template(getProject());
+                }
 
+                @Override
+                public RockerModel groovyJunit() {
+                    return javaJunit.template(getProject());
+                }
+
+                @Override
+                public RockerModel kotlinJunit() {
+                    return javaJunit.template(getProject());
+                }
+
+                @Override
+                public RockerModel spock() {
+                    return spock.template(getProject());
+                }
+
+                @Override
+                public RockerModel kotlinTest() {
+                    return kotlinTest.template(getProject());
+                }
+            };
+            generatorContext.addTemplate("applicationTest",
+                    new RockerTemplate(testSourcePath,
+                            testRockerModelProvider.findModel(generatorContext.getLanguage(), testFramework))
+            );
         }
     }
 
