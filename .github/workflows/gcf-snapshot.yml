@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - fix-gcf-snapshot-workflow
 jobs:
   deploy:
     name: Deploy job
