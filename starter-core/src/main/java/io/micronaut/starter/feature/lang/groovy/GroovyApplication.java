@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
-import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -26,6 +25,7 @@ import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -63,39 +63,15 @@ public class GroovyApplication implements GroovyApplicationFeature {
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(generatorContext.getProject()) {
-                @Override
-                public RockerModel javaJunit() {
-                    return groovyJunit.template(getProject());
-                }
-
-                @Override
-                public RockerModel groovyJunit() {
-                    return groovyJunit.template(getProject());
-                }
-
-                @Override
-                public RockerModel kotlinJunit() {
-                    return groovyJunit.template(getProject());
-                }
-
-                @Override
-                public RockerModel spock() {
-                    return spock.template(getProject());
-                }
-
-                @Override
-                public RockerModel kotlinTest() {
-                    return kotlinTest.template(getProject());
-                }
-
-                @Override
-                public RockerModel koTest() {
-                    return koTest.template(getProject());
-                }
-            };
+            Project project = generatorContext.getProject();
+            TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+                    kotlinTest.template(project),
+                    groovyJunit.template(project),
+                    groovyJunit.template(project),
+                    groovyJunit.template(project),
+                    koTest.template(project));
             generatorContext.addTemplate("applicationTest",
-                    new RockerTemplate(testSourcePath, testRockerModelProvider.findModel(generatorContext.getLanguage(), testFramework))
+                    new RockerTemplate(testSourcePath, provider.findModel(generatorContext.getLanguage(), testFramework))
             );
         }
     }

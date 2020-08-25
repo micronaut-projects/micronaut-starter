@@ -24,9 +24,35 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.KOTLIN | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.GROOVY | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
-        Language.JAVA   | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
-        Language.KOTLIN | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
-        Language.GROOVY | TestFramework.KOTEST      || "src/test/kotlin/{packagePath}/{className}Test.kt"
         path = '/{packagePath}/{className}'
     }
+
+    @Unroll("getDefaultLanguage for test framework: #testFramework return #expected")
+    void "verify the default language for a test framework"(Language expected, TestFramework testFramework) {
+        expect:
+        expected == testFramework.getDefaultLanguage()
+
+        where:
+        expected        | testFramework
+        Language.JAVA   | TestFramework.JUNIT
+        Language.GROOVY | TestFramework.SPOCK
+        Language.KOTLIN | TestFramework.KOTLINTEST
+    }
+
+    @Unroll("getSupportedLanguages for test framework: #testFramework return #expected")
+    void "verify the list of supported languages for a test framework"(List<Language> expected, TestFramework testFramework) {
+        given:
+        expect:
+        expected.sort { a, b -> a.name <=> b.name } ==
+                testFramework.supportedLanguages.sort { a, b -> a.name <=> b.name }
+
+        where:
+        expected                                          | testFramework
+        [Language.JAVA, Language.GROOVY, Language.KOTLIN] | TestFramework.JUNIT
+        [Language.GROOVY]                                 | TestFramework.SPOCK
+        [Language.KOTLIN]                                 | TestFramework.KOTLINTEST
+    }
+
+
+
 }

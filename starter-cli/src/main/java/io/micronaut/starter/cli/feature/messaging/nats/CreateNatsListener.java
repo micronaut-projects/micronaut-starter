@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.feature.messaging.nats;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -64,14 +65,18 @@ public class CreateNatsListener extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
+        String path = "/{packagePath}/{className}";
+        path = config.getSourceLanguage().getSourcePath(path);
         RenderResult renderResult = null;
+        RockerModel rockerModel = null;
         if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}.java", javaListener.template(project)), overwrite);
+            rockerModel = javaListener.template(project);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}.groovy", groovyListener.template(project)), overwrite);
+            rockerModel = groovyListener.template(project);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}.kt", kotlinListener.template(project)), overwrite);
+            rockerModel = kotlinListener.template(project);
         }
+        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {

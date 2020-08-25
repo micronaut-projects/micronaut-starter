@@ -10,7 +10,7 @@ class TestRockerModelProviderSpec extends Specification {
     void "a delegate method is defined for language: #language and test framework: #testFramework "(Language language,
                                                                                                     TestFramework testFramework) {
         given:
-        TestRockerModelProvider provider = new TestRockerModelProvider(null) {
+        TestRockerModelProvider provider = new TestRockerModelProvider() {
 
             @Override
             RockerModel spock() {
@@ -22,6 +22,7 @@ class TestRockerModelProviderSpec extends Specification {
                 return null
             }
 
+            @Override
             RockerModel koTest() {
                 return null
             }
@@ -52,3 +53,4 @@ class TestRockerModelProviderSpec extends Specification {
         [language, testFramework] << [Language.values(), TestFramework.values()].combinations()
     }
 }
+

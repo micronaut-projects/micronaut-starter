@@ -16,6 +16,10 @@
 package io.micronaut.starter.options;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public enum TestFramework {
@@ -48,6 +52,40 @@ public enum TestFramework {
                 } else {
                     return Language.JAVA.getTestSrcDir() + "Test." + path + Language.JAVA.getExtension();
                 }
+        }
+    }
+
+    /**
+     *
+     * @return The list of supported languages for a {@link TestFramework}
+     */
+    public List<Language> getSupportedLanguages() {
+        switch (this) {
+            case SPOCK:
+                return Collections.singletonList(Language.GROOVY);
+            case KOTLINTEST:
+                return Collections.singletonList(Language.KOTLIN);
+            case JUNIT:
+                return Arrays.asList(Language.JAVA, Language.KOTLIN, Language.GROOVY);
+            default:
+                throw new RuntimeException("No list of supported languages have been defined for " + this.getName());
+        }
+    }
+
+    /**
+     *
+     * @return The default language for a {@link TestFramework}
+     */
+    public Language getDefaultLanguage() {
+        switch (this) {
+            case SPOCK:
+                return Language.GROOVY;
+            case KOTLINTEST:
+                return Language.KOTLIN;
+            case JUNIT:
+                return Language.JAVA;
+            default:
+                throw new RuntimeException("No default language have been defined for " + this.getName());
         }
     }
 }

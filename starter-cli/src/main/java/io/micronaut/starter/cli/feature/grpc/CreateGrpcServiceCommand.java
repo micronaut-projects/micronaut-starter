@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.feature.grpc;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -63,13 +64,17 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
+        String path = "/{packagePath}/{className}";
+        path = config.getSourceLanguage().getSourcePath(path);
+        RockerModel rockerModel = null;
         if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}.java", javaService.template(project)), overwrite);
+            rockerModel = javaService.template(project);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}.groovy", groovyService.template(project)), overwrite);
+            rockerModel = groovyService.template(project);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}.kt", kotlinService.template(project)), overwrite);
+            rockerModel = kotlinService.template(project);
         }
+        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
