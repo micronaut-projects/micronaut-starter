@@ -29,6 +29,7 @@ import io.micronaut.starter.feature.picocli.lang.kotlin.PicocliKotlinApplication
 import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
 import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
+import io.micronaut.starter.options.AbstractTestRockerModelProvider;
 import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
@@ -159,7 +160,7 @@ public class CreateCommandCommand extends CodeGenCommand {
         return 0;
     }
 
-    public abstract static class CustomTestRockerModelProvider extends TestRockerModelProvider {
+    public abstract static class CustomTestRockerModelProvider extends AbstractTestRockerModelProvider {
 
         private final JunitRockerModelProvider junitRockerModelProvider;
 

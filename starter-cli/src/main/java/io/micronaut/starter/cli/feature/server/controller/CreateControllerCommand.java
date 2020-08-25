@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.feature.server.template.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
@@ -99,33 +100,12 @@ public class CreateControllerCommand extends CodeGenCommand {
         renderResult = null;
         String path = "/{packagePath}/{className}Controller";
         path = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());
-        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
-            @Override
-            public RockerModel spock() {
-                return spock.template(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinTest() {
-                return kotlinTest.template(getProject());
-            }
-
-            @Override
-            public RockerModel javaJunit() {
-                return javaJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel groovyJunit() {
-                return groovyJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinJunit() {
-                return kotlinJunit.template(getProject());
-            }
-        };
-        RockerModel rockerModel = testRockerModelProvider.findModel(config.getSourceLanguage(), config.getTestFramework());
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+                kotlinTest.template(project),
+                javaJunit.template(project),
+                groovyJunit.template(project),
+                kotlinJunit.template(project));
+        RockerModel rockerModel = provider.findModel(config.getSourceLanguage(), config.getTestFramework());
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 
         if (renderResult != null) {

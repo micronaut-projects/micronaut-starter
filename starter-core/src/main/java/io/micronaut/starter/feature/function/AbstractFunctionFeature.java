@@ -19,11 +19,12 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
@@ -89,33 +90,12 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
-        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
-            @Override
-            public RockerModel spock() {
-                return spockTemplate(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinTest() {
-                return kotlinTestTemplate(getProject());
-            }
-
-            @Override
-            public RockerModel javaJunit() {
-                return javaJUnitTemplate(getProject());
-            }
-
-            @Override
-            public RockerModel groovyJunit() {
-                return groovyJUnitTemplate(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinJunit() {
-                return kotlinJUnitTemplate(getProject());
-            }
-        };
-        generatorContext.addTemplate("testFunction", testSource, testRockerModelProvider);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
+                kotlinTestTemplate(project),
+                javaJUnitTemplate(project),
+                groovyJUnitTemplate(project),
+                kotlinJUnitTemplate(project));
+        generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
     protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
