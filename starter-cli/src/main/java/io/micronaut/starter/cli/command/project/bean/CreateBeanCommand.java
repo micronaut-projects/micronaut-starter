@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command.project.bean;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -64,13 +65,17 @@ public class CreateBeanCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
+        String path = "/{packagePath}/{className}";
+        path = config.getSourceLanguage().getSourcePath(path);
+        RockerModel rockerModel = null;
         if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}.java", javaBean.template(project)), overwrite);
+            rockerModel = javaBean.template(project);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}.groovy", groovyBean.template(project)), overwrite);
+            rockerModel = groovyBean.template(project);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}.kt", kotlinBean.template(project)), overwrite);
+            rockerModel = kotlinBean.template(project);
         }
+        renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
