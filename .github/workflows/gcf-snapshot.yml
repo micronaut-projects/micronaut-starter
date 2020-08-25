@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - fix-gcf-snapshot-workflow
 jobs:
   deploy:
     name: Deploy job
@@ -17,6 +18,7 @@ jobs:
         with:
           service_account_email: ${{ secrets.GCLOUD_FUNCTION_EMAIL }}
           service_account_key: ${{ secrets.GCLOUD_FUNCTION_AUTH }}
+          project_id: ${{ secrets.GCLOUD_FUNCTION_PROJECT }}
       - name: Deploy to Cloud Function
         run: |
           cd starter-gcp-function/build/libs
