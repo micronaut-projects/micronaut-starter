@@ -24,6 +24,8 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.spock;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -60,26 +62,15 @@ public class KotlinApplication implements KotlinApplicationFeature {
                     application.template(generatorContext.getProject(), generatorContext.getFeatures())));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            switch (testFramework) {
-                case JUNIT:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    kotlinJunit.template(generatorContext.getProject()))
-                    );
-                break;
-                case SPOCK:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    spock.template(generatorContext.getProject()))
-                    );
-                break;
-                case KOTLINTEST:
-                default:
-                    generatorContext.addTemplate("applicationTest",
-                            new RockerTemplate(testSourcePath,
-                                    kotlinTest.template(generatorContext.getProject()))
-                    );
-            }
+            Project project = generatorContext.getProject();
+            TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+                    kotlinTest.template(project),
+                    kotlinJunit.template(project),
+                    kotlinJunit.template(project),
+                    kotlinJunit.template(project));
+            generatorContext.addTemplate("applicationTest",
+                    new RockerTemplate(testSourcePath, provider.findModel(generatorContext.getLanguage(), testFramework))
+            );
         }
     }
 

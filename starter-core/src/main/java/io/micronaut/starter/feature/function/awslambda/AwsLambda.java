@@ -47,7 +47,9 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestRockerModelProvider;
 
 import javax.inject.Singleton;
 import java.util.Set;
@@ -95,12 +97,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
 
     private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookController");
-        generatorContext.addTestTemplate("testBookController", testSource,
-                bookControllerJavaJunit.template(project),
-                bookControllerKotlinJunit.template(project),
-                bookControllerGroovyJunit.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(bookControllerSpock.template(project),
                 bookControllerKotlinTest.template(project),
-                bookControllerSpock.template(project));
+                bookControllerJavaJunit.template(project),
+                bookControllerGroovyJunit.template(project),
+                bookControllerKotlinJunit.template(project));
+        generatorContext.addTemplate("testBookController", testSource, provider);
     }
 
     private void addBookController(GeneratorContext generatorContext, Project project) {
@@ -113,12 +115,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
 
     private void addTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookRequestHandler");
-        generatorContext.addTestTemplate("testBookRequestHandler", testSource,
-                awsLambdaBookRequestHandlerJavaJunit.template(project),
-                awsLambdaBookRequestHandlerKotlinJunit.template(project),
-                awsLambdaBookRequestHandlerGroovyJunit.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaBookRequestHandlerSpock.template(project),
                 awsLambdaBookRequestHandlerKotlinTest.template(project),
-                awsLambdaBookRequestHandlerSpock.template(project));
+                awsLambdaBookRequestHandlerJavaJunit.template(project),
+                awsLambdaBookRequestHandlerGroovyJunit.template(project),
+                awsLambdaBookRequestHandlerKotlinJunit.template(project));
+        generatorContext.addTemplate("testBookRequestHandler", testSource, provider);
     }
 
     private void addBook(GeneratorContext generatorContext, Project project) {

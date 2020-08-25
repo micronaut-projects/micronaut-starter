@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.feature.picocli;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
@@ -28,11 +29,15 @@ import io.micronaut.starter.feature.picocli.lang.kotlin.PicocliKotlinApplication
 import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
 import io.micronaut.starter.feature.picocli.test.kotlintest.PicocliKotlinTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
+import io.micronaut.starter.options.AbstractTestRockerModelProvider;
+import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+import static io.micronaut.starter.feature.picocli.test.PicocliTestFeature.PATH;
 
 @CommandLine.Command(name = "create-command", description = "Creates a CLI command")
 @Prototype
@@ -95,13 +100,23 @@ public class CreateCommandCommand extends CodeGenCommand {
             }
         }
 
-        if (config.getTestFramework() == TestFramework.JUNIT) {
-            renderResult = templateRenderer.render(junit.getTemplate(config.getSourceLanguage(), project), overwrite);
-        } else if (config.getTestFramework() == TestFramework.SPOCK) {
-            renderResult = templateRenderer.render(spock.getTemplate(project), overwrite);
-        } else if (config.getTestFramework() == TestFramework.KOTLINTEST) {
-            renderResult = templateRenderer.render(kotlinTest.getTemplate(project), overwrite);
-        }
+        Language rockerTemplateLanguage = (config.getTestFramework().getSupportedLanguages().contains(config.getSourceLanguage())) ?
+                config.getSourceLanguage() : config.getTestFramework().getDefaultLanguage();
+        TestRockerModelProvider testRockerModelProvider = new CustomTestRockerModelProvider(project, junit.getJunitRockerModelProvider(project)) {
+            @Override
+            public RockerModel spock() {
+                return spock.getModel(getProject());
+            }
+
+            @Override
+            public RockerModel kotlinTest() {
+                return kotlinTest.getModel(project);
+            }
+        };
+        RockerModel rockerModel = testRockerModelProvider.findModel(rockerTemplateLanguage, config.getTestFramework());
+        String path = config.getTestFramework().getSourcePath(PATH, rockerTemplateLanguage);
+        RockerTemplate rockerTemplate = new RockerTemplate(path, rockerModel);
+        renderResult = templateRenderer.render(rockerTemplate, overwrite);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
@@ -114,5 +129,31 @@ public class CreateCommandCommand extends CodeGenCommand {
         }
 
         return 0;
+    }
+
+    public abstract static class CustomTestRockerModelProvider extends AbstractTestRockerModelProvider {
+
+        private final JunitRockerModelProvider junitRockerModelProvider;
+
+        public CustomTestRockerModelProvider(Project project,
+                                             JunitRockerModelProvider junitRockerModelProvider) {
+            super(project);
+            this.junitRockerModelProvider = junitRockerModelProvider;
+        }
+
+        @Override
+        public RockerModel javaJunit() {
+            return junitRockerModelProvider.javaJunit();
+        }
+
+        @Override
+        public RockerModel groovyJunit() {
+            return junitRockerModelProvider.groovyJunit();
+        }
+
+        @Override
+        public RockerModel kotlinJunit() {
+            return junitRockerModelProvider.kotlinJunit();
+        }
     }
 }

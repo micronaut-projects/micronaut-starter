@@ -20,6 +20,8 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
+import io.micronaut.starter.options.TestRockerModelProvider;
 
 import javax.inject.Singleton;
 
@@ -56,12 +58,13 @@ public class AzureRawFunction extends AbstractAzureFunction {
             Project project = generatorContext.getProject();
 
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
-            generatorContext.addTestTemplate("testFunction", testSource,
-                    javaJUnitTemplate(project),
-                    kotlinJUnitTemplate(project),
-                    groovyJUnitTemplate(project),
+
+            TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
                     kotlinTestTemplate(project),
-                    spockTemplate(project));
+                    javaJUnitTemplate(project),
+                    groovyJUnitTemplate(project),
+                    kotlinJUnitTemplate(project));
+            generatorContext.addTemplate("testFunction", testSource, provider);
         }
     }
 

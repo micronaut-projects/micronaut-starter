@@ -19,12 +19,14 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
@@ -88,12 +90,12 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
 
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
-        generatorContext.addTestTemplate("testFunction", testSource,
-                javaJUnitTemplate(project),
-                kotlinJUnitTemplate(project),
-                groovyJUnitTemplate(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
                 kotlinTestTemplate(project),
-                spockTemplate(project));
+                javaJUnitTemplate(project),
+                groovyJUnitTemplate(project),
+                kotlinJUnitTemplate(project));
+        generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
     protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
