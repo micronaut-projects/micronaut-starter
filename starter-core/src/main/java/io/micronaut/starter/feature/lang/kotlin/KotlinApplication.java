@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.kotlinTest;
+import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
@@ -67,7 +68,8 @@ public class KotlinApplication implements KotlinApplicationFeature {
                     kotlinTest.template(project),
                     kotlinJunit.template(project),
                     kotlinJunit.template(project),
-                    kotlinJunit.template(project));
+                    kotlinJunit.template(project),
+                    koTest.template(project));
             generatorContext.addTemplate("applicationTest",
                     new RockerTemplate(testSourcePath, provider.findModel(generatorContext.getLanguage(), testFramework))
             );

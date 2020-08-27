@@ -23,6 +23,11 @@ class TestRockerModelProviderSpec extends Specification {
             }
 
             @Override
+            RockerModel koTest() {
+                return null
+            }
+
+            @Override
             RockerModel javaJunit() {
                 return null
             }

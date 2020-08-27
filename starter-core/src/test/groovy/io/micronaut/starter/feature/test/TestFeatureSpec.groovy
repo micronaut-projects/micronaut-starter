@@ -40,6 +40,7 @@ class TestFeatureSpec extends Specification {
         expected | testFramework
         false    | TestFramework.JUNIT
         true     | TestFramework.KOTLINTEST
+        true     | TestFramework.KOTEST
         false    | TestFramework.SPOCK
 
     }

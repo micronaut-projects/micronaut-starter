@@ -34,6 +34,8 @@ public interface TestRockerModelProvider extends JunitRockerModelProvider {
                 return spock();
             case KOTLINTEST:
                 return kotlinTest();
+            case KOTEST:
+                return koTest();
             default:
                 throw new IllegalArgumentException("unable to find a RockerModel for lang: " + language.getName() + "testFramework: " + testFramework.getName());
         }
@@ -50,4 +52,10 @@ public interface TestRockerModelProvider extends JunitRockerModelProvider {
      * @return {@link RockerModel} for {@link TestFramework#KOTLINTEST}
      */
     RockerModel kotlinTest();
+
+    /**
+     *
+     * @return {@link RockerModel} for {@link TestFramework#KOTEST}
+     */
+    RockerModel koTest();
 }

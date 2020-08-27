@@ -94,7 +94,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                 kotlinTestTemplate(project),
                 javaJUnitTemplate(project),
                 groovyJUnitTemplate(project),
-                kotlinJUnitTemplate(project));
+                kotlinJUnitTemplate(project),
+                koTestTemplate(project));
         generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
@@ -111,6 +112,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected abstract RockerModel groovyJUnitTemplate(Project project);
 
     protected abstract RockerModel kotlinTestTemplate(Project project);
+
+    protected abstract RockerModel koTestTemplate(Project project);
 
     public abstract RockerModel spockTemplate(Project project);
 }

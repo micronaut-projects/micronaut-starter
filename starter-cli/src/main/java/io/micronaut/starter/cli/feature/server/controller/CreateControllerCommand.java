@@ -104,7 +104,8 @@ public class CreateControllerCommand extends CodeGenCommand {
                 kotlinTest.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
-                kotlinJunit.template(project));
+                kotlinJunit.template(project),
+                koTest.template(project));
         RockerModel rockerModel = provider.findModel(config.getSourceLanguage(), config.getTestFramework());
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 

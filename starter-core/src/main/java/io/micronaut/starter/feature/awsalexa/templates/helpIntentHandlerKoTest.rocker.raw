@@ -1,0 +1,54 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.amazon.ask.dispatcher.request.handler.HandlerInput
+import com.amazon.ask.model.Intent
+import com.amazon.ask.model.IntentRequest
+import com.amazon.ask.model.RequestEnvelope
+import com.amazon.ask.model.ui.SimpleCard
+import com.amazon.ask.model.ui.SsmlOutputSpeech
+
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
+import io.kotest.core.spec.style.StringSpec
+import io.micronaut.test.annotation.MicronautTest
+
+@@MicronautTest
+class HelpIntentHandlerTest(private val handler: HelpIntentHandler): StringSpec({
+
+    "testHelpIntentHandler" {
+        val input = HandlerInput.builder()
+                .withRequestEnvelope(RequestEnvelope.builder()
+                        .withRequest(IntentRequest.builder()
+                                .withIntent(Intent.builder()
+                                        .withName("AMAZON.HelpIntent")
+                                        .build())
+                                .build())
+                        .build()
+                ).build()
+        handler.canHandle(input).shouldBeTrue()
+        val responseOptional = handler.handle(input)
+        responseOptional.isPresent.shouldBeTrue()
+        val response = responseOptional.get()
+        (response.outputSpeech is SsmlOutputSpeech).shouldBeTrue()
+        val speechText = "You can say hello to me!"
+        val expectedSsml = "<speak>$speechText</speak>"
+        (response.outputSpeech as SsmlOutputSpeech).ssml.shouldBe(expectedSsml)
+        response.reprompt.outputSpeech.shouldNotBeNull()
+        (response.reprompt.outputSpeech is SsmlOutputSpeech).shouldBeTrue()
+        (response.reprompt.outputSpeech as SsmlOutputSpeech).ssml.shouldBe(expectedSsml)
+        (response.card is SimpleCard).shouldBeTrue()
+        (response.card as SimpleCard).title.shouldBe("HelloWorld")
+        (response.card as SimpleCard).content.shouldBe(speechText)
+        response.shouldEndSession.shouldBeFalse()
+    }
+})

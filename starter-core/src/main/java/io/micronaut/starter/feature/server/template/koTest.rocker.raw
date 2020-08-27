@@ -1,0 +1,37 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.HttpStatus
+import io.micronaut.context.ApplicationContext
+import io.micronaut.runtime.server.EmbeddedServer
+import io.micronaut.http.client.RxHttpClient
+import io.micronaut.test.annotation.MicronautTest
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+@@MicronautTest
+class @project.getClassName()ControllerTest(ctx: ApplicationContext): StringSpec({
+
+    "test the server is running" {
+        assert(ctx.getBean(EmbeddedServer::class.java).isRunning())
+    }
+
+    "@project.getClassName()Controller test" {
+        val embeddedServer: EmbeddedServer = ctx.getBean(EmbeddedServer::class.java)
+        val client: RxHttpClient = embeddedServer.applicationContext.createBean(RxHttpClient::class.java, embeddedServer.url)
+
+        // "a request is made to index"
+        val response = client.toBlocking().exchange(HttpRequest.GET<String>("/@project.getPropertyName()"), String::class.java)
+
+        // "the response is successful"
+        response.status shouldBe HttpStatus.OK
+    }
+})

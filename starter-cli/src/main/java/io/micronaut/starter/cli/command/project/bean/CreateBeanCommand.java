@@ -86,7 +86,6 @@ public class CreateBeanCommand extends CodeGenCommand {
                 throw renderResult.getError();
             }
         }
-
         return 0;
     }
 }

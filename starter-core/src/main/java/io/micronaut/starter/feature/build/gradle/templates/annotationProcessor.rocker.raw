@@ -4,7 +4,6 @@
 Features features,
 String artifact
 )
-
 @if (features.language().isJava()) {
 @if (features.testFramework().isKotlinTestFramework()) {
     kapt(@artifact)
