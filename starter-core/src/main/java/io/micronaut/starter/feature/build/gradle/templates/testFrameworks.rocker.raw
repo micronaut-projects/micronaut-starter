@@ -35,7 +35,7 @@ TestFeature testFeature
     @dependency.template("org.junit.jupiter", "junit-jupiter-api", "testImplementation", null)
     @dependency.template("io.micronaut.test", "micronaut-test-junit5", "testImplementation", null)
     @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "testRuntimeOnly", null)
-} else if (testFeature.isKotlinTest()) {
+} else if (testFeature.isKotlinTestFramework()) {
     @if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
     kaptTest(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
     } else {
