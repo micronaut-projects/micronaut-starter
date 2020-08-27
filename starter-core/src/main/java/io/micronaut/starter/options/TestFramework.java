@@ -63,6 +63,7 @@ public enum TestFramework {
         switch (this) {
             case SPOCK:
                 return Collections.singletonList(Language.GROOVY);
+            case KOTEST:
             case KOTLINTEST:
                 return Collections.singletonList(Language.KOTLIN);
             case JUNIT:
@@ -80,6 +81,7 @@ public enum TestFramework {
         switch (this) {
             case SPOCK:
                 return Language.GROOVY;
+            case KOTEST:
             case KOTLINTEST:
                 return Language.KOTLIN;
             case JUNIT:
