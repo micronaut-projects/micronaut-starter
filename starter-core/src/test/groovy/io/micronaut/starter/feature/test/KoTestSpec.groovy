@@ -7,7 +7,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.TestFramework
 
-class KotlinTestSpec extends BeanContextSpec {
+class KoTestSpec extends BeanContextSpec {
 
     void 'test maven configure unit tests'() {
         given:

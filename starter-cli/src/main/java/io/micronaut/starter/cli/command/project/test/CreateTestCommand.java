@@ -26,6 +26,7 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.test.template.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
@@ -62,33 +63,13 @@ public class CreateTestCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         final String path = "/{packagePath}/{className}";
-        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
-            @Override
-            public RockerModel javaJunit() {
-                return javaJunit.template(getProject());
-            }
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+                javaJunit.template(project),
+                groovyJunit.template(project),
+                kotlinJunit.template(project),
+                koTest.template(project));
 
-            @Override
-            public RockerModel groovyJunit() {
-                return groovyJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinJunit() {
-                return kotlinJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel spock() {
-                return spock.template(getProject());
-            }
-
-            @Override
-            public RockerModel koTest() {
-                return koTest.template(getProject());
-            }
-        };
-        RockerModel rockerModel = testRockerModelProvider.findModel(config.getSourceLanguage(), config.getTestFramework());
+        RockerModel rockerModel = provider.findModel(config.getSourceLanguage(), config.getTestFramework());
         String testPath = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());
         RockerTemplate rockerTemplate = new RockerTemplate(testPath, rockerModel);
         RenderResult renderResult = templateRenderer.render(rockerTemplate);

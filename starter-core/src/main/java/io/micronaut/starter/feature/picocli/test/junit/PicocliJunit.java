@@ -19,6 +19,7 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.picocli.test.PicocliTestFeature;
+import io.micronaut.starter.options.AbstractJunitRockerModelProvider;
 import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
@@ -52,7 +53,7 @@ public class PicocliJunit implements PicocliTestFeature {
     }
 
     public JunitRockerModelProvider getJunitRockerModelProvider(Project project) {
-        return new JunitRockerModelProvider(project) {
+        return new AbstractJunitRockerModelProvider(project) {
             @Override
             public RockerModel javaJunit() {
                 return picocliJunitTest.template(getProject());

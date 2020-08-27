@@ -19,7 +19,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
     KotlinApplication kotlinApplication = beanContext.getBean(KotlinApplication)
 
     @Unroll
-    void 'Application file is generated for a default application type with #buildTool and language: kotlin'(BuildTool buildTool) {
+    void 'Application file is generated for a default application type with #buildTool and language: kotlin and testing framework: #testFramework'(BuildTool buildTool, TestFramework testFramework) {
         given:
         def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
         def testPolicy = "enforcedPlatform"
@@ -27,7 +27,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, TestFramework.KOTEST, buildTool),
+                new Options(Language.KOTLIN, testFramework, buildTool),
                 []
         )
 
@@ -63,7 +63,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         }
 
         where:
-        buildTool << BuildTool.values()
+        [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()
     }
 
     @Unroll

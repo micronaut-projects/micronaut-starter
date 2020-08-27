@@ -16,31 +16,15 @@
 package io.micronaut.starter.options;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.starter.application.Project;
 
-/**
- * Provides a {@link RockerModel} each language supported by {@link TestFramework#JUNIT}.
- * @author Sergio del Amo
- */
-public abstract class JunitRockerModelProvider {
-
-    private final Project project;
-
-    public JunitRockerModelProvider(Project project) {
-        this.project = project;
-    }
-
-    public Project getProject() {
-        return this.project;
-    }
-
+public interface JunitRockerModelProvider {
     /**
      *
      * @param language Selected language
      * @return A {@link RockerModel}
      * @throws IllegalArgumentException if the test combination is not handled
      */
-    public RockerModel findJunitModel(Language language) {
+    default RockerModel findJunitModel(Language language) {
         switch (language) {
             case JAVA:
                 return javaJunit();
@@ -57,17 +41,17 @@ public abstract class JunitRockerModelProvider {
      *
      * @return {@link RockerModel} for {@link TestFramework#JUNIT} and {@link Language#JAVA}
      */
-    public abstract RockerModel javaJunit();
+    RockerModel javaJunit();
 
     /**
      *
      * @return {@link RockerModel} for {@link TestFramework#JUNIT} and {@link Language#GROOVY}
      */
-    public abstract RockerModel groovyJunit();
+    RockerModel groovyJunit();
 
     /**
      *
      * @return {@link RockerModel} for {@link TestFramework#JUNIT} and {@link Language#KOTLIN}
      */
-    public abstract RockerModel kotlinJunit();
+    RockerModel kotlinJunit();
 }

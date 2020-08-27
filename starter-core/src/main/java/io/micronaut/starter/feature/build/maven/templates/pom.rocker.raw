@@ -510,12 +510,13 @@ List<Property> properties
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
-
-} else if (features.testFramework().isKoTest()) {
+} else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
+@if (features.testFramework().isKoTest()) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null)
 @dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.1.3")
 @dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.1.3")
+}
 } else if (features.testFramework().isSpock()) {
 @if (!features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-inject-groovy", "test", null)
@@ -585,7 +586,8 @@ List<Property> properties
         <artifactId>maven-shade-plugin</artifactId>
       </plugin>
 }
-@if (features.testFramework().isKoTest() || features.testFramework().isSpock()) {
+
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock()) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -595,7 +597,7 @@ List<Property> properties
             <include>**/*Test.*</include>
           </includes>
         </configuration>
-@if (features.testFramework().isKoTest()) {
+@if (features.testFramework().isKotlinTestFramework()) {
         <dependencies>
           <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -990,7 +992,7 @@ List<Property> properties
               </sourceDirs>
             </configuration>
           </execution>
-@if (features.testFramework().isKoTest() || features.testFramework().isJunit()) {
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isJunit()) {
           <execution>
             <id>test-kapt</id>
             <goals>

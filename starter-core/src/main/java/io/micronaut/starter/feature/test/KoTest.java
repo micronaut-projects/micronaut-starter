@@ -47,6 +47,6 @@ public class KoTest implements TestFeature {
 
     @Override
     public List<Language> getDefaultLanguages() {
-        return Collections.singletonList(Language.KOTLIN);
+        return Collections.emptyList();
     }
 }

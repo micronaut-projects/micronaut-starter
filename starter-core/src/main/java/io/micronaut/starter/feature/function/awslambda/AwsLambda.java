@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -48,6 +47,7 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 
@@ -97,33 +97,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
 
     private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookController");
-        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
-            @Override
-            public RockerModel spock() {
-                return bookControllerSpock.template(getProject());
-            }
-
-            @Override
-            public RockerModel koTest() {
-                return bookControllerKoTest.template(getProject());
-            }
-
-            @Override
-            public RockerModel javaJunit() {
-                return bookControllerJavaJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel groovyJunit() {
-                return bookControllerGroovyJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinJunit() {
-                return bookControllerKotlinJunit.template(getProject());
-            }
-        };
-        generatorContext.addTemplate("testBookController", testSource, testRockerModelProvider);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(bookControllerSpock.template(project),
+                bookControllerJavaJunit.template(project),
+                bookControllerGroovyJunit.template(project),
+                bookControllerKotlinJunit.template(project),
+                bookControllerKoTest.template(project));
+        generatorContext.addTemplate("testBookController", testSource, provider);
     }
 
     private void addBookController(GeneratorContext generatorContext, Project project) {
@@ -136,33 +115,12 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
 
     private void addTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookRequestHandler");
-        TestRockerModelProvider testRockerModelProvider = new TestRockerModelProvider(project) {
-            @Override
-            public RockerModel spock() {
-                return awsLambdaBookRequestHandlerSpock.template(getProject());
-            }
-
-            @Override
-            public RockerModel koTest() {
-                return awsLambdaBookRequestHandlerKoTest.template(getProject());
-            }
-
-            @Override
-            public RockerModel javaJunit() {
-                return awsLambdaBookRequestHandlerJavaJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel groovyJunit() {
-                return awsLambdaBookRequestHandlerGroovyJunit.template(getProject());
-            }
-
-            @Override
-            public RockerModel kotlinJunit() {
-                return awsLambdaBookRequestHandlerKotlinJunit.template(getProject());
-            }
-        };
-        generatorContext.addTemplate("testBookRequestHandler", testSource, testRockerModelProvider);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaBookRequestHandlerSpock.template(project),
+                awsLambdaBookRequestHandlerJavaJunit.template(project),
+                awsLambdaBookRequestHandlerGroovyJunit.template(project),
+                awsLambdaBookRequestHandlerKotlinJunit.template(project),
+                awsLambdaBookRequestHandlerKoTest.template(project));
+        generatorContext.addTemplate("testBookRequestHandler", testSource, provider);
     }
 
     private void addBook(GeneratorContext generatorContext, Project project) {

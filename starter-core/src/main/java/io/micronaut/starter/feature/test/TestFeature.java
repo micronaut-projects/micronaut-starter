@@ -58,6 +58,10 @@ public interface TestFeature extends DefaultFeature {
         return getTestFramework() == TestFramework.SPOCK;
     }
 
+    default boolean isKotlinTestFramework() {
+        return isKoTest();
+    }
+
     default boolean isKoTest() {
         return getTestFramework() == TestFramework.KOTEST;
     }

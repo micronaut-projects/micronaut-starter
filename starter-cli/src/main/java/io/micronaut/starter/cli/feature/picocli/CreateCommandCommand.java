@@ -29,6 +29,7 @@ import io.micronaut.starter.feature.picocli.lang.kotlin.PicocliKotlinApplication
 import io.micronaut.starter.feature.picocli.test.junit.PicocliJunit;
 import io.micronaut.starter.feature.picocli.test.kotest.PicocliKoTest;
 import io.micronaut.starter.feature.picocli.test.spock.PicocliSpock;
+import io.micronaut.starter.options.AbstractTestRockerModelProvider;
 import io.micronaut.starter.options.JunitRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
@@ -36,10 +37,6 @@ import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static io.micronaut.starter.feature.picocli.test.PicocliTestFeature.PATH;
 
 @CommandLine.Command(name = "create-command", description = "Creates a CLI command")
@@ -103,33 +100,8 @@ public class CreateCommandCommand extends CodeGenCommand {
             }
         }
 
-        List<Language> supportedLanguagesForTestFramework = new ArrayList<>();
-        Language defaultLanguageForTestFramework = null;
-        switch (config.getTestFramework()) {
-            case KOTEST:
-                defaultLanguageForTestFramework = Language.KOTLIN;
-                supportedLanguagesForTestFramework.add(defaultLanguageForTestFramework);
-                break;
-
-            case SPOCK:
-                defaultLanguageForTestFramework = Language.GROOVY;
-                supportedLanguagesForTestFramework.add(defaultLanguageForTestFramework);
-                break;
-
-            case JUNIT:
-                defaultLanguageForTestFramework = Language.JAVA;
-                supportedLanguagesForTestFramework.add(defaultLanguageForTestFramework);
-                supportedLanguagesForTestFramework.add(Language.KOTLIN);
-                supportedLanguagesForTestFramework.add(Language.GROOVY);
-                break;
-
-            default:
-                defaultLanguageForTestFramework = Language.JAVA;
-                supportedLanguagesForTestFramework.add(defaultLanguageForTestFramework);
-
-        }
-        Language rockerTemplateLanguage = (supportedLanguagesForTestFramework.contains(config.getSourceLanguage())) ?
-            config.getSourceLanguage() : defaultLanguageForTestFramework;
+        Language rockerTemplateLanguage = (config.getTestFramework().getSupportedLanguages().contains(config.getSourceLanguage())) ?
+                config.getSourceLanguage() : config.getTestFramework().getDefaultLanguage();
         TestRockerModelProvider testRockerModelProvider = new CustomTestRockerModelProvider(project, junit.getJunitRockerModelProvider(project)) {
             @Override
             public RockerModel spock() {
@@ -138,7 +110,7 @@ public class CreateCommandCommand extends CodeGenCommand {
 
             @Override
             public RockerModel koTest() {
-                return koTest.getModel(getProject());
+                return koTest.getModel(project);
             }
         };
         RockerModel rockerModel = testRockerModelProvider.findModel(rockerTemplateLanguage, config.getTestFramework());
@@ -159,7 +131,7 @@ public class CreateCommandCommand extends CodeGenCommand {
         return 0;
     }
 
-    public abstract static class CustomTestRockerModelProvider extends TestRockerModelProvider {
+    public abstract static class CustomTestRockerModelProvider extends AbstractTestRockerModelProvider {
 
         private final JunitRockerModelProvider junitRockerModelProvider;
 
