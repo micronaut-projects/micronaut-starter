@@ -30,7 +30,6 @@ import io.micronaut.starter.feature.function.awslambda.template.bookControllerJa
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerJavaJunit;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinTest;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerKoTest;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerSpock;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -43,7 +42,6 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJavaJunit;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinTest;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKoTest;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerSpock;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
@@ -100,7 +98,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
     private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookController");
         TestRockerModelProvider provider = new DefaultTestRockerModelProvider(bookControllerSpock.template(project),
-                bookControllerKotlinTest.template(project),
                 bookControllerJavaJunit.template(project),
                 bookControllerGroovyJunit.template(project),
                 bookControllerKotlinJunit.template(project),
@@ -119,7 +116,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
     private void addTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookRequestHandler");
         TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaBookRequestHandlerSpock.template(project),
-                awsLambdaBookRequestHandlerKotlinTest.template(project),
                 awsLambdaBookRequestHandlerJavaJunit.template(project),
                 awsLambdaBookRequestHandlerGroovyJunit.template(project),
                 awsLambdaBookRequestHandlerKotlinJunit.template(project),

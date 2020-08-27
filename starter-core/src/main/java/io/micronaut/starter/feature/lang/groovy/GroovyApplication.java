@@ -22,7 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.groovyJunit;
-import io.micronaut.starter.feature.test.template.kotlinTest;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
@@ -65,7 +64,6 @@ public class GroovyApplication implements GroovyApplicationFeature {
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
             Project project = generatorContext.getProject();
             TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
-                    kotlinTest.template(project),
                     groovyJunit.template(project),
                     groovyJunit.template(project),
                     groovyJunit.template(project),

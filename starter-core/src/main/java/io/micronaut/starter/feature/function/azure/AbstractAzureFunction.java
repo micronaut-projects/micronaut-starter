@@ -122,11 +122,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
     }
 
     @Override
-    protected RockerModel kotlinTestTemplate(Project project) {
-        return azureRawFunctionKotlinTest.template(project);
-    }
-
-    @Override
     protected RockerModel koTestTemplate(Project project) {
         return azureRawFunctionKoTest.template(project);
     }

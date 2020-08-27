@@ -64,7 +64,6 @@ public class CreateTestCommand extends CodeGenCommand {
 
         final String path = "/{packagePath}/{className}";
         TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
-                kotlinTest.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
                 kotlinJunit.template(project),

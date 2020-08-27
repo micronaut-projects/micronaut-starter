@@ -512,10 +512,7 @@ List<Property> properties
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
 } else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
-@if (features.testFramework().isKotlinTest() ) {
-@dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "test", null)
-@dependency.template("io.kotlintest", "kotlintest-runner-junit5", "test", "3.3.2")
-} else if (features.testFramework().isKoTest()) {
+@if (features.testFramework().isKoTest()) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null)
 @dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.1.3")
 @dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.1.3")

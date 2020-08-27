@@ -21,9 +21,6 @@ class TestFrameworkSpec extends Specification {
         Language.JAVA   | TestFramework.SPOCK       || "src/test/groovy/{packagePath}/{className}Spec.groovy"
         Language.KOTLIN | TestFramework.SPOCK       || "src/test/groovy/{packagePath}/{className}Spec.groovy"
         Language.GROOVY | TestFramework.SPOCK       || "src/test/groovy/{packagePath}/{className}Spec.groovy"
-        Language.JAVA   | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
-        Language.KOTLIN | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
-        Language.GROOVY | TestFramework.KOTLINTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.JAVA   | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.KOTLIN | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
         Language.GROOVY | TestFramework.KOTEST  || "src/test/kotlin/{packagePath}/{className}Test.kt"
@@ -39,7 +36,6 @@ class TestFrameworkSpec extends Specification {
         expected        | testFramework
         Language.JAVA   | TestFramework.JUNIT
         Language.GROOVY | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.KOTLINTEST
         Language.KOTLIN | TestFramework.KOTEST
     }
 
@@ -54,7 +50,6 @@ class TestFrameworkSpec extends Specification {
         expected                                          | testFramework
         [Language.JAVA, Language.GROOVY, Language.KOTLIN] | TestFramework.JUNIT
         [Language.GROOVY]                                 | TestFramework.SPOCK
-        [Language.KOTLIN]                                 | TestFramework.KOTLINTEST
         [Language.KOTLIN]                                 | TestFramework.KOTEST
     }
 

@@ -19,20 +19,17 @@ import com.fizzed.rocker.RockerModel;
 
 public class DefaultTestRockerModelProvider implements TestRockerModelProvider {
     private final RockerModel spock;
-    private final RockerModel kotlinTest;
     private final RockerModel javaJunit;
     private final RockerModel groovyJunit;
     private final RockerModel kotlinJunit;
     private final RockerModel kotest;
 
     public DefaultTestRockerModelProvider(RockerModel spock,
-                                          RockerModel kotlinTest,
                                           RockerModel javaJunit,
                                           RockerModel groovyJunit,
                                           RockerModel kotlinJunit,
                                           RockerModel kotest) {
         this.spock = spock;
-        this.kotlinTest = kotlinTest;
         this.javaJunit = javaJunit;
         this.groovyJunit = groovyJunit;
         this.kotlinJunit = kotlinJunit;
@@ -42,11 +39,6 @@ public class DefaultTestRockerModelProvider implements TestRockerModelProvider {
     @Override
     public RockerModel spock() {
         return spock;
-    }
-
-    @Override
-    public RockerModel kotlinTest() {
-        return kotlinTest;
     }
 
     @Override

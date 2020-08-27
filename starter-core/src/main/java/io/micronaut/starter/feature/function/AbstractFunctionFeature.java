@@ -91,7 +91,6 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
         TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
-                kotlinTestTemplate(project),
                 javaJUnitTemplate(project),
                 groovyJUnitTemplate(project),
                 kotlinJUnitTemplate(project),
@@ -110,8 +109,6 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected abstract RockerModel kotlinJUnitTemplate(Project project);
 
     protected abstract RockerModel groovyJUnitTemplate(Project project);
-
-    protected abstract RockerModel kotlinTestTemplate(Project project);
 
     protected abstract RockerModel koTestTemplate(Project project);
 

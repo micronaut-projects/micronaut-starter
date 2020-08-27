@@ -137,11 +137,6 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
     }
 
     @Override
-    protected RockerModel kotlinTestTemplate(Project project) {
-        return gcpRawFunctionKotlinTest.template(project);
-    }
-
-    @Override
     protected RockerModel koTestTemplate(Project project) {
         return gcpRawFunctionKoTest.template(project);
     }

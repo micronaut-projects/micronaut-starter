@@ -32,8 +32,6 @@ public interface TestRockerModelProvider extends JunitRockerModelProvider {
                 return findJunitModel(language);
             case SPOCK:
                 return spock();
-            case KOTLINTEST:
-                return kotlinTest();
             case KOTEST:
                 return koTest();
             default:
@@ -46,12 +44,6 @@ public interface TestRockerModelProvider extends JunitRockerModelProvider {
      * @return {@link RockerModel} for {@link TestFramework#SPOCK}
      */
     RockerModel spock();
-
-    /**
-     *
-     * @return {@link RockerModel} for {@link TestFramework#KOTLINTEST}
-     */
-    RockerModel kotlinTest();
 
     /**
      *

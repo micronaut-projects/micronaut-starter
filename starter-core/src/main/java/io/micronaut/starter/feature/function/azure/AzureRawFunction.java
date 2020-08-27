@@ -60,7 +60,6 @@ public class AzureRawFunction extends AbstractAzureFunction {
             String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
 
             TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
-                    kotlinTestTemplate(project),
                     javaJUnitTemplate(project),
                     groovyJUnitTemplate(project),
                     kotlinJUnitTemplate(project),

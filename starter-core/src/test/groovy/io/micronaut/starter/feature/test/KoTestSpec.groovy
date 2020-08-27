@@ -7,11 +7,11 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.TestFramework
 
-class KotlinTestSpec extends BeanContextSpec {
+class KoTestSpec extends BeanContextSpec {
 
     void 'test maven configure unit tests'() {
         given:
-        Features features = getFeatures([], null, TestFramework.KOTLINTEST, BuildTool.MAVEN)
+        Features features = getFeatures([], null, TestFramework.KOTEST, BuildTool.MAVEN)
 
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()

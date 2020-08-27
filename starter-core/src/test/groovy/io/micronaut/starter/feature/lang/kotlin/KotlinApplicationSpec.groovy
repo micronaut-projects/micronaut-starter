@@ -63,7 +63,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         }
 
         where:
-        [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTLINTEST, TestFramework.KOTEST]].combinations()
+        [buildTool, testFramework] << [BuildTool.values(), [TestFramework.KOTEST]].combinations()
     }
 
     @Unroll

@@ -25,8 +25,7 @@ import java.util.Locale;
 public enum TestFramework {
     JUNIT,
     SPOCK,
-    KOTEST,
-    KOTLINTEST;
+    KOTEST;
 
     @Override
     public String toString() {
@@ -43,7 +42,6 @@ public enum TestFramework {
             case SPOCK:
                 return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
             case KOTEST:
-            case KOTLINTEST:
                 return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
             case JUNIT:
             default:
@@ -64,7 +62,6 @@ public enum TestFramework {
             case SPOCK:
                 return Collections.singletonList(Language.GROOVY);
             case KOTEST:
-            case KOTLINTEST:
                 return Collections.singletonList(Language.KOTLIN);
             case JUNIT:
                 return Arrays.asList(Language.JAVA, Language.KOTLIN, Language.GROOVY);
@@ -82,7 +79,6 @@ public enum TestFramework {
             case SPOCK:
                 return Language.GROOVY;
             case KOTEST:
-            case KOTLINTEST:
                 return Language.KOTLIN;
             case JUNIT:
                 return Language.JAVA;
