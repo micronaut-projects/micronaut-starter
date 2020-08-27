@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -132,11 +132,12 @@ implements <a href="../../../../io/micronaut/starter/options/TestRockerModelProv
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#DefaultTestRockerModelProvider-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">DefaultTestRockerModelProvider</a></span>(com.fizzed.rocker.RockerModel&nbsp;spock,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#DefaultTestRockerModelProvider-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">DefaultTestRockerModelProvider</a></span>(com.fizzed.rocker.RockerModel&nbsp;spock,
                               com.fizzed.rocker.RockerModel&nbsp;kotlinTest,
                               com.fizzed.rocker.RockerModel&nbsp;javaJunit,
                               com.fizzed.rocker.RockerModel&nbsp;groovyJunit,
-                              com.fizzed.rocker.RockerModel&nbsp;kotlinJunit)</code>&nbsp;</td>
+                              com.fizzed.rocker.RockerModel&nbsp;kotlinJunit,
+                              com.fizzed.rocker.RockerModel&nbsp;kotest)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -163,13 +164,17 @@ implements <a href="../../../../io/micronaut/starter/options/TestRockerModelProv
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#kotlinJunit--">kotlinJunit</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#koTest--">koTest</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#kotlinTest--">kotlinTest</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#kotlinJunit--">kotlinJunit</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#kotlinTest--">kotlinTest</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>com.fizzed.rocker.RockerModel</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/DefaultTestRockerModelProvider.html#spock--">spock</a></span>()</code>&nbsp;</td>
 </tr>
@@ -209,7 +214,7 @@ implements <a href="../../../../io/micronaut/starter/options/TestRockerModelProv
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DefaultTestRockerModelProvider-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">
+<a name="DefaultTestRockerModelProvider-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-com.fizzed.rocker.RockerModel-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -219,7 +224,8 @@ implements <a href="../../../../io/micronaut/starter/options/TestRockerModelProv
                                       com.fizzed.rocker.RockerModel&nbsp;kotlinTest,
                                       com.fizzed.rocker.RockerModel&nbsp;javaJunit,
                                       com.fizzed.rocker.RockerModel&nbsp;groovyJunit,
-                                      com.fizzed.rocker.RockerModel&nbsp;kotlinJunit)</pre>
+                                      com.fizzed.rocker.RockerModel&nbsp;kotlinJunit,
+                                      com.fizzed.rocker.RockerModel&nbsp;kotest)</pre>
 </li>
 </ul>
 </li>
@@ -257,6 +263,21 @@ implements <a href="../../../../io/micronaut/starter/options/TestRockerModelProv
 <dd><code><a href="../../../../io/micronaut/starter/options/TestRockerModelProvider.html#kotlinTest--">kotlinTest</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/starter/options/TestRockerModelProvider.html" title="interface in io.micronaut.starter.options">TestRockerModelProvider</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>RockerModel</code> for <a href="../../../../io/micronaut/starter/options/TestFramework.html#KOTLINTEST"><code>TestFramework.KOTLINTEST</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="koTest--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>koTest</h4>
+<pre>public&nbsp;com.fizzed.rocker.RockerModel&nbsp;koTest()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../io/micronaut/starter/options/TestRockerModelProvider.html#koTest--">koTest</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../io/micronaut/starter/options/TestRockerModelProvider.html" title="interface in io.micronaut.starter.options">TestRockerModelProvider</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>RockerModel</code> for <a href="../../../../io/micronaut/starter/options/TestFramework.html#KOTEST"><code>TestFramework.KOTEST</code></a></dd>
 </dl>
 </li>
 </ul>

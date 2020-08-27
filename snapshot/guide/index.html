@@ -384,7 +384,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-ucp, jdbc-tomcat, jdbc-hikari, ktor, redis-lettuce, views-rocker, micrometer-appoptics, hibernate-jpa, jax-rs, discovery-eureka, http-client, micrometer-signalfx, tomcat-server, netflix-hystrix, micrometer-statsd, micrometer-jmx, rxjava1, jetty-server, log4j2, security, cache-infinispan, postgres, spring, mariadb, vertx-pg-client, data-jpa, rss, kafka-streams, micrometer-graphite, micrometer-ganglia, tracing-zipkin, oracle, neo4j-bolt, micrometer-dynatrace, kafka, cache-hazelcast, views-handlebars, netflix-archaius, views-soy, micrometer-kairos, graphql, micrometer-atlas, sql-jdbi, file-watch, security-session, views-thymeleaf, multi-tenancy, data-jdbc, rxjava3, micrometer-wavefront, aws-alexa, google-cloud-function, micrometer-influx, neo4j-gorm, gcp-cloud-trace, jib, asciidoctor, micrometer-elastic, mysql, micrometer-new-relic, liquibase, rss-itunes-podcast, micrometer-humio, jackson-xml, rabbitmq, springloaded, micrometer-stackdriver, jrebel, micrometer-azure-monitor, security-oauth2, mongo-reactive, hibernate-gorm, spring-web, graalvm, jooq, netflix-ribbon, acme, mongo-gorm, micrometer-prometheus, elasticsearch, micrometer-cloudwatch, config-consul, vertx-mysql-client, security-ldap, security-jwt, hibernate-validator, kubernetes, nats, spring-data-jpa, reactor, flyway, sqlserver, h2, cassandra, tracing-jaeger, micrometer-datadog, azure-function, views-freemarker, spring-boot, kotlin-extension-functions, logback, netty-server, aws-lambda-custom-runtime, cache-ehcache, aws-lambda, testcontainers, openapi, management, spring-data-jdbc, cache-caffeine, config-kubernetes, undertow-server, discovery-consul, multi-tenancy-gorm, jmx, mongo-sync, views-velocity, config4k, properties</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, security, graphql, views-rocker, acme, mongo-gorm, jmx, logback, micrometer-wavefront, tomcat-server, asciidoctor, rss-itunes-podcast, micrometer-appoptics, views-velocity, micrometer-humio, jackson-xml, cache-infinispan, security-ldap, rabbitmq, data-jpa, redis-lettuce, cache-ehcache, security-session, undertow-server, jax-rs, hibernate-validator, neo4j-gorm, oracle, rxjava1, micrometer-statsd, security-oauth2, discovery-consul, micrometer-dynatrace, kafka, micrometer-elastic, flyway, micrometer-kairos, mysql, graalvm, postgres, netflix-hystrix, micrometer-signalfx, jetty-server, management, vertx-mysql-client, azure-function, h2, reactor, springloaded, nats, mariadb, tracing-zipkin, ktor, multi-tenancy-gorm, kafka-streams, micrometer-jmx, micrometer-prometheus, spring-web, jrebel, micrometer-azure-monitor, aws-lambda-custom-runtime, sql-jdbi, sqlserver, jooq, cache-hazelcast, cassandra, config-kubernetes, aws-alexa, netflix-ribbon, micrometer-datadog, spring-data-jdbc, views-soy, log4j2, aws-lambda, hibernate-jpa, kotlin-extension-functions, gcp-cloud-trace, http-client, micrometer-influx, micrometer-ganglia, micrometer-cloudwatch, kubernetes, hibernate-gorm, spring-boot, rxjava3, vertx-pg-client, neo4j-bolt, cache-caffeine, tracing-jaeger, openapi, jib, liquibase, security-jwt, google-cloud-function, netflix-archaius, elasticsearch, mongo-reactive, rss, spring-data-jpa, multi-tenancy, data-jdbc, netty-server, mongo-sync, micrometer-new-relic, micrometer-graphite, discovery-eureka, micrometer-stackdriver, views-freemarker, file-watch, spring, config-consul, micrometer-atlas, views-handlebars, testcontainers, views-thymeleaf, config4k, properties</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -408,7 +408,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, kotlintest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -471,7 +471,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-ucp, jdbc-tomcat, jdbc-hikari, redis-lettuce, hibernate-jpa, http-client, netflix-hystrix, rxjava1, log4j2, security, cache-infinispan, postgres, spring, mariadb, vertx-pg-client, data-jpa, kafka-streams, oracle, neo4j-bolt, kafka, cache-hazelcast, graphql, sql-jdbi, file-watch, security-session, multi-tenancy, data-jdbc, rxjava3, neo4j-gorm, gcp-cloud-trace, jib, asciidoctor, mysql, liquibase, jackson-xml, rabbitmq, springloaded, jrebel, security-oauth2, mongo-reactive, hibernate-gorm, graalvm, jooq, netflix-ribbon, mongo-gorm, elasticsearch, vertx-mysql-client, security-ldap, security-jwt, hibernate-validator, nats, spring-data-jpa, reactor, flyway, sqlserver, h2, cassandra, spring-boot, kotlin-extension-functions, logback, cache-ehcache, testcontainers, spring-data-jdbc, cache-caffeine, multi-tenancy-gorm, mongo-sync, config4k, properties</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, security, graphql, mongo-gorm, logback, asciidoctor, jackson-xml, cache-infinispan, security-ldap, rabbitmq, data-jpa, redis-lettuce, cache-ehcache, security-session, hibernate-validator, neo4j-gorm, oracle, rxjava1, security-oauth2, kafka, flyway, mysql, graalvm, postgres, netflix-hystrix, vertx-mysql-client, h2, reactor, springloaded, nats, mariadb, multi-tenancy-gorm, kafka-streams, jrebel, sql-jdbi, sqlserver, jooq, cache-hazelcast, cassandra, netflix-ribbon, spring-data-jdbc, log4j2, hibernate-jpa, kotlin-extension-functions, gcp-cloud-trace, http-client, hibernate-gorm, spring-boot, rxjava3, vertx-pg-client, neo4j-bolt, cache-caffeine, jib, liquibase, security-jwt, elasticsearch, mongo-reactive, spring-data-jpa, multi-tenancy, data-jdbc, mongo-sync, file-watch, spring, testcontainers, config4k, properties</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -495,7 +495,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, kotlintest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -558,7 +558,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-ucp, jdbc-tomcat, jdbc-hikari, redis-lettuce, hibernate-jpa, discovery-eureka, http-client, netflix-hystrix, rxjava1, log4j2, security, cache-infinispan, postgres, spring, mariadb, vertx-pg-client, data-jpa, kafka-streams, tracing-zipkin, oracle, neo4j-bolt, kafka, cache-hazelcast, netflix-archaius, graphql, sql-jdbi, file-watch, security-session, multi-tenancy, data-jdbc, rxjava3, aws-alexa, google-cloud-function, neo4j-gorm, gcp-cloud-trace, jib, asciidoctor, mysql, liquibase, jackson-xml, rabbitmq, springloaded, jrebel, security-oauth2, mongo-reactive, hibernate-gorm, graalvm, jooq, netflix-ribbon, mongo-gorm, elasticsearch, config-consul, vertx-mysql-client, security-ldap, security-jwt, hibernate-validator, nats, spring-data-jpa, reactor, flyway, sqlserver, h2, cassandra, tracing-jaeger, azure-function, spring-boot, kotlin-extension-functions, logback, aws-lambda-custom-runtime, cache-ehcache, aws-lambda, testcontainers, spring-data-jdbc, cache-caffeine, discovery-consul, multi-tenancy-gorm, mongo-sync, config4k, properties</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, security, graphql, mongo-gorm, logback, asciidoctor, jackson-xml, cache-infinispan, security-ldap, rabbitmq, data-jpa, redis-lettuce, cache-ehcache, security-session, hibernate-validator, neo4j-gorm, oracle, rxjava1, security-oauth2, discovery-consul, kafka, flyway, mysql, graalvm, postgres, netflix-hystrix, vertx-mysql-client, azure-function, h2, reactor, springloaded, nats, mariadb, tracing-zipkin, multi-tenancy-gorm, kafka-streams, jrebel, aws-lambda-custom-runtime, sql-jdbi, sqlserver, jooq, cache-hazelcast, cassandra, aws-alexa, netflix-ribbon, spring-data-jdbc, log4j2, aws-lambda, hibernate-jpa, kotlin-extension-functions, gcp-cloud-trace, http-client, hibernate-gorm, spring-boot, rxjava3, vertx-pg-client, neo4j-bolt, cache-caffeine, tracing-jaeger, jib, liquibase, security-jwt, google-cloud-function, netflix-archaius, elasticsearch, mongo-reactive, spring-data-jpa, multi-tenancy, data-jdbc, mongo-sync, discovery-eureka, file-watch, spring, config-consul, testcontainers, config4k, properties</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -582,7 +582,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, kotlintest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -645,7 +645,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-ucp, jdbc-tomcat, jdbc-hikari, redis-lettuce, hibernate-jpa, discovery-eureka, http-client, netflix-hystrix, rxjava1, log4j2, security, cache-infinispan, postgres, spring, mariadb, vertx-pg-client, data-jpa, kafka-streams, tracing-zipkin, oracle, neo4j-bolt, kafka, cache-hazelcast, netflix-archaius, graphql, sql-jdbi, file-watch, security-session, multi-tenancy, data-jdbc, rxjava3, neo4j-gorm, gcp-cloud-trace, jib, asciidoctor, mysql, liquibase, jackson-xml, rabbitmq, springloaded, jrebel, security-oauth2, mongo-reactive, hibernate-gorm, graalvm, jooq, netflix-ribbon, mongo-gorm, elasticsearch, config-consul, vertx-mysql-client, security-ldap, security-jwt, hibernate-validator, kubernetes, nats, spring-data-jpa, reactor, flyway, sqlserver, h2, cassandra, tracing-jaeger, spring-boot, kotlin-extension-functions, logback, cache-ehcache, testcontainers, spring-data-jdbc, cache-caffeine, config-kubernetes, discovery-consul, multi-tenancy-gorm, mongo-sync, config4k, properties</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, security, graphql, mongo-gorm, logback, asciidoctor, jackson-xml, cache-infinispan, security-ldap, rabbitmq, data-jpa, redis-lettuce, cache-ehcache, security-session, hibernate-validator, neo4j-gorm, oracle, rxjava1, security-oauth2, discovery-consul, kafka, flyway, mysql, graalvm, postgres, netflix-hystrix, vertx-mysql-client, h2, reactor, springloaded, nats, mariadb, tracing-zipkin, multi-tenancy-gorm, kafka-streams, jrebel, sql-jdbi, sqlserver, jooq, cache-hazelcast, cassandra, config-kubernetes, netflix-ribbon, spring-data-jdbc, log4j2, hibernate-jpa, kotlin-extension-functions, gcp-cloud-trace, http-client, kubernetes, hibernate-gorm, spring-boot, rxjava3, vertx-pg-client, neo4j-bolt, cache-caffeine, tracing-jaeger, jib, liquibase, security-jwt, netflix-archaius, elasticsearch, mongo-reactive, spring-data-jpa, multi-tenancy, data-jdbc, mongo-sync, discovery-eureka, file-watch, spring, config-consul, testcontainers, config4k, properties</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -669,7 +669,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, kotlintest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -732,7 +732,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-dbcp, jdbc-ucp, jdbc-tomcat, jdbc-hikari, redis-lettuce, hibernate-jpa, discovery-eureka, http-client, netflix-hystrix, rxjava1, log4j2, security, cache-infinispan, postgres, spring, mariadb, vertx-pg-client, data-jpa, kafka-streams, tracing-zipkin, oracle, neo4j-bolt, kafka, cache-hazelcast, netflix-archaius, graphql, sql-jdbi, file-watch, security-session, multi-tenancy, data-jdbc, rxjava3, neo4j-gorm, gcp-cloud-trace, jib, asciidoctor, mysql, liquibase, jackson-xml, rabbitmq, springloaded, jrebel, security-oauth2, mongo-reactive, hibernate-gorm, graalvm, jooq, netflix-ribbon, mongo-gorm, elasticsearch, config-consul, vertx-mysql-client, security-ldap, security-jwt, hibernate-validator, nats, spring-data-jpa, reactor, flyway, sqlserver, h2, cassandra, tracing-jaeger, spring-boot, kotlin-extension-functions, logback, cache-ehcache, testcontainers, spring-data-jdbc, cache-caffeine, config-kubernetes, discovery-consul, multi-tenancy-gorm, mongo-sync, config4k, properties</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-hikari, jdbc-dbcp, security, graphql, mongo-gorm, logback, asciidoctor, jackson-xml, cache-infinispan, security-ldap, rabbitmq, data-jpa, redis-lettuce, cache-ehcache, security-session, hibernate-validator, neo4j-gorm, oracle, rxjava1, security-oauth2, discovery-consul, kafka, flyway, mysql, graalvm, postgres, netflix-hystrix, vertx-mysql-client, h2, reactor, springloaded, nats, mariadb, tracing-zipkin, multi-tenancy-gorm, kafka-streams, jrebel, sql-jdbi, sqlserver, jooq, cache-hazelcast, cassandra, config-kubernetes, netflix-ribbon, spring-data-jdbc, log4j2, hibernate-jpa, kotlin-extension-functions, gcp-cloud-trace, http-client, hibernate-gorm, spring-boot, rxjava3, vertx-pg-client, neo4j-bolt, cache-caffeine, tracing-jaeger, jib, liquibase, security-jwt, netflix-archaius, elasticsearch, mongo-reactive, spring-data-jpa, multi-tenancy, data-jdbc, mongo-sync, discovery-eureka, file-watch, spring, config-consul, testcontainers, config4k, properties</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -756,7 +756,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest, kotlintest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>

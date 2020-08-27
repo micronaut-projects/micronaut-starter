@@ -103,6 +103,7 @@ io.micronaut.starter.feature.picocli.lang.java
 io.micronaut.starter.feature.picocli.lang.kotlin
 io.micronaut.starter.feature.picocli.test
 io.micronaut.starter.feature.picocli.test.junit
+io.micronaut.starter.feature.picocli.test.kotest
 io.micronaut.starter.feature.picocli.test.kotlintest
 io.micronaut.starter.feature.picocli.test.spock
 io.micronaut.starter.feature.reactor

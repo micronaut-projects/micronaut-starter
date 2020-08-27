@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":6,"i5":18,"i6":18,"i7":18,"i8":18,"i9":18,"i10":18};
+var methods = {"i0":18,"i1":6,"i2":6,"i3":18,"i4":6,"i5":18,"i6":18,"i7":18,"i8":18,"i9":18,"i10":18,"i11":18,"i12":18};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../io/micronaut/starter/feature/test/Junit.html" title="class in io.micronaut.starter.feature.test">Junit</a>, <a href="../../../../../io/micronaut/starter/feature/test/KotlinTest.html" title="class in io.micronaut.starter.feature.test">KotlinTest</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/junit/PicocliJunit.html" title="class in io.micronaut.starter.feature.picocli.test.junit">PicocliJunit</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/kotlintest/PicocliKotlinTest.html" title="class in io.micronaut.starter.feature.picocli.test.kotlintest">PicocliKotlinTest</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/spock/PicocliSpock.html" title="class in io.micronaut.starter.feature.picocli.test.spock">PicocliSpock</a>, <a href="../../../../../io/micronaut/starter/feature/test/Spock.html" title="class in io.micronaut.starter.feature.test">Spock</a></dd>
+<dd><a href="../../../../../io/micronaut/starter/feature/test/Junit.html" title="class in io.micronaut.starter.feature.test">Junit</a>, <a href="../../../../../io/micronaut/starter/feature/test/KoTest.html" title="class in io.micronaut.starter.feature.test">KoTest</a>, <a href="../../../../../io/micronaut/starter/feature/test/KotlinTest.html" title="class in io.micronaut.starter.feature.test">KotlinTest</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/junit/PicocliJunit.html" title="class in io.micronaut.starter.feature.picocli.test.junit">PicocliJunit</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/kotest/PicocliKoTest.html" title="class in io.micronaut.starter.feature.picocli.test.kotest">PicocliKoTest</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/kotlintest/PicocliKotlinTest.html" title="class in io.micronaut.starter.feature.picocli.test.kotlintest">PicocliKotlinTest</a>, <a href="../../../../../io/micronaut/starter/feature/picocli/test/spock/PicocliSpock.html" title="class in io.micronaut.starter.feature.picocli.test.spock">PicocliSpock</a>, <a href="../../../../../io/micronaut/starter/feature/test/Spock.html" title="class in io.micronaut.starter.feature.test">Spock</a></dd>
 </dl>
 <hr>
 <br>
@@ -178,20 +178,28 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKotlinTestFramework--">isKotlinTestFramework</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKoTest--">isKoTest</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isSpock--">isSpock</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKotlinTest--">isKotlinTest</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isKotlinTestFramework--">isKotlinTestFramework</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>default boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isSpock--">isSpock</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#isVisible--">isVisible</a></span>()</code>
 <div class="block">Some features should not be visible to the user because they are a common parent of other
  selectable features, or they should always be applied, or any other reason.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
@@ -199,7 +207,7 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <div class="block">Determines if the feature should be applied to the project.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>default boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/test/TestFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -338,6 +346,15 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <pre>default&nbsp;boolean&nbsp;isSpock()</pre>
 </li>
 </ul>
+<a name="isKotlinTest--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isKotlinTest</h4>
+<pre>default&nbsp;boolean&nbsp;isKotlinTest()</pre>
+</li>
+</ul>
 <a name="isKotlinTestFramework--">
 <!--   -->
 </a>
@@ -345,6 +362,15 @@ extends <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html
 <li class="blockList">
 <h4>isKotlinTestFramework</h4>
 <pre>default&nbsp;boolean&nbsp;isKotlinTestFramework()</pre>
+</li>
+</ul>
+<a name="isKoTest--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isKoTest</h4>
+<pre>default&nbsp;boolean&nbsp;isKoTest()</pre>
 </li>
 </ul>
 <a name="shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">
