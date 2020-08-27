@@ -16,7 +16,7 @@ class TestRockerModelProviderSpec extends Specification {
             RockerModel spock() {
                 return null
             }
-
+            
             @Override
             RockerModel koTest() {
                 return null
