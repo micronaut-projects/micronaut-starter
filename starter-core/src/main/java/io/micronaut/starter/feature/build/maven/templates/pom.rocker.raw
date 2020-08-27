@@ -510,8 +510,7 @@ List<Property> properties
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
-
-} else if (features.testFramework().isKotlinTest() || features.testFramework().isKoTest()) {
+} else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @if (features.testFramework().isKotlinTest() ) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotlintest", "test", null)
@@ -590,7 +589,8 @@ List<Property> properties
         <artifactId>maven-shade-plugin</artifactId>
       </plugin>
 }
-@if (features.testFramework().isKotlinTest() || features.testFramework().isKoTest() || features.testFramework().isSpock()) {
+
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock()) {
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -600,7 +600,7 @@ List<Property> properties
             <include>**/*Test.*</include>
           </includes>
         </configuration>
-@if (features.testFramework().isKotlinTest() || features.testFramework().isKoTest()) {
+@if (features.testFramework().isKotlinTestFramework()) {
         <dependencies>
           <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -995,7 +995,7 @@ List<Property> properties
               </sourceDirs>
             </configuration>
           </execution>
-@if (features.testFramework().isKotlinTest() || features.testFramework().isKoTest() || features.testFramework().isJunit()) {
+@if (features.testFramework().isKotlinTestFramework() || features.testFramework().isJunit()) {
           <execution>
             <id>test-kapt</id>
             <goals>
