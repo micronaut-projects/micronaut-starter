@@ -80,11 +80,11 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         language << Language.values().toList()
     }
 
-    void 'test security-oauth2 configuration'() {
+    void 'security-oauth2 configuration does not contain micronaut.security.token.jwt.cookie.enabled'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['security-oauth2', 'security-jwt'])
 
         then:
-        commandContext.configuration.get("micronaut.security.token.jwt.cookie.enabled") == true
+        !commandContext.configuration.containsKey("micronaut.security.token.jwt.cookie.enabled")
     }
 }

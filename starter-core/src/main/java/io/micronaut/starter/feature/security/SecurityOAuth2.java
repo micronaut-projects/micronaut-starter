@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.security;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -53,13 +52,6 @@ public class SecurityOAuth2 implements Feature {
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(SecurityAnnotations.class)) {
             featureContext.addFeature(securityAnnotations);
-        }
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.isFeaturePresent(SecurityJWT.class)) {
-            generatorContext.getConfiguration().put("micronaut.security.token.jwt.cookie.enabled", true);
         }
     }
 
