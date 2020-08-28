@@ -46,6 +46,8 @@ import java.util.List;
 @Controller
 public class CreateController extends AbstractCreateController implements CreateOperation {
 
+    public static final String MEDIA_TYPE_APPLICATION_ZIP = "application/zip";
+
     /**
      * Default constructor.
      *
@@ -67,11 +69,11 @@ public class CreateController extends AbstractCreateController implements Create
      * @return A ZIP file containing the generated application.
      */
     @Override
-    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion}", produces = "application/zip")
+    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",        
             content = @Content(
-                    mediaType = "application/zip"
+                    mediaType = MEDIA_TYPE_APPLICATION_ZIP
             )
     )
     public HttpResponse<Writable> createApp(
@@ -96,11 +98,11 @@ public class CreateController extends AbstractCreateController implements Create
      * @param lang The language
      * @return A Zip file containing the application
      */
-    @Get(uri = "/{name}.zip{?type,features,lang,build,test}", produces = "application/zip")
+    @Get(uri = "/{name}.zip{?type,features,lang,build,test}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",
             content = @Content(
-                    mediaType = "application/zip"
+                    mediaType = MEDIA_TYPE_APPLICATION_ZIP
             )
     )
     public HttpResponse<Writable> createZip(
