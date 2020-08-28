@@ -24,7 +24,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.api.TestFramework;
 
 import javax.validation.constraints.Pattern;
 import java.util.List;
