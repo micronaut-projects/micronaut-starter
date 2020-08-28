@@ -98,7 +98,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     @ApiResponse(
             responseCode = "200",
             description = "A textual description of the API",
-            content = @Content(mediaType = "text/plain")
+            content = @Content(mediaType = MediaType.TEXT_PLAIN)
     )
     HttpResponse<Writable> home(HttpRequest<?> request, @Parameter(hidden = true) RequestInfo info) {
         Collection<MediaType> accept = request.accept();
