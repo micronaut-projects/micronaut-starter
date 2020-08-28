@@ -22,14 +22,19 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.exceptions.HttpStatusException;
-import io.micronaut.starter.options.*;
+import io.micronaut.starter.api.Relationship;
+import io.micronaut.starter.api.RequestInfo;
+import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.api.*;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
@@ -89,7 +94,7 @@ public class PreviewController extends AbstractCreateController implements Previ
                     project,
                     new Options(
                             lang,
-                            test,
+                            test != null ? test.toTestFramework() : null,
                             build == null ? BuildTool.GRADLE : build,
                             javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
                     getOperatingSystem(requestInfo.getUserAgent()),
