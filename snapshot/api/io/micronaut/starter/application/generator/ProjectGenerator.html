@@ -17,8 +17,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":6,"i1":6,"i2":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -74,13 +74,13 @@ var activeTableTab = "activeTableTab";
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -91,49 +91,26 @@ var activeTableTab = "activeTableTab";
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="subTitle">io.micronaut.starter.application.generator</div>
-<h2 title="Class ProjectGenerator" class="title">Class ProjectGenerator</h2>
+<h2 title="Interface ProjectGenerator" class="title">Interface ProjectGenerator</h2>
 </div>
 <div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>io.micronaut.starter.application.generator.ProjectGenerator</li>
-</ul>
-</li>
-</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../../../io/micronaut/starter/application/generator/DefaultProjectGenerator.html" title="class in io.micronaut.starter.application.generator">DefaultProjectGenerator</a></dd>
+</dl>
 <hr>
 <br>
-<pre>@Singleton
-public class <span class="typeNameLabel">ProjectGenerator</span>
-extends java.lang.Object</pre>
+<pre>@DefaultImplementation(value=<a href="../../../../../io/micronaut/starter/application/generator/DefaultProjectGenerator.html" title="class in io.micronaut.starter.application.generator">DefaultProjectGenerator.class</a>)
+public interface <span class="typeNameLabel">ProjectGenerator</span></pre>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Constructor and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html#ProjectGenerator-io.micronaut.starter.application.ContextFactory-io.micronaut.context.BeanContext-">ProjectGenerator</a></span>(<a href="../../../../../io/micronaut/starter/application/ContextFactory.html" title="class in io.micronaut.starter.application">ContextFactory</a>&nbsp;contextFactory,
-                io.micronaut.context.BeanContext&nbsp;beanContext)</code>&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -141,7 +118,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -173,13 +150,6 @@ extends java.lang.Object</pre>
         <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
 </li>
 </ul>
 </li>
@@ -188,24 +158,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a name="ProjectGenerator-io.micronaut.starter.application.ContextFactory-io.micronaut.context.BeanContext-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>ProjectGenerator</h4>
-<pre>public&nbsp;ProjectGenerator(<a href="../../../../../io/micronaut/starter/application/ContextFactory.html" title="class in io.micronaut.starter.application">ContextFactory</a>&nbsp;contextFactory,
-                        io.micronaut.context.BeanContext&nbsp;beanContext)</pre>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.detail">
@@ -218,15 +170,15 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>generate</h4>
-<pre>public&nbsp;void&nbsp;generate(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                     <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
-                     <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-                     @Nullable
-                     <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
-                     java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
-                     <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
-                     <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)
-              throws java.lang.Exception</pre>
+<pre>void&nbsp;generate(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+              <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
+              <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+              @Nullable
+              <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
+              java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
+              <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
+              <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)
+       throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
@@ -239,11 +191,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>generate</h4>
-<pre>public&nbsp;void&nbsp;generate(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                     <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
-                     <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
-                     <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)
-              throws java.lang.Exception</pre>
+<pre>void&nbsp;generate(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+              <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
+              <a href="../../../../../io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io">OutputHandler</a>&nbsp;outputHandler,
+              <a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)
+       throws java.lang.Exception</pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.Exception</code></dd>
@@ -256,13 +208,13 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createGeneratorContext</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;createGeneratorContext(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                                               <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
-                                               <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
-                                               @Nullable
-                                               <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
-                                               java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
-                                               <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
+<pre><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;createGeneratorContext(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
+                                        <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
+                                        <a href="../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
+                                        @Nullable
+                                        <a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a>&nbsp;operatingSystem,
+                                        java.util.List&lt;java.lang.String&gt;&nbsp;selectedFeatures,
+                                        <a href="../../../../../io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io">ConsoleOutput</a>&nbsp;consoleOutput)</pre>
 </li>
 </ul>
 </li>
@@ -319,13 +271,13 @@ extends java.lang.Object</pre>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

@@ -160,7 +160,7 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#PreviewController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">PreviewController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#PreviewController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">PreviewController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
                  io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</code>
 <div class="block">Default constructor.</div>
 </td>
@@ -182,11 +182,11 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/preview/PreviewController.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
           java.lang.String&nbsp;name,
           java.util.List&lt;java.lang.String&gt;&nbsp;features,
           <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
-          <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
+          <a href="../../../../../io/micronaut/starter/api/TestFramework.html" title="enum in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
           <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
           <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
           <a href="../../../../../io/micronaut/starter/api/RequestInfo.html" title="class in io.micronaut.starter.api">RequestInfo</a>&nbsp;requestInfo)</code>
@@ -199,7 +199,7 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.api.create.<a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create">AbstractCreateController</a></h3>
-<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a>, <a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getFilename-io.micronaut.starter.application.Project-">getFilename</a>, <a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getOperatingSystem-java.lang.String-">getOperatingSystem</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a>, <a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getFilename-io.micronaut.starter.application.Project-">getFilename</a>, <a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#getOperatingSystem-java.lang.String-">getOperatingSystem</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -228,7 +228,7 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PreviewController</h4>
-<pre>public&nbsp;PreviewController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<pre>public&nbsp;PreviewController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
                          io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</pre>
 <div class="block">Default constructor.</div>
 <dl>
@@ -246,7 +246,7 @@ implements <a href="../../../../../io/micronaut/starter/api/preview/PreviewOpera
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">
+<a name="previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -261,7 +261,7 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.
                                                                                                                                  @Nullable
                                                                                                                                  <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;build,
                                                                                                                                  @Nullable
-                                                                                                                                 <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;test,
+                                                                                                                                 <a href="../../../../../io/micronaut/starter/api/TestFramework.html" title="enum in io.micronaut.starter.api">TestFramework</a>&nbsp;test,
                                                                                                                                  @Nullable
                                                                                                                                  <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
                                                                                                                                  @Nullable
@@ -271,7 +271,7 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/api/preview/PreviewDTO.
 <div class="block">Previews the contents of a generated application..</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/api/preview/PreviewOperations.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/preview/PreviewOperations.html" title="interface in io.micronaut.starter.api.preview">PreviewOperations</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/api/preview/PreviewOperations.html#previewApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-io.micronaut.starter.api.RequestInfo-">previewApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/preview/PreviewOperations.html" title="interface in io.micronaut.starter.api.preview">PreviewOperations</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The application type The application type</dd>
 <dd><code>name</code> - The name of the application The name of the application</dd>

@@ -144,7 +144,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a></code></td>
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#projectGenerator">projectGenerator</a></span></code>&nbsp;</td>
 </tr>
 </table>
@@ -164,7 +164,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">AbstractCreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#AbstractCreateController-io.micronaut.starter.application.generator.ProjectGenerator-io.micronaut.context.event.ApplicationEventPublisher-">AbstractCreateController</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
                         io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</code>
 <div class="block">Abstract implementation of <a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a>.</div>
 </td>
@@ -186,11 +186,11 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>io.micronaut.http.HttpResponse&lt;io.micronaut.core.io.Writable&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/api/create/AbstractCreateController.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;type,
          @Pattern(regexp="[\\w\\d-_\\.]+") java.lang.String&nbsp;name,
          java.util.List&lt;java.lang.String&gt;&nbsp;features,
          <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
-         <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;testFramework,
+         <a href="../../../../../io/micronaut/starter/api/TestFramework.html" title="enum in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
          <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
          <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
          java.lang.String&nbsp;userAgent)</code>
@@ -233,7 +233,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <ul class="blockListLast">
 <li class="blockList">
 <h4>projectGenerator</h4>
-<pre>protected final&nbsp;<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a> projectGenerator</pre>
+<pre>protected final&nbsp;<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a> projectGenerator</pre>
 </li>
 </ul>
 </li>
@@ -250,7 +250,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractCreateController</h4>
-<pre>protected&nbsp;AbstractCreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="class in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
+<pre>protected&nbsp;AbstractCreateController(<a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator">ProjectGenerator</a>&nbsp;projectGenerator,
                                    io.micronaut.context.event.ApplicationEventPublisher&nbsp;eventPublisher)</pre>
 <div class="block">Abstract implementation of <a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><code>CreateOperation</code></a>.</div>
 <dl>
@@ -268,7 +268,7 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">
+<a name="createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -282,18 +282,18 @@ implements <a href="../../../../../io/micronaut/starter/api/create/CreateOperati
                                                                                @Nullable
                                                                                <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
                                                                                @Nullable
-                                                                               <a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a>&nbsp;testFramework,
+                                                                               <a href="../../../../../io/micronaut/starter/api/TestFramework.html" title="enum in io.micronaut.starter.api">TestFramework</a>&nbsp;testFramework,
                                                                                @Nullable
                                                                                <a href="../../../../../io/micronaut/starter/options/Language.html" title="enum in io.micronaut.starter.options">Language</a>&nbsp;lang,
                                                                                @Nullable
                                                                                <a href="../../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion,
                                                                                @Nullable @Header(value="User-Agent")
                                                                                java.lang.String&nbsp;userAgent)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">CreateOperation</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">CreateOperation</a></code></span></div>
 <div class="block">Creates an application.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.options.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html#createApp-io.micronaut.starter.application.ApplicationType-java.lang.String-java.util.List-io.micronaut.starter.options.BuildTool-io.micronaut.starter.api.TestFramework-io.micronaut.starter.options.Language-io.micronaut.starter.options.JdkVersion-java.lang.String-">createApp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The application type</dd>
 <dd><code>name</code> - The name of the application</dd>
