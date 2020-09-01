@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import com.fizzed.rocker.RockerModel;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -24,6 +27,8 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.DocumentationLink;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
 import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
@@ -47,17 +52,25 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
+import io.micronaut.starter.template.RockerWritable;
 
 import javax.inject.Singleton;
 import java.util.Set;
 
+import static io.micronaut.starter.application.ApplicationType.*;
+
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
+    private static final String BOOK_REQUEST_HANDLER = "BookRequestHandler";
+    private static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
+    private static final String LINK_TITLE = "AWS Lambda Handler";
+    private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
 
     @Override
     public String getName() {
@@ -81,12 +94,16 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
             addBook(generatorContext, project);
             addBookSaved(generatorContext, project);
             ApplicationType applicationType = generatorContext.getApplicationType();
-            if (applicationType == ApplicationType.DEFAULT) {
-                addBookController(generatorContext, project);
-                addBookControllerTest(generatorContext, project);
-            } else if (applicationType == ApplicationType.FUNCTION) {
-                addRequestHandler(generatorContext, project);
-                addTest(generatorContext, project);
+            if (applicationType == DEFAULT || applicationType == FUNCTION) {
+                if (applicationType == DEFAULT) {
+                    addBookController(generatorContext, project);
+                    addBookControllerTest(generatorContext, project);
+                } else {
+                    addRequestHandler(generatorContext, project);
+                    addTest(generatorContext, project);
+                }
+                DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
+                generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
             }
         }
     }
@@ -135,13 +152,13 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
     }
 
     private void addRequestHandler(GeneratorContext generatorContext, Project project) {
-        String awsLambdaBookRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/BookRequestHandler");
+        String awsLambdaBookRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + BOOK_REQUEST_HANDLER);
         generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookRequestHandlerFile, awsLambdaBookRequestHandlerJava.template(project), awsLambdaBookRequestHandlerKotlin.template(project), awsLambdaBookRequestHandlerGroovy.template(project));
     }
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return applicationType == ApplicationType.FUNCTION &&
+        return applicationType == FUNCTION &&
                 selectedFeatures.stream().filter(feature -> feature instanceof CloudFeature)
                         .noneMatch(cloudFeature -> ((CloudFeature) cloudFeature).getCloud() != getCloud());
     }
@@ -159,5 +176,17 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature 
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda";
+    }
+
+    @Override
+    public String handlerClass(ApplicationType applicationType, Project project) {
+        switch (applicationType) {
+            case DEFAULT:
+                return MICRONAUT_LAMBDA_HANDLER;
+            case FUNCTION:
+                return project.getPackageName() + "." + BOOK_REQUEST_HANDLER;
+            default:
+                return null;
+        }
     }
 }
