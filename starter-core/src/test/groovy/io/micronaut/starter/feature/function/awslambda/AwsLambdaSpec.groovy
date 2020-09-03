@@ -30,6 +30,23 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda")
     }
 
+    void 'test readme.md for application #applicationType feature aws-lambda contains Handler '(ApplicationType applicationType,
+                                                                                                String handler) {
+        when:
+        def output = generate(applicationType, ['aws-lambda'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("[AWS Lambda Handler](https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html)")
+        readme.contains("Handler: $handler".toString())
+
+        where:
+        applicationType             | handler
+        ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.MicronautLambdaHandler'
+        ApplicationType.FUNCTION    | 'example.micronaut.BookRequestHandler'
+    }
+
     @Unroll
     void "aws-lambda does not support #description"(ApplicationType applicationType, String description) {
         expect:
@@ -59,7 +76,6 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         language << Language.values()
     }
-
 
     @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {

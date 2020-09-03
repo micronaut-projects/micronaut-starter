@@ -1,0 +1,26 @@
+@import io.micronaut.starter.feature.function.DocumentationLink
+@import io.micronaut.starter.feature.function.HandlerClassFeature
+@import io.micronaut.starter.feature.Feature
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.application.Project
+
+@args (
+Feature feature,
+ApplicationType applicationType,
+Project project,
+DocumentationLink documentationLink
+)
+
+@if (feature instanceof HandlerClassFeature && ((HandlerClassFeature) feature).handlerClass(applicationType, project) != null) {
+
+## Handler
+
+@if (documentationLink != null) {
+
+[@documentationLink.getTitle()](@documentationLink.getUrl())
+
+}
+
+Handler: @(((HandlerClassFeature) feature).handlerClass(applicationType, project))
+
+}
