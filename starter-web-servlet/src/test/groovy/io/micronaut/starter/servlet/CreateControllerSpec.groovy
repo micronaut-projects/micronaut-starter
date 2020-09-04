@@ -32,7 +32,7 @@ class CreateControllerSpec extends Specification {
         def bytes = client.createApp("test", ['graalvm'], null, null, null)
 
         then:
-        ZipUtil.containsFile(bytes, "native-image.properties")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle", ':svm')
     }
 
     void "test create app with kotlin"() {
@@ -64,7 +64,7 @@ class CreateControllerSpec extends Specification {
         def bytes = client.createApp("test", ['flyway'], BuildTool.GRADLE, TestFramework.SPOCK, Language.GROOVY)
 
         then:
-        ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock-core")
+        ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
 
 
