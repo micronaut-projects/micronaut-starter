@@ -201,12 +201,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         !buildGradle.contains('id "application"')
         !buildGradle.contains('mainClassName')
-        if (language == Language.JAVA) {
-            assert buildGradle.contains('id "java"')
-        } else if (language == Language.GROOVY) {
-            assert buildGradle.contains('id "groovy"')
-        }
-
+        buildGradle.contains('id "io.micronaut.application"')
 
         where:
         language << Language.values().toList()
@@ -265,7 +260,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        template.contains('runtime "lambda"')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !template.contains('implementation("io.micronaut:micronaut-http-client")')
 
@@ -302,7 +297,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String build = output['build.gradle']
 
         then:
-        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        build.contains('runtime "lambda"')
         build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
@@ -372,7 +367,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         String build = output['build.gradle']
 
         then:
-        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-api-proxy")')
+        build.contains('runtime "lambda"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 

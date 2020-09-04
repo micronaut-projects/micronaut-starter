@@ -29,7 +29,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
         then:
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
         template.contains('implementation("io.micronaut:micronaut-management")')
-        template.contains('id "com.google.cloud.tools.jib" version "2.1.0"')
+        template.contains('id "com.google.cloud.tools.jib"')
 
         where:
         language << Language.values().toList()

@@ -33,31 +33,4 @@ class GradleSpec extends BeanContextSpec {
         template.contains('age=30')
     }
 
-    void "test annotation processor dependencies"() {
-        when:
-        String template = annotationProcessors.template(getFeatures([])).render().toString()
-        String platform = VersionInfo.micronautVersion.endsWith("SNAPSHOT") ? "enforcedPlatform" : "platform"
-
-        then:
-        template.contains("annotationProcessor($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
-        template.contains('annotationProcessor("io.micronaut:micronaut-inject-java")')
-        template.contains('annotationProcessor("io.micronaut:micronaut-validation")')
-
-        when:
-        template = annotationProcessors.template(getFeatures([], Language.KOTLIN)).render().toString()
-
-        then:
-
-        template.contains("kapt($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
-        template.contains('kapt("io.micronaut:micronaut-inject-java")')
-        template.contains('kapt("io.micronaut:micronaut-validation")')
-
-        when:
-        template = annotationProcessors.template(getFeatures([], Language.GROOVY)).render().toString()
-
-        then:
-        template.contains("compileOnly($platform(\"io.micronaut:micronaut-bom:\$micronautVersion\"))")
-        template.contains('compileOnly("io.micronaut:micronaut-inject-groovy")')
-    }
-
 }

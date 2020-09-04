@@ -15,20 +15,12 @@
  */
 package io.micronaut.starter.feature.graalvm;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import io.micronaut.starter.feature.graalvm.template.deploysh;
-import io.micronaut.starter.feature.graalvm.template.dockerBuildScript;
-import io.micronaut.starter.feature.graalvm.template.dockerfile;
-import io.micronaut.starter.feature.graalvm.template.lambdadockerfile;
-import io.micronaut.starter.feature.graalvm.template.nativeImageProperties;
-import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
@@ -82,38 +74,8 @@ public class GraalVM implements Feature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        ApplicationType applicationType = generatorContext.getApplicationType();
-        RockerModel dockerfileRockerModel;
-        String jarFile = generatorContext.getBuildTool()
-                                         .getShadeJarDirectoryPattern(generatorContext.getProject());
-        if (nativeImageWillBeDeployedToAwsLambda(generatorContext)) {
-            dockerfileRockerModel = lambdadockerfile.template(generatorContext.getProject(), generatorContext.getBuildTool(), jarFile, generatorContext.getJdkVersion());
-            RockerModel deployshRockerModel = deploysh.template(generatorContext.getProject());
-            generatorContext.addTemplate("deploysh", new RockerTemplate("deploy.sh", deployshRockerModel, true));
-
-        } else {
-            dockerfileRockerModel = dockerfile.template(generatorContext.getProject(), jarFile, generatorContext.getJdkVersion());
-        }
-
-        //overrides the template from the Docker feature
-        generatorContext.addTemplate("dockerfile", new RockerTemplate("Dockerfile", dockerfileRockerModel));
-
-        generatorContext.addTemplate("dockerBuildScript", new RockerTemplate("docker-build.sh", dockerBuildScript.template(generatorContext.getProject()), true));
-
-        generatorContext.addTemplate("nativeImageProperties",
-                new RockerTemplate("src/main/resources/META-INF/native-image/{packageName}/{name}-application/native-image.properties", nativeImageProperties.template(applicationType, generatorContext.getProject(), generatorContext.getFeatures())
-                )
-        );
-    }
-
-    @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    protected boolean nativeImageWillBeDeployedToAwsLambda(GeneratorContext generatorContext) {
-        return generatorContext.getFeatures().getFeatures().stream().anyMatch(feature -> feature.getName().equals(AwsLambda.FEATURE_NAME_AWS_LAMBDA));
     }
 
     @Override

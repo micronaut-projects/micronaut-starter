@@ -64,9 +64,17 @@ List<Property> properties
     }
   </repositories>
 
-@if (features.contains("testcontainers")) {
+
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+@if (features.contains("testcontainers")) {
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
@@ -74,9 +82,10 @@ List<Property> properties
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+}
     </dependencies>
   </dependencyManagement>
-}
+
 
 
   <dependencies>

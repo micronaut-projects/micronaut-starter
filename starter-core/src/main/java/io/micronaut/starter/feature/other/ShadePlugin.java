@@ -28,7 +28,7 @@ import java.util.Set;
  * Adds a shaded JAR feature.
  */
 @Singleton
-public class ShadePlugin implements DefaultFeature {
+public class ShadePlugin implements Feature {
 
     @NonNull
     @Override
@@ -39,11 +39,6 @@ public class ShadePlugin implements DefaultFeature {
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return true;
     }
 
     @Override

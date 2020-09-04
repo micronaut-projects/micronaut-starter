@@ -6,20 +6,6 @@
 Features features
 )
 
-@if (VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT")) {
-@annotationProcessor.template(features, "enforcedPlatform(\"io.micronaut:micronaut-bom:$micronautVersion\")")
-} else {
-@annotationProcessor.template(features, "platform(\"io.micronaut:micronaut-bom:$micronautVersion\")")
-}
-@if (features.language().isJava() || features.language().isKotlin()) {
-@annotationProcessor.template(features, "\"io.micronaut:micronaut-inject-java\"")
-@annotationProcessor.template(features, "\"io.micronaut:micronaut-validation\"")
-} else if (features.language().isGroovy()) {
-@annotationProcessor.template(features, "\"io.micronaut:micronaut-inject-groovy\"")
-}
-@if (features.contains("graalvm")) {
-@annotationProcessor.template(features, "\"io.micronaut:micronaut-graal\"")
-}
 @if (features.contains("picocli")) {
 @annotationProcessor.template(features, "\"info.picocli:picocli-codegen:4.2.0\"")
 }

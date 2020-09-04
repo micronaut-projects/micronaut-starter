@@ -20,10 +20,12 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.*;
+import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;
@@ -38,6 +40,19 @@ import javax.inject.Singleton;
 public class GoogleCloudFunction extends AbstractFunctionFeature implements CloudFeature {
 
     public static final String NAME = "google-cloud-function-http";
+
+    private final ShadePlugin shadePlugin;
+
+    public GoogleCloudFunction(ShadePlugin shadePlugin) {
+        this.shadePlugin = shadePlugin;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(ShadePlugin.class)) {
+            featureContext.addFeature(shadePlugin);
+        }
+    }
 
     @NonNull
     @Override
