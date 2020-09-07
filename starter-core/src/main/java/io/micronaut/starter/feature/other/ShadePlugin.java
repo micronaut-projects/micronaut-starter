@@ -17,12 +17,9 @@ package io.micronaut.starter.feature.other;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.Set;
 
 /**
  * Adds a shaded JAR feature.
