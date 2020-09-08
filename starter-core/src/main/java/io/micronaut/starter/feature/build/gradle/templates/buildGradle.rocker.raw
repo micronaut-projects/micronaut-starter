@@ -34,11 +34,11 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.0.0"
 }
 @if (features.application() != null && features.application().mainClassName(applicationType, project, features) != null) {
-    id "io.micronaut.application" version '1.0.0.RC10'
+    id "io.micronaut.application" version '1.0.0.RC11'
 } else if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-   id "io.micronaut.application" version '1.0.0.RC10'
+   id "io.micronaut.application" version '1.0.0.RC11'
 } else {
-    id "io.micronaut.library" version '1.0.0.RC10'
+    id "io.micronaut.library" version '1.0.0.RC11'
 }
 @if (features.contains("grpc")) {
     id "com.google.protobuf" version "0.8.13"
