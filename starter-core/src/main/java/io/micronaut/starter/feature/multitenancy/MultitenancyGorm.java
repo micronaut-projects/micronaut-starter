@@ -94,8 +94,8 @@ public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
     }
 
     @Override
-    public Language getRequiredLanguage() {
-        return Language.GROOVY;
+    public Language[] getRequiredLanguages() {
+        return new Language[]{Language.GROOVY};
     }
 
     @Override

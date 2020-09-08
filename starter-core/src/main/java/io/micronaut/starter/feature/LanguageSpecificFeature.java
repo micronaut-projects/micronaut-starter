@@ -26,8 +26,8 @@ import io.micronaut.starter.options.Language;
 public interface LanguageSpecificFeature extends Feature {
 
     /**
-     * @return The language this feature requires, or empty if the feature can be used with
+     * @return The languages this feature requires, or empty if the feature can be used with
      * any language.
      */
-    Language getRequiredLanguage();
+    Language[] getRequiredLanguages();
 }

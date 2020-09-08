@@ -12,6 +12,7 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 import java.util.stream.Collectors
+import java.util.stream.Stream
 
 class FeatureSpec extends BeanContextSpec {
 
@@ -36,13 +37,9 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     @Unroll
-    void "test #feature does not add an unmodifiable map to config"(Feature feature) {
+    void "test #feature.name with #language does not add an unmodifiable map to config"(Feature feature, Language language) {
         when:
         JdkVersion javaVersion = javaVersionForFeature(feature.getName())
-        Language language = Language.JAVA
-        if (feature instanceof LanguageSpecificFeature) {
-            language = ((LanguageSpecificFeature) feature).getRequiredLanguage();
-        }
         Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
@@ -66,9 +63,16 @@ class FeatureSpec extends BeanContextSpec {
             })
 
         where:
-        feature << beanContext.getBeansOfType(Feature).stream()
-            .filter(f -> f.isVisible())
-            .collect(Collectors.toList())
+        [feature, language] << beanContext.getBeansOfType(Feature).stream()
+                .filter(f -> f.isVisible())
+                .flatMap(f -> {
+                    if (f instanceof LanguageSpecificFeature) {
+                        Language[] languages = ((LanguageSpecificFeature) f).getRequiredLanguages()
+                        return Arrays.stream(languages).flatMap(l -> Arrays.stream(Arrays.asList(f, l)))
+                    } else {
+                        return Stream.of(Arrays.asList(f, Language.JAVA))
+                    }
+                }).collect(Collectors.toList())
     }
 
     private JdkVersion javaVersionForFeature(String feature) {

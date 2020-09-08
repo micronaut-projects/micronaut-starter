@@ -20,7 +20,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     void "kotlin-extension-functions requires kotlin"() {
         expect:
         kotlinExtensionFunctions instanceof LanguageSpecificFeature
-        kotlinExtensionFunctions.getRequiredLanguage() == Language.KOTLIN
+        kotlinExtensionFunctions.getRequiredLanguages().contains(Language.KOTLIN)
     }
 
     void "kotlin-extension-functions belongs to Logging category"() {

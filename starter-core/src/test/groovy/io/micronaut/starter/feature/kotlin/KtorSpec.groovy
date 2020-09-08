@@ -42,7 +42,7 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     void "ktor requires kotlin"() {
         expect:
         ktor instanceof LanguageSpecificFeature
-        ktor.getRequiredLanguage() == Language.KOTLIN
+        ktor.getRequiredLanguages().contains(Language.KOTLIN)
     }
 
     void "ktor is visible"() {

@@ -64,8 +64,8 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
     }
 
     @Override
-    public Language getRequiredLanguage() {
-        return Language.GROOVY;
+    public Language[] getRequiredLanguages() {
+        return new Language[]{Language.GROOVY};
     }
 
     @Override

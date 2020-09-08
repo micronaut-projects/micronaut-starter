@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.validation;
 
+import io.micronaut.core.util.ArrayUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Options;
@@ -23,39 +24,29 @@ import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Singleton
 public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        Map<Language, Set<String>> requiredLanguages = new HashMap<>();
-        for (Feature feature: features) {
-            if (feature instanceof LanguageSpecificFeature) {
-                Language lang = ((LanguageSpecificFeature) feature).getRequiredLanguage();
-                requiredLanguages.compute(lang, (key, value) -> {
-                    if (value == null) {
-                        value = new HashSet<>();
-                    }
-                    value.add(feature.getName());
-                    return value;
-                });
+        if (options != null) {
+            Map<String, Language[]> incomaptibleFeatures = features.stream()
+                    .filter(LanguageSpecificFeature.class::isInstance)
+                    .map(LanguageSpecificFeature.class::cast)
+                    .filter(f -> ArrayUtils.isNotEmpty(f.getRequiredLanguages()))
+                    .filter(f -> !Arrays.asList(f.getRequiredLanguages()).contains(options.getLanguage()))
+                    .collect(Collectors.toMap(Feature::getName, LanguageSpecificFeature::getRequiredLanguages));
+
+            if (!incomaptibleFeatures.isEmpty()) {
+                throw new IllegalArgumentException(String.format("The selected features are incompatible with language %s: %s.", options.getLanguage(),
+                        incomaptibleFeatures
+                                .entrySet()
+                                .stream()
+                                .map(e -> String.format("%s requires %s", e.getKey(), Arrays.toString(e.getValue())))
+                                .collect(Collectors.joining(", "))));
             }
-        }
-
-        Set<Language> languages = requiredLanguages.keySet();
-        Iterator<Language> languageIterator = languages.iterator();
-
-        if (languages.size() > 1) {
-            Language first = languageIterator.next();
-            Language second = languageIterator.next();
-            throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s and %s requires %s", requiredLanguages.get(first), first, requiredLanguages.get(second), second));
-        }
-
-        Language requiredLanguage = languageIterator.hasNext() ? languageIterator.next() : null;
-
-        if (options != null && requiredLanguage != null && requiredLanguage != options.getLanguage()) {
-            throw new IllegalArgumentException(String.format("The selected features are incompatible. %s requires %s but %s was the selected language.", requiredLanguages.get(requiredLanguage), requiredLanguage, options.getLanguage()));
         }
     }
 

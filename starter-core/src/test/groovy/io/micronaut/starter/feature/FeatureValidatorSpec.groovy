@@ -16,13 +16,49 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
     FeatureValidator featureValidator = beanContext.getBean(FeatureValidator)
 
+    void "test feature with empty language selection"() {
+        when:
+        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+            String name = "test-feature"
+            String description = "test desc"
+            String title = "test title"
+            Language[] requiredLanguages = new Language[]{}
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
+        }] as Set)
+
+        then:
+        noExceptionThrown()
+    }
+
+    void "test required feature with language selection"() {
+        when:
+        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+            String name = "test-feature"
+            String description = "test desc"
+            String title = "test title"
+            Language[] requiredLanguages = new Language[]{Language.JAVA, Language.GROOVY}
+
+            @Override
+            boolean supports(ApplicationType applicationType) {
+                true
+            }
+        }] as Set)
+
+        then:
+        noExceptionThrown()
+    }
+
     void "test feature conflicts with language selection"() {
         when:
         featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
             String name = "test-feature"
             String description = "test desc"
             String title = "test title"
-            Language requiredLanguage = Language.GROOVY
+            Language[] requiredLanguages = new Language[]{Language.GROOVY}
 
             @Override
             boolean supports(ApplicationType applicationType) {
@@ -32,26 +68,26 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
         then:
         def ex = thrown(IllegalArgumentException)
-        ex.message == "The selected features are incompatible. [test-feature] requires groovy but java was the selected language."
+        ex.message == "The selected features are incompatible with language java: test-feature requires [groovy]."
     }
 
     void "test conflicting features required language"() {
         when:
-        featureValidator.validatePreProcessing(new Options(Language.JAVA, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
-            String name = "groovy-feature"
-            String description = "groovy"
-            String title = "groovy title"
-            Language requiredLanguage = Language.GROOVY
+        featureValidator.validatePreProcessing(new Options(Language.KOTLIN, null, null), ApplicationType.DEFAULT, [new LanguageSpecificFeature() {
+            String name = "groovy-java-feature"
+            String description = "groovy-java"
+            String title = "groovy java title"
+            Language[] requiredLanguages = new Language[]{Language.GROOVY, Language.JAVA}
 
             @Override
             boolean supports(ApplicationType applicationType) {
                 true
             }
         }, new LanguageSpecificFeature() {
-            String name = "kotlin-feature"
+            String name = "groovy-feature"
             String description = "groovy"
             String title = "groovy title"
-            Language requiredLanguage = Language.KOTLIN
+            Language[] requiredLanguages = new Language[]{Language.GROOVY}
 
             @Override
             boolean supports(ApplicationType applicationType) {
@@ -61,9 +97,9 @@ class FeatureValidatorSpec extends BeanContextSpec {
 
         then:
         def ex = thrown(IllegalArgumentException)
-        ex.message.contains("The selected features are incompatible")
-        ex.message.contains("[groovy-feature] requires groovy")
-        ex.message.contains("[kotlin-feature] requires kotlin")
+        ex.message.contains("The selected features are incompatible with language kotlin: ")
+        ex.message.contains("groovy-java-feature requires [groovy, java]")
+        ex.message.contains("groovy-feature requires [groovy]")
     }
 
     void "test one of"() {

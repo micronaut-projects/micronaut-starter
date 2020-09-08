@@ -21,7 +21,7 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "config4k only works with kotlin"() {
         expect:
-        config4k.requiredLanguage == Language.KOTLIN
+        config4k.requiredLanguages.contains(Language.KOTLIN)
     }
 
     void "title of config4k is not null"() {

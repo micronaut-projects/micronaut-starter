@@ -85,8 +85,8 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     }
 
     @Override
-    public Language getRequiredLanguage() {
-        return Language.KOTLIN;
+    public Language[] getRequiredLanguages() {
+        return new Language[]{Language.KOTLIN};
     }
 
     @Override

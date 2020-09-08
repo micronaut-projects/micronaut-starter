@@ -71,7 +71,7 @@ public enum Language {
         return features.stream()
                 .filter(LanguageSpecificFeature.class::isInstance)
                 .map(LanguageSpecificFeature.class::cast)
-                .map(LanguageSpecificFeature::getRequiredLanguage)
+                .flatMap(it -> Arrays.stream(it.getRequiredLanguages()))
                 .findFirst()
                 .orElse(null);
     }

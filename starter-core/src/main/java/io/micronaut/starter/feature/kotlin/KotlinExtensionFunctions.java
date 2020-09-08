@@ -73,7 +73,7 @@ public class KotlinExtensionFunctions implements Feature, LanguageSpecificFeatur
     }
 
     @Override
-    public Language getRequiredLanguage() {
-        return Language.KOTLIN;
+    public Language[] getRequiredLanguages() {
+        return new Language[]{Language.KOTLIN};
     }
 }

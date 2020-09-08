@@ -80,8 +80,8 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
     }
 
     @Override
-    public Language getRequiredLanguage() {
-        return Language.KOTLIN;
+    public Language[] getRequiredLanguages() {
+        return new Language[]{Language.KOTLIN};
     }
 
     @Override
