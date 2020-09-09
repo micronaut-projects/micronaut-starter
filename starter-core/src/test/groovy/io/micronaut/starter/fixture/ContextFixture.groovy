@@ -50,7 +50,7 @@ trait ContextFixture {
         featureContext.processSelectedFeatures()
         Set<Feature> finalFeatures = featureContext.getFinalFeatures(ConsoleOutput.NOOP)
         beanContext.getBean(FeatureValidator).validatePostProcessing(featureContext.getOptions(), applicationType, finalFeatures)
-        return new Features(finalFeatures, options)
+        return new Features(buildGeneratorContext(features, options, applicationType), finalFeatures, options)
     }
 
     FeatureContext buildFeatureContext(List<String> selectedFeatures,

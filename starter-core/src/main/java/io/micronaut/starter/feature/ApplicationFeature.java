@@ -24,7 +24,7 @@ import io.micronaut.starter.options.BuildTool;
 public interface ApplicationFeature extends Feature {
 
     @Nullable
-    String mainClassName(ApplicationType applicationType, Project project, Features features);
+    String mainClassName(GeneratorContext generatorContext);
 
     @Override
     default boolean isVisible() {
@@ -34,10 +34,7 @@ public interface ApplicationFeature extends Feature {
     @Override
     default void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            String mainClass = mainClassName(
-                    generatorContext.getApplicationType(),
-                    generatorContext.getProject(),
-                    generatorContext.getFeatures());
+            String mainClass = mainClassName(generatorContext);
             if (mainClass != null) {
                 generatorContext.getBuildProperties().put("exec.mainClass", mainClass);
             }

@@ -119,7 +119,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'Application file is NOT generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
+    void 'Application file is generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
             ApplicationType.DEFAULT,
@@ -128,7 +128,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         )
 
         then:
-        !output.containsKey("src/main/java/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         where:
         language << supportedLanguages()

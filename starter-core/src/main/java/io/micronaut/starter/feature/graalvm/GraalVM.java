@@ -18,45 +18,11 @@ package io.micronaut.starter.feature.graalvm;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class GraalVM implements Feature {
-
-    private final AwsLambdaCustomRuntime awsLambdaCustomRuntime;
-
-    public GraalVM(AwsLambdaCustomRuntime awsLambdaCustomRuntime) {
-        this.awsLambdaCustomRuntime = awsLambdaCustomRuntime;
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (shouldApplyFeature(featureContext, AwsLambdaCustomRuntime.class)) {
-            featureContext.addFeature(awsLambdaCustomRuntime);
-        }
-    }
-
-    protected boolean shouldApplyFeature(FeatureContext featureContext, Class feature) {
-        if (feature == AwsLambdaCustomRuntime.class) {
-            if (
-                    (
-                            featureContext.getApplicationType() == ApplicationType.FUNCTION ||
-                                    featureContext.getApplicationType() == ApplicationType.DEFAULT
-                    ) &&
-                            featureContext.isPresent(AwsLambda.class) &&
-                            awsLambdaCustomRuntime.supports(featureContext.getApplicationType()) &&
-                            !featureContext.isPresent(feature)
-            ) {
-                    return true;
-            }
-        }
-        return false;
-
-    }
 
     @Override
     public String getName() {

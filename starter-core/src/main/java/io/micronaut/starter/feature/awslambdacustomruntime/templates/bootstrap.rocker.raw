@@ -15,8 +15,8 @@ set -euo pipefail
 ./@project.getName() -Xmx512m
 } else {
 @if (buildTool.equals(BuildTool.GRADLE)) {
-java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.application().mainClassName(applicationType,project,features)
+java -XX:TieredStopAtLevel=1 -noverify -cp @project.getName()-all.jar @features.mainClass().get()
 } else {
-java -XX:TieredStopAtLevel=1 -noverify -cp @(project.getName()).jar @features.application().mainClassName(applicationType,project,features)
+java -XX:TieredStopAtLevel=1 -noverify -cp @(project.getName()).jar @features.mainClass().get()
 }
 }

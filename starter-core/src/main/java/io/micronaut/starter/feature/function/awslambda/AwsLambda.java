@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
@@ -50,7 +51,9 @@ import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookReq
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
@@ -71,15 +74,21 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
 
     private final ShadePlugin shadePlugin;
+    private final AwsLambdaCustomRuntime customRuntime;
 
-    public AwsLambda(ShadePlugin shadePlugin) {
+    public AwsLambda(ShadePlugin shadePlugin, AwsLambdaCustomRuntime customRuntime) {
         this.shadePlugin = shadePlugin;
+        this.customRuntime = customRuntime;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(ShadePlugin.class)) {
             featureContext.addFeature(shadePlugin);
+        }
+
+        if (featureContext.getBuildTool() == BuildTool.MAVEN && featureContext.isPresent(GraalVM.class)) {
+            featureContext.addFeature(customRuntime);
         }
     }
 

@@ -33,7 +33,7 @@ plugins {
 @if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "6.0.0"
 }
-@if (features.application() != null && features.application().mainClassName(applicationType, project, features) != null) {
+@if (features.mainClass().isPresent()) {
     id "io.micronaut.application" version '1.0.0.RC11'
 } else if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
    id "io.micronaut.application" version '1.0.0.RC11'
@@ -519,10 +519,8 @@ dependencies {
 }
 }
 
-@if (features.application() != null) {
-@if (features.application().mainClassName(applicationType, project, features)!=null) {
-mainClassName = "@features.application().mainClassName(applicationType, project, features)"
-}
+@if (features.mainClass().isPresent()) {
+mainClassName = "@features.mainClass().get()"
 }
 
 java {
@@ -540,7 +538,7 @@ compileKotlin {
 }
 }
 
-@if (features.testFramework().isKotlinTestFramework()) {
+@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = '@features.getTargetJdk()'

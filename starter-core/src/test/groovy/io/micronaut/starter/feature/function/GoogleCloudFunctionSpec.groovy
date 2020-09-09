@@ -73,7 +73,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !build.contains('implementation("io.micronaut:micronaut-http-client")')
-        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
