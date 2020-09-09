@@ -1,0 +1,33 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: "@project.getName()"
+spec:
+  template:
+    spec:
+      containers:
+      - image: "gcr.io/@project.getName()/jib-image"
+        name: "@project.getName()"
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+          initialDelaySeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 10
