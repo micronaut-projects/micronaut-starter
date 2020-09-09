@@ -440,6 +440,27 @@ dependencies {
 @if (features.contains("jmx")) {
     @dependency.template("io.micronaut.jmx", "micronaut-jmx", "implementation", null)
 }
+@if (features.contains("dekorate-kubernetes")) {
+    @dependency.template("io.dekorate", "kubernetes-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-openshift")) {
+    @dependency.template("io.dekorate", "openshift-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-knative")) {
+    @dependency.template("io.dekorate", "knative-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-prometheus")) {
+    @dependency.template("io.dekorate", "prometheus-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-jaeger")) {
+    @dependency.template("io.dekorate", "jaeger-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-servicecatalog")) {
+    @dependency.template("io.dekorate", "servicecatalog-annotations", "implementation", "${dekorateVersion}")
+}
+@if (features.contains("dekorate-halkyon")) {
+    @dependency.template("io.dekorate", "halkyon-annotations", "implementation", "${dekorateVersion}")
+}
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
 }

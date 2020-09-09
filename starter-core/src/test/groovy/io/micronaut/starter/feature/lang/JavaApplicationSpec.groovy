@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.lang
 
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature
+import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.feature.lang.java.application
@@ -14,6 +17,7 @@ import io.micronaut.starter.util.VersionInfo
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class JavaApplicationSpec extends Specification implements ProjectFixture, ContextFixture, CommandOutputFixture {
 
@@ -84,6 +88,37 @@ import io.swagger.v3.oas.annotations.info.*;
             title = "foo",
             version = "0.0"
     )
+)
+public class Application {
+
+    public static void main(String[] args) {
+        Micronaut.run(Application.class, args);
+    }
+}
+""".trim())
+    }
+
+    void "test java application with dekorate-kubernetes"() {
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]))
+                .render()
+                .toString()
+
+        expect:
+        applicationJava.contains("""
+package example.micronaut;
+
+import io.micronaut.runtime.Micronaut;
+import io.dekorate.kubernetes.annotation.KubernetesApplication;
+import io.dekorate.kubernetes.annotation.Label;
+import io.dekorate.kubernetes.annotation.Port;
+import io.dekorate.kubernetes.annotation.Probe;
+
+@KubernetesApplication(
+    name = "foo",
+    labels = @Label(key = "app", value = "foo"),
+    ports = @Port(name = "http", containerPort = 8080),
+    livenessProbe = @Probe(httpActionPath = "/health/liveness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10),
+    readinessProbe = @Probe(httpActionPath = "/health/readiness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10)
 )
 public class Application {
 

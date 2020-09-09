@@ -1,5 +1,8 @@
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Feature
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+@import java.util.stream.Collectors
 
 @args (Project project, Features features)
 
@@ -11,6 +14,30 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
 }
 
+@if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
+@if (features.contains("dekorate-kubernetes")) {
+import io.dekorate.kubernetes.annotation.KubernetesApplication;
+}
+@if (features.contains("dekorate-openshift")) {
+import io.dekorate.openshift.annotation.OpenshiftApplication;
+}
+@if (features.contains("dekorate-knative")) {
+import io.dekorate.knative.annotation.KnativeApplication;
+}
+import io.dekorate.kubernetes.annotation.Label;
+import io.dekorate.kubernetes.annotation.Port;
+import io.dekorate.kubernetes.annotation.Probe;
+}
+@if (features.contains("dekorate-prometheus")) {
+import io.dekorate.prometheus.annotation.EnableServiceMonitor;
+}
+@if (features.contains("dekorate-jeager")) {
+import io.dekorate.jaeger.annotation.EnableJaegerAgent;
+}
+@if (features.contains("dekorate-halkyon")) {
+import io.dekorate.halkyon.annotation.HalkyonComponent;
+}
+
 
 @if (features.contains("openapi")) {
 @@OpenAPIDefinition(
@@ -19,6 +46,33 @@ import io.swagger.v3.oas.annotations.info.*;
             version = "0.0"
     )
 )
+}
+
+@for(Feature feature : features.getFeatures().stream().filter(f -> f instanceof AbstractDekoratePlatformFeature).iterator()) {
+
+@if (feature.getName().equals("dekorate-kubernetes")) {
+@@KubernetesApplication(
+} else if (feature.getName().equals("dekorate-openshift")) {
+@@OpenshiftApplication(
+} else if (feature.getName().equals("dekorate-knative")) {
+@@KnativeApplication(
+}
+    name = "@project.getName()",
+    labels = @@Label(key = "app", value = "@project.getName()"),
+    ports = @@Port(name = "http", containerPort = 8080),
+    livenessProbe = @@Probe(httpActionPath = "/health/liveness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10),
+    readinessProbe = @@Probe(httpActionPath = "/health/readiness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10)
+)
+}
+
+@if (features.contains("dekorate-prometheus")) {
+@@EnableServiceMonitor(port = "http", path="/prometheus")
+}
+@if (features.contains("dekorate-jeager")) {
+@@EnableJaegerAgent
+}
+@if (features.contains("dekorate-halkyon")) {
+@@HalkyonComponent(name = "@project.getName()")
 }
 public class Application {
 
