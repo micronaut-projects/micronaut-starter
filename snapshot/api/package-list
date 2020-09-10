@@ -80,6 +80,8 @@ io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
 io.micronaut.starter.feature.k8s
+io.micronaut.starter.feature.knative
+io.micronaut.starter.feature.knative.template
 io.micronaut.starter.feature.kotlin
 io.micronaut.starter.feature.kotlin.templates
 io.micronaut.starter.feature.lang
