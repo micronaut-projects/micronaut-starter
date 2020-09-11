@@ -114,7 +114,7 @@
         <h1>Micronaut Launch</h1>
         <p></p>
         <p>Generates Micronaut applications</p>
-        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/index.html'>2.0.1</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-starter/2.0.1/guide/index.html'>2.0.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0/guide/index.html'>2.0.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.RC2/guide/index.html'>2.0.0.RC2</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.RC1/guide/index.html'>2.0.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.M3/guide/index.html'>2.0.0.M3</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.TEST/guide/index.html'>2.0.0.TEST</option></select></p>
+        <p><strong>Version:</strong> <select style='max-width: 200px' onChange='window.document.location.href=this.options[this.selectedIndex].value;'><option value='https://micronaut-projects.github.io/micronaut-starter/snapshot/guide/index.html'>2.0.2</option><option selected='selected' value='https://micronaut-projects.github.io/micronaut-starter/2.0.2/guide/index.html'>2.0.2</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.1/guide/index.html'>2.0.1</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0/guide/index.html'>2.0.0</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.RC2/guide/index.html'>2.0.0.RC2</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.RC1/guide/index.html'>2.0.0.RC1</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.M3/guide/index.html'>2.0.0.M3</option><option value='https://micronaut-projects.github.io/micronaut-starter/2.0.0.TEST/guide/index.html'>2.0.0.TEST</option></select></p>
     </div>
     
 <h1 id="introduction"><a class="anchor" href="#introduction"></a>1 Introduction</h1>
@@ -384,7 +384,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, security-oauth2, http-client, tracing-jaeger, micrometer-atlas, micrometer-kairos, elasticsearch, data-jpa, kafka-streams, micrometer-datadog, neo4j-bolt, micrometer-statsd, liquibase, netflix-ribbon, views-thymeleaf, rxjava1, hibernate-jpa, cache-hazelcast, log4j2, data-jdbc, vertx-mysql-client, sqlserver, springloaded, hibernate-gorm, jackson-xml, micrometer-cloudwatch, micrometer-azure-monitor, security, aws-alexa, aws-lambda-custom-runtime, micrometer-elastic, jrebel, spring, views-soy, kubernetes, azure-function, neo4j-gorm, gcp-cloud-trace, views-rocker, security-session, multi-tenancy, file-watch, micrometer-ganglia, asciidoctor, micrometer-stackdriver, cache-ehcache, oracle, mongo-sync, jetty-server, micrometer-wavefront, spring-data-jpa, kafka, netflix-hystrix, undertow-server, openapi, spring-boot, jax-rs, rxjava3, acme, mongo-reactive, views-freemarker, testcontainers, views-velocity, aws-lambda, kotlin-extension-functions, spring-data-jdbc, jmx, security-ldap, flyway, mariadb, micrometer-influx, config-consul, reactor, mongo-gorm, redis-lettuce, rabbitmq, cache-infinispan, micrometer-prometheus, jib, netflix-archaius, postgres, nats, discovery-consul, micrometer-new-relic, micrometer-dynatrace, vertx-pg-client, cache-caffeine, spring-web, logback, netty-server, google-cloud-function, rss, discovery-eureka, h2, rss-itunes-podcast, graalvm, cassandra, management, config-kubernetes, micrometer-graphite, multi-tenancy-gorm, graphql, mysql, ktor, security-jwt, sql-jdbi, micrometer-jmx, micrometer-appoptics, tracing-zipkin, micrometer-humio, micrometer-signalfx, jooq, views-handlebars, hibernate-validator, tomcat-server, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-dbcp, jdbc-hikari, micrometer-ganglia, spring-data-jdbc, views-handlebars, views-soy, micrometer-appoptics, jackson-xml, springloaded, jmx, hibernate-validator, tracing-zipkin, netty-server, cache-ehcache, cassandra, micrometer-elastic, tomcat-server, spring, security-ldap, openapi, spring-data-jpa, ktor, discovery-consul, graalvm, kubernetes, views-thymeleaf, security-oauth2, micrometer-azure-monitor, netflix-archaius, nats, jrebel, log4j2, mariadb, hibernate-gorm, vertx-mysql-client, mongo-reactive, multi-tenancy, elasticsearch, micrometer-prometheus, graphql, testcontainers, mongo-gorm, aws-alexa, aws-lambda, flyway, kafka, file-watch, jib, postgres, config-kubernetes, micrometer-humio, aws-lambda-custom-runtime, neo4j-bolt, neo4j-gorm, micrometer-cloudwatch, management, micrometer-dynatrace, gcp-cloud-trace, logback, security, jetty-server, multi-tenancy-gorm, azure-function, vertx-pg-client, micrometer-graphite, rxjava3, netflix-ribbon, micrometer-stackdriver, sqlserver, http-client, jooq, rss, spring-web, kafka-streams, security-jwt, config-consul, knative, hibernate-jpa, asciidoctor, mysql, undertow-server, discovery-eureka, micrometer-statsd, spring-boot, micrometer-jmx, security-session, data-jdbc, sql-jdbi, cache-caffeine, acme, micrometer-kairos, micrometer-influx, rss-itunes-podcast, google-cloud-function, micrometer-new-relic, oracle, kotlin-extension-functions, micrometer-wavefront, views-freemarker, liquibase, tracing-jaeger, netflix-hystrix, jax-rs, views-rocker, reactor, micrometer-atlas, rxjava1, cache-hazelcast, rabbitmq, cache-infinispan, h2, micrometer-signalfx, mongo-sync, data-jpa, views-velocity, micrometer-datadog, redis-lettuce, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -408,7 +408,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -471,7 +471,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, security-oauth2, http-client, elasticsearch, data-jpa, kafka-streams, neo4j-bolt, liquibase, netflix-ribbon, rxjava1, hibernate-jpa, cache-hazelcast, log4j2, data-jdbc, vertx-mysql-client, sqlserver, springloaded, hibernate-gorm, jackson-xml, security, jrebel, spring, neo4j-gorm, gcp-cloud-trace, security-session, multi-tenancy, file-watch, asciidoctor, cache-ehcache, oracle, mongo-sync, spring-data-jpa, kafka, netflix-hystrix, spring-boot, rxjava3, mongo-reactive, testcontainers, kotlin-extension-functions, spring-data-jdbc, security-ldap, flyway, mariadb, reactor, mongo-gorm, redis-lettuce, rabbitmq, cache-infinispan, jib, postgres, nats, vertx-pg-client, cache-caffeine, logback, h2, graalvm, cassandra, multi-tenancy-gorm, graphql, mysql, security-jwt, sql-jdbi, jooq, hibernate-validator, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-dbcp, jdbc-hikari, spring-data-jdbc, jackson-xml, springloaded, hibernate-validator, cache-ehcache, cassandra, spring, security-ldap, spring-data-jpa, graalvm, security-oauth2, nats, jrebel, log4j2, mariadb, hibernate-gorm, vertx-mysql-client, mongo-reactive, multi-tenancy, elasticsearch, graphql, testcontainers, mongo-gorm, flyway, kafka, file-watch, jib, postgres, neo4j-bolt, neo4j-gorm, gcp-cloud-trace, logback, security, multi-tenancy-gorm, vertx-pg-client, rxjava3, netflix-ribbon, sqlserver, http-client, jooq, kafka-streams, security-jwt, hibernate-jpa, asciidoctor, mysql, spring-boot, security-session, data-jdbc, sql-jdbi, cache-caffeine, oracle, kotlin-extension-functions, liquibase, netflix-hystrix, reactor, rxjava1, cache-hazelcast, rabbitmq, cache-infinispan, h2, mongo-sync, data-jpa, redis-lettuce, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -495,7 +495,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -558,7 +558,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, security-oauth2, http-client, tracing-jaeger, elasticsearch, data-jpa, kafka-streams, neo4j-bolt, liquibase, netflix-ribbon, rxjava1, hibernate-jpa, cache-hazelcast, log4j2, data-jdbc, vertx-mysql-client, sqlserver, springloaded, hibernate-gorm, jackson-xml, security, aws-alexa, aws-lambda-custom-runtime, jrebel, spring, azure-function, neo4j-gorm, gcp-cloud-trace, security-session, multi-tenancy, file-watch, asciidoctor, cache-ehcache, oracle, mongo-sync, spring-data-jpa, kafka, netflix-hystrix, spring-boot, rxjava3, mongo-reactive, testcontainers, aws-lambda, kotlin-extension-functions, spring-data-jdbc, security-ldap, flyway, mariadb, config-consul, reactor, mongo-gorm, redis-lettuce, rabbitmq, cache-infinispan, jib, netflix-archaius, postgres, nats, discovery-consul, vertx-pg-client, cache-caffeine, logback, google-cloud-function, discovery-eureka, h2, graalvm, cassandra, multi-tenancy-gorm, graphql, mysql, security-jwt, sql-jdbi, tracing-zipkin, jooq, hibernate-validator, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-dbcp, jdbc-hikari, spring-data-jdbc, jackson-xml, springloaded, hibernate-validator, tracing-zipkin, cache-ehcache, cassandra, spring, security-ldap, spring-data-jpa, discovery-consul, graalvm, security-oauth2, netflix-archaius, nats, jrebel, log4j2, mariadb, hibernate-gorm, vertx-mysql-client, mongo-reactive, multi-tenancy, elasticsearch, graphql, testcontainers, mongo-gorm, aws-alexa, aws-lambda, flyway, kafka, file-watch, jib, postgres, aws-lambda-custom-runtime, neo4j-bolt, neo4j-gorm, gcp-cloud-trace, logback, security, multi-tenancy-gorm, azure-function, vertx-pg-client, rxjava3, netflix-ribbon, sqlserver, http-client, jooq, kafka-streams, security-jwt, config-consul, hibernate-jpa, asciidoctor, mysql, discovery-eureka, spring-boot, security-session, data-jdbc, sql-jdbi, cache-caffeine, google-cloud-function, oracle, kotlin-extension-functions, liquibase, tracing-jaeger, netflix-hystrix, reactor, rxjava1, cache-hazelcast, rabbitmq, cache-infinispan, h2, mongo-sync, data-jpa, redis-lettuce, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -582,7 +582,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -645,7 +645,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, security-oauth2, http-client, tracing-jaeger, elasticsearch, data-jpa, kafka-streams, neo4j-bolt, liquibase, netflix-ribbon, rxjava1, hibernate-jpa, cache-hazelcast, log4j2, data-jdbc, vertx-mysql-client, sqlserver, springloaded, hibernate-gorm, jackson-xml, security, jrebel, spring, kubernetes, neo4j-gorm, gcp-cloud-trace, security-session, multi-tenancy, file-watch, asciidoctor, cache-ehcache, oracle, mongo-sync, spring-data-jpa, kafka, netflix-hystrix, spring-boot, rxjava3, mongo-reactive, testcontainers, kotlin-extension-functions, spring-data-jdbc, security-ldap, flyway, mariadb, config-consul, reactor, mongo-gorm, redis-lettuce, rabbitmq, cache-infinispan, jib, netflix-archaius, postgres, nats, discovery-consul, vertx-pg-client, cache-caffeine, logback, discovery-eureka, h2, graalvm, cassandra, config-kubernetes, multi-tenancy-gorm, graphql, mysql, security-jwt, sql-jdbi, tracing-zipkin, jooq, hibernate-validator, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-dbcp, jdbc-hikari, spring-data-jdbc, jackson-xml, springloaded, hibernate-validator, tracing-zipkin, cache-ehcache, cassandra, spring, security-ldap, spring-data-jpa, discovery-consul, graalvm, kubernetes, security-oauth2, netflix-archaius, nats, jrebel, log4j2, mariadb, hibernate-gorm, vertx-mysql-client, mongo-reactive, multi-tenancy, elasticsearch, graphql, testcontainers, mongo-gorm, flyway, kafka, file-watch, jib, postgres, config-kubernetes, neo4j-bolt, neo4j-gorm, gcp-cloud-trace, logback, security, multi-tenancy-gorm, vertx-pg-client, rxjava3, netflix-ribbon, sqlserver, http-client, jooq, kafka-streams, security-jwt, config-consul, knative, hibernate-jpa, asciidoctor, mysql, discovery-eureka, spring-boot, security-session, data-jdbc, sql-jdbi, cache-caffeine, oracle, kotlin-extension-functions, liquibase, tracing-jaeger, netflix-hystrix, reactor, rxjava1, cache-hazelcast, rabbitmq, cache-infinispan, h2, mongo-sync, data-jpa, redis-lettuce, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -669,7 +669,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -732,7 +732,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-f</strong>, <strong>--features</strong>=<em>FEATURE</em>[,<em>FEATURE</em>&#8230;&#8203;]</dt>
 <dd>
-<p>The features to use. Possible values: jdbc-tomcat, jdbc-dbcp, jdbc-hikari, jdbc-ucp, security-oauth2, http-client, tracing-jaeger, elasticsearch, data-jpa, kafka-streams, neo4j-bolt, liquibase, netflix-ribbon, rxjava1, hibernate-jpa, cache-hazelcast, log4j2, data-jdbc, vertx-mysql-client, sqlserver, springloaded, hibernate-gorm, jackson-xml, security, jrebel, spring, neo4j-gorm, gcp-cloud-trace, security-session, multi-tenancy, file-watch, asciidoctor, cache-ehcache, oracle, mongo-sync, spring-data-jpa, kafka, netflix-hystrix, spring-boot, rxjava3, mongo-reactive, testcontainers, kotlin-extension-functions, spring-data-jdbc, security-ldap, flyway, mariadb, config-consul, reactor, mongo-gorm, redis-lettuce, rabbitmq, cache-infinispan, jib, netflix-archaius, postgres, nats, discovery-consul, vertx-pg-client, cache-caffeine, logback, discovery-eureka, h2, graalvm, cassandra, config-kubernetes, multi-tenancy-gorm, graphql, mysql, security-jwt, sql-jdbi, tracing-zipkin, jooq, hibernate-validator, properties, config4k</p>
+<p>The features to use. Possible values: jdbc-ucp, jdbc-tomcat, jdbc-dbcp, jdbc-hikari, spring-data-jdbc, jackson-xml, springloaded, hibernate-validator, tracing-zipkin, cache-ehcache, cassandra, spring, security-ldap, spring-data-jpa, discovery-consul, graalvm, security-oauth2, netflix-archaius, nats, jrebel, log4j2, mariadb, hibernate-gorm, vertx-mysql-client, mongo-reactive, multi-tenancy, elasticsearch, graphql, testcontainers, mongo-gorm, flyway, kafka, file-watch, jib, postgres, config-kubernetes, neo4j-bolt, neo4j-gorm, gcp-cloud-trace, logback, security, multi-tenancy-gorm, vertx-pg-client, rxjava3, netflix-ribbon, sqlserver, http-client, jooq, kafka-streams, security-jwt, config-consul, hibernate-jpa, asciidoctor, mysql, discovery-eureka, spring-boot, security-session, data-jdbc, sql-jdbi, cache-caffeine, oracle, kotlin-extension-functions, liquibase, tracing-jaeger, netflix-hystrix, reactor, rxjava1, cache-hazelcast, rabbitmq, cache-infinispan, h2, mongo-sync, data-jpa, redis-lettuce, properties, config4k</p>
 </dd>
 <dt class="hdlist1"><strong>-h</strong>, <strong>--help</strong></dt>
 <dd>
@@ -756,7 +756,7 @@ Application generation commands are:</p>
 </dd>
 <dt class="hdlist1"><strong>-t</strong>, <strong>--test</strong>=<em>TEST</em></dt>
 <dd>
-<p>Which test framework to use. Possible values: junit, spock, kotlintest.</p>
+<p>Which test framework to use. Possible values: junit, spock, kotest.</p>
 </dd>
 <dt class="hdlist1"><strong>-v</strong>, <strong>--verbose</strong></dt>
 <dd>
@@ -803,7 +803,7 @@ Application generation commands are:</p>
 <p>        <div class="listingblock multi-language-sample">
 <div class="title"></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-core:2.0.1")</span></code></pre>
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="gradle">implementation(<span class="hljs-string">"io.micronaut.starter:micronaut-starter-core:2.0.2")</span></code></pre>
 </div>
 </div>
 <div class="listingblock multi-language-sample">
@@ -811,7 +811,7 @@ Application generation commands are:</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="maven">&lt;dependency&gt;
     &lt;groupId&gt;io.micronaut.starter&lt;/groupId&gt;
     &lt;artifactId&gt;micronaut-starter-core&lt;/artifactId&gt;
-    &lt;version&gt;2.0.1&lt;/version&gt;
+    &lt;version&gt;2.0.2&lt;/version&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
 </div>
@@ -845,7 +845,7 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-2.0.1-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">java -jar starter-cli/build/libs/micronaut-cli-2.0.2-all.jar</code></pre>
 </div>
 </div>
 </div>
@@ -856,7 +856,7 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-server --no-fallback -cp starter-cli/build/libs/micronaut-cli-2.0.1-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-2.0.2-all.jar</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -951,7 +951,7 @@ Application generation commands are:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-2.0.1-all.jar</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-2.0.2-all.jar</code></pre>
 </div>
 </div>
 </div>

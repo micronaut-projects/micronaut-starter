@@ -68,6 +68,8 @@ io.micronaut.starter.feature.function.azure.template.raw
 io.micronaut.starter.feature.function.gcp
 io.micronaut.starter.feature.function.gcp.template
 io.micronaut.starter.feature.function.gcp.template.raw
+io.micronaut.starter.feature.function.template
+io.micronaut.starter.feature.function.template.http
 io.micronaut.starter.feature.graalvm
 io.micronaut.starter.feature.graalvm.template
 io.micronaut.starter.feature.graphql
@@ -78,6 +80,8 @@ io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
 io.micronaut.starter.feature.k8s
+io.micronaut.starter.feature.knative
+io.micronaut.starter.feature.knative.template
 io.micronaut.starter.feature.kotlin
 io.micronaut.starter.feature.kotlin.templates
 io.micronaut.starter.feature.lang
@@ -102,7 +106,7 @@ io.micronaut.starter.feature.picocli.lang.java
 io.micronaut.starter.feature.picocli.lang.kotlin
 io.micronaut.starter.feature.picocli.test
 io.micronaut.starter.feature.picocli.test.junit
-io.micronaut.starter.feature.picocli.test.kotlintest
+io.micronaut.starter.feature.picocli.test.kotest
 io.micronaut.starter.feature.picocli.test.spock
 io.micronaut.starter.feature.reactor
 io.micronaut.starter.feature.redis
