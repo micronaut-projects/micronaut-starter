@@ -26,8 +26,9 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.api.starterApi;
+import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -115,11 +116,10 @@ public class ApplicationController implements ApplicationTypeOperations {
 
                 @Override
                 public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
-                    new RockerTemplate("home", new starterApi()
+                    new RockerWritable(new starterApi()
                             .serverURL(info.getServerURL())
-                            .micronautVersion(VersionUtils.MICRONAUT_VERSION)).write(
-                        outputStream
-                    );
+                            .micronautVersion(VersionInfo.getMicronautVersion()))
+                            .write(outputStream);
                 }
             });
         }
