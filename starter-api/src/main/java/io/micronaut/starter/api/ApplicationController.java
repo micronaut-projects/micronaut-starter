@@ -18,7 +18,6 @@ package io.micronaut.starter.api;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.version.VersionUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
