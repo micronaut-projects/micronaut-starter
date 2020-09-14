@@ -19,7 +19,6 @@ package io.micronaut.starter.feature.messaging.pubsub;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import javax.inject.Singleton;
@@ -50,7 +49,6 @@ public class PubSub implements MessagingFeature {
     public String getThirdPartyDocumentation() {
         return "https://cloud.google.com/pubsub/docs";
     }
-
 
     @Override
     public boolean supports(ApplicationType applicationType) {
