@@ -20,9 +20,9 @@ plugins {
 }
 
 @if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
-    id "org.jetbrains.kotlin.jvm" version "1.3.72"
-    id "org.jetbrains.kotlin.kapt" version "1.3.72"
-    id "org.jetbrains.kotlin.plugin.allopen" version "1.3.72"
+    id "org.jetbrains.kotlin.jvm" version "1.4.10"
+    id "org.jetbrains.kotlin.kapt" version "1.4.10"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.4.10"
 }
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
     id "groovy"
