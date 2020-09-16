@@ -31,7 +31,8 @@ public enum JdkVersion {
     JDK_11(11, true),
     JDK_12(12, false),
     JDK_13(13, false),
-    JDK_14(14, true);
+    JDK_14(14, false),
+    JDK_15(15, true);
 
     private final int majorVersion;
     private final boolean hasSupport;
@@ -47,8 +48,8 @@ public enum JdkVersion {
                 return JDK_8;
             case 11:
                 return JDK_11;
-            case 14:
-                return JDK_14;
+            case 15:
+                return JDK_15;
             default:
                 throw new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " + Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList()));
         }

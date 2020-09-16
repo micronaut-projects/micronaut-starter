@@ -9,10 +9,10 @@ class JdkVersionSpec extends Specification {
         JdkVersion.JDK_11 == JdkVersion.valueOf(11)
 
         when:
-        JdkVersion.valueOf(15)
+        JdkVersion.valueOf(16)
 
         then:
         def ex = thrown(IllegalArgumentException)
-        ex.message == "Unsupported JDK version: 15. Supported values are [8, 9, 10, 11, 12, 13, 14]"
+        ex.message == "Unsupported JDK version: 16. Supported values are [8, 9, 10, 11, 12, 13, 14, 15]"
     }
 }
