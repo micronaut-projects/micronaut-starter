@@ -23,7 +23,6 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 import java.util.List;
