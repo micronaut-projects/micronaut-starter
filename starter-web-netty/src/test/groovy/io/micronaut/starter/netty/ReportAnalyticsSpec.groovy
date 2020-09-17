@@ -5,11 +5,9 @@ import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
 import io.micronaut.context.event.BeanCreatedEvent
 import io.micronaut.context.event.BeanCreatedEventListener
-import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
@@ -43,7 +41,7 @@ class ReportAnalyticsSpec extends Specification {
     EmbeddedServer embeddedServer
 
     @Inject
-    CreateControllerSpec.CreateClient client
+    ZipCreateControllerSpec.CreateClient client
 
     @Inject
     AnalyticsController controller

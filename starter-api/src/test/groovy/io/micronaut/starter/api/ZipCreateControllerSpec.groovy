@@ -20,7 +20,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @MicronautTest
-class CreateControllerSpec extends Specification {
+class ZipCreateControllerSpec extends Specification {
 
     @Inject
     CreateClient client

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create;
+package io.micronaut.starter.api.create.zip;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.io.Writable;
@@ -35,7 +35,7 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-public interface CreateOperation {
+public interface ZipCreateOperation {
 
     /**
      * Creates an application.
