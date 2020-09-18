@@ -517,8 +517,8 @@ List<Property> properties
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @if (features.testFramework().isKoTest()) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null)
-@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.1.3")
-@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.1.3")
+@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.2.5")
+@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.2.5")
 }
 } else if (features.testFramework().isSpock()) {
 @if (!features.language().isGroovy()) {
