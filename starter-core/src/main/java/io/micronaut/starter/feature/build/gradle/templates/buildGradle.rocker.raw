@@ -336,6 +336,9 @@ dependencies {
 @if (features.contains("gcp-cloud-trace")) {
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
 }
+@if (features.contains("gcp-pubsub")) {
+    @dependency.template("io.micronaut.gcp", "micronaut-gcp-pubsub", "implementation", null)
+}
 @if (features.contains("kotlin-extension-functions")) {
     @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "implementation", null)
 }
