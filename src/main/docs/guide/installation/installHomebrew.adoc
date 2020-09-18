@@ -1,0 +1,18 @@
+In order to install Micronaut, run following command:
+
+[source,bash]
+----
+$ brew cask install micronaut-projects/tap/micronaut
+----
+
+You can find more information about Homebrew usage on their https://brew.sh/[homepage].
+
+You should now be able to run the Micronaut CLI.
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----
