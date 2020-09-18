@@ -2,10 +2,9 @@ package io.micronaut.starter.api.features
 
 import io.micronaut.starter.api.RequestInfo
 import io.micronaut.starter.api.preview.PreviewController
-import io.micronaut.starter.api.preview.PreviewDTO
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.test.annotation.MicronautTest
 import spock.lang.Specification
 
@@ -25,7 +24,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 null,
-                null,
+                JdkVersion.JDK_11,
                 new RequestInfo("http://localhost", "", Locale.ENGLISH, "")
         )
 

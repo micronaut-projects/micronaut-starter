@@ -375,6 +375,9 @@ List<Property> properties
 @if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }
+@if (features.contains("gcp-pubsub")) {
+@dependency.template("io.micronaut.gcp", "micronaut-gcp-pubsub", "compile", null)
+}
 @if (features.contains("reactor")) {
 @dependency.template("io.micronaut.reactor", "micronaut-reactor", "compile", null)
 }
@@ -514,8 +517,8 @@ List<Property> properties
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @if (features.testFramework().isKoTest()) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null)
-@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.1.3")
-@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.1.3")
+@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.2.5")
+@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.2.5")
 }
 } else if (features.testFramework().isSpock()) {
 @if (!features.language().isGroovy()) {
