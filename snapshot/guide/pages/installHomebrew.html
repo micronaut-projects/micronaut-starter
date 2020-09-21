@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>5.3 Web API Application 2.1.0.BUILD-SNAPSHOT</title>
+    <title>2.2 Install with Homebrew 2.1.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -71,16 +71,18 @@ function addJsClass() {
             <div id="main" class="corner-all">
 
                 
-                    <div class="toc-item prev-left"><a href="../../guide/commands.html">&lt;&lt; <strong>4</strong><span>Available commands</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
                 
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
+                    <div class="toc-item next-right"><a href="../../guide/releaseHistory.html"><strong>3</strong><span>Release History</span> >></a></div>
+                
 
 
                 <div class="project">
-                    <h1>5.3 Web API Application</h1>
+                    <h1>2.2 Install with Homebrew</h1>
 
                     <p><strong>Version:</strong> 2.1.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -88,68 +90,44 @@ function addJsClass() {
                 
 
                 
-<h2 id="starterNetty"><a class="anchor" href="#starterNetty"></a>5.3 Web API Application</h2>
+<h2 id="installHomebrew"><a class="anchor" href="#installHomebrew"></a>2.2 Install with Homebrew</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/starterImpls/starterNetty.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/installation/installHomebrew.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
 <div class="paragraph">
-<p>The subproject <code>starter-web-netty</code> provides an implementation that runs on Netty.</p>
-</div>
-<div class="sect2">
-<h3 id="_running_the_application_locally">Running the Application locally</h3>
-<div class="paragraph">
-<p>From the project root:</p>
+<p>In order to install Micronaut, run following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-netty:run</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew cask install micronaut-projects/tap/micronaut</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And visit <a href="http://localhost:8080/application-types" class="bare">http://localhost:8080/application-types</a></p>
+<p>You can find more information about Homebrew usage on their <a href="https://brew.sh/">homepage</a>.</p>
 </div>
 <div class="paragraph">
-<p>You can view the Swagger UI definition at:</p>
-</div>
-<div class="paragraph">
-<p><a href="http://localhost:8080/swagger/views/swagger-ui/index.html" class="bare">http://localhost:8080/swagger/views/swagger-ui/index.html</a></p>
-</div>
-<div class="paragraph">
-<p>Or with RapiDoc:</p>
-</div>
-<div class="paragraph">
-<p><a href="http://localhost:8080/swagger/views/rapidoc/index.html" class="bare">http://localhost:8080/swagger/views/rapidoc/index.html</a></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploying_the_application">Deploying the Application</h3>
-<div class="paragraph">
-<p>You can build the WAR file with:</p>
+<p>You should now be able to run the Micronaut CLI.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-cmd hljs" data-lang="cmd">./gradlew clean starter-web-netty:shadowJar</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A runnable JAR file will be located in <code>starter-web-servlet/build/libs</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ java -jar starter-web-netty/build/libs/starter-web-netty-2.1.0.BUILD-SNAPSHOT-all.jar</code></pre>
-</div>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn&gt;</code></pre>
 </div>
 </div>
 
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item prev-left"><a href="../../guide/commands.html">&lt;&lt; <strong>4</strong><span>Available commands</span></a></div>
+                    <div class="toc-item prev-left"><a href="../../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/releaseHistory.html"><strong>3</strong><span>Release History</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>

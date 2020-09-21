@@ -41,10 +41,16 @@ function addJsClass() {
                         <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/commands.html"><strong>2</strong><span>Available commands</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span></a>
                         </div>
                         
-                        <div class="toc-item" style="margin-left:0"><a href="../guide/starterImpls.html"><strong>3</strong><span>Micronaut Launch</span></a>
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/releaseHistory.html"><strong>3</strong><span>Release History</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/commands.html"><strong>4</strong><span>Available commands</span></a>
+                        </div>
+                        
+                        <div class="toc-item" style="margin-left:0"><a href="../guide/starterImpls.html"><strong>5</strong><span>Micronaut Launch</span></a>
                         </div>
                         
                     </div>
@@ -69,7 +75,7 @@ function addJsClass() {
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
                 
-                    <div class="toc-item next-right"><a href="../guide/commands.html"><strong>2</strong><span>Available commands</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span> >></a></div>
                 
 
 
@@ -79,17 +85,6 @@ function addJsClass() {
                     <p><strong>Version:</strong> 2.1.0.BUILD-SNAPSHOT</p>
                 </div>
 
-                
-                <div id="table-of-content">
-                    <h2>Table of Contents</h2>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#installation"><strong>1.1</strong><span>Installation</span></a>
-                    </div>
-                    
-                    <div class="toc-item" style="margin-left:0px"><a href="#releaseHistory"><strong>1.2</strong><span>Release History</span></a>
-                    </div>
-                    
-                </div>
                 
 
                 
@@ -106,135 +101,10 @@ function addJsClass() {
 <p>This project implements a project generator for Micronaut as is both a Command Line (CLI) application and an API that can be run as a HTTP server, deployed to a Servlet container or executed on a Serverless platform (Google Cloud Run, Google Cloud Function, AWS Lambda or Azure Function).</p>
 </div>
 
-<h2 id="installation"><a class="anchor" href="#installation"></a>1.1 Installation</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/installation.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="paragraph">
-<p>The best way to install Micronaut on Unix systems is with <a href="http://sdkman.io/">SDKMAN</a> which greatly simplifies installing
-and managing multiple Micronaut versions.</p>
-</div>
-<div class="sect2">
-<h3 id="_install_with_sdkman">Install with SDKMAN</h3>
-<div class="paragraph">
-<p>Before updating make sure you have latest version of SDKMAN installed. If not, run</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk update</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>In order to install Micronaut, run following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can also specify the version to the <code>sdk install</code> command.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ sdk install micronaut {project-version}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can find more information about SDKMAN usage on the <a href="http://sdkman.io/usage">SDKMAN Docs</a></p>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
-| Starting interactive mode...
-| Enter a command name to run. Use TAB for completion:
-mn&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_install_with_homebrew">Install with Homebrew</h3>
-<div class="paragraph">
-<p>In order to install Micronaut, run following command:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ brew cask install micronaut-projects/tap/micronaut</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can find more information about Homebrew usage on their <a href="https://brew.sh/">homepage</a>.</p>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
-| Starting interactive mode...
-| Enter a command name to run. Use TAB for completion:
-mn&gt;</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_install_with_chocolatey">Install with Chocolatey</h3>
-<div class="paragraph">
-<p>If using Windows, you can use <a href="https://chocolatey.org">Chocolatey</a> to install the Micronaut CLI:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>choco install micronaut</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Check the <a href="https://chocolatey.org/packages/micronaut">micronaut package page</a> for more information.</p>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI from the command prompt or Powershell by running <code>mn</code>:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ mn
-| Starting interactive mode...
-| Enter a command name to run. Use TAB for completion:
-mn&gt;</code></pre>
-</div>
-</div>
-</div>
-
-<h2 id="releaseHistory"><a class="anchor" href="#releaseHistory"></a>1.2 Release History</h2>
-
-<div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/releaseHistory.adoc"'>
-        <i class='fa fa-pencil-square-o'></i> Improve this doc
-    </button>
-</div>
-
-
-<div class="sect3">
-<h4 id="_2_0_0_m3">2.0.0.M3</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Initial Milestone Release</p>
-</li>
-</ul>
-</div>
-</div>
-
 
                 <div style="clear:both;margin-top:15px;"></div>
                 
-                    <div class="toc-item next-right"><a href="../guide/commands.html"><strong>2</strong><span>Available commands</span> >></a></div>
+                    <div class="toc-item next-right"><a href="../guide/installation.html"><strong>2</strong><span>Installation</span> >></a></div>
                 
                 <div style="clear:both"></div>
             </div>
