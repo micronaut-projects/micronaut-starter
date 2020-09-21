@@ -1,0 +1,18 @@
+If using Windows, you can use https://chocolatey.org[Chocolatey] to install the Micronaut CLI:
+
+[source, bash]
+----
+$ choco install micronaut
+----
+
+Check the https://chocolatey.org/packages/micronaut[micronaut package page] for more information.
+
+You should now be able to run the Micronaut CLI from the command prompt or Powershell by running `mn`:
+
+[source,bash]
+----
+$ mn
+| Starting interactive mode...
+| Enter a command name to run. Use TAB for completion:
+mn>
+----
