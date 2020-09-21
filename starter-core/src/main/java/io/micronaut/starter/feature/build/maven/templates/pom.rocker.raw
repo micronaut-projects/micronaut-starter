@@ -381,6 +381,12 @@ List<Property> properties
 @dependency.template("io.ktor", "ktor-server-netty", "compile", null)
 @dependency.template("io.ktor", "ktor-jackson", "compile", null)
 }
+@if (features.contains("oracle-cloud-sdk")) {
+@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "compile", null)
+}
+@if (features.contains("aws-v2-sdk")) {
+@dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "compile", null)
+}
 @if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }

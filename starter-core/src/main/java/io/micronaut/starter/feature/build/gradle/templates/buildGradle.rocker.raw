@@ -123,6 +123,12 @@ dependencies {
 @if (features.contains("annotation-api")) {
     @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
 }
+@if (features.contains("oracle-cloud-sdk")) {
+    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "implementation", null)
+}
+@if (features.contains("aws-v2-sdk")) {
+    @dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "implementation", null)
+}
 @if (features.contains("google-cloud-function")) {
     @if (!features.contains("google-cloud-function-http")) {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
