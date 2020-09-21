@@ -66,6 +66,9 @@ micronaut {
     @if (features.contains("google-cloud-function-http")) {
     runtime "google_function"
     }
+    @if (features.contains("oracle-function-http")) {
+    runtime "oracle_function"
+    }
     @if (features.contains("azure-function-http")) {
     runtime "azure_function"
     }
@@ -144,6 +147,8 @@ dependencies {
 }
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
+} else {
+    @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null)
 }
 @if (features.contains("openapi")) {
     @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
@@ -466,6 +471,9 @@ dependencies {
 @if (features.contains("logback")) {
     @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
 }
+@if (features.contains("slf4j-simple")) {
+    @dependency.template("org.slf4j", "slf4j-simple", "runtimeOnly", null)
+}
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null)
 }
@@ -580,6 +588,24 @@ azurefunctions {
       os = 'windows'
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+}
+
+@if (features.contains("oracle-function-http")) {
+nativeImage {
+    args("--initialize-at-build-time=@project.getPackageName()")
+}
+
+dockerfileNative {
+  args('-XX:MaximumHeapSizePercent=80')
+}
+
+dockerBuild {
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+}
+
+dockerBuildNative {
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
 }
 }
 

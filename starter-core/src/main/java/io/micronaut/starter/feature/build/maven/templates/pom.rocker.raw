@@ -130,6 +130,8 @@ List<Property> properties
 }
 @if (features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "compile", null)
+} else {
+@dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
@@ -499,6 +501,9 @@ List<Property> properties
 }
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
+}
+@if (features.contains("slf4j-simple")) {
+@dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
 }
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)

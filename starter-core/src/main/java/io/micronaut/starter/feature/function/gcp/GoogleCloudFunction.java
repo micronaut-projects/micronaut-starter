@@ -143,6 +143,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#cloudFunction";
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction";
     }
 }

@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.function
+package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType

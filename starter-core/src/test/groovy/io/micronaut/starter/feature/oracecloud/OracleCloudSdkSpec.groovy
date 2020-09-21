@@ -23,7 +23,7 @@ class OracleCloudSdkSpec extends BeanContextSpec  implements CommandOutputFixtur
     }
 
     @Unroll
-    void 'test maven jmx feature for language=#language'() {
+    void 'test Oracle SDK feature for maven and language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle-cloud-sdk'], language), []).render().toString()
 

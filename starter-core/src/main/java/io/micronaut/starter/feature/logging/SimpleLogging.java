@@ -13,51 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.logging;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.logging.template.slf4jSimple;
+import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class AwsV2Sdk implements Feature {
+public class SimpleLogging implements LoggingFeature {
     @Override
     public String getName() {
-        return "aws-v2-sdk";
+        return "slf4j-simple";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/simplelogger.properties", slf4jSimple.template()));
     }
 
     @Override
     public String getTitle() {
-        return "AWS v2 SDK";
+        return "SLF4J Simple Logging";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the AWS v2 SDK";
+        return "Adds SLF4J Simple Logging through simplelogger.properties";
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.LOGGING;
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLOUD;
-    }
-
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html";
     }
 }
