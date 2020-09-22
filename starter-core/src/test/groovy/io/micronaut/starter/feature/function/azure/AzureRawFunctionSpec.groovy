@@ -19,6 +19,6 @@ class AzureRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixt
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#simpleAzureFunctions")
+        readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions")
     }
 }

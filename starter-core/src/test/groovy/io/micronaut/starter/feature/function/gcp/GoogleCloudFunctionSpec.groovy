@@ -31,7 +31,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#cloudFunction")
+        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction")
 
         where:
         language << Language.values().toList()

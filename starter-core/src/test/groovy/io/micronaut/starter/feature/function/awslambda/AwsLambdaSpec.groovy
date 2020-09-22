@@ -169,7 +169,6 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         !build.contains('<exec.mainClass>')
         !build.contains('</exec.mainClass>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        !build.contains('<artifactId>micronaut-http-client</artifactId>')
 
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
@@ -322,7 +321,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         build.contains('<exec.mainClass>')
         build.contains('</exec.mainClass>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+        build.contains('<artifactId>micronaut-http-client</artifactId>')
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
 
         where:
@@ -344,7 +343,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
         build.contains('<artifactId>micronaut-function-aws-custom-runtime</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        !build.contains('<artifactId>micronaut-http-client</artifactId>')
+        build.contains('<artifactId>micronaut-http-client</artifactId>')
 
         where:
         language << graalSupportedLanguages()
@@ -390,7 +389,6 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-        !build.contains('<artifactId>micronaut-http-client</artifactId>')
 
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
