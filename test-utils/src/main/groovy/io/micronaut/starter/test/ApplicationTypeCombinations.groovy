@@ -11,4 +11,12 @@ class ApplicationTypeCombinations {
     static List combinations(List<ApplicationType> applicationTypes, List<Language> languages = Language.values() as List<Language>) {
         [applicationTypes, languages, BuildToolCombinations.buildTools, TestFramework.values()].combinations()
     }
+
+    @Memoized
+    static List combinations(
+            List<ApplicationType> applicationTypes,
+            List<Language> languages,
+            List<BuildTool> buildTools) {
+        [applicationTypes, languages, buildTools, TestFramework.values()].combinations()
+    }
 }

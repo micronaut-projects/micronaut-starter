@@ -1,0 +1,24 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldNotBe
+import com.fnproject.fn.testing.FnTestingRule
+
+class FunctionTest : StringSpec({
+
+    "test function" {
+        val rule = FnTestingRule.createDefault()
+        rule.givenEvent().enqueue()
+        rule.thenRun(Function::class.java, "handleRequest")
+        val result = rule.onlyResult.bodyAsString
+        result.shouldNotBe(null)
+    }
+})

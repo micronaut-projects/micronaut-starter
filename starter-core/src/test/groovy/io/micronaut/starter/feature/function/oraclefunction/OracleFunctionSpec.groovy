@@ -21,9 +21,11 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         )
         String build = output['build.gradle']
         def readme = output["README.md"]
+        def funcYaml = output["func.yml"]
 
         then:
         readme
+        funcYaml
         build.contains('runtime "oracle_function"')
         build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())

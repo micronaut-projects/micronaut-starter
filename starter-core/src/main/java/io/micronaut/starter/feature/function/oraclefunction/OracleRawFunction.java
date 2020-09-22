@@ -15,9 +15,15 @@
  */
 package io.micronaut.starter.feature.function.oraclefunction;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.*;
 import io.micronaut.starter.feature.logging.SimpleLogging;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
 
@@ -42,6 +48,62 @@ public class OracleRawFunction extends OracleFunction {
                     httpFunction
             );
         }
+        super.processSelectedFeatures(featureContext);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        ApplicationType type = generatorContext.getApplicationType();
+        applyFunction(generatorContext, type);
+        if (type == ApplicationType.FUNCTION) {
+            Language language = generatorContext.getLanguage();
+            Project project = generatorContext.getProject();
+            String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
+            switch (language) {
+                case GROOVY:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            sourceFile,
+                            oracleRawFunctionGroovy.template(project)));
+                    break;
+                case KOTLIN:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            sourceFile,
+                            oracleRawFunctionKotlin.template(project)));
+                    break;
+                case JAVA:
+                default:
+                    generatorContext.addTemplate("function", new RockerTemplate(
+                            sourceFile,
+                            oracleRawFunctionJava.template(project)));
+            }
+
+            applyTestTemplate(generatorContext, project, "Function");
+        }
+    }
+
+    @Override
+    protected RockerModel javaJUnitTemplate(Project project) {
+        return oracleRawFunctionJavaJunit.template(project);
+    }
+
+    @Override
+    protected RockerModel groovyJUnitTemplate(Project project) {
+        return oracleRawFunctionGroovyJunit.template(project);
+    }
+
+    @Override
+    protected RockerModel kotlinJUnitTemplate(Project project) {
+        return oracleRawFunctionKotlinJunit.template(project);
+    }
+
+    @Override
+    public RockerModel spockTemplate(Project project) {
+        return oracleRawFunctionGroovySpock.template(project);
+    }
+
+    @Override
+    protected RockerModel koTestTemplate(Project project) {
+        return oracleRawFunctionKotlinKoTest.template(project);
     }
 
     @Override

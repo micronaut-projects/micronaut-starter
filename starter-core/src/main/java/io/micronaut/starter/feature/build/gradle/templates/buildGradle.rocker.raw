@@ -33,12 +33,12 @@ plugins {
 @if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "6.0.0"
 }
-@if (features.mainClass().isPresent()) {
-    id "io.micronaut.application" version '1.0.0.RC11'
+@if (features.mainClass().isPresent() || features.contains("oracle-function")) {
+    id "io.micronaut.application" version '1.0.0.RC12'
 } else if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-   id "io.micronaut.application" version '1.0.0.RC11'
+   id "io.micronaut.application" version '1.0.0.RC12'
 } else {
-    id "io.micronaut.library" version '1.0.0.RC11'
+    id "io.micronaut.library" version '1.0.0.RC12'
 }
 @if (features.contains("grpc")) {
     id "com.google.protobuf" version "0.8.13"
@@ -59,6 +59,13 @@ repositories {
     jcenter()
     @if (VersionInfo.isMicronautSnapshot()) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    }
+    @if (features.contains("oracle-function")) {
+        @if (!features.contains("oracle-function-http")) {
+    maven {
+        url("https://dl.bintray.com/fnproject/fnproject")
+    }
+        }
     }
 }
 
@@ -131,6 +138,14 @@ dependencies {
 }
 @if (features.contains("aws-v2-sdk")) {
     @dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "implementation", null)
+}
+@if (features.contains("oracle-function")) {
+    @if (!features.contains("oracle-function-http")) {
+    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "implementation", null)
+    @dependency.template("com.fnproject.fn", "api", "implementation", null)
+    @dependency.template("com.fnproject.fn", "runtime", "runtimeOnly", null)
+    @dependency.template("com.fnproject.fn", "testing-junit4", "testImplementation", null)
+    }
 }
 @if (features.contains("google-cloud-function")) {
     @if (!features.contains("google-cloud-function-http")) {
@@ -591,13 +606,33 @@ azurefunctions {
 }
 }
 
+@if (features.contains("oracle-function")) {
 @if (features.contains("oracle-function-http")) {
+dockerfileNative {
+  args('-XX:MaximumHeapSizePercent=80')
+}
 nativeImage {
     args("--initialize-at-build-time=@project.getPackageName()")
+}
+} else {
+mainClassName = "com.fnproject.fn.runtime.EntryPoint"
+
+nativeImage {
+  args("--static",
+       "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+       "--initialize-at-build-time=@project.getPackageName()")
 }
 
 dockerfileNative {
   args('-XX:MaximumHeapSizePercent=80')
+  buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+  defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+}
+
+dockerfile {
+  buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+  defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+}
 }
 
 dockerBuild {
@@ -605,7 +640,7 @@ dockerBuild {
 }
 
 dockerBuildNative {
-    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
 }
 }
 
