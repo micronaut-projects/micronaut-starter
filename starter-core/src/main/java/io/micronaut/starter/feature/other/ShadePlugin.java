@@ -20,7 +20,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
@@ -32,10 +31,13 @@ import java.util.Set;
 @Singleton
 public class ShadePlugin implements DefaultFeature {
 
-    // TODO: Delete Maven plugin is upgraded
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.MAVEN;
+    public boolean shouldApply(
+            ApplicationType applicationType,
+            Options options,
+            Set<Feature> selectedFeatures) {
+        // maybe should not apply if JIB is selected
+        return true;
     }
 
     @NonNull
