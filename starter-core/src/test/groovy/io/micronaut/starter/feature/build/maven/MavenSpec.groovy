@@ -32,6 +32,13 @@ class MavenSpec extends BeanContextSpec {
     <version>${VersionInfo.micronautVersion}</version>
   </parent>
 """)
+        then:'shade plugin applies to maven by default'
+        template.contains("""
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
+""")
 
         then: 'there are no Maven specific properties defined, all of them are inherited from parent pom'
         !template.contains('<maven.compiler.target>')

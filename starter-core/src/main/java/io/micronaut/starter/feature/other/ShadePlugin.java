@@ -17,15 +17,26 @@ package io.micronaut.starter.feature.other;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.Set;
 
 /**
  * Adds a shaded JAR feature.
  */
 @Singleton
-public class ShadePlugin implements Feature {
+public class ShadePlugin implements DefaultFeature {
+
+    // TODO: Delete Maven plugin is upgraded
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getBuildTool() == BuildTool.MAVEN;
+    }
 
     @NonNull
     @Override
@@ -35,11 +46,26 @@ public class ShadePlugin implements Feature {
 
     @Override
     public boolean isVisible() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Fat/Shaded JAR Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds the ability to build a Fat/Shaded JAR";
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.PACKAGING;
     }
 }
