@@ -13,6 +13,17 @@ micronaut:
             - ${CORS_ALLOWED_ORIGIN:`^http(|s):\/\/micronaut\.io$`}
           allowedMethods:
             - GET
+  starter:
+    github:
+      clientId: ${GITHUB_OAUTH_APP_CLIENT_ID}
+      clientSecret: ${GITHUB_OAUTH_APP_CLIENT_SECRET}
+
+  http:
+    services:
+      github-oauth:
+        url: https://github.com
+      github-api-v3:
+        url: https://api.github.com
 gcp:
   http:
     client:

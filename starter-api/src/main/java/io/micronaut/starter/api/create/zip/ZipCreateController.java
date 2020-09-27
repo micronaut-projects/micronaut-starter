@@ -26,6 +26,8 @@ import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Header;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -57,6 +59,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Controller
+@ExecuteOn(TaskExecutors.IO)
 public class ZipCreateController extends AbstractCreateController implements ZipCreateOperation {
 
     public static final String MEDIA_TYPE_APPLICATION_ZIP = "application/zip";

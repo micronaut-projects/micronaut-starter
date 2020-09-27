@@ -88,4 +88,42 @@ public class StarterConfiguration {
     public void setPath(String path) {
         this.path = path;
     }
+
+    @ConfigurationProperties(GitHubConfiguration.PREFIX)
+    public static class GitHubConfiguration {
+        public static final String PREFIX = "github";
+
+        private String clientId;
+        private String clientSecret;
+
+        /**
+         * @return GitHub OAuth App client id
+         */
+        public String getClientId() {
+            return clientId;
+        }
+
+        /**
+         * Sets GitHub OAuth App client id
+         * @param clientId client id
+         */
+        public void setClientId(String clientId) {
+            this.clientId = clientId;
+        }
+
+        /**
+         * @return GitHub OAuth App secret id
+         */
+        public String getClientSecret() {
+            return clientSecret;
+        }
+
+        /**
+         * Sets GitHub OAuth App secret
+         * @param clientSecret secret
+         */
+        public void setClientSecret(String clientSecret) {
+            this.clientSecret = clientSecret;
+        }
+    }
 }

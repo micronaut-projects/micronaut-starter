@@ -25,7 +25,7 @@ class GoogleCloudFunctionSpec extends Specification {
                 null,
                 null,
                 JdkVersion.JDK_11,
-                new RequestInfo("http://localhost", "", Locale.ENGLISH, "")
+                new RequestInfo("http://localhost", "", null, Locale.ENGLISH, "")
         )
 
         then:

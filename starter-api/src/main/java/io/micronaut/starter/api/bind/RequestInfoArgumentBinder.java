@@ -56,7 +56,8 @@ public class RequestInfoArgumentBinder implements TypedRequestArgumentBinder<Req
     @Override
     public BindingResult<RequestInfo> bind(ArgumentConversionContext<RequestInfo> context, HttpRequest<?> source) {
         String url = resolveUrl(source);
-        return () -> Optional.of(new RequestInfo(url, source.getPath(), source.getLocale().orElse(Locale.ENGLISH), source.getHeaders().get(HttpHeaders.USER_AGENT)));
+        return () -> Optional.of(new RequestInfo(url, source.getPath(), source.getParameters(),
+                source.getLocale().orElse(Locale.ENGLISH), source.getHeaders().get(HttpHeaders.USER_AGENT)));
     }
 
     private String resolveUrl(HttpRequest<?> request) {
