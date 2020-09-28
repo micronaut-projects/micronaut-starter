@@ -550,7 +550,9 @@ test {
 
 java {
     sourceCompatibility = JavaVersion.toVersion('@features.getTargetJdk()')
+@if (!features.language().isKotlin()) {
     targetCompatibility = JavaVersion.toVersion('@features.getTargetJdk()')
+}
 }
 
 @if (features.language().isJava()) {

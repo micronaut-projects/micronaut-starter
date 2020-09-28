@@ -85,7 +85,11 @@ public class Features extends ArrayList<String> {
     }
 
     public String getTargetJdk() {
-        return VersionInfo.toJdkVersion(javaVersion.majorVersion());
+        if (language().isJava() && testFramework().isJunit()) {
+            return VersionInfo.toJdkVersion(javaVersion.majorVersion());
+        } else {
+            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 13));
+        }
     }
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {
