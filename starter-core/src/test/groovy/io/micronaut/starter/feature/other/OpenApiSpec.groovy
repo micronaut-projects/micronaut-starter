@@ -39,7 +39,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
-        template.contains("$scope(\"io.micronaut.configuration:micronaut-openapi\")")
+        template.contains("$scope(\"io.micronaut.openapi:micronaut-openapi\")")
 
         where:
         language        | scope
@@ -62,7 +62,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
         template.contains("""
             <path>
-              <groupId>io.micronaut.configuration</groupId>
+              <groupId>io.micronaut.openapi</groupId>
               <artifactId>micronaut-openapi</artifactId>
               <version>\${micronaut.openapi.version}</version>
             </path>
@@ -81,7 +81,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
         template.contains("""
                 <annotationProcessorPath>
-                  <groupId>io.micronaut.configuration</groupId>
+                  <groupId>io.micronaut.openapi</groupId>
                   <artifactId>micronaut-openapi</artifactId>
                   <version>\${micronaut.openapi.version}</version>
                 </annotationProcessorPath>
@@ -100,7 +100,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.configuration</groupId>
+      <groupId>io.micronaut.openapi</groupId>
       <artifactId>micronaut-openapi</artifactId>
       <scope>compile</scope>
     </dependency>
