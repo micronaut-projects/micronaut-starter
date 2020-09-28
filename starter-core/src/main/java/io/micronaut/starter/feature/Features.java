@@ -88,7 +88,7 @@ public class Features extends ArrayList<String> {
         if (language().isJava() && testFramework().isJunit()) {
             return VersionInfo.toJdkVersion(javaVersion.majorVersion());
         } else {
-            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 13));
+            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 14));
         }
     }
 
