@@ -1,7 +1,10 @@
-introduction:
-  title: Introduction
-  installation: Installation
-  releaseHistory: Release History
+introduction: Introduction
+installation: 
+  title: Installation
+  installSdkman: Install with SDKman
+  installHomebrew: Install with Homebrew
+  installChocolatey: Install with Chocolatey
+releaseHistory: Release History
 commands:
   title: Available commands
 starterImpls:

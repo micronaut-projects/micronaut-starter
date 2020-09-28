@@ -27,7 +27,7 @@ Features features
 @annotationProcessor.template(features, "\"io.micronaut.data:micronaut-data-processor\"")
 }
 @if (features.contains("openapi")) {
-@annotationProcessor.template(features, "\"io.micronaut.configuration:micronaut-openapi\"")
+@annotationProcessor.template(features, "\"io.micronaut.openapi:micronaut-openapi\"")
 }
 @if (features.contains("jax-rs")) {
 @annotationProcessor.template(features, "\"io.micronaut.jaxrs:micronaut-jaxrs-processor\"")

@@ -29,7 +29,7 @@ class DiffControllerSpec extends Specification {
         def result = diffClient.diffApp(
                 ApplicationType.DEFAULT,
                 "test",
-                ["google-cloud-function"],
+                ["data-jdbc"],
                 null,
                 null,
                 null,
@@ -37,7 +37,7 @@ class DiffControllerSpec extends Specification {
         )
 
         then:
-        result.contains('+# Micronaut and Google Cloud Function')
+        result.contains('+## Feature data-jdbc documentation')
     }
 
     void 'test diff feature'() {
@@ -45,7 +45,7 @@ class DiffControllerSpec extends Specification {
         def result = diffClient.diffFeature(
                 ApplicationType.DEFAULT,
                 null,
-                "google-cloud-function",
+                "data-jdbc",
                 null,
                 null,
                 null,
@@ -53,7 +53,7 @@ class DiffControllerSpec extends Specification {
         )
 
         then:
-        result.contains('+# Micronaut and Google Cloud Function')
+        result.contains('+## Feature data-jdbc documentation')
     }
 
     void 'test diff invalid feature'() {
