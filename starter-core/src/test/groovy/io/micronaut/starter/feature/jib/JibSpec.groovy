@@ -15,7 +15,7 @@ class JibSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jib'], language)).render().toString()
 
         then:
-        template.contains('id "com.google.cloud.tools.jib" version "2.1.0"')
+        template.contains('id "com.google.cloud.tools.jib"')
         template.contains("jib.to.image = 'gcr.io/foo/jib-image")
 
         where:

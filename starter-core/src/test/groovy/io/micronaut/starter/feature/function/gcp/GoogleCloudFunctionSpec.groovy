@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.function
+package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
@@ -31,7 +31,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#cloudFunction")
+        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction")
 
         where:
         language << Language.values().toList()
@@ -69,13 +69,11 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         def readme = output["README.md"]
 
         then:
-        build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
-        build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
-        build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
+        build.contains('runtime "google_function"')
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !build.contains('implementation("io.micronaut:micronaut-http-client")')
-        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
@@ -102,8 +100,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         def readme = output["README.md"]
 
         then:
-        build.contains('compileOnly("com.google.cloud.functions:functions-framework-api")')
-        build.contains('invoker("com.google.cloud.functions.invoker:java-function-invoker:'+ VersionInfo.getDependencyVersion("google.function.invoker").getValue() +'")')
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-http")')
         build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')

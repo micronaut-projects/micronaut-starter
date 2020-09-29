@@ -1,0 +1,23 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.fnproject.fn.testing.FnTestingRule
+import org.junit.jupiter.api.Test
+
+class FunctionTest {
+    @@Test
+    void testFunction() {
+        FnTestingRule rule = FnTestingRule.createDefault()
+        rule.givenEvent().enqueue()
+        rule.thenRun(Function.class, "handleRequest")
+        String result = rule.onlyResult.bodyAsString
+        assert result != null
+    }
+}

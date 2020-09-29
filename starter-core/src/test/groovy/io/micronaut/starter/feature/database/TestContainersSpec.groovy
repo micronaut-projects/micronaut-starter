@@ -134,8 +134,6 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains("""
-  <dependencyManagement>
-    <dependencies>
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
@@ -143,8 +141,6 @@ class TestContainersSpec extends BeanContextSpec {
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-    </dependencies>
-  </dependencyManagement>
 """)
     }
 

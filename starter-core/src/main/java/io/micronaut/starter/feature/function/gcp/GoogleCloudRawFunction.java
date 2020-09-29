@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.raw.*;
+import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -36,9 +37,11 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
     public static final String NAME = "google-cloud-function";
 
     private final GoogleCloudFunction googleCloudFunction;
+    private final ShadePlugin shadePlugin;
 
-    public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction) {
+    public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin) {
         this.googleCloudFunction = googleCloudFunction;
+        this.shadePlugin = shadePlugin;
     }
 
     @NonNull
@@ -101,6 +104,10 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
             featureContext.addFeature(
                     googleCloudFunction
             );
+        }
+
+        if (!featureContext.isPresent(ShadePlugin.class)) {
+            featureContext.addFeature(shadePlugin);
         }
     }
 

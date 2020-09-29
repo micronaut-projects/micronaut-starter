@@ -13,48 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.reloading.filewatch;
+package io.micronaut.starter.feature.aws;
 
-import io.micronaut.context.condition.OperatingSystem;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.Set;
 
 @Singleton
-public class FileWatch implements DefaultFeature {
-
-    private final FileWatchOsx fileWatchOsx;
-
-    public FileWatch(FileWatchOsx fileWatchOsx) {
-        this.fileWatchOsx = fileWatchOsx;
-    }
-
+public class AwsV2Sdk implements Feature {
     @Override
     public String getName() {
-        return "file-watch";
+        return "aws-v2-sdk";
     }
 
     @Override
     public String getTitle() {
-        return "File Watch Support";
+        return "AWS v2 SDK";
     }
 
     @Override
     public String getDescription() {
-        return "Adds automatic restarts and file watch";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (OperatingSystem.getCurrent().isMacOs()) {
-            featureContext.addFeature(fileWatchOsx);
-        }
+        return "Provides integration with the AWS v2 SDK";
     }
 
     @Override
@@ -64,11 +46,18 @@ public class FileWatch implements DefaultFeature {
 
     @Override
     public String getCategory() {
-        return Category.DEV_TOOLS;
+        return Category.CLOUD;
     }
 
+    @Nullable
     @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return true;
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/";
+    }
+
+    @Nullable
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html";
     }
 }

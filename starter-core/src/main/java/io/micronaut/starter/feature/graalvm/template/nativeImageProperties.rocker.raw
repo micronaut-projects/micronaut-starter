@@ -9,4 +9,4 @@ Features features
 )
 
 Args = -H:Name=@project.getName() \
-       -H:Class=@features.application().mainClassName(applicationType,project,features)
+       -H:Class=@features.mainClass().get()

@@ -1,0 +1,10 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+    Project project
+)
+
+schema_version: 20180708
+name: @project.getName()
+version: 0.0.1
+timeout: 120

@@ -13,10 +13,7 @@ Features features
 
 plugins {
 @if (features.contains("asciidoctor")) {
-    id "org.asciidoctor.jvm.convert" version "3.1.0"
-}
-@if (features.language().isJava()) {
-    id "com.diffplug.eclipse.apt" version "3.22.0"
+    id "org.asciidoctor.jvm.convert" version "3.2.0"
 }
 
 @if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
@@ -28,24 +25,26 @@ plugins {
     id "groovy"
 }
 @if (features.contains("jrebel")) {
-    id "org.zeroturnaround.gradle.jrebel" version "1.1.8"
+    id "org.zeroturnaround.gradle.jrebel" version "1.1.10"
 }
 @if (features.contains("azure-function")) {
-    id "com.microsoft.azure.azurefunctions" version "1.2.0"
+    id "com.microsoft.azure.azurefunctions" version "1.4.0"
 }
 @if (features.contains("shade")) {
     id "com.github.johnrengelman.shadow" version "6.0.0"
 }
-@if (features.application() != null && features.application().mainClassName(applicationType, project, features)!=null) {
-    id "application"
-} else if (features.language().isJava()) {
-    id "java"
+@if (features.mainClass().isPresent() || features.contains("oracle-function")) {
+    id "io.micronaut.application" version '1.0.0'
+} else if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
+   id "io.micronaut.application" version '1.0.0'
+} else {
+    id "io.micronaut.library" version '1.0.0'
 }
 @if (features.contains("grpc")) {
-    id "com.google.protobuf" version "0.8.12"
+    id "com.google.protobuf" version "0.8.13"
 }
 @if (features.contains("jib")) {
-    id "com.google.cloud.tools.jib" version "2.1.0"
+    id "com.google.cloud.tools.jib" version "2.5.0"
 }
 @if (features.contains("views-rocker")) {
     id "com.fizzed.rocker" version "1.2.3"
@@ -61,38 +60,58 @@ repositories {
     @if (VersionInfo.isMicronautSnapshot()) {
     maven { url "https://oss.jfrog.org/oss-snapshot-local" }
     }
+    @if (features.contains("oracle-function")) {
+        @if (!features.contains("oracle-function-http")) {
+    maven {
+        url("https://dl.bintray.com/fnproject/fnproject")
+    }
+        }
+    }
 }
 
-configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
-    @if (features.contains("google-cloud-function")) {
-    invoker
+micronaut {
+    @if (features.contains("google-cloud-function-http")) {
+    runtime "google_function"
+    }
+    @if (features.contains("oracle-function-http")) {
+    runtime "oracle_function"
+    }
+    @if (features.contains("azure-function-http")) {
+    runtime "azure_function"
+    }
+    @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
+    runtime "lambda"
+    }
+    @if (features.contains("tomcat-server")) {
+    runtime "tomcat"
+    }
+    @if (features.contains("jetty-server")) {
+    runtime "jetty"
+    }
+    @if (features.contains("netty-server")) {
+    runtime "netty"
+    }
+    @if (features.contains("undertow-server")) {
+    runtime "undertow"
+    }
+    @if (features.testFramework().isJunit()) {
+    testRuntime "junit5"
+    } else if (features.testFramework().isKotlinTestFramework()) {
+    testRuntime "kotest"
+    } else if (features.testFramework().isSpock()) {
+    testRuntime "spock2"
+    }
+    processing {
+        incremental true
+        annotations "@project.getPackageName().*"
     }
 }
 
 dependencies {
 @io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
-@if (!features.language().isGroovy() && (features.contains("graalvm") || features.contains("google-cloud-function"))) {
-    @if (VersionInfo.isMicronautSnapshot()) {
-    compileOnly(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
-    } else {
-    compileOnly(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    }
-}
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
-@if (features.contains("google-cloud-function")) {
-    @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
-    @dependency.template("com.google.cloud.functions.invoker", "java-function-invoker", "invoker", VersionInfo.getDependencyVersion("google.function.invoker").getValue())
-}
-    @if (VersionInfo.isMicronautSnapshot()) {
-    implementation(enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion"))
-    } else {
-    implementation(platform("io.micronaut:micronaut-bom:$micronautVersion"))
-    }
-    @dependency.template("io.micronaut", "micronaut-inject", "implementation", null)
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null)
 @if (features.language().isKotlin()) {
     @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "implementation", "${kotlinVersion}")
@@ -114,32 +133,32 @@ dependencies {
 @if (features.contains("annotation-api")) {
     @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
 }
-@if (features.contains("netty-server")) {
-    @dependency.template("io.micronaut", "micronaut-http-server-netty", "implementation", null)
+@if (features.contains("oracle-cloud-sdk")) {
+    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "implementation", null)
 }
-@if (features.contains("jetty-server")) {
-    @dependency.template("io.micronaut.servlet", "micronaut-http-server-jetty", "implementation", null)
+@if (features.contains("aws-v2-sdk")) {
+    @dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "implementation", null)
 }
-@if (features.contains("undertow-server")) {
-    @dependency.template("io.micronaut.servlet", "micronaut-http-server-undertow", "implementation", null)
-}
-@if (features.contains("tomcat-server")) {
-    @dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "implementation", null)
+@if (features.contains("oracle-function")) {
+    @if (!features.contains("oracle-function-http")) {
+    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "implementation", null)
+    @dependency.template("com.fnproject.fn", "api", "implementation", null)
+    @dependency.template("com.fnproject.fn", "runtime", "runtimeOnly", null)
+    @dependency.template("com.fnproject.fn", "testing-junit4", "testImplementation", null)
+    }
 }
 @if (features.contains("google-cloud-function")) {
-    @if (features.contains("google-cloud-function-http")) {
-    @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "implementation", null)
-    } else {
+    @if (!features.contains("google-cloud-function-http")) {
+    @dependency.template("com.google.cloud.functions", "functions-framework-api", "compileOnly", null)
     @dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "implementation", null)
+    @dependency.template("com.google.cloud.functions", "functions-framework-api", "testImplementation", null)
     }
 }
 @if (features.contains("azure-function")) {
+    @if (!features.contains("azure-function-http")) {
     @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null)
-@if (features.contains("azure-function-http")) {
-    @dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "implementation", null)
-} else {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
-}
+    }
 }
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
@@ -389,9 +408,6 @@ dependencies {
 @if (features.contains("nats")) {
     @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
 }
-@if (features.contains("file-watch-osx")) {
-    @dependency.template("io.micronaut", "micronaut-runtime-osx", "developmentOnly", "$micronautVersion")
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
@@ -400,9 +416,6 @@ dependencies {
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws", "implementation", null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "implementation", null)
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "implementation", null)
@@ -492,6 +505,9 @@ dependencies {
 @if (features.contains("logback")) {
     @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
 }
+@if (features.contains("slf4j-simple")) {
+    @dependency.template("org.slf4j", "slf4j-simple", "runtimeOnly", null)
+}
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null)
 }
@@ -516,20 +532,22 @@ dependencies {
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
 }
-
-@io.micronaut.starter.feature.build.gradle.templates.testFrameworks.template(features.language(), features.testFramework())
-
+@if (features.testFramework().isSpock()) {
+    @if (features.contains("aws-lambda") || features.contains("aws-lambda-custom-runtime")) {
+    @dependency.template("io.micronaut","micronaut-function", "testImplementation", null)
+    }
+}
+@if (features.contains("http-client")) {
+    @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null)
+}
 @if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
     @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null)
 }
 @if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
     @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
 }
-@if (features.contains("google-cloud-function")) {
-    @dependency.template("com.google.cloud.functions", "functions-framework-api", "testImplementation", null)
-}
 @if (features.contains("neo4j-bolt")) {
-    @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntime", null)
+    @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
     testImplementation(platform("org.testcontainers:testcontainers-bom:1.14.3"))
@@ -551,22 +569,8 @@ dependencies {
 }
 }
 
-test.classpath += configurations.developmentOnly
-
-@if (features.application() != null) {
-@if (features.contains("google-cloud-function")) {
-mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
-} else {
-@if (features.application().mainClassName(applicationType, project, features)!=null) {
-mainClassName = "@features.application().mainClassName(applicationType, project, features)"
-}
-}
-}
-
-
-// use JUnit 5 platform
-test {
-    useJUnitPlatform()
+@if (features.mainClass().isPresent()) {
+mainClassName = "@features.mainClass().get()"
 }
 
 java {
@@ -576,102 +580,36 @@ java {
 }
 }
 
-@if (features.language().isJava()) {
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-    options.compilerArgs.addAll([
-        '-parameters',
-        // enables incremental compilation
-        '-Amicronaut.processing.incremental=true',
-        '-Amicronaut.processing.annotations=@project.getPackageName().*',
-        "-Amicronaut.processing.group=$project.group",
-        "-Amicronaut.processing.module=$project.name",
-    ])
-}
-}
-@if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
-allOpen {
-    annotation("io.micronaut.aop.Around")
-}
 @if (features.language().isKotlin()) {
 compileKotlin {
     kotlinOptions {
         jvmTarget = '@features.getTargetJdk()'
-        //Will retain parameter names for Java reflection
-        javaParameters = true
     }
 }
 }
+
+@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
 compileTestKotlin {
     kotlinOptions {
         jvmTarget = '@features.getTargetJdk()'
-        javaParameters = true
-    }
-}
-kapt {
-    arguments {
-        arg("micronaut.processing.incremental", true)
-        arg("micronaut.processing.annotations", "@project.getPackageName().*")
-        arg("micronaut.processing.group", "@project.getPackageName()")
-        arg("micronaut.processing.module", "@project.getPropertyName()")
     }
 }
 }
-
-@if (features.language().isGroovy()) {
-tasks.withType(GroovyCompile) {
-    groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
-}
-}
-
-
-@if (features.contains("shade")) {
-shadowJar {
-    mergeServiceFiles()
-}
-}
-
-@if (features.application() != null) {
 
 @if (features.contains("jrebel")) {
 run.dependsOn(generateRebel)
 }
 
-@if (features.contains("google-cloud-function")) {
-task('runFunction', type: JavaExec, dependsOn: classes) {
-    main = 'com.google.cloud.functions.invoker.runner.Invoker'
-    classpath(configurations.invoker)
-    args(
-        '--target', 'io.micronaut.gcp.function.http.HttpFunction',
-        '--port', 8080
-    )
-    doFirst {
-        args('--classpath', files(configurations.runtimeClasspath, sourceSets.main.output).asPath)
-    }
-}
-}
-
-
-tasks.withType(JavaExec) {
-    classpath += configurations.developmentOnly
-    jvmArgs('-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 @if (features.contains("springloaded")) {
+tasks.withType(JavaExec) {
     jvmArgs('-noverify', '-javaagent:agent/springloaded-1.2.8.RELEASE.jar')
 }
-@if (features.contains("file-watch")) {
-    if (gradle.startParameter.continuous) {
-        systemProperties(
-            'micronaut.io.watch.restart':'true',
-            'micronaut.io.watch.enabled':'true',
-            "micronaut.io.watch.paths":"src/main"
-        )
-    }
 }
 @if (features.contains("jrebel")) {
+tasks.withType(JavaExec) {
     if (project.hasProperty('rebelAgent')) {
         jvmArgs(rebelAgent)
     }
-}
 }
 }
 
@@ -686,6 +624,44 @@ azurefunctions {
       os = 'windows'
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+}
+
+@if (features.contains("oracle-function")) {
+@if (features.contains("oracle-function-http")) {
+dockerfileNative {
+  args('-XX:MaximumHeapSizePercent=80')
+}
+nativeImage {
+    args("--initialize-at-build-time=@project.getPackageName()")
+}
+} else {
+mainClassName = "com.fnproject.fn.runtime.EntryPoint"
+
+nativeImage {
+  args("--static",
+       "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+       "--initialize-at-build-time=@project.getPackageName()")
+}
+
+dockerfileNative {
+  args('-XX:MaximumHeapSizePercent=80')
+  buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+  defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+}
+
+dockerfile {
+  buildStrategy = io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION
+  defaultCommand = "@(project.getPackageName()).Function::handleRequest"
+}
+}
+
+dockerBuild {
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+}
+
+dockerBuildNative {
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
 }
 }
 

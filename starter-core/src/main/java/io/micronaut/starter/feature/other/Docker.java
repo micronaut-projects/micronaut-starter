@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.other.template.dockerfile;
 import javax.inject.Singleton;
 import java.util.Set;
 
+// TODO: Delete Maven plugin is upgraded
 @Singleton
 public class Docker implements DefaultFeature {
 
@@ -69,6 +70,6 @@ public class Docker implements DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return supports(applicationType);
+        return supports(applicationType) && options.getBuildTool() == BuildTool.MAVEN;
     }
 }

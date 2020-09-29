@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.function
+package io.micronaut.starter.feature.function.azure
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
@@ -86,14 +86,13 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
 
         then:
         build.contains('id "com.microsoft.azure.azurefunctions"')
-        build.contains('implementation("io.micronaut.azure:micronaut-azure-function-http")')
-        build.contains('implementation("com.microsoft.azure.functions:azure-functions-java-library")')
+        build.contains('runtime "azure_function"')
         build.contains('azurefunctions {')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         !build.contains('"com.github.johnrengelman.shadow"')
         !build.contains('shadowJar')
-        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")

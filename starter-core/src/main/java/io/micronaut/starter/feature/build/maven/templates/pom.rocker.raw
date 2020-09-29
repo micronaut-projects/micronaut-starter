@@ -64,9 +64,10 @@ List<Property> properties
     }
   </repositories>
 
-@if (features.contains("testcontainers")) {
+
   <dependencyManagement>
     <dependencies>
+@if (features.contains("testcontainers")) {
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
@@ -74,9 +75,10 @@ List<Property> properties
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+}
     </dependencies>
   </dependencyManagement>
-}
+
 
 
   <dependencies>
@@ -121,6 +123,8 @@ List<Property> properties
 }
 @if (features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "compile", null)
+} else {
+@dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
@@ -372,6 +376,12 @@ List<Property> properties
 @dependency.template("io.ktor", "ktor-server-netty", "compile", null)
 @dependency.template("io.ktor", "ktor-jackson", "compile", null)
 }
+@if (features.contains("oracle-cloud-sdk")) {
+@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "compile", null)
+}
+@if (features.contains("aws-v2-sdk")) {
+@dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "compile", null)
+}
 @if (features.contains("gcp-cloud-trace")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
 }
@@ -408,7 +418,7 @@ List<Property> properties
 @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null)
 }
-@if (features.contains("aws-lambda-custom-runtime")) {
+@if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null)
 }
 @if (features.contains("views-thymeleaf")) {
@@ -505,6 +515,9 @@ List<Property> properties
 }
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
+}
+@if (features.contains("slf4j-simple")) {
+@dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
 }
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)

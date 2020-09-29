@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.other;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
@@ -30,6 +31,15 @@ import java.util.Set;
 @Singleton
 public class ShadePlugin implements DefaultFeature {
 
+    @Override
+    public boolean shouldApply(
+            ApplicationType applicationType,
+            Options options,
+            Set<Feature> selectedFeatures) {
+        // maybe should not apply if JIB is selected
+        return true;
+    }
+
     @NonNull
     @Override
     public String getName() {
@@ -38,16 +48,26 @@ public class ShadePlugin implements DefaultFeature {
 
     @Override
     public boolean isVisible() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return true;
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Fat/Shaded JAR Support";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Adds the ability to build a Fat/Shaded JAR";
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.PACKAGING;
     }
 }

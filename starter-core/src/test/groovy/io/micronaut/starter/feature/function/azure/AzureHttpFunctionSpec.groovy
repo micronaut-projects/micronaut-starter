@@ -19,6 +19,6 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#azureHttpFunctions")
+        readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions")
     }
 }

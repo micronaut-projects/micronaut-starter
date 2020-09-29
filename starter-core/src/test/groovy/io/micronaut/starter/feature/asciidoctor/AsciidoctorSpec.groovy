@@ -15,7 +15,7 @@ class AsciidoctorSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language)).render().toString()
 
         then:
-        template.contains('id "org.asciidoctor.jvm.convert" version "3.1.0"')
+        template.contains('id "org.asciidoctor.jvm.convert"')
         template.contains("apply from: 'gradle/asciidoc.gradle'")
 
         where:

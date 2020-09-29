@@ -9,12 +9,13 @@ import io.micronaut.starter.options.Options
 
 class DockerSpec extends BeanContextSpec {
 
-    void "test docker is applied by default"() {
+    void "test docker is applied by default for Maven"() {
         when:
         GeneratorContext ctx = buildGeneratorContext([], new Options(Language.JAVA, null, build), applicationType)
 
         then:
-        ctx.templates.containsKey("dockerfile")
+        (build == BuildTool.MAVEN && ctx.templates.containsKey("dockerfile"))||     (build == BuildTool.GRADLE && !ctx.templates.containsKey("dockerfile"))
+
 
         where:
         [build, applicationType] << [BuildTool.values(), ApplicationType.values() - ApplicationType.FUNCTION].combinations()
