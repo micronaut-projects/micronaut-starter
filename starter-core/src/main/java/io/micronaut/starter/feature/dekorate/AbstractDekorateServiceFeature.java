@@ -1,0 +1,41 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package io.micronaut.starter.feature.dekorate;
+
+import io.micronaut.starter.feature.FeatureContext;
+
+/**
+ * Abstract class for all Dekorate features that requries to for proper functionality
+ * one of {@link AbstractDekoratePlatformFeature}
+ *
+ * @author Pavol Gressa
+ * @since 2.1
+ */
+public abstract class AbstractDekorateServiceFeature extends AbstractDekorateFeature {
+
+    private final DekorateKubernetes dekorateKubernetes;
+
+    public AbstractDekorateServiceFeature(DekorateKubernetes dekorateKubernetes) {
+        this.dekorateKubernetes = dekorateKubernetes;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(AbstractDekoratePlatformFeature.class)) {
+            featureContext.addFeature(dekorateKubernetes);
+        }
+    }
+}

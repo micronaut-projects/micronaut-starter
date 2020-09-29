@@ -444,6 +444,27 @@ List<Property> properties
 @if (features.contains("jmx")) {
 @dependency.template("io.micronaut.jmx", "micronaut-jmx", "compile", null)
 }
+@if (features.contains("dekorate-kubernetes")) {
+@dependency.template("io.dekorate", "kubernetes-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-openshift")) {
+@dependency.template("io.dekorate", "openshift-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-knative")) {
+@dependency.template("io.dekorate", "knative-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-servicecatalog")) {
+@dependency.template("io.dekorate", "servicecatalog-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-halkyon")) {
+@dependency.template("io.dekorate", "halkyon-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-prometheus")) {
+@dependency.template("io.dekorate", "prometheus-annotations", "compile", "${dekorate.version}")
+}
+@if (features.contains("dekorate-jaeger")) {
+@dependency.template("io.dekorate", "jaeger-annotations", "compile", "${dekorate.version}")
+}
 @if (features.contains("spring")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
 @if (features.language().isGroovy()) {
@@ -801,6 +822,56 @@ List<Property> properties
               <version>${micronaut.security.version}</version>
             </path>
 }
+@if (features.contains("dekorate-kubernetes")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>kubernetes-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-openshift")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>openshift-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-knative")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>knative-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-servicecatalog")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>servicecatalog-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-jaeger")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>jaeger-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-prometheus")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>prometheus-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+@if (features.contains("dekorate-halkyon")) {
+            <path>
+              <groupId>io.dekorate</groupId>
+              <artifactId>halkyon-annotations</artifactId>
+              <version>${dekorate.version}</version>
+            </path>
+}
+
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
@@ -975,6 +1046,55 @@ List<Property> properties
                   <groupId>io.micronaut.security</groupId>
                   <artifactId>micronaut-security-annotations</artifactId>
                   <version>${micronaut.security.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-kubernetes")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>kubernetes-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-openshift")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>openshift-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-knative")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>knative-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-servicecatalog")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>servicecatalog-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-prometheus")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>prometheus-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-jaeger")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>jaeger-annotations</artifactId>
+                  <version>${dekorate.version}</version>
+                </annotationProcessorPath>
+}
+@if (features.contains("dekorate-halkyon")) {
+                <annotationProcessorPath>
+                  <groupId>io.dekorate</groupId>
+                  <artifactId>halkyon-annotations</artifactId>
+                  <version>${dekorate.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
