@@ -163,7 +163,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html#AwsLambdaCustomRuntime-io.micronaut.starter.feature.function.awslambda.AwsLambda-">AwsLambdaCustomRuntime</a></span>(<a href="../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html" title="class in io.micronaut.starter.feature.function.awslambda">AwsLambda</a>&nbsp;awsLambda)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html#AwsLambdaCustomRuntime-javax.inject.Provider-">AwsLambdaCustomRuntime</a></span>(javax.inject.Provider&lt;<a href="../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html" title="class in io.micronaut.starter.feature.function.awslambda">AwsLambda</a>&gt;&nbsp;awsLambda)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -227,9 +227,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html#mainClassName-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.feature.Features-">mainClassName</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-             <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
-             <a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html#mainClassName-io.micronaut.starter.application.generator.GeneratorContext-">mainClassName</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -312,13 +310,13 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="AwsLambdaCustomRuntime-io.micronaut.starter.feature.function.awslambda.AwsLambda-">
+<a name="AwsLambdaCustomRuntime-javax.inject.Provider-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AwsLambdaCustomRuntime</h4>
-<pre>public&nbsp;AwsLambdaCustomRuntime(<a href="../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html" title="class in io.micronaut.starter.feature.function.awslambda">AwsLambda</a>&nbsp;awsLambda)</pre>
+<pre>public&nbsp;AwsLambdaCustomRuntime(javax.inject.Provider&lt;<a href="../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html" title="class in io.micronaut.starter.feature.function.awslambda">AwsLambda</a>&gt;&nbsp;awsLambda)</pre>
 </li>
 </ul>
 </li>
@@ -458,19 +456,17 @@ implements <a href="../../../../../io/micronaut/starter/feature/function/Functio
 <pre>public&nbsp;boolean&nbsp;shouldGenerateMainClassForRuntime(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
 </li>
 </ul>
-<a name="mainClassName-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.feature.Features-">
+<a name="mainClassName-io.micronaut.starter.application.generator.GeneratorContext-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>mainClassName</h4>
 <pre>@Nullable
-public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                                                <a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project,
-                                                <a href="../../../../../io/micronaut/starter/feature/Features.html" title="class in io.micronaut.starter.feature">Features</a>&nbsp;features)</pre>
+public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../io/micronaut/starter/feature/ApplicationFeature.html#mainClassName-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-io.micronaut.starter.feature.Features-">mainClassName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/ApplicationFeature.html" title="interface in io.micronaut.starter.feature">ApplicationFeature</a></code></dd>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/ApplicationFeature.html#mainClassName-io.micronaut.starter.application.generator.GeneratorContext-">mainClassName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/ApplicationFeature.html" title="interface in io.micronaut.starter.feature">ApplicationFeature</a></code></dd>
 </dl>
 </li>
 </ul>

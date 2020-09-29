@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -165,7 +165,8 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#Features-java.util.Set-io.micronaut.starter.options.Options-">Features</a></span>(java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#Features-io.micronaut.starter.application.generator.GeneratorContext-java.util.Set-io.micronaut.starter.options.Options-">Features</a></span>(<a href="../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;context,
+        java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
         <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</code>&nbsp;</td>
 </tr>
 </table>
@@ -224,6 +225,10 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#language--">language</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code>java.util.Optional&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#mainClass--">mainClass</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../io/micronaut/starter/feature/test/TestFeature.html" title="interface in io.micronaut.starter.feature.test">TestFeature</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/feature/Features.html#testFramework--">testFramework</a></span>()</code>&nbsp;</td>
 </tr>
@@ -284,13 +289,14 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Features-java.util.Set-io.micronaut.starter.options.Options-">
+<a name="Features-io.micronaut.starter.application.generator.GeneratorContext-java.util.Set-io.micronaut.starter.options.Options-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Features</h4>
-<pre>public&nbsp;Features(java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
+<pre>public&nbsp;Features(<a href="../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;context,
+                java.util.Set&lt;<a href="../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;featureList,
                 <a href="../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options)</pre>
 </li>
 </ul>
@@ -363,6 +369,19 @@ extends java.util.ArrayList&lt;java.lang.String&gt;</pre>
 <li class="blockList">
 <h4>javaVersion</h4>
 <pre>public&nbsp;<a href="../../../../io/micronaut/starter/options/JdkVersion.html" title="enum in io.micronaut.starter.options">JdkVersion</a>&nbsp;javaVersion()</pre>
+</li>
+</ul>
+<a name="mainClass--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>mainClass</h4>
+<pre>public&nbsp;java.util.Optional&lt;java.lang.String&gt;&nbsp;mainClass()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The main class</dd>
+</dl>
 </li>
 </ul>
 <a name="getTargetJdk--">
