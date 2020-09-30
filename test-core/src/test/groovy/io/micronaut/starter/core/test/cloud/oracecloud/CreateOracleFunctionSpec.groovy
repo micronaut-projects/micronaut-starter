@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test.oracecloud
+package io.micronaut.starter.core.test.cloud.oracecloud
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool

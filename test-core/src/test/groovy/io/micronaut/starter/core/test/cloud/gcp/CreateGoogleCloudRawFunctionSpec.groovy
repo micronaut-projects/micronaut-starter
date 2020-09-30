@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test.gcp
+package io.micronaut.starter.core.test.cloud.gcp
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
@@ -8,17 +8,17 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 
-class CreateGoogleCloudFunctionSpec extends CommandSpec{
+class CreateGoogleCloudRawFunctionSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
-        "test-gcpfunction"
+        "test-gcpfunctionraw"
     }
 
     @Unroll
     void 'create-#applicationType with features google-cloud-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                           Language lang,
-                                                                                                                           BuildTool build,
-                                                                                                                           TestFramework testFramework) {
+                                                                                                                Language lang,
+                                                                                                                BuildTool build,
+                                                                                                                TestFramework testFramework) {
         given:
         List<String> features = ['google-cloud-function']
         generateProject(lang, build, features, applicationType, testFramework)
@@ -30,6 +30,6 @@ class CreateGoogleCloudFunctionSpec extends CommandSpec{
         output.contains("BUILD SUCCESS")
 
         where:
-        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT])
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION])
     }
 }

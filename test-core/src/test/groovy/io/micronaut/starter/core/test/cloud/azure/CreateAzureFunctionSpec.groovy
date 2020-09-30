@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test.azure
+package io.micronaut.starter.core.test.cloud.azure
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
