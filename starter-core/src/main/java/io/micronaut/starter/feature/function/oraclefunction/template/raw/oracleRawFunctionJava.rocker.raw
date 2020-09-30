@@ -11,7 +11,7 @@ package @project.getPackageName();
 
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.oraclecloud.function.OciFunction;
-
+import io.micronaut.oraclecloud.core.TenancyIdProvider;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

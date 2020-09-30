@@ -54,8 +54,8 @@ public class OracleRawFunction extends OracleFunction {
     @Override
     public void apply(GeneratorContext generatorContext) {
         ApplicationType type = generatorContext.getApplicationType();
-        applyFunction(generatorContext, type);
         if (type == ApplicationType.FUNCTION) {
+            applyFunction(generatorContext, type);
             Language language = generatorContext.getLanguage();
             Project project = generatorContext.getProject();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
