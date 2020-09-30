@@ -18,7 +18,6 @@ package io.micronaut.starter.feature.function.azure;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
@@ -33,10 +32,5 @@ public class AzureFeatureValidator implements FeatureValidator  {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof AzureHttpFunction || f instanceof AzureRawFunction)) {
-            if (options.getJavaVersion() != JdkVersion.JDK_8) {
-                throw new IllegalArgumentException("The Azure Functions runtime only supports Java SE 8 LTS (zulu8.31.0.2-jre8.0.181-win_x64).");
-            }
-        }
     }
 }
