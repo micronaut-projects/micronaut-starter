@@ -24,7 +24,7 @@ class CreateOracleFunctionSpec extends CommandSpec{
         generateProject(lang, build, features, applicationType, testFramework)
 
         when:
-        String output = executeBuild(build, "test")
+        String output = executeBuild(build, "testClasses")
 
         then:
         output.contains("BUILD SUCCESS")
