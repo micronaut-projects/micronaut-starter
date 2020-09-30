@@ -13,7 +13,7 @@ import spock.lang.Unroll
 class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Unroll
-    void "#jdkVersion not supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    void "#jdkVersion supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
         generate(
                 applicationType,
@@ -21,9 +21,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
                 [feature],
         )
         then:
-        IllegalArgumentException e = thrown()
-        e.message == 'The Azure Functions runtime only supports Java SE 8 LTS (zulu8.31.0.2-jre8.0.181-win_x64).'
-
+        noExceptionThrown()
+       
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
