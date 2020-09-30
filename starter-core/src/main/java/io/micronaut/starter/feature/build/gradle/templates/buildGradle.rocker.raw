@@ -537,7 +537,7 @@ dependencies {
     @dependency.template("io.micronaut","micronaut-function", "testImplementation", null)
     }
 }
-@if (features.contains("http-client")) {
+@if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null)
 }
 @if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {

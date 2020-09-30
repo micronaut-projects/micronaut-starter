@@ -12,7 +12,7 @@ import spock.lang.Unroll
 
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
-    void 'test gradle google cloud function feature for language=#language'() {
+    void 'test gradle oracle cloud function feature for language=#language'() {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -29,7 +29,10 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         build.contains('runtime "oracle_function"')
         build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
-
+        output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
+            .contains("class FooController {")
+        output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
+                .contains("class FooControllerTest")
 
         where:
         language << Language.values().toList()
