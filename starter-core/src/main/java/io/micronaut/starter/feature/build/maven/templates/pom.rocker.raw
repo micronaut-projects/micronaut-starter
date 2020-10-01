@@ -47,15 +47,13 @@ List<Property> properties
 
   <repositories>
     <repository>
+      <id>central</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
       <id>jcenter.bintray.com</id>
       <url>https://jcenter.bintray.com</url>
     </repository>
-    @if (VersionInfo.isStarterSnapshot()) {
-    <repository>
-        <id>central</id>
-        <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    }
     @if (VersionInfo.isMicronautSnapshot()) {
     <repository>
       <id>jfrog-snapshots</id>
