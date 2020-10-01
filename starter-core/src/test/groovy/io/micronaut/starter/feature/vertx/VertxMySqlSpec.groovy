@@ -13,7 +13,7 @@ class VertxClientSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle vertx-mysql-client feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-mysql-client'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-mysql-client'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-mysql-client")')

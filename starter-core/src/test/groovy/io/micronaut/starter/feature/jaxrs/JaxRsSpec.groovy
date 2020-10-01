@@ -24,7 +24,7 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test jax-rs with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')

@@ -110,7 +110,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     protected String getBuildCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
             return "mvnw clean package";
-        } else if (buildTool == BuildTool.GRADLE) {
+        } else if (buildTool.isGradle()) {
             return "gradlew clean assemble";
         } else {
             throw new IllegalStateException("Unsupported build tool");

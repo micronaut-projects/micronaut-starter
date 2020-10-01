@@ -33,7 +33,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY)).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), false).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

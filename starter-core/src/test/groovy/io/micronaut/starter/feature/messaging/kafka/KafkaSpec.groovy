@@ -21,7 +21,7 @@ class KafkaSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka"]), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')

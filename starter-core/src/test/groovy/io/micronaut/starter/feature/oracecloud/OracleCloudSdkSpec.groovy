@@ -13,7 +13,7 @@ class OracleCloudSdkSpec extends BeanContextSpec  implements CommandOutputFixtur
     @Unroll
     void 'test Oracle Cloud SDK feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle-cloud-sdk'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle-cloud-sdk'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-sdk")')

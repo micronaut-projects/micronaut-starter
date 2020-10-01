@@ -14,7 +14,7 @@ class AWSSDKv2Spec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test Oracle Cloud SDK feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')

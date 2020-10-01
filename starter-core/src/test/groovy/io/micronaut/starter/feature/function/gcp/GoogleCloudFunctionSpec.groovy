@@ -69,7 +69,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         def readme = output["README.md"]
 
         then:
-        build.contains('runtime "google_function"')
+        build.contains('runtime("google_function")')
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !build.contains('implementation("io.micronaut:micronaut-http-client")')

@@ -12,7 +12,7 @@ class MariaDBSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle mariadb feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client")')

@@ -25,7 +25,7 @@ class InfinispanSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle cache-infinispan feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-infinispan'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-infinispan'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')

@@ -26,7 +26,7 @@ class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle dekorate #feature.name feature with for #language' (Feature feature, Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature.getName()], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature.getName()], language), false).render().toString()
         String service = feature.getName().replaceFirst("dekorate-", "")
 
         then:

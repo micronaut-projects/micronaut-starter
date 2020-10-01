@@ -24,7 +24,7 @@ class CaffeineSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle cache-caffeine feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-caffeine'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-caffeine'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.cache:micronaut-cache-caffeine")')

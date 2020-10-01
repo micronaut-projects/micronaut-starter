@@ -138,7 +138,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec  implements CommandOutp
     @Unroll
     void 'test gradle aws-lambda-custom-runtime feature for language=#language and application: default'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
@@ -150,7 +150,7 @@ class AwsLambdaCustomRuntimeSpec extends BeanContextSpec  implements CommandOutp
     @Unroll
     void 'test gradle aws-lambda-custom-runtime feature for language=#language and application: function'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda-custom-runtime'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')

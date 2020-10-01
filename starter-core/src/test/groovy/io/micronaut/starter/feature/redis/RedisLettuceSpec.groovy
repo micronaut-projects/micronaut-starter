@@ -13,7 +13,7 @@ class RedisLettuceSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle redis-lettuce feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['redis-lettuce'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['redis-lettuce'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.redis:micronaut-redis-lettuce")')

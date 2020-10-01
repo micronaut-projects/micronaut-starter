@@ -25,7 +25,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test gradle elasticsearch feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")')
@@ -64,7 +64,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     @Requires({ jvm.isJava8() || jvm.isJava11() })
     void 'test gradle elasticsearch and graalvm features for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch', 'graalvm'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch', 'graalvm'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:1.7.30")')

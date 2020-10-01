@@ -35,7 +35,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')

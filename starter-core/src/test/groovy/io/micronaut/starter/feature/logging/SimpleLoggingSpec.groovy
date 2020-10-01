@@ -23,7 +23,7 @@ class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test configure slf4j-simple for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("org.slf4j:slf4j-simple")')

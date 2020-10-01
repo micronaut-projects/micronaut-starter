@@ -26,7 +26,7 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
     @Unroll
     void 'test gradle discovery-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['discovery-consul'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['discovery-consul'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')

@@ -52,20 +52,23 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
-        generatorContext.addTemplate("build", new RockerTemplate("build.gradle", buildGradle.template(
+        BuildTool buildTool = generatorContext.getBuildTool();
+        generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
-                generatorContext.getFeatures()
+                generatorContext.getFeatures(),
+                buildTool == BuildTool.GRADLE_KOTLIN
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
-        generatorContext.addTemplate("gradleSettings", new RockerTemplate("settings.gradle", settingsGradle.template(generatorContext.getProject())));
+        String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
+        generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject())));
     }
 
     @Override
     public boolean shouldApply(ApplicationType applicationType,
                                Options options,
                                Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.GRADLE;
+        return options.getBuildTool().isGradle();
     }
 }

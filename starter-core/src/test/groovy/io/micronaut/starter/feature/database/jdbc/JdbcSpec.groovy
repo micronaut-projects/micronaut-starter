@@ -13,7 +13,7 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "test gradle jdbc feature #jdbcFeature"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([jdbcFeature])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([jdbcFeature]), false).render().toString()
 
         then:
         template.contains("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")")
