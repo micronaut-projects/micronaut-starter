@@ -42,7 +42,7 @@ abstract class CommandSpec extends Specification {
 
     String executeBuild(BuildTool buildTool, String command) {
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle(command).getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven(command)

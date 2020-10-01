@@ -29,6 +29,10 @@ apply from: "gradle/asciidoc.gradle"
 }
 }
 
+@if(features.language().isKotlin() && isKotlinDsl) {
+val kotlinVersion=project.properties.get("kotlinVersion")
+}
+
 repositories {
     mavenCentral()
     jcenter()

@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;
 
