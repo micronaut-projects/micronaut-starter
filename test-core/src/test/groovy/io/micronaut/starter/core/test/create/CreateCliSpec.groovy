@@ -22,7 +22,7 @@ class CreateCliSpec extends CommandSpec {
 
         when:
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle('run --args="-v"').output
         } else {
             output = executeMaven("mn:run -Dmn.appArgs=-v")

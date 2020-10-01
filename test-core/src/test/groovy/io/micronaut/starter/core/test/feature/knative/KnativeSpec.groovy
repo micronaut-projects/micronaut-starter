@@ -30,7 +30,7 @@ class KnativeSpec extends CommandSpec {
         generateProject(Language.JAVA, buildTool, ["knative"])
 
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle("test")?.output
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven("compile test")
