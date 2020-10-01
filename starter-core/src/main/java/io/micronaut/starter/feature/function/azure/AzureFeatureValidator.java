@@ -33,8 +33,11 @@ public class AzureFeatureValidator implements FeatureValidator  {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (options.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
-            throw new IllegalArgumentException("The Azure Gradle plugin currently does not support the Kotlin Gradle DSL.");
+        if (features.stream().anyMatch(f -> f instanceof AbstractAzureFunction)) {
+
+            if (options.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
+                throw new IllegalArgumentException("The Azure Gradle plugin currently does not support the Kotlin Gradle DSL.");
+            }
         }
     }
 }
