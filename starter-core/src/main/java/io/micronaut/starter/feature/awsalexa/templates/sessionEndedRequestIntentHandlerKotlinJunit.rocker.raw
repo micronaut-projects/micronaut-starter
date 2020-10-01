@@ -11,7 +11,7 @@ package @project.getPackageName()
 import com.amazon.ask.dispatcher.request.handler.HandlerInput
 import com.amazon.ask.model.RequestEnvelope
 import com.amazon.ask.model.SessionEndedRequest
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import javax.inject.Inject
