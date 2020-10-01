@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.function.azure;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
@@ -32,5 +33,8 @@ public class AzureFeatureValidator implements FeatureValidator  {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        if (options.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
+            throw new IllegalArgumentException("The Azure Gradle plugin currently does not support the Kotlin Gradle DSL.");
+        }
     }
 }

@@ -44,7 +44,7 @@ public class Application {
 }
 """)
         String output = null
-        if (build == BuildTool.GRADLE) {
+        if (build.isGradle()) {
             output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
             output = executeMaven("compile test")
@@ -90,7 +90,7 @@ class Application {
 }
 """)
         String output = null
-        if (build == BuildTool.GRADLE) {
+        if (build.isGradle()) {
             output = executeGradle("test")?.output
         } else if (build == BuildTool.MAVEN) {
             output = executeMaven("compile test")

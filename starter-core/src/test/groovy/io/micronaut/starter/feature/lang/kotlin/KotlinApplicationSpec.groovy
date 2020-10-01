@@ -35,7 +35,7 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         output.containsKey("src/main/kotlin/example/micronaut/Application.${Language.KOTLIN.extension}".toString())
 
         when:
-        def buildGradle = output['build.gradle']
+        def buildGradle = output[buildTool.getBuildFileName()]
         def pom = output['pom.xml']
 
         then:
