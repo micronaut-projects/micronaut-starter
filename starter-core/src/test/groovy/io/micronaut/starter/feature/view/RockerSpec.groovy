@@ -28,7 +28,7 @@ class RockerSpec extends BeanContextSpec  implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
-        template.contains('id "com.fizzed.rocker" version "1.2.3"')
+        template.contains('id "com.fizzed.rocker" version "1.3.0"')
         template.contains("""
 sourceSets {
     main {
