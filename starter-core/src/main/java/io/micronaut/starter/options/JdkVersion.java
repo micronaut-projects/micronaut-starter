@@ -37,6 +37,8 @@ public enum JdkVersion {
 
     private static final List<Integer> SUPPORTED_JDKS = Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList());
 
+    public static final JdkVersion DEFAULT_OPTION = JDK_11;
+
     private final int majorVersion;
 
     JdkVersion(int majorVersion) {

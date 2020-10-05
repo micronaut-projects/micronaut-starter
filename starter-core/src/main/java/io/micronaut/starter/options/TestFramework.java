@@ -27,6 +27,8 @@ public enum TestFramework {
     SPOCK,
     KOTEST;
 
+    public static final TestFramework DEFAULT_OPTION = JUNIT;
+
     @Override
     public String toString() {
         return this.name().toLowerCase();

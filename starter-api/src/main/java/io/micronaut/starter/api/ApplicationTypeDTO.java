@@ -20,6 +20,8 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.naming.Described;
+import io.micronaut.core.naming.Named;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -33,7 +35,7 @@ import java.util.List;
  */
 @Schema(name = "ApplicationTypeInfo")
 @Introspected
-public class ApplicationTypeDTO extends Linkable {
+public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<String> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
     private final String name;
     private final List<FeatureDTO> features;
@@ -101,4 +103,18 @@ public class ApplicationTypeDTO extends Linkable {
         return name;
     }
 
+
+    @Override
+    @Schema(description = "The value of the application type for select options")
+    public String getValue() {
+        return name;
+    }
+
+    @Override
+    @Schema(description = "The label of the application type for select options")
+    public String getLabel() {
+        return description
+                .replaceFirst("A ", "")
+                .trim();
+    }
 }
