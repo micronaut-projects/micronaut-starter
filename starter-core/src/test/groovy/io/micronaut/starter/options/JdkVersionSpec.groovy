@@ -13,6 +13,6 @@ class JdkVersionSpec extends Specification {
 
         then:
         def ex = thrown(IllegalArgumentException)
-        ex.message == "Unsupported JDK version: 16. Supported values are [8, 9, 10, 11, 12, 13, 14, 15]"
+        ex.message == "Unsupported JDK version: 16. Supported values are [8, 11, 15]"
     }
 }

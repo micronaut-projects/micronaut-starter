@@ -51,7 +51,9 @@ public enum JdkVersion {
             case 15:
                 return JDK_15;
             default:
-                throw new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " + Arrays.stream(JdkVersion.values()).map(JdkVersion::majorVersion).collect(Collectors.toList()));
+                throw new IllegalArgumentException("Unsupported JDK version: " + majorVersion + ". Supported values are " +
+                        Arrays.stream(JdkVersion.values()).filter(JdkVersion::hasSupport).map(JdkVersion::majorVersion).collect(Collectors.toList())
+                );
         }
     }
 
