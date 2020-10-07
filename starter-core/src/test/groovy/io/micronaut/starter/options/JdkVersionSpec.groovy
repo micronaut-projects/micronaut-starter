@@ -4,10 +4,12 @@ import spock.lang.Specification
 
 class JdkVersionSpec extends Specification {
 
-    void "test valueOf error"() {
+    void 'test valueOf with a supported JDK version'() {
         expect:
-        JdkVersion.JDK_11 == JdkVersion.valueOf(11)
+        JdkVersion.JDK_14 == JdkVersion.valueOf(14)
+    }
 
+    void 'test valueOf when the JDK version does not exist'() {
         when:
         JdkVersion.valueOf(16)
 
