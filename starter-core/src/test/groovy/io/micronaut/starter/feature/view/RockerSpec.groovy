@@ -8,7 +8,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class RockerSpec extends BeanContextSpec  implements CommandOutputFixture {
+class RockerSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-rocker contains links to micronaut docs'() {
         when:
@@ -60,7 +60,7 @@ sourceSets {
       <plugin>
         <groupId>com.fizzed</groupId>
         <artifactId>rocker-maven-plugin</artifactId>
-        <version>1.2.3</version>
+        <version>1.3.0</version>
         <executions>
           <execution>
             <id>generate-rocker-templates</id>
