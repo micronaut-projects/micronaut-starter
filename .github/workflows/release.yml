@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
@@ -81,7 +81,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -129,7 +129,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -177,7 +177,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Download GraalVM
@@ -233,7 +233,7 @@ jobs:
     needs: [linux, macos, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -253,7 +253,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -290,7 +290,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -322,7 +322,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -353,7 +353,7 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v2.3.3
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: master
