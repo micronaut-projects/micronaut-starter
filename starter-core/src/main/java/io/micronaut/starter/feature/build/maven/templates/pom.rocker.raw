@@ -651,7 +651,7 @@ List<Property> properties
       <plugin>
         <groupId>com.fizzed</groupId>
         <artifactId>rocker-maven-plugin</artifactId>
-        <version>1.2.3</version>
+        <version>1.3.0</version>
         <executions>
           <execution>
             <id>generate-rocker-templates</id>
