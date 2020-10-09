@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 import spock.lang.Unroll
 
 class ConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
@@ -59,6 +60,19 @@ class ConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         commandContext.configuration.get('consul.client.registration.enabled'.toString()) == true
         commandContext.configuration.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/508")
+    void 'discovery-consul with config-consul only adds configuration to bootstrap.yml'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(['discovery-consul', 'config-consul'])
+
+        then:
+        commandContext.bootstrapConfig.get('consul.client.registration.enabled'.toString()) == true
+        commandContext.bootstrapConfig.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
+
+        !commandContext.configuration.containsKey('consul.client.registration.enabled')
+        !commandContext.configuration.containsKey('consul.client.defaultZone')
     }
 
 }

@@ -39,8 +39,10 @@ public class Consul implements DiscoveryFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
-        generatorContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        if (!generatorContext.isFeaturePresent(io.micronaut.starter.feature.distributedconfig.Consul.class)) {
+            generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
+            generatorContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        }
     }
 
     @Override
