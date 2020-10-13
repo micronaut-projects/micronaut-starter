@@ -54,6 +54,7 @@ io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.config
+io.micronaut.starter.feature.consul
 io.micronaut.starter.feature.database
 io.micronaut.starter.feature.database.jdbc
 io.micronaut.starter.feature.dekorate
