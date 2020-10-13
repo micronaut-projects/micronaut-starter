@@ -13,34 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.discovery;
+package io.micronaut.starter.feature.distributedconfig;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.consul.Consul;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Consul implements DiscoveryFeature {
+public class DistributedConfigConsul implements DistributedConfigFeature {
 
+    private final Consul consul;
+
+    public DistributedConfigConsul(Consul consul) {
+        this.consul = consul;
+    }
+
+    @NonNull
     @Override
     public String getName() {
-        return "discovery-consul";
+        return "config-consul";
     }
 
     @Override
     public String getTitle() {
-        return "Consul Service Discovery";
+        return "Consul Distributed Configuration";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Service Discovery with Consul";
+        return "Adds support for Distributed Configuration with Consul";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Consul.class)) {
+            featureContext.addFeature(consul);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
-        generatorContext.getConfiguration().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
     }
 
     @Override
@@ -50,6 +66,6 @@ public class Consul implements DiscoveryFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryConsul";
+        return "https://docs.micronaut.io/latest/guide/index.html#distributedConfigurationConsul";
     }
 }
