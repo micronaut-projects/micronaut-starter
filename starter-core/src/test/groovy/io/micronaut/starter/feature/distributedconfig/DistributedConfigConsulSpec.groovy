@@ -9,7 +9,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class ConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
+class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature discovery-consul contains links to micronaut docs'() {
         when:
@@ -81,7 +81,6 @@ class ConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'
         commandContext.bootstrapConfig.get('micronaut.config-client.enabled'.toString()) == true
-        commandContext.bootstrapConfig.get('consul.client.registration.enabled'.toString()) == true
         commandContext.bootstrapConfig.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
     }
 
