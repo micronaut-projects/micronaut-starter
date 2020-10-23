@@ -13,35 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.distributedconfig;
+package io.micronaut.starter.feature.discovery;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.consul.Consul;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Consul implements DistributedConfigFeature {
+public class DiscoveryConsul implements DiscoveryFeature {
 
+    private final Consul consul;
+
+    public DiscoveryConsul(Consul consul) {
+        this.consul = consul;
+    }
+
+    @NonNull
     @Override
     public String getName() {
-        return "config-consul";
+        return "discovery-consul";
     }
 
     @Override
     public String getTitle() {
-        return "Consul Distributed Configuration";
+        return "Consul Service Discovery";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Consul";
+        return "Adds support for Service Discovery with Consul";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Consul.class)) {
+            featureContext.addFeature(consul);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
-        generatorContext.getBootstrapConfig().put("consul.client.registration.enabled", true);
-        generatorContext.getBootstrapConfig().put("consul.client.defaultZone", "${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}");
+        generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
     }
 
     @Override
@@ -51,6 +66,6 @@ public class Consul implements DistributedConfigFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#distributedConfigurationConsul";
+        return "https://docs.micronaut.io/latest/guide/index.html#serviceDiscoveryConsul";
     }
 }
