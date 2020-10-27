@@ -4,6 +4,7 @@ installation:
   installSdkman: Install with SDKman
   installHomebrew: Install with Homebrew
   installChocolatey: Install with Chocolatey
+  installWindows: Install through Binary on Windows
 releaseHistory: Release History
 commands:
   title: Available commands
