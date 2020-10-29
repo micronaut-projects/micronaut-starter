@@ -5,6 +5,10 @@ io.micronaut.starter.api
 io.micronaut.starter.api.analytics
 io.micronaut.starter.api.bind
 io.micronaut.starter.api.create
+io.micronaut.starter.api.create.github
+io.micronaut.starter.api.create.github.client.oauth
+io.micronaut.starter.api.create.github.client.v3
+io.micronaut.starter.api.create.zip
 io.micronaut.starter.api.diff
 io.micronaut.starter.api.event
 io.micronaut.starter.api.preview

@@ -78,6 +78,10 @@
 <li><a href="io/micronaut/starter/api/analytics/package-tree.html">io.micronaut.starter.api.analytics</a>, </li>
 <li><a href="io/micronaut/starter/api/bind/package-tree.html">io.micronaut.starter.api.bind</a>, </li>
 <li><a href="io/micronaut/starter/api/create/package-tree.html">io.micronaut.starter.api.create</a>, </li>
+<li><a href="io/micronaut/starter/api/create/github/package-tree.html">io.micronaut.starter.api.create.github</a>, </li>
+<li><a href="io/micronaut/starter/api/create/github/client/oauth/package-tree.html">io.micronaut.starter.api.create.github.client.oauth</a>, </li>
+<li><a href="io/micronaut/starter/api/create/github/client/v3/package-tree.html">io.micronaut.starter.api.create.github.client.v3</a>, </li>
+<li><a href="io/micronaut/starter/api/create/zip/package-tree.html">io.micronaut.starter.api.create.zip</a>, </li>
 <li><a href="io/micronaut/starter/api/diff/package-tree.html">io.micronaut.starter.api.diff</a>, </li>
 <li><a href="io/micronaut/starter/api/event/package-tree.html">io.micronaut.starter.api.event</a>, </li>
 <li><a href="io/micronaut/starter/api/preview/package-tree.html">io.micronaut.starter.api.preview</a>, </li>
@@ -238,10 +242,11 @@
 </li>
 </ul>
 </li>
-<li type="circle">io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create"><span class="typeNameLink">AbstractCreateController</span></a> (implements io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a>)
+<li type="circle">io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/AbstractCreateController.html" title="class in io.micronaut.starter.api.create"><span class="typeNameLink">AbstractCreateController</span></a>
 <ul>
-<li type="circle">io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateController.html" title="class in io.micronaut.starter.api.create"><span class="typeNameLink">CreateController</span></a> (implements io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create">CreateOperation</a>)</li>
+<li type="circle">io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubCreateService.html" title="class in io.micronaut.starter.api.create.github"><span class="typeNameLink">GitHubCreateService</span></a></li>
 <li type="circle">io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewController.html" title="class in io.micronaut.starter.api.preview"><span class="typeNameLink">PreviewController</span></a> (implements io.micronaut.starter.api.preview.<a href="io/micronaut/starter/api/preview/PreviewOperations.html" title="interface in io.micronaut.starter.api.preview">PreviewOperations</a>)</li>
+<li type="circle">io.micronaut.starter.api.create.zip.<a href="io/micronaut/starter/api/create/zip/ZipCreateController.html" title="class in io.micronaut.starter.api.create.zip"><span class="typeNameLink">ZipCreateController</span></a> (implements io.micronaut.starter.api.create.zip.<a href="io/micronaut/starter/api/create/zip/ZipCreateOperation.html" title="interface in io.micronaut.starter.api.create.zip">ZipCreateOperation</a>)</li>
 </ul>
 </li>
 <li type="circle">io.micronaut.starter.feature.dekorate.<a href="io/micronaut/starter/feature/dekorate/AbstractDekorateFeature.html" title="class in io.micronaut.starter.feature.dekorate"><span class="typeNameLink">AbstractDekorateFeature</span></a> (implements io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>)
@@ -289,6 +294,7 @@
 </li>
 </ul>
 </li>
+<li type="circle">io.micronaut.starter.api.create.github.client.oauth.<a href="io/micronaut/starter/api/create/github/client/oauth/AccessToken.html" title="class in io.micronaut.starter.api.create.github.client.oauth"><span class="typeNameLink">AccessToken</span></a></li>
 <li type="circle">io.micronaut.starter.feature.acme.<a href="io/micronaut/starter/feature/acme/Acme.html" title="class in io.micronaut.starter.feature.acme"><span class="typeNameLink">Acme</span></a> (implements io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>)</li>
 <li type="circle">io.micronaut.starter.feature.acme.<a href="io/micronaut/starter/feature/acme/AcmeFeatureValidator.html" title="class in io.micronaut.starter.feature.acme"><span class="typeNameLink">AcmeFeatureValidator</span></a> (implements io.micronaut.starter.feature.validation.<a href="io/micronaut/starter/feature/validation/FeatureValidator.html" title="interface in io.micronaut.starter.feature.validation">FeatureValidator</a>)</li>
 <li type="circle">io.micronaut.starter.cli.feature.acme.<a href="io/micronaut/starter/cli/feature/acme/AcmeServerOption.html" title="class in io.micronaut.starter.cli.feature.acme"><span class="typeNameLink">AcmeServerOption</span></a></li>
@@ -655,6 +661,11 @@
 <li type="circle">io.micronaut.starter.analytics.<a href="io/micronaut/starter/analytics/Generated.html" title="class in io.micronaut.starter.analytics"><span class="typeNameLink">Generated</span></a></li>
 <li type="circle">io.micronaut.starter.api.analytics.<a href="io/micronaut/starter/api/analytics/GenerationListener.html" title="class in io.micronaut.starter.api.analytics"><span class="typeNameLink">GenerationListener</span></a></li>
 <li type="circle">io.micronaut.starter.application.generator.<a href="io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">GeneratorContext</span></a></li>
+<li type="circle">io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubCreateController.html" title="class in io.micronaut.starter.api.create.github"><span class="typeNameLink">GitHubCreateController</span></a> (implements io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubCreateOperation.html" title="interface in io.micronaut.starter.api.create.github">GitHubCreateOperation</a>)</li>
+<li type="circle">io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubCreateDTO.html" title="class in io.micronaut.starter.api.create.github"><span class="typeNameLink">GitHubCreateDTO</span></a></li>
+<li type="circle">io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubRedirectService.html" title="class in io.micronaut.starter.api.create.github"><span class="typeNameLink">GitHubRedirectService</span></a></li>
+<li type="circle">io.micronaut.starter.api.create.github.client.v3.<a href="io/micronaut/starter/api/create/github/client/v3/GitHubRepository.html" title="class in io.micronaut.starter.api.create.github.client.v3"><span class="typeNameLink">GitHubRepository</span></a></li>
+<li type="circle">io.micronaut.starter.api.create.github.client.v3.<a href="io/micronaut/starter/api/create/github/client/v3/GitHubUser.html" title="class in io.micronaut.starter.api.create.github.client.v3"><span class="typeNameLink">GitHubUser</span></a></li>
 <li type="circle">io.micronaut.starter.feature.function.gcp.<a href="io/micronaut/starter/feature/function/gcp/GoogleCloudFunctionFeatureValidator.html" title="class in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">GoogleCloudFunctionFeatureValidator</span></a> (implements io.micronaut.starter.feature.validation.<a href="io/micronaut/starter/feature/validation/FeatureValidator.html" title="interface in io.micronaut.starter.feature.validation">FeatureValidator</a>)</li>
 <li type="circle">io.micronaut.starter.analytics.postgres.gcp.<a href="io/micronaut/starter/analytics/postgres/gcp/GoogleCloudSqlSetup.html" title="class in io.micronaut.starter.analytics.postgres.gcp"><span class="typeNameLink">GoogleCloudSqlSetup</span></a> (implements io.micronaut.context.event.BeanCreatedEventListener&lt;T&gt;)</li>
 <li type="circle">io.micronaut.starter.feature.graalvm.<a href="io/micronaut/starter/feature/graalvm/GraalVM.html" title="class in io.micronaut.starter.feature.graalvm"><span class="typeNameLink">GraalVM</span></a> (implements io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>)</li>
@@ -1035,6 +1046,7 @@
 </li>
 <li type="circle">io.micronaut.starter.feature.reloading.<a href="io/micronaut/starter/feature/reloading/Springloaded.html" title="class in io.micronaut.starter.feature.reloading"><span class="typeNameLink">Springloaded</span></a> (implements io.micronaut.starter.feature.reloading.<a href="io/micronaut/starter/feature/reloading/ReloadingFeature.html" title="interface in io.micronaut.starter.feature.reloading">ReloadingFeature</a>)</li>
 <li type="circle">io.micronaut.starter.api.<a href="io/micronaut/starter/api/StarterConfiguration.html" title="class in io.micronaut.starter.api"><span class="typeNameLink">StarterConfiguration</span></a></li>
+<li type="circle">io.micronaut.starter.api.<a href="io/micronaut/starter/api/StarterConfiguration.GitHubConfiguration.html" title="class in io.micronaut.starter.api"><span class="typeNameLink">StarterConfiguration.GitHubConfiguration</span></a></li>
 <li type="circle">io.micronaut.starter.template.<a href="io/micronaut/starter/template/StringTemplate.html" title="class in io.micronaut.starter.template"><span class="typeNameLink">StringTemplate</span></a> (implements io.micronaut.starter.template.<a href="io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>)</li>
 <li type="circle">io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database"><span class="typeNameLink">TestContainers</span></a> (implements io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>)</li>
 <li type="circle">io.micronaut.starter.cli.command.<a href="io/micronaut/starter/cli/command/TestFrameworkConverter.html" title="class in io.micronaut.starter.cli.command"><span class="typeNameLink">TestFrameworkConverter</span></a> (implements picocli.CommandLine.ITypeConverter&lt;K&gt;)</li>
@@ -1080,7 +1092,6 @@
 </li>
 <li type="circle">io.micronaut.starter.feature.function.<a href="io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function"><span class="typeNameLink">CloudFeature</span></a></li>
 <li type="circle">io.micronaut.starter.io.<a href="io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io"><span class="typeNameLink">ConsoleOutput</span></a></li>
-<li type="circle">io.micronaut.starter.api.create.<a href="io/micronaut/starter/api/create/CreateOperation.html" title="interface in io.micronaut.starter.api.create"><span class="typeNameLink">CreateOperation</span></a></li>
 <li type="circle">io.micronaut.core.naming.Described
 <ul>
 <li type="circle">io.micronaut.starter.feature.<a href="io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature"><span class="typeNameLink">Feature</span></a> (also extends io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered)
@@ -1162,6 +1173,17 @@
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li type="circle">io.micronaut.starter.api.create.github.client.v3.<a href="io/micronaut/starter/api/create/github/client/v3/GitHubApiOperations.html" title="interface in io.micronaut.starter.api.create.github.client.v3"><span class="typeNameLink">GitHubApiOperations</span></a>
+<ul>
+<li type="circle">io.micronaut.starter.api.create.github.client.v3.<a href="io/micronaut/starter/api/create/github/client/v3/GitHubApiClient.html" title="interface in io.micronaut.starter.api.create.github.client.v3"><span class="typeNameLink">GitHubApiClient</span></a></li>
+</ul>
+</li>
+<li type="circle">io.micronaut.starter.api.create.github.<a href="io/micronaut/starter/api/create/github/GitHubCreateOperation.html" title="interface in io.micronaut.starter.api.create.github"><span class="typeNameLink">GitHubCreateOperation</span></a></li>
+<li type="circle">io.micronaut.starter.api.create.github.client.oauth.<a href="io/micronaut/starter/api/create/github/client/oauth/GitHubOAuthOperations.html" title="interface in io.micronaut.starter.api.create.github.client.oauth"><span class="typeNameLink">GitHubOAuthOperations</span></a>
+<ul>
+<li type="circle">io.micronaut.starter.api.create.github.client.oauth.<a href="io/micronaut/starter/api/create/github/client/oauth/GitHubOAuthClient.html" title="interface in io.micronaut.starter.api.create.github.client.oauth"><span class="typeNameLink">GitHubOAuthClient</span></a></li>
 </ul>
 </li>
 <li type="circle">io.micronaut.starter.feature.function.<a href="io/micronaut/starter/feature/function/HandlerClassFeature.html" title="interface in io.micronaut.starter.feature.function"><span class="typeNameLink">HandlerClassFeature</span></a></li>
@@ -1328,6 +1350,7 @@
 <li type="circle">io.micronaut.starter.template.<a href="io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template"><span class="typeNameLink">Template</span></a></li>
 </ul>
 </li>
+<li type="circle">io.micronaut.starter.api.create.zip.<a href="io/micronaut/starter/api/create/zip/ZipCreateOperation.html" title="interface in io.micronaut.starter.api.create.zip"><span class="typeNameLink">ZipCreateOperation</span></a></li>
 </ul>
 <h2 title="Enum Hierarchy">Enum Hierarchy</h2>
 <ul>
