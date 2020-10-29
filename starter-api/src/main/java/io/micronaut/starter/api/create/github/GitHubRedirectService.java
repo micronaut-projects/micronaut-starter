@@ -40,9 +40,9 @@ import java.util.UUID;
 @Requires(property = GitHubRedirectService.OAUTH_URL)
 public class GitHubRedirectService {
 
+    public static final String OAUTH_URL = "micronaut.http.services." + GitHubOAuthClient.SERVICE_ID + ".url";
     private static final Logger LOG = LoggerFactory.getLogger(GitHubRedirectService.class);
     private static final String AUTHORIZE_PATH = "/login/oauth/authorize";
-    public static final String OAUTH_URL = "micronaut.http.services." + GitHubOAuthClient.SERVICE_ID + ".url";
 
     private final String githubOAuthUrl;
     private final StarterConfiguration starterConfiguration;
