@@ -43,13 +43,13 @@ class SpockSpec extends BeanContextSpec {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false).render().toString()
 
         then:
         template.contains('''
 java {
-    sourceCompatibility = JavaVersion.toVersion('15')
-    targetCompatibility = JavaVersion.toVersion('15')
+    sourceCompatibility = JavaVersion.toVersion("15")
+    targetCompatibility = JavaVersion.toVersion("15")
 }
 ''')
 
@@ -63,14 +63,14 @@ java {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false).render().toString()
 
         then:
-        template.contains("sourceCompatibility = JavaVersion.toVersion('14')")
+        template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")
         template.contains('''
-    kotlinOptions {
-        jvmTarget = '14'
-    }
+        kotlinOptions {
+            jvmTarget = "14"
+        }
 ''')
 
         where:
