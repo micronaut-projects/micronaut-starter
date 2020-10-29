@@ -16,6 +16,7 @@
 package io.micronaut.starter.api.create.github;
 
 import io.micronaut.context.annotation.Property;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.StarterConfiguration;
@@ -36,17 +37,19 @@ import java.util.UUID;
  * @since 2.2
  */
 @Singleton
+@Requires(property = GitHubRedirectService.OAUTH_URL)
 public class GitHubRedirectService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GitHubRedirectService.class);
     private static final String AUTHORIZE_PATH = "/login/oauth/authorize";
+    public static final String OAUTH_URL = "micronaut.http.services." + GitHubOAuthClient.SERVICE_ID + ".url";
 
     private final String githubOAuthUrl;
     private final StarterConfiguration starterConfiguration;
     private final StarterConfiguration.GitHubConfiguration gitHubConfiguration;
 
     public GitHubRedirectService(
-            @NotNull @Property(name = "micronaut.http.services." + GitHubOAuthClient.SERVICE_ID + ".url") String githubOAuthUrl,
+            @NotNull @Property(name = OAUTH_URL) String githubOAuthUrl,
             @NotNull StarterConfiguration starterConfiguration,
             @NotNull StarterConfiguration.GitHubConfiguration gitHubConfiguration) {
         this.githubOAuthUrl = githubOAuthUrl + AUTHORIZE_PATH;

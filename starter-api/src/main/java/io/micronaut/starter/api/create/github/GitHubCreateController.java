@@ -17,6 +17,7 @@ package io.micronaut.starter.api.create.github;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
@@ -53,6 +54,7 @@ import java.util.List;
  */
 @Controller
 @ExecuteOn(TaskExecutors.IO)
+@Requires(beans = {GitHubCreateService.class, GitHubRedirectService.class})
 public class GitHubCreateController implements GitHubCreateOperation {
 
     private static final Logger LOG = LoggerFactory.getLogger(GitHubCreateController.class);

@@ -17,6 +17,7 @@ package io.micronaut.starter.api.create.github;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
@@ -64,6 +65,7 @@ import java.util.stream.StreamSupport;
  * @since 2.2
  */
 @Singleton
+@Requires(beans = GitHubOAuthClient.class)
 public class GitHubCreateService extends AbstractCreateController {
 
     protected static final String COMMIT_MESSAGE = "Initial commit";
