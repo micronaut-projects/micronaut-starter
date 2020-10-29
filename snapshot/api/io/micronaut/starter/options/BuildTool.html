@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":9,"i6":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":9,"i7":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -139,6 +139,9 @@ extends java.lang.Enum&lt;<a href="../../../../io/micronaut/starter/options/Buil
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#GRADLE">GRADLE</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#GRADLE_KOTLIN">GRADLE_KOTLIN</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#MAVEN">MAVEN</a></span></code>&nbsp;</td>
 </tr>
 </table>
@@ -173,16 +176,20 @@ extends java.lang.Enum&lt;<a href="../../../../io/micronaut/starter/options/Buil
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#getShadeJarDirectoryPattern-io.micronaut.starter.application.Project-">getShadeJarDirectoryPattern</a></span>(<a href="../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#isGradle--">isGradle</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../io/micronaut/starter/options/BuildTool.html#values--">values</a></span>()</code>
 <div class="block">Returns an array containing the constants of this enum type, in
@@ -225,6 +232,15 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>GRADLE</h4>
 <pre>public static final&nbsp;<a href="../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a> GRADLE</pre>
+</li>
+</ul>
+<a name="GRADLE_KOTLIN">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>GRADLE_KOTLIN</h4>
+<pre>public static final&nbsp;<a href="../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a> GRADLE_KOTLIN</pre>
 </li>
 </ul>
 <a name="MAVEN">
@@ -329,11 +345,20 @@ not permitted.)</div>
 <a name="getName--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
 <pre>@NonNull
 public&nbsp;java.lang.String&nbsp;getName()</pre>
+</li>
+</ul>
+<a name="isGradle--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isGradle</h4>
+<pre>public&nbsp;boolean&nbsp;isGradle()</pre>
 </li>
 </ul>
 </li>
