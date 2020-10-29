@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.http.HttpParameters;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.Hidden;
 
@@ -30,10 +31,12 @@ import java.util.Objects;
 @Hidden
 public class RequestInfo {
 
-    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/", Locale.ENGLISH, "");
+    public static final RequestInfo LOCAL = new RequestInfo("http://localhost:8080", "/", null, Locale.ENGLISH, "");
 
     private final String serverURL;
-    private final String currentPath;
+    private final String currentURL;
+    private final String path;
+    private final HttpParameters parameters;
     private final Locale locale;
     private final String userAgent;
 
@@ -42,11 +45,13 @@ public class RequestInfo {
      * @param serverURL The URL
      * @param locale The locale
      */
-    public RequestInfo(String serverURL, String path, Locale locale, String userAgent) {
+    public RequestInfo(String serverURL, String path, HttpParameters parameters, Locale locale, String userAgent) {
         this.serverURL = Objects.requireNonNull(serverURL, "URL cannot be null");
         this.locale = locale;
+        this.path = path;
+        this.parameters = parameters;
         this.userAgent = userAgent;
-        this.currentPath = serverURL + Objects.requireNonNull(path, "Path cannot be null");
+        this.currentURL = serverURL + Objects.requireNonNull(path, "Path cannot be null");
     }
 
     /**
@@ -60,7 +65,7 @@ public class RequestInfo {
      * @return The current URL
      */
     public String getCurrentURL() {
-        return currentPath;
+        return currentURL;
     }
 
     /**
@@ -97,5 +102,31 @@ public class RequestInfo {
 
     public String getUserAgent() {
         return userAgent;
+    }
+
+    /**
+     * @return request path
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * @return request parameters
+     */
+    public HttpParameters getParameters() {
+        return parameters;
+    }
+
+    @Override
+    public String toString() {
+        return "RequestInfo{" +
+                "serverURL='" + serverURL + '\'' +
+                ", currentURL='" + currentURL + '\'' +
+                ", path='" + path + '\'' +
+                ", parameters=" + parameters +
+                ", locale=" + locale +
+                ", userAgent='" + userAgent + '\'' +
+                '}';
     }
 }

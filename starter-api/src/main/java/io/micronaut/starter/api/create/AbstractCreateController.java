@@ -15,27 +15,21 @@
  */
 package io.micronaut.starter.api.create;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
-import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
-import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Header;
 import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.api.UserAgentParser;
 import io.micronaut.starter.api.event.ApplicationGeneratingEvent;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.io.ConsoleOutput;
-
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.io.ZipOutputHandler;
+import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -45,10 +39,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.validation.constraints.Pattern;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,13 +48,13 @@ import java.util.List;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractCreateController implements CreateOperation {
+public abstract class AbstractCreateController {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCreateController.class);
     protected final ProjectGenerator projectGenerator;
     private final ApplicationEventPublisher eventPublisher;
 
     /**
-     * Abstract implementation of {@link CreateOperation}.
+     * Abstract implementation for create controllers.
      * @param projectGenerator The project generator
      * @param eventPublisher The event publisher
      */
@@ -75,8 +65,7 @@ public abstract class AbstractCreateController implements CreateOperation {
         this.eventPublisher = eventPublisher;
     }
 
-    @Override
-    public HttpResponse<Writable> createApp(
+    public GeneratorContext createProjectGeneratorContext(
             ApplicationType type,
             @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
@@ -112,36 +101,7 @@ public abstract class AbstractCreateController implements CreateOperation {
             throw new HttpStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
 
-        MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
-            @Override
-            public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
-                try {
-                    projectGenerator.generate(type,
-                            project,
-                            new ZipOutputHandler(outputStream),
-                            generatorContext);
-
-                    outputStream.flush();
-                } catch (Exception e) {
-                    LOG.error("Error generating application: " + e.getMessage(), e);
-                    throw new IOException(e.getMessage(), e);
-                }
-            }
-
-            @Override
-            public void writeTo(Writer out) {
-                // no-op, output stream used
-            }
-        });
-        return response.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + getFilename(project));
-    }
-
-    /**
-     * @return The file name to return.
-     * @param project The project
-     */
-    protected @NonNull String getFilename(@NonNull Project project) {
-        return project.getName() + ".zip";
+        return generatorContext;
     }
 
     protected OperatingSystem getOperatingSystem(String userAgent) {

@@ -13,48 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create;
+package io.micronaut.starter.api.create.github;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Header;
+import io.micronaut.starter.api.RequestInfo;
+import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.api.TestFramework;
 
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
 /**
- * Defines the signature for creating an application.
+ * Defines the signature for creating an application in Github repository.
  *
- * @author graemerocher
- * @since 1.0.0
+ * @author Pavol Gressa
+ * @since 2.2
  */
-public interface CreateOperation {
+public interface GitHubCreateOperation {
 
     /**
-     * Creates an application.
+     * Creates and push application to GitHub repository.
      * @param type The application type
-     * @param name The name of the application
+     * @param name The name of the application and GitHub repository
      * @param features The features
      * @param buildTool The build tool
      * @param testFramework The test framework
      * @param lang The lang
-     * @return An HTTP response that emits a writable
+     * @param javaVersion The java version
+     * @param code The github code
+     * @return An information about newly created GitHub repository
      */
-    HttpResponse<Writable> createApp(
-            ApplicationType type,
+    HttpResponse<GitHubCreateDTO> createApp(
+            @NonNull ApplicationType type,
             @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
             @Nullable BuildTool buildTool,
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
-            @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent
+            @NonNull String code,
+            @NonNull String state,
+            @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent,
+            @NonNull RequestInfo requestInfo
     );
 }

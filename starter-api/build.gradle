@@ -10,7 +10,9 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
+    api "io.micronaut:micronaut-http-client"
     api "io.micronaut:micronaut-validation"
+    api 'org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r'
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-http-server-netty"
