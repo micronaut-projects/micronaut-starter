@@ -33,7 +33,7 @@ class CreateNatsListenerSpec extends CommandSpec {
 
         when:
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle("classes")?.output
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven("compile")

@@ -61,7 +61,7 @@ class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature rxjava1 for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.rxjava1:micronaut-rxjava1")')

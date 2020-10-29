@@ -24,7 +24,7 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
     @Unroll
     void 'test gradle security-oauth2 feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-oauth2'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-oauth2'], language), false).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")

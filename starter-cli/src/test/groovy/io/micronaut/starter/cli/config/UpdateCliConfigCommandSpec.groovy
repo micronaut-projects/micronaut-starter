@@ -33,7 +33,7 @@ sourceLanguage: java""")
 
         then:
         2 * consoleOutput.warning(_)
-        codeGenConfig.buildTool == BuildTool.GRADLE
+        codeGenConfig.buildTool.isGradle()
         codeGenConfig.sourceLanguage == Language.JAVA
         codeGenConfig.testFramework == TestFramework.JUNIT
         codeGenConfig.applicationType == ApplicationType.DEFAULT

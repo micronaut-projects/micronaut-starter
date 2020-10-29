@@ -34,7 +34,7 @@ class CreateTestSpec extends CommandSpec {
 
         when:
         String result = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             result = executeGradle("test")?.output
         } else if (buildTool == BuildTool.MAVEN) {
             result = executeMaven("compile test")

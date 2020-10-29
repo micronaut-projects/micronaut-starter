@@ -58,7 +58,7 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-alexa feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-alexa'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION)).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-alexa'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-alexa")')
@@ -91,7 +91,7 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'default app with gradle aws-alexa feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-alexa'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-alexa'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')

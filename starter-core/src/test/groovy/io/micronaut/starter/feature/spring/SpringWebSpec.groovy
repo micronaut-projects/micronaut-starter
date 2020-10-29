@@ -63,7 +63,7 @@ class SpringWebSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), false).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")

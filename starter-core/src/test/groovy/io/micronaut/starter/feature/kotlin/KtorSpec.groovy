@@ -6,7 +6,6 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -135,10 +134,10 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature ktor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false).render().toString()
 
         then:
-        template.contains("mainClassName = \"example.micronaut.Application\"")
+        template.contains("mainClass.set(\"example.micronaut.Application\")")
         template.contains('implementation("io.micronaut.kotlin:micronaut-ktor")')
         template.contains("implementation(\"io.ktor:ktor-server-netty\")".toString())
         template.contains("implementation(\"io.ktor:ktor-jackson\")".toString())
@@ -152,7 +151,7 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language)).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

@@ -24,7 +24,7 @@ class RibbonSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle netflix-ribbon feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-ribbon'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-ribbon'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-ribbon")')

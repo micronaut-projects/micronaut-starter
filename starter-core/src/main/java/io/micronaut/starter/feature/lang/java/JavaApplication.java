@@ -77,7 +77,7 @@ public class JavaApplication implements JavaApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool() == BuildTool.GRADLE)
+        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool().isGradle())
                 || !generatorContext.getFeatures().hasFunctionFeature();
     }
 

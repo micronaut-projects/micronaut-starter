@@ -22,7 +22,7 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"]), false).render().toString()
 
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")

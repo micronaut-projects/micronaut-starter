@@ -12,7 +12,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test oracle dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), false).render().toString()
 
         then:
         template.contains('testRuntimeOnly("org.testcontainers:oracle-xe")')
@@ -20,7 +20,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mysql dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), false).render().toString()
 
         then:
         template.contains('testRuntimeOnly("org.testcontainers:mysql")')
@@ -28,7 +28,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test postgres dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), false).render().toString()
 
         then:
         template.contains('testRuntimeOnly("org.testcontainers:postgresql")')
@@ -36,7 +36,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mariadb dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), false).render().toString()
 
         then:
         template.contains('testRuntimeOnly("org.testcontainers:mariadb")')
@@ -44,7 +44,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test sqlserver dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), false).render().toString()
 
         then:
         template.contains('testRuntimeOnly("org.testcontainers:mssqlserver")')
@@ -52,7 +52,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test bom is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), false).render().toString()
 
         then:
         template.contains("testImplementation(platform(\"org.testcontainers:testcontainers-bom:1.14.3\"))")
@@ -147,7 +147,7 @@ class TestContainersSpec extends BeanContextSpec {
     void "test there is a dependency for every non embedded driver feature"() {
         when:
         String mavenTemplate = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), []).render().toString()
-        String gradleTemplate = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()])).render().toString()
+        String gradleTemplate = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), false).render().toString()
 
         then:
         gradleTemplate.contains("org.testcontainers")

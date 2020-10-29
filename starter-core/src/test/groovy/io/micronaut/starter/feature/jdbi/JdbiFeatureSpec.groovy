@@ -56,7 +56,7 @@ class JdbiFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature sql-jdbi for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-jdbi")')

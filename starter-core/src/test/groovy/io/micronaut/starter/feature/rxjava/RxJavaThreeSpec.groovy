@@ -61,7 +61,7 @@ class RxJavaThreeSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature rxjava3 for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava3'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava3'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.rxjava3:micronaut-rxjava3")')

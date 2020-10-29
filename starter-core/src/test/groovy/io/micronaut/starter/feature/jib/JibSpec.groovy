@@ -12,11 +12,11 @@ class JibSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle jib feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jib'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jib'], language), false).render().toString()
 
         then:
-        template.contains('id "com.google.cloud.tools.jib"')
-        template.contains("jib.to.image = 'gcr.io/foo/jib-image")
+        template.contains('id("com.google.cloud.tools.jib")')
+        template.contains("image = \"gcr.io/myapp/jib-image\"")
 
         where:
         language << Language.values().toList()

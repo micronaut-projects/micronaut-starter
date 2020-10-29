@@ -25,7 +25,7 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle jmx feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.jmx:micronaut-jmx")')

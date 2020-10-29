@@ -15,7 +15,7 @@ class CreateAsciidoctorSpec extends CommandSpec {
 
         when:
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle('asciidoctor').output
         } else {
             output = executeMaven("generate-resources")

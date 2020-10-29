@@ -36,7 +36,7 @@ sourceLanguage: java
         config.defaultPackage == "micronaut.testing.keycloak"
         config.testFramework == TestFramework.JUNIT
         config.sourceLanguage == Language.JAVA
-        config.buildTool == BuildTool.GRADLE
+        config.buildTool.isGradle()
         config.features.containsAll(["java", "gradle"])
 
         cleanup:

@@ -34,7 +34,7 @@ class TestcontainersSpec extends CommandSpec {
         if (driverFeature.getName() == "oracle") {
             output = "BUILD SUCCESS"
         } else {
-            if (buildTool == BuildTool.GRADLE) {
+            if (buildTool.isGradle()) {
                 output = executeGradle("test")?.output
             } else if (buildTool == BuildTool.MAVEN) {
                 output = executeMaven("compile test")

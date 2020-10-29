@@ -25,7 +25,7 @@ class EHCacheSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle cache-ehcache feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-ehcache'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-ehcache'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.cache:micronaut-cache-ehcache")')

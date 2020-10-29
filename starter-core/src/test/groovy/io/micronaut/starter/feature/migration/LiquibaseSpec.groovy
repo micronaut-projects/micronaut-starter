@@ -21,7 +21,7 @@ class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test the dependency is added to the gradle build"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['liquibase'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['liquibase']), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.liquibase:micronaut-liquibase")')

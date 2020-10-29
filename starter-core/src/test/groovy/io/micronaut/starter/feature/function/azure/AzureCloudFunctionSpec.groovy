@@ -43,7 +43,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         def readme = output["README.md"]
 
         then:
-        build.contains('id "com.microsoft.azure.azurefunctions"')
+        build.contains('id("com.microsoft.azure.azurefunctions")')
         !build.contains('implementation("io.micronaut:micronaut-function-aws")')
         !build.contains('implementation("io.micronaut.azure:micronaut-azure-function-http")')
         build.contains('implementation("io.micronaut.azure:micronaut-azure-function")')
@@ -84,8 +84,8 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         def readme = output["README.md"]
 
         then:
-        build.contains('id "com.microsoft.azure.azurefunctions"')
-        build.contains('runtime "azure_function"')
+        build.contains('id("com.microsoft.azure.azurefunctions")')
+        build.contains('runtime("azure_function")')
         build.contains('azurefunctions {')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')

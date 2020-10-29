@@ -12,7 +12,7 @@ class MySQLSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle mysql feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mysql'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mysql'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("mysql:mysql-connector-java")')

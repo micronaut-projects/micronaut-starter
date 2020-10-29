@@ -21,7 +21,7 @@ class CreateCliSpec extends CommandSpec {
         generateProject(lang, buildTool, [], applicationType)
 
         when:
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             executeGradleCommand('run --args="-v"')
         } else {
             executeMavenCommand("mn:run -Dmn.appArgs=-v")

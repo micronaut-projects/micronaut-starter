@@ -60,7 +60,7 @@ public class Docker implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         String jarFile;
-        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+        if (generatorContext.getBuildTool().isGradle()) {
             jarFile = "build/libs/" + generatorContext.getProject().getName() + "-*-all.jar";
         } else {
             jarFile = "target/" + generatorContext.getProject().getName() + "-*.jar";

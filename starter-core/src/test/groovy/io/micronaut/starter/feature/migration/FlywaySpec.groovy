@@ -22,7 +22,7 @@ class FlywaySpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test the dependency is added to the gradle build"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway']), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.flyway:micronaut-flyway")')

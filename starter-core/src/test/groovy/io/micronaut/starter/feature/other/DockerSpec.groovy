@@ -14,7 +14,7 @@ class DockerSpec extends BeanContextSpec {
         GeneratorContext ctx = buildGeneratorContext([], new Options(Language.JAVA, null, build), applicationType)
 
         then:
-        (build == BuildTool.MAVEN && ctx.templates.containsKey("dockerfile"))||     (build == BuildTool.GRADLE && !ctx.templates.containsKey("dockerfile"))
+        (build == BuildTool.MAVEN && ctx.templates.containsKey("dockerfile"))||     (build.isGradle() && !ctx.templates.containsKey("dockerfile"))
 
 
         where:

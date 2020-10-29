@@ -25,7 +25,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
     @Unroll
     void 'test gradle config-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
@@ -36,7 +36,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
 
     void 'test gradle config-consul multiple features'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul'])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), false).render().toString()
 
         then:
         template.count('implementation("io.micronaut:micronaut-discovery-client")') == 1

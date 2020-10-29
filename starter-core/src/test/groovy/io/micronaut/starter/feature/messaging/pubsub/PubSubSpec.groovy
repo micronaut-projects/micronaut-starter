@@ -9,7 +9,7 @@ class PubSubSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([PubSub.NAME])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([PubSub.NAME]), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-pubsub")')

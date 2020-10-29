@@ -24,7 +24,7 @@ class SoySpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-soy feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-soy")')

@@ -63,7 +63,7 @@ public class GeneratorContext {
         this.features = new Features(this, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
-        if (options.getBuildTool() == BuildTool.GRADLE) {
+        if (options.getBuildTool().isGradle()) {
             buildProperties.put("micronautVersion", micronautVersion);
         } else if (options.getBuildTool() == BuildTool.MAVEN) {
             buildProperties.put("micronaut.version", micronautVersion);

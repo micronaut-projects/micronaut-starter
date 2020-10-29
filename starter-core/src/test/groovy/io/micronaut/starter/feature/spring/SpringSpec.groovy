@@ -57,7 +57,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test spring with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), false).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")

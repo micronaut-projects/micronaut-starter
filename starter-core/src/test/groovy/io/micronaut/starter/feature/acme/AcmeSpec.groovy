@@ -24,7 +24,7 @@ class AcmeSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle acme feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['acme'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['acme'], language), false).render().toString()
 
         then:
         template.contains('implementation "io.micronaut.acme:micronaut-acme')

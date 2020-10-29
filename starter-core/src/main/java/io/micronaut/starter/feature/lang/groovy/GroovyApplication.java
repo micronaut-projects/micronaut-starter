@@ -22,7 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
@@ -71,7 +70,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool() == BuildTool.GRADLE)
+        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool().isGradle())
                 || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
