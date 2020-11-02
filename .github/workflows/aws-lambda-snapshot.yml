@@ -20,7 +20,7 @@ jobs:
           mkdir build
           docker run --rm --entrypoint cat micronaut-starter /home/application/function.zip > build/function.zip
       - name: AWS Lambda Deploy
-        uses: appleboy/lambda-action@v0.0.4
+        uses: appleboy/lambda-action@v0.0.8
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
