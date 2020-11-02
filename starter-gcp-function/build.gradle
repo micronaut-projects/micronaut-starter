@@ -13,7 +13,7 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation "io.micronaut.gcp:micronaut-gcp-function-http:2.0.2"
+    implementation "io.micronaut.gcp:micronaut-gcp-function-http:3.2.1"
     compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
     developmentOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
 
