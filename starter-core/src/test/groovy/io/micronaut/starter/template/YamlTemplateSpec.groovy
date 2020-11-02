@@ -1,5 +1,6 @@
 package io.micronaut.starter.template
 
+import io.micronaut.core.beans.BeanIntrospection
 import spock.lang.Specification
 
 class YamlTemplateSpec extends Specification {
@@ -27,5 +28,16 @@ micronaut:
   application:
     name: foo
 """
+    }
+
+    void "test empty yaml output"() {
+        Map<String, Object> config = [:]
+
+        YamlTemplate template = new YamlTemplate("abc", config)
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        template.write(baos)
+
+        expect:
+        baos.toString().isEmpty()
     }
 }
