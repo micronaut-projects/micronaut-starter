@@ -5,6 +5,7 @@ installation:
   installHomebrew: Install with Homebrew
   installMacports: Install with MacPorts
   installChocolatey: Install with Chocolatey
+  installWindows: Install through Binary on Windows
 releaseHistory: Release History
 commands:
   title: Available commands
