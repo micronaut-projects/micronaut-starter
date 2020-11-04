@@ -50,6 +50,8 @@ public class YamlTemplate implements Template {
         if (!config.isEmpty()) {
             Yaml yaml = new Yaml(options);
             yaml.dump(config, new OutputStreamWriter(outputStream));
+        } else {
+            outputStream.write("# Place application configuration here".getBytes());
         }
     }
 

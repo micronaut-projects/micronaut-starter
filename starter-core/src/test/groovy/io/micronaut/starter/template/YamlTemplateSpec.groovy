@@ -38,6 +38,6 @@ micronaut:
         template.write(baos)
 
         expect:
-        baos.toString().isEmpty()
+        baos.toString() == "# Place application configuration here"
     }
 }
