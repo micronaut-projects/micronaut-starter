@@ -42,7 +42,7 @@ class CreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().contains('Invalid project name: \"micronaut\" is not a valid app name')
 
         when:
         httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/com.example.micronaut'), Argument.of(String), Argument.of(String))
@@ -56,7 +56,7 @@ class CreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().contains('Invalid project name: \"micronaut\" is not a valid app name')
 
         when:
         httpClient.toBlocking().exchange(HttpRequest.GET('/micronaut.zip'), Argument.of(String), Argument.of(String))
@@ -70,7 +70,7 @@ class CreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().contains('Invalid project name: \"micronaut\" is not a valid app name')
     }
 
     void "test default create app command"() {
