@@ -31,46 +31,46 @@ class CreateControllerSpec extends Specification {
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/352")
     void "micronaut is not an allowed name"() {
         when:
-        httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/micronaut'), Argument.of(String), Argument.of(String))
+        httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/micronaut'), Argument.of(String), Argument.of(Map))
 
         then:
         HttpClientResponseException e = thrown()
         e.status == HttpStatus.BAD_REQUEST
 
         when:
-        Optional<String> response = e.response.getBody(String)
+        Optional<Map> response = e.response.getBody(Map)
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
 
         when:
-        httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/com.example.micronaut'), Argument.of(String), Argument.of(String))
+        httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/com.example.micronaut'), Argument.of(String), Argument.of(Map))
 
         then:
         e = thrown()
         e.status == HttpStatus.BAD_REQUEST
 
         when:
-        response = e.response.getBody(String)
+        response = e.response.getBody(Map)
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
 
         when:
-        httpClient.toBlocking().exchange(HttpRequest.GET('/micronaut.zip'), Argument.of(String), Argument.of(String))
+        httpClient.toBlocking().exchange(HttpRequest.GET('/micronaut.zip'), Argument.of(String), Argument.of(Map))
 
         then:
         e = thrown()
         e.status == HttpStatus.BAD_REQUEST
 
         when:
-        response = e.response.getBody(String)
+        response = e.response.getBody(Map)
 
         then:
         response.isPresent()
-        response.get().contains('Invalid project name: micronaut is not a valid app name')
+        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
     }
 
     void "test default create app command"() {
