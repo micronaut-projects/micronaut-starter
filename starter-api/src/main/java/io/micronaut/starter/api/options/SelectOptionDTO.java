@@ -12,8 +12,8 @@ import java.util.List;
  * @param <T> The underlying option type
  */
 @Introspected
-@Schema(name = "SupportedOptionInfo")
-public class SupportedOptionDTO<T> {
+@Schema(name = "SelectOption")
+public class SelectOptionDTO<T> {
 
     /**
      * The list of options
@@ -26,7 +26,7 @@ public class SupportedOptionDTO<T> {
     T defaultOption;
 
     @Creator
-    public SupportedOptionDTO(List<T> options, T defaultOption) {
+    public SelectOptionDTO(List<T> options, T defaultOption) {
         this.options = options;
         this.defaultOption = defaultOption;
     }

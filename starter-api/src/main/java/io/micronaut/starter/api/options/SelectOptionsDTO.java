@@ -14,24 +14,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Aggregator for {@link SupportedOptionDTO}.
+ * Aggregator for {@link SelectOptionDTO}.
  *
  * @since 2.2.0
  */
-@Schema(name = "SupportedOptionsInfo")
+@Schema(name = "SupportedOptions")
 @Introspected
-public class SupportedOptionsDTO {
-    
-    SupportedOptionDTO<ApplicationTypeDTO>types;
-    SupportedOptionDTO<JdkVersionDTO>jdkVersions;
-    SupportedOptionDTO<LanguageDTO>languages;
-    SupportedOptionDTO<TestFrameworkDTO>testFrameworks;
-    SupportedOptionDTO<BuildToolDTO>buildTools;
+public class SelectOptionsDTO {
 
-    public SupportedOptionsDTO() { }
+    SelectOptionDTO<ApplicationTypeDTO> types;
+    SelectOptionDTO<JdkVersionDTO> jdkVersions;
+    SelectOptionDTO<LanguageDTO> languages;
+    SelectOptionDTO<TestFrameworkDTO> testFrameworks;
+    SelectOptionDTO<BuildToolDTO> buildTools;
+
+    public SelectOptionsDTO() { }
 
     @Creator
-    public SupportedOptionsDTO(SupportedOptionDTO<ApplicationTypeDTO> types, SupportedOptionDTO<JdkVersionDTO> jdkVersions, SupportedOptionDTO<LanguageDTO> languages, SupportedOptionDTO<TestFrameworkDTO>testFrameworks, SupportedOptionDTO<BuildToolDTO>buildTools) {
+    public SelectOptionsDTO(SelectOptionDTO<ApplicationTypeDTO> types, SelectOptionDTO<JdkVersionDTO> jdkVersions, SelectOptionDTO<LanguageDTO> languages, SelectOptionDTO<TestFrameworkDTO> testFrameworks, SelectOptionDTO<BuildToolDTO> buildTools) {
         this.types = types;
         this.jdkVersions = jdkVersions;
         this.languages = languages;
@@ -40,27 +40,27 @@ public class SupportedOptionsDTO {
     }
 
     @Schema(description = "supported options for application type")
-    public SupportedOptionDTO<ApplicationTypeDTO> getTypes() {
+    public SelectOptionDTO<ApplicationTypeDTO> getTypes() {
         return types;
     }
 
     @Schema(description = "supported options for jdk versions")
-    public SupportedOptionDTO<JdkVersionDTO> getJdkVersions() {
+    public SelectOptionDTO<JdkVersionDTO> getJdkVersions() {
         return jdkVersions;
     }
 
     @Schema(description = "supported options for code languages")
-    public SupportedOptionDTO<LanguageDTO> getLanguages() {
+    public SelectOptionDTO<LanguageDTO> getLanguages() {
         return languages;
     }
 
     @Schema(description = "supported options for test frameworks")
-    public SupportedOptionDTO<TestFrameworkDTO> getTestFrameworks() {
+    public SelectOptionDTO<TestFrameworkDTO> getTestFrameworks() {
         return testFrameworks;
     }
 
     @Schema(description = "supported options for build tools")
-    public SupportedOptionDTO<BuildToolDTO> getBuildTools() {
+    public SelectOptionDTO<BuildToolDTO> getBuildTools() {
         return buildTools;
     }
 
@@ -68,13 +68,13 @@ public class SupportedOptionsDTO {
      * Build the options
      * @return the supported options
      */
-    public static SupportedOptionsDTO make() {
+    public static SelectOptionsDTO make() {
 
         List<ApplicationTypeDTO> applications = Arrays.stream(ApplicationType.values())
                 .map(it-> new ApplicationTypeDTO(it, null))
                 .collect(Collectors.toList());
 
-        SupportedOptionDTO<ApplicationTypeDTO> applicationOpts = new SupportedOptionDTO<ApplicationTypeDTO>(
+        SelectOptionDTO<ApplicationTypeDTO> applicationOpts = new SelectOptionDTO<ApplicationTypeDTO>(
                 applications,
                 new ApplicationTypeDTO(ApplicationType.DEFAULT_OPTION, null)
         );
@@ -83,7 +83,7 @@ public class SupportedOptionsDTO {
                 .map(JdkVersionDTO::new)
                 .collect(Collectors.toList());
 
-        SupportedOptionDTO<JdkVersionDTO> jdkVersionOpts = new SupportedOptionDTO<JdkVersionDTO>(
+        SelectOptionDTO<JdkVersionDTO> jdkVersionOpts = new SelectOptionDTO<JdkVersionDTO>(
                 jdkVersions,
                 new JdkVersionDTO(JdkVersion.DEFAULT_OPTION)
         );
@@ -92,7 +92,7 @@ public class SupportedOptionsDTO {
                 .map(LanguageDTO::new)
                 .collect(Collectors.toList());
 
-        SupportedOptionDTO<LanguageDTO> languageOpts = new SupportedOptionDTO<LanguageDTO>(
+        SelectOptionDTO<LanguageDTO> languageOpts = new SelectOptionDTO<LanguageDTO>(
                 languages,
                 new LanguageDTO(Language.DEFAULT_OPTION)
         );
@@ -101,7 +101,7 @@ public class SupportedOptionsDTO {
                 .map(TestFrameworkDTO::new)
                 .collect(Collectors.toList());
 
-       SupportedOptionDTO<TestFrameworkDTO> testFrameworkOpts = new SupportedOptionDTO<TestFrameworkDTO>(
+       SelectOptionDTO<TestFrameworkDTO> testFrameworkOpts = new SelectOptionDTO<TestFrameworkDTO>(
                 testFrameworks,
                 new TestFrameworkDTO(TestFramework.DEFAULT_OPTION)
         );
@@ -110,12 +110,12 @@ public class SupportedOptionsDTO {
                .map(BuildToolDTO::new)
                .collect(Collectors.toList());
 
-       SupportedOptionDTO<BuildToolDTO> buildToolOpts = new SupportedOptionDTO<BuildToolDTO>(
+       SelectOptionDTO<BuildToolDTO> buildToolOpts = new SelectOptionDTO<BuildToolDTO>(
                buildTools,
                new BuildToolDTO(BuildTool.DEFAULT_OPTION)
        );
 
-       return new SupportedOptionsDTO(applicationOpts, jdkVersionOpts, languageOpts, testFrameworkOpts, buildToolOpts);
+       return new SelectOptionsDTO(applicationOpts, jdkVersionOpts, languageOpts, testFrameworkOpts, buildToolOpts);
 
     }
 }

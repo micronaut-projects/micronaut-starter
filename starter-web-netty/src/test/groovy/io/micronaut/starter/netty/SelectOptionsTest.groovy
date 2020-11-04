@@ -3,7 +3,7 @@ package io.micronaut.starter.netty
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.starter.api.options.SupportedOptionsDTO
+import io.micronaut.starter.api.options.SelectOptionsDTO
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -14,21 +14,21 @@ import spock.lang.Specification
 import javax.inject.Inject
 
 @MicronautTest
-class SupportedOptionsTest extends Specification {
+class SelectOptionsTest extends Specification {
 
     @Inject
-    SupportedOptionsClient client
+    SelectOptionsClient client
 
     void "Select options are provided"() {
         when: "We ask for the options"
-        SupportedOptionsDTO supportedOptions = client.supportedOptions().body()
+        SelectOptionsDTO selectOptions = client.selectOptions().body()
 
         then: "We have all the application type options"
-        def typeOpts = supportedOptions.types.options
+        def typeOpts = selectOptions.types.options
         typeOpts.size() == ApplicationType.values().size()
 
         then: "There's a matching application type default"
-        supportedOptions.types.defaultOption.value ==
+        selectOptions.types.defaultOption.value ==
                 ApplicationType.DEFAULT_OPTION.name().toLowerCase(Locale.ENGLISH); // This Matches DTO impl
 
         ApplicationType.values().each { t ->
@@ -37,11 +37,11 @@ class SupportedOptionsTest extends Specification {
         }
 
         then: "We get all the languages"
-        def languageOpts = supportedOptions.languages.options
+        def languageOpts = selectOptions.languages.options
         languageOpts.size() == Language.values().size()
 
         then: "There's a matching Language default"
-        supportedOptions.languages.defaultOption.value == Language.DEFAULT_OPTION.name()
+        selectOptions.languages.defaultOption.value == Language.DEFAULT_OPTION.name()
 
         Language.values().each { lang ->
             then: "We can find the ${lang.name()} language"
@@ -49,11 +49,11 @@ class SupportedOptionsTest extends Specification {
         }
 
         then: "We get all the jdk version options"
-        def jdkVersionOpts = supportedOptions.jdkVersions.options
+        def jdkVersionOpts = selectOptions.jdkVersions.options
         jdkVersionOpts.size() == JdkVersion.values().size()
 
         then: "There's a matching JdkVersion default"
-        supportedOptions.jdkVersions.defaultOption.value == JdkVersion.DEFAULT_OPTION.name()
+        selectOptions.jdkVersions.defaultOption.value == JdkVersion.DEFAULT_OPTION.name()
 
         JdkVersion.values().each { jdkVer ->
             then: "We can find the ${jdkVer.name()} jdk version"
@@ -61,11 +61,11 @@ class SupportedOptionsTest extends Specification {
         }
 
         then: "We get all the test framework options"
-        def testOpts = supportedOptions.testFrameworks.options
+        def testOpts = selectOptions.testFrameworks.options
         testOpts.size() == TestFramework.values().size()
 
         then: "There's a matching TestFramework default"
-        supportedOptions.testFrameworks.defaultOption.value == TestFramework.DEFAULT_OPTION.name()
+        selectOptions.testFrameworks.defaultOption.value == TestFramework.DEFAULT_OPTION.name()
 
         TestFramework.values().each { t ->
             then: "We can find the ${t.name()} test framework"
@@ -74,11 +74,11 @@ class SupportedOptionsTest extends Specification {
 
 
         then: "We have all the build tools options"
-        def buildOpts = supportedOptions.buildTools.options
+        def buildOpts = selectOptions.buildTools.options
         buildOpts.size() == BuildTool.values().size()
 
         then: "There's a matching build tool default"
-        supportedOptions.buildTools.defaultOption.value == BuildTool.DEFAULT_OPTION.name()
+        selectOptions.buildTools.defaultOption.value == BuildTool.DEFAULT_OPTION.name()
 
         BuildTool.values().each { t ->
             then: "We can find the ${t.name()} build tool"
@@ -86,9 +86,9 @@ class SupportedOptionsTest extends Specification {
         }
     }
 
-    @Client('/supported-options')
-    static interface SupportedOptionsClient {
+    @Client('/select-options')
+    static interface SelectOptionsClient {
         @Get('/')
-        HttpResponse<SupportedOptionsDTO> supportedOptions();
+        HttpResponse<SelectOptionsDTO> selectOptions();
     }
 }
