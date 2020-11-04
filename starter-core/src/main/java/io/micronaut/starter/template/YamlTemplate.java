@@ -47,8 +47,12 @@ public class YamlTemplate implements Template {
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         options.setPrettyFlow(true);
 
-        Yaml yaml = new Yaml(options);
-        yaml.dump(config, new OutputStreamWriter(outputStream));
+        if (!config.isEmpty()) {
+            Yaml yaml = new Yaml(options);
+            yaml.dump(config, new OutputStreamWriter(outputStream));
+        } else {
+            outputStream.write("# Place application configuration here".getBytes());
+        }
     }
 
     @SuppressWarnings("unchecked")
