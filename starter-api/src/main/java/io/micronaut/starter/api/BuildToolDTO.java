@@ -3,8 +3,16 @@ package io.micronaut.starter.api;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.options.BuildTool;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+
+/**
+ * DTO objects for {@link BuildTool}.
+ *
+ * @since 2.2.0
+ */
 @Introspected
+@Schema(name = "BuildToolInfo")
 public class BuildToolDTO implements Selectable<String>{
     String label;
     String description;

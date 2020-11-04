@@ -9,22 +9,19 @@ import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import javax.annotation.processing.SupportedOptions;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Aggregator for select options.
+ * Aggregator for {@link SupportedOptionDTO}.
  *
- * @author eahrold
  * @since 2.2.0
  */
-@Schema(name = "OptionsDTO")
+@Schema(name = "SupportedOptionsInfo")
 @Introspected
 public class SupportedOptionsDTO {
-
+    
     SupportedOptionDTO<ApplicationTypeDTO>types;
     SupportedOptionDTO<JdkVersionDTO>jdkVersions;
     SupportedOptionDTO<LanguageDTO>languages;
