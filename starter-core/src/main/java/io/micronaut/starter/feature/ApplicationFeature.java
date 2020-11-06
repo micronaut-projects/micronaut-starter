@@ -17,9 +17,12 @@ package io.micronaut.starter.feature;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
+
+    String DEFAULT_PACKAGING = "jar";
 
     @Nullable
     String mainClassName(GeneratorContext generatorContext);
@@ -34,7 +37,9 @@ public interface ApplicationFeature extends Feature {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             String mainClass = mainClassName(generatorContext);
             if (mainClass != null) {
-                generatorContext.getBuildProperties().put("exec.mainClass", mainClass);
+                BuildProperties buildProperties = generatorContext.getBuildProperties();
+                buildProperties.put("exec.mainClass", mainClass);
+                buildProperties.put("packaging", DEFAULT_PACKAGING);
             }
         }
     }
