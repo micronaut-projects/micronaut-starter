@@ -37,11 +37,6 @@ public class KotlinApplication implements KotlinApplicationFeature {
     @Override
     @Nullable
     public String mainClassName(GeneratorContext generatorContext) {
-        // TODO: Remove this hack once Maven plugin is updated
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN &&
-                generatorContext.getFeatures().isFeaturePresent(AwsLambda.class)) {
-            return "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
-        }
         return generatorContext.getProject().getPackageName() + ".ApplicationKt";
     }
 
@@ -77,7 +72,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool().isGradle())
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
                 || !generatorContext.getFeatures().hasFunctionFeature();
     }
 

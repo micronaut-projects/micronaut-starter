@@ -84,6 +84,12 @@ List<Property> properties
       <url>https://oss.jfrog.org/oss-snapshot-local</url>
     </repository>
     }
+    @if (features.contains("oracle-function")) {
+    <repository>
+      <id>fnproject</id>
+      <url>https://dl.bintray.com/fnproject/fnproject</url>
+    </repository>
+    }
   </repositories>
 
 
@@ -129,6 +135,14 @@ List<Property> properties
 @dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null)
 }
 }
+
+@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
+@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null)
+@dependency.template("com.fnproject.fn", "api", "compile", null)
+@dependency.template("com.fnproject.fn", "runtime", "runtime", null)
+@dependency.template("com.fnproject.fn", "testing-junit4", "test", null)
+}
+
 @if (features.contains("netty-server")) {
 @dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
 }
