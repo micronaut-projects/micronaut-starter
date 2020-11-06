@@ -25,6 +25,6 @@ class CreateAppCommandSpec extends Specification {
 
         then:
         noExceptionThrown()
-        baos.toString().contains("micronaut is not a valid app name")
+        baos.toString().contains("\"micronaut\" is not a valid app name")
     }
 }
