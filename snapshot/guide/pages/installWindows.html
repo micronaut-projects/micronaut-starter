@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-82213539-2');
     </script>
-    <title>2.4 Install with Chocolatey 2.2.0.BUILD-SNAPSHOT</title>
+    <title>2.5 Install through Binary on Windows 2.2.0.BUILD-SNAPSHOT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
     <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
@@ -82,7 +82,7 @@ function addJsClass() {
 
 
                 <div class="project">
-                    <h1>2.4 Install with Chocolatey</h1>
+                    <h1>2.5 Install through Binary on Windows</h1>
 
                     <p><strong>Version:</strong> 2.2.0.BUILD-SNAPSHOT</p>
                 </div>
@@ -90,28 +90,33 @@ function addJsClass() {
                 
 
                 
-<h2 id="installChocolatey"><a class="anchor" href="#installChocolatey"></a>2.4 Install with Chocolatey</h2>
+<h2 id="installWindows"><a class="anchor" href="#installWindows"></a>2.5 Install through Binary on Windows</h2>
 
 <div class='contribute-btn'>
-    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/installation/installChocolatey.adoc"'>
+    <button type='button' class='btn btn-default' onclick='window.location.href="https://github.com/micronaut-projects/micronaut-starter/edit/master/src/main/docs/guide/installation/installWindows.adoc"'>
         <i class='fa fa-pencil-square-o'></i> Improve this doc
     </button>
 </div>
 
 
+<div class="ulist">
+<ul>
+<li>
+<p>Download the latest binary from <a href="http://micronaut.io/download.html">Micronaut Website</a></p>
+</li>
+<li>
+<p>Extract the binary to appropriate location (For example: <code>C:\micronaut</code>)</p>
+</li>
+<li>
+<p>Create an environment variable <code>MICRONAUT_HOME</code> which points to the installation directory i.e. <code>C:\micronaut</code></p>
+</li>
+<li>
+<p>Update the <code>PATH</code> environment variable, append <code>%MICRONAUT_HOME%\bin</code>.</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>If using Windows, you can use <a href="https://chocolatey.org">Chocolatey</a> to install the Micronaut CLI:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$ choco install micronaut</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Check the <a href="https://chocolatey.org/packages/micronaut">micronaut package page</a> for more information.</p>
-</div>
-<div class="paragraph">
-<p>You should now be able to run the Micronaut CLI from the command prompt or Powershell by running <code>mn</code>:</p>
+<p>You should now be able to run the Micronaut CLI from the command prompt as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
