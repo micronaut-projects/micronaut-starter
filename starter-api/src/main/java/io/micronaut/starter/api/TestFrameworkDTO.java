@@ -23,6 +23,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Arrays;
@@ -116,6 +117,6 @@ public class TestFrameworkDTO extends Linkable implements Named, Described, Sele
     @Override
     @Schema(description = "The label of the testFramework for select options")
     public String getLabel() {
-        return description;
+        return NameUtils.getNaturalNameOfEnum(description);
     }
 }

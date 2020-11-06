@@ -1,8 +1,8 @@
-package io.micronaut.starter.api.options;
+package io.micronaut.starter.api;
 
+import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.starter.api.*;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -68,51 +68,51 @@ public class SelectOptionsDTO {
      * Build the options
      * @return the supported options
      */
-    public static SelectOptionsDTO make() {
+    public static SelectOptionsDTO make(MessageSource messageSource, MessageSource.MessageContext messageContext) {
 
         List<ApplicationTypeDTO> applications = Arrays.stream(ApplicationType.values())
-                .map(it-> new ApplicationTypeDTO(it, null))
+                .map(it-> new ApplicationTypeDTO(it, null, messageSource, messageContext))
                 .collect(Collectors.toList());
 
         SelectOptionDTO<ApplicationTypeDTO> applicationOpts = new SelectOptionDTO<ApplicationTypeDTO>(
                 applications,
-                new ApplicationTypeDTO(ApplicationType.DEFAULT_OPTION, null)
+                new ApplicationTypeDTO(ApplicationType.DEFAULT_OPTION, null, messageSource, messageContext)
         );
 
         List<JdkVersionDTO> jdkVersions = Arrays.stream(JdkVersion.values())
-                .map(JdkVersionDTO::new)
+                .map(it -> new JdkVersionDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
         SelectOptionDTO<JdkVersionDTO> jdkVersionOpts = new SelectOptionDTO<JdkVersionDTO>(
                 jdkVersions,
-                new JdkVersionDTO(JdkVersion.DEFAULT_OPTION)
+                new JdkVersionDTO(JdkVersion.DEFAULT_OPTION, messageSource, messageContext)
         );
 
         List<LanguageDTO> languages = Arrays.stream(Language.values())
-                .map(LanguageDTO::new)
+                .map(it->new LanguageDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
         SelectOptionDTO<LanguageDTO> languageOpts = new SelectOptionDTO<LanguageDTO>(
                 languages,
-                new LanguageDTO(Language.DEFAULT_OPTION)
+                new LanguageDTO(Language.DEFAULT_OPTION, messageSource, messageContext)
         );
 
         List<TestFrameworkDTO> testFrameworks = Arrays.stream(TestFramework.values())
-                .map(TestFrameworkDTO::new)
+                .map(it->new TestFrameworkDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
        SelectOptionDTO<TestFrameworkDTO> testFrameworkOpts = new SelectOptionDTO<TestFrameworkDTO>(
                 testFrameworks,
-                new TestFrameworkDTO(TestFramework.DEFAULT_OPTION)
+                new TestFrameworkDTO(TestFramework.DEFAULT_OPTION, messageSource, messageContext)
         );
 
        List<BuildToolDTO> buildTools = Arrays.stream(BuildTool.values())
-               .map(BuildToolDTO::new)
+               .map(it->new BuildToolDTO(it, messageSource, messageContext))
                .collect(Collectors.toList());
 
        SelectOptionDTO<BuildToolDTO> buildToolOpts = new SelectOptionDTO<BuildToolDTO>(
                buildTools,
-               new BuildToolDTO(BuildTool.DEFAULT_OPTION)
+               new BuildToolDTO(BuildTool.DEFAULT_OPTION, messageSource, messageContext)
        );
 
        return new SelectOptionsDTO(applicationOpts, jdkVersionOpts, languageOpts, testFrameworkOpts, buildToolOpts);

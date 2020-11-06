@@ -1,8 +1,11 @@
 package io.micronaut.starter.api;
 
+import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
+import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 
@@ -14,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "BuildToolInfo")
 public class BuildToolDTO implements Selectable<String>{
+    static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".buildTools.";
     String label;
     String description;
     String value;
@@ -22,6 +26,14 @@ public class BuildToolDTO implements Selectable<String>{
         this.label = buildTool.name();
         this.value = buildTool.name();
         this.description = buildTool.name();
+    }
+
+    @Internal
+    public BuildToolDTO(BuildTool buildTool, MessageSource messageSource, MessageSource.MessageContext messageContext) {
+        this.value = buildTool.name();
+        String label = NameUtils.getNaturalNameOfEnum(buildTool.name());
+        this.label = messageSource.getMessage(MESSAGE_PREFIX + this.value + ".label", messageContext, label);
+        this.description = messageSource.getMessage(MESSAGE_PREFIX + this.value + ".description", messageContext, label);
     }
 
     @Creator

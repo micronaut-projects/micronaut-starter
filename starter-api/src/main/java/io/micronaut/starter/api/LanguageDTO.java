@@ -23,6 +23,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -110,6 +111,6 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
     @Override
     @Schema(description = "The label of the language for select options")
     public String getLabel() {
-        return name;
+        return NameUtils.getNaturalNameOfEnum(name);
     }
 }

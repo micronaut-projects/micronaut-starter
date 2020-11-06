@@ -104,6 +104,6 @@ public class JdkVersionDTO extends Linkable implements Named, Described, Selecta
     @Override
     @Schema(description = "The label of the jdkVersion for select options")
     public String getLabel() {
-        return description;
+        return description.replaceFirst("JDK_", "");
     }
 }

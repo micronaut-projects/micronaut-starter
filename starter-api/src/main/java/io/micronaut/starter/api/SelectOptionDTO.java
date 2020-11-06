@@ -1,4 +1,4 @@
-package io.micronaut.starter.api.options;
+package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;

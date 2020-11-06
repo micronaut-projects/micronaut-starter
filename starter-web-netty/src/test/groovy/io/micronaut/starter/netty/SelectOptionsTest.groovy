@@ -3,7 +3,7 @@ package io.micronaut.starter.netty
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
-import io.micronaut.starter.api.options.SelectOptionsDTO
+import io.micronaut.starter.api.SelectOptionsDTO
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
