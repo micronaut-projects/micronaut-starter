@@ -18,17 +18,21 @@ import java.util.stream.Collectors;
  *
  * @since 2.2.0
  */
-@Schema(name = "SupportedOptions")
+@Schema(name = "SelectOptions")
 @Introspected
 public class SelectOptionsDTO {
 
-    SelectOptionDTO<ApplicationTypeDTO> types;
-    SelectOptionDTO<JdkVersionDTO> jdkVersions;
-    SelectOptionDTO<LanguageDTO> languages;
-    SelectOptionDTO<TestFrameworkDTO> testFrameworks;
-    SelectOptionDTO<BuildToolDTO> buildTools;
+    private SelectOptionDTO<ApplicationTypeDTO> types;
 
-    public SelectOptionsDTO() { }
+    private SelectOptionDTO<JdkVersionDTO> jdkVersions;
+
+    private SelectOptionDTO<LanguageDTO> languages;
+
+    private SelectOptionDTO<TestFrameworkDTO> testFrameworks;
+
+    private SelectOptionDTO<BuildToolDTO> buildTools;
+
+    SelectOptionsDTO() { }
 
     @Creator
     public SelectOptionsDTO(SelectOptionDTO<ApplicationTypeDTO> types, SelectOptionDTO<JdkVersionDTO> jdkVersions, SelectOptionDTO<LanguageDTO> languages, SelectOptionDTO<TestFrameworkDTO> testFrameworks, SelectOptionDTO<BuildToolDTO> buildTools) {
@@ -39,27 +43,27 @@ public class SelectOptionsDTO {
         this.buildTools = buildTools;
     }
 
-    @Schema(description = "supported options for application type")
+    @Schema(ref="#/components/schemas/SelectOption<ApplicationTypeInfo>", description = "supported options for application type")
     public SelectOptionDTO<ApplicationTypeDTO> getTypes() {
         return types;
     }
 
-    @Schema(description = "supported options for jdk versions")
+    @Schema(ref="#/components/schemas/SelectOption<JdkVersionInfo>", description = "supported options for jdk versions")
     public SelectOptionDTO<JdkVersionDTO> getJdkVersions() {
         return jdkVersions;
     }
 
-    @Schema(description = "supported options for code languages")
+    @Schema(ref="#/components/schemas/SelectOption<LanguageInfo>", description = "supported options for code languages")
     public SelectOptionDTO<LanguageDTO> getLanguages() {
         return languages;
     }
 
-    @Schema(description = "supported options for test frameworks")
+    @Schema(ref="#/components/schemas/SelectOption<TestFrameworkInfo>", description = "supported options for test frameworks")
     public SelectOptionDTO<TestFrameworkDTO> getTestFrameworks() {
         return testFrameworks;
     }
 
-    @Schema(description = "supported options for build tools")
+    @Schema(ref="#/components/schemas/SelectOption<BuildToolInfo>", description = "supported options for build tools")
     public SelectOptionDTO<BuildToolDTO> getBuildTools() {
         return buildTools;
     }

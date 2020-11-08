@@ -3,6 +3,7 @@ package io.micronaut.starter.api;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.api.Selectable;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Introspected
 @Schema(name = "SelectOption")
-public class SelectOptionDTO<T> {
+public class SelectOptionDTO<T extends Selectable<?>> {
 
     /**
      * The list of options
@@ -31,12 +32,14 @@ public class SelectOptionDTO<T> {
         this.defaultOption = defaultOption;
     }
 
-    @Schema(description = "supported options")
+    @ArraySchema(schema =
+        @Schema(description = "the supported options", ref="#/components/schemas/<Any>")
+    )
     public List<T> getOptions() {
         return options;
     }
 
-    @Schema(description = "default value")
+    @Schema(description = "the default value", ref="#/components/schemas/<Any>")
     public T getDefaultOption() {
         return defaultOption;
     }
