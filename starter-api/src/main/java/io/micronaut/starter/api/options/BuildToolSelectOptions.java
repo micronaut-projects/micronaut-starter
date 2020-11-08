@@ -15,10 +15,25 @@
  */
 package io.micronaut.starter.api.options;
 
-import io.micronaut.starter.api.RequestInfo;
-import io.micronaut.starter.api.SelectOptionsDTO;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.micronaut.starter.api.BuildToolDTO;
+import io.micronaut.starter.api.SelectOptionDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-public interface SelectOptionsOperations {
-    SelectOptionsDTO selectOptions(@Parameter(hidden = true) RequestInfo serverURL);
+import java.util.List;
+
+@Schema(name = "BuildToolSelectOptions")
+public class BuildToolSelectOptions extends SelectOptionDTO<BuildToolDTO> {
+    public BuildToolSelectOptions(List<BuildToolDTO> options, BuildToolDTO defaultOption) {
+        super(options, defaultOption);
+    }
+
+    @Override
+    public List<BuildToolDTO> getOptions() {
+        return super.getOptions();
+    }
+
+    @Override
+    public BuildToolDTO getDefaultOption() {
+        return super.getDefaultOption();
+    }
 }

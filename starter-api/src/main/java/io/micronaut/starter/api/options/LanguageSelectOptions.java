@@ -15,10 +15,25 @@
  */
 package io.micronaut.starter.api.options;
 
-import io.micronaut.starter.api.RequestInfo;
-import io.micronaut.starter.api.SelectOptionsDTO;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.micronaut.starter.api.LanguageDTO;
+import io.micronaut.starter.api.SelectOptionDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-public interface SelectOptionsOperations {
-    SelectOptionsDTO selectOptions(@Parameter(hidden = true) RequestInfo serverURL);
+import java.util.List;
+
+@Schema(name = "LanguageSelectOptions")
+public class LanguageSelectOptions extends SelectOptionDTO<LanguageDTO> {
+    public LanguageSelectOptions(List<LanguageDTO> options, LanguageDTO defaultOption) {
+        super(options, defaultOption);
+    }
+
+    @Override
+    public List<LanguageDTO> getOptions() {
+        return super.getOptions();
+    }
+
+    @Override
+    public LanguageDTO getDefaultOption() {
+        return super.getDefaultOption();
+    }
 }

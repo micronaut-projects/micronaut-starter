@@ -1,8 +1,24 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.api;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.starter.api.options.*;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -22,20 +38,20 @@ import java.util.stream.Collectors;
 @Introspected
 public class SelectOptionsDTO {
 
-    private SelectOptionDTO<ApplicationTypeDTO> types;
+    private ApplicationTypeSelectOptions types;
 
-    private SelectOptionDTO<JdkVersionDTO> jdkVersions;
+    private JdkVersionSelectOptions jdkVersions;
 
-    private SelectOptionDTO<LanguageDTO> languages;
+    private LanguageSelectOptions languages;
 
-    private SelectOptionDTO<TestFrameworkDTO> testFrameworks;
+    private TestFrameworkSelectOptions testFrameworks;
 
-    private SelectOptionDTO<BuildToolDTO> buildTools;
+    private BuildToolSelectOptions buildTools;
 
     SelectOptionsDTO() { }
 
     @Creator
-    public SelectOptionsDTO(SelectOptionDTO<ApplicationTypeDTO> types, SelectOptionDTO<JdkVersionDTO> jdkVersions, SelectOptionDTO<LanguageDTO> languages, SelectOptionDTO<TestFrameworkDTO> testFrameworks, SelectOptionDTO<BuildToolDTO> buildTools) {
+    public SelectOptionsDTO(ApplicationTypeSelectOptions types, JdkVersionSelectOptions jdkVersions, LanguageSelectOptions languages, TestFrameworkSelectOptions testFrameworks, BuildToolSelectOptions buildTools) {
         this.types = types;
         this.jdkVersions = jdkVersions;
         this.languages = languages;
@@ -43,28 +59,28 @@ public class SelectOptionsDTO {
         this.buildTools = buildTools;
     }
 
-    @Schema(ref="#/components/schemas/SelectOption<ApplicationTypeInfo>", description = "supported options for application type")
-    public SelectOptionDTO<ApplicationTypeDTO> getTypes() {
+    @Schema(description = "supported options for application type")
+    public ApplicationTypeSelectOptions getTypes() {
         return types;
     }
 
-    @Schema(ref="#/components/schemas/SelectOption<JdkVersionInfo>", description = "supported options for jdk versions")
-    public SelectOptionDTO<JdkVersionDTO> getJdkVersions() {
+    @Schema(description = "supported options for jdk versions")
+    public JdkVersionSelectOptions getJdkVersions() {
         return jdkVersions;
     }
 
-    @Schema(ref="#/components/schemas/SelectOption<LanguageInfo>", description = "supported options for code languages")
-    public SelectOptionDTO<LanguageDTO> getLanguages() {
+    @Schema(description = "supported options for code languages")
+    public LanguageSelectOptions getLanguages() {
         return languages;
     }
 
-    @Schema(ref="#/components/schemas/SelectOption<TestFrameworkInfo>", description = "supported options for test frameworks")
-    public SelectOptionDTO<TestFrameworkDTO> getTestFrameworks() {
+    @Schema(description = "supported options for test frameworks")
+    public TestFrameworkSelectOptions getTestFrameworks() {
         return testFrameworks;
     }
 
-    @Schema(ref="#/components/schemas/SelectOption<BuildToolInfo>", description = "supported options for build tools")
-    public SelectOptionDTO<BuildToolDTO> getBuildTools() {
+    @Schema(description = "supported options for build tools")
+    public BuildToolSelectOptions getBuildTools() {
         return buildTools;
     }
 
@@ -75,10 +91,10 @@ public class SelectOptionsDTO {
     public static SelectOptionsDTO make(MessageSource messageSource, MessageSource.MessageContext messageContext) {
 
         List<ApplicationTypeDTO> applications = Arrays.stream(ApplicationType.values())
-                .map(it-> new ApplicationTypeDTO(it, null, messageSource, messageContext))
+                .map(it -> new ApplicationTypeDTO(it, null, messageSource, messageContext))
                 .collect(Collectors.toList());
 
-        SelectOptionDTO<ApplicationTypeDTO> applicationOpts = new SelectOptionDTO<ApplicationTypeDTO>(
+        ApplicationTypeSelectOptions applicationOpts = new ApplicationTypeSelectOptions(
                 applications,
                 new ApplicationTypeDTO(ApplicationType.DEFAULT_OPTION, null, messageSource, messageContext)
         );
@@ -87,34 +103,34 @@ public class SelectOptionsDTO {
                 .map(it -> new JdkVersionDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
-        SelectOptionDTO<JdkVersionDTO> jdkVersionOpts = new SelectOptionDTO<JdkVersionDTO>(
+        JdkVersionSelectOptions jdkVersionOpts = new JdkVersionSelectOptions(
                 jdkVersions,
                 new JdkVersionDTO(JdkVersion.DEFAULT_OPTION, messageSource, messageContext)
         );
 
         List<LanguageDTO> languages = Arrays.stream(Language.values())
-                .map(it->new LanguageDTO(it, messageSource, messageContext))
+                .map(it -> new LanguageDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
-        SelectOptionDTO<LanguageDTO> languageOpts = new SelectOptionDTO<LanguageDTO>(
+        LanguageSelectOptions languageOpts = new LanguageSelectOptions(
                 languages,
                 new LanguageDTO(Language.DEFAULT_OPTION, messageSource, messageContext)
         );
 
         List<TestFrameworkDTO> testFrameworks = Arrays.stream(TestFramework.values())
-                .map(it->new TestFrameworkDTO(it, messageSource, messageContext))
+                .map(it -> new TestFrameworkDTO(it, messageSource, messageContext))
                 .collect(Collectors.toList());
 
-       SelectOptionDTO<TestFrameworkDTO> testFrameworkOpts = new SelectOptionDTO<TestFrameworkDTO>(
+       TestFrameworkSelectOptions testFrameworkOpts = new TestFrameworkSelectOptions(
                 testFrameworks,
                 new TestFrameworkDTO(TestFramework.DEFAULT_OPTION, messageSource, messageContext)
         );
 
        List<BuildToolDTO> buildTools = Arrays.stream(BuildTool.values())
-               .map(it->new BuildToolDTO(it, messageSource, messageContext))
+               .map(it -> new BuildToolDTO(it, messageSource, messageContext))
                .collect(Collectors.toList());
 
-       SelectOptionDTO<BuildToolDTO> buildToolOpts = new SelectOptionDTO<BuildToolDTO>(
+       BuildToolSelectOptions buildToolOpts = new BuildToolSelectOptions(
                buildTools,
                new BuildToolDTO(BuildTool.DEFAULT_OPTION, messageSource, messageContext)
        );

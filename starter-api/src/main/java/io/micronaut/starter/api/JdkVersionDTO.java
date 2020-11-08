@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific jdkVersion governing permissions and
+ * See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package io.micronaut.starter.api;
@@ -25,8 +25,6 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.starter.options.JdkVersion;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
-
 /**
  * DTO objects for {@link JdkVersion}.
  *
@@ -35,21 +33,21 @@ import java.util.List;
  */
 @Schema(name = "JdkVersionInfo")
 @Introspected
-public class JdkVersionDTO extends Linkable implements Named, Described, Selectable<String> {
+public class JdkVersionDTO extends Linkable implements Named, Described, Selectable<JdkVersion> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".jdkVersion.";
+    private final JdkVersion value;
     private final String name;
     private final String description;
     private final Integer majorVersion;
-    private final String value;
 
     /**
      * @param jdkVersion The jdkVersion
      */
     public JdkVersionDTO(JdkVersion jdkVersion) {
+        this.value = jdkVersion;
         this.name = jdkVersion.toString();
         this.description = String.valueOf(jdkVersion.majorVersion());
         this.majorVersion = jdkVersion.majorVersion();
-        this.value= jdkVersion.name();
     }
 
     /**
@@ -58,11 +56,11 @@ public class JdkVersionDTO extends Linkable implements Named, Described, Selecta
      */
     @Creator
     @Internal
-    JdkVersionDTO(String name, String description, Integer majorVersion, String value) {
+    JdkVersionDTO(String name, String description, Integer majorVersion, JdkVersion value) {
+        this.value = value;
         this.name = name;
         this.description = description;
         this.majorVersion = majorVersion;
-        this.value= value;
     }
 
     /**
@@ -74,12 +72,12 @@ public class JdkVersionDTO extends Linkable implements Named, Described, Selecta
     @Internal
     JdkVersionDTO(JdkVersion jdkVersion, MessageSource messageSource, MessageSource.MessageContext messageContext) {
         String name = jdkVersion.name();
+
+        this.value = jdkVersion;
         this.name = name;
         this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, name);
         this.majorVersion = jdkVersion.majorVersion();
-        this.value= jdkVersion.name();
     }
-
 
     @Override
     @Schema(description = "A description of the jdkVersion")
@@ -97,7 +95,7 @@ public class JdkVersionDTO extends Linkable implements Named, Described, Selecta
     @Override
     @Schema(description = "The value of the jdkVersion for select options")
     @NonNull
-    public String getValue() {
+    public JdkVersion getValue() {
         return value;
     }
 

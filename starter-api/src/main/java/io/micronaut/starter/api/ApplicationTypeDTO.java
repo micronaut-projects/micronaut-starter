@@ -35,18 +35,20 @@ import java.util.List;
  */
 @Schema(name = "ApplicationTypeInfo")
 @Introspected
-public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<String> {
+public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<ApplicationType> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
     private final String name;
     private final List<FeatureDTO> features;
     private final String title;
     private final String description;
+    private final ApplicationType value;
 
     /**
      * @param type The type
      * @param features The available features
      */
     public ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features) {
+        this.value = type;
         this.name = type.getName();
         this.features = features;
         this.title = type.getTitle();
@@ -59,7 +61,8 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
      */
     @Creator
     @Internal
-    ApplicationTypeDTO(String name, String title, String description, List<FeatureDTO> features) {
+    ApplicationTypeDTO(ApplicationType value, String name, String title, String description, List<FeatureDTO> features) {
+        this.value = value;
         this.name = name;
         this.features = features;
         this.title = title;
@@ -75,6 +78,7 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
      */
     @Internal
     ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features, MessageSource messageSource, MessageSource.MessageContext messageContext) {
+        this.value = type;
         String name = type.getName();
         this.name = name;
         this.features = features;
@@ -103,11 +107,10 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
         return name;
     }
 
-
     @Override
     @Schema(description = "The value of the application type for select options")
-    public String getValue() {
-        return name;
+    public ApplicationType getValue() {
+        return value;
     }
 
     @Override

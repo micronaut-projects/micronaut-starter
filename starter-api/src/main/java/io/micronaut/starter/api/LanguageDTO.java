@@ -26,8 +26,6 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.util.List;
-
 /**
  * DTO objects for {@link Language}.
  *
@@ -100,10 +98,8 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
         return name;
     }
 
-
     @Override
     @Schema(description = "The value of the language for select options")
-    @NonNull
     public String getValue() {
         return value;
     }

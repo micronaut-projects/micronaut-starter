@@ -1,8 +1,22 @@
+/*
+ * Copyright 2020 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.starter.api.Selectable;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -13,8 +27,7 @@ import java.util.List;
  * @param <T> The underlying option type
  */
 @Introspected
-@Schema(name = "SelectOption")
-public class SelectOptionDTO<T extends Selectable<?>> {
+public abstract class SelectOptionDTO<T extends Selectable<?>> {
 
     /**
      * The list of options
@@ -33,13 +46,13 @@ public class SelectOptionDTO<T extends Selectable<?>> {
     }
 
     @ArraySchema(schema =
-        @Schema(description = "the supported options", ref="#/components/schemas/<Any>")
+        @Schema(description = "the supported options")
     )
     public List<T> getOptions() {
         return options;
     }
 
-    @Schema(description = "the default value", ref="#/components/schemas/<Any>")
+    @Schema(description = "the default value")
     public T getDefaultOption() {
         return defaultOption;
     }

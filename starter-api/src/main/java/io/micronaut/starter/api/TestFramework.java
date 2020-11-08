@@ -19,7 +19,7 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 
 import java.util.Locale;
 
-public enum TestFramework{
+public enum TestFramework {
     JUNIT,
     SPOCK,
     KOTLINTEST,

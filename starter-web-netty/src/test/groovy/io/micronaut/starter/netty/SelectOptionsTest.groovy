@@ -27,49 +27,49 @@ class SelectOptionsTest extends Specification {
         def typeOpts = selectOptions.types.options
         typeOpts.size() == ApplicationType.values().size()
 
-        then: "There's a matching application type default"
+        then: "We get the correct application type default"
         selectOptions.types.defaultOption.value ==
-                ApplicationType.DEFAULT_OPTION.name().toLowerCase(Locale.ENGLISH); // This Matches DTO impl
+                ApplicationType.DEFAULT_OPTION; // This Matches DTO impl
 
         ApplicationType.values().each { t ->
             then: "We can find the ${t.name()} type"
-            typeOpts.find {so -> t.name() == so.value} != null
+            typeOpts.find {so -> t == so.value} != null
         }
 
         then: "We get all the languages"
         def languageOpts = selectOptions.languages.options
         languageOpts.size() == Language.values().size()
 
-        then: "There's a matching Language default"
+        then: "We get the correct Language default"
         selectOptions.languages.defaultOption.value == Language.DEFAULT_OPTION.name()
 
         Language.values().each { lang ->
             then: "We can find the ${lang.name()} language"
-            languageOpts.find {so -> lang.name() == so.value} != null
+            languageOpts.find {so -> lang == so.value} != null
         }
 
         then: "We get all the jdk version options"
         def jdkVersionOpts = selectOptions.jdkVersions.options
         jdkVersionOpts.size() == JdkVersion.values().size()
 
-        then: "There's a matching JdkVersion default"
-        selectOptions.jdkVersions.defaultOption.value == JdkVersion.DEFAULT_OPTION.name()
+        then: "We get the correct JdkVersion default"
+        selectOptions.jdkVersions.defaultOption.value == JdkVersion.DEFAULT_OPTION
 
         JdkVersion.values().each { jdkVer ->
             then: "We can find the ${jdkVer.name()} jdk version"
-            jdkVersionOpts.find {so -> jdkVer.name() == so.value} != null
+            jdkVersionOpts.find {so -> jdkVer == so.value} != null
         }
 
         then: "We get all the test framework options"
         def testOpts = selectOptions.testFrameworks.options
         testOpts.size() == TestFramework.values().size()
 
-        then: "There's a matching TestFramework default"
-        selectOptions.testFrameworks.defaultOption.value == TestFramework.DEFAULT_OPTION.name()
+        then: "We get the correct TestFramework default"
+        selectOptions.testFrameworks.defaultOption.value == TestFramework.DEFAULT_OPTION
 
         TestFramework.values().each { t ->
             then: "We can find the ${t.name()} test framework"
-            testOpts.find {so -> t.name() == so.value} != null
+            testOpts.find {so -> t == so.value} != null
         }
 
 
@@ -77,12 +77,12 @@ class SelectOptionsTest extends Specification {
         def buildOpts = selectOptions.buildTools.options
         buildOpts.size() == BuildTool.values().size()
 
-        then: "There's a matching build tool default"
-        selectOptions.buildTools.defaultOption.value == BuildTool.DEFAULT_OPTION.name()
+        then: "We get the correct build tool default"
+        selectOptions.buildTools.defaultOption.value == BuildTool.DEFAULT_OPTION
 
         BuildTool.values().each { t ->
             then: "We can find the ${t.name()} build tool"
-            buildOpts.find {so -> t.name() == so.value} != null
+            buildOpts.find {so -> t == so.value} != null
         }
     }
 
