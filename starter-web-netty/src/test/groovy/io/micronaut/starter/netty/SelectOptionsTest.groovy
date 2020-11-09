@@ -41,7 +41,7 @@ class SelectOptionsTest extends Specification {
         languageOpts.size() == Language.values().size()
 
         then: "We get the correct Language default"
-        selectOptions.lang.defaultOption.value == Language.DEFAULT_OPTION.name()
+        selectOptions.lang.defaultOption.value == Language.DEFAULT_OPTION
 
         Language.values().each { lang ->
             then: "We can find the ${lang.name()} language"

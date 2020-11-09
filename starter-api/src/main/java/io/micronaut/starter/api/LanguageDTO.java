@@ -34,21 +34,21 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(name = "LanguageInfo")
 @Introspected
-public class LanguageDTO extends Linkable implements Named, Described, Selectable<String> {
+public class LanguageDTO extends Linkable implements Named, Described, Selectable<Language> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".language.";
     private final String name;
     private final String extension;
     private final String description;
-    private final String value;
+    private final Language value;
 
     /**
      * @param language The language
      */
     public LanguageDTO(Language language) {
+        this.value = language;
         this.name = language.getName();
         this.extension = language.getExtension();
         this.description = language.getName();
-        this.value = language.name();
     }
 
     /**
@@ -58,11 +58,11 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
      */
     @Creator
     @Internal
-    LanguageDTO(String name, String extension, String description, String value) {
+    LanguageDTO(Language value, String name, String extension, String description) {
+        this.value = value;
         this.name = name;
         this.extension = extension;
         this.description = description;
-        this.value = value;
     }
 
     /**
@@ -73,11 +73,12 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
      */
     @Internal
     LanguageDTO(Language language, MessageSource messageSource, MessageSource.MessageContext messageContext) {
+        this.value = language;
         String name = language.getName();
         this.name = name;
         this.extension = language.getExtension();
         this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, name);
-        this.value = language.name();
+
     }
 
     @Schema(description = "The extension of the language")
@@ -100,7 +101,7 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
 
     @Override
     @Schema(description = "The value of the language for select options")
-    public String getValue() {
+    public Language getValue() {
         return value;
     }
 
