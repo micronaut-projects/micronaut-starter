@@ -38,50 +38,50 @@ import java.util.stream.Collectors;
 @Introspected
 public class SelectOptionsDTO {
 
-    private ApplicationTypeSelectOptions types;
+    private ApplicationTypeSelectOptions type;
 
-    private JdkVersionSelectOptions jdkVersions;
+    private JdkVersionSelectOptions jdkVersion;
 
-    private LanguageSelectOptions languages;
+    private LanguageSelectOptions lang;
 
-    private TestFrameworkSelectOptions testFrameworks;
+    private TestFrameworkSelectOptions test;
 
-    private BuildToolSelectOptions buildTools;
+    private BuildToolSelectOptions build;
 
     SelectOptionsDTO() { }
 
     @Creator
-    public SelectOptionsDTO(ApplicationTypeSelectOptions types, JdkVersionSelectOptions jdkVersions, LanguageSelectOptions languages, TestFrameworkSelectOptions testFrameworks, BuildToolSelectOptions buildTools) {
-        this.types = types;
-        this.jdkVersions = jdkVersions;
-        this.languages = languages;
-        this.testFrameworks = testFrameworks;
-        this.buildTools = buildTools;
+    public SelectOptionsDTO(ApplicationTypeSelectOptions type, JdkVersionSelectOptions jdkVersion, LanguageSelectOptions lang, TestFrameworkSelectOptions test, BuildToolSelectOptions build) {
+        this.type = type;
+        this.jdkVersion = jdkVersion;
+        this.lang = lang;
+        this.test = test;
+        this.build = build;
     }
 
     @Schema(description = "supported options for application type")
-    public ApplicationTypeSelectOptions getTypes() {
-        return types;
+    public ApplicationTypeSelectOptions getType() {
+        return type;
     }
 
     @Schema(description = "supported options for jdk versions")
-    public JdkVersionSelectOptions getJdkVersions() {
-        return jdkVersions;
+    public JdkVersionSelectOptions getJdkVersion() {
+        return jdkVersion;
     }
 
     @Schema(description = "supported options for code languages")
-    public LanguageSelectOptions getLanguages() {
-        return languages;
+    public LanguageSelectOptions getLang() {
+        return lang;
     }
 
     @Schema(description = "supported options for test frameworks")
-    public TestFrameworkSelectOptions getTestFrameworks() {
-        return testFrameworks;
+    public TestFrameworkSelectOptions getTest() {
+        return test;
     }
 
     @Schema(description = "supported options for build tools")
-    public BuildToolSelectOptions getBuildTools() {
-        return buildTools;
+    public BuildToolSelectOptions getBuild() {
+        return build;
     }
 
     /**
