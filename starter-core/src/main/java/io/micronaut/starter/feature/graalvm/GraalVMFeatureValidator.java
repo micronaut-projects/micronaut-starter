@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -35,7 +36,7 @@ public class GraalVMFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
+        if (features.stream().anyMatch(f -> f instanceof GraalVM || f instanceof GraalVMDockerRegistryWorkflow)) {
             if (options.getLanguage() == Language.GROOVY) {
                 throw new IllegalArgumentException("GraalVM is not supported in Groovy applications");
             }

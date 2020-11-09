@@ -1,0 +1,64 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+
+@args (
+AbstractDockerRegistryWorkflow feature,
+Project project
+)
+
+
+## @feature.getTitle()
+Workflow builds docker image with name `"${System.env.DOCKER_REGISTRY_URL}/${System.env.DOCKER_ORGANIZATION}/@project.getName():@@project.version"` and pushes the image
+into configured docker registry.
+
+The GitHub secrets in table below needs to be configured:
+
+| Name | Description |
+| ---- | ----------- |
+@for (secret : feature.getSecrets()) {
+| @secret.getName() | @secret.getDescription() |
+}
+
+### Examples of configuration
+> Specifics on how to configure public cloud docker registries like DockerHub, Google Container Registry (GCR), AWS Container Registry (ECR),
+> Oracle Cloud Infrastructure Registry (OCIR) and many more can be found in [docker/login-action](https://github.com/docker/login-action)
+> documentation.
+
+#### DockerHub
+
+- `DOCKER_USERNAME` - DockerHub username
+- `DOCKER_PASSWORD` - DockerHub password or personal access token
+- `DOCKER_ORGANIZATION` - DockerHub organization or the username in case of personal registry
+- `DOCKER_REGISTRY_URL` - No need to configure for DockerHub
+
+> See [docker/login-action for GCR](https://github.com/docker/login-action#dockerhub)
+
+#### Google Container Registry (GCR)
+Create service account with permission to edit GCR or use predefined Storage Admin role.
+
+- `DOCKER_USERNAME` - set exactly to `_json_key`
+- `DOCKER_PASSWORD` - content of the service account json key file
+- `DOCKER_ORGANIZATION` - `<project-id>`
+- `DOCKER_REGISTRY_URL` - `gcr.io`
+
+> See [docker/login-action for GCR](https://github.com/docker/login-action#google-container-registry-gcr)
+
+#### AWS Elastic Container Registry (ECR)
+Create IAM user with permission to push to ECR (or use AmazonEC2ContainerRegistryFullAccess role).
+
+- DOCKER_USERNAME - access key ID
+- DOCKER_PASSWORD - secret access key
+- DOCKER_ORGANIZATION - no need to set
+- DOCKER_REGISTRY_URL - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
+
+> See [docker/login-action for ECR](https://github.com/docker/login-action#aws-elastic-container-registry-ecr)
+
+#### Oracle Infrastructure Cloud Registry (OCIR)
+[Create auth token](https://www.oracle.com/webfolder/technetwork/tutorials/obe/oci/registry/index.html#GetanAuthToken) for authentication.
+
+- DOCKER_USERNAME - username in format `<tenancy>/<username>`
+- DOCKER_PASSWORD - account auth token
+- DOCKER_ORGANIZATION - `<tenancy>/<registry>`
+- DOCKER_REGISTRY_URL - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
+
+> See [docker/login-action for OCIR](https://github.com/docker/login-action#oci-oracle-cloud-infrastructure-registry-ocir)

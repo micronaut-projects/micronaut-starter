@@ -1376,6 +1376,17 @@ List<Property> properties
         <artifactId>protoc-jar-maven-plugin</artifactId>
       </plugin>
 }
+@if (features.contains("github-workflow-docker-registry") || features.contains("github-workflow-graal-docker-registry") ) {
+    <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <image>${jib.docker.image}:${jib.docker.tag}</image>
+          </to>
+        </configuration>
+      </plugin>
+}
     </plugins>
   </build>
 

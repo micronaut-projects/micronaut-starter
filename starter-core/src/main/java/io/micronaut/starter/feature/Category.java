@@ -32,6 +32,7 @@ public class Category {
     public static final String DEV_TOOLS            = "Development Tools";
     public static final String DISTRIBUTED_CONFIG   = "Distributed Configuration";
     public static final String DOCUMENTATION        = "Documentation";
+    public static final String CICD                 = "CI/CD";
     public static final String SERVERLESS           = "Serverless";
     public static final String CLIENT               = "Client";
     public static final String SERVER               = "Server";

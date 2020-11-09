@@ -1,8 +1,9 @@
 package io.micronaut.starter.test
 
-import io.micronaut.context.BeanContext
+import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
@@ -25,12 +26,17 @@ abstract class CommandSpec extends Specification {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext
+
     @Shared GradleRunner gradleRunner = GradleRunner.create()
 
     abstract String getTempDirectoryPrefix()
 
     File dir
+
+    void setupSpec(){
+        beanContext = ApplicationContext.run(getConfiguration())
+    }
 
     void setup() {
         dir = Files.createTempDirectory(tempDirectoryPrefix).toFile()
@@ -38,6 +44,10 @@ abstract class CommandSpec extends Specification {
 
     void cleanup() {
         dir.delete()
+    }
+
+    Map<String, Object> getConfiguration(){
+        return Collections.EMPTY_MAP
     }
 
     String executeBuild(BuildTool buildTool, String command) {
@@ -92,6 +102,22 @@ abstract class CommandSpec extends Specification {
                          TestFramework testFramework = null) {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
+                new Options(lang, testFramework, buildTool),
+                io.micronaut.starter.application.OperatingSystem.LINUX,
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
+
+    void generateProject(Project project,
+                         Language lang,
+                         BuildTool buildTool = BuildTool.GRADLE,
+                         List<String> features = [],
+                         ApplicationType applicationType = ApplicationType.DEFAULT,
+                         TestFramework testFramework = null) {
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
+                project,
                 new Options(lang, testFramework, buildTool),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
                 features,

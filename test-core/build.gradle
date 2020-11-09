@@ -14,6 +14,7 @@ dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":starter-core")
     testImplementation project(":micronaut-cli")
+    testImplementation "ch.qos.logback:logback-classic:1.2.3"
 }
 
 tasks.withType(Test) {
