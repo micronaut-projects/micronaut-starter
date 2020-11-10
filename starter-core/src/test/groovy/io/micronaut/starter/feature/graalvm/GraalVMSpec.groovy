@@ -56,7 +56,6 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     <dependency>
       <groupId>org.graalvm.sdk</groupId>
       <artifactId>graal-sdk</artifactId>
-      <version>\${graal.version}</version>
       <scope>provided</scope>
     </dependency>
 """)

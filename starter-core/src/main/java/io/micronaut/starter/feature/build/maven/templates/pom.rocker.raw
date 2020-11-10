@@ -167,7 +167,7 @@ List<Property> properties
 }
 @if (features.contains("graalvm")) {
 @dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
-@dependency.template("org.graalvm.sdk", "graal-sdk", "provided", "${graal.version}")
+@dependency.template("org.graalvm.sdk", "graal-sdk", "provided", null)
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
 }
