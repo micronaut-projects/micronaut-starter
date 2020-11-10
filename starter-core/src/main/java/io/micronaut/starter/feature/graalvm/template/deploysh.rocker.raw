@@ -1,8 +1,0 @@
-@import io.micronaut.starter.application.Project
-
-@args (Project project)
-
-#!/bin/bash
-docker build . -t @project.getName()
-mkdir -p build
-docker run --rm --entrypoint cat @project.getName()  /home/application/function.zip > build/function.zip
