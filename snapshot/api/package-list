@@ -81,7 +81,6 @@ io.micronaut.starter.feature.function.oraclefunction.template.raw
 io.micronaut.starter.feature.function.template
 io.micronaut.starter.feature.function.template.http
 io.micronaut.starter.feature.graalvm
-io.micronaut.starter.feature.graalvm.template
 io.micronaut.starter.feature.graphql
 io.micronaut.starter.feature.grpc
 io.micronaut.starter.feature.grpc.template
