@@ -652,12 +652,6 @@ List<Property> properties
 }
       </plugin>
 }
-@if (features.contains("shade")) {
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-      </plugin>
-}
 
 @if (features.testFramework().isKotlinTestFramework() || features.testFramework().isSpock()) {
       <plugin>
@@ -680,10 +674,6 @@ List<Property> properties
 }
       </plugin>
 }
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-      </plugin>
 @if (features.contains("views-rocker")) {
       <plugin>
         <groupId>com.fizzed</groupId>
@@ -796,17 +786,7 @@ List<Property> properties
         <configuration>
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-          <annotationProcessorPaths>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-inject-java</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-validation</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
+          <annotationProcessorPaths combine.children="append">
 @if (features.contains("graalvm")) {
             <path>
               <groupId>io.micronaut</groupId>
@@ -926,77 +906,6 @@ List<Property> properties
             <arg>-Amicronaut.processing.module=@project.getName()</arg>
           </compilerArgs>
         </configuration>
-        <executions>
-          <execution>
-            <id>test-compile</id>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <annotationProcessorPaths>
-                <path>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>${micronaut.version}</version>
-                </path>
-                <path>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
-                </path>
-@if (features.contains("graalvm")) {
-                <path>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-graal</artifactId>
-                  <version>${micronaut.version}</version>
-                </path>
-}
-@if (features.contains("data")) {
-                <path>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>${micronaut.data.version}</version>
-                </path>
-}
-@if (features.contains("jax-rs")) {
-                <path>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>${micronaut.jaxrs.version}</version>
-                </path>
-}
-@if (features.contains("spring")) {
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </path>
-}
-@if (features.contains("spring-web")) {
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </path>
-}
-@if (features.contains("spring-boot")) {
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </path>
-}
-@if (features.contains("security-annotations")) {
-                <path>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>${micronaut.security.version}</version>
-                </path>
-}
-              </annotationProcessorPaths>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
 } else if (features.language().isKotlin()) {
       <plugin>
@@ -1022,7 +931,7 @@ List<Property> properties
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
-              <annotationProcessorPaths>
+              <annotationProcessorPaths combine.children="append">
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -1412,17 +1321,6 @@ List<Property> properties
         </executions>
       </plugin>
 }
-@if (features.contains("jib")) {
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <configuration>
-          <to>
-            <image>gcr.io/@project.getName()/jib-image</image>
-          </to>
-        </configuration>
-      </plugin>
-}
 @if (features.contains("grpc")) {
       <plugin>
         <groupId>com.github.os72</groupId>
@@ -1460,6 +1358,4 @@ List<Property> properties
        </pluginRepository>
     </pluginRepositories>
 }
-
-
 </project>
