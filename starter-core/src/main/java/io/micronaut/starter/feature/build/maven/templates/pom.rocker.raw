@@ -138,7 +138,7 @@ List<Property> properties
 
 @if (features.contains("oracle-function")) {
 @dependency.template("com.fnproject.fn", "runtime", "runtime", null)
-@if (features.contains("oracle-function-http") {
+@if (features.contains("oracle-function-http")) {
 @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null)
 @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null)
 } else {
