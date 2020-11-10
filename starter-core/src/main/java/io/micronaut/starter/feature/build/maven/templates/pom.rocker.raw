@@ -136,10 +136,14 @@ List<Property> properties
 }
 }
 
-@if (features.contains("oracle-function") && !features.contains("oracle-function-http")) {
+@if (features.contains("oracle-function")) {
+@dependency.template("com.fnproject.fn", "runtime", "runtime", null)
+@if (features.contains("oracle-function-http") {
+@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http", "compile", null)
+@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function-http-test", "test", null)
+} else {
 @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "compile", null)
 @dependency.template("com.fnproject.fn", "api", "compile", null)
-@dependency.template("com.fnproject.fn", "runtime", "runtime", null)
 @dependency.template("com.fnproject.fn", "testing-junit4", "test", null)
 }
 
@@ -452,6 +456,7 @@ List<Property> properties
 }
 @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null)
+@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy-test", "test", null)
 }
 @if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null)
