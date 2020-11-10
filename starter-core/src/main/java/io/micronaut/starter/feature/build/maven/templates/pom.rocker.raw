@@ -118,6 +118,7 @@ List<Property> properties
 @dependency.template("com.google.cloud.functions", "functions-framework-api", "provided", null)
     @if (features.contains("google-cloud-function-http")) {
 @dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http", "compile", null)
+@dependency.template("io.micronaut.gcp", "micronaut-gcp-function-http-test", "test", null)
 <!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
 @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
 @dependency.template("io.micronaut", "micronaut-http-netty", "compile", null)
@@ -127,10 +128,9 @@ List<Property> properties
 }
 @if (features.contains("azure-function")) {
 @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "provided", null)
-<!-- Remove when https://github.com/microsoft/azure-maven-plugins/pull/1054 is released -->
-@dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null)
 @if (features.contains("azure-function-http")) {
 @dependency.template("io.micronaut.azure", "micronaut-azure-function-http", "compile", null)
+@dependency.template("io.micronaut.azure", "micronaut-azure-function-http-test", "test", null)
 } else {
 @dependency.template("io.micronaut.azure", "micronaut-azure-function", "compile", null)
 }
