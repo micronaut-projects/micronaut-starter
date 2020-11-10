@@ -15,8 +15,10 @@ import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.Tomcat
 import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
@@ -119,7 +121,8 @@ class MavenSpec extends BeanContextSpec {
     @Unroll
     void 'test micronaut runtime for #feature'(ApplicationType applicationType, String feature, String runtime) {
         given:
-        Features features = getFeatures([feature], null, null, BuildTool.MAVEN)
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11)
+        Features features = getFeatures([feature], options, applicationType)
         println features.features
 
         when:
