@@ -56,13 +56,6 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
               <version>\${micronaut.jaxrs.version}</version>
             </path>
 """)
-        template.contains("""
-                <path>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>\${micronaut.jaxrs.version}</version>
-                </path>
-""")
 
         when:
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.KOTLIN), []).render().toString()
