@@ -22,26 +22,4 @@ class JibSpec extends BeanContextSpec {
         language << Language.values().toList()
     }
 
-    @Unroll
-    void 'test maven jib feature for language=#language'() {
-        when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jib'], language), []).render().toString()
-
-        then:
-        template.contains("""
-      <plugin>
-        <groupId>com.google.cloud.tools</groupId>
-        <artifactId>jib-maven-plugin</artifactId>
-        <configuration>
-          <to>
-            <image>gcr.io/foo/jib-image</image>
-          </to>
-        </configuration>
-      </plugin>
-""")
-
-        where:
-        language << Language.values().toList()
-    }
-
 }

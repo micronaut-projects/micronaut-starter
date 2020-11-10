@@ -54,13 +54,6 @@ class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
               <version>\${micronaut.security.version}</version>
             </path>
 """)
-            assert template.contains("""
-                <path>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </path>
-""")
         } else if (language == Language.KOTLIN) {
             assert template.count("""
                 <annotationProcessorPath>

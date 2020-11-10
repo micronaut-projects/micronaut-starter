@@ -55,7 +55,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), false).render().toString()
 
         then:
-        template.contains("testImplementation(platform(\"org.testcontainers:testcontainers-bom:1.14.3\"))")
+        template.contains("testImplementation(platform(\"org.testcontainers:testcontainers-bom:1.15.0\"))")
     }
 
     void "test oracle dependency is present for maven"() {
@@ -137,7 +137,7 @@ class TestContainersSpec extends BeanContextSpec {
       <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>testcontainers-bom</artifactId>
-        <version>1.14.3</version>
+        <version>1.15.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

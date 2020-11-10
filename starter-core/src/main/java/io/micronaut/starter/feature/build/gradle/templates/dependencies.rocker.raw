@@ -454,7 +454,7 @@ dependencies {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.14.3"))
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0"))
 @if (features.contains("mysql")) {
     @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", null)
 }

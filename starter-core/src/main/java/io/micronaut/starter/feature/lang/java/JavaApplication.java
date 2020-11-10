@@ -19,14 +19,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;

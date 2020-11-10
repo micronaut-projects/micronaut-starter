@@ -42,15 +42,8 @@ class MavenSpec extends BeanContextSpec {
     <version>${VersionInfo.micronautVersion}</version>
   </parent>
 """)
-        then:'shade plugin applies to maven by default'
-        template.contains("""
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-      </plugin>
-""")
 
-        then: 'there are no Maven specific properties defined, all of them are inherited from parent pom'
+        and: 'there are no Maven specific properties defined, all of them are inherited from parent pom'
         !template.contains('<maven.compiler.target>')
         !template.contains('<maven.compiler.source>')
         !template.contains('<project.build.sourceEncoding>')
@@ -61,8 +54,8 @@ class MavenSpec extends BeanContextSpec {
         and: 'Surefire is inherited from parent pom so it should not appear in generated pom'
         !template.contains('<artifactId>maven-surefire-plugin</artifactId>')
 
-        and: 'Failsafe is declared but without any specific configuration (configuration is inherited from parent pom)'
-        template.contains('''
+        and: 'Failsafe is inherited'
+        !template.contains('''
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
@@ -80,17 +73,7 @@ class MavenSpec extends BeanContextSpec {
 
         then:
         template.contains('''
-          <annotationProcessorPaths>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-inject-java</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-validation</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
+          <annotationProcessorPaths combine.children="append">
           </annotationProcessorPaths>
 ''')
 

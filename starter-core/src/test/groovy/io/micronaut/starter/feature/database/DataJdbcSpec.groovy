@@ -55,14 +55,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
               <version>\${micronaut.data.version}</version>
             </path>
 """)
-        //src/test
-        template.contains("""
-                <path>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>\${micronaut.data.version}</version>
-                </path>
-""")
+
         template.contains("""
     <dependency>
       <groupId>io.micronaut.data</groupId>
