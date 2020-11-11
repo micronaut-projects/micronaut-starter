@@ -12,13 +12,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.NameUtils
-import org.apache.maven.shared.invoker.DefaultInvocationRequest
-import org.apache.maven.shared.invoker.DefaultInvoker
-import org.apache.maven.shared.invoker.InvocationOutputHandler
-import org.apache.maven.shared.invoker.InvocationRequest
-import org.apache.maven.shared.invoker.InvocationResult
-import org.apache.maven.shared.invoker.Invoker
-import org.apache.maven.shared.invoker.PrintStreamHandler
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.AutoCleanup
@@ -30,14 +23,10 @@ import java.time.Duration
 
 abstract class CommandSpec extends Specification {
 
-    static final Invoker mavenInvoker = new DefaultInvoker()
-
     @Shared
     @AutoCleanup
     BeanContext beanContext = BeanContext.run()
-
-    @Shared
-    GradleRunner gradleRunner = GradleRunner.create()
+    @Shared GradleRunner gradleRunner = GradleRunner.create()
 
     abstract String getTempDirectoryPrefix()
 
@@ -94,29 +83,6 @@ abstract class CommandSpec extends Specification {
         } finally {
             process.destroy()
         }
-    }
-
-    String invokeMaven(String goals, Map properties = null) {
-        if (!mavenInvoker.mavenHome) {
-            String mavenHome = executeMaven("--version")
-                    .split(System.getProperty("line.separator"))
-                    .find {it.startsWith("Maven home: ")}
-                    .replace("Maven home: ", "")
-
-            mavenInvoker.setMavenHome(new File(mavenHome))
-        }
-        InvocationRequest request = new DefaultInvocationRequest()
-        request.setBaseDirectory(dir)
-        request.setBatchMode(true)
-        request.setGoals(goals.split(" ").toList())
-        if (properties) {
-            request.setProperties(properties as Properties)
-        }
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        InvocationOutputHandler outputHandler = new PrintStreamHandler(new PrintStream(baos, true), true)
-        request.setOutputHandler(outputHandler)
-        InvocationResult result = mavenInvoker.execute(request)
-        return baos.toString()
     }
 
     void generateProject(Language lang,

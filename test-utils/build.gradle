@@ -4,5 +4,4 @@ dependencies {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
     }
     implementation project(":starter-core")
-    implementation("org.apache.maven.shared:maven-invoker:3.0.1")
 }
