@@ -26,6 +26,8 @@ public enum Language {
     GROOVY("groovy"),
     KOTLIN("kt");
 
+    public static final Language DEFAULT_OPTION = JAVA;
+
     private final String extension;
 
     Language(String extension) {

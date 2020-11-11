@@ -509,6 +509,16 @@ public final class NameUtils {
     }
 
     /**
+     * Converts an enum style name into its natural language equivalent eg ('FIRST_NAME' becomes 'First Name').
+     *
+     * @param name The string to convert
+     * @return The converted property name
+     */
+    public static String getNaturalNameOfEnum(String name) {
+        return getNaturalName(io.micronaut.core.naming.NameUtils.camelCase(name.toLowerCase()));
+    }
+
+    /**
      * <p>Determines whether a given string is <code>null</code>, empty,
      * or only contains whitespace. If it contains anything other than
      * whitespace then the string is not considered to be blank and the

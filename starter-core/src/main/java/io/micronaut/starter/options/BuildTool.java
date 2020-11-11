@@ -22,10 +22,11 @@ import java.util.Locale;
 import java.util.Objects;
 
 public enum BuildTool {
-
     GRADLE("build/libs", "build.gradle", "-*-all.jar"),
     GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar"),
     MAVEN("target", "pom.xml", "-*.jar");
+
+    public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE;
 
     private final String jarDirectory;
     private final String fileName;

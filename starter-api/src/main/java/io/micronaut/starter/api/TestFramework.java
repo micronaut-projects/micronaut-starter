@@ -47,4 +47,5 @@ public enum TestFramework {
                 return io.micronaut.starter.options.TestFramework.JUNIT;
         }
     }
+
 }

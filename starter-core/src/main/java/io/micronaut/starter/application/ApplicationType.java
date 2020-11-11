@@ -28,6 +28,8 @@ public enum ApplicationType implements Named {
     GRPC("Micronaut gRPC Application", "A gRPC Application"),
     MESSAGING("Micronaut Messaging Application", "A Messaging-Driven Application");
 
+    public static final ApplicationType DEFAULT_OPTION = DEFAULT;
+
     private final String title;
     private final String description;
 
