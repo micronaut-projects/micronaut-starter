@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build.maven;
 
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
@@ -36,6 +37,7 @@ public class Maven implements BuildFeature {
     private static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     private static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     private static final String WRAPPER_DOWNLOADER = ".mvn/wrapper/MavenWrapperDownloader.java";
+    private static final String DEFAULT_PACKAGING = "jar";
 
     @Override
     public String getName() {
@@ -59,6 +61,9 @@ public class Maven implements BuildFeature {
                 generatorContext.getBuildProperties().getProperties()
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
+
+        BuildProperties buildProperties = generatorContext.getBuildProperties();
+        buildProperties.put("packaging", DEFAULT_PACKAGING);
     }
 
     @Override
