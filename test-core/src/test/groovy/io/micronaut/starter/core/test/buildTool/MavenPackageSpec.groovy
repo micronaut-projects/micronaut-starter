@@ -18,7 +18,7 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven("package")
+        String output = invokeMaven("package")
 
         then:
         output.contains("Replacing original artifact with shaded artifact")
@@ -34,7 +34,7 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven("package -Dpackaging=docker")
+        String output = invokeMaven("package", ['packaging': 'docker'])
 
         then:
         output.contains("Built image to Docker daemon")
@@ -51,7 +51,7 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=docker-native", 30)
+        String output = invokeMaven("package", ['packaging': 'docker-native'])
 
         then:
         output.contains("Using BASE_IMAGE: oracle/graalvm-ce:20.2.0-java11")

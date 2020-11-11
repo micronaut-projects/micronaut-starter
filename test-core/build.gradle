@@ -13,6 +13,8 @@ sourceSets {
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":starter-core")
+    testImplementation("org.apache.maven.shared:maven-invoker:3.0.1")
+
 }
 
 tasks.withType(Test) {
