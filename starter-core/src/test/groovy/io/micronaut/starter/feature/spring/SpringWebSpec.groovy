@@ -107,13 +107,6 @@ class SpringWebSpec extends BeanContextSpec {
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
-        template.contains("""
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </path>
-""")
 
         when:
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), []).render().toString()

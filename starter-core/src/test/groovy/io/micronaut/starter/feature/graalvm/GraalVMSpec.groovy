@@ -53,6 +53,13 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     </dependency>
 """)
         template.contains("""
+    <dependency>
+      <groupId>org.graalvm.sdk</groupId>
+      <artifactId>graal-sdk</artifactId>
+      <scope>provided</scope>
+    </dependency>
+""")
+        template.contains("""
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-graal</artifactId>

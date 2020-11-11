@@ -89,13 +89,6 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
-        template.contains("""
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </path>
-""")
 
         when:
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), []).render().toString()

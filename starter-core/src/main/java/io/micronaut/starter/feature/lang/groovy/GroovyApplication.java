@@ -70,7 +70,7 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return (generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getBuildTool().isGradle())
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
                 || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
