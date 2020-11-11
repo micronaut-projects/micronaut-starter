@@ -21,6 +21,7 @@ List<Property> properties
   <groupId>@project.getPackageName()</groupId>
   <artifactId>@project.getName()</artifactId>
   <version>0.1</version>
+  <packaging>${packaging}</packaging>
 
   <parent>
     <groupId>io.micronaut</groupId>
