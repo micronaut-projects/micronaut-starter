@@ -58,7 +58,7 @@ abstract class CommandSpec extends Specification {
         return result
     }
 
-    String executeMaven(String command) {
+    String executeMaven(String command, int timeoutSeconds = 180) {
         if (OperatingSystem.current.isWindows()) {
             command = dir.getAbsolutePath()+"\\"+"mvnw.bat " + command
         } else {
@@ -74,7 +74,7 @@ abstract class CommandSpec extends Specification {
         StringBuilder output = new StringBuilder()
         def thread = process.consumeProcessOutputStream(output)
         try {
-            thread.join(Duration.ofSeconds(180).toMillis())
+            thread.join(Duration.ofSeconds(timeoutSeconds).toMillis())
         } catch (InterruptedException e) {
         }
 
