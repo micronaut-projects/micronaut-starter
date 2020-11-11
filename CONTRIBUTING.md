@@ -24,7 +24,7 @@ To generate a project execute `./gradlew micronaut-cli:run --args=""` where the 
 
 If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew micronaut-cli:shadowJar` and then `java -jar starter-cli/build/libs/micronaut-cli-2.0.0.BUILD-SNAPSHOT-all.jar create-app temp`
 
-You can also install the cli fully from source by [following these instructions](https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html#installFromSource)
+You can build the CLI from source by [following these instructions](https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html#installFromSource)
 
 ### Default Feature Logic
 

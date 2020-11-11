@@ -13,9 +13,7 @@ $ git clone https://github.com/micronaut-projects/micronaut-starter.git
 $ ./gradlew micronaut-cli:assembleDist
 ----
 
-This creates a ZIP of the executables and lib support for use in the CLI, named with the current version.
-
-You can find it in the `starter-cli/build/dist` folder.
+This will create a zip distribution of the CLI (named with the current version) in the `starter-cli/build/dist/` folder.
 
 You'll need to unzip this somewhere convenient. For example, to unzip it to a dot directory in your user home, you could do:
 
