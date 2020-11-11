@@ -31,7 +31,7 @@ plugins {
     id "com.microsoft.azure.azurefunctions" version "1.4.0"
 }
 @if (features.contains("shade")) {
-    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 @if (features.mainClass().isPresent() || features.contains("oracle-function")) {
     id "io.micronaut.application" version '1.0.5'

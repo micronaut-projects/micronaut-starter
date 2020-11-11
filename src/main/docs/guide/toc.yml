@@ -3,7 +3,9 @@ installation:
   title: Installation
   installSdkman: Install with SDKman
   installHomebrew: Install with Homebrew
+  installMacports: Install with MacPorts
   installChocolatey: Install with Chocolatey
+  installWindows: Install through Binary on Windows
   installFromSource: Build & Install from Source
 releaseHistory: Release History
 commands:

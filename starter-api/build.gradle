@@ -1,5 +1,5 @@
 dependencies {
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.5.2"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.5.3"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
 
