@@ -15,14 +15,12 @@ import io.micronaut.starter.util.NameUtils
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
 import spock.lang.AutoCleanup
-import spock.lang.Retry
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.environment.OperatingSystem
 import java.nio.file.Files
 import java.time.Duration
 
-@Retry
 abstract class CommandSpec extends Specification {
 
     @Shared
