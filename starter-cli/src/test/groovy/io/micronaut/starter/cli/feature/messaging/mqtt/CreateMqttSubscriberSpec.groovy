@@ -19,7 +19,7 @@ class CreateMqttSubscriberSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating an mqtt #version subscriber - #language.getName()"(Language language, String version) {
-        generateProject(language, BuildTool.GRADLE, ["mqtt${version}".toString()])
+        generateProject(language, BuildTool.GRADLE, [version == "v5" ? "mqtt" : "mqtt${version}".toString()])
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateMqttSubscriber command = new CreateMqttSubscriber(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

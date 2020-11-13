@@ -58,7 +58,7 @@ public class CreateMqttPublisher extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("mqttv3") || config.getFeatures().contains("mqttv5");
+        return config.getFeatures().contains("mqtt") || config.getFeatures().contains("mqttv3");
     }
 
     @Override
@@ -72,10 +72,10 @@ public class CreateMqttPublisher extends CodeGenCommand {
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
         String version = null;
-        if (config.getFeatures().contains("mqttv3")) {
-            version = "v3";
-        } else if (config.getFeatures().contains("mqttv5")) {
+        if (config.getFeatures().contains("mqtt")) {
             version = "v5";
+        } else if (config.getFeatures().contains("mqttv3")) {
+            version = "v3";
         }
 
         if (config.getSourceLanguage() == Language.JAVA) {

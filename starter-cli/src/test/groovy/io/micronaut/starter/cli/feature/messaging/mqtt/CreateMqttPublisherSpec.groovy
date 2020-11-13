@@ -19,7 +19,7 @@ class CreateMqttPublisherSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating an mqtt #version publisher - #language.getName()"(Language language) {
-        generateProject(language, BuildTool.GRADLE, ["mqtt${version}".toString()])
+        generateProject(language, BuildTool.GRADLE, [version == "v5" ? "mqtt" : "mqtt${version}".toString()])
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
         CreateMqttPublisher command = new CreateMqttPublisher(codeGenConfig, getOutputHandler(consoleOutput), consoleOutput)

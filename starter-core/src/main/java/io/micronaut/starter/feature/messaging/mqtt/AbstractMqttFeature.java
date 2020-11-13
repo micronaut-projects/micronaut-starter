@@ -16,9 +16,9 @@
 package io.micronaut.starter.feature.messaging.mqtt;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
-public abstract class AbstractMqttFeature implements Feature {
+public abstract class AbstractMqttFeature implements MqttFeature {
 
     @Override
     public String getDescription() {
@@ -33,5 +33,11 @@ public abstract class AbstractMqttFeature implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/index.html";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put ("mqtt.client.server-uri", "tcp://localhost:1883");
+        generatorContext.getConfiguration().put ("mqtt.client.client-id", "${random.uuid}");
     }
 }

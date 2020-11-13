@@ -58,7 +58,7 @@ public class CreateMqttSubscriber extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("mqttv3") || config.getFeatures().contains("mqttv5");
+        return config.getFeatures().contains("mqtt") || config.getFeatures().contains("mqttv3");
     }
 
     @Override

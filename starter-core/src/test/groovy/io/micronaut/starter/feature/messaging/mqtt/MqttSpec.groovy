@@ -13,12 +13,17 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mqtt contains links to micronaut docs'() {
         when:
-        def output = generate(['mqtt'])
+        def output = generate([feature])
         def readme = output["README.md"]
 
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/index.html")
+
+        where:
+        feature << beanContext.streamOfType(MqttFeature)
+                .map{f -> f.getName()}
+                .collect(Collectors.toList())
     }
 
     void "test dependencies are present for gradle"() {
@@ -31,7 +36,6 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         feature  | dependency
         "mqtt"   | "mqttv5"
-        "mqttv5" | "mqttv5"
         "mqttv3" | "mqttv3"
     }
 
@@ -50,7 +54,6 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
         where:
         feature  | dependency
         "mqtt"   | "mqttv5"
-        "mqttv5" | "mqttv5"
         "mqttv3" | "mqttv3"
     }
 
