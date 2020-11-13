@@ -15,10 +15,6 @@
  */
 package io.micronaut.starter.feature.messaging.mqtt;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.FeatureContext;
-
 import javax.inject.Singleton;
 
 @Singleton
