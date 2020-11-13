@@ -565,6 +565,9 @@ List<Property> properties
 @if (features.contains("r2dbc")) {
 @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "compile", null)
 }
+@if (features.contains("data-r2dbc")) {
+@dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "compile", null)
+}
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
     @if (features.contains("r2dbc")) {

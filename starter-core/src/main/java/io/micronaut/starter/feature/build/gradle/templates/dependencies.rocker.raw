@@ -381,6 +381,9 @@ dependencies {
 @if (features.contains("r2dbc")) {
     @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)
 }
+@if (features.contains("data-r2dbc")) {
+    @dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "implementation", null)
+}
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
 }
