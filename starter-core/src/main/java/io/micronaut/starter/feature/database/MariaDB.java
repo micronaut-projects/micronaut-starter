@@ -48,6 +48,11 @@ public class MariaDB extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:mariadb://localhost:3306/db";
+    }
+
+    @Override
     public String getDriverClass() {
         return "org.mariadb.jdbc.Driver";
     }

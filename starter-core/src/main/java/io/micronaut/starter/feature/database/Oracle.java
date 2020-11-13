@@ -48,6 +48,11 @@ public class Oracle extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        throw new UnsupportedOperationException("R2DBC is not yet supported by Oracle");
+    }
+
+    @Override
     public String getDriverClass() {
         return "oracle.jdbc.OracleDriver";
     }

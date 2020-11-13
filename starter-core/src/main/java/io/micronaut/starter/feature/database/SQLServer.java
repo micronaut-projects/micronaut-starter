@@ -48,6 +48,11 @@ public class SQLServer extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:mssql://localhost:1433/tempdb";
+    }
+
+    @Override
     public String getDriverClass() {
         return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     }

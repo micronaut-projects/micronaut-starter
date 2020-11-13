@@ -562,23 +562,41 @@ List<Property> properties
 @if (features.contains("slf4j-simple")) {
 @dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
 }
+@if (features.contains("r2dbc")) {
+@dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "compile", null)
+}
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-h2", "runtime", null)
+    }
 }
 @if (features.contains("postgres")) {
 @dependency.template("org.postgresql", "postgresql", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-postgresql", "runtime", null)
+    }
 }
 @if (features.contains("mysql")) {
 @dependency.template("mysql", "mysql-connector-java", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("dev.miku", "r2dbc-mysql", "runtime", null)
+    }
 }
 @if (features.contains("mariadb")) {
 @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("org.mariadb", "r2dbc-mariadb", "runtime", null)
+    }
 }
 @if (features.contains("oracle")) {
 @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtime", null)
 }
 @if (features.contains("sqlserver")) {
 @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-mssql", "runtime", null)
+    }
 }
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
@@ -621,6 +639,9 @@ List<Property> properties
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
 @if (features.contains("testcontainers")) {
+@if (features.contains("r2dbc")) {
+@dependency.template("org.testcontainers", "r2dbc", "test", null)
+}
 @if (features.contains("mysql")) {
 @dependency.template("org.testcontainers", "mysql", "test", null)
 }
