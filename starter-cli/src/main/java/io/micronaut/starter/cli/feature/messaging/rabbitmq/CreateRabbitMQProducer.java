@@ -31,7 +31,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-rabbitmq-producer", description = "Creates a producer class for RabbitMQ")
+@CommandLine.Command(name = "create-rabbitmq-producer", description = "Creates a producer interface for RabbitMQ")
 @Prototype
 public class CreateRabbitMQProducer extends CodeGenCommand {
 

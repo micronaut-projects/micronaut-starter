@@ -31,7 +31,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-kafka-listener", description = "Creates a listener interface for Kafka")
+@CommandLine.Command(name = "create-kafka-listener", description = "Creates a listener class for Kafka")
 @Prototype
 public class CreateKafkaListener extends CodeGenCommand {
 

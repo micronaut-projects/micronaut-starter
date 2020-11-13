@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.cli.feature.messaging.nats;
+package io.micronaut.starter.cli.feature.messaging.mqtt;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.groovyListener;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.javaListener;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.kotlinListener;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.producer.groovyProducer;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.producer.javaProducer;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.producer.kotlinProducer;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
@@ -34,53 +34,62 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-nats-listener", description = "Creates a listener class for Nats.io")
+@CommandLine.Command(name = "create-mqtt-publisher", description = "Creates a publisher class for MQTT")
 @Prototype
-public class CreateNatsListener extends CodeGenCommand {
+public class CreateMqttPublisher extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
-    String listenerName;
+    @CommandLine.Parameters(paramLabel = "PUBLISHER", description = "The name of the publisher to create")
+    String publisherName;
 
-    public CreateNatsListener(@Parameter CodeGenConfig config) {
+    @Inject
+    public CreateMqttPublisher(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateNatsListener(CodeGenConfig config,
-                          ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                          ConsoleOutput consoleOutput) {
+    public CreateMqttPublisher(CodeGenConfig config,
+                               ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                               ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("nats");
+        return config.getFeatures().contains("mqttv3") || config.getFeatures().contains("mqttv5");
     }
 
     @Override
     public Integer call() throws Exception {
-        Project project = getProject(listenerName);
+        Project project = getProject(publisherName);
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
+        RenderResult renderResult = null;
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
-        RenderResult renderResult = null;
         RockerModel rockerModel = null;
+        String version = null;
+        if (config.getFeatures().contains("mqttv3")) {
+            version = "v3";
+        } else if (config.getFeatures().contains("mqttv5")) {
+            version = "v5";
+        }
+
         if (config.getSourceLanguage() == Language.JAVA) {
-            rockerModel = javaListener.template(project);
+            rockerModel = javaProducer.template(project, version);
         } else if (config.getSourceLanguage() == Language.GROOVY) {
-            rockerModel = groovyListener.template(project);
+            rockerModel = groovyProducer.template(project, version);
         } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            rockerModel = kotlinListener.template(project);
+            rockerModel = kotlinProducer.template(project, version);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
-                out("@|blue ||@ Rendered Nats listener to " + renderResult.getPath());
+                out("@|blue ||@ Rendered MQTT publisher to " + renderResult.getPath());
             } else if (renderResult.isSkipped()) {
                 warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
             } else if (renderResult.getError() != null) {

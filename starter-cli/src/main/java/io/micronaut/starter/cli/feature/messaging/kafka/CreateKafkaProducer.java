@@ -31,7 +31,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "create-kafka-producer", description = "Creates a producer class for Kafka")
+@CommandLine.Command(name = "create-kafka-producer", description = "Creates a producer interface for Kafka")
 @Prototype
 public class CreateKafkaProducer extends CodeGenCommand {
 
