@@ -166,6 +166,9 @@ dependencies {
 @if (features.contains("openapi")) {
     @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
 }
+@if (features.contains("lombok")) {
+    @dependency.template("org.projectlombok", "lombok", "compileOnly", "${lombokVersion}")
+}
 @if (features.contains("management")) {
     @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
 }

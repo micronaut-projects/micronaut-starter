@@ -156,6 +156,9 @@ List<Property> properties
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
 }
+@if (features.contains("lombok")) {
+@dependency.template("org.projectlombok", "lombok", "provided", "${lombok.version}")
+}
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
 }
@@ -760,6 +763,14 @@ List<Property> properties
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
           <annotationProcessorPaths>
+@if (features.contains("lombok")) {
+            <path>
+              <!-- must precede micronaut-inject-java -->
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+}
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-inject-java</artifactId>
@@ -986,6 +997,13 @@ List<Property> properties
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+@if (features.contains("lombok")) {
+                <annotationProcessorPath>
+                  <groupId>org.projectlombok</groupId>
+                  <artifactId>lombok</artifactId>
+                  <version>${lombok.version}</version>
+                </annotationProcessorPath>
+}
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
