@@ -41,15 +41,15 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework) {
-        this(language, testFramework, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, testFramework, language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options(Language language, BuildTool buildTool) {
-        this(language, TestFramework.JUNIT, buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options(Language language) {
-        this(language, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options() {

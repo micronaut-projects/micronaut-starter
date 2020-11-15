@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.defaults;
+package io.micronaut.starter.defaults;
 
-import java.util.Optional;
+import io.micronaut.starter.options.BuildTool;
 
-public interface IncludesDefaults<T> {
-    Optional<T> getDefaults();
+public interface HasDefaultBuild {
+    BuildTool getBuild();
 }

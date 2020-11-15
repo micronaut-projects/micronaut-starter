@@ -33,6 +33,7 @@ import picocli.CommandLine;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
@@ -44,7 +45,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
-    Language lang;
+    Language lang = Language.DEFAULT_OPTION;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
@@ -52,7 +53,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
-    BuildTool build = BuildToolConverter.DEFAULT_BUILD_TOOL;
+    BuildTool build;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
@@ -93,7 +94,12 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public Integer call() throws Exception {
         if (listFeatures) {
             new ListFeatures(availableFeatures,
-                    new Options(lang, test, build, getJdkVersion()),
+                    new Options(
+                            lang,
+                            Optional.ofNullable(test).orElse(lang.getDefaults().getTest()),
+                            Optional.ofNullable(build).orElse(lang.getDefaults().getBuild()),
+                            getJdkVersion()
+                    ),
                     applicationType,
                     getOperatingSystem(),
                     contextFactory).output(this);
@@ -119,7 +125,13 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
+        Options options = new Options(
+                lang,
+                Optional.ofNullable(test).orElse(lang.getDefaults().getTest()),
+                Optional.ofNullable(build).orElse(lang.getDefaults().getBuild()),
+                getJdkVersion(),
+                getAdditionalOptions()
+        );
 
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }

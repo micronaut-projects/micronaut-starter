@@ -22,15 +22,11 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
-import io.micronaut.starter.api.defaults.IncludesDefaults;
-import io.micronaut.starter.api.defaults.LanguageDefaults;
-import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.defaults.IncludesDefaults;
+import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.util.Optional;
 
 /**
  * DTO objects for {@link Language}.
@@ -119,16 +115,7 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
 
     @Override
     @Schema(description = "The default values that correlate to the language")
-    public Optional<LanguageDefaults> getDefaults() {
-        switch (this.value) {
-            case JAVA:
-                return Optional.of(new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE));
-            case GROOVY:
-                return Optional.of(new LanguageDefaults(TestFramework.SPOCK, BuildTool.GRADLE));
-            case KOTLIN:
-                return Optional.of(new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN));
-            default:
-                return Optional.empty();
-        }
+    public LanguageDefaults getDefaults() {
+        return this.value.getDefaults();
     }
 }

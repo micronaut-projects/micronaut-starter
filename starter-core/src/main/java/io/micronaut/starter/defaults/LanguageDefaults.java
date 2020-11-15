@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.defaults;
+package io.micronaut.starter.defaults;
 
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;

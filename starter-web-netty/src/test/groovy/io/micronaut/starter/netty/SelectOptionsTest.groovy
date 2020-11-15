@@ -92,7 +92,7 @@ class SelectOptionsTest extends Specification {
 
         then:
         selectOptions.lang.options.each {
-            def langDefault = it.defaults.get();
+            def langDefault = it.defaults;
 
             then: "We get valid correlative build tools"
             selectOptions.build.options.find{ it.value == langDefault.build} != null

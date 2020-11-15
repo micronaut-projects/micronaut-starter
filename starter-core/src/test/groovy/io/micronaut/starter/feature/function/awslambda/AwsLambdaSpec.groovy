@@ -68,7 +68,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, TestFramework.JUNIT, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -80,7 +80,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, TestFramework.JUNIT, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -131,7 +131,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['aws-lambda']
         )
         String build = output['build.gradle']
@@ -354,7 +354,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['aws-lambda']
         )
         String build = output['build.gradle']

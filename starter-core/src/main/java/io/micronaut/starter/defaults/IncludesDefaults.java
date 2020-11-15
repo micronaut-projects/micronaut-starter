@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.defaults;
+package io.micronaut.starter.defaults;
 
-import io.micronaut.starter.options.TestFramework;
-
-public interface HasDefaultTest {
-    TestFramework getTest();
+public interface IncludesDefaults<T> {
+    T getDefaults();
 }

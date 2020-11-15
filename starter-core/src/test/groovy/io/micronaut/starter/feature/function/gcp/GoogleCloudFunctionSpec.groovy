@@ -95,7 +95,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['google-cloud-function']
         )
         String build = output['build.gradle']
