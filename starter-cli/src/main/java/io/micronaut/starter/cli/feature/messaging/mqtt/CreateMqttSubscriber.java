@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.cli.feature.messaging.nats;
+package io.micronaut.starter.cli.feature.messaging.mqtt;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
+import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.groovyListener;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.javaListener;
-import io.micronaut.starter.cli.feature.messaging.nats.template.listener.kotlinListener;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.listener.groovyListener;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.listener.javaListener;
+import io.micronaut.starter.cli.feature.messaging.mqtt.template.listener.kotlinListener;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
@@ -34,29 +34,31 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
+import javax.inject.Inject;
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-nats-listener", description = "Creates a listener class for Nats.io")
+@CommandLine.Command(name = "create-mqtt-subscriber", description = "Creates a subscriber class for MQTT")
 @Prototype
-public class CreateNatsListener extends CodeGenCommand {
+public class CreateMqttSubscriber extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
+    @CommandLine.Parameters(paramLabel = "SUBSCRIBER", description = "The name of the subscriber to create")
     String listenerName;
 
-    public CreateNatsListener(@Parameter CodeGenConfig config) {
+    @Inject
+    public CreateMqttSubscriber(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateNatsListener(CodeGenConfig config,
-                          ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                          ConsoleOutput consoleOutput) {
+    public CreateMqttSubscriber(CodeGenConfig config,
+                                ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("nats");
+        return config.getFeatures().contains("mqtt") || config.getFeatures().contains("mqttv3");
     }
 
     @Override
@@ -65,9 +67,9 @@ public class CreateNatsListener extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
+        RenderResult renderResult = null;
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
-        RenderResult renderResult = null;
         RockerModel rockerModel = null;
         if (config.getSourceLanguage() == Language.JAVA) {
             rockerModel = javaListener.template(project);
@@ -80,7 +82,7 @@ public class CreateNatsListener extends CodeGenCommand {
 
         if (renderResult != null) {
             if (renderResult.isSuccess()) {
-                out("@|blue ||@ Rendered Nats listener to " + renderResult.getPath());
+                out("@|blue ||@ Rendered MQTT subscriber to " + renderResult.getPath());
             } else if (renderResult.isSkipped()) {
                 warning("Rendering skipped for " + renderResult.getPath() + " because it already exists. Run again with -f to overwrite.");
             } else if (renderResult.getError() != null) {

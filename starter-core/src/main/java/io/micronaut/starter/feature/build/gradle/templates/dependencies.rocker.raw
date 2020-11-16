@@ -312,6 +312,12 @@ dependencies {
 @if (features.contains("nats")) {
     @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
 }
+@if (features.contains("mqtt")) {
+    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "implementation", null)
+}
+@if (features.contains("mqttv3")) {
+    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "implementation", null)
+}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }

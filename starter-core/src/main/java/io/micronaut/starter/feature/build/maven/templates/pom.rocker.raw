@@ -372,6 +372,12 @@ List<Property> properties
 @if (features.contains("rabbitmq")) {
 @dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "compile", null)
 }
+@if (features.contains("mqtt")) {
+@dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "compile", null)
+}
+@if (features.contains("mqttv3")) {
+@dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "compile", null)
+}
 @if (features.contains("nats")) {
 @dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
 }

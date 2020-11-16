@@ -36,7 +36,7 @@ import picocli.CommandLine;
 
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-nats-producer", description = "Creates a producer class for Nats.io")
+@CommandLine.Command(name = "create-nats-producer", description = "Creates a producer interface for Nats.io")
 @Prototype
 public class CreateNatsProducer extends CodeGenCommand {
 
