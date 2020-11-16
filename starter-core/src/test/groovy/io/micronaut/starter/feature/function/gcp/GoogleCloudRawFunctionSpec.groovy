@@ -8,7 +8,9 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Requires
 
+@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
