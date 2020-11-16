@@ -44,6 +44,11 @@ public class H2 extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:h2:mem:///testdb;DB_CLOSE_ON_EXIT=FALSE";
+    }
+
+    @Override
     public String getDriverClass() {
         return "org.h2.Driver";
     }

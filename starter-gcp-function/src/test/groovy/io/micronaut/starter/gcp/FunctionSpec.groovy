@@ -6,8 +6,10 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpMethod
 import io.micronaut.http.HttpStatus
 import io.micronaut.starter.util.ZipUtil
+import spock.lang.Requires
 import spock.lang.Specification
 
+@Requires({ jvm.current.isJava11Compatible() })
 class FunctionSpec extends Specification {
 
     void "test list features"() {

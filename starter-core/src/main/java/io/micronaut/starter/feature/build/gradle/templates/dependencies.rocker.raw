@@ -384,6 +384,12 @@ dependencies {
 @if (features.contains("dekorate-halkyon")) {
     @dependency.template("io.dekorate", "halkyon-annotations", "implementation", "${dekorateVersion}")
 }
+@if (features.contains("r2dbc")) {
+    @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)
+}
+@if (features.contains("data-r2dbc")) {
+    @dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "implementation", null)
+}
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
 }
@@ -423,21 +429,36 @@ dependencies {
 }
 @if (features.contains("h2")) {
     @dependency.template("com.h2database", "h2", "runtimeOnly", null)
+    @if (features.contains("r2dbc")) {
+    @dependency.template("io.r2dbc", "r2dbc-h2", "runtimeOnly", null)
+    }
 }
 @if (features.contains("postgres")) {
     @dependency.template("org.postgresql", "postgresql", "runtimeOnly", null)
+    @if (features.contains("r2dbc")) {
+    @dependency.template("io.r2dbc", "r2dbc-postgresql", "runtimeOnly", null)
+    }
 }
 @if (features.contains("mysql")) {
     @dependency.template("mysql", "mysql-connector-java", "runtimeOnly", null)
+    @if (features.contains("r2dbc")) {
+    @dependency.template("dev.miku", "r2dbc-mysql", "runtimeOnly", null)
+    }
 }
 @if (features.contains("mariadb")) {
     @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", null)
+    @if (features.contains("r2dbc")) {
+    @dependency.template("org.mariadb", "r2dbc-mariadb", "runtimeOnly", null)
+    }
 }
 @if (features.contains("oracle")) {
     @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtimeOnly", null)
 }
 @if (features.contains("sqlserver")) {
     @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", null)
+    @if (features.contains("r2dbc")) {
+    @dependency.template("io.r2dbc", "r2dbc-mssql", "runtimeOnly", null)
+    }
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
@@ -461,6 +482,9 @@ dependencies {
 }
 @if (features.contains("testcontainers")) {
     testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0"))
+@if (features.contains("r2dbc")) {
+    @dependency.template("org.testcontainers", "r2dbc", "testRuntimeOnly", null)
+}
 @if (features.contains("mysql")) {
     @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", null)
 }

@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public class @project.getClassName()Test {
 
     @@Inject
-    EmbeddedApplication application;
+    EmbeddedApplication<?> application;
 
     @@Test
     void testItWorks() {

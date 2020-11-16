@@ -58,6 +58,8 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     public abstract String getJdbcUrl();
 
+    public abstract String getR2dbcUrl();
+
     public abstract String getDriverClass();
 
     public abstract String getDefaultUser();
