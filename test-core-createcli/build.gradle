@@ -1,6 +1,0 @@
-dependencies {
-    testCompileOnly("io.micronaut:micronaut-inject-groovy")
-    testImplementation project(":test-utils")
-    testImplementation project(":starter-core")
-
-}

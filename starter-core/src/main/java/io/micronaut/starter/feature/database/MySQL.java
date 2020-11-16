@@ -48,6 +48,11 @@ public class MySQL extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:mysql://localhost:3306/db";
+    }
+
+    @Override
     public String getDriverClass() {
         return "com.mysql.cj.jdbc.Driver";
     }

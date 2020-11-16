@@ -49,6 +49,11 @@ public class PostgreSQL extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:postgresql://localhost:5432/postgres";
+    }
+
+    @Override
     public String getDriverClass() {
         return "org.postgresql.Driver";
     }
