@@ -1101,6 +1101,9 @@ List<Property> properties
             <configuration>
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                @if (features.contains("grpc")) {
+                <sourceDir>${project.build.directory}/generated-sources/</sourceDir>
+                }
               </sourceDirs>
             </configuration>
           </execution>
