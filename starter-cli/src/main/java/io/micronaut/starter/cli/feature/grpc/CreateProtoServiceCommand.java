@@ -18,15 +18,20 @@ package io.micronaut.starter.cli.feature.grpc;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
+import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.grpc.template.proto;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+
+import java.io.IOException;
 
 @CommandLine.Command(name = "create-proto-service", description = "Creates a protobuf file for the given ame")
 @Prototype
@@ -38,6 +43,18 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
     public CreateProtoServiceCommand(@Parameter CodeGenConfig config) {
         super(config);
+    }
+
+    public CreateProtoServiceCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+        super(config, outputHandlerSupplier, consoleOutput);
+    }
+
+    /**
+     * The service name
+     * @param serviceName Sets the service name to generate
+     */
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     @Override

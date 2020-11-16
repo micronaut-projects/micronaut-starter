@@ -13,6 +13,7 @@ sourceSets {
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":starter-core")
+    testImplementation project(":micronaut-cli")
 }
 
 tasks.withType(Test) {
