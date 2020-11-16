@@ -98,7 +98,6 @@ public class DataR2dbc implements Feature {
         return "https://r2dbc.io";
     }
 
-
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
