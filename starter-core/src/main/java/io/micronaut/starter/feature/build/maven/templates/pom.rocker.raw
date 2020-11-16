@@ -1377,7 +1377,7 @@ List<Property> properties
       </plugin>
 }
 @if (features.contains("github-workflow-docker-registry") || features.contains("github-workflow-graal-docker-registry") ) {
-    <plugin>
+      <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
         <configuration>
@@ -1408,6 +1408,13 @@ List<Property> properties
        <id>central</id>
        <url>https://repo.maven.apache.org/maven2</url>
     </pluginRepository>
+    <pluginRepository>
+       <id>ossrh</id>
+       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+       <snapshots>
+           <enabled>true</enabled>
+       </snapshots>
+    </pluginRepository>
     }
   </pluginRepositories>
 } else if (VersionInfo.isStarterSnapshot()) {
@@ -1415,6 +1422,13 @@ List<Property> properties
        <pluginRepository>
            <id>central</id>
            <url>https://repo.maven.apache.org/maven2</url>
+       </pluginRepository>
+       <pluginRepository>
+           <id>ossrh</id>
+           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+           <snapshots>
+               <enabled>true</enabled>
+           </snapshots>
        </pluginRepository>
     </pluginRepositories>
 }
