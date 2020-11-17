@@ -6,6 +6,9 @@
 Features features
 )
 
+@if (features.contains("lombok")) {
+@annotationProcessor.template(features, "\"org.projectlombok:lombok\"")
+}
 @if (features.contains("picocli")) {
 @annotationProcessor.template(features, "\"info.picocli:picocli-codegen:4.2.0\"")
 }
