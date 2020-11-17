@@ -33,7 +33,6 @@ import picocli.CommandLine;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {

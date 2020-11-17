@@ -24,8 +24,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.List;
 
 @Singleton
 public class PicocliSpock implements PicocliTestFeature {
