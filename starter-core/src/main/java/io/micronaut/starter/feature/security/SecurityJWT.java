@@ -26,6 +26,7 @@ import javax.inject.Singleton;
 @Singleton
 public class SecurityJWT implements Feature {
 
+    public static final int ORDER = 0;
     private final SecurityAnnotations securityAnnotations;
 
     public SecurityJWT(SecurityAnnotations securityAnnotations) {
@@ -75,4 +76,8 @@ public class SecurityJWT implements Feature {
         return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html";
     }
 
+    @Override
+    public int getOrder() {
+        return ORDER;
+    }
 }
