@@ -16,15 +16,11 @@
 package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
 public class ProjectLombok implements LanguageSpecificFeature {
@@ -62,17 +58,6 @@ public class ProjectLombok implements LanguageSpecificFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://projectlombok.org/features/all";
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("lombok");
-            generatorContext.getBuildProperties().put(
-                dependencyVersion.getKey(),
-                dependencyVersion.getValue()
-            );
-        }
     }
 
     @Override

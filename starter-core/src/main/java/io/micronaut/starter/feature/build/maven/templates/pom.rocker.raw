@@ -821,14 +821,26 @@ List<Property> properties
         <configuration>
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-          <annotationProcessorPaths combine.children="append">
 @if (features.contains("lombok")) {
+          <annotationProcessorPaths combine.self="override">
             <path>
               <!-- must precede micronaut-inject-java -->
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
               <version>${lombok.version}</version>
             </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-inject-java</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-validation</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+} else {
+          <annotationProcessorPaths combine.children="append">
 }
 @if (features.contains("graalvm")) {
             <path>

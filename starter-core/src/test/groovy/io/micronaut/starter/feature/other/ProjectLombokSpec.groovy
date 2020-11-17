@@ -69,12 +69,13 @@ class ProjectLombokSpec extends BeanContextSpec implements CommandOutputFixture 
                 context.getFeatures(), context.getBuildProperties().getProperties()).render().toString()
 
         then:
-        template.contains("""
+        // ensure we use version from Micronaut BOM
+        !template.contains("""
     <lombok.version>1.18.16</lombok.version>
 """)
         // make sure lombok is before inject-java or it won't work
         template.contains("""
-          <annotationProcessorPaths combine.children="append">
+          <annotationProcessorPaths combine.self="override">
             <path>
               <!-- must precede micronaut-inject-java -->
               <groupId>org.projectlombok</groupId>
