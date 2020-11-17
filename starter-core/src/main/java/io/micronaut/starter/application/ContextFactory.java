@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
@@ -54,12 +55,8 @@ public class ContextFactory {
         }
 
         Language language = determineLanguage(options.getLanguage(), features);
-        Options newOptions;
-        if (options.getBuildTool() == null) {
-            newOptions = options.withLanguage(language).withBuildTool(language.getDefaults().getBuild());
-        } else {
-            newOptions = options.withLanguage(language);
-        }
+        Options newOptions = options.withLanguage(language)
+                .withBuildTool(determineBuildTool(language, options.getBuildTool()));
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
@@ -91,5 +88,12 @@ public class ContextFactory {
             language = Language.JAVA;
         }
         return language;
+    }
+
+    BuildTool determineBuildTool(Language language, BuildTool buildTool) {
+        if (buildTool == null) {
+            buildTool = language.getDefaults().getBuild();
+        }
+        return buildTool;
     }
 }

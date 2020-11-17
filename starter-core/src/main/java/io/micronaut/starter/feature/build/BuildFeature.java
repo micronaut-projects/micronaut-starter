@@ -18,8 +18,6 @@ package io.micronaut.starter.feature.build;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
 
 public interface BuildFeature extends DefaultFeature {
 
