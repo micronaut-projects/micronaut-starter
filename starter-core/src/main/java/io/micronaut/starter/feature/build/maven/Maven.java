@@ -66,6 +66,6 @@ public class Maven implements BuildFeature {
                                Options options,
                                Set<Feature> selectedFeatures) {
 
-        return getBuildTool(options) == BuildTool.MAVEN;
+        return options.getBuildTool() == BuildTool.MAVEN;
     }
 }

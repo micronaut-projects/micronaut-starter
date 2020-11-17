@@ -53,9 +53,6 @@ public class FeatureContext {
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
             options = options.withTestFramework(testFramework);
         }
-        if (options.getBuildTool() == null) {
-            options = options.withBuildTool(options.getLanguage().getDefaults().getBuild());
-        }
         this.options = options;
     }
 

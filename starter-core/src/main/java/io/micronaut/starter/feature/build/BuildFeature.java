@@ -38,11 +38,4 @@ public interface BuildFeature extends DefaultFeature {
         return true;
     }
 
-    default BuildTool getBuildTool(Options options) {
-        BuildTool buildTool = options.getBuildTool();
-        if (buildTool == null) {
-            buildTool = options.getLanguage().getDefaults().getBuild();
-        }
-        return buildTool;
-    }
 }

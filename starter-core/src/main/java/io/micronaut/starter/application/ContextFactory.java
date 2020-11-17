@@ -54,7 +54,12 @@ public class ContextFactory {
         }
 
         Language language = determineLanguage(options.getLanguage(), features);
-        Options newOptions = options.withLanguage(language);
+        Options newOptions;
+        if (options.getBuildTool() == null) {
+            newOptions = options.withLanguage(language).withBuildTool(language.getDefaults().getBuild());
+        } else {
+            newOptions = options.withLanguage(language);
+        }
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
