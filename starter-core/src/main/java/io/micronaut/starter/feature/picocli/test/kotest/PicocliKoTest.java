@@ -43,7 +43,6 @@ public class PicocliKoTest implements PicocliTestFeature {
         return TestFramework.KOTEST;
     }
 
-
     public RockerModel getModel(Project project) {
         return picocliKoTestTest.template(project);
     }
