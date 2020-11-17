@@ -17,6 +17,7 @@ package io.micronaut.starter.feature;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.application.ApplicationType;
@@ -51,6 +52,9 @@ public class FeatureContext {
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException(String.format("No test framework could derived from the selected features [%s]", selectedFeatures)));
             options = options.withTestFramework(testFramework);
+        }
+        if (options.getBuildTool() == null) {
+            options = options.withBuildTool(options.getLanguage().getDefaults().getBuild());
         }
         this.options = options;
     }

@@ -69,10 +69,6 @@ public class Gradle implements BuildFeature {
     public boolean shouldApply(ApplicationType applicationType,
                                Options options,
                                Set<Feature> selectedFeatures) {
-        BuildTool buildTool = options.getBuildTool();
-        if (buildTool == null) {
-            buildTool = options.getLanguage().getDefaults().getBuild();
-        }
-        return buildTool.isGradle();
+        return getBuildTool(options).isGradle();
     }
 }
