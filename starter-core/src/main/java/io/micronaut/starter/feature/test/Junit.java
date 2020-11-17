@@ -41,9 +41,4 @@ public class Junit implements TestFeature {
         return TestFramework.JUNIT;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Arrays.asList(Language.JAVA, Language.KOTLIN);
-    }
-
 }

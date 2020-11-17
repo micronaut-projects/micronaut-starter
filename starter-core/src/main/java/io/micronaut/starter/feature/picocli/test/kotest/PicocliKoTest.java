@@ -45,10 +45,6 @@ public class PicocliKoTest implements PicocliTestFeature {
         return TestFramework.KOTEST;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.emptyList();
-    }
 
     public RockerModel getModel(Project project) {
         return picocliKoTestTest.template(project);

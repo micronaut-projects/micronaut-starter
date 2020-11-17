@@ -41,9 +41,4 @@ public class Spock implements TestFeature {
         return TestFramework.SPOCK;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.singletonList(Language.GROOVY);
-    }
-
 }

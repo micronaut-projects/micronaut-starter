@@ -48,8 +48,6 @@ public interface TestFeature extends DefaultFeature {
 
     TestFramework getTestFramework();
 
-    List<Language> getDefaultLanguages();
-
     default boolean isJunit() {
         return getTestFramework() == TestFramework.JUNIT;
     }
@@ -70,8 +68,11 @@ public interface TestFeature extends DefaultFeature {
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && getDefaultLanguages().contains(options.getLanguage())));
+        TestFramework selectedTest = options.getTestFramework();
+        if (selectedTest == null) {
+            selectedTest = options.getLanguage().getDefaults().getTest();
+        }
+        return supports(applicationType) && selectedTest == getTestFramework();
     }
 
     @Override

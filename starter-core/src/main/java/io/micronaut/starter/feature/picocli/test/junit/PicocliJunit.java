@@ -47,11 +47,6 @@ public class PicocliJunit implements PicocliTestFeature {
         return TestFramework.JUNIT;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Arrays.asList(Language.JAVA, Language.KOTLIN);
-    }
-
     public JunitRockerModelProvider getJunitRockerModelProvider(Project project) {
         return new AbstractJunitRockerModelProvider(project) {
             @Override

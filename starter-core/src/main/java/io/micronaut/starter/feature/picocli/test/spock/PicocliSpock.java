@@ -45,11 +45,6 @@ public class PicocliSpock implements PicocliTestFeature {
         return TestFramework.SPOCK;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.singletonList(Language.GROOVY);
-    }
-
     public RockerModel getModel(Project project) {
         return picocliSpockTest.template(project);
     }

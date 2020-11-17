@@ -37,6 +37,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
+
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
@@ -45,7 +46,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
-    Language lang = Language.DEFAULT_OPTION;
+    Language lang;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
@@ -94,12 +95,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public Integer call() throws Exception {
         if (listFeatures) {
             new ListFeatures(availableFeatures,
-                    new Options(
-                            lang,
-                            Optional.ofNullable(test).orElse(lang.getDefaults().getTest()),
-                            Optional.ofNullable(build).orElse(lang.getDefaults().getBuild()),
-                            getJdkVersion()
-                    ),
+                    new Options(lang, test, build, getJdkVersion()),
                     applicationType,
                     getOperatingSystem(),
                     contextFactory).output(this);
@@ -125,13 +121,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(
-                lang,
-                Optional.ofNullable(test).orElse(lang.getDefaults().getTest()),
-                Optional.ofNullable(build).orElse(lang.getDefaults().getBuild()),
-                getJdkVersion(),
-                getAdditionalOptions()
-        );
+        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
 
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }

@@ -45,8 +45,4 @@ public class KoTest implements TestFeature {
         return TestFramework.KOTEST;
     }
 
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.emptyList();
-    }
 }
