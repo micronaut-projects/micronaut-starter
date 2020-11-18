@@ -484,7 +484,6 @@ dependencies {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
-    testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0"))
 @if (features.contains("r2dbc")) {
     @dependency.template("org.testcontainers", "r2dbc", "testRuntimeOnly", null)
 }
