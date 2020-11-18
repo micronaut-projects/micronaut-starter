@@ -2,9 +2,7 @@ package io.micronaut.starter.test.github
 
 import groovy.util.logging.Slf4j
 import io.micronaut.context.annotation.Property
-import io.micronaut.context.env.PropertySource
 import io.micronaut.starter.application.Project
-import io.micronaut.starter.client.github.oauth.GitHubOAuthClient
 import io.micronaut.starter.client.github.v3.GitHubApiClient
 import io.micronaut.starter.client.github.v3.GitHubRepository
 import io.micronaut.starter.client.github.v3.GitHubSecret
@@ -15,6 +13,7 @@ import io.micronaut.starter.client.github.v3.GitHubWorkflowRuns
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.util.GitHubUtil
+import org.apache.tuweni.crypto.sodium.Box
 import spock.lang.Shared
 import spock.util.concurrent.PollingConditions
 
@@ -57,7 +56,7 @@ abstract class WorkflowSpec extends CommandSpec{
         for(Secret secret : secrets){
             if(secret.name && secret.value) {
                 log.debug("Creating secret ${secret.name}")
-                String encryptedSecret = GitHubUtil.encryptSecret(secret.value, secretsPublicKey.key)
+                String encryptedSecret = encryptSecret(secret.value, secretsPublicKey.key)
                 GitHubSecret gitHubSecret = new GitHubSecret(encryptedSecret, secretsPublicKey.keyId)
                 apiClient.createSecret(apiToken, owner.login, repository.name, secret.name, gitHubSecret)
             }
@@ -103,5 +102,19 @@ abstract class WorkflowSpec extends CommandSpec{
 
     protected static Secret secretFromEnvVariable(String envVariable){
         return new Secret(envVariable, System.getenv(envVariable), null)
+    }
+
+    /**
+     * Encrypts secret using libsodium library like recommended by GitHub.
+     * See: https://docs.github.com/en/free-pro-team@latest/rest/reference/actions#create-or-update-a-repository-secret
+     *
+     * @param secret     to encrypt
+     * @param secretsKey repository public key used for encryption
+     * @return base64 encoded encrypted secret
+     */
+    static String encryptSecret(String secret, String secretsKey) {
+        Box.PublicKey pubKey = Box.PublicKey.fromBytes(Base64.getDecoder().decode(secretsKey.getBytes()))
+        byte[] encrypted = Box.encryptSealed(secret.getBytes(), pubKey)
+        return new String(Base64.getEncoder().encode(encrypted))
     }
 }

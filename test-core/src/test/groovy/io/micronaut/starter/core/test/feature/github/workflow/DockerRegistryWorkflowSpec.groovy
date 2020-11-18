@@ -21,7 +21,8 @@ import spock.lang.Shared
  * </ul>
  */
 @Requires({System.getenv().containsKey(GH_TOKEN) && System.getenv().containsKey(DOCKER_USERNAME) \
-        && System.getenv().containsKey(DOCKER_PASSWORD) && System.getenv().containsKey(DOCKER_ORGANIZATION)})
+        && System.getenv().containsKey(DOCKER_PASSWORD) && System.getenv().containsKey(DOCKER_ORGANIZATION) \
+        && jvm.isJava11()})
 class DockerRegistryWorkflowSpec extends WorkflowSpec {
 
     private static final String DOCKER_USERNAME = "DOCKER_USERNAME"

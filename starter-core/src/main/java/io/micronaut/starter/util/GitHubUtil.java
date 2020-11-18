@@ -18,7 +18,6 @@ package io.micronaut.starter.util;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.client.github.v3.GitHubRepository;
 import io.micronaut.starter.client.github.v3.GitHubUser;
-import org.apache.tuweni.crypto.sodium.Box;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.transport.PushResult;
@@ -28,7 +27,6 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -89,19 +87,5 @@ public class GitHubUtil {
         } catch (GitAPIException e) {
             throw new IOException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * Encrypts secret using libsodium library like recommended by GitHub.
-     * See: https://docs.github.com/en/free-pro-team@latest/rest/reference/actions#create-or-update-a-repository-secret
-     *
-     * @param secret     to encrypt
-     * @param secretsKey repository public key used for encryption
-     * @return base64 encoded encrypted secret
-     */
-    public static String encryptSecret(String secret, String secretsKey) {
-        Box.PublicKey pubKey = Box.PublicKey.fromBytes(Base64.getDecoder().decode(secretsKey.getBytes()));
-        byte[] encrypted = Box.encryptSealed(secret.getBytes(), pubKey);
-        return new String(Base64.getEncoder().encode(encrypted));
     }
 }
