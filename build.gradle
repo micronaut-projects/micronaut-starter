@@ -3,7 +3,7 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
+        classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath "io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE"
@@ -18,7 +18,7 @@ buildscript {
 }
 
 plugins {
-    id "com.diffplug.gradle.spotless" version "5.4.0" apply false
+    id "com.diffplug.gradle.spotless" version "5.8.2" apply false
 }
 
 repositories {
