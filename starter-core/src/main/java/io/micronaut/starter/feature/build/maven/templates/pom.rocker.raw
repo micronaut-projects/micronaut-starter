@@ -200,6 +200,9 @@ List<Property> properties
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
 }
+@if (features.contains("lombok")) {
+@dependency.template("org.projectlombok", "lombok", "provided", null)
+}
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
 }
@@ -824,7 +827,27 @@ List<Property> properties
         <configuration>
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
+@if (features.contains("lombok")) {
+          <annotationProcessorPaths combine.self="override">
+            <path>
+              <!-- must precede micronaut-inject-java -->
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-inject-java</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-validation</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+} else {
           <annotationProcessorPaths combine.children="append">
+}
 @if (features.contains("graalvm")) {
             <path>
               <groupId>io.micronaut</groupId>
