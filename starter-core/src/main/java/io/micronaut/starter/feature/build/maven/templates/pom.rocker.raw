@@ -961,6 +961,9 @@ List<Property> properties
         <configuration>
           <jvmTarget>${jdk.version}</jvmTarget>
           <compilerPlugins>
+@if (features.contains("data-jpa")) {
+            <plugin>jpa</plugin>
+}
             <plugin>all-open</plugin>
           </compilerPlugins>
           <pluginOptions>

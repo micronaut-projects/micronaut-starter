@@ -20,6 +20,9 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.10"
     id("org.jetbrains.kotlin.kapt") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
+    @if (features.contains("data-jpa")) {
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
+    }
 }
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
     id("groovy")
