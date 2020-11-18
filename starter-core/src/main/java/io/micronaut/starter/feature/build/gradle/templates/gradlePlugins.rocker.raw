@@ -3,6 +3,7 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
+@import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.application.ApplicationType
 
 @args (
@@ -20,7 +21,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.10"
     id("org.jetbrains.kotlin.kapt") version "1.4.10"
     id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
-    @if (features.contains("data-jpa")) {
+    @if (features.isFeaturePresent(JpaFeature.class)) {
     id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
     }
 }

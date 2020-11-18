@@ -8,6 +8,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.Language
 
 class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -38,6 +39,28 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
+    }
+
+    void "test kotlin jpa plugin is present for gradle kotlin project"() {
+        when:
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), false).render().toString()
+
+        then:
+        template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
+    }
+
+    void "test kotlin jpa plugin is present for maven kotlin project"() {
+        when:
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), []).render().toString()
+
+        then:
+        //src/main
+        template.contains("""
+          <compilerPlugins>
+            <plugin>jpa</plugin>
+            <plugin>all-open</plugin>
+          </compilerPlugins>
+""")
     }
 
     void "test dependencies are present for maven"() {

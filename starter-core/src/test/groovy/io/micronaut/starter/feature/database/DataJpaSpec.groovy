@@ -6,6 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.Language
 
 class DataJpaSpec extends BeanContextSpec {
 
@@ -29,6 +30,14 @@ class DataJpaSpec extends BeanContextSpec {
         template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-jpa")')
         template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains("runtimeOnly(\"com.h2database:h2\")")
+    }
+
+    void "test kotlin jpa plugin is present for gradle kotlin project"() {
+        when:
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), false).render().toString()
+
+        then:
+        template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
     }
 
     void "test dependencies are present for maven"() {
@@ -64,6 +73,20 @@ class DataJpaSpec extends BeanContextSpec {
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
+""")
+    }
+
+    void "test kotlin jpa plugin is present for maven kotlin project"() {
+        when:
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), []).render().toString()
+
+        then:
+        //src/main
+        template.contains("""
+          <compilerPlugins>
+            <plugin>jpa</plugin>
+            <plugin>all-open</plugin>
+          </compilerPlugins>
 """)
     }
 
