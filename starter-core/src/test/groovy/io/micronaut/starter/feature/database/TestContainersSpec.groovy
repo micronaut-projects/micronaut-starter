@@ -50,14 +50,6 @@ class TestContainersSpec extends BeanContextSpec {
         template.contains('testRuntimeOnly("org.testcontainers:mssqlserver")')
     }
 
-    void "test bom is present for gradle"() {
-        when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), false).render().toString()
-
-        then:
-        template.contains("testImplementation(platform(\"org.testcontainers:testcontainers-bom:1.15.0\"))")
-    }
-
     void "test oracle dependency is present for maven"() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), []).render().toString()
@@ -125,22 +117,6 @@ class TestContainersSpec extends BeanContextSpec {
       <artifactId>mssqlserver</artifactId>
       <scope>test</scope>
     </dependency>
-""")
-    }
-
-    void "test bom is present for maven"() {
-        when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), []).render().toString()
-
-        then:
-        template.contains("""
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>1.15.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
 """)
     }
 
