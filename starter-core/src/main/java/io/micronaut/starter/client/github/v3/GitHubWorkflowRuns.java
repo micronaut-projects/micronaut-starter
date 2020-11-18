@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test.github.client;
+package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,6 +22,8 @@ import io.micronaut.core.annotation.Introspected;
 import java.util.List;
 
 /**
+ * GitHub workflow runs.
+ *
  * @author Pavol Gressa
  * @since 2.2
  */

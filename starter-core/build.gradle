@@ -14,7 +14,11 @@ dependencies {
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
+    api "io.micronaut:micronaut-http"
+    api "io.micronaut:micronaut-http-client"
     api "io.github.java-diff-utils:java-diff-utils:4.9"
+    api "org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r"
+    api "org.apache.tuweni:tuweni-crypto:1.1.0"
     implementation "org.yaml:snakeyaml:1.26"
     implementation 'com.typesafe:config:1.4.0'
     implementation 'org.apache.commons:commons-compress:1.20'

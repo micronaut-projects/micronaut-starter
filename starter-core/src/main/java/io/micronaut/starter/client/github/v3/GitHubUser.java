@@ -13,50 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test.github.client;
+package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
 
 /**
+ * GitHub User.
+ *
  * @author Pavol Gressa
+ * @see <a href="https://docs.github.com/en/rest/reference/users">Api reference users</a>
  * @since 2.2
  */
 @Introspected
-public class GitHubWorkflowRun {
-
-    private final Long id;
-    private final String status;
-    private final String conclusion;
+public class GitHubUser {
+    private final String login;
+    private final String email;
+    private final String name;
 
     @JsonCreator
-    public GitHubWorkflowRun(@JsonProperty("id") Long id,
-                             @JsonProperty("status") String status,
-                             @JsonProperty("conclusion") String conclusion) {
-        this.id = id;
-        this.status = status;
-        this.conclusion = conclusion;
+    public GitHubUser(
+            @JsonProperty("login") String login,
+            @JsonProperty("email")  String email,
+            @JsonProperty("name") String name) {
+        this.login = login;
+        this.email = email;
+        this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public String getLogin() {
+        return login;
     }
 
-    public String getStatus() {
-        return status;
+    public String getEmail() {
+        return email;
     }
 
-    public String getConclusion() {
-        return conclusion;
+    public String getName() {
+        return name;
     }
 
     @Override
     public String toString() {
-        return "GitHubWorkflowRun{" +
-                "id=" + id +
-                ", status='" + status + '\'' +
-                ", conclusion='" + conclusion + '\'' +
+        return "GitHubUser{" +
+                "login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

@@ -1,10 +1,4 @@
 dependencies {
-    annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-
-    implementation('org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r')
-    implementation("org.apache.tuweni:tuweni-crypto:1.1.0")
-    implementation("io.micronaut:micronaut-http-client")
     implementation("org.codehaus.groovy:groovy:$groovyVersion")
     implementation("org.spockframework:spock-core:$spockVersion") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"

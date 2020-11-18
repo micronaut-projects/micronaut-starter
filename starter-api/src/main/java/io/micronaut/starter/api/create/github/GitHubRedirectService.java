@@ -20,8 +20,8 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.StarterConfiguration;
-import io.micronaut.starter.api.create.github.client.oauth.GitHubOAuthClient;
-import io.micronaut.starter.api.create.github.client.v3.GitHubRepository;
+import io.micronaut.starter.client.github.oauth.GitHubOAuthClient;
+import io.micronaut.starter.client.github.v3.GitHubRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

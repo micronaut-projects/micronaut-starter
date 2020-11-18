@@ -3,7 +3,7 @@ package io.micronaut.starter.api.create.github
 import io.micronaut.context.annotation.Property
 import io.micronaut.http.HttpParameters
 import io.micronaut.starter.api.RequestInfo
-import io.micronaut.starter.api.create.github.client.v3.GitHubRepository
+import io.micronaut.starter.client.github.v3.GitHubRepository
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
 
@@ -22,7 +22,8 @@ class GitHubRedirectServiceTest extends Specification{
         parameters.names() >> ["lang", "build"]
         parameters.getAll("lang") >> Collections.singletonList("java")
         parameters.getAll("build") >> Collections.singletonList("maven")
-        RequestInfo requestInfo = new RequestInfo("https://localhost:8080", "/github/default/foo", parameters, Locale.ENGLISH, "");
+        RequestInfo requestInfo = new RequestInfo("https://localhost:8080",
+                "/github/default/foo", parameters, Locale.ENGLISH, "")
 
         when:
         URI redirectUri = gitHubRedirectService.constructOAuthRedirectUrl(requestInfo)

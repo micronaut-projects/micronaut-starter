@@ -13,33 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test.github.client;
+package io.micronaut.starter.client.github.oauth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Pavol Gressa
  * @since 2.2
  */
 @Introspected
-public class GitHubSecretsPublicKey {
-    private final String keyId;
-    private final String key;
+public class AccessToken {
+    private final String tokenType;
+    private final String scope;
+    private final String accessToken;
 
     @JsonCreator
-    public GitHubSecretsPublicKey(@JsonProperty("key_id") String keyId, @JsonProperty("key") String key) {
-        this.keyId = keyId;
-        this.key = key;
+    public AccessToken(
+            @NotNull @JsonProperty("token_type") String tokenType,
+            @NotNull @JsonProperty("scope") String scope,
+            @NotNull @JsonProperty("access_token") String accessToken) {
+        this.tokenType = tokenType;
+        this.scope = scope;
+        this.accessToken = accessToken;
     }
 
-    public String getKey() {
-        return key;
+    public String getTokenType() {
+        return tokenType;
     }
 
-    public String getKeyId() {
-        return keyId;
+    public String getScope() {
+        return scope;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
     }
 }
-

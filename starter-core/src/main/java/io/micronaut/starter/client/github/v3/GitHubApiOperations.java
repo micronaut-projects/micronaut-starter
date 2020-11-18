@@ -13,29 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test.github.client;
+package io.micronaut.starter.client.github.v3;
 
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.annotation.*;
-import io.micronaut.http.client.annotation.Client;
 
-@Client(id = GitHubApiClient.SERVICE_URL)
-@Header(name = "User-Agent", value = "https://micronaut.io/launch/")
-@Header(name = "Accept", value = GitHubApiClient.GITHUB_V3_TYPE)
-public interface GitHubApiClient {
-    String SERVICE_URL = "https://api.github.com";
-    String GITHUB_V3_TYPE = "application/vnd.github.v3+json";
+/**
+ * GitHub Oauth operations.
+ *
+ * @author Pavol Gressa
+ * @since 2.2
+ */
+public interface GitHubApiOperations {
 
     @Post(value = "/user/repos", single = true)
     GitHubRepository createRepository(
             @Header(HttpHeaders.AUTHORIZATION) String oauthToken,
             @Body GitHubRepository gitHubRepository);
-
-    @Delete(value = "/repos/{owner}/{repo}")
-    void deleteRepository(
-            @Header(HttpHeaders.AUTHORIZATION) String oauthToken,
-            @PathVariable String owner,
-            @PathVariable String repo);
 
     @Get(value = "/repos/{owner}/{repo}", single = true)
     GitHubRepository getRepository(
@@ -43,8 +37,15 @@ public interface GitHubApiClient {
             @PathVariable String owner,
             @PathVariable String repo);
 
+    @Delete(value = "/repos/{owner}/{repo}")
+    void deleteRepository(
+            @Header(HttpHeaders.AUTHORIZATION) String oauthToken,
+            @PathVariable String owner,
+            @PathVariable String repo);
+
     @Get(value = "/user", single = true)
-    GitHubUser getUser(@Header(HttpHeaders.AUTHORIZATION) String oauthToken);
+    GitHubUser getUser(
+            @Header(HttpHeaders.AUTHORIZATION) String oauthToken);
 
     @Put(value = "/repos/{owner}/{repo}/actions/secrets/{secretName}")
     void createSecret(
@@ -72,4 +73,5 @@ public interface GitHubApiClient {
             @PathVariable String owner,
             @PathVariable String repo,
             @PathVariable Long runId);
+
 }

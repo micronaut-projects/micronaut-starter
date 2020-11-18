@@ -13,43 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.test.github.client;
+package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
 
 /**
+ * GitHub secrets public key used for secrets encryption.
+ *
  * @author Pavol Gressa
  * @since 2.2
  */
 @Introspected
-public class GitHubSecret {
-    private final String encryptedValue;
+public class GitHubSecretsPublicKey {
     private final String keyId;
+    private final String key;
 
     @JsonCreator
-    public GitHubSecret(@JsonProperty("encrypted_value") String encryptedValue,
-                        @JsonProperty("key_id") String keyId) {
-        this.encryptedValue = encryptedValue;
+    public GitHubSecretsPublicKey(@JsonProperty("key_id") String keyId, @JsonProperty("key") String key) {
         this.keyId = keyId;
+        this.key = key;
     }
 
-    @JsonProperty("encrypted_value")
-    public String getEncryptedValue() {
-        return encryptedValue;
+    public String getKey() {
+        return key;
     }
 
-    @JsonProperty("key_id")
     public String getKeyId() {
         return keyId;
     }
-
-    @Override
-    public String toString() {
-        return "GitHubSecret{" +
-                "encryptedValue='" + encryptedValue + '\'' +
-                ", keyId='" + keyId + '\'' +
-                '}';
-    }
 }
+
