@@ -79,11 +79,18 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
         GeneratorContext commandContext = buildGeneratorContext(['security-session'])
 
         then:
-        !commandContext.configuration.containsKey('micronaut.security.endpoints.login.enabled')
-        !commandContext.configuration.containsKey('micronaut.security.endpoints.logout.enabled')
-        !commandContext.configuration.containsKey('micronaut.security.session.loginSuccessTargetUrl')
-        !commandContext.configuration.containsKey('micronaut.security.session.loginFailureTargetUrl')
-        commandContext.configuration.containsKey('micronaut.security.authentication')
+        commandContext.configuration.get('micronaut.security.authentication') == 'session'
+
+        when:
+        commandContext = buildGeneratorContext(['security-session', 'security-jwt'])
+
+        then:
+        commandContext.configuration.get('micronaut.security.authentication') == 'session'
+
+        when:
+        commandContext = buildGeneratorContext(['security-session', 'security-jwt', 'security-oauth2'])
+
+        then:
         commandContext.configuration.get('micronaut.security.authentication') == 'session'
     }
 }

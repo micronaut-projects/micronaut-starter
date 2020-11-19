@@ -26,6 +26,7 @@ import javax.inject.Singleton;
 @Singleton
 public class SecuritySession implements Feature {
 
+    public static final int ORDER = SecurityOAuth2.ORDER + 10;
     private final SecurityAnnotations securityAnnotations;
 
     public SecuritySession(SecurityAnnotations securityAnnotations) {
@@ -72,5 +73,10 @@ public class SecuritySession implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#session";
+    }
+
+    @Override
+    public int getOrder() {
+        return ORDER;
     }
 }

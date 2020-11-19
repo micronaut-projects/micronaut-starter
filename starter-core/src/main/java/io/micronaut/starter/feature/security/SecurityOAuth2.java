@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.security;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -26,6 +27,7 @@ import javax.inject.Singleton;
 @Singleton
 public class SecurityOAuth2 implements Feature {
 
+    public static final int ORDER = SecurityJWT.ORDER + 10;
     private final SecurityAnnotations securityAnnotations;
 
     public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
@@ -56,6 +58,16 @@ public class SecurityOAuth2 implements Feature {
     }
 
     @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("micronaut.security.authentication", "cookie");
+        generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.client-id", "${OAUTH_CLIENT_ID}");
+        generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.client-secret", "${OAUTH_CLIENT_SECRET}");
+        if (generatorContext.isFeaturePresent(SecurityJWT.class)) {
+            generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.openid.issuer", "${OAUTH_ISSUER}");
+        }
+    }
+
+    @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
@@ -68,5 +80,10 @@ public class SecurityOAuth2 implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#oauth";
+    }
+
+    @Override
+    public int getOrder() {
+        return ORDER;
     }
 }
