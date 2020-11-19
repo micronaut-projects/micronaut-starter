@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import javax.inject.Singleton;
 
 @Singleton
-public class DataJpa implements DataFeature {
+public class DataJpa implements JpaFeature, DataFeature {
 
     private final Data data;
     private final JdbcFeature jdbcFeature;
