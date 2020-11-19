@@ -13,23 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.api.create.github.client.v3;
+package io.micronaut.starter.client.github.oauth;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Header;
 import io.micronaut.http.client.annotation.Client;
 
 /**
- * GitHub API v3 operations.
+ * GitHub OAuth client.
  *
  * @author Pavol Gressa
  * @since 2.2
  */
-@Client(id = GitHubApiClient.SERVICE_ID)
-@Requires(property = "micronaut.http.services." + GitHubApiClient.SERVICE_ID)
+@Client(id = GitHubOAuthClient.SERVICE_ID, path = "/login/oauth")
+@Requires(property = "micronaut.http.services." + GitHubOAuthClient.SERVICE_ID)
 @Header(name = "User-Agent", value = "https://micronaut.io/launch/")
-@Header(name = "Accept", value = GitHubApiClient.GITHUB_V3_TYPE)
-public interface GitHubApiClient extends GitHubApiOperations {
-    String SERVICE_ID = "github-api-v3";
-    String GITHUB_V3_TYPE = "application/vnd.github.v3+json";
+@Header(name = "Accept", value = MediaType.APPLICATION_JSON)
+public interface GitHubOAuthClient extends GitHubOAuthOperations {
+    String SERVICE_ID = "github-oauth";
+    String SERVICE_URL = "https://github.com";
 }

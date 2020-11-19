@@ -189,21 +189,38 @@ tasks {
 }
 
     dockerBuild {
-        @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+        @if (features.contains("github-workflow-docker-registry")) {
+            images = ["${System.env.DOCKER_IMAGE}:$project.version"]
         } else {
+            @if(isKotlinDsl) {
+        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+            } else {
         images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+            }
         }
     }
 
     dockerBuildNative {
-        @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
+        @if (features.contains("github-workflow-graal-docker-registry")) {
+            images = ["${System.env.DOCKER_IMAGE}:$project.version"]
         } else {
+            @if(isKotlinDsl) {
+        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
+            } else {
         images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
+            }
         }
     }
+} else if (features.contains("github-workflow-docker-registry")) {
+    dockerBuild{
+        images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+    }
+} else if (features.contains("github-workflow-graal-docker-registry")) {
+    dockerBuildNative{
+        images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+    }
 }
+
 
     @if (features.contains("jib")) {
     jib {

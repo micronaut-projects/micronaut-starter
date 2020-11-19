@@ -1,4 +1,5 @@
 dependencies {
+    implementation("org.apache.tuweni:tuweni-crypto:1.1.0")
     implementation("org.codehaus.groovy:groovy:$groovyVersion")
     implementation("org.spockframework:spock-core:$spockVersion") {
         exclude group: "org.codehaus.groovy", module: "groovy-all"
