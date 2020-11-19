@@ -65,6 +65,7 @@ public class Maven implements BuildFeature {
     public boolean shouldApply(ApplicationType applicationType,
                                Options options,
                                Set<Feature> selectedFeatures) {
+
         return options.getBuildTool() == BuildTool.MAVEN;
     }
 }

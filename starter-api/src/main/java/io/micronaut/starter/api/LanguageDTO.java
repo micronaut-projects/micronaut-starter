@@ -22,6 +22,8 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
+import io.micronaut.starter.defaults.IncludesDefaults;
+import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -34,7 +36,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Schema(name = "LanguageInfo")
 @Introspected
-public class LanguageDTO extends Linkable implements Named, Described, Selectable<Language> {
+public class LanguageDTO extends Linkable implements Named, Described, Selectable<Language>, IncludesDefaults<LanguageDefaults> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".language.";
     private final String name;
     private final String extension;
@@ -109,5 +111,11 @@ public class LanguageDTO extends Linkable implements Named, Described, Selectabl
     @Schema(description = "The label of the language for select options")
     public String getLabel() {
         return NameUtils.getNaturalNameOfEnum(name);
+    }
+
+    @Override
+    @Schema(description = "The default values that correlate to the language")
+    public LanguageDefaults getDefaults() {
+        return this.value.getDefaults();
     }
 }

@@ -24,8 +24,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.List;
 
 @Singleton
 public class PicocliKoTest implements PicocliTestFeature {
@@ -43,11 +41,6 @@ public class PicocliKoTest implements PicocliTestFeature {
     @Override
     public TestFramework getTestFramework() {
         return TestFramework.KOTEST;
-    }
-
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.emptyList();
     }
 
     public RockerModel getModel(Project project) {

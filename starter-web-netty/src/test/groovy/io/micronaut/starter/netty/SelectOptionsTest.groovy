@@ -48,6 +48,7 @@ class SelectOptionsTest extends Specification {
             languageOpts.find {so -> lang == so.value} != null
         }
 
+
         then: "We get all the jdk version options"
         def jdkVersionOpts = selectOptions.jdkVersion.options
         jdkVersionOpts.size() == JdkVersion.values().size()
@@ -82,6 +83,22 @@ class SelectOptionsTest extends Specification {
         BuildTool.values().each { t ->
             then: "We can find the ${t.name()} build tool"
             buildOpts.find {so -> t == so.value} != null
+        }
+    }
+
+    void "Test Default correlations"() {
+        when: "We ask for the options"
+        SelectOptionsDTO selectOptions = client.selectOptions().body()
+
+        then:
+        selectOptions.lang.options.each {
+            def langDefault = it.defaults;
+
+            then: "We get valid correlative build tools"
+            selectOptions.build.options.find{ it.value == langDefault.build} != null
+
+            then: "We get valid correlative test tool"
+            selectOptions.test.options.find{ it.value == langDefault.test} != null
         }
     }
 

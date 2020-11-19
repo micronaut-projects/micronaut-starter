@@ -13,29 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.test;
+package io.micronaut.starter.defaults;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.options.TestFramework;
-
-import javax.inject.Singleton;
-
-@Singleton
-public class Junit implements TestFeature {
-
-    @Override
-    public String getName() {
-        return "junit";
-    }
-
-    @Override
-    public void doApply(GeneratorContext generatorContext) {
-        // no-op
-    }
-
-    @Override
-    public TestFramework getTestFramework() {
-        return TestFramework.JUNIT;
-    }
-
+public interface IncludesDefaults<T> {
+    T getDefaults();
 }

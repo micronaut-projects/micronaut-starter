@@ -35,4 +35,5 @@ public interface BuildFeature extends DefaultFeature {
     default boolean supports(ApplicationType applicationType) {
         return true;
     }
+
 }

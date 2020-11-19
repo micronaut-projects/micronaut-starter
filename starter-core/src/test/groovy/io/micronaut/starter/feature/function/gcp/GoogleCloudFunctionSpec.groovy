@@ -95,7 +95,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                new Options(language, BuildTool.GRADLE),
                 ['google-cloud-function']
         )
         String build = output['build.gradle']
@@ -110,7 +110,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         !output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
         !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/Function", language))
         readme?.contains("Micronaut and Google Cloud Function")
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 

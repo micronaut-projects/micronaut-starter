@@ -24,11 +24,6 @@ class TestFeatureSpec extends Specification {
             }
 
             @Override
-            List<Language> getDefaultLanguages() {
-                return null
-            }
-
-            @Override
             String getName() {
                 return null
             }

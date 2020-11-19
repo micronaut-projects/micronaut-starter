@@ -131,7 +131,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language),
+                new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']
         )
         String build = output['build.gradle']
@@ -145,7 +145,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -159,7 +159,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -173,7 +173,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -187,7 +187,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']
         )
 
@@ -354,7 +354,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language),
+                new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']
         )
         String build = output['build.gradle']
@@ -367,7 +367,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
 
         where:
         language << Language.values().toList()
@@ -381,7 +381,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -393,7 +393,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
 
         where:
         language << Language.values().toList()

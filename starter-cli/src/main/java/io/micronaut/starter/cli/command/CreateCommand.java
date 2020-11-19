@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class CreateCommand extends BaseCommand implements Callable<Integer> {
+
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
@@ -52,7 +53,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
-    BuildTool build = BuildToolConverter.DEFAULT_BUILD_TOOL;
+    BuildTool build;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")

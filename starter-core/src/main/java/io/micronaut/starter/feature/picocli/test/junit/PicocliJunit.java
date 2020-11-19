@@ -26,8 +26,6 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
-import java.util.Arrays;
-import java.util.List;
 
 @Singleton
 public class PicocliJunit implements PicocliTestFeature {
@@ -45,11 +43,6 @@ public class PicocliJunit implements PicocliTestFeature {
     @Override
     public TestFramework getTestFramework() {
         return TestFramework.JUNIT;
-    }
-
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Arrays.asList(Language.JAVA, Language.KOTLIN);
     }
 
     public JunitRockerModelProvider getJunitRockerModelProvider(Project project) {

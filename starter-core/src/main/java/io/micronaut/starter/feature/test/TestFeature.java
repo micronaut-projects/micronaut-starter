@@ -20,11 +20,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 
-import java.util.List;
 import java.util.Set;
 
 public interface TestFeature extends DefaultFeature {
@@ -48,8 +46,6 @@ public interface TestFeature extends DefaultFeature {
 
     TestFramework getTestFramework();
 
-    List<Language> getDefaultLanguages();
-
     default boolean isJunit() {
         return getTestFramework() == TestFramework.JUNIT;
     }
@@ -70,8 +66,11 @@ public interface TestFeature extends DefaultFeature {
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && getDefaultLanguages().contains(options.getLanguage())));
+        TestFramework selectedTest = options.getTestFramework();
+        if (selectedTest == null) {
+            selectedTest = options.getLanguage().getDefaults().getTest();
+        }
+        return supports(applicationType) && selectedTest == getTestFramework();
     }
 
     @Override

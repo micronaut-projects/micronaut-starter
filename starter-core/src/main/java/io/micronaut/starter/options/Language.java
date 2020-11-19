@@ -16,22 +16,26 @@
 package io.micronaut.starter.options;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.defaults.IncludesDefaults;
+import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 
 import java.util.*;
 
-public enum Language {
-    JAVA("java"),
-    GROOVY("groovy"),
-    KOTLIN("kt");
+public enum Language implements IncludesDefaults<LanguageDefaults> {
+    JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE)),
+    GROOVY("groovy", new LanguageDefaults(TestFramework.SPOCK, BuildTool.GRADLE)),
+    KOTLIN("kt", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE_KOTLIN));
 
     public static final Language DEFAULT_OPTION = JAVA;
 
     private final String extension;
+    private final LanguageDefaults defaults;
 
-    Language(String extension) {
+    Language(String extension, LanguageDefaults defaults) {
         this.extension = extension;
+        this.defaults = defaults;
     }
 
     /**
@@ -88,4 +92,8 @@ public enum Language {
         return name().toLowerCase(Locale.ENGLISH);
     }
 
+    @Override
+    public LanguageDefaults getDefaults() {
+        return defaults;
+    }
 }

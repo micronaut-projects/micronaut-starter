@@ -16,12 +16,9 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.List;
 
 @Singleton
 public class Spock implements TestFeature {
@@ -39,11 +36,6 @@ public class Spock implements TestFeature {
     @Override
     public TestFramework getTestFramework() {
         return TestFramework.SPOCK;
-    }
-
-    @Override
-    public List<Language> getDefaultLanguages() {
-        return Collections.singletonList(Language.GROOVY);
     }
 
 }
