@@ -11,6 +11,7 @@ import javax.inject.Inject
 
 @Property(name = "micronaut.http.services.github-oauth.url", value =  "https://api.github.com")
 @Property(name = "micronaut.starter.github.clientId", value =  "clientId")
+@Property(name = "micronaut.starter.github.tokenPermissions", value =  "user,repo,workflow")
 @MicronautTest
 class GitHubRedirectServiceTest extends Specification{
 
@@ -29,7 +30,7 @@ class GitHubRedirectServiceTest extends Specification{
         URI redirectUri = gitHubRedirectService.constructOAuthRedirectUrl(requestInfo)
 
         then:
-        redirectUri.query.contains('scope=user,repo')
+        redirectUri.query.contains('scope=user,repo,workflow')
         redirectUri.query.contains('client_id=clientId')
         redirectUri.query.contains('state=')
         redirectUri.query.contains('github/default/foo')
