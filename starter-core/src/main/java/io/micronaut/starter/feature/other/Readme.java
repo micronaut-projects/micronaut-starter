@@ -65,10 +65,8 @@ public class Readme implements DefaultFeature {
                         writable.write(outputStream);
                     }
 
-                    for (Feature feature : featuresWithDocumentationLinks) {
-                        Writable writable = new RockerWritable(readme.template(feature));
-                        writable.write(outputStream);
-                    }
+                    Writable writable = new RockerWritable(readme.template(featuresWithDocumentationLinks));
+                    writable.write(outputStream);
                 }
             });
         }

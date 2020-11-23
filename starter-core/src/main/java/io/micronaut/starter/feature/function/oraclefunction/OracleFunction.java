@@ -34,6 +34,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
+import java.util.Collections;
 
 @Singleton
 @Primary
@@ -120,7 +121,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
         return readme.template(
-                this
+            Collections.singletonList(this)
         );
     }
 
