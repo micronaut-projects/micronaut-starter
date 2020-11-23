@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.other.template.maindocs;
 import io.micronaut.starter.feature.other.template.readme;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerWritable;
@@ -61,12 +62,17 @@ public class Readme implements DefaultFeature {
 
                 @Override
                 public void write(OutputStream outputStream) throws IOException {
+                    Writable mainDocsWritable = new RockerWritable(maindocs.template());
+                    mainDocsWritable.write(outputStream);
+
                     for (Writable writable : generatorContext.getHelpTemplates()) {
                         writable.write(outputStream);
                     }
 
-                    Writable writable = new RockerWritable(readme.template(featuresWithDocumentationLinks));
-                    writable.write(outputStream);
+                    for (Feature feature : featuresWithDocumentationLinks) {
+                        Writable writable = new RockerWritable(readme.template(feature));
+                        writable.write(outputStream);
+                    }
                 }
             });
         }

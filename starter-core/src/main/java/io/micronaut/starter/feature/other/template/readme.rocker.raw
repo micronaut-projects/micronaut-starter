@@ -1,38 +1,21 @@
 @import io.micronaut.starter.feature.Feature
-@import io.micronaut.starter.util.VersionInfo
-@import java.util.List
 
 @args (
-List<Feature> features
+Feature feature
 )
 
-## Micronaut @VersionInfo.getMicronautVersion() Documentation
-
-@if (VersionInfo.isMicronautSnapshot()) {
-- [User Guide](https://docs.micronaut.io/snapshot/guide/index.html)
-- [API Reference](https://docs.micronaut.io/snapshot/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/snapshot/guide/configurationreference.html)
-} else {
-- [User Guide](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/guide/index.html)
-- [API Reference](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/guide/configurationreference.html)
-}
----
-
-@for (Feature feature : features) {
-    @if (feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null) {
+@if (feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null) {
 
 ## Feature @feature.getName() documentation
 
-        @if (feature.getMicronautDocumentation() != null) {
+    @if (feature.getMicronautDocumentation() != null) {
 
 - [Micronaut @feature.getTitle() documentation](@feature.getMicronautDocumentation())
 
-        }
-        @if (feature.getThirdPartyDocumentation() != null) {
+    }
+    @if (feature.getThirdPartyDocumentation() != null) {
 
 - [@feature.getThirdPartyDocumentation()](@feature.getThirdPartyDocumentation())
 
-        }
     }
 }

@@ -1,0 +1,16 @@
+@import io.micronaut.starter.util.VersionInfo
+@import java.util.List
+
+## Micronaut @VersionInfo.getMicronautVersion() Documentation
+
+@if (VersionInfo.isMicronautSnapshot()) {
+- [User Guide](https://docs.micronaut.io/snapshot/guide/index.html)
+- [API Reference](https://docs.micronaut.io/snapshot/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/snapshot/guide/configurationreference.html)
+} else {
+- [User Guide](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/guide/index.html)
+- [API Reference](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/@VersionInfo.getMicronautVersion()/guide/configurationreference.html)
+}
+---
+
