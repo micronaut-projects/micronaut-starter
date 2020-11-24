@@ -70,7 +70,7 @@ public class GitHubRedirectService {
             URI redirectUri = uriBuilder.build();
 
             return UriBuilder.of(githubOAuthUrl)
-                    .queryParam("scope", "user,repo")
+                    .queryParam("scope", gitHubConfiguration.getTokenPermissions())
                     .queryParam("client_id", gitHubConfiguration.getClientId())
                     .queryParam("redirect_uri", redirectUri.toString())
                     .queryParam("state", UUID.randomUUID().toString())
