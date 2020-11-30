@@ -46,19 +46,19 @@ Create service account with permission to edit GCR or use predefined Storage Adm
 #### AWS Elastic Container Registry (ECR)
 Create IAM user with permission to push to ECR (or use AmazonEC2ContainerRegistryFullAccess role).
 
-- DOCKER_USERNAME - access key ID
-- DOCKER_PASSWORD - secret access key
-- DOCKER_ORGANIZATION - no need to set
-- DOCKER_REGISTRY_URL - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
+- `DOCKER_USERNAME` - access key ID
+- `DOCKER_PASSWORD` - secret access key
+- `DOCKER_ORGANIZATION` - no need to set
+- `DOCKER_REGISTRY_URL` - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
 
 > See [docker/login-action for ECR](https://github.com/docker/login-action#aws-elastic-container-registry-ecr)
 
 #### Oracle Infrastructure Cloud Registry (OCIR)
 [Create auth token](https://www.oracle.com/webfolder/technetwork/tutorials/obe/oci/registry/index.html#GetanAuthToken) for authentication.
 
-- DOCKER_USERNAME - username in format `<tenancy>/<username>`
-- DOCKER_PASSWORD - account auth token
-- DOCKER_ORGANIZATION - `<tenancy>/<registry>`
-- DOCKER_REGISTRY_URL - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
+- `DOCKER_USERNAME` - username in format `<tenancy>/<username>`
+- `DOCKER_PASSWORD` - account auth token
+- `DOCKER_ORGANIZATION` - `<tenancy>/<registry>`
+- `DOCKER_REGISTRY_URL` - set to `<aws-account-number>.dkr.ecr.<region>.amazonaws.com`
 
 > See [docker/login-action for OCIR](https://github.com/docker/login-action#oci-oracle-cloud-infrastructure-registry-ocir)
