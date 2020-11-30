@@ -40,26 +40,26 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         e.message == 'GraalVM is not supported in Groovy applications'
     }
 
-    void 'test maven graalvm feature'() {
+    void "test maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), []).render().toString()
 
         then:
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
       <artifactId>svm</artifactId>
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.sdk</groupId>
       <artifactId>graal-sdk</artifactId>
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("""
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-graal</artifactId>
@@ -77,7 +77,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
 
         then:
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
       <artifactId>svm</artifactId>
