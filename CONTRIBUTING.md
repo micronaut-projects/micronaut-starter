@@ -22,7 +22,7 @@ To run the tests use `./gradlew check`.
 
 To generate a project execute `./gradlew micronaut-cli:run --args=""` where the args are what would be after `mn` using the CLI. For example: `./gradlew micronaut-cli:run --args="create-app temp"`. 
 
-If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew micronaut-cli:shadowJar` and then `java -jar starter-cli/build/libs/micronaut-cli-2.0.0.BUILD-SNAPSHOT-all.jar create-app temp`
+If you want to test output colors or the interactive shell, the jar must be executed. Run `./gradlew micronaut-cli:shadowJar` and then `java -jar starter-cli/build/libs/micronaut-cli-2.0.0-SNAPSHOT-all.jar create-app temp`
 
 You can build the CLI from source by [following these instructions](https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html#installFromSource)
 
