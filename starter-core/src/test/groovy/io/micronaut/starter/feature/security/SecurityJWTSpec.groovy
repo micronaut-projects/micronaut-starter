@@ -24,7 +24,7 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle security-jwt feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language), false).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -54,13 +54,6 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
-""")
-            assert template.contains("""
-                <path>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </path>
 """)
         } else if (language == Language.KOTLIN) {
             assert template.count("""

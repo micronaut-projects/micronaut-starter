@@ -54,7 +54,7 @@ class SpringBootSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-boot with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language), false).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot\")")
@@ -88,13 +88,6 @@ class SpringBootSpec extends BeanContextSpec {
               <artifactId>micronaut-spring-boot</artifactId>
               <version>\${micronaut.spring.version}</version>
             </path>
-""")
-        template.contains("""
-                <path>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </path>
 """)
 
         when:
@@ -144,7 +137,7 @@ class SpringBootSpec extends BeanContextSpec {
 
     void 'test spring-web and spring-boot only add spring-boot-starter-web dependency once'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language), false).render().toString()
 
         then:
         template.count('implementation("org.springframework.boot:spring-boot-starter-web")') == 1

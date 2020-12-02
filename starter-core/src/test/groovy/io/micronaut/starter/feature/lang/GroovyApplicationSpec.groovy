@@ -12,10 +12,6 @@ import spock.lang.Unroll
 
 class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: groovy'() {
-        given:
-        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
-        def testPolicy = "enforcedPlatform"
-
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -30,12 +26,7 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def buildGradle = output['build.gradle']
 
         then:
-        buildGradle.contains('mainClassName = "example.micronaut.Application"')
-
-        and: 'implementation compileOnly testImplementation use the same policy'
-        buildGradle.contains("compileOnly($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-        buildGradle.contains("implementation($policy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
-        buildGradle.contains("testImplementation($testPolicy(\"io.micronaut:micronaut-bom:\$micronautVersion\")")
+        buildGradle.contains('mainClass.set("example.micronaut.Application")')
     }
 
     @Unroll
@@ -53,6 +44,5 @@ class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixt
       <artifactId>micronaut-inject-groovy</artifactId>
       <scope>provided</scope>
     </dependency>"""
-        BuildTool.GRADLE | 'compileOnly("io.micronaut:micronaut-inject-groovy")'
     }
 }

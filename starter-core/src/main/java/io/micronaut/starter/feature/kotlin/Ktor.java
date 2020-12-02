@@ -18,23 +18,14 @@ package io.micronaut.starter.feature.kotlin;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.FeaturePredicate;
-import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.*;
+import io.micronaut.starter.feature.kotlin.templates.*;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
-import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
-import io.micronaut.starter.feature.kotlin.templates.jacksonFeatureKotlin;
-import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
-import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
+
 import javax.inject.Singleton;
 import java.util.Optional;
 
@@ -91,8 +82,8 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
 
     @Override
     @Nullable
-    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        return project.getPackageName() + ".Application";
+    public String mainClassName(GeneratorContext generatorContext) {
+        return generatorContext.getProject().getPackageName() + ".Application";
     }
 
     @Override

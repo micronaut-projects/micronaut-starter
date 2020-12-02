@@ -24,6 +24,7 @@ import java.util.Objects;
 public enum BuildTool {
 
     GRADLE("build/libs", "build.gradle", "-*-all.jar"),
+    GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar"),
     MAVEN("target", "pom.xml", "-*.jar");
 
     private final String jarDirectory;
@@ -57,5 +58,9 @@ public enum BuildTool {
     @NonNull
     public String getName() {
         return name().toLowerCase(Locale.ENGLISH);
+    }
+
+    public boolean isGradle() {
+        return this == GRADLE || this == GRADLE_KOTLIN;
     }
 }

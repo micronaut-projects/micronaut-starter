@@ -33,7 +33,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')

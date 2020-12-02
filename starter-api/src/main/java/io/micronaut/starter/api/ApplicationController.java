@@ -18,7 +18,6 @@ package io.micronaut.starter.api;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.io.Writable;
-import io.micronaut.core.version.VersionUtils;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -26,8 +25,9 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.api.starterApi;
+import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -115,11 +115,10 @@ public class ApplicationController implements ApplicationTypeOperations {
 
                 @Override
                 public void writeTo(OutputStream outputStream, @Nullable Charset charset) {
-                    new RockerTemplate("home", new starterApi()
+                    new RockerWritable(new starterApi()
                             .serverURL(info.getServerURL())
-                            .micronautVersion(VersionUtils.MICRONAUT_VERSION)).write(
-                        outputStream
-                    );
+                            .micronautVersion(VersionInfo.getMicronautVersion()))
+                            .write(outputStream);
                 }
             });
         }

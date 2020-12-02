@@ -12,17 +12,17 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle server feature #serverFeature'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), false).render().toString()
 
         then:
         template.contains(dependency)
 
         where:
         serverFeature     | dependency
-        "netty-server"    | 'implementation("io.micronaut:micronaut-http-server-netty")'
-        "jetty-server"    | 'implementation("io.micronaut.servlet:micronaut-http-server-jetty")'
-        "tomcat-server"   | 'implementation("io.micronaut.servlet:micronaut-http-server-tomcat")'
-        "undertow-server" | 'implementation("io.micronaut.servlet:micronaut-http-server-undertow")'
+        "netty-server"    | 'runtime("netty")'
+        "jetty-server"    | 'runtime("jetty")'
+        "tomcat-server"   | 'runtime("tomcat")'
+        "undertow-server" | 'runtime("undertow")'
     }
 
     @Unroll

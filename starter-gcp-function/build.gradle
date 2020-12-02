@@ -13,7 +13,7 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation "io.micronaut.gcp:micronaut-gcp-function-http:2.0.2"
+    implementation "io.micronaut.gcp:micronaut-gcp-function-http:3.2.1"
     compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
     developmentOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
 
@@ -22,7 +22,7 @@ dependencies {
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation 'com.google.cloud.functions:functions-framework-api:1.0.1'
     testImplementation "io.micronaut.test:micronaut-test-spock"
-    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.0-beta2'
+    invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.0'
 }
 test.classpath += configurations.developmentOnly
 
@@ -40,7 +40,7 @@ shadowJar {
 }
 
 run.classpath += configurations.developmentOnly
-task('runFunction', type: JavaExec, dependsOn: classes) {
+task('runFunction', type: JavaExec, dependsOn: classes, group: 'application') {
     main = 'com.google.cloud.functions.invoker.runner.Invoker'
     classpath(configurations.invoker)
     args(

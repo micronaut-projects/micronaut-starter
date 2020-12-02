@@ -78,6 +78,6 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#azureHttpFunctions";
+        return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions";
     }
 }

@@ -8,7 +8,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class RockerSpec extends BeanContextSpec  implements CommandOutputFixture {
+class RockerSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-rocker contains links to micronaut docs'() {
         when:
@@ -24,16 +24,16 @@ class RockerSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-rocker feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
-        template.contains('id "com.fizzed.rocker" version "1.2.3"')
+        template.contains('id("com.fizzed.rocker") version "1.3.0"')
         template.contains("""
 sourceSets {
     main {
         rocker {
-            srcDir('src/main/resources')
+            srcDir("src/main/resources")
         }
     }
 }
@@ -60,7 +60,7 @@ sourceSets {
       <plugin>
         <groupId>com.fizzed</groupId>
         <artifactId>rocker-maven-plugin</artifactId>
-        <version>1.2.3</version>
+        <version>1.3.0</version>
         <executions>
           <execution>
             <id>generate-rocker-templates</id>

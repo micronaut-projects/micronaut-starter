@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;
 
@@ -40,7 +39,7 @@ public class Jrebel implements ReloadingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.GRADLE) {
+        if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
             generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
         }

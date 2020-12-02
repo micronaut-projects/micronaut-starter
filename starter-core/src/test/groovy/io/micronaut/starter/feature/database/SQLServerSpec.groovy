@@ -12,7 +12,7 @@ class SQLServerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle sqlserver feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sqlserver'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sqlserver'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("com.microsoft.sqlserver:mssql-jdbc")')

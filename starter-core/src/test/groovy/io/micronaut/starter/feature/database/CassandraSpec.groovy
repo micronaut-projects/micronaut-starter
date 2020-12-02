@@ -13,7 +13,7 @@ class CassandraSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle cassandra feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cassandra'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cassandra'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.cassandra:micronaut-cassandra")')

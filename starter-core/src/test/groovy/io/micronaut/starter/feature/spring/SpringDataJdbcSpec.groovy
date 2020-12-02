@@ -55,7 +55,7 @@ class SpringDataJdbcSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-data-jdbc with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.data:micronaut-data-spring")')

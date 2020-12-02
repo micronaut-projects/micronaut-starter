@@ -42,7 +42,7 @@ abstract class CommandSpec extends Specification {
 
     String executeBuild(BuildTool buildTool, String command) {
         String output = null
-        if (buildTool == BuildTool.GRADLE) {
+        if (buildTool.isGradle()) {
             output = executeGradle(command).getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven(command)
@@ -74,7 +74,7 @@ abstract class CommandSpec extends Specification {
         StringBuilder output = new StringBuilder()
         def thread = process.consumeProcessOutputStream(output)
         try {
-            thread.join(Duration.ofSeconds(120).toMillis())
+            thread.join(Duration.ofSeconds(180).toMillis())
         } catch (InterruptedException e) {
         }
 

@@ -29,11 +29,14 @@ public final class NameUtils {
     private static final String PROPERTY_GET_PREFIX = "get";
 
     private static final Pattern SERVICE_ID_REGEX = Pattern.compile("[\\p{javaLowerCase}\\d-]+");
-    
+
     private NameUtils() {
     }
 
     public static ProjectIdentifier parseProjectIdentifier(String name) throws IllegalArgumentException {
+        if (!isValidAppName(name)) {
+            throw new IllegalArgumentException("\"" + name + "\" is not a valid app name");
+        }
         String packageName;
         String appName;
         String[] parts = name.split("\\.");
@@ -52,7 +55,7 @@ public final class NameUtils {
             throw new IllegalArgumentException("Cannot create a valid package name for [" + packageName + "]. Please specify a name that is also a valid Java package.");
         }
         if (!isValidAppName(appName)) {
-            throw new IllegalArgumentException(appName + " is not a valid app name");
+            throw new IllegalArgumentException("\"" + appName + "\" is not a valid app name");
         }
         return new ProjectIdentifier(packageName, appName);
     }

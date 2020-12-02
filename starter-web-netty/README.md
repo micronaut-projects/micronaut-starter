@@ -33,7 +33,7 @@ $ docker push gcr.io/[PROJECT ID]/micronaut-starter
 You are now ready to deploy your application:
 
 ```
-$ gcloud run deploy --image gcr.io/[PROJECT ID]/micronaut-starter --platform=managed --allow-unauthenticated
+$ gcloud run deploy --image gcr.io/[PROJECT ID]/micronaut-starter --update-env-vars=GITHUB_OAUTH_APP_CLIENT_ID=[CLIENT ID],GITHUB_OAUTH_APP_CLIENT_SECRET=[SECRET ID],HOSTNAME=[CLOUD RUN HOSTNAME] --platform=managed --allow-unauthenticated
 ```
 
 Where `[PROJECT ID]` is replaced for your project ID. You should see output like the following:

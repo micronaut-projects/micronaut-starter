@@ -19,7 +19,7 @@ class MongoSpec extends BeanContextSpec {
 
     void "test mongo sync dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
@@ -58,7 +58,7 @@ class MongoSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"])).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')

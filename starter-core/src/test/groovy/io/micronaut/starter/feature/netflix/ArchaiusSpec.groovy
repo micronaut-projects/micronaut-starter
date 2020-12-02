@@ -12,7 +12,7 @@ class ArchaiusSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle netflix-archaius feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-archaius'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-archaius'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-archaius")')

@@ -45,12 +45,12 @@ To view the possible features and their descriptions visit:
 
 To create a default application:
 
-    $ curl @serverURL/create/app/example -o example.zip
+    $ curl @serverURL/create/DEFAULT/example -o example.zip
 
 To create a Maven application:
 
-    $ curl @serverURL/create/app/example?build=maven -o example.zip
+    $ curl @serverURL/create/DEFAULT/example?build=maven -o example.zip
 
 To create a Kotlin application:
 
-    $ curl @serverURL/create/app/example?lang=kotlin -o example.zip
+    $ curl @serverURL/create/DEFAULT/example?lang=kotlin -o example.zip

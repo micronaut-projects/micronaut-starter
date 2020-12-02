@@ -25,7 +25,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
     @Unroll
     void 'test gradle security-session feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), false).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -55,13 +55,6 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
-""")
-            assert template.contains("""
-                <path>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </path>
 """)
         } else if (language == Language.KOTLIN) {
             assert template.count("""

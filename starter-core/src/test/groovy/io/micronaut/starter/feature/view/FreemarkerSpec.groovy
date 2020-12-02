@@ -24,7 +24,7 @@ class FreemarkerSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-freemarker feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-freemarker'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-freemarker'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-freemarker")')

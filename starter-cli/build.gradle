@@ -7,7 +7,7 @@ plugins {
 }
 
 ext {
-    picocliVersion = '4.5.1'
+    picocliVersion = '4.5.2'
 }
 
 configurations {
@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
 
-    testImplementation "org.testcontainers:spock:1.14.3"
+    testImplementation "org.testcontainers:spock:1.15.0"
     testImplementation 'org.reflections:reflections:0.9.12'
 }
 

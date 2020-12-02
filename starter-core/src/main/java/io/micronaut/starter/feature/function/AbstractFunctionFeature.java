@@ -84,8 +84,12 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
                     break;
             }
 
-            applyTestTemplate(generatorContext, project, className + "Function");
+            applyTestTemplate(generatorContext, project, className + getTestSuffix(type));
         }
+    }
+
+    protected String getTestSuffix(ApplicationType type) {
+        return "Function";
     }
 
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {

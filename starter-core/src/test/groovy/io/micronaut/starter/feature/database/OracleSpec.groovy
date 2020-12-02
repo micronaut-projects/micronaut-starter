@@ -12,7 +12,7 @@ class OracleSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle oracle feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['oracle'], language), false).render().toString()
 
         then:
         template.contains('runtimeOnly("com.oracle.database.jdbc:ojdbc8")')

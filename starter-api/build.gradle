@@ -1,5 +1,5 @@
 dependencies {
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.5.2"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.5.3"
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
 
@@ -10,7 +10,9 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-runtime"
     api "io.micronaut:micronaut-http"
+    api "io.micronaut:micronaut-http-client"
     api "io.micronaut:micronaut-validation"
+    api 'org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r'
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-http-server-netty"

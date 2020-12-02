@@ -23,7 +23,7 @@ class JooqSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle jooq feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jooq'], language)).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jooq'], language), false).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-jooq")')

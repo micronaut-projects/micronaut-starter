@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -33,14 +34,16 @@ public class Features extends ArrayList<String> {
 
     private final Set<Feature> featureList;
     private final BuildTool buildTool;
+    private final GeneratorContext context;
     private ApplicationFeature applicationFeature;
     private LanguageFeature languageFeature;
     private TestFeature testFeature;
     private final JdkVersion javaVersion;
 
-    public Features(Set<Feature> featureList, Options options) {
+    public Features(GeneratorContext context, Set<Feature> featureList, Options options) {
         super(featureList.stream().map(Feature::getName).collect(Collectors.toList()));
         this.featureList = featureList;
+        this.context = context;
         for (Feature feature: featureList) {
             if (applicationFeature == null && feature instanceof ApplicationFeature) {
                 applicationFeature = (ApplicationFeature) feature;
@@ -84,11 +87,22 @@ public class Features extends ArrayList<String> {
         return javaVersion;
     }
 
+    /**
+     * @return The main class
+     */
+    public Optional<String> mainClass() {
+        ApplicationFeature application = application();
+        if (application != null && context != null) {
+            return Optional.ofNullable(application.mainClassName(context));
+        }
+        return Optional.empty();
+    }
+
     public String getTargetJdk() {
-        if (language().isJava() && testFramework().isJunit()) {
-            return VersionInfo.toJdkVersion(javaVersion.majorVersion());
+        if (language().isKotlin() || testFramework().isKoTest()) {
+            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 14));
         } else {
-            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 13));
+            return VersionInfo.toJdkVersion(javaVersion.majorVersion());
         }
     }
 

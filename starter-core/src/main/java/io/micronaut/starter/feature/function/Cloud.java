@@ -18,5 +18,6 @@ package io.micronaut.starter.feature.function;
 public enum Cloud {
     AZURE,
     GCP,
-    AWS
+    AWS,
+    ORACLE
 }

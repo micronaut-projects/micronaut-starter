@@ -3,5 +3,5 @@
     {"pattern":"\\Qapplication.yml\\E"},
     {"pattern":"\\Qlogback.xml\\E"}
   ],
-  "bundles":[]
+  "bundles":[{"name":"org.eclipse.jgit.internal.JGitText"}]
 }

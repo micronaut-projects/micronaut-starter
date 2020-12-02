@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
@@ -68,7 +68,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}.BUILD-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -81,7 +81,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -129,7 +129,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -177,7 +177,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Download GraalVM
@@ -233,7 +233,7 @@ jobs:
     needs: [linux, macos, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -253,7 +253,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -281,16 +281,16 @@ jobs:
           release_version: ${{ steps.release_version.outputs.release_version }}
         run: |
           gcloud components install beta --quiet
-          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
           version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
-          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
   analytics:
     name: Release Analytics Job
     runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -322,7 +322,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.2
+        uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -341,7 +341,7 @@ jobs:
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
           sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -353,7 +353,7 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v2.3.4
         with:
           token: ${{ secrets.GH_TOKEN }}
           ref: master
@@ -394,7 +394,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build

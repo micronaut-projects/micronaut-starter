@@ -19,8 +19,6 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -36,11 +34,8 @@ public class GroovyApplication implements GroovyApplicationFeature {
 
     @Override
     @Nullable
-    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        if (features.isFeaturePresent(AwsLambda.class)) {
-            return null;
-        }
-        return project.getPackageName() + ".Application";
+    public String mainClassName(GeneratorContext generatorContext) {
+        return generatorContext.getProject().getPackageName() + ".Application";
     }
 
     @Override
@@ -75,7 +70,8 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return !generatorContext.getFeatures().hasFunctionFeature();
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+                || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {

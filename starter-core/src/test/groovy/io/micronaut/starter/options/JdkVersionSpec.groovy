@@ -4,15 +4,17 @@ import spock.lang.Specification
 
 class JdkVersionSpec extends Specification {
 
-    void "test valueOf error"() {
+    void 'test valueOf with a supported JDK version'() {
         expect:
-        JdkVersion.JDK_11 == JdkVersion.valueOf(11)
+        JdkVersion.JDK_14 == JdkVersion.valueOf(14)
+    }
 
+    void 'test valueOf when the JDK version does not exist'() {
         when:
-        JdkVersion.valueOf(15)
+        JdkVersion.valueOf(16)
 
         then:
         def ex = thrown(IllegalArgumentException)
-        ex.message == "Unsupported JDK version: 15. Supported values are [8, 9, 10, 11, 12, 13, 14]"
+        ex.message == "Unsupported JDK version: 16. Supported values are [8, 9, 10, 11, 12, 13, 14, 15]"
     }
 }

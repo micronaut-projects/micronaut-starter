@@ -156,6 +156,8 @@ public class CodeGenConfig {
 
                     if (new File(directory, "build.gradle").exists()) {
                         codeGenConfig.setBuildTool(BuildTool.GRADLE);
+                    } else if (new File(directory, "build.gradle.kts").exists()) {
+                        codeGenConfig.setBuildTool(BuildTool.GRADLE_KOTLIN);
                     } else if (new File(directory, "pom.xml").exists()) {
                         codeGenConfig.setBuildTool(BuildTool.MAVEN);
                     } else {

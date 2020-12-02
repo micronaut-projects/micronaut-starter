@@ -19,14 +19,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.Features;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.koTest;
+import io.micronaut.starter.feature.test.template.kotlinJunit;
 import io.micronaut.starter.feature.test.template.spock;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
@@ -36,11 +34,8 @@ public class KotlinApplication implements KotlinApplicationFeature {
 
     @Override
     @Nullable
-    public String mainClassName(ApplicationType applicationType, Project project, Features features) {
-        if (features.isFeaturePresent(AwsLambda.class)) {
-            return null;
-        }
-        return project.getPackageName() + ".ApplicationKt";
+    public String mainClassName(GeneratorContext generatorContext) {
+        return generatorContext.getProject().getPackageName() + ".ApplicationKt";
     }
 
     @Override
@@ -75,7 +70,8 @@ public class KotlinApplication implements KotlinApplicationFeature {
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return !generatorContext.getFeatures().hasFunctionFeature();
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+                || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {

@@ -70,6 +70,6 @@ public class AzureRawFunction extends AbstractAzureFunction {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#simpleAzureFunctions";
+        return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions";
     }
 }
