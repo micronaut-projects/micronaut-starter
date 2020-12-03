@@ -602,6 +602,9 @@ List<Property> properties
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
+    @if (features.contains("assertj")) {
+@dependency.template("org.assertj", "assertj-core", "test", null)
+    }
 } else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @if (features.testFramework().isKoTest()) {
