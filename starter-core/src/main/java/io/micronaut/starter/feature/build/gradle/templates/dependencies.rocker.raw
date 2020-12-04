@@ -485,22 +485,22 @@ dependencies {
 }
 @if (features.contains("testcontainers")) {
 @if (features.contains("r2dbc")) {
-    @dependency.template("org.testcontainers", "r2dbc", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "r2dbc", "testImplementation", null)
 }
 @if (features.contains("mysql")) {
-    @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "mysql", "testImplementation", null)
 }
 @if (features.contains("postgres")) {
-    @dependency.template("org.testcontainers", "postgresql", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "postgresql", "testImplementation", null)
 }
 @if (features.contains("mariadb")) {
-    @dependency.template("org.testcontainers", "mariadb", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "mariadb", "testImplementation", null)
 }
 @if (features.contains("oracle")) {
-    @dependency.template("org.testcontainers", "oracle-xe", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "oracle-xe", "testImplementation", null)
 }
 @if (features.contains("sqlserver")) {
-    @dependency.template("org.testcontainers", "mssqlserver", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "mssqlserver", "testImplementation", null)
 }
 }
 }

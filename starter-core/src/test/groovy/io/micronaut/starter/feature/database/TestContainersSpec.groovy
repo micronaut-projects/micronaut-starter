@@ -15,7 +15,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), false).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:oracle-xe")')
+        template.contains('testImplementation("org.testcontainers:oracle-xe")')
     }
 
     void "test mysql dependency is present for gradle"() {
@@ -23,7 +23,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), false).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mysql")')
+        template.contains('testImplementation("org.testcontainers:mysql")')
     }
 
     void "test postgres dependency is present for gradle"() {
@@ -31,7 +31,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), false).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:postgresql")')
+        template.contains('testImplementation("org.testcontainers:postgresql")')
     }
 
     void "test mariadb dependency is present for gradle"() {
@@ -39,7 +39,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), false).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mariadb")')
+        template.contains('testImplementation("org.testcontainers:mariadb")')
     }
 
     void "test sqlserver dependency is present for gradle"() {
@@ -47,7 +47,7 @@ class TestContainersSpec extends BeanContextSpec {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), false).render().toString()
 
         then:
-        template.contains('testRuntimeOnly("org.testcontainers:mssqlserver")')
+        template.contains('testImplementation("org.testcontainers:mssqlserver")')
     }
 
     void "test oracle dependency is present for maven"() {
