@@ -39,20 +39,6 @@ public class Mockito implements Feature {
         return "Mockito test mocking framework for JUnit";
     }
 
-//    @Override
-//    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-//        TestFramework selectedTest = options.getTestFramework();
-//        if (selectedTest == null) {
-//            selectedTest = options.getLanguage().getDefaults().getTest();
-//        }
-//        return supports(applicationType) && selectedTest == TestFramework.JUNIT;
-//    }
-
-//    @Override
-//    public void apply(GeneratorContext generatorContext) {
-//
-//    }
-
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
