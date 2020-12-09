@@ -3,11 +3,11 @@ package io.micronaut.starter.feature.test
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle
+import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -50,6 +50,26 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
         when:
         buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language, testfw),
                 false).render().toString()
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message.startsWith("Hamcrest requires JUnit.")
+
+        where:
+        language        | testfw
+        Language.JAVA   | TestFramework.SPOCK
+        Language.KOTLIN | TestFramework.SPOCK
+        Language.GROOVY | TestFramework.SPOCK
+        Language.JAVA   | TestFramework.KOTEST
+        Language.KOTLIN | TestFramework.KOTEST
+        Language.GROOVY | TestFramework.KOTEST
+    }
+
+    @Unroll
+    void 'test maven hamcrest feature fails for language=#language when test framework is not Junit'() {
+        when:
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language,
+                testfw), []).render().toString()
 
         then:
         def e = thrown(IllegalArgumentException)
