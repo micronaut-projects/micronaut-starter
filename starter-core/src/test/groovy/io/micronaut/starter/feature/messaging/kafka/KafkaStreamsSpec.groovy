@@ -7,6 +7,8 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
 class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -18,6 +20,22 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html#kafkaStream")
+    }
+
+    void 'test java project with feature kafka-streams for #language includes example listener'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(language), ['kafka-streams'])
+        def listener = output["src/main/${language}/example/micronaut/ExampleListener.${language.extension}"]
+        def factory = output["src/main/${language}/example/micronaut/ExampleFactory.${language.extension}"]
+
+        then:
+        listener
+        listener.contains("@KafkaListener(groupId = \"ExampleListener\")")
+        factory
+        factory.contains("builder.stream(\"streams-plaintext-input\")")
+
+        where:
+        language << Language.values().toList()
     }
 
     void "test kafka-streams features"() {
