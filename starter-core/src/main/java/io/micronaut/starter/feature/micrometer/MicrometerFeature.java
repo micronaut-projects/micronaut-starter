@@ -20,9 +20,10 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.Management;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.util.NameUtils;
 
-public abstract class MicrometerFeature implements Feature {
+public abstract class MicrometerFeature implements Feature, MicronautServerDependent {
 
     protected final String EXPORT_PREFIX = "micronaut.metrics.export";
 

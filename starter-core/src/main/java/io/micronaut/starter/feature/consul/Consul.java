@@ -20,12 +20,13 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class Consul implements Feature {
+public class Consul implements Feature, MicronautServerDependent {
 
     @NonNull
     @Override

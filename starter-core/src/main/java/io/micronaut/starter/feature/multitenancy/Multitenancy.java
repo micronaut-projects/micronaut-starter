@@ -19,10 +19,12 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
+
 import javax.inject.Singleton;
 
 @Singleton
-public class Multitenancy implements Feature {
+public class Multitenancy implements Feature, MicronautServerDependent {
 
     @NonNull
     @Override
