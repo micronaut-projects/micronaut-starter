@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.function.gcp;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
@@ -29,6 +30,11 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction || f instanceof GoogleCloudRawFunction)) {
+            if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
+                throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM");
+            }
+        }
     }
 
     @Override
