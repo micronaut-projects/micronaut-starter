@@ -13,39 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jib;
+package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.Set;
 
 @Singleton
-public class Jib implements Feature {
-
+public class MockitoValidator implements FeatureValidator {
     @Override
-    public String getName() {
-        return "jib";
+    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        if (features.stream().anyMatch(f -> f instanceof Mockito)) {
+            if (features.stream().noneMatch(f -> (f instanceof Junit))) {
+                throw new IllegalArgumentException("Mockito requires JUnit.");
+            }
+        }
     }
 
     @Override
-    public String getTitle() {
-        return "Jib Docker Containers";
-    }
+    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
 
-    @Override
-    public String getDescription() {
-        return "Adds support for Jib builds";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.PACKAGING;
     }
 }
