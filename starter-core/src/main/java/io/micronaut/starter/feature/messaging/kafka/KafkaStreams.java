@@ -16,8 +16,16 @@
 package io.micronaut.starter.feature.messaging.kafka;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryGroovy;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryJava;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryKotlin;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerGroovy;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerJava;
+import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerKotlin;
 
 import javax.inject.Singleton;
 
@@ -56,5 +64,22 @@ public class KafkaStreams implements MessagingFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html#kafkaStream";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Project project = generatorContext.getProject();
+
+        String exampleListener = generatorContext.getSourcePath("/{packagePath}/ExampleListener");
+        generatorContext.addTemplate("exampleListener", exampleListener,
+            exampleListenerJava.template(project),
+            exampleListenerKotlin.template(project),
+            exampleListenerGroovy.template(project));
+
+        String exampleFactory = generatorContext.getSourcePath("/{packagePath}/ExampleFactory");
+        generatorContext.addTemplate("exampleFactory", exampleFactory,
+            exampleFactoryJava.template(project),
+            exampleFactoryKotlin.template(project),
+            exampleFactoryGroovy.template(project));
     }
 }
