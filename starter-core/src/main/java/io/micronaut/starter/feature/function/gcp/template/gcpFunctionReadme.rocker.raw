@@ -57,4 +57,4 @@ You can then use this variable to test the function invocation:
 
 ```bash
 $ curl -i $YOUR_HTTP_TRIGGER_URL/@project.getPropertyName()
-```%
+```
