@@ -158,12 +158,8 @@ List<Property> properties
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
 @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "compile", null)
 }
-@if (features.contains("graalvm")) {
-@dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
-@dependency.template("org.graalvm.sdk", "graal-sdk", "provided", null)
-@if (features.language().isGroovy()) {
+@if (features.contains("graalvm") && features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
-}
 }
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.groovy", "micronaut-runtime-groovy", "compile", null)
@@ -178,7 +174,7 @@ List<Property> properties
 @dependency.template("io.micronaut.picocli", "micronaut-picocli", "compile", null)
 }
 @if (features.contains("annotation-api")) {
-@dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
+@dependency.template("jakarta.annotation", "jakarta.annotation-api", "compile", null)
 }
 @if (features.contains("openapi")) {
 @dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
@@ -833,13 +829,6 @@ List<Property> properties
             </path>
 } else {
           <annotationProcessorPaths combine.children="append">
-}
-@if (features.contains("graalvm")) {
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-graal</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
 }
 @if (features.contains("picocli")) {
             <path>
