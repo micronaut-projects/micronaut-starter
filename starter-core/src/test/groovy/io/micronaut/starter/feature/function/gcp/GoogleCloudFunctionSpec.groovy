@@ -145,6 +145,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message == 'Google Cloud Function is not supported for GraalVM'
+        e.message == 'Google Cloud Function is not supported for GraalVM. ' +
+                'Consider Google Cloud Run for deploying GraalVM native images as docker containers.'
     }
 }
