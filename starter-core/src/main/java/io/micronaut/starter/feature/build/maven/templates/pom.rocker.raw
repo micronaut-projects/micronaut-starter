@@ -174,7 +174,7 @@ List<Property> properties
 @dependency.template("io.micronaut.picocli", "micronaut-picocli", "compile", null)
 }
 @if (features.contains("annotation-api")) {
-@dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
+@dependency.template("jakarta.annotation", "jakarta.annotation-api", "compile", null)
 }
 @if (features.contains("openapi")) {
 @dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
