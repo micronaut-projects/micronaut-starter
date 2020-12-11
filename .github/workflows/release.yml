@@ -67,7 +67,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "Setting new Micronaut snapshot version"
-          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}.BUILD-SNAPSHOT/" gradle.properties
+          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
       - uses: stefanzweifel/git-auto-commit-action@v4.7.2
         continue-on-error: true
         with:

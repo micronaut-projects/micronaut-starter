@@ -17,6 +17,7 @@ micronaut:
     github:
       clientId: ${GITHUB_OAUTH_APP_CLIENT_ID}
       clientSecret: ${GITHUB_OAUTH_APP_CLIENT_SECRET}
+      tokenPermissions: user,repo,workflow
 
   http:
     services:
