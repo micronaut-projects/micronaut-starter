@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.jib;
+package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
@@ -22,21 +22,21 @@ import io.micronaut.starter.feature.Feature;
 import javax.inject.Singleton;
 
 @Singleton
-public class Jib implements Feature {
+public class Mockito implements Feature {
 
     @Override
     public String getName() {
-        return "jib";
+        return "mockito";
     }
 
     @Override
     public String getTitle() {
-        return "Jib Docker Containers";
+        return "Mockito Framework";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Jib builds";
+        return "Mockito test mocking framework for JUnit";
     }
 
     @Override
@@ -46,6 +46,11 @@ public class Jib implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.PACKAGING;
+        return Category.DEV_TOOLS;
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://site.mockito.org";
     }
 }
