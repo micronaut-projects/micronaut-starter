@@ -17,7 +17,7 @@ jobs:
         run: |
           ./gradlew starter-azure-function:azureFunctionsPackage
       - name: 'Deploy Azure Function'
-        uses: Azure/functions-action@v1
+        uses: Azure/functions-action@v1.2.1
         with:
           app-name: micronaut-starter
           package: ./starter-azure-function/build/azure-functions/micronaut-starter
