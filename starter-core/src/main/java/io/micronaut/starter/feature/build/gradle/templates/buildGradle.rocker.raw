@@ -113,7 +113,9 @@ java {
 }
 }
 
-tasks {
+@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
+tasks @{
+}
 @if (features.language().isKotlin()) {
     compileKotlin {
         kotlinOptions {
@@ -229,6 +231,9 @@ tasks {
         }
     }
     }
+
+@if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
+@}
 }
 
 @if (features.contains("grpc")) {
