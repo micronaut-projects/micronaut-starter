@@ -1,16 +1,18 @@
 package io.micronaut.starter.feature.build.gradle
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.Property
-import io.micronaut.starter.feature.build.gradle.templates.annotationProcessors
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
+import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.util.VersionInfo
-import spock.lang.Ignore
-import spock.lang.IgnoreIf
+import io.micronaut.starter.options.Options
+import spock.lang.Issue
+import spock.lang.Unroll
 
-class GradleSpec extends BeanContextSpec {
+class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test settings.gradle"() {
         String template = settingsGradle.template(buildProject()).render().toString()
@@ -31,6 +33,33 @@ class GradleSpec extends BeanContextSpec {
         expect:
         template.contains('name=Sally')
         template.contains('age=30')
+    }
+
+    @Unroll
+    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/601')
+    void 'a Java/Groovy app with Gradle does not add a "tasks" block (language=#language)'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.GRADLE))
+        def buildGradle = output["build.gradle"]
+
+        then:
+        buildGradle
+        !buildGradle.contains("tasks")
+
+        where:
+        language << [Language.JAVA, Language.GROOVY]
+    }
+
+    @Unroll
+    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/601')
+    void 'a Kotlin app with Gradle adds a "tasks" block (language=#language)'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, BuildTool.GRADLE))
+        def buildGradle = output["build.gradle"]
+
+        then:
+        buildGradle
+        buildGradle.contains("tasks")
     }
 
 }
