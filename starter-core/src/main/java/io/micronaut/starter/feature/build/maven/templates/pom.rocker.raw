@@ -153,6 +153,9 @@ List<Property> properties
 } else {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
+@if (features.contains("http-session")) {
+@dependency.template("io.micronaut", "micronaut-session", "compile", null)
+}
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
