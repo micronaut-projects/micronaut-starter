@@ -19,11 +19,12 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Security implements Feature {
+public class Security implements Feature, MicronautServerDependent {
 
     private final SecurityAnnotations securityAnnotations;
 

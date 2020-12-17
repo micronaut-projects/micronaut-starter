@@ -18,5 +18,7 @@ package io.micronaut.starter.feature.server;
 /**
  * Marks a server feature as third party as opposed to a Micronaut server, to denote
  * it cannot be combined with features that are dependent on a Micronaut Server feature.
+ *
+ * @see MicronautServerDependent
  */
 public interface ThirdPartyServerFeature extends ServerFeature { }

@@ -18,5 +18,7 @@ package io.micronaut.starter.feature.server;
 /**
  * Marks a feature as dependent on a Micronaut Server (such as Netty) and
  * cannot be combined with a third party server feature.
+ *
+ * @see ThirdPartyServerFeature
  */
 public interface MicronautServerDependent { }
