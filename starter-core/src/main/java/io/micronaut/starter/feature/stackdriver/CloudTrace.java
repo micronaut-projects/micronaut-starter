@@ -47,7 +47,7 @@ public class CloudTrace implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.LOGGING;
+        return Category.TRACING;
     }
 
     @Override
