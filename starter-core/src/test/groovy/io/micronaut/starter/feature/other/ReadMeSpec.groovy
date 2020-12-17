@@ -18,9 +18,11 @@ class ReadMeSpec extends BeanContextSpec implements CommandOutputFixture {
         def guide = "[User Guide](https://docs.micronaut.io/${version}/guide/index.html)"
         def api = "[API Reference](https://docs.micronaut.io/${version}/api/index.html)"
         def config = "[Configuration Reference](https://docs.micronaut.io/${version}/guide/configurationreference.html)"
+        def guides = "[Micronaut Guides](https://guides.micronaut.io/index.html)"
         readme.startsWith(title)
         readme.contains(guide)
         readme.contains(api)
         readme.contains(config)
+        readme.contains(guides)
     }
 }
