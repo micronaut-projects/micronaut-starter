@@ -206,6 +206,9 @@ dependencies {
 @if (features.contains("jooq")) {
     @dependency.template("io.micronaut.sql", "micronaut-jooq", "implementation", null)
 }
+@if (features.contains("jasync-sql")) {
+    @dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "implementation", null)
+}
 @if (features.contains("mongo-reactive")) {
     @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
 }

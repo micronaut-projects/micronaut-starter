@@ -4,6 +4,7 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
@@ -41,14 +42,20 @@ class FeatureSpec extends BeanContextSpec {
         JdkVersion javaVersion = javaVersionForFeature(feature.getName())
         Language language = Language.JAVA
         if (feature instanceof LanguageSpecificFeature) {
-            language = ((LanguageSpecificFeature) feature).getRequiredLanguage();
+            language = ((LanguageSpecificFeature) feature).getRequiredLanguage()
         }
         Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
+        def features = [feature.getName()]
+        if (feature instanceof JAsyncSQLFeature) {
+            // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
+            // so it can't be tested in isolation like this in isolation
+            features += 'mysql'
+        }
         def commandCtx = new GeneratorContext(buildProject(),
                                               ApplicationType.DEFAULT,
                                               options,
                                               OperatingSystem.LINUX,
-                                              getFeatures([feature.getName()], options).getFeatures()
+                                              getFeatures(features, options).getFeatures()
         )
         commandCtx.applyFeatures()
 
