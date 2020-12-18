@@ -10,7 +10,7 @@ Feature feature
 
     @if (feature.getMicronautDocumentation() != null) {
 
-- [Micronaut @feature.getTitle() documentation](@feature.getMicronautDocumentation())
+- [Micronaut @feature.getTitle().replaceFirst("^Micronaut\\s+(.*)", "$1") documentation](@feature.getMicronautDocumentation())
 
     }
     @if (feature.getThirdPartyDocumentation() != null) {

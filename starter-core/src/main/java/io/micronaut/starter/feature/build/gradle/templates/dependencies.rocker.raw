@@ -67,6 +67,9 @@ dependencies {
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
 }
+@if (features.contains("http-session")) {
+    @dependency.template("io.micronaut", "micronaut-session", "implementation", null)
+}
 @if (features.contains("openapi")) {
     @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
 }
@@ -205,6 +208,9 @@ dependencies {
 }
 @if (features.contains("jooq")) {
     @dependency.template("io.micronaut.sql", "micronaut-jooq", "implementation", null)
+}
+@if (features.contains("jasync-sql")) {
+    @dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "implementation", null)
 }
 @if (features.contains("mongo-reactive")) {
     @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
@@ -473,6 +479,9 @@ dependencies {
 }
 @if (features.contains("assertj")) {
     @dependency.template("org.assertj","assertj-core", "testImplementation", null)
+}
+@if (features.contains("hamcrest")) {
+    @dependency.template("org.hamcrest","hamcrest", "testImplementation", null)
 }
 @if (features.contains("mockito")) {
     @dependency.template("org.mockito","mockito-core", "testImplementation", null)

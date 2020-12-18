@@ -153,6 +153,9 @@ List<Property> properties
 } else {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
+@if (features.contains("http-session")) {
+@dependency.template("io.micronaut", "micronaut-session", "compile", null)
+}
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
@@ -317,6 +320,9 @@ List<Property> properties
 }
 @if (features.contains("jooq")) {
 @dependency.template("io.micronaut.sql", "micronaut-jooq", "compile", null)
+}
+@if (features.contains("jasync-sql")) {
+@dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "compile", null)
 }
 @if (features.contains("mongo-reactive")) {
 @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "compile", null)
@@ -604,6 +610,9 @@ List<Property> properties
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
     @if (features.contains("assertj")) {
 @dependency.template("org.assertj", "assertj-core", "test", null)
+    }
+    @if (features.contains("hamcrest")) {
+@dependency.template("org.hamcrest", "hamcrest", "test", null)
     }
     @if (features.contains("mockito")) {
 @dependency.template("org.mockito", "mockito-core", "test", null)

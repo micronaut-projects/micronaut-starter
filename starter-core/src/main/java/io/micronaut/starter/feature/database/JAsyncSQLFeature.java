@@ -13,53 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.security;
+package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.other.HttpSession;
 
 import javax.inject.Singleton;
+import java.util.Map;
 
 @Singleton
-public class SecuritySession implements Feature {
-
-    public static final int ORDER = SecurityOAuth2.ORDER + 10;
-    private final SecurityAnnotations securityAnnotations;
-
-    public SecuritySession(SecurityAnnotations securityAnnotations) {
-        this.securityAnnotations = securityAnnotations;
-    }
+public class JAsyncSQLFeature implements Feature {
 
     @Override
     public String getName() {
-        return "security-session";
+        return "jasync-sql";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Security Session";
+        return "Micronaut JAsync SQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Session based Authentication";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(SecurityAnnotations.class)) {
-            featureContext.addFeature(securityAnnotations);
-        }
-        featureContext.exclude(feature -> feature instanceof HttpSession);
+        return "Adds asynchronous access to PostgreSQL and MySQL using jasync-sql";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.authentication", "session");
+        Map<String, Object> configuration = generatorContext.getConfiguration();
+        configuration.put("jasync.client.port", 5432);
+        configuration.put("jasync.client.host", "the-host");
+        configuration.put("jasync.client.database", "the-db");
+        configuration.put("jasync.client.username", "test");
+        configuration.put("jasync.client.password", "test");
+        configuration.put("jasync.client.maxActiveConnections", 5);
     }
 
     @Override
@@ -69,16 +59,16 @@ public class SecuritySession implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.SECURITY;
+        return Category.DATABASE;
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#session";
+        return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jasync";
     }
 
     @Override
-    public int getOrder() {
-        return ORDER;
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/jasync-sql/jasync-sql/wiki";
     }
 }
