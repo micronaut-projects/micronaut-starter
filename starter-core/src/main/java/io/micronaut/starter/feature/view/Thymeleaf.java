@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.starter.feature.server.MicronautServerDependent;
+
 import javax.inject.Singleton;
 
 @Singleton
-public class Thymeleaf implements ViewFeature {
+public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getName() {

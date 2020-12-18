@@ -30,6 +30,14 @@ You can build the CLI from source by [following these instructions](https://micr
 
 Avoid having complex logic to determine if a default feature should be applied. If, for example, a default feature should not apply if feature x is chosen, the default feature should not add logic to assert it should not apply if feature x is chosen. Instead, feature x should exclude the default feature.
 
+### Server Features and Server Dependent Features Logic
+
+Features that depend on Micronaut servers (Netty, etc) should not be combined with third party servers that cannot support those features. Please follow these guidelines for adding new features that fall into either category.
+
+For third party servers (e.g. ktor), the feature implements the `ThirdPartyServerFeature` interface, instead of `ServerFeature`.
+For Features dependent on Micronaut servers (e.g. Management), the feature implements the marker interface `MicronautServerDependent`.
+Existing validation logic takes care of the rest, ensuring that incompatible server features are not generated for a project.
+
 ### Feature Ownership
 
 A given feature owns its templates. Any modifications that need to be made to those templates based on the existence of another feature should be the responsibility of the feature owning the template. Avoid adding arbitrary entry points for content in templates for other features to use.

@@ -16,11 +16,12 @@
 package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Jaeger implements TracingFeature {
+public class Jaeger implements TracingFeature, MicronautServerDependent {
 
     @Override
     public String getName() {

@@ -16,11 +16,12 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SpringWeb extends SpringFeature {
+public class SpringWeb extends SpringFeature implements MicronautServerDependent {
 
     public SpringWeb(Spring spring) {
         super(spring);
