@@ -477,6 +477,9 @@ dependencies {
     @dependency.template("io.micronaut","micronaut-function", "testImplementation", null)
     }
 }
+@if (features.contains("assertj")) {
+    @dependency.template("org.assertj","assertj-core", "testImplementation", null)
+}
 @if (features.contains("hamcrest")) {
     @dependency.template("org.hamcrest","hamcrest", "testImplementation", null)
 }
