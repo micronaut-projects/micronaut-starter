@@ -477,6 +477,9 @@ dependencies {
     @dependency.template("io.micronaut","micronaut-function", "testImplementation", null)
     }
 }
+@if (features.contains("hamcrest")) {
+    @dependency.template("org.hamcrest","hamcrest", "testImplementation", null)
+}
 @if (features.contains("mockito")) {
     @dependency.template("org.mockito","mockito-core", "testImplementation", null)
 }
