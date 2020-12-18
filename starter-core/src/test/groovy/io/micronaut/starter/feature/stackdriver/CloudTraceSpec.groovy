@@ -16,9 +16,9 @@ class CloudTraceSpec extends BeanContextSpec {
     @Shared
     CloudTrace cloudtrace = beanContext.getBean(CloudTrace)
 
-    void "cloudtrace belongs to Logging category"() {
+    void "cloudtrace belongs to Tracing category"() {
         expect:
-        Category.LOGGING == cloudtrace.category
+        Category.TRACING == cloudtrace.category
     }
 
     void "cloudtrace is visible"() {
