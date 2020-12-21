@@ -1,0 +1,30 @@
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+BuildTool buildTool,
+JdkVersion jdkVersion
+)
+
+      - uses: actions/checkout@@v2
+      - uses: actions/cache@@v2
+        with:
+          path: |
+          @if (buildTool.equals(BuildTool.MAVEN)) {
+            ~/.m2
+          key: ${{ runner.os }}-maven-test-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-test-
+          } else {
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            ~/.m2/repository
+          key: ${{ runner.os }}-gradle-test-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-test-
+          }
+      - name: Set up JDK @jdkVersion.majorVersion()
+        uses: actions/setup-java@@v1
+        with:
+          java-version: @jdkVersion.majorVersion()

@@ -17,12 +17,10 @@ package io.micronaut.starter.feature.github.workflows.docker;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.github.workflows.docker.templates.*;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
+import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 
@@ -60,26 +58,22 @@ public class GraalVMDockerRegistryWorkflow extends AbstractDockerRegistryWorkflo
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        JdkVersion graalJdkVersion = generatorContext.getJdkVersion() == JdkVersion.JDK_8 ? JdkVersion.JDK_8 : JdkVersion.JDK_11;
-        String graalVersion = String.format("%s.java%s", VersionInfo.getDependencyVersion("graal").getValue(),
-                graalJdkVersion.majorVersion());
+        super.apply(generatorContext);
+        String workflowFilePath = ".github/workflows/" + getWorkflowFileName(generatorContext);
 
-        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN)) {
-            generatorContext.getBuildProperties().put("jib.docker.image", "${project.name}");
-            generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
-            generatorContext.addTemplate("mavenGraalCEWorkflow",
-                    new RockerTemplate(".github/workflows/maven-graalvm.yml",
-                            mavenGraalCEWorkflow.template(generatorContext.getProject(), graalVersion)
-                    )
-            );
-        } else {
-            generatorContext.addTemplate("gradleGraalCEWorkflow",
-                    new RockerTemplate(".github/workflows/gradle-graalvm.yml",
-                            gradleGraalCEWorkflow.template(generatorContext.getProject(), graalVersion)
-                    )
-            );
-        }
+        generatorContext.addTemplate("graalCEWorkflow",
+                new RockerTemplate(workflowFilePath,
+                        dockerRegistryWorkflow.template(generatorContext.getProject(), generatorContext.getJdkVersion(),
+                                generatorContext.getBuildTool(), true)
+                )
+        );
 
-        generatorContext.addHelpTemplate(new RockerWritable(dockerRegistryWorkflowReadme.template(this, generatorContext.getProject())));
+        generatorContext.addHelpTemplate(new RockerWritable(dockerRegistryWorkflowReadme.template(
+                this, generatorContext.getProject(), workflowFilePath)));
+    }
+
+    @Override
+    public String getWorkflowFileName(GeneratorContext generatorContext) {
+        return "graalvm.yml";
     }
 }

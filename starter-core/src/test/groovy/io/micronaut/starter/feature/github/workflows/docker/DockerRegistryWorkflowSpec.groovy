@@ -20,13 +20,13 @@ class DockerRegistryWorkflowSpec extends BeanContextSpec implements CommandOutpu
         then:
         readme
         readme.contains("""
-The GitHub secrets in table below needs to be configured:
+Add the following GitHub secrets:
 
 | Name | Description |
 | ---- | ----------- |
 | DOCKER_USERNAME | Username for Docker registry authentication. |
 | DOCKER_PASSWORD | Docker registry password. |
-| DOCKER_ORGANIZATION | Path to the docker image registry, e.g. for image `foo/bar/micronaut:0.1` it is `foo/bar`. |
+| DOCKER_REPOSITORY_PATH | Path to the docker image repository inside the registry, e.g. for the image `foo/bar/micronaut:0.1` it is `foo/bar`. |
 | DOCKER_REGISTRY_URL | Docker registry url. |
 """)
     }
@@ -41,6 +41,7 @@ The GitHub secrets in table below needs to be configured:
 
         then:
         workflow
+        workflow.contains("name: Java CI")
 
         where:
         buildTool | workflowName
@@ -57,7 +58,7 @@ The GitHub secrets in table below needs to be configured:
 
         then:
         maven
-        maven.contains("DOCKER_IMAGE=`echo \"\${DOCKER_REGISTRY_URL}/\${DOCKER_ORGANIZATION}/foo")
+        maven.contains("DOCKER_IMAGE=`echo \"\${DOCKER_REGISTRY_URL}/\${DOCKER_REPOSITORY_PATH}/foo")
     }
 
     void 'test docker image is configured in build.gradle'() {
@@ -69,7 +70,7 @@ The GitHub secrets in table below needs to be configured:
         gradle
         gradle.contains("""
     dockerBuild{
-        images = [\"\${System.env.DOCKER_IMAGE}:\$project.version"]
+        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
     }""")
     }
 

@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.github.workflows.docker;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.github.workflows.GitHubWorkflowFeature;
 import io.micronaut.starter.feature.github.workflows.Secret;
+import io.micronaut.starter.options.BuildTool;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,13 +31,27 @@ import java.util.List;
  */
 public abstract class AbstractDockerRegistryWorkflow extends GitHubWorkflowFeature {
 
+    public static final String DOCKER_USERNAME = "DOCKER_USERNAME";
+    public static final String DOCKER_PASSWORD = "DOCKER_PASSWORD";
+    public static final String DOCKER_REPOSITORY_PATH = "DOCKER_REPOSITORY_PATH";
+    public static final String DOCKER_REGISTRY_URL = "DOCKER_REGISTRY_URL";
+
     @Override
     public List<Secret> getSecrets() {
         return Arrays.asList(
-                new Secret("DOCKER_USERNAME", "Username for Docker registry authentication."),
-                new Secret("DOCKER_PASSWORD", "Docker registry password."),
-                new Secret("DOCKER_ORGANIZATION", "Path to the docker image registry, e.g. for image `foo/bar/micronaut:0.1` it is `foo/bar`."),
-                new Secret("DOCKER_REGISTRY_URL", "Docker registry url.")
+                new Secret(DOCKER_USERNAME, "Username for Docker registry authentication."),
+                new Secret(DOCKER_PASSWORD, "Docker registry password."),
+                new Secret(DOCKER_REPOSITORY_PATH, "Path to the docker image repository inside the registry, e.g. for the image `foo/bar/micronaut:0.1` it is `foo/bar`."),
+                new Secret(DOCKER_REGISTRY_URL, "Docker registry url.")
         );
     }
+
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN)) {
+            generatorContext.getBuildProperties().put("jib.docker.image", "${project.artifactId}");
+            generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
+        }
+    }
+
+    public abstract String getWorkflowFileName(GeneratorContext generatorContext);
 }

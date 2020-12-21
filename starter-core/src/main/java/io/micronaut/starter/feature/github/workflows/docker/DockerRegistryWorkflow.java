@@ -58,22 +58,24 @@ public class DockerRegistryWorkflow extends AbstractDockerRegistryWorkflow {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN)) {
-            generatorContext.getBuildProperties().put("jib.docker.image", "${project.name}");
-            generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
-            generatorContext.addTemplate("mavenJavaWorkflow",
-                    new RockerTemplate(".github/workflows/maven.yml",
-                            mavenJavaWorkflow.template(generatorContext.getProject(), generatorContext.getJdkVersion())
-                    )
-            );
-        } else {
-            generatorContext.addTemplate("gradleJavaWorkflow",
-                    new RockerTemplate(".github/workflows/gradle.yml",
-                            gradleJavaWorkflow.template(generatorContext.getJdkVersion(), generatorContext.getProject())
-                    )
-            );
-        }
+        super.apply(generatorContext);
 
-        generatorContext.addHelpTemplate(new RockerWritable(dockerRegistryWorkflowReadme.template(this, generatorContext.getProject())));
+        String workflowFilePath = ".github/workflows/" + getWorkflowFileName(generatorContext);
+
+        generatorContext.addTemplate("javaWorkflow",
+                new RockerTemplate(workflowFilePath,
+                        dockerRegistryWorkflow.template(generatorContext.getProject(), generatorContext.getJdkVersion(),
+                                generatorContext.getBuildTool(), false)
+                )
+        );
+
+        generatorContext.addHelpTemplate(new RockerWritable(
+                dockerRegistryWorkflowReadme.template(this, generatorContext.getProject(),
+                        workflowFilePath)));
+    }
+
+    @Override
+    public String getWorkflowFileName(GeneratorContext generatorContext) {
+        return generatorContext.getBuildTool().equals(BuildTool.MAVEN) ? "maven.yml" : "gradle.yml";
     }
 }
