@@ -1,0 +1,64 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.feature.github.workflows.templates.graalvmSetup
+@import io.micronaut.starter.feature.github.workflows.templates.javaSetup
+@import io.micronaut.starter.feature.github.workflows.templates.buildAndPushImage
+@import static io.micronaut.starter.feature.github.workflows.gcloud.AbstractCloudRunWorkflow.GCLOUD_DEFAULT_REGION
+@import static io.micronaut.starter.feature.github.workflows.gcloud.AbstractCloudRunWorkflow.GCLOUD_DEFAULT_GCR
+
+@args (
+Project project,
+BuildTool buildTool,
+JdkVersion jdkVersion,
+boolean isGraal,
+)
+
+@if (isGraal) {
+name: Google Cloud Run GraalVM CE CD
+} else {
+name: Google Cloud Run Java CD
+}
+on: [push, pull_request]
+
+env:
+  GCLOUD_PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+  GCLOUD_REGION: @GCLOUD_DEFAULT_REGION
+  GCLOUD_GCR: @GCLOUD_DEFAULT_GCR
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+@if(isGraal){
+@graalvmSetup.template(buildTool, jdkVersion)
+} else {
+@javaSetup.template(buildTool, jdkVersion)
+}
+      - name: Setup Google Cloud CLI
+        uses: google-github-actions/setup-gcloud@@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.GCLOUD_SA_KEY }}
+          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+      - name: Docker Login
+        run: |
+          gcloud auth configure-docker
+      - name: Build And Push Docker Image
+        env:
+          GCLOUD_IMAGE_REPOSITORY: ${{ secrets.GCLOUD_IMAGE_REPOSITORY }}
+          TESTCONTAINERS_RYUK_DISABLED: true
+        run: |
+          export DOCKER_IMAGE=`echo "${GCLOUD_GCR}/${GCLOUD_PROJECT_ID}/${GCLOUD_IMAGE_REPOSITORY}/@project.getName()" | sed -e 's#//#/#' -e 's#^/##'`
+@buildAndPushImage.template(buildTool, isGraal)
+      - name: Deploy Cloud Run
+        run: |
+          DOCKER_IMAGE_REPOSITORY=$(docker images --format "{{.Repository}}" | grep @project.getName())
+          DOCKER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" "${DOCKER_IMAGE_REPOSITORY}" )
+
+          gcloud run deploy @project.getName() --quiet \
+            --image "${DOCKER_IMAGE}" --project "${GCLOUD_PROJECT_ID}" \
+            --region "${GCLOUD_REGION}" --platform managed --allow-unauthenticated --format json
+          echo "Invoke endpoint:"
+          gcloud run services list --platform managed --format json | jq -r \
+            '.[] | select(.metadata.name == "google-cloud-run-maven-test") | .status.address.url'
