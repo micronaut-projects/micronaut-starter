@@ -48,6 +48,7 @@ public class WorkflowsUtils {
     public static RockerTemplate createExampleController(Project project, Language language) {
         RockerModel model = null;
         switch (language) {
+            default:
             case JAVA:
                 model = javaController.template(project);
                 break;

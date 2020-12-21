@@ -7,6 +7,7 @@
 @import io.micronaut.starter.build.Property
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 
 @args (
 ApplicationType applicationType,
@@ -49,7 +50,7 @@ List<Property> properties
 @if (features.contains("google-cloud-function-http")) {
     <micronaut.runtime>google_function</micronaut.runtime>
 }
-@if (features.contains("oracle-function-http")) {
+@if (features.contains("oracle-function-http") || features.contains("oracle-function")) {
     <micronaut.runtime>oracle_function</micronaut.runtime>
 }
 @if (features.contains("azure-function-http")) {
@@ -671,12 +672,13 @@ List<Property> properties
 
   <build>
     <plugins>
-@if (features.application() != null) {
+@if (features.application() != null || features.contains("oracle-function")) {
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function")) {
           <configuration>
+@if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
 @if (features.contains("springloaded")) {
               <jvmArgument>-noverify</jvmArgument>
@@ -686,6 +688,17 @@ List<Property> properties
               <jvmArgument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArgument>
 }
             </jvmArguments>
+}
+@if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+            <nativeImageBuildArgs>
+              <arg>--static</arg>
+              <arg>-Dfn.handler=${exec.mainClass}::handleRequest</arg>
+              <arg>--initialize-at-build-time=com.example</arg>
+            </nativeImageBuildArgs>
+            <appArguments>
+              <arg>${exec.mainClass}::handleRequest</arg>
+            </appArguments>
+}
           </configuration>
 }
       </plugin>
@@ -1384,7 +1397,7 @@ List<Property> properties
         <artifactId>protoc-jar-maven-plugin</artifactId>
       </plugin>
 }
-@if (features.contains("github-workflow-docker-registry") || features.contains("github-workflow-graal-docker-registry") ) {
+@if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow) || features.contains("oracle-function")) {
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
         <artifactId>jib-maven-plugin</artifactId>
@@ -1392,6 +1405,12 @@ List<Property> properties
           <to>
             <image>${jib.docker.image}:${jib.docker.tag}</image>
           </to>
+  @if(applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+          <container>
+            <args>${exec.mainClass}::handleRequest</args>
+            <mainClass>${exec.mainClass}</mainClass>
+          </container>
+  }
         </configuration>
       </plugin>
 }
