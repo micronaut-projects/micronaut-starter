@@ -110,6 +110,7 @@ io.micronaut.starter.feature.logging
 io.micronaut.starter.feature.logging.template
 io.micronaut.starter.feature.messaging
 io.micronaut.starter.feature.messaging.kafka
+io.micronaut.starter.feature.messaging.kafka.templates
 io.micronaut.starter.feature.messaging.mqtt
 io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.pubsub
