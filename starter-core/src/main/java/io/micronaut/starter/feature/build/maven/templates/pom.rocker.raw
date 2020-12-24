@@ -70,7 +70,6 @@ List<Property> properties
 @if (features.contains("undertow-server")) {
     <micronaut.runtime>undertow</micronaut.runtime>
 }
-    <micronaut.aws.version>2.2.5</micronaut.aws.version>
   </properties>
 
   <repositories>
