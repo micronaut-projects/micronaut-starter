@@ -641,13 +641,13 @@ List<Property> properties
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
-@dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
 @if (features.contains("testcontainers")) {
+@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
+@dependency.template("org.testcontainers", "mongodb", "test", null)
+}
 @if (features.contains("r2dbc")) {
 @dependency.template("org.testcontainers", "r2dbc", "test", null)
 }
@@ -666,6 +666,12 @@ List<Property> properties
 @if (features.contains("sqlserver")) {
 @dependency.template("org.testcontainers", "mssqlserver", "test", null)
 }
+@if (features.testFramework().isSpock()) {
+@dependency.template("org.testcontainers", "spock", "test", null)
+} else if (features.testFramework().isJunit()) {
+@dependency.template("org.testcontainers", "junit-jupiter", "test", null)
+}
+
 }
   </dependencies>
 

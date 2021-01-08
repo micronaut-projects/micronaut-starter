@@ -5,6 +5,9 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 
 import java.util.stream.Collectors
 
@@ -49,6 +52,33 @@ class TestContainersSpec extends BeanContextSpec {
         then:
         template.contains('testRuntimeOnly("org.testcontainers:mssqlserver")')
     }
+
+    void "testframework dependency is present for gradle for feature #feature and spock framework"() {
+        when:
+        def template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK), false).render().toString()
+
+        then:
+        template.contains('testImplementation("org.testcontainers:spock")')
+
+        where:
+        feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
+    }
+
+    void "testframework dependency is present for gradle for feature #feature and junit framework"() {
+
+        when:
+        def template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT), false).render().toString()
+
+        then:
+        template.contains('testImplementation("org.testcontainers:junit-jupiter")')
+
+        where:
+        feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
+    }
+
+
 
     void "test oracle dependency is present for maven"() {
         when:
@@ -118,6 +148,43 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
+    }
+
+    void "testframework dependency is present for maven for feature #feature and spock framework"() {
+        when:
+        def template = pom.template(ApplicationType.DEFAULT, buildProject(),
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK, BuildTool.MAVEN,ApplicationType.DEFAULT),[]).render().toString()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>spock</artifactId>
+      <scope>test</scope>
+    </dependency>
+""")
+
+        where:
+        feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
+    }
+
+    void "testframework dependency is present for maven for feature #feature and junit framework"() {
+
+        when:
+        def template = pom.template(ApplicationType.DEFAULT, buildProject(),
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.MAVEN,ApplicationType.DEFAULT),[]).render().toString()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+""")
+
+        where:
+        feature << ["mongo-reactive", "mongo-sync", "mysql", "postgres", "mariadb", "sqlserver", "oracle"]
     }
 
     void "test there is a dependency for every non embedded driver feature"() {
