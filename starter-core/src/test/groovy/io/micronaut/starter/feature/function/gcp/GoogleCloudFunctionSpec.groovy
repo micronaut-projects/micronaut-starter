@@ -20,7 +20,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     @Subject
     GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
 
-    void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
+    void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
         def output = generate(
             ApplicationType.DEFAULT,
@@ -31,7 +31,22 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction")
+        verifyAll {
+            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions")
+            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions")
+        }
+
+        when:
+        readme = readme.replaceFirst("## Feature google-cloud-function documentation","")
+        readme = readme.replaceFirst("## Feature google-cloud-function-http documentation","")
+        readme = readme.replaceFirst("# Micronaut and Google Cloud Function","")
+
+        then:
+        verifyAll {
+            !readme.contains("## Feature google-cloud-function documentation")
+            !readme.contains("## Feature google-cloud-function-http documentation")
+            !readme.contains("# Micronaut and Google Cloud Function")
+        }
 
         where:
         language << Language.values().toList()

@@ -28,8 +28,11 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
-import io.micronaut.starter.feature.other.template.readme;
-import io.micronaut.starter.feature.server.template.*;
+import io.micronaut.starter.feature.server.template.groovyJunit;
+import io.micronaut.starter.feature.server.template.javaJunit;
+import io.micronaut.starter.feature.server.template.koTest;
+import io.micronaut.starter.feature.server.template.kotlinJunit;
+import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -85,18 +88,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         return false;
     }
 
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Concepts/functionsoverview.htm";
-    }
-
     @Override
     protected String getRunCommand(BuildTool buildTool) {
         if (buildTool == BuildTool.MAVEN) {
@@ -115,13 +106,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         } else {
             throw new IllegalStateException("Unsupported build tool");
         }
-    }
-
-    @Override
-    protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
-        return readme.template(
-                this
-        );
     }
 
     @Override
@@ -160,5 +144,11 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public Cloud getCloud() {
         return Cloud.ORACLE;
+    }
+
+    @Nullable
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#httpFunctions";
     }
 }
