@@ -24,8 +24,14 @@ import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
-import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
-import io.micronaut.starter.feature.function.azure.template.raw.*;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKoTest;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionSpock;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerGroovy;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -95,15 +101,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
                     azureRawFunctionTriggerKotlin.template(project),
                     azureRawFunctionTriggerGroovy.template(project));
         }
-    }
-
-    @Override
-    protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
-        return azureFunctionReadme.template(project,
-                generatorContext.getFeatures(),
-                getRunCommand(buildTool),
-                getBuildCommand(buildTool)
-        );
     }
 
     @Override
