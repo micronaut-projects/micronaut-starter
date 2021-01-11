@@ -102,11 +102,12 @@ public class DiffController implements DiffOperations {
         GeneratorContext generatorContext;
         try {
             Project project = name != null ? NameUtils.parse(name) : this.project;
+            Language language = lang != null ? lang : Language.DEFAULT_OPTION;
             Options options = new Options(
-                    lang != null ? lang : Language.JAVA,
-                    test != null ? test : TestFramework.JUNIT,
-                    build != null ? build : BuildTool.GRADLE,
-                    javaVersion
+                    language,
+                    test != null ? test : language.getDefaults().getTest(),
+                    build != null ? build : language.getDefaults().getBuild(),
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
