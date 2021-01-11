@@ -304,6 +304,10 @@ dependencies {
 @if (features.contains("cache-infinispan")) {
     @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "implementation", null)
 }
+@if (features.contains("cache-coherence")) {
+    @dependency.template("io.micronaut.coherence", "micronaut-coherence-cache", "implementation", null)
+    @dependency.template("com.oracle.coherence.ce", "coherence", "implementation", null)
+}
 @if (features.contains("kafka")) {
     @dependency.template("io.micronaut.kafka", "micronaut-kafka", "implementation", null)
 }

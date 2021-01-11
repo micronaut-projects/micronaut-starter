@@ -7,7 +7,7 @@ class CacheSpec extends BeanContextSpec {
 
     void 'test there can only be one cache feature'() {
         when:
-        getFeatures(["cache-ehcache", "cache-hazelcast", "cache-infinispan"])
+        getFeatures(["cache-ehcache", "cache-hazelcast", "cache-infinispan", "cache-coherence"])
 
         then:
         def ex = thrown(IllegalArgumentException)
@@ -23,7 +23,7 @@ class CacheSpec extends BeanContextSpec {
         noExceptionThrown()
 
         where:
-        otherCache << ["cache-ehcache", "cache-hazelcast", "cache-infinispan"]
+        otherCache << ["cache-ehcache", "cache-hazelcast", "cache-infinispan", "cache-coherence"]
     }
 
 }
