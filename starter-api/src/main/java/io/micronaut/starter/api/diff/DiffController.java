@@ -105,7 +105,8 @@ public class DiffController implements DiffOperations {
             Options options = new Options(
                     lang != null ? lang : Language.JAVA,
                     test != null ? test : TestFramework.JUNIT,
-                    build != null ? build : BuildTool.GRADLE
+                    build != null ? build : BuildTool.GRADLE,
+                    javaVersion
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
