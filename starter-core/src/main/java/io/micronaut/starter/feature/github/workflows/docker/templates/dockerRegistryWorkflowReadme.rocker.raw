@@ -14,8 +14,8 @@ Workflow file: [`@workflowFilePath`](@workflowFilePath)
 ### Workflow description
 For pushes to the `master` branch, the workflow will:
 1. Setup the build environment with respect to the selected java/graalvm version.
-1. Login to docker registry based on provided configuration.
-1. Build, tag and push Docker image with Micronaut application to the Docker container image.
+2. Login to docker registry based on provided configuration.
+3. Build, tag and push Docker image with Micronaut application to the Docker container image.
 
 ### Dependencies on other GitHub Actions
 - [Docker login](`https://github.com/docker/login-action`)(`docker/login`)

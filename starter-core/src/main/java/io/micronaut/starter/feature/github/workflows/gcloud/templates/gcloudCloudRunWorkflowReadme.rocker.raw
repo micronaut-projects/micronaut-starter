@@ -17,10 +17,10 @@ Workflow file: [`@workflowFilePath`](@workflowFilePath)
 ### Workflow description
 For pushes to the `master` branch, the workflow will:
 1. Setup the build environment with respect to the selected java/graalvm version.
-1. Setup of [Google Cloud CLI](https://cloud.google.com/sdk).
-1. Authenticate docker to use [Google Container Registry (GCR)](https://cloud.google.com/container-registry/docs).
-1. Build, tag and push Docker image with Micronaut application to the GCR.
-1. Deploy [Google Cloud run](https://cloud.google.com/run) application.
+2. Setup of [Google Cloud CLI](https://cloud.google.com/sdk).
+3. Authenticate docker to use [Google Container Registry (GCR)](https://cloud.google.com/container-registry/docs).
+4. Build, tag and push Docker image with Micronaut application to GCR.
+6. Deploy [Google Cloud Run](https://cloud.google.com/run) application.
 
 ### Dependencies on other GitHub Actions
 - [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)
@@ -40,7 +40,7 @@ The workflow file also contains additional configuration options that are now co
 
 | Name | Description | Default value |
 | ---- | ----------- | ------------- |
-| GCLOUD_REGION | Region where the Cloud Run will be created. See [Cloud Run Release Notes](https://cloud.google.com/run/docs/release-notes) to find out what regions are supported. | `@GCLOUD_DEFAULT_REGION` |
+| GCLOUD_REGION | Region where the Cloud Run application will be created. See [Cloud Run Release Notes](https://cloud.google.com/run/docs/release-notes) to find out what regions are supported. | `@GCLOUD_DEFAULT_REGION` |
 | GCLOUD_GCR | Google Container Registry url. See [Overview of Container Registry](https://cloud.google.com/container-registry/docs/overview) to find out valid GCR endpoints. | `@GCLOUD_DEFAULT_GCR` |
 
 ### Verification

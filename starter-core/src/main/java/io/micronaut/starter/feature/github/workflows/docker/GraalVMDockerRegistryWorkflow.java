@@ -42,7 +42,7 @@ public class GraalVMDockerRegistryWorkflow extends AbstractDockerRegistryWorkflo
 
     @Override
     public String getDescription() {
-        return "Adds GitHub workflow that builds and pushes GraalVM native image to docker registry.";
+        return "Adds a GitHub Actions Workflow that builds and pushes GraalVM native image to a Docker registry.";
     }
 
     @Override

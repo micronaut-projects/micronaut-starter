@@ -23,7 +23,7 @@ JdkVersion jdkVersion
           restore-keys: ${{ runner.os }}-gradle-test-
           }
       - name: Setup GraalVM CE
-        uses: DeLaGuardo/setup-graalvm@@master
+        uses: DeLaGuardo/setup-graalvm@@3.1
         with:
           graalvm-version: @graalVersion(jdkVersion)
       - name: Install Native Image

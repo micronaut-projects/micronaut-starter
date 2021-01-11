@@ -21,10 +21,10 @@ Workflow file: [`@workflowFilePath`](@workflowFilePath)
 ### Workflow description
 For pushes to the `master` branch, the workflow will:
 1. Setup the build environment with respect to the selected java or GraalVM version.
-1. Login to the [Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/en-us/iaas/Content/Registry/Concepts/registryoverview.htm).
-1. Install and configure [Oracle Cloud Infrastructure CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
-1. Build, tag and push Docker image with Micronaut application to the OCIR.
-1. Create or update [Oracle Cloud Functions](https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Concepts/functionsoverview.htm) with name `@project.getName()` using built Docker container image.
+2. Login to the [Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/en-us/iaas/Content/Registry/Concepts/registryoverview.htm).
+3. Install and configure [Oracle Cloud Infrastructure CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
+4. Build, tag and push Docker image with Micronaut application to the OCIR.
+5. Create or update [Oracle Cloud Functions](https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Concepts/functionsoverview.htm) with name `@project.getName()` using built Docker container image.
 
 ### Dependencies on other GitHub Actions
 - [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)

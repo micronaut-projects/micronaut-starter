@@ -49,7 +49,7 @@ public class AzureContainerInstanceJavaWorkflow extends AbstractAzureContainerIn
 
     @Override
     public String getDescription() {
-        return "Adds GitHub workflow that deploys app to the Azure Container Instance.";
+        return "Adds a GitHub Actions Workflow that deploys an application to Azure Container Instance.";
     }
 
     @Override

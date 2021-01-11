@@ -17,10 +17,10 @@ Workflow file: [`@workflowFilePath`](@workflowFilePath)
 ### Workflow description
 For pushes to the `master` branch, the workflow will:
 1. Setup the build environment with respect to the selected java/graalvm version.
-1. Login to Docker registry.
-1. Login to [Azure Command-Line Interface ](https://docs.microsoft.com/cs-cz/cli/azure/).
-1. Build, tag and push Docker image with Micronaut application to the Docker registry.
-1. Deploy to [Azure Container Instances](https://docs.microsoft.com/cs-cz/azure/container-instances/).
+2. Login to Docker registry.
+3. Login to [Azure Command-Line Interface](https://docs.microsoft.com/cs-cz/cli/azure/).
+4. Build, tag and push Docker image with Micronaut application to the Docker Registry.
+5. Deploy to [Azure Container Instances](https://docs.microsoft.com/cs-cz/azure/container-instances/).
 
 ### Dependencies on other GitHub Actions
 - [Login to Docker Registry `docker/login`](https://github.com/docker/login-action)
