@@ -4,6 +4,7 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 
 @args (
 ApplicationType applicationType,
@@ -189,8 +190,8 @@ tasks {
 }
 
     dockerBuild {
-        @if (features.contains("github-workflow-docker-registry")) {
-            images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
         } else {
             @if(isKotlinDsl) {
         images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
@@ -201,8 +202,8 @@ tasks {
     }
 
     dockerBuildNative {
-        @if (features.contains("github-workflow-graal-docker-registry")) {
-            images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
         } else {
             @if(isKotlinDsl) {
         images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
@@ -211,13 +212,13 @@ tasks {
             }
         }
     }
-} else if (features.contains("github-workflow-docker-registry")) {
+} else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
     dockerBuild{
-        images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     }
-} else if (features.contains("github-workflow-graal-docker-registry")) {
+
     dockerBuildNative{
-        images = ["${System.env.DOCKER_IMAGE}:$project.version"]
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     }
 }
 

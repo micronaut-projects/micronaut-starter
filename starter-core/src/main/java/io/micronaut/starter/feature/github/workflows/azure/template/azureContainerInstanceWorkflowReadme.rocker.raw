@@ -1,0 +1,53 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import static io.micronaut.starter.feature.github.workflows.azure.AbstractAzureContainerInstanceWorkflow.AZURE_DEFAULT_WORKFLOW_LOCATION
+@import static io.micronaut.starter.feature.github.workflows.azure.AbstractAzureContainerInstanceWorkflow.AZURE_DEFAULT_WORKFLOW_PORT
+
+@args (
+AbstractDockerRegistryWorkflow feature,
+Project project,
+String workflowFilePath
+)
+
+
+## @feature.getTitle()
+
+Workflow file: [`@workflowFilePath`](@workflowFilePath)
+
+### Workflow description
+For pushes to the `master` branch, the workflow will:
+1. Setup the build environment with respect to the selected java/graalvm version.
+2. Login to Docker registry.
+3. Login to [Azure Command-Line Interface](https://docs.microsoft.com/cs-cz/cli/azure/).
+4. Build, tag and push Docker image with Micronaut application to the Docker Registry.
+5. Deploy to [Azure Container Instances](https://docs.microsoft.com/cs-cz/azure/container-instances/).
+
+### Dependencies on other GitHub Actions
+- [Login to Docker Registry `docker/login`](https://github.com/docker/login-action)
+- [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)
+- [Setup Azure CLI `azure/login`](https://github.com/Azure/login)
+
+### Setup
+Add the following GitHub secrets:
+
+| Name | Description |
+| ---- | ----------- |
+@for (secret : feature.getSecrets()) {
+| @secret.getName() | @secret.getDescription() |
+}
+
+
+The workflow file also contains additional configuration options that are now configured to:
+
+| Name | Description | Default value |
+| ---- | ----------- | ------------- |
+| AZURE_LOCATION | Location where the Container Instance will be created. See [Resource availability for Azure Container Instances in Azure regions](https://docs.microsoft.com/en-us/azure//container-instances/container-instances-region-availability) to find out what regions are supported. | `@AZURE_DEFAULT_WORKFLOW_LOCATION` |
+| AZURE_DNS_LABEL | The dns name label for container group with public IP. | `@project.getName()` |
+
+
+### Verification
+Call the rest api endpoint `[AZURE_DNS_LABEL].[AZURE_LOCATION].azurecontainer.io:[PORT]/@project.getPropertyName()`:
+```
+curl http://@(project.getName()).@(AZURE_DEFAULT_WORKFLOW_LOCATION).westeurope.azurecontainer.io:@(AZURE_DEFAULT_WORKFLOW_PORT)/@project.getPropertyName()
+```
+

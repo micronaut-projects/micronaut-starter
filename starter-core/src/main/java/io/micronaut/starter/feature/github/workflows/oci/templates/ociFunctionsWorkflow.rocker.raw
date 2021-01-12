@@ -1,0 +1,123 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.feature.github.workflows.templates.graalvmSetup
+@import io.micronaut.starter.feature.github.workflows.templates.javaSetup
+@import io.micronaut.starter.feature.github.workflows.templates.buildAndPushImage
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_REGION
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_OCIR_URL
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_MEMORY_IN_MBS
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS
+
+@args (
+Project project,
+BuildTool buildTool,
+JdkVersion jdkVersion,
+boolean isGraal,
+)
+
+@if (isGraal) {
+name: OCI Functions GraalVM CE CD
+} else {
+name: OCI Functions Java CD
+}
+
+on: [push, pull_request]
+
+env:
+  # Regions: https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm
+  OCI_REGION: @WORKFLOW_DEFAULT_REGION
+  # OCIR regions: https://docs.cloud.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#regional-availability
+  OCI_OCIR_URL: @WORKFLOW_DEFAULT_OCIR_URL
+  # Allowed values https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionscustomizing.htm
+  OCI_FUNCTION_MEMORY_IN_MBS: @WORKFLOW_DEFAULT_MEMORY_IN_MBS
+  # Timeout for executions of the function. Value in seconds.
+  OCI_FUNCTION_TIMEOUT_IN_SECONDS: @WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+@if(isGraal){
+@graalvmSetup.template(buildTool, jdkVersion)
+} else {
+@javaSetup.template(buildTool, jdkVersion)
+}
+      - name: Install OCI CLI
+        run: |
+          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+          chmod +x install.sh
+          ./install.sh --accept-all-defaults
+          echo "$HOME/bin" >> $GITHUB_PATH
+          exec -l $SHELL
+      - name: 'Configure OCI CLI'
+        env:
+          OCI_USER_OCID: ${{ secrets.OCI_USER_OCID }}
+          OCI_FINGERPRINT: ${{ secrets.OCI_FINGERPRINT }}
+          OCI_PASSPHRASE: ${{ secrets.OCI_PASSPHRASE }}
+          OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
+          OCI_KEY_FILE: ${{ secrets.OCI_KEY_FILE }}
+        run: |
+          mkdir $HOME/.oci
+          echo "[DEFAULT]" >> $HOME/.oci/config
+          echo "user=${OCI_USER_OCID}" >> $HOME/.oci/config
+          echo "fingerprint=${OCI_FINGERPRINT}" >> $HOME/.oci/config
+          echo "pass_phrase=${OCI_PASSPHRASE}" >> $HOME/.oci/config
+          echo "region=${OCI_REGION}" >> $HOME/.oci/config
+          echo "tenancy=${OCI_TENANCY_OCID}" >> $HOME/.oci/config
+          echo "key_file=$HOME/.oci/key.pem" >> $HOME/.oci/config
+          echo "${OCI_KEY_FILE}" >> $HOME/.oci/key.pem
+
+          oci setup repair-file-permissions --file $HOME/.oci/config
+          oci setup repair-file-permissions --file $HOME/.oci/key.pem
+      - name: Docker login
+        env:
+          OCI_USER_OCID: ${{ secrets.OCI_USER_OCID }}
+          OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
+          OCI_AUTH_TOKEN: ${{ secrets.OCI_AUTH_TOKEN }}
+        run: |
+          USERNAME=$(oci iam user get --user-id "$OCI_USER_OCID" | jq -r '.data.name')
+          TENANCY=$(oci iam tenancy get --tenancy-id "$OCI_TENANCY_OCID" | jq -r '.data.name')
+          docker login "${OCI_OCIR_URL}" -u "${TENANCY}/${USERNAME}" -p "${OCI_AUTH_TOKEN}"
+      - name: Build And Push Docker Image
+        env:
+          OCI_OCIR_REPOSITORY: ${{ secrets.OCI_OCIR_REPOSITORY }}
+          OCI_TENANCY_OCID: ${{ secrets.OCI_TENANCY_OCID }}
+          TESTCONTAINERS_RYUK_DISABLED: true
+        run: |
+          TENANCY=$(oci iam tenancy get --tenancy-id "$OCI_TENANCY_OCID" | jq -r '.data.name')
+          export DOCKER_IMAGE=`echo "${OCI_OCIR_URL}/${TENANCY}/${OCI_OCIR_REPOSITORY}/@project.getName()" | sed -e 's#//#/#' -e 's#^/##'`
+@buildAndPushImage.template(buildTool, isGraal)
+      - name: Deploy Function
+        env:
+          OCI_FUNCTION_APPLICATION_OCID: ${{ secrets.OCI_FUNCTION_APPLICATION_OCID }}
+        run: |
+          DOCKER_IMAGE_REPOSITORY=$(docker images --format "{{.Repository}}" | grep @project.getName())
+          DOCKER_IMAGE=$(docker images --format "{{.Repository}}:{{.Tag}}" "${DOCKER_IMAGE_REPOSITORY}" )
+          DOCKER_IMAGE_DIGEST=$(docker images --format "{{.Digest}}" "${DOCKER_IMAGE_REPOSITORY}" )
+
+          FUNCTION_ID=$(oci fn function list --application-id "${OCI_FUNCTION_APPLICATION_OCID}" | \
+            jq -r '.data[] | select(."display-name" == "@project.getName()") | .id')
+          if [ ! -z "$FUNCTION_ID" ]; then
+            echo "Function with name '@project.getName()' already exists. Updating existing function."
+            oci fn function update --function-id "${FUNCTION_ID}" \
+              --image "${DOCKER_IMAGE}" \
+              @if (!buildTool.equals(BuildTool.MAVEN)) {
+              --image-digest "${DOCKER_IMAGE_DIGEST}" \
+              }
+              --memory-in-mbs "${OCI_FUNCTION_MEMORY_IN_MBS}" \
+              --wait-for-state ACTIVE \
+              --timeout-in-seconds ${OCI_FUNCTION_TIMEOUT_IN_SECONDS} \
+              --force
+          else
+            echo "Creating new function '@project.getName()' with image: $DOCKER_IMAGE"
+            oci fn function create --display-name "@project.getName()" \
+              --application-id "${OCI_FUNCTION_APPLICATION_OCID}" \
+              --image "${DOCKER_IMAGE}" \
+              @if (!buildTool.equals(BuildTool.MAVEN)) {
+              --image-digest "${DOCKER_IMAGE_DIGEST}" \
+              }
+              --memory-in-mbs "${OCI_FUNCTION_MEMORY_IN_MBS}" \
+              --wait-for-state ACTIVE \
+              --timeout-in-seconds ${OCI_FUNCTION_TIMEOUT_IN_SECONDS}
+          fi
