@@ -53,10 +53,14 @@ public class Properties implements ConfigurationFeature {
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
             generatorContext.addTemplate("propertiesBootstrapConfig", new PropertiesTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
         }
-        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
+        Map<String, EnvConfiguration> envConfigs = generatorContext.getEnvConfigurations();
         if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
-                generatorContext.addTemplate("propertiesConfig" + StringUtils.capitalize(envConfig.getKey()), new PropertiesTemplate("src/main/resources/application-" + envConfig.getKey() + ".properties", envConfig.getValue()));
+            for (Map.Entry<String, EnvConfiguration> envConfig: envConfigs.entrySet()) {
+                String env = envConfig.getKey();
+                Map<String, Object> configs = envConfig.getValue().getEnvConfiguration();
+                String path = envConfig.getValue().getPath();
+                generatorContext.addTemplate("propertiesConfig" + StringUtils.capitalize(env),
+                    new PropertiesTemplate(path + "application-" + env + ".properties", configs));
             }
         }
     }

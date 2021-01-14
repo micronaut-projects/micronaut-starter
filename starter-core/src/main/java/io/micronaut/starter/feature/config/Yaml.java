@@ -57,10 +57,14 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
             generatorContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", generatorContext.getBootstrapConfig()));
         }
-        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
+        Map<String, EnvConfiguration> envConfigs = generatorContext.getEnvConfigurations();
         if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
-                generatorContext.addTemplate("yamlConfig" + StringUtils.capitalize(envConfig.getKey()), new YamlTemplate("src/main/resources/application-" + envConfig.getKey() + ".yml", envConfig.getValue()));
+            for (Map.Entry<String, EnvConfiguration> envConfig: envConfigs.entrySet()) {
+                String env = envConfig.getKey();
+                Map<String, Object> configs = envConfig.getValue().getEnvConfiguration();
+                String path = envConfig.getValue().getPath();
+                generatorContext.addTemplate("yamlConfig" + StringUtils.capitalize(env),
+                    new YamlTemplate(path + "application-" + env + ".yml", configs));
             }
         }
     }

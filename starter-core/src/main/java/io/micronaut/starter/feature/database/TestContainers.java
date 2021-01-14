@@ -21,13 +21,13 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.config.EnvConfiguration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.StringTemplate;
 
 import javax.inject.Singleton;
 import java.util.Collections;
-import java.util.Map;
 
 @Singleton
 public class TestContainers implements Feature {
@@ -65,8 +65,9 @@ public class TestContainers implements Feature {
                 }
 
                 if (url != null) {
-                    Map<String, Object> testConfig = generatorContext.getEnvConfiguration("test");
-                    testConfig.put(driverConfiguration.getUrlKey(), url);
+                    EnvConfiguration testConfig = generatorContext.getEnvConfiguration(
+                        "test", EnvConfiguration.DEFAULT_TEST_PATH);
+                    testConfig.getEnvConfiguration().put(driverConfiguration.getUrlKey(), url);
                 }
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
@@ -87,9 +88,10 @@ public class TestContainers implements Feature {
                 }
 
                 if (url != null) {
-                    Map<String, Object> testConfig = generatorContext.getEnvConfiguration("test");
-                    testConfig.put(driverConfiguration.getUrlKey(), url);
-                    testConfig.put(driverConfiguration.getDriverKey(), driver);
+                    EnvConfiguration testConfig = generatorContext.getEnvConfiguration(
+                        "test", EnvConfiguration.DEFAULT_TEST_PATH);
+                    testConfig.getEnvConfiguration().put(driverConfiguration.getUrlKey(), url);
+                    testConfig.getEnvConfiguration().put(driverConfiguration.getDriverKey(), driver);
                 }
             });
         });

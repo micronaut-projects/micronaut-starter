@@ -90,10 +90,14 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
         if (!generatorContext.getBootstrapConfig().isEmpty()) {
             generatorContext.addTemplate("confBootstrapConfig", new Config4kTemplate("src/main/resources/bootstrap.conf", generatorContext.getBootstrapConfig()));
         }
-        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
+        Map<String, EnvConfiguration> envConfigs = generatorContext.getEnvConfigurations();
         if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
-                generatorContext.addTemplate("confConfig" + StringUtils.capitalize(envConfig.getKey()), new Config4kTemplate("src/main/resources/application-" + envConfig.getKey() + ".conf", envConfig.getValue()));
+            for (Map.Entry<String, EnvConfiguration> envConfig: envConfigs.entrySet()) {
+                String env = envConfig.getKey();
+                Map<String, Object> configs = envConfig.getValue().getEnvConfiguration();
+                String path = envConfig.getValue().getPath();
+                generatorContext.addTemplate("confConfig" + StringUtils.capitalize(env),
+                    new Config4kTemplate(path + "application-" + env + ".conf", configs));
             }
         }
     }

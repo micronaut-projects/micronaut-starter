@@ -35,15 +35,17 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         GeneratorContext generatorContext = buildGeneratorContext(['properties'], { context ->
             context.getBootstrapConfig().put("abc", 123)
-            context.getEnvConfiguration("test").put("abc", 456)
-            context.getEnvConfiguration("prod").put("abc", 789)
+            context.getEnvConfiguration("test", EnvConfiguration.DEFAULT_TEST_PATH)
+                    .getEnvConfiguration().put("abc", 456)
+            context.getEnvConfiguration("prod", EnvConfiguration.DEFAULT_MAIN_PATH)
+                    .getEnvConfiguration().put("abc", 789)
         }, new Options())
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
         output["src/main/resources/application.properties"].readLines()[1] == 'micronaut.application.name=foo'
         output["src/main/resources/bootstrap.properties"].readLines()[1] == 'abc=123'
-        output["src/main/resources/application-test.properties"].readLines()[1] == 'abc=456'
+        output["src/test/resources/application-test.properties"].readLines()[1] == 'abc=456'
         output["src/main/resources/application-prod.properties"].readLines()[1] == 'abc=789'
     }
 }
