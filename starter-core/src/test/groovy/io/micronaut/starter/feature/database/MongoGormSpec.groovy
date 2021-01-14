@@ -1,6 +1,5 @@
 package io.micronaut.starter.feature.database
 
-
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -47,7 +46,7 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
     }
 
-    void "test testcopntainers dependencies are present for gradle"() {
+    void "test testcontainers dependencies are present for gradle"() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
                 getFeatures(["mongo-gorm", "testcontainers"], Language.GROOVY, TestFramework.SPOCK), false).render().toString()

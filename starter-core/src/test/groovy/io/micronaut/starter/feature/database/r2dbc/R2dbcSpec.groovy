@@ -2,11 +2,10 @@ package io.micronaut.starter.feature.database.r2dbc
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.database.DatabaseDriverFeature
-import io.micronaut.starter.feature.database.jdbc.JdbcFeature
-import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.database.DatabaseDriverFeature
+import io.micronaut.starter.fixture.CommandOutputFixture
 import spock.lang.Unroll
 
 class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -35,6 +34,13 @@ class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
     <dependency>
       <groupId>io.micronaut.r2dbc</groupId>
       <artifactId>micronaut-r2dbc-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        !template.contains("""
+    <dependency>
+      <groupId>io.micronaut.sql</groupId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
 """)

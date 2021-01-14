@@ -21,7 +21,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
@@ -29,40 +28,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
-public class DataR2dbc implements R2dbcFeature {
-    private final Data data;
-    private final R2dbc r2dbc;
+public class R2dbc implements R2dbcFeature {
 
-    public DataR2dbc(Data data, R2dbc r2dbc) {
-        this.data = data;
-        this.r2dbc = r2dbc;
-    }
+    private static final String PREFIX = "r2dbc.datasources.default.";
+    private static final String URL_KEY = PREFIX + "url";
+    private static final String USERNAME_KEY = PREFIX + "username";
+    private static final String PASSWORD_KEY = PREFIX + "password";
 
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(data);
-        if (!featureContext.isPresent(R2dbc.class)) {
-            featureContext.addFeature(r2dbc);
-        }
-    }
+    private final DatabaseDriverFeature defaultDbFeature;
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
-    }
-
-    private Map<? extends String, ?> getDatasourceConfig(DatabaseDriverFeature dbFeature) {
-        Map<String, Object> conf = new LinkedHashMap<>();
-        conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
-        conf.put("r2dbc.datasources.default.dialect", dbFeature.getDataDialect());
-        return conf;
+    public R2dbc(DatabaseDriverFeature defaultDbFeature) {
+        this.defaultDbFeature = defaultDbFeature;
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "data-r2dbc";
+        return "r2dbc";
     }
 
     @Override
@@ -72,12 +54,19 @@ public class DataR2dbc implements R2dbcFeature {
 
     @Override
     public String getTitle() {
-        return "Micronaut Data R2DBC";
+        return "R2DBC";
     }
 
     @Override
     public String getDescription() {
-        return "Micronaut Data support for Reactive Database Connectivity (R2DBC)";
+        return "R2DBC - Reactive Database Connectivity";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
     }
 
     @Override
@@ -100,5 +89,20 @@ public class DataR2dbc implements R2dbcFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
+            Map<String, Object> rdbcConfig = new LinkedHashMap<>();
+            rdbcConfig.put(getUrlKey(), dbFeature.getR2dbcUrl());
+            rdbcConfig.put(USERNAME_KEY, dbFeature.getDefaultUser());
+            rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
+            generatorContext.getConfiguration().putAll(rdbcConfig);
+        });
+    }
+
+    public String getUrlKey() {
+        return URL_KEY;
     }
 }
