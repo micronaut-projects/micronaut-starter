@@ -19,16 +19,21 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
 
 public abstract class DatabaseDriverFeature implements OneOfFeature {
 
+    private final JdbcFeature jdbcFeature;
     private final TestContainers testContainers;
 
     public DatabaseDriverFeature() {
+        this.jdbcFeature = null;
         this.testContainers = null;
     }
 
-    public DatabaseDriverFeature(TestContainers testContainers) {
+    public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        this.jdbcFeature = jdbcFeature;
         this.testContainers = testContainers;
     }
 
@@ -44,6 +49,10 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
+            && jdbcFeature != null) {
+            featureContext.addFeature(jdbcFeature);
+        }
         if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
             featureContext.addFeature(testContainers);
         }

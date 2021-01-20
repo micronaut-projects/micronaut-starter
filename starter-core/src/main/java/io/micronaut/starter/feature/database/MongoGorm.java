@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
@@ -74,4 +75,9 @@ public class MongoGorm implements LanguageSpecificFeature {
         return Category.DATABASE;
     }
 
+    @Nullable
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://gorm.grails.org/latest/mongodb/manual/";
+    }
 }
