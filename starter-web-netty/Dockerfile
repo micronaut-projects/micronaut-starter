@@ -1,6 +1,6 @@
-FROM oracle/graalvm-ce:20.2.0-java8 as graalvm
+FROM ghcr.io/graalvm/graalvm-ce:java8-21.0.0 as graalvm
 # For JDK 11
-#FROM oracle/graalvm-ce:20.2.0-java11 as graalvm
+#FROM ghcr.io/graalvm/graalvm-ce:java11-21.0.0 as graalvm
 RUN gu install native-image
 
 COPY . /home/app/micronaut-starter
