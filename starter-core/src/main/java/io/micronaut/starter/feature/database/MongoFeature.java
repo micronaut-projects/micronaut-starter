@@ -13,9 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database.r2dbc;
+package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 
-public interface R2dbcFeature extends Feature {
+public abstract class MongoFeature implements Feature {
+
+    private final TestContainers testContainers;
+
+    public MongoFeature(TestContainers testContainers) {
+        this.testContainers = testContainers;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
+            featureContext.addFeature(testContainers);
+        }
+    }
 }

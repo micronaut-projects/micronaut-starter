@@ -1,5 +1,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.MongoFeature
 @import java.util.List
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
@@ -642,30 +644,32 @@ List<Property> properties
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
-@dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
 @if (features.contains("testcontainers")) {
+@dependency.template("org.testcontainers", "testcontainers", "test", null)
+@if (features.testFramework().isSpock()) {
+@dependency.template("org.testcontainers", "spock", "test", null)
+} else if (features.testFramework().isJunit()) {
+@dependency.template("org.testcontainers", "junit-jupiter", "test", null)
+}
 @if (features.contains("r2dbc")) {
 @dependency.template("org.testcontainers", "r2dbc", "test", null)
 }
 @if (features.contains("mysql")) {
 @dependency.template("org.testcontainers", "mysql", "test", null)
-}
-@if (features.contains("postgres")) {
+} else if (features.contains("postgres")) {
 @dependency.template("org.testcontainers", "postgresql", "test", null)
-}
-@if (features.contains("mariadb")) {
+} else if (features.contains("mariadb")) {
 @dependency.template("org.testcontainers", "mariadb", "test", null)
-}
-@if (features.contains("oracle")) {
+} else if (features.contains("oracle")) {
 @dependency.template("org.testcontainers", "oracle-xe", "test", null)
-}
-@if (features.contains("sqlserver")) {
+} else if (features.contains("sqlserver")) {
 @dependency.template("org.testcontainers", "mssqlserver", "test", null)
+}
+@if (features.isFeaturePresent(MongoFeature.class)) {
+@dependency.template("org.testcontainers", "mongodb", "test", null)
 }
 }
   </dependencies>
