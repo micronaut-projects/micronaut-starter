@@ -1,6 +1,8 @@
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
@@ -492,30 +494,32 @@ dependencies {
 @if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
     @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
-    @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
-}
 @if (features.contains("neo4j-bolt")) {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
+    @dependency.template("org.testcontainers", "testcontainers", "testImplementation", null)
+@if (features.testFramework().isSpock()) {
+    @dependency.template("org.testcontainers", "spock", "testImplementation", null)
+} else if (features.testFramework().isJunit()) {
+    @dependency.template("org.testcontainers", "junit-jupiter", "testImplementation", null)
+}
 @if (features.contains("r2dbc")) {
-    @dependency.template("org.testcontainers", "r2dbc", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "r2dbc", "testImplementation", null)
 }
 @if (features.contains("mysql")) {
-    @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", null)
+    @dependency.template("org.testcontainers", "mysql", "testImplementation", null)
+} else if (features.contains("postgres")) {
+    @dependency.template("org.testcontainers", "postgresql", "testImplementation", null)
+} else if (features.contains("mariadb")) {
+    @dependency.template("org.testcontainers", "mariadb", "testImplementation", null)
+} else if (features.contains("oracle")) {
+    @dependency.template("org.testcontainers", "oracle-xe", "testImplementation", null)
+} else if (features.contains("sqlserver")) {
+    @dependency.template("org.testcontainers", "mssqlserver", "testImplementation", null)
 }
-@if (features.contains("postgres")) {
-    @dependency.template("org.testcontainers", "postgresql", "testRuntimeOnly", null)
-}
-@if (features.contains("mariadb")) {
-    @dependency.template("org.testcontainers", "mariadb", "testRuntimeOnly", null)
-}
-@if (features.contains("oracle")) {
-    @dependency.template("org.testcontainers", "oracle-xe", "testRuntimeOnly", null)
-}
-@if (features.contains("sqlserver")) {
-    @dependency.template("org.testcontainers", "mssqlserver", "testRuntimeOnly", null)
+@if (features.isFeaturePresent(MongoFeature.class)) {
+    @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
 }
 }
 }

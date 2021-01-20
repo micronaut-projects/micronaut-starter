@@ -21,7 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.StringTemplate;
 
@@ -51,7 +51,7 @@ public class TestContainers implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(driverFeature -> {
-            generatorContext.getFeature(R2dbcFeature.class).ifPresent(driverConfiguration -> {
+            generatorContext.getFeature(R2dbc.class).ifPresent(driverConfiguration -> {
                 String url = null;
                 if (driverFeature instanceof MySQL) {
                     url = "r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8";

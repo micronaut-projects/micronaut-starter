@@ -2,14 +2,15 @@ package io.micronaut.starter.feature.database.r2dbc
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle
+import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import spock.lang.Unroll
 
 class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
+
     @Unroll
     void "test gradle r2dbc feature #driver"() {
         when:
@@ -29,12 +30,21 @@ class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["r2dbc", driver]), []).render().toString()
         driver = getDriverName(driver)
+        JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
 
         then:
+        jdbcFeature.name == 'jdbc-hikari'
         template.contains("""
     <dependency>
       <groupId>io.micronaut.r2dbc</groupId>
       <artifactId>micronaut-r2dbc-core</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        !template.contains("""
+    <dependency>
+      <groupId>io.micronaut.sql</groupId>
+      <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
 """)

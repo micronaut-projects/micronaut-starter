@@ -16,14 +16,15 @@
 package io.micronaut.starter.feature.database;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class MySQL extends DatabaseDriverFeature {
 
-    public MySQL(TestContainers testContainers) {
-        super(testContainers);
+    public MySQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        super(jdbcFeature, testContainers);
     }
 
     @Override
