@@ -647,6 +647,7 @@ List<Property> properties
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
 @if (features.contains("testcontainers")) {
+@dependency.template("org.testcontainers", "testcontainers", "test", null)
 @if (features.testFramework().isSpock()) {
 @dependency.template("org.testcontainers", "spock", "test", null)
 } else if (features.testFramework().isJunit()) {
@@ -666,12 +667,8 @@ List<Property> properties
 } else if (features.contains("sqlserver")) {
 @dependency.template("org.testcontainers", "mssqlserver", "test", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
+@if (features.isFeaturePresent(MongoFeature.class)) {
 @dependency.template("org.testcontainers", "mongodb", "test", null)
-}
-@if (!(features.isFeaturePresent(DatabaseDriverFeature.class) ||
-       features.isFeaturePresent(MongoFeature.class))) {
-@dependency.template("org.testcontainers", "testcontainers", "test", null)
 }
 }
   </dependencies>

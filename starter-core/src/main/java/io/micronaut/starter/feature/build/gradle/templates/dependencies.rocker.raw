@@ -498,6 +498,7 @@ dependencies {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
+    @dependency.template("org.testcontainers", "testcontainers", "testImplementation", null)
 @if (features.testFramework().isSpock()) {
     @dependency.template("org.testcontainers", "spock", "testImplementation", null)
 } else if (features.testFramework().isJunit()) {
@@ -517,12 +518,8 @@ dependencies {
 } else if (features.contains("sqlserver")) {
     @dependency.template("org.testcontainers", "mssqlserver", "testImplementation", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
+@if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
-}
-@if (!(features.isFeaturePresent(DatabaseDriverFeature.class) ||
-       features.isFeaturePresent(MongoFeature.class))) {
-    @dependency.template("org.testcontainers", "testcontainers", "testImplementation", null)
 }
 }
 }

@@ -4,12 +4,17 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature
+import io.micronaut.starter.fixture.CommandOutputFixture
+import spock.lang.Shared
 import spock.lang.Unroll
 
 class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Shared
+    JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
 
     void 'test readme.md with feature data-jdbc contains links to micronaut docs'() {
         when:
@@ -38,6 +43,7 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), false).render().toString()
 
         then:
+        jdbcFeature.name == 'jdbc-hikari'
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
         template.contains('implementation("io.micronaut.r2dbc:micronaut-data-r2dbc")')
         template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
@@ -80,6 +86,7 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>runtime</scope>
     </dependency>
 """)
+        jdbcFeature.name == 'jdbc-hikari'
         !template.contains("""
     <dependency>
       <groupId>io.micronaut.sql</groupId>

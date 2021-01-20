@@ -19,7 +19,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:oracle-xe")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test mysql dependency is present for gradle"() {
@@ -28,7 +28,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mysql")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test postgres dependency is present for gradle"() {
@@ -37,7 +37,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:postgresql")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test mariadb dependency is present for gradle"() {
@@ -46,7 +46,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mariadb")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test sqlserver dependency is present for gradle"() {
@@ -55,7 +55,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mssqlserver")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test mongo-reactive dependency is present for gradle"() {
@@ -64,7 +64,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test mongo-sync dependency is present for gradle"() {
@@ -73,7 +73,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test mongo-gorm dependency is present for gradle"() {
@@ -83,7 +83,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
-        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
     }
 
     void "test testcontainers core is present when no testcontainer modules are present for gradle"() {
@@ -131,7 +131,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -152,7 +152,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -173,7 +173,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -194,7 +194,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -215,7 +215,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -236,7 +236,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -257,7 +257,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -279,7 +279,7 @@ class TestContainersSpec extends BeanContextSpec {
       <scope>test</scope>
     </dependency>
 """)
-        !template.contains("""
+        template.contains("""
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
@@ -346,9 +346,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         then:
         gradleTemplate.contains("org.testcontainers")
-        !gradleTemplate.contains('testImplementation("org.testcontainers:testcontainers")')
         mavenTemplate.contains("org.testcontainers")
-        !mavenTemplate.contains("<artifactId>testcontainers</artifactId>")
 
         where:
         driverFeature <<  beanContext.streamOfType(DatabaseDriverFeature)
