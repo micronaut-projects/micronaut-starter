@@ -16,9 +16,7 @@
 package io.micronaut.starter.feature.config;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -29,7 +27,6 @@ import io.micronaut.starter.template.Config4kTemplate;
 import io.micronaut.starter.template.Template;
 
 import javax.inject.Singleton;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 

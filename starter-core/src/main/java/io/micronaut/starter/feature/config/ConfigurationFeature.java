@@ -19,11 +19,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.template.Template;
-import io.micronaut.starter.template.YamlTemplate;
 
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public interface ConfigurationFeature extends OneOfFeature {

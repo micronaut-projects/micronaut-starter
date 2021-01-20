@@ -37,7 +37,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
-import sun.security.krb5.Config;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,7 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * A context object used when generating projects.
