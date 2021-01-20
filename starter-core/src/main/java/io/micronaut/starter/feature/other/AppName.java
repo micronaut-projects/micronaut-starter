@@ -54,7 +54,7 @@ public class AppName implements DefaultFeature {
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> appNameConfig;
         if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
-            appNameConfig = generatorContext.getBootstrapConfig();
+            appNameConfig = generatorContext.getBootstrapConfiguration();
         } else {
             appNameConfig = generatorContext.getConfiguration();
         }

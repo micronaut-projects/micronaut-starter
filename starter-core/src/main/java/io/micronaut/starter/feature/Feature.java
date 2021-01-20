@@ -99,7 +99,7 @@ public interface Feature extends Named, Ordered, Described {
      *
      * This method can be implemented to modify the generated project. The feature can add templates
      * by executing {@link GeneratorContext#addTemplate(String, io.micronaut.starter.template.Template)}, modify configuration
-     * by modifying {@link GeneratorContext#getConfiguration()} or {@link GeneratorContext#getBootstrapConfig()}, or modify build properties through {@link GeneratorContext#getBuildProperties()}.
+     * by modifying {@link GeneratorContext#getConfiguration()} or {@link GeneratorContext#getBootstrapConfiguration()}, or modify build properties through {@link GeneratorContext#getBuildProperties()}.
      *
      * @param generatorContext THe generator context
      */

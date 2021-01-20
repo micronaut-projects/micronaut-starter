@@ -22,14 +22,19 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.template.PropertiesTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 
 import javax.inject.Singleton;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
+
+    private static final String EXTENSION = "yml";
 
     @Override
     public String getName() {
@@ -52,21 +57,8 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", generatorContext.getConfiguration()));
-        if (!generatorContext.getBootstrapConfig().isEmpty()) {
-            generatorContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", generatorContext.getBootstrapConfig()));
-        }
-        Map<String, EnvConfiguration> envConfigs = generatorContext.getEnvConfigurations();
-        if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, EnvConfiguration> envConfig: envConfigs.entrySet()) {
-                String env = envConfig.getKey();
-                Map<String, Object> configs = envConfig.getValue().getEnvConfiguration();
-                String path = envConfig.getValue().getPath();
-                generatorContext.addTemplate("yamlConfig" + StringUtils.capitalize(env),
-                    new YamlTemplate(path + "application-" + env + ".yml", configs));
-            }
-        }
+    public Function<Configuration, Template> createTemplate() {
+        return (config) -> new YamlTemplate(config.getFullPath(EXTENSION), config);
     }
 
     @Override

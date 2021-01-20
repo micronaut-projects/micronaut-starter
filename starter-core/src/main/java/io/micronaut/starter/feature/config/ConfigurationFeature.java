@@ -15,8 +15,16 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.template.Template;
+import io.micronaut.starter.template.YamlTemplate;
+
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public interface ConfigurationFeature extends OneOfFeature {
 
@@ -28,5 +36,18 @@ public interface ConfigurationFeature extends OneOfFeature {
     @Override
     default String getCategory() {
         return Category.CONFIGURATION;
+    }
+
+    Function<Configuration, Template> createTemplate();
+
+    @Override
+    default void apply(GeneratorContext generatorContext) {
+        Function<Configuration, Template> createTemplateFunc = createTemplate();
+        generatorContext.getAllConfigurations()
+                .stream()
+                .filter(config -> !config.isEmpty())
+                .forEach(config -> {
+                    generatorContext.addTemplate(config.getTemplateKey(), createTemplateFunc.apply(config));
+                });
     }
 }

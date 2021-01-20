@@ -47,7 +47,7 @@ public class Consul implements Feature {
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config;
         if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
-            config = generatorContext.getBootstrapConfig();
+            config = generatorContext.getBootstrapConfiguration();
         } else {
             config = generatorContext.getConfiguration();
         }

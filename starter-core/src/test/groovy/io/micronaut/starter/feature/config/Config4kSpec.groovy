@@ -46,11 +46,9 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test configuration files generated for config4k feature"() {
         when:
         GeneratorContext generatorContext = buildGeneratorContext(['config4k'], {context ->
-            context.getBootstrapConfig().put("abc", 123)
-            context.getEnvConfiguration("test", EnvConfiguration.DEFAULT_TEST_PATH)
-                    .getEnvConfiguration().put("abc", 456)
-            context.getEnvConfiguration("prod", EnvConfiguration.DEFAULT_MAIN_PATH)
-                    .getEnvConfiguration().put("abc", 789)
+            context.getBootstrapConfiguration().put("abc", 123)
+            context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
+            context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
         }, new Options(Language.KOTLIN, null, BuildTool.GRADLE))
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 

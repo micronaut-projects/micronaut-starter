@@ -69,9 +69,9 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
 
         then:
         commandContext.configuration.get('consul.client.registration.enabled'.toString()) == true
-        commandContext.bootstrapConfig.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
+        commandContext.bootstrapConfiguration.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
 
-        !commandContext.bootstrapConfig.containsKey('consul.client.registration.enabled')
+        !commandContext.bootstrapConfiguration.containsKey('consul.client.registration.enabled')
         !commandContext.configuration.containsKey('consul.client.defaultZone')
     }
 

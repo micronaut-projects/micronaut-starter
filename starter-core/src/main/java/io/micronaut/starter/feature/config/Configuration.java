@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.config;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -26,31 +27,42 @@ import java.util.Objects;
  *
  * @since 2.3.0
  */
-public class EnvConfiguration {
-
-    public static final String DEFAULT_MAIN_PATH = "src/main/resources/";
-    public static final String DEFAULT_TEST_PATH = "src/test/resources/";
+public class Configuration extends LinkedHashMap<String, Object> {
 
     private final String path;
-    private final Map<String, Object> envConfiguration;
+    private final String fileName;
+    private final String templateKey;
 
     /**
      * A configuration rooted at path, with the given map of configurations
      *
-     * @param path where the configuration is rooted, e.g. src/main/resources
-     * @param envConfiguration the configuration value
+     * @param sourceSet where the configuration is rooted, e.g. main, test
      */
-    public EnvConfiguration(@NonNull String path, @NonNull Map<String, Object> envConfiguration) {
-        this.path = path.endsWith("/") ? path : path + "/";
-        this.envConfiguration = envConfiguration;
+    public Configuration(@NonNull String sourceSet, @NonNull String fileName, @NonNull String templateKey) {
+        super();
+        this.path = "src/" + sourceSet + "/resources/";
+        this.fileName = fileName;
+        this.templateKey = templateKey;
     }
 
-    @NonNull public String getPath() {
+    @NonNull
+    public String getPath() {
         return path;
     }
 
-    @NonNull public Map<String, Object> getEnvConfiguration() {
-        return envConfiguration;
+    @NonNull
+    public String getFileName() {
+        return fileName;
+    }
+
+    @NonNull
+    public String getFullPath(String extension) {
+        return path + fileName + "." + extension;
+    }
+
+    @NonNull
+    public String getTemplateKey() {
+        return templateKey;
     }
 
     @Override
@@ -61,12 +73,13 @@ public class EnvConfiguration {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        EnvConfiguration that = (EnvConfiguration) o;
-        return path.equals(that.path) && envConfiguration.equals(that.envConfiguration);
+        Configuration that = (Configuration) o;
+        return templateKey.equals(that.templateKey);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(path, envConfiguration);
+        return Objects.hash(templateKey);
     }
+
 }

@@ -21,7 +21,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.config.EnvConfiguration;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.StringTemplate;
@@ -65,9 +66,8 @@ public class TestContainers implements Feature {
                 }
 
                 if (url != null) {
-                    EnvConfiguration testConfig = generatorContext.getEnvConfiguration(
-                        "test", EnvConfiguration.DEFAULT_TEST_PATH);
-                    testConfig.getEnvConfiguration().put(driverConfiguration.getUrlKey(), url);
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    testConfig.put(driverConfiguration.getUrlKey(), url);
                 }
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
@@ -88,10 +88,9 @@ public class TestContainers implements Feature {
                 }
 
                 if (url != null) {
-                    EnvConfiguration testConfig = generatorContext.getEnvConfiguration(
-                        "test", EnvConfiguration.DEFAULT_TEST_PATH);
-                    testConfig.getEnvConfiguration().put(driverConfiguration.getUrlKey(), url);
-                    testConfig.getEnvConfiguration().put(driverConfiguration.getDriverKey(), driver);
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    testConfig.put(driverConfiguration.getUrlKey(), url);
+                    testConfig.put(driverConfiguration.getDriverKey(), driver);
                 }
             });
         });

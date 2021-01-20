@@ -66,7 +66,7 @@ public class KubernetesConfig implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfig().put("micronaut.config-client.enabled", true);
+        generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
     }
 
     @Override

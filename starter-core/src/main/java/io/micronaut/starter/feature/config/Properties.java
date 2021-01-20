@@ -19,13 +19,18 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.template.Config4kTemplate;
 import io.micronaut.starter.template.PropertiesTemplate;
+import io.micronaut.starter.template.Template;
 
 import javax.inject.Singleton;
 import java.util.Map;
+import java.util.function.Function;
 
 @Singleton
 public class Properties implements ConfigurationFeature {
+
+    private static final String EXTENSION = "properties";
 
     @Override
     public String getName() {
@@ -48,21 +53,8 @@ public class Properties implements ConfigurationFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("propertiesConfig", new PropertiesTemplate("src/main/resources/application.properties", generatorContext.getConfiguration()));
-        if (!generatorContext.getBootstrapConfig().isEmpty()) {
-            generatorContext.addTemplate("propertiesBootstrapConfig", new PropertiesTemplate("src/main/resources/bootstrap.properties", generatorContext.getBootstrapConfig()));
-        }
-        Map<String, EnvConfiguration> envConfigs = generatorContext.getEnvConfigurations();
-        if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, EnvConfiguration> envConfig: envConfigs.entrySet()) {
-                String env = envConfig.getKey();
-                Map<String, Object> configs = envConfig.getValue().getEnvConfiguration();
-                String path = envConfig.getValue().getPath();
-                generatorContext.addTemplate("propertiesConfig" + StringUtils.capitalize(env),
-                    new PropertiesTemplate(path + "application-" + env + ".properties", configs));
-            }
-        }
+    public Function<Configuration, Template> createTemplate() {
+        return (config) -> new PropertiesTemplate(config.getFullPath(EXTENSION), config);
     }
 
     @Override
