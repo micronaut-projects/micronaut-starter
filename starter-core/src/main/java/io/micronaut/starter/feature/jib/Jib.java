@@ -18,8 +18,6 @@ package io.micronaut.starter.feature.jib;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.other.ShadePlugin;
 
 import javax.inject.Singleton;
 
@@ -39,11 +37,6 @@ public class Jib implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for Jib builds";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.exclude(feature -> feature instanceof ShadePlugin);
     }
 
     @Override

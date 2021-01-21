@@ -19,6 +19,12 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")")
         template.contains("runtimeOnly(\"com.h2database:h2\")")
 
+        when:
+        template = template.replace("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")", "")
+
+        then: "make sure we didn't add default JdbcFeature if some other was added"
+        !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name
     }

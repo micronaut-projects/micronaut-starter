@@ -18,12 +18,15 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class MongoSync implements Feature {
+public class MongoSync extends MongoFeature {
+
+    public MongoSync(TestContainers testContainers) {
+        super(testContainers);
+    }
 
     @Override
     public String getName() {
@@ -55,4 +58,13 @@ public class MongoSync implements Feature {
         return Category.DATABASE;
     }
 
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.mongodb.com";
+    }
 }

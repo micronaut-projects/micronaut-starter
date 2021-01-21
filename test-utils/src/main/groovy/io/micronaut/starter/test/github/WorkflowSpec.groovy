@@ -17,6 +17,8 @@ import org.apache.tuweni.crypto.sodium.Box
 import spock.lang.Shared
 import spock.util.concurrent.PollingConditions
 
+import java.util.stream.Collectors
+
 /**
  * Spec class for testing of GitHub workflows. If the creation of secrets on demand is requested, then the LibSodium
  * have to be installed in the system. For more information <a href="https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets">encrypted secrets</a>
@@ -49,6 +51,11 @@ abstract class WorkflowSpec extends CommandSpec{
         GitHubApiClient apiClient = beanContext.getBean(GitHubApiClient)
         GitHubUser owner = apiClient.getUser(apiToken)
 
+        GitHubRepository repo = apiClient.getRepository(apiToken, owner.login, project.name)
+        if(repo){
+            log.debug("Deleting repository ${project.name}")
+            apiClient.deleteRepository(apiToken, owner.login, project.name)
+        }
         GitHubRepository repository = apiClient.createRepository(apiToken, new GitHubRepository(repoName, "Test"))
         log.debug("Repository created ${repository}")
 
@@ -95,9 +102,10 @@ abstract class WorkflowSpec extends CommandSpec{
      * @param project the project
      */
     protected void cleanupGitHubRepository(Project project){
-        GitHubApiClient apiClient = beanContext.getBean(GitHubApiClient)
-        GitHubUser gitHubUser = apiClient.getUser(apiToken)
-        apiClient.deleteRepository(apiToken, gitHubUser.login, project.name)
+// TODO: remove
+//        GitHubApiClient apiClient = beanContext.getBean(GitHubApiClient)
+//        GitHubUser gitHubUser = apiClient.getUser(apiToken)
+//        apiClient.deleteRepository(apiToken, gitHubUser.login, project.name)
     }
 
     protected static Secret secretFromEnvVariable(String envVariable){
@@ -116,5 +124,28 @@ abstract class WorkflowSpec extends CommandSpec{
         Box.PublicKey pubKey = Box.PublicKey.fromBytes(Base64.getDecoder().decode(secretsKey.getBytes()))
         byte[] encrypted = Box.encryptSealed(secret.getBytes(), pubKey)
         return new String(Base64.getEncoder().encode(encrypted))
+    }
+
+    static List<String> splitAfterNChars(String input, int len){
+        return new ArrayList<String>(Arrays.asList(input.split(String.format("(?<=\\G.{%1\$d})", len))))
+    }
+
+    static String convertPrivateKeyOnelinerToMultiline(String oneliner) {
+        if(oneliner.contains("\n")){
+            return oneliner
+        }
+
+        // Get the key content without
+        String code = oneliner.replace('-----BEGIN PRIVATE KEY-----', '')
+                .replace('-----END PRIVATE KEY-----', '')
+                .replace(' ', '')
+
+        // split content by 64 charts
+        List<String> multiline = splitAfterNChars(code, 64)
+
+        // add header and footer
+        multiline.add(0, '-----BEGIN PRIVATE KEY-----')
+        multiline.add('-----END PRIVATE KEY-----')
+        return multiline.stream().collect(Collectors.joining("\n"))
     }
 }

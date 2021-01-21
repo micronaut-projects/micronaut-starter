@@ -20,7 +20,6 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
@@ -30,20 +29,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
-public class DataR2dbc implements Feature {
+public class DataR2dbc implements R2dbcFeature {
     private final Data data;
-    private final R2dbcFeature r2dbcFeature;
+    private final R2dbc r2dbc;
 
-    public DataR2dbc(Data data, R2dbcFeature r2dbcFeature) {
+    public DataR2dbc(Data data, R2dbc r2dbc) {
         this.data = data;
-        this.r2dbcFeature = r2dbcFeature;
+        this.r2dbc = r2dbc;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
-        if (!featureContext.isPresent(R2dbcFeature.class)) {
-            featureContext.addFeature(r2dbcFeature);
+        if (!featureContext.isPresent(R2dbc.class)) {
+            featureContext.addFeature(r2dbc);
         }
     }
 

@@ -18,19 +18,35 @@ package io.micronaut.starter.application.generator;
 import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.options.*;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.config.BootstrapConfiguration;
+import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
-import io.micronaut.starter.build.BuildProperties;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * A context object used when generating projects.
@@ -43,9 +59,12 @@ public class GeneratorContext {
     private final Project project;
     private final OperatingSystem operatingSystem;
     private final BuildProperties buildProperties = new BuildProperties();
-    private final Map<String, Object> configuration = new LinkedHashMap<>();
-    private final Map<String, Map<String, Object>> environmentConfiguration = new LinkedHashMap<>();
-    private final Map<String, Object> bootstrapConfig = new LinkedHashMap<>();
+    private final ApplicationConfiguration configuration = new ApplicationConfiguration();
+    private final Map<String, ApplicationConfiguration> applicationEnvironmentConfiguration = new LinkedHashMap<>();
+    private final Map<String, BootstrapConfiguration> bootstrapEnvironmentConfiguration = new LinkedHashMap<>();
+    private final BootstrapConfiguration bootstrapConfiguration = new BootstrapConfiguration();
+    private final Set<Configuration> otherConfiguration = new HashSet<>();
+
     private final Map<String, Template> templates = new LinkedHashMap<>();
     private final List<Writable> helpTemplates = new ArrayList<>(8);
     private final ApplicationType command;
@@ -106,29 +125,51 @@ public class GeneratorContext {
     /**
      * @return The configuration
      */
-    @NonNull public Map<String, Object> getConfiguration() {
+    @NonNull public ApplicationConfiguration getConfiguration() {
         return configuration;
     }
 
     /**
      * @return The configuration
      */
-    @NonNull public Map<String, Object> getEnvConfiguration(String env) {
-        return environmentConfiguration.computeIfAbsent(env, (k) -> new LinkedHashMap<>());
+    @Nullable public ApplicationConfiguration getConfiguration(String env) {
+        return applicationEnvironmentConfiguration.get(env);
+    }
+
+    @NonNull public ApplicationConfiguration getConfiguration(String env, ApplicationConfiguration defaultConfig) {
+        return applicationEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
     }
 
     /**
      * @return The configuration
      */
-    @NonNull public Map<String, Map<String, Object>> getEnvConfigurations() {
-        return environmentConfiguration;
+    @Nullable public BootstrapConfiguration getBootstrapConfiguration(String env) {
+        return bootstrapEnvironmentConfiguration.get(env);
+    }
+
+    @NonNull public BootstrapConfiguration getBootstrapConfiguration(String env, BootstrapConfiguration defaultConfig) {
+        return bootstrapEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
     }
 
     /**
      * @return The bootstrap config
      */
-    @NonNull public Map<String, Object> getBootstrapConfig() {
-        return bootstrapConfig;
+    @NonNull public BootstrapConfiguration getBootstrapConfiguration() {
+        return bootstrapConfiguration;
+    }
+
+    public void addConfiguration(@NonNull Configuration configuration) {
+        otherConfiguration.add(configuration);
+    }
+
+    @NonNull public Set<Configuration> getAllConfigurations() {
+        Set<Configuration> allConfigurations = new HashSet<>();
+        allConfigurations.add(configuration);
+        allConfigurations.add(bootstrapConfiguration);
+        allConfigurations.addAll(applicationEnvironmentConfiguration.values());
+        allConfigurations.addAll(bootstrapEnvironmentConfiguration.values());
+        allConfigurations.addAll(otherConfiguration);
+        return allConfigurations;
     }
 
     /**

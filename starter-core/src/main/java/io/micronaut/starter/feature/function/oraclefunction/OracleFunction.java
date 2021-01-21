@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
+import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.feature.server.template.groovyJunit;
 import io.micronaut.starter.feature.server.template.javaJunit;
 import io.micronaut.starter.feature.server.template.koTest;
@@ -53,6 +54,10 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         if (!featureContext.isPresent(SimpleLogging.class)) {
             featureContext.addFeature(simpleLogging);
             featureContext.exclude(feature -> feature instanceof Logback);
+        }
+
+        if (featureContext.isPresent(ServerFeature.class)) {
+            featureContext.exclude(feature -> feature instanceof ServerFeature);
         }
     }
 

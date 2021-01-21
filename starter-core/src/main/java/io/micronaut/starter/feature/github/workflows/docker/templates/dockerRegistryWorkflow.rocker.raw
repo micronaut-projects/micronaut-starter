@@ -1,0 +1,43 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.feature.github.workflows.templates.graalvmSetup
+@import io.micronaut.starter.feature.github.workflows.templates.javaSetup
+@import io.micronaut.starter.feature.github.workflows.templates.buildAndPushImage
+
+@args (
+Project project,
+JdkVersion jdkVersion,
+BuildTool buildTool,
+boolean isGraal
+)
+
+@if (isGraal) {
+name: GraalVM CE CI
+} else {
+name: Java CI
+}
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+@if (isGraal) {
+@graalvmSetup.template(buildTool, jdkVersion)
+} else {
+@javaSetup.template(buildTool, jdkVersion)
+}
+      - name: Docker login
+        uses: docker/login-action@@v1
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY_URL }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build And Push Docker Image
+        env:
+          DOCKER_REPOSITORY_PATH: ${{ secrets.DOCKER_REPOSITORY_PATH }}
+          DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_URL }}
+          TESTCONTAINERS_RYUK_DISABLED: true
+        run: |
+          export DOCKER_IMAGE=`echo "${DOCKER_REGISTRY_URL}/${DOCKER_REPOSITORY_PATH}/@project.getName()" | sed -e 's#//#/#' -e 's#^/##'`
+@buildAndPushImage.template(buildTool, isGraal)

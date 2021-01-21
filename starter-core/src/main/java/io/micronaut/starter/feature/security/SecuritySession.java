@@ -20,6 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpSession;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
@@ -54,6 +55,7 @@ public class SecuritySession implements Feature, MicronautServerDependent {
         if (!featureContext.isPresent(SecurityAnnotations.class)) {
             featureContext.addFeature(securityAnnotations);
         }
+        featureContext.exclude(feature -> feature instanceof HttpSession);
     }
 
     @Override

@@ -34,9 +34,9 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test configuration files generated for yaml feature"() {
         when:
         GeneratorContext generatorContext = buildGeneratorContext([], { context ->
-            context.getBootstrapConfig().put("abc", 123)
-            context.getEnvConfiguration("test").put("abc", 456)
-            context.getEnvConfiguration("prod").put("abc", 789)
+            context.getBootstrapConfiguration().put("abc", 123)
+            context.getConfiguration("test", new ApplicationConfiguration("test", "test")).put("abc", 456)
+            context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
         }, new Options())
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
@@ -49,7 +49,7 @@ micronaut:
         output["src/main/resources/bootstrap.yml"] == '''\
 abc: 123
 '''
-        output["src/main/resources/application-test.yml"] == '''\
+        output["src/test/resources/application-test.yml"] == '''\
 abc: 456
 '''
         output["src/main/resources/application-prod.yml"] == '''\

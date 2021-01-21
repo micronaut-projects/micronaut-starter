@@ -16,14 +16,15 @@
 package io.micronaut.starter.feature.database;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;
 
 @Singleton
 public class Oracle extends DatabaseDriverFeature {
 
-    public Oracle(TestContainers testContainers) {
-        super(testContainers);
+    public Oracle(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        super(jdbcFeature, testContainers);
     }
 
     @Override
