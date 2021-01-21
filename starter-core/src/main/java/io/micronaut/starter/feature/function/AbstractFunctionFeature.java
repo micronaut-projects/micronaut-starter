@@ -30,6 +30,8 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
+import java.util.Optional;
+
 /**
  * Abstract function implementation.
  *
@@ -53,9 +55,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         BuildTool buildTool = generatorContext.getBuildTool();
 
-
-        generatorContext.addHelpTemplate(new RockerWritable(readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
-
+        readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)
+            .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
 
         if (type == ApplicationType.DEFAULT) {
 
@@ -102,7 +103,9 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
         generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
-    protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
+    protected Optional<RockerModel> readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
+        return Optional.empty();
+    }
 
     protected abstract String getRunCommand(BuildTool buildTool);
 

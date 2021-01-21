@@ -2,14 +2,12 @@ package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Subject
@@ -22,7 +20,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     @Subject
     GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
 
-    void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
+    void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
         def output = generate(
             ApplicationType.DEFAULT,
@@ -33,7 +31,22 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction")
+        verifyAll {
+            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions")
+            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions")
+        }
+
+        when:
+        readme = readme.replaceFirst("## Feature google-cloud-function documentation","")
+        readme = readme.replaceFirst("## Feature google-cloud-function-http documentation","")
+        readme = readme.replaceFirst("# Micronaut and Google Cloud Function","")
+
+        then:
+        verifyAll {
+            !readme.contains("## Feature google-cloud-function documentation")
+            !readme.contains("## Feature google-cloud-function-http documentation")
+            !readme.contains("# Micronaut and Google Cloud Function")
+        }
 
         where:
         language << Language.values().toList()
@@ -135,5 +148,19 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         where:
         jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_9, JdkVersion.JDK_10]
+    }
+
+    void 'test Google Cloud Function with graalvm is unsupported'() {
+        when:
+        generate(
+            ApplicationType.DEFAULT,
+            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            ['google-cloud-function','graalvm']
+        )
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'Google Cloud Function is not supported for GraalVM. ' +
+                'Consider Google Cloud Run for deploying GraalVM native images as docker containers.'
     }
 }

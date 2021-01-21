@@ -85,7 +85,7 @@ public class ContextFactory {
             language = Language.infer(features);
         }
         if (language == null) {
-            language = Language.JAVA;
+            language = Language.DEFAULT_OPTION;
         }
         return language;
     }

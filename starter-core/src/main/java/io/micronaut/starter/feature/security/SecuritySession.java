@@ -21,11 +21,12 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpSession;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SecuritySession implements Feature {
+public class SecuritySession implements Feature, MicronautServerDependent {
 
     public static final int ORDER = SecurityOAuth2.ORDER + 10;
     private final SecurityAnnotations securityAnnotations;

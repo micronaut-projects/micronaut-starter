@@ -13,37 +13,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.function.gcp;
+package io.micronaut.starter.feature.server;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+/**
+ * Validates that features dependent on a Micronaut server are not included when
+ * a 3rd party (i.e. non-Micronaut) server is selected.
+ */
 @Singleton
-public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
-
+public class MicronautServerDependentValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction || f instanceof GoogleCloudRawFunction)) {
-            if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
-                throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
-                    "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
+
+        features.stream().filter(f -> f instanceof ThirdPartyServerFeature).findFirst().ifPresent(feature -> {
+            List<String> dependents = features.stream()
+            .filter(f -> f instanceof MicronautServerDependent)
+            .map(Feature::getName)
+            .sorted()
+            .collect(Collectors.toList());
+
+            if (!dependents.isEmpty()) {
+                throw new IllegalArgumentException(feature.getName() +
+                    " cannot be used with these features that depend on a Micronaut Server: " +
+                    dependents);
             }
-        }
+        });
     }
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction)) {
-            if (options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
-                throw new IllegalArgumentException("Google Cloud Function needs at least JDK 11");
-            }
-        }
+
     }
 }

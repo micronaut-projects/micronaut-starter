@@ -11,7 +11,7 @@ import io.micronaut.starter.options.TestFramework
 
 class AzureRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
-    void 'test readme.md with feature azure-function contains links to micronaut docs'() {
+    void 'test readme.md with feature azure-function contains links to docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
         def output = generate(ApplicationType.FUNCTION, options, ['azure-function'])
@@ -19,6 +19,19 @@ class AzureRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixt
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions")
+        verifyAll {
+            readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions")
+            !readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions")
+            readme.contains("https://docs.microsoft.com/azure")
+            // don't add azure-function-http for ApplicationType.FUNCTION
+            !readme.contains("## Feature azure-function-http documentation")
+        }
+
+        when:
+        readme = readme.replaceFirst("## Feature azure-function documentation","")
+
+        then:
+        // make sure we didn't add docs more than once
+        !readme.contains("## Feature azure-function documentation")
     }
 }
