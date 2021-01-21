@@ -5,7 +5,6 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.io.MapOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
@@ -47,9 +46,9 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test configuration files generated for config4k feature"() {
         when:
         GeneratorContext generatorContext = buildGeneratorContext(['config4k'], {context ->
-            context.getBootstrapConfig().put("abc", 123)
-            context.getEnvConfiguration("test").put("abc", 456)
-            context.getEnvConfiguration("prod").put("abc", 789)
+            context.getBootstrapConfiguration().put("abc", 123)
+            context.getConfiguration("test", ApplicationConfiguration.testConfig()).put("abc", 456)
+            context.getConfiguration("prod", new ApplicationConfiguration("prod")).put("abc", 789)
         }, new Options(Language.KOTLIN, null, BuildTool.GRADLE))
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
@@ -64,7 +63,7 @@ micronaut {
         output["src/main/resources/bootstrap.conf"] == '''\
 abc=123
 '''
-        output["src/main/resources/application-test.conf"] == '''\
+        output["src/test/resources/application-test.conf"] == '''\
 abc=456
 '''
         output["src/main/resources/application-prod.conf"] == '''\

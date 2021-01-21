@@ -58,8 +58,8 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
         GeneratorContext commandContext = buildGeneratorContext(['config-kubernetes'])
 
         then:
-        commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'
-        commandContext.bootstrapConfig.get('micronaut.config-client.enabled'.toString()) == true
+        commandContext.bootstrapConfiguration.get('micronaut.application.name'.toString()) == 'foo'
+        commandContext.bootstrapConfiguration.get('micronaut.config-client.enabled'.toString()) == true
         commandContext.templates.get('k8sYaml')
     }
 
@@ -69,7 +69,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
         GeneratorContext commandContext = buildGeneratorContext(['kubernetes'])
 
         then:
-        commandContext.bootstrapConfig.get('micronaut.config-client.enabled'.toString()) == null
+        commandContext.bootstrapConfiguration.get('micronaut.config-client.enabled'.toString()) == null
         commandContext.templates.get('k8sYaml')
     }
 }

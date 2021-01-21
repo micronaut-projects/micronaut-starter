@@ -16,11 +16,12 @@
 package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class Zipkin implements TracingFeature {
+public class Zipkin implements TracingFeature, MicronautServerDependent {
 
     @Override
     public String getName() {

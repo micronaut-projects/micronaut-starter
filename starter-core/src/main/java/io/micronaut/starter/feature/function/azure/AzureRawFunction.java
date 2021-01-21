@@ -15,15 +15,19 @@
  */
 package io.micronaut.starter.feature.function.azure;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 
 import javax.inject.Singleton;
+import java.util.Optional;
 
 @Singleton
 public class AzureRawFunction extends AbstractAzureFunction {
@@ -69,7 +73,23 @@ public class AzureRawFunction extends AbstractAzureFunction {
     }
 
     @Override
+    protected Optional<RockerModel> readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
+        return Optional.of(
+            azureFunctionReadme.template(
+                project,
+                generatorContext.getFeatures(),
+                getRunCommand(buildTool),
+                getBuildCommand(buildTool))
+        );
+    }
+
+    @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.microsoft.com/azure";
     }
 }

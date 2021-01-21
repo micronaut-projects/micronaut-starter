@@ -24,13 +24,22 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
-import io.micronaut.starter.feature.function.gcp.template.raw.*;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionKotlin;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionJavaJunit;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKoTest;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawFunctionSpock;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;
+import java.util.Optional;
 
 @Singleton
 public class GoogleCloudRawFunction extends AbstractFunctionFeature implements CloudFeature {
@@ -91,11 +100,19 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
     }
 
     @Override
-    protected RockerModel readmeTemplate(
+    protected Optional<RockerModel> readmeTemplate(
             GeneratorContext generatorContext,
             Project project,
             BuildTool buildTool) {
-        return googleCloudFunction.readmeTemplate(generatorContext, project, buildTool);
+        return Optional.of(
+            gcpFunctionReadme.template(
+                project,
+                generatorContext.getFeatures(),
+                getRunCommand(buildTool),
+                getBuildCommand(buildTool),
+                generatorContext.getApplicationType() == ApplicationType.FUNCTION
+            )
+        );
     }
 
     @Override
@@ -160,6 +177,6 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#simpleFunctions";
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions";
     }
 }

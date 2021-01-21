@@ -21,7 +21,14 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.azure.template.*;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionKoTest;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionSpock;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerGroovy;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
 
 import javax.inject.Singleton;
 
