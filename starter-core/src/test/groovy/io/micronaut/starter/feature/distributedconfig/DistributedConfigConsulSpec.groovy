@@ -79,9 +79,9 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
         GeneratorContext commandContext = buildGeneratorContext(['config-consul'])
 
         then:
-        commandContext.bootstrapConfig.get('micronaut.application.name'.toString()) == 'foo'
-        commandContext.bootstrapConfig.get('micronaut.config-client.enabled'.toString()) == true
-        commandContext.bootstrapConfig.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
+        commandContext.bootstrapConfiguration.get('micronaut.application.name'.toString()) == 'foo'
+        commandContext.bootstrapConfiguration.get('micronaut.config-client.enabled'.toString()) == true
+        commandContext.bootstrapConfiguration.get('consul.client.defaultZone') == '${CONSUL_HOST:localhost}:${CONSUL_PORT:8500}'
     }
 
 }
