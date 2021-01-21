@@ -662,6 +662,15 @@ List<Property> properties
 @dependency.template("org.testcontainers", "mssqlserver", "test", null)
 }
 }
+@if (features.contains("jms-activemq-artemis")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
+}
+@if (features.contains("jms-activemq-classic")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
+}
+@if (features.contains("jms-sqs")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
+}
   </dependencies>
 
   <build>
