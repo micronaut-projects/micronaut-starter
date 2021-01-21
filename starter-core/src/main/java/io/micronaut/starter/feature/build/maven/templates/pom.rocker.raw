@@ -93,7 +93,7 @@ List<Property> properties
       </snapshots>
       <releases>
         <enabled>false</enabled>
-      </releases>      
+      </releases>
     </repository>
     }
     @if (features.contains("oracle-function")) {
@@ -380,6 +380,15 @@ List<Property> properties
 }
 @if (features.contains("nats")) {
 @dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
+}
+@if (features.contains("jms-activemq-artemis")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
+}
+@if (features.contains("jms-activemq-classic")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
+}
+@if (features.contains("jms-sqs")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
 }
 @if (features.contains("cassandra")) {
 @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
@@ -677,15 +686,6 @@ List<Property> properties
 @if (features.isFeaturePresent(MongoFeature.class)) {
 @dependency.template("org.testcontainers", "mongodb", "test", null)
 }
-}
-@if (features.contains("jms-activemq-artemis")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
-}
-@if (features.contains("jms-sqs")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
 }
   </dependencies>
 
