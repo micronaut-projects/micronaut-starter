@@ -329,6 +329,15 @@ dependencies {
 @if (features.contains("mqttv3")) {
     @dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "implementation", null)
 }
+@if (features.contains("jms-activemq-artemis")) {
+    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "implementation", null)
+}
+@if (features.contains("jms-activemq-classic")) {
+    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "implementation", null)
+}
+@if (features.contains("jms-sqs")) {
+    @dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "implementation", null)
+}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
@@ -520,15 +529,6 @@ dependencies {
 }
 @if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
-}
-@if (features.contains("jms-activemq-artemis")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "implementation", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "implementation", null)
-}
-@if (features.contains("jms-sqs")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "implementation", null)
 }
 }
 }
