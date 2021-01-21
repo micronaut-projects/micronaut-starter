@@ -19,10 +19,18 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.*;
-import io.micronaut.starter.feature.kotlin.templates.*;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
+import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
+import io.micronaut.starter.feature.kotlin.templates.jacksonFeatureKotlin;
+import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
+import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
-import io.micronaut.starter.feature.server.ServerFeature;
+import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -30,7 +38,7 @@ import javax.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSpecificFeature {
+public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, LanguageSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {

@@ -21,7 +21,18 @@ class GoogleCloudRawFunctionSpec extends BeanContextSpec  implements CommandOutp
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-gcp/snapshot/guide/index.html#simpleFunctions")
+        verifyAll {
+            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions")
+            // don't add azure-function-http for ApplicationType.FUNCTION
+            !readme.contains("## Feature google-cloud-function-http documentation")
+        }
+
+        when:
+        readme = readme.replaceFirst("## Feature google-cloud-function documentation", "")
+
+        then:
+        // make sure we didn't add docs more than once
+        !readme.contains("## Feature google-cloud-function documentation")
     }
 
 }

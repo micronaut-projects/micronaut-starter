@@ -20,11 +20,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SecurityJWT implements Feature {
+public class SecurityJWT implements Feature, MicronautServerDependent {
 
     public static final int ORDER = 0;
     private final SecurityAnnotations securityAnnotations;

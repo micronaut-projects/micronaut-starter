@@ -17,11 +17,12 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SecurityAnnotations implements Feature {
+public class SecurityAnnotations implements Feature, MicronautServerDependent {
 
     @Override
     public String getName() {
