@@ -37,7 +37,7 @@ dependencies {
     @dependency.template("io.micronaut.picocli", "micronaut-picocli", "implementation", null)
 }
 @if (features.contains("annotation-api")) {
-    @dependency.template("jakarta.annotation", "jakarta.annotation-api", "implementation", null)
+    @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
 }
 @if (features.contains("oracle-cloud-sdk")) {
     @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "implementation", null)
