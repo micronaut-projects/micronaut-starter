@@ -26,6 +26,11 @@ public abstract class AbstractJmsFeature implements JmsFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-jms/latest/guide/index.html";
+        return "https://micronaut-projects.github.io/micronaut-jms/snapshot/guide/index.html";
+    }
+
+    @Override
+    public boolean isPreview() {
+        return true;
     }
 }
