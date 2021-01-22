@@ -19,7 +19,7 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains 'https://micronaut-projects.github.io/micronaut-jms/latest/guide/index.html'
+        readme.contains 'https://micronaut-projects.github.io/micronaut-jms/snapshot/guide/index.html'
 
         where:
         feature << beanContext
