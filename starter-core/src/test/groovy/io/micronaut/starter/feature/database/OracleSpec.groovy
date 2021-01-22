@@ -4,10 +4,14 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class OracleSpec extends BeanContextSpec {
+import java.util.stream.Collectors
+
+class OracleSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Unroll
     void 'test gradle oracle feature for language=#language'() {
@@ -39,4 +43,18 @@ class OracleSpec extends BeanContextSpec {
         language << Language.values().toList()
     }
 
+    @Unroll
+    void "test exception for oracle and #r2dbcFeature features"() {
+        when:
+        generate(['oracle',r2dbcFeature])
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message.startsWith("R2DBC is not yet supported by Oracle")
+
+        where:
+        r2dbcFeature << beanContext.streamOfType(R2dbcFeature)
+                .map { f -> f.name }
+                .collect(Collectors.toList())
+    }
 }
