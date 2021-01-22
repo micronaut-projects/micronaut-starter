@@ -3,7 +3,9 @@ package io.micronaut.starter.core.test.buildTool
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.Requires
 import spock.lang.Unroll
+import spock.util.environment.Jvm
 
 class MavenPackageSpec extends CommandSpec {
 
@@ -46,6 +48,7 @@ class MavenPackageSpec extends CommandSpec {
 
 
     @Unroll
+    @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging for #lang'(Language lang) {
         given:
         generateProject(lang, BuildTool.MAVEN, [])

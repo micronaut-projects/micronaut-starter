@@ -107,3 +107,24 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.cloud.*"
+  test-buildTool:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['8', '11', '15']
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-test-aws-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-test-aws-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Run app Functional Tests
+        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.buildTool.*"
