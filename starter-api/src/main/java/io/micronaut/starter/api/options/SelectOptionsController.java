@@ -16,6 +16,7 @@
 package io.micronaut.starter.api.options;
 
 import io.micronaut.context.MessageSource;
+import io.micronaut.context.i18n.ResourceBundleMessageSource;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -23,7 +24,7 @@ import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.SelectOptionsDTO;
 
 import javax.inject.Inject;
-
+import javax.inject.Singleton;
 
 /**
  * Gets Information about select options for the starter.
@@ -38,6 +39,7 @@ public class SelectOptionsController implements SelectOptionsOperations {
 
     /**
      * Gets select options for the starter
+     *
      * @return Select Options and their defaults.
      */
     @Override
@@ -45,5 +47,12 @@ public class SelectOptionsController implements SelectOptionsOperations {
     public SelectOptionsDTO selectOptions(RequestInfo requestInfo) {
         MessageSource.MessageContext context = MessageSource.MessageContext.of(requestInfo.getLocale());
         return SelectOptionsDTO.make(messageSource, context);
+    }
+
+    @Singleton
+    static class SelectOptionMessages extends ResourceBundleMessageSource {
+        SelectOptionMessages() {
+            super("select_options");
+        }
     }
 }

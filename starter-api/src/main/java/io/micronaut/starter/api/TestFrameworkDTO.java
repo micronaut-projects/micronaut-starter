@@ -83,7 +83,7 @@ public class TestFrameworkDTO extends Linkable implements Named, Described, Sele
     TestFrameworkDTO(TestFramework testFramework, MessageSource messageSource, MessageSource.MessageContext messageContext) {
         this.value = testFramework;
         this.name = testFramework.toString();
-        this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, name);
+        this.description = messageSource.getMessage(MESSAGE_PREFIX + name + ".description", messageContext, NameUtils.getNaturalNameOfEnum(name));
         this.defaultLanguage = new LanguageDTO(testFramework.getDefaultLanguage());
         this.supportedLanguages = testFramework.getSupportedLanguages()
                 .stream()
@@ -114,6 +114,6 @@ public class TestFrameworkDTO extends Linkable implements Named, Described, Sele
     @Override
     @Schema(description = "The label of the testFramework for select options")
     public String getLabel() {
-        return NameUtils.getNaturalNameOfEnum(description);
+        return description;
     }
 }
