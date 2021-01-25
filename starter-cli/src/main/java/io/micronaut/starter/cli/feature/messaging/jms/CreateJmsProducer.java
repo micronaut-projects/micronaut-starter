@@ -26,6 +26,9 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.jms.template.producer.groovyProducer;
 import io.micronaut.starter.cli.feature.messaging.jms.template.producer.javaProducer;
 import io.micronaut.starter.cli.feature.messaging.jms.template.producer.kotlinProducer;
+import io.micronaut.starter.feature.messaging.jms.ActiveMqArtemis;
+import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic;
+import io.micronaut.starter.feature.messaging.jms.SQS;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
@@ -57,9 +60,9 @@ public class CreateJmsProducer extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getFeatures().contains("jms-activemq-artemis")
-            || config.getFeatures().contains("jms-activemq-classic")
-            || config.getFeatures().contains("jms-sqs");
+        return config.getFeatures().contains(ActiveMqArtemis.NAME)
+            || config.getFeatures().contains(ActiveMqClassic.NAME)
+            || config.getFeatures().contains(SQS.NAME);
     }
 
     @Override
@@ -74,11 +77,11 @@ public class CreateJmsProducer extends CodeGenCommand {
         RockerModel rockerModel = null;
 
         String configClass = null;
-        if (config.getFeatures().contains("jms-activemq-artemis")) {
+        if (config.getFeatures().contains(ActiveMqArtemis.NAME)) {
             configClass = "io.micronaut.jms.activemq.artemis.configuration.ActiveMqArtemisConfiguration";
-        } else if (config.getFeatures().contains("jms-activemq-classic")) {
+        } else if (config.getFeatures().contains(ActiveMqClassic.NAME)) {
             configClass = "io.micronaut.jms.activemq.classic.configuration.ActiveMqClassicConfiguration";
-        } else if (config.getFeatures().contains("jms-sqs")) {
+        } else if (config.getFeatures().contains(SQS.NAME)) {
             configClass = "io.micronaut.jms.sqs.configuration.SqsConfiguration";
         }
 
