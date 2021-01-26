@@ -6,8 +6,8 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.IgnoreIf
 import spock.lang.Requires
+import spock.lang.Retry
 import spock.lang.Unroll
 import spock.util.environment.Jvm
 
@@ -18,6 +18,7 @@ class CreateGoogleCloudFunctionSpec extends CommandSpec{
         "test-gcpfunction"
     }
 
+    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features google-cloud-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                            Language lang,

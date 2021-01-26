@@ -6,6 +6,7 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Retry
 import spock.lang.Unroll
 
 class CreateAwsAlexaSpec extends CommandSpec {
@@ -15,6 +16,7 @@ class CreateAwsAlexaSpec extends CommandSpec {
         return "test-awsalexa"
     }
 
+    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features aws-alexa #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                Language lang,

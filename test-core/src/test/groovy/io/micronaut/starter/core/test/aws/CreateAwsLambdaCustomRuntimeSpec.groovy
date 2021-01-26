@@ -6,6 +6,7 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Retry
 import spock.lang.Unroll
 
 class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
@@ -14,6 +15,7 @@ class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
         "test-awslambdacustomruntime"
     }
 
+    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features aws-lambda, aws-lambda-custom-runtime #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                                            Language lang,

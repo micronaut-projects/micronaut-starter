@@ -6,6 +6,7 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.Retry
 import spock.lang.Unroll
 
 class CreateAzureFunctionSpec extends CommandSpec {
@@ -15,6 +16,7 @@ class CreateAzureFunctionSpec extends CommandSpec {
         "test-azure-function"
     }
 
+    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features azure-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 Language lang,
