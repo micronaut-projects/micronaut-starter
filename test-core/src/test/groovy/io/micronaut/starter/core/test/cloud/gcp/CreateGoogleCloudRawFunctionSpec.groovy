@@ -12,13 +12,13 @@ import spock.lang.Unroll
 import spock.util.environment.Jvm
 
 @Requires({ Jvm.current.isJava11Compatible()})
+@Retry // can fail on CI due to port binding race condition, so retry
 class CreateGoogleCloudRawFunctionSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         "test-gcpfunctionraw"
     }
 
-    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features google-cloud-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 Language lang,

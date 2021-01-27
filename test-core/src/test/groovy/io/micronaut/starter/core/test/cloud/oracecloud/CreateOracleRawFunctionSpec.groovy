@@ -9,13 +9,13 @@ import io.micronaut.starter.test.CommandSpec
 import spock.lang.Retry
 import spock.lang.Unroll
 
+@Retry // can fail on CI due to port binding race condition, so retry
 class CreateOracleRawFunctionSpec extends CommandSpec{
     @Override
     String getTempDirectoryPrefix() {
         "test-raw-oraclefunction"
     }
 
-    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                      Language lang,

@@ -9,13 +9,13 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Retry
 import spock.lang.Unroll
 
+@Retry // can fail on CI due to port binding race condition, so retry
 class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         "test-awslambdacustomruntime"
     }
 
-    @Retry // can fail on CI due to port binding race condition, so retry
     @Unroll
     void 'create-#applicationType with features aws-lambda, aws-lambda-custom-runtime #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                                            Language lang,
