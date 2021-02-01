@@ -7,12 +7,14 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.test.LanguageBuildCombinations
 import org.gradle.testkit.runner.UnexpectedBuildFailure
+import spock.lang.Retry
 import spock.lang.Unroll
 
 import java.util.stream.Collectors
 
 import static io.micronaut.starter.options.BuildTool.MAVEN
 
+@Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
 class CreateMessagingSpec extends CommandSpec {
 
     @Override

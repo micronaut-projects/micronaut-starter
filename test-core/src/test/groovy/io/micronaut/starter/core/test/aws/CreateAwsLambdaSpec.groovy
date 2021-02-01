@@ -6,8 +6,10 @@ import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Retry
 import spock.lang.Unroll
 
+@Retry // can fail on CI due to port binding race condition, so retry
 class CreateAwsLambdaSpec extends CommandSpec {
 
     @Override
