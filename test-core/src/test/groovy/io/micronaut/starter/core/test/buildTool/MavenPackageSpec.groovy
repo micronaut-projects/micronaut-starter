@@ -56,10 +56,26 @@ class MavenPackageSpec extends CommandSpec {
         generateProject(lang, BuildTool.MAVEN, [])
 
         when:
-        String output = executeMaven( "package -Dpackaging=docker-native", 30)
+        String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
 
         then:
         output.contains("Using BASE_IMAGE: ghcr.io/graalvm/graalvm-ce:java11-21.0.0")
+
+        where:
+        lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
+    }
+
+    @Unroll
+    @Requires({ Jvm.current.java8 || Jvm.current.java11 })
+    void 'test maven Docker Native packaging GraalVM check for #lang'(Language lang) {
+        given:
+        generateProject(lang, BuildTool.MAVEN, [])
+
+        when:
+        String output = executeMaven( "package -Dpackaging=docker-native", 30)
+
+        then:
+        output.contains("The [graalvm] profile was not activated automatically because you are not using a GraalVM JDK. Activate the profile manually (-Pgraalvm) and try again")
 
         where:
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
