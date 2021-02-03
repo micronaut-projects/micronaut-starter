@@ -368,6 +368,9 @@ dependencies {
 @if (features.contains("views-soy")) {
     @dependency.template("io.micronaut.views", "micronaut-views-soy", "implementation", null)
 }
+@if (features.contains("views-pebble")) {
+    @dependency.template("io.micronaut.views", "micronaut-views-pebble", "implementation", null)
+}
 @if (features.contains("rss")) {
     @dependency.template("io.micronaut.rss", "micronaut-rss", "implementation", null)
 }
