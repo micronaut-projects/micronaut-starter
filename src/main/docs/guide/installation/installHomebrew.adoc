@@ -2,7 +2,7 @@ In order to install Micronaut, run following command:
 
 [source,bash]
 ----
-$ brew cask install micronaut-projects/tap/micronaut
+$ brew install --cask micronaut-projects/tap/micronaut
 ----
 
 You can find more information about Homebrew usage on their https://brew.sh/[homepage].
