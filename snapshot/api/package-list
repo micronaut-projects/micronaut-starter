@@ -71,7 +71,6 @@ io.micronaut.starter.feature.database
 io.micronaut.starter.feature.database.jdbc
 io.micronaut.starter.feature.database.r2dbc
 io.micronaut.starter.feature.dekorate
-io.micronaut.starter.feature.dependencies
 io.micronaut.starter.feature.discovery
 io.micronaut.starter.feature.distributedconfig
 io.micronaut.starter.feature.distributedconfig.template
