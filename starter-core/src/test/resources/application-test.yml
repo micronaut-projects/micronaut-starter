@@ -1,0 +1,21 @@
+dependencies:
+  mybatis:
+    group-id: org.mybatis
+    artifact-id: mybatis
+    version: 3.4.6
+  geb-junit5:
+    group-id: org.gebish
+    artifact-id: geb-junit5
+    version: 4.0
+  geb-spock:
+    group-id: org.gebish
+    artifact-id: geb-spock
+    version: 4.0
+  selenium-firefox-driver:
+    group-id: org.seleniumhq.selenium
+    artifact-id: selenium-firefox-driver
+    version: 3.141.59
+  selenium-support:
+    group-id: org.seleniumhq.selenium
+    artifact-id: selenium-support
+    version: 3.141.59

@@ -6,6 +6,8 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.feature.dependencies.DependenciesFeature
+@import io.micronaut.starter.options.BuildTool
 
 @args (
 ApplicationType applicationType,
@@ -530,5 +532,8 @@ dependencies {
 @if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
 }
+}
+@for (f : DependenciesFeature.collectCoordinates(features, BuildTool.GRADLE)) {
+    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
 }
 }

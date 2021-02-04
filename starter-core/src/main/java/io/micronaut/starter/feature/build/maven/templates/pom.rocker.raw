@@ -10,6 +10,8 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.feature.dependencies.DependenciesFeature
+@import io.micronaut.starter.options.BuildTool
 
 @args (
 ApplicationType applicationType,
@@ -105,6 +107,10 @@ List<Property> properties
   </repositories>
 
   <dependencies>
+@for (f : DependenciesFeature.collectCoordinates(features, BuildTool.MAVEN)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
+}
+
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null)
 @dependency.template("org.codehaus.groovy", "groovy", "compile", "${groovyVersion}")
