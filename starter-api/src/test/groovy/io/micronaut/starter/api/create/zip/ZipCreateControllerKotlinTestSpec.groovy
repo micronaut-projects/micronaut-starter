@@ -12,6 +12,7 @@ import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.build.dependencies.DependencyVersionResolver
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options

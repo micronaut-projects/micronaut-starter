@@ -10,14 +10,14 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.feature.dependencies.DependenciesFeature
-@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.build.dependencies.Dependency
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-List<Property> properties
+List<Property> properties,
+List<Dependency> dependencies
 )
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -107,7 +107,7 @@ List<Property> properties
   </repositories>
 
   <dependencies>
-@for (f : DependenciesFeature.collectCoordinates(features, BuildTool.MAVEN)) {
+@for (f : dependencies) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
 }
 

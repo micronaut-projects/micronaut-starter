@@ -12,6 +12,7 @@ sourceSets {
 
 dependencies {
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
+    api "io.micronaut:micronaut-validation"
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"

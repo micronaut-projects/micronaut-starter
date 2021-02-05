@@ -13,23 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.dependencies;
+package io.micronaut.starter.build.dependencies;
 
-public enum MavenScope {
-    COMPILE("compile"),
-    PROVIDED("provided"),
-    RUNTIME("runtime"),
-    TEST("test"),
-    SYSTEM("system"),
-    IMPORT("import");
+import edu.umd.cs.findbugs.annotations.NonNull;
 
-    private final String scope;
-    MavenScope(String scope) {
-        this.scope = scope;
-    }
+import java.util.List;
+import java.util.Set;
 
-    @Override
-    public String toString() {
-        return scope;
-    }
+public interface BuildToolDependencyResolver {
+    @NonNull
+    List<Dependency> resolve(@NonNull Set<ScopedArtifact> artifacts);
 }

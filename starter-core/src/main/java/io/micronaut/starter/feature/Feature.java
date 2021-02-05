@@ -23,6 +23,7 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.build.dependencies.DependencyContext;
 
 /**
  * A feature is a class that affects the outcome of a generated
@@ -104,6 +105,10 @@ public interface Feature extends Named, Ordered, Described {
      * @param generatorContext THe generator context
      */
     default void apply(GeneratorContext generatorContext) {
+        applyDependencies(generatorContext);
+    }
+
+    default void applyDependencies(DependencyContext dependencyContext) {
 
     }
 

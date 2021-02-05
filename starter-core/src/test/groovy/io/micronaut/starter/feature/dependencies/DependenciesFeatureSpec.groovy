@@ -5,8 +5,11 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import org.jetbrains.annotations.NotNull
+import spock.lang.Shared
 import spock.lang.Unroll
 
 class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -17,8 +20,11 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
 
     @Unroll
     void 'test gradle geb feature for language=#language and spock'() {
+        given:
+        TestFramework testFramework = TestFramework.SPOCK
+
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, TestFramework.SPOCK), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, testFramework), false, getFeatureDependencies(GebFeature, BuildTool.GRADLE, testFramework)).render().toString()
 
         then:
         template.contains('testImplementation("org.gebish:geb-spock:4.0")')

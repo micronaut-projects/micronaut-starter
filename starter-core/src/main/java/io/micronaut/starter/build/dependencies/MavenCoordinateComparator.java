@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.dependencies;
+package io.micronaut.starter.build.dependencies;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import java.util.Comparator;
 
-public interface MavenCoordinate {
-
-    @NonNull
-    String getGroupId();
-
-    @NonNull
-    String getArtifactId();
-
-    @Nullable
-    String getVersion();
+public class MavenCoordinateComparator implements Comparator<MavenCoordinate> {
+    @Override
+    public int compare(MavenCoordinate o1, MavenCoordinate o2) {
+        int comparison = o1.getGroupId().compareTo(o2.getGroupId());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return o1.getArtifactId().compareTo(o2.getArtifactId());
+    }
 }

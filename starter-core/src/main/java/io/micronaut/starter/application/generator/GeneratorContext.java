@@ -22,6 +22,8 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.DependencyContext;
+import io.micronaut.starter.build.dependencies.ScopedArtifact;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -54,7 +56,7 @@ import java.util.Set;
  * @author graemerocher
  * @since 1.0.0
  */
-public class GeneratorContext {
+public class GeneratorContext implements DependencyContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
@@ -70,6 +72,7 @@ public class GeneratorContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
+    private final Set<ScopedArtifact> scopedArtifactIds = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -196,7 +199,9 @@ public class GeneratorContext {
     /**
      * @return The test framework
      */
-    @NonNull public TestFramework getTestFramework() {
+    @Override
+    @NonNull
+    public TestFramework getTestFramework() {
         return options.getTestFramework();
     }
 
@@ -301,4 +306,12 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
+    public Set<ScopedArtifact> getDependencies() {
+        return this.scopedArtifactIds;
+    }
+
+    @Override
+    public void addDependency(@NonNull ScopedArtifact scopedArtifact) {
+        this.scopedArtifactIds.add(scopedArtifact);
+    }
 }

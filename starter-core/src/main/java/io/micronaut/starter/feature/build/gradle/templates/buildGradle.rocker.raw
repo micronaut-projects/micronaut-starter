@@ -5,12 +5,15 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.build.dependencies.Dependency
+@import java.util.List
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-boolean isKotlinDsl
+boolean isKotlinDsl,
+List<Dependency> coordinates
 )
 
 @if (features.contains("grpc") && isKotlinDsl) {
@@ -93,7 +96,7 @@ micronaut {
     }
 }
 
-@dependencies.template(applicationType, project, features)
+@dependencies.template(applicationType, project, features, coordinates)
 
 
 @if (features.mainClass().isPresent()) {

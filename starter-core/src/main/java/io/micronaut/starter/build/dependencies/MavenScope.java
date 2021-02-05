@@ -13,25 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.dependencies;
+package io.micronaut.starter.build.dependencies;
 
-public enum GradleConfiguration {
-    API("api"),
-    IMPLEMENTATION("implementation"),
-    COMPILE_ONLY("compileOnly"),
-    COMPILE_ONLY_API("compileOnlyApi"),
-    RUNTIME_ONLY("runtimeOnly"),
-    TEST_IMPLEMENTATION("testImplementation"),
-    TEST_COMPILE_ONLY("testCompileOnly"),
-    TEST_RUNTIME_ONLY("testRuntimeOnly");
+import io.micronaut.core.order.Ordered;
 
-    private final String configurationName;
+public enum MavenScope implements Ordered {
+    COMPILE("compile", 0),
+    PROVIDED("provided", 2),
+    RUNTIME("runtime", 1),
+    TEST("test", 3),
+    SYSTEM("system", -1),
+    IMPORT("import", -1);
 
-    GradleConfiguration(String configurationName) {
-        this.configurationName = configurationName;
+    private final String scope;
+    private final int order;
+
+    MavenScope(String scope, int order) {
+        this.scope = scope;
+        this.order = order;
     }
 
-    public String getConfigurationName() {
-        return configurationName;
+    @Override
+    public String toString() {
+        return scope;
+    }
+
+    @Override
+    public int getOrder() {
+        return this.order;
     }
 }

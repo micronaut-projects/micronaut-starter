@@ -13,57 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.dependencies;
+package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.context.annotation.EachProperty;
-import io.micronaut.context.annotation.Parameter;
 
-@EachProperty("dependencies")
-public class DependenciesConfiguration implements MavenCoordinate {
-    private final String name;
+public class ScopedArtifact {
 
     @NonNull
-    private String groupId;
+    private Scope scope;
 
     @NonNull
     private String artifactId;
 
-    @Nullable
-    private String version;
-
-    public DependenciesConfiguration(@Parameter String name) {
-        this.name = name;
+    public ScopedArtifact(@NonNull Scope scope, @NonNull String artifactId) {
+        this.scope = scope;
+        this.artifactId = artifactId;
     }
 
     @NonNull
-    @Override
-    public String getGroupId() {
-        return groupId;
+    public Scope getScope() {
+        return scope;
     }
 
-    public void setGroupId(@NonNull String groupId) {
-        this.groupId = groupId;
+    public void setScope(@NonNull Scope scope) {
+        this.scope = scope;
     }
 
     @NonNull
-    @Override
     public String getArtifactId() {
         return artifactId;
     }
 
     public void setArtifactId(@NonNull String artifactId) {
         this.artifactId = artifactId;
-    }
-
-    @Nullable
-    @Override
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(@Nullable String version) {
-        this.version = version;
     }
 }

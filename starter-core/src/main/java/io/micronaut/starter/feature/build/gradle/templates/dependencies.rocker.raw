@@ -6,13 +6,15 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.feature.dependencies.DependenciesFeature
+@import io.micronaut.starter.build.dependencies.Dependency
+@import java.util.List
 @import io.micronaut.starter.options.BuildTool
 
 @args (
 ApplicationType applicationType,
 Project project,
-Features features
+Features features,
+List<Dependency> dependencies
 )
 
 dependencies {
@@ -533,7 +535,7 @@ dependencies {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
 }
 }
-@for (f : DependenciesFeature.collectCoordinates(features, BuildTool.GRADLE)) {
+@for (f : dependencies) {
     @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
 }
 }
