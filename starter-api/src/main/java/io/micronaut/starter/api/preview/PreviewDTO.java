@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.preview;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.api.Linkable;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +32,7 @@ import java.util.Map;
 @Schema(name = "Preview", description = "Previews the contents of the generated ZIP")
 public class PreviewDTO extends Linkable  {
 
+    @JsonInclude
     private final Map<String, String> contents;
 
     /**
