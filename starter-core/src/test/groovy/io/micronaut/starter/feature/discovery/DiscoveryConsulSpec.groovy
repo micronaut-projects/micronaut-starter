@@ -29,7 +29,7 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['discovery-consul'], language), false).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-discovery-client")')
+        template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
 
         where:
         language << Language.values().toList()
@@ -43,7 +43,7 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.discovery</groupId>
       <artifactId>micronaut-discovery-client</artifactId>
       <scope>compile</scope>
     </dependency>
