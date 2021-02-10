@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.options;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.Collections;

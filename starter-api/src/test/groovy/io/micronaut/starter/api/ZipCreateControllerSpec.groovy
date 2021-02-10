@@ -1,6 +1,6 @@
 package io.micronaut.starter.api
 
-import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.context.event.ApplicationEventListener
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse
