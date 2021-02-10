@@ -36,7 +36,7 @@ class MockitoSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle mockito feature for language=#language'() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mockito'],
-                language, TestFramework.JUNIT), false).render().toString()
+                language, TestFramework.JUNIT), false, []).render().toString()
 
         then:
         template.contains('testImplementation("org.mockito:mockito-core")')
@@ -49,7 +49,7 @@ class MockitoSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle mockito feature fails for language=#language when test framework is not Junit'() {
         when:
         buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mockito'], language, testfw),
-                false).render().toString()
+                false, []).render().toString()
 
         then:
         def e = thrown(IllegalArgumentException)

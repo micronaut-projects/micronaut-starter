@@ -12,7 +12,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle server feature #serverFeature'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), false, []).render().toString()
 
         then:
         template.contains(dependency)
@@ -28,7 +28,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test maven server feature #serverFeature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), [], []).render().toString()
 
         then:
         template.contains("""
@@ -40,7 +40,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), [], []).render().toString()
 
         then:
         template.contains("""
@@ -52,7 +52,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), [], []).render().toString()
 
         then:
         template.contains("""

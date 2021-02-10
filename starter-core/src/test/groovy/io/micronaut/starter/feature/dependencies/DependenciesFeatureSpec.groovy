@@ -38,7 +38,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test gradle geb feature for language=#language and junit'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, TestFramework.JUNIT), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, TestFramework.JUNIT), false, []).render().toString()
 
         then:
         template.contains('testImplementation("org.gebish:geb-junit5:4.0")')
@@ -52,7 +52,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test gradle mybatis feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("org.mybatis:mybatis:3.4.6")')
@@ -64,7 +64,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test maven mybatis feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), [], []).render().toString()
 
         then:
         template.contains("""
@@ -83,7 +83,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test maven geb feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language), [], []).render().toString()
 
         then:
         if (language == Language.GROOVY) {

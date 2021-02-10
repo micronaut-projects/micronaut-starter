@@ -24,7 +24,7 @@ class JacksonXmlSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle jackson-xml feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jackson-xml'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jackson-xml'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.xml:micronaut-jackson-xml")')
@@ -36,7 +36,7 @@ class JacksonXmlSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven jackson-xml feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jackson-xml'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jackson-xml'], language), [], []).render().toString()
 
         then:
         template.contains("""

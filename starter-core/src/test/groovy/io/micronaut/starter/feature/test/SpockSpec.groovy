@@ -19,7 +19,7 @@ class SpockSpec extends BeanContextSpec {
         Features features = getFeatures([], null, TestFramework.SPOCK, BuildTool.MAVEN)
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains("""
@@ -43,7 +43,7 @@ class SpockSpec extends BeanContextSpec {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false, []).render().toString()
 
         then:
         template.contains('''
@@ -63,7 +63,7 @@ java {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false, []).render().toString()
 
         then:
         template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")

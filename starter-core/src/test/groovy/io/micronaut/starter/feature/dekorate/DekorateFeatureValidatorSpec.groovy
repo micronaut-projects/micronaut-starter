@@ -42,7 +42,7 @@ class DekorateFeatureValidatorSpec extends BeanContextSpec implements CommandOut
             Feature feature, Language language) {
         when:
         pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), []).render().toString()
+                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), [], []).render().toString()
 
         then:
         beanContext.containsBean(DekorateKubernetes)

@@ -24,7 +24,7 @@ class PebbleSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-pebble feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-pebble")')
@@ -36,7 +36,7 @@ class PebbleSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven views-pebble feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), [], []).render().toString()
 
         then:
         template.contains("""

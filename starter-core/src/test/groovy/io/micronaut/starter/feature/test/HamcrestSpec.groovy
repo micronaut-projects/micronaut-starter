@@ -36,7 +36,7 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle hamcrest feature for language=#language'() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'],
-                language, TestFramework.JUNIT), false).render().toString()
+                language, TestFramework.JUNIT), false, []).render().toString()
 
         then:
         template.contains('testImplementation("org.hamcrest:hamcrest")')
@@ -49,7 +49,7 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle hamcrest feature fails for language=#language when test framework is not Junit'() {
         when:
         buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language, testfw),
-                false).render().toString()
+                false, []).render().toString()
 
         then:
         def e = thrown(IllegalArgumentException)

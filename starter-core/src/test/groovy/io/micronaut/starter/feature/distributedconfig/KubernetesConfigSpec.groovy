@@ -24,7 +24,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
     @Unroll
     void 'test gradle kubernetes feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
@@ -38,7 +38,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
     @Unroll
     void 'test maven kubernetes feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), [], []).render().toString()
 
         then:
         template.contains("""

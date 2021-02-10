@@ -28,7 +28,7 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
@@ -41,7 +41,7 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), [], []).render().toString()
 
         then:
         template.contains("""

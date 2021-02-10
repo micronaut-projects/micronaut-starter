@@ -63,7 +63,7 @@ class SpringWebSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), false, []).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
@@ -80,7 +80,7 @@ class SpringWebSpec extends BeanContextSpec {
 
     void 'test maven spring-web feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), [], []).render().toString()
 
         then:
         template.contains("""
@@ -109,7 +109,7 @@ class SpringWebSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), [], []).render().toString()
 
         then:
         template.contains("""
@@ -138,7 +138,7 @@ class SpringWebSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), [], []).render().toString()
 
         then:
         template.contains("""

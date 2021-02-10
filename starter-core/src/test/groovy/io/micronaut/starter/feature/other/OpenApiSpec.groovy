@@ -35,7 +35,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
@@ -50,7 +50,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven swagger feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.JAVA), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.JAVA), [], []).render().toString()
 
         then:
         template.contains("""
@@ -69,7 +69,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.KOTLIN), [], []).render().toString()
 
         then:
         template.contains("""
@@ -88,7 +88,7 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.GROOVY), [], []).render().toString()
 
         then:
         template.contains("""

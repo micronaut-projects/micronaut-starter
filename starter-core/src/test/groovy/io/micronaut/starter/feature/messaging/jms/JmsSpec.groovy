@@ -30,7 +30,7 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Gradle'() {
         when:
-        String template = buildGradle.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), false).render()
+        String template = buildGradle.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), false, []).render()
 
         then:
         template.contains """implementation("io.micronaut.jms:micronaut-jms-$name")"""
@@ -41,7 +41,7 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Maven'() {
         when:
-        String template = pom.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), []).render()
+        String template = pom.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), [], []).render()
 
         then:
         template.contains("""

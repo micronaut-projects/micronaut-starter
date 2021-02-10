@@ -23,7 +23,7 @@ class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle security-ldap feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), false, []).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -36,7 +36,7 @@ class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven security-ldap feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), [], []).render().toString()
 
         then:
         template.contains("""

@@ -33,7 +33,8 @@ class MavenSpec extends BeanContextSpec {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                generatorContext.getBuildProperties().getProperties()
+                generatorContext.getBuildProperties().getProperties(),
+                []
         ).render().toString()
 
         then: 'parent pom is used'
@@ -71,7 +72,7 @@ class MavenSpec extends BeanContextSpec {
     void 'test annotation processor dependencies'() {
         when:
         Features features = getFeatures([], null, null, BuildTool.MAVEN)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains('''
@@ -81,7 +82,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains("""
@@ -101,7 +102,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains('''

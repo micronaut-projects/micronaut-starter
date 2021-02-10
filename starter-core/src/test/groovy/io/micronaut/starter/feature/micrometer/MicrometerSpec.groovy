@@ -18,7 +18,7 @@ class MicrometerSpec extends BeanContextSpec {
         Features features = getFeatures([micrometerFeature.name])
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), features, false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), features, false, []).render().toString()
 
         then:
         template.contains("implementation(\"io.micronaut.micrometer:${dependency}\")")
@@ -30,7 +30,7 @@ class MicrometerSpec extends BeanContextSpec {
     void "test gradle micrometer multiple features"() {
         when:
         Features features = getFeatures(["micrometer-atlas", "micrometer-influx"])
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), features, false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), features, false, []).render().toString()
 
         then:
         template.contains("""
@@ -48,7 +48,7 @@ class MicrometerSpec extends BeanContextSpec {
         Features features = getFeatures([micrometerFeature.name], null, null, BuildTool.MAVEN)
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains("""
@@ -66,7 +66,7 @@ class MicrometerSpec extends BeanContextSpec {
     void "test maven micrometer multiple features"() {
         when:
         Features features = getFeatures(["micrometer-atlas", "micrometer-influx"], null, null, BuildTool.MAVEN)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains("""

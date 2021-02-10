@@ -12,7 +12,7 @@ class PostgreSQLSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle postgres feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), false, []).render().toString()
 
         then:
         template.contains('runtimeOnly("org.postgresql:postgresql")')
@@ -24,7 +24,7 @@ class PostgreSQLSpec extends BeanContextSpec {
     @Unroll
     void 'test maven postgres feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), [], []).render().toString()
 
         then:
         template.contains("""

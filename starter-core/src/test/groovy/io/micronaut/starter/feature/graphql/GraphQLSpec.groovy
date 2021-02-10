@@ -35,7 +35,7 @@ class GraphQLSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle graphql feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['graphql'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['graphql'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.graphql:micronaut-graphql")')
@@ -47,7 +47,7 @@ class GraphQLSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven graphql feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['graphql'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['graphql'], language), [], []).render().toString()
 
         then:
         template.contains("""

@@ -23,7 +23,7 @@ class RssSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle rss feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.rss:micronaut-rss")')
@@ -35,7 +35,7 @@ class RssSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven rss feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), [], []).render().toString()
 
         then:
         template.contains("""

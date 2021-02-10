@@ -10,7 +10,7 @@ class NatsSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["nats"]), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["nats"]), false, []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.nats:micronaut-nats")')
@@ -18,7 +18,7 @@ class NatsSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["nats"]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["nats"]), [], []).render().toString()
 
         then:
         template.contains("""

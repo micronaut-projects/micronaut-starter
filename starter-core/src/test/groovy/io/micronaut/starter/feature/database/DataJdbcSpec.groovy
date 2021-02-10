@@ -33,7 +33,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), false).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), false, []).render().toString()
 
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
@@ -44,7 +44,7 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), [], []).render().toString()
 
         then:
         //src/main

@@ -14,7 +14,7 @@ class KoTestSpec extends BeanContextSpec {
         Features features = getFeatures([], null, TestFramework.KOTEST, BuildTool.MAVEN)
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains('''
