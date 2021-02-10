@@ -1,6 +1,5 @@
 package io.micronaut.starter.api
 
-
 import io.micronaut.context.i18n.ResourceBundleMessageSource
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.annotation.Get
