@@ -1,13 +1,16 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.MongoFeature
 @import java.util.List
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.build.Property
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.dependencies.Dependency
-
 @args (
 ApplicationType applicationType,
 Project project,
@@ -23,6 +26,7 @@ List<Dependency> dependencies
   <groupId>@project.getPackageName()</groupId>
   <artifactId>@project.getName()</artifactId>
   <version>0.1</version>
+  <packaging>${packaging}</packaging>
 
   <parent>
     <groupId>io.micronaut</groupId>
@@ -31,6 +35,7 @@ List<Dependency> dependencies
   </parent>
 
   <properties>
+    <packaging>jar</packaging>
     <jdk.version>@features.getTargetJdk()</jdk.version>
 @if (features.javaVersion() == JdkVersion.JDK_8) {
     <!-- If you are building with JDK 9 or higher, you can uncomment the lines below to set the release version -->
@@ -48,7 +53,7 @@ List<Dependency> dependencies
 @if (features.contains("google-cloud-function-http")) {
     <micronaut.runtime>google_function</micronaut.runtime>
 }
-@if (features.contains("oracle-function-http")) {
+@if (features.contains("oracle-function-http") || features.contains("oracle-function")) {
     <micronaut.runtime>oracle_function</micronaut.runtime>
 }
 @if (features.contains("azure-function-http")) {
@@ -84,6 +89,12 @@ List<Dependency> dependencies
     <repository>
       <id>jfrog-snapshots</id>
       <url>https://oss.jfrog.org/oss-snapshot-local</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
     </repository>
     }
     @if (features.contains("oracle-function")) {
@@ -94,26 +105,7 @@ List<Dependency> dependencies
     }
   </repositories>
 
-
-@if (features.contains("testcontainers")) {
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers-bom</artifactId>
-        <version>1.15.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-}
-
   <dependencies>
-  @for (f : dependencies) {
-   @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
-   }
-
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null)
 @dependency.template("org.codehaus.groovy", "groovy", "compile", "${groovyVersion}")
@@ -171,17 +163,16 @@ List<Dependency> dependencies
 } else {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
+@if (features.contains("http-session")) {
+@dependency.template("io.micronaut", "micronaut-session", "compile", null)
+}
 @if (features.language().isKotlin()) {
 @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
 @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
 @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "compile", null)
 }
-@if (features.contains("graalvm")) {
-@dependency.template("org.graalvm.nativeimage", "svm", "provided", null)
-@dependency.template("org.graalvm.sdk", "graal-sdk", "provided", null)
-@if (features.language().isGroovy()) {
+@if (features.contains("graalvm") && features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
-}
 }
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.groovy", "micronaut-runtime-groovy", "compile", null)
@@ -203,6 +194,9 @@ List<Dependency> dependencies
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
+}
+@if (features.contains("lombok")) {
+@dependency.template("org.projectlombok", "lombok", "provided", null)
 }
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
@@ -337,6 +331,9 @@ List<Dependency> dependencies
 @if (features.contains("jooq")) {
 @dependency.template("io.micronaut.sql", "micronaut-jooq", "compile", null)
 }
+@if (features.contains("jasync-sql")) {
+@dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "compile", null)
+}
 @if (features.contains("mongo-reactive")) {
 @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "compile", null)
 }
@@ -376,8 +373,23 @@ List<Dependency> dependencies
 @if (features.contains("rabbitmq")) {
 @dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "compile", null)
 }
+@if (features.contains("mqtt")) {
+@dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "compile", null)
+}
+@if (features.contains("mqttv3")) {
+@dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "compile", null)
+}
 @if (features.contains("nats")) {
 @dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
+}
+@if (features.contains("jms-activemq-artemis")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
+}
+@if (features.contains("jms-activemq-classic")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
+}
+@if (features.contains("jms-sqs")) {
+@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
 }
 @if (features.contains("cassandra")) {
 @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
@@ -569,23 +581,44 @@ List<Dependency> dependencies
 @if (features.contains("slf4j-simple")) {
 @dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
 }
+@if (features.contains("r2dbc")) {
+@dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "compile", null)
+}
+@if (features.contains("data-r2dbc")) {
+@dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "compile", null)
+}
 @if (features.contains("h2")) {
 @dependency.template("com.h2database", "h2", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-h2", "runtime", null)
+    }
 }
 @if (features.contains("postgres")) {
 @dependency.template("org.postgresql", "postgresql", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-postgresql", "runtime", null)
+    }
 }
 @if (features.contains("mysql")) {
 @dependency.template("mysql", "mysql-connector-java", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("dev.miku", "r2dbc-mysql", "runtime", null)
+    }
 }
 @if (features.contains("mariadb")) {
 @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("org.mariadb", "r2dbc-mariadb", "runtime", null)
+    }
 }
 @if (features.contains("oracle")) {
 @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtime", null)
 }
 @if (features.contains("sqlserver")) {
 @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", null)
+    @if (features.contains("r2dbc")) {
+@dependency.template("io.r2dbc", "r2dbc-mssql", "runtime", null)
+    }
 }
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
@@ -597,6 +630,15 @@ List<Dependency> dependencies
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
+    @if (features.contains("assertj")) {
+@dependency.template("org.assertj", "assertj-core", "test", null)
+    }
+    @if (features.contains("hamcrest")) {
+@dependency.template("org.hamcrest", "hamcrest", "test", null)
+    }
+    @if (features.contains("mockito")) {
+@dependency.template("org.mockito", "mockito-core", "test", null)
+    }
 } else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3")
 @if (features.testFramework().isKoTest()) {
@@ -621,39 +663,48 @@ List<Dependency> dependencies
     </dependency>
 @dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null)
 }
-@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
-@dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "test", "2.0.1")
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
 }
 @if (features.contains("testcontainers")) {
+@dependency.template("org.testcontainers", "testcontainers", "test", null)
+@if (features.testFramework().isSpock()) {
+@dependency.template("org.testcontainers", "spock", "test", null)
+} else if (features.testFramework().isJunit()) {
+@dependency.template("org.testcontainers", "junit-jupiter", "test", null)
+}
+@if (features.contains("r2dbc")) {
+@dependency.template("org.testcontainers", "r2dbc", "test", null)
+}
 @if (features.contains("mysql")) {
 @dependency.template("org.testcontainers", "mysql", "test", null)
-}
-@if (features.contains("postgres")) {
+} else if (features.contains("postgres")) {
 @dependency.template("org.testcontainers", "postgresql", "test", null)
-}
-@if (features.contains("mariadb")) {
+} else if (features.contains("mariadb")) {
 @dependency.template("org.testcontainers", "mariadb", "test", null)
-}
-@if (features.contains("oracle")) {
+} else if (features.contains("oracle")) {
 @dependency.template("org.testcontainers", "oracle-xe", "test", null)
-}
-@if (features.contains("sqlserver")) {
+} else if (features.contains("sqlserver")) {
 @dependency.template("org.testcontainers", "mssqlserver", "test", null)
 }
+@if (features.isFeaturePresent(MongoFeature.class)) {
+@dependency.template("org.testcontainers", "mongodb", "test", null)
+}
+}
+@for (f : dependencies) {
+    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
 }
   </dependencies>
 
   <build>
     <plugins>
-@if (features.application() != null) {
+@if (features.application() != null || features.contains("oracle-function")) {
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function")) {
           <configuration>
+@if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
 @if (features.contains("springloaded")) {
               <jvmArgument>-noverify</jvmArgument>
@@ -663,6 +714,17 @@ List<Dependency> dependencies
               <jvmArgument>-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib</jvmArgument>
 }
             </jvmArguments>
+}
+@if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+            <nativeImageBuildArgs>
+              <arg>--static</arg>
+              <arg>-Dfn.handler=${exec.mainClass}::handleRequest</arg>
+              <arg>--initialize-at-build-time=com.example</arg>
+            </nativeImageBuildArgs>
+            <appArguments>
+              <arg>${exec.mainClass}::handleRequest</arg>
+            </appArguments>
+}
           </configuration>
 }
       </plugin>
@@ -801,13 +863,26 @@ List<Dependency> dependencies
         <configuration>
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-          <annotationProcessorPaths combine.children="append">
-@if (features.contains("graalvm")) {
+@if (features.contains("lombok")) {
+          <annotationProcessorPaths combine.self="override">
+            <path>
+              <!-- must precede micronaut-inject-java -->
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
             <path>
               <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-graal</artifactId>
+              <artifactId>micronaut-inject-java</artifactId>
               <version>${micronaut.version}</version>
             </path>
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-validation</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+} else {
+          <annotationProcessorPaths combine.children="append">
 }
 @if (features.contains("picocli")) {
             <path>
@@ -930,6 +1005,9 @@ List<Dependency> dependencies
         <configuration>
           <jvmTarget>${jdk.version}</jvmTarget>
           <compilerPlugins>
+@if (features.isFeaturePresent(JpaFeature.class)) {
+            <plugin>jpa</plugin>
+}
             <plugin>all-open</plugin>
           </compilerPlugins>
           <pluginOptions>
@@ -1084,6 +1162,9 @@ List<Dependency> dependencies
             <configuration>
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                @if (features.contains("grpc")) {
+                <sourceDir>${project.build.directory}/generated-sources/</sourceDir>
+                }
               </sourceDirs>
             </configuration>
           </execution>
@@ -1342,6 +1423,23 @@ List<Dependency> dependencies
         <artifactId>protoc-jar-maven-plugin</artifactId>
       </plugin>
 }
+@if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow) || features.contains("oracle-function")) {
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>jib-maven-plugin</artifactId>
+        <configuration>
+          <to>
+            <image>${jib.docker.image}:${jib.docker.tag}</image>
+          </to>
+  @if(applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
+          <container>
+            <args>${exec.mainClass}::handleRequest</args>
+            <mainClass>${exec.mainClass}</mainClass>
+          </container>
+  }
+        </configuration>
+      </plugin>
+}
     </plugins>
   </build>
 
@@ -1363,6 +1461,13 @@ List<Dependency> dependencies
        <id>central</id>
        <url>https://repo.maven.apache.org/maven2</url>
     </pluginRepository>
+    <pluginRepository>
+       <id>ossrh</id>
+       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+       <snapshots>
+           <enabled>true</enabled>
+       </snapshots>
+    </pluginRepository>
     }
   </pluginRepositories>
 } else if (VersionInfo.isStarterSnapshot()) {
@@ -1370,6 +1475,13 @@ List<Dependency> dependencies
        <pluginRepository>
            <id>central</id>
            <url>https://repo.maven.apache.org/maven2</url>
+       </pluginRepository>
+       <pluginRepository>
+           <id>ossrh</id>
+           <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+           <snapshots>
+               <enabled>true</enabled>
+           </snapshots>
        </pluginRepository>
     </pluginRepositories>
 }

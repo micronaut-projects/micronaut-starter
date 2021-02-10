@@ -65,7 +65,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), [], []).render().toString()
 
         then:
         template.contains("""

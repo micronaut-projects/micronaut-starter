@@ -91,7 +91,7 @@ class SpringBootSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.KOTLIN), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.KOTLIN), [], []).render().toString()
 
         then:
         template.contains("""
@@ -115,7 +115,7 @@ class SpringBootSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.GROOVY), []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.GROOVY), [], []).render().toString()
 
         then:
         template.contains("""

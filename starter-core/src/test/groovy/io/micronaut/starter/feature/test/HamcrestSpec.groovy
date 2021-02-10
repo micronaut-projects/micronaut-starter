@@ -89,7 +89,7 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     void 'test maven hamcrest feature for language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language,
-                TestFramework.JUNIT), []).render().toString()
+                TestFramework.JUNIT), [], []).render().toString()
 
         then:
         template.contains("""

@@ -69,7 +69,7 @@ class MockitoSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test maven mockito feature for language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mockito'], language,
-                TestFramework.JUNIT), []).render().toString()
+                TestFramework.JUNIT), [], []).render().toString()
 
         then:
         template.contains("""

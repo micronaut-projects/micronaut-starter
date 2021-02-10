@@ -69,7 +69,7 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test maven assertj feature for language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'], language,
-                TestFramework.JUNIT), []).render().toString()
+                TestFramework.JUNIT), [], []).render().toString()
 
         then:
         template.contains("""

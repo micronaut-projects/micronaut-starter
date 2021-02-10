@@ -127,7 +127,7 @@ class MavenSpec extends BeanContextSpec {
         println features.features
 
         when:
-        String template = pom.template(applicationType, buildProject(), features, []).render().toString()
+        String template = pom.template(applicationType, buildProject(), features, [], []).render().toString()
 
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")
