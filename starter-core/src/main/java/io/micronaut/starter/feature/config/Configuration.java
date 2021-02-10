@@ -15,8 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-
+import io.micronaut.core.annotation.NonNull;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 

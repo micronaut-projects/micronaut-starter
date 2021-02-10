@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.options.*;
 import io.micronaut.starter.io.ConsoleOutput;
