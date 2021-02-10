@@ -13,7 +13,7 @@ import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
