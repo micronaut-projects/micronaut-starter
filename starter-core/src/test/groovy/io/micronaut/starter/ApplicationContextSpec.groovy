@@ -1,6 +1,6 @@
 package io.micronaut.starter
 
-import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.context.ApplicationContext
 import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver

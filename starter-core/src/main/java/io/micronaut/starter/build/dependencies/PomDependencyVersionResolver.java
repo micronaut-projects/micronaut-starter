@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.ResourceResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
