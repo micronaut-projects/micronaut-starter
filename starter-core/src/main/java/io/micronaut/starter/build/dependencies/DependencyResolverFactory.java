@@ -41,6 +41,6 @@ public class DependencyResolverFactory {
     @Named("maven")
     @Singleton
     public BuildToolDependencyResolver createMaven() {
-        return new DependencyResolver(mavenCoordinateResolver, adapterBuilder, BuildTool.GRADLE, new MavenDependencyComparator());
+        return new DependencyResolver(mavenCoordinateResolver, adapterBuilder, BuildTool.MAVEN, new MavenDependencyComparator());
     }
 }

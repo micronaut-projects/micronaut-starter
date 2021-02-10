@@ -692,7 +692,7 @@ List<Dependency> dependencies
 }
 }
 @for (f : dependencies) {
-    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
 }
   </dependencies>
 
