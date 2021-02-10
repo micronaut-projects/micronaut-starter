@@ -1,6 +1,6 @@
 package io.micronaut.starter.api
 
-import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.annotation.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType

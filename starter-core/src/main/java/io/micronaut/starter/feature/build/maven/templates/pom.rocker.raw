@@ -486,6 +486,9 @@ List<Dependency> dependencies
 @if (features.contains("views-soy")) {
 @dependency.template("io.micronaut.views", "micronaut-views-soy", "compile", null)
 }
+@if (features.contains("views-pebble")) {
+@dependency.template("io.micronaut.views", "micronaut-views-pebble", "compile", null)
+}
 @if (features.contains("rss")) {
 @dependency.template("io.micronaut.rss", "micronaut-rss", "compile", null)
 }

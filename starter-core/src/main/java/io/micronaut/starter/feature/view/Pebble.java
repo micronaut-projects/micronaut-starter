@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,50 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.stackdriver;
+package io.micronaut.starter.feature.view;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class CloudTrace implements Feature {
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
+public class Pebble implements ViewFeature, MicronautServerDependent {
 
-    @NonNull
     @Override
     public String getName() {
-        return "gcp-cloud-trace";
+        return "views-pebble";
     }
 
     @Override
     public String getTitle() {
-        return "Cloud Trace - Google Cloud Operations";
+        return "Pebble views";
     }
 
     @Override
     public String getDescription() {
-        return "Integrates Micronaut with Cloud Trace from Google Cloud Operations (formerly Stackdriver)";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.TRACING;
+        return "Adds support for Pebble as a Server Side View Rendering";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://cloud.google.com/trace";
+        return "https://pebbletemplates.io/";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#tracing";
+        return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#pebble";
     }
 }
