@@ -22,6 +22,8 @@ import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
 
+    String DEFAULT_PACKAGING = "jar";
+
     @Nullable
     String mainClassName(GeneratorContext generatorContext);
 
@@ -37,6 +39,7 @@ public interface ApplicationFeature extends Feature {
             if (mainClass != null) {
                 BuildProperties buildProperties = generatorContext.getBuildProperties();
                 buildProperties.put("exec.mainClass", mainClass);
+                buildProperties.put("packaging", DEFAULT_PACKAGING);
             }
         }
     }

@@ -1,14 +1,11 @@
 @import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.database.DatabaseDriverFeature
-@import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.dependencies.Dependency
 @import java.util.List
-@import io.micronaut.starter.options.BuildTool
 
 @args (
 ApplicationType applicationType,
@@ -73,14 +70,8 @@ dependencies {
 @if (features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
 }
-@if (features.contains("http-session")) {
-    @dependency.template("io.micronaut", "micronaut-session", "implementation", null)
-}
 @if (features.contains("openapi")) {
     @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
-}
-@if (features.contains("lombok")) {
-    @dependency.template("org.projectlombok", "lombok", "compileOnly", null)
 }
 @if (features.contains("management")) {
     @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
@@ -215,9 +206,6 @@ dependencies {
 @if (features.contains("jooq")) {
     @dependency.template("io.micronaut.sql", "micronaut-jooq", "implementation", null)
 }
-@if (features.contains("jasync-sql")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "implementation", null)
-}
 @if (features.contains("mongo-reactive")) {
     @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
 }
@@ -327,21 +315,6 @@ dependencies {
 @if (features.contains("nats")) {
     @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
 }
-@if (features.contains("mqtt")) {
-    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "implementation", null)
-}
-@if (features.contains("mqttv3")) {
-    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "implementation", null)
-}
-@if (features.contains("jms-activemq-artemis")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "implementation", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "implementation", null)
-}
-@if (features.contains("jms-sqs")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "implementation", null)
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
@@ -408,12 +381,6 @@ dependencies {
 @if (features.contains("dekorate-halkyon")) {
     @dependency.template("io.dekorate", "halkyon-annotations", "implementation", "${dekorateVersion}")
 }
-@if (features.contains("r2dbc")) {
-    @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)
-}
-@if (features.contains("data-r2dbc")) {
-    @dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "implementation", null)
-}
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
 }
@@ -453,36 +420,21 @@ dependencies {
 }
 @if (features.contains("h2")) {
     @dependency.template("com.h2database", "h2", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-h2", "runtimeOnly", null)
-    }
 }
 @if (features.contains("postgres")) {
     @dependency.template("org.postgresql", "postgresql", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-postgresql", "runtimeOnly", null)
-    }
 }
 @if (features.contains("mysql")) {
     @dependency.template("mysql", "mysql-connector-java", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("dev.miku", "r2dbc-mysql", "runtimeOnly", null)
-    }
 }
 @if (features.contains("mariadb")) {
     @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("org.mariadb", "r2dbc-mariadb", "runtimeOnly", null)
-    }
 }
 @if (features.contains("oracle")) {
     @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtimeOnly", null)
 }
 @if (features.contains("sqlserver")) {
     @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-mssql", "runtimeOnly", null)
-    }
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
@@ -492,50 +444,37 @@ dependencies {
     @dependency.template("io.micronaut","micronaut-function", "testImplementation", null)
     }
 }
-@if (features.contains("assertj")) {
-    @dependency.template("org.assertj","assertj-core", "testImplementation", null)
-}
-@if (features.contains("hamcrest")) {
-    @dependency.template("org.hamcrest","hamcrest", "testImplementation", null)
-}
-@if (features.contains("mockito")) {
-    @dependency.template("org.mockito","mockito-core", "testImplementation", null)
-}
 @if (!features.contains("http-client")) {
     @dependency.template("io.micronaut", "micronaut-http-client", "testImplementation", null)
 }
 @if (features.contains("google-cloud-function") && features.testFramework().isSpock()) {
     @dependency.template("io.micronaut.servlet","micronaut-servlet-core", "testImplementation", null)
 }
+@if (features.contains("mongo-reactive") || features.contains("mongo-sync")) {
+    @dependency.template("de.flapdoodle.embed", "de.flapdoodle.embed.mongo", "testImplementation", "2.0.1")
+}
 @if (features.contains("neo4j-bolt")) {
     @dependency.template("org.neo4j.test", "neo4j-harness", "testRuntimeOnly", null)
 }
 @if (features.contains("testcontainers")) {
-    @dependency.template("org.testcontainers", "testcontainers", "testImplementation", null)
-@if (features.testFramework().isSpock()) {
-    @dependency.template("org.testcontainers", "spock", "testImplementation", null)
-} else if (features.testFramework().isJunit()) {
-    @dependency.template("org.testcontainers", "junit-jupiter", "testImplementation", null)
-}
-@if (features.contains("r2dbc")) {
-    @dependency.template("org.testcontainers", "r2dbc", "testImplementation", null)
-}
+    testImplementation(platform("org.testcontainers:testcontainers-bom:1.15.0"))
 @if (features.contains("mysql")) {
-    @dependency.template("org.testcontainers", "mysql", "testImplementation", null)
-} else if (features.contains("postgres")) {
-    @dependency.template("org.testcontainers", "postgresql", "testImplementation", null)
-} else if (features.contains("mariadb")) {
-    @dependency.template("org.testcontainers", "mariadb", "testImplementation", null)
-} else if (features.contains("oracle")) {
-    @dependency.template("org.testcontainers", "oracle-xe", "testImplementation", null)
-} else if (features.contains("sqlserver")) {
-    @dependency.template("org.testcontainers", "mssqlserver", "testImplementation", null)
+    @dependency.template("org.testcontainers", "mysql", "testRuntimeOnly", null)
 }
-@if (features.isFeaturePresent(MongoFeature.class)) {
-    @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
+@if (features.contains("postgres")) {
+    @dependency.template("org.testcontainers", "postgresql", "testRuntimeOnly", null)
+}
+@if (features.contains("mariadb")) {
+    @dependency.template("org.testcontainers", "mariadb", "testRuntimeOnly", null)
+}
+@if (features.contains("oracle")) {
+    @dependency.template("org.testcontainers", "oracle-xe", "testRuntimeOnly", null)
+}
+@if (features.contains("sqlserver")) {
+    @dependency.template("org.testcontainers", "mssqlserver", "testRuntimeOnly", null)
 }
 }
 @for (f : dependencies) {
-    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
-}
+     @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
+ }
 }
