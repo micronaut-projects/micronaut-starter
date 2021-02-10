@@ -17,13 +17,13 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.io.ResourceResolver;
+import io.micronaut.core.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.inject.Singleton;
-import javax.validation.Validator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,8 +41,7 @@ public class PomDependencyVersionResolver implements DependencyVersionResolver {
     private static final String NODE_NAME_TEXT = "#text";
     private Map<String, MavenCoordinate> coordinates;
 
-    public PomDependencyVersionResolver(Validator validator,
-                                        ResourceResolver resourceResolver) {
+    public PomDependencyVersionResolver(ResourceResolver resourceResolver) {
         Map<String, MavenCoordinate> coordinates = new HashMap<>();
         for (URL url : resourceResolver.getResources("classpath:pom.xml").collect(Collectors.toList())) {
             try {
@@ -66,7 +65,7 @@ public class PomDependencyVersionResolver implements DependencyVersionResolver {
                             valueOfNode(child).ifPresent(mavenCoordinate::setArtifactId);
                         }
                     }
-                    if (validator.validate(mavenCoordinate).isEmpty()) {
+                    if (StringUtils.isNotEmpty(mavenCoordinate.getGroupId()) && StringUtils.isNotEmpty(mavenCoordinate.getArtifactId())) {
                         coordinates.put(mavenCoordinate.getArtifactId(), mavenCoordinate);
                     }
                 }
