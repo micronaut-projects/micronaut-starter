@@ -17,14 +17,12 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.options.BuildTool;
-import javax.inject.Singleton;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Singleton
 public class DependencyResolver implements BuildToolDependencyResolver {
     private final MavenCoordinateResolver mavenCoordinateResolver;
     private final AdapterBuilder adapterBuilder;
