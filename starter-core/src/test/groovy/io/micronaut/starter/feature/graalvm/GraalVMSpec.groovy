@@ -40,26 +40,26 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         e.message == 'GraalVM is not supported in Groovy applications'
     }
 
-    void 'test maven graalvm feature'() {
+    void "test maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), [], []).render().toString()
 
         then:
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
       <artifactId>svm</artifactId>
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.sdk</groupId>
       <artifactId>graal-sdk</artifactId>
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("""
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-graal</artifactId>
@@ -77,7 +77,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
         template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), [], []).render().toString()
 
         then:
-        template.contains("""
+        !template.contains("""
     <dependency>
       <groupId>org.graalvm.nativeimage</groupId>
       <artifactId>svm</artifactId>
@@ -101,7 +101,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()
@@ -112,9 +112,9 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'it is not possible to use graalvm with JDK versions different than JDK8 through JDK11'(JdkVersion jdkVersion) {
         when:
         generate(
-            ApplicationType.DEFAULT,
-            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-            ['graalvm']
+                ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                ['graalvm']
         )
 
         then:
@@ -129,9 +129,9 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'Application file is generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
-            ApplicationType.DEFAULT,
-            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-            ['graalvm', 'aws-lambda']
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                ['graalvm', 'aws-lambda']
         )
 
         then:
