@@ -570,11 +570,6 @@ List<Dependency> dependencies
 @dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
 @dependency.template("org.springframework", "spring-jdbc", "compile", null)
 }
-@if (features.contains("log4j2")) {
-@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
-@dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
-@dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtime", "2.12.1")
-}
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
 }
