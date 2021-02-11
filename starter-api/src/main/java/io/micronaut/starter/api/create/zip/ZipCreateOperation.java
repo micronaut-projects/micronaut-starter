@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api.create.zip;
 
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;

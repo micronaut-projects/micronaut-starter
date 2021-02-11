@@ -1,7 +1,7 @@
 package io.micronaut.starter.api
 
-import io.micronaut.core.annotation.NonNull
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get

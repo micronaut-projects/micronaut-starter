@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;

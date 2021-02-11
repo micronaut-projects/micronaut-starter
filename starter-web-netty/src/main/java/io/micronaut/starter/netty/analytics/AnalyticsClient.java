@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.netty.analytics;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Body;

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.options.BuildTool;
 import java.util.Comparator;
 import java.util.List;

@@ -16,7 +16,7 @@
 package io.micronaut.starter.cli.feature.grpc;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;

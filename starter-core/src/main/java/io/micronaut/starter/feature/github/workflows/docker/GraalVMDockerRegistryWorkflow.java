@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.github.workflows.docker;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;

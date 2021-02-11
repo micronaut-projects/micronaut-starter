@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.analytics;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.application.ApplicationType;

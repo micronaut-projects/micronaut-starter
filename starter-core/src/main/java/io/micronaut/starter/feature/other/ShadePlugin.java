@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.other;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.util.Optional;
 import java.util.stream.Stream;
 

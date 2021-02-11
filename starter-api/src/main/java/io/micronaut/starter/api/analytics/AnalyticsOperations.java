@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api.analytics;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.starter.analytics.Generated;
 

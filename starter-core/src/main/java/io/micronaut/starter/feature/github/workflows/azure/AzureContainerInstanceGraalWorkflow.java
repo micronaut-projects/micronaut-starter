@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.github.workflows.azure;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.server.Netty;
 

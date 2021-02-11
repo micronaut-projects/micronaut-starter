@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Indexed;
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;

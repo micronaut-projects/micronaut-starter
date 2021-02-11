@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.options.TestFramework;
 
 import java.util.Arrays;

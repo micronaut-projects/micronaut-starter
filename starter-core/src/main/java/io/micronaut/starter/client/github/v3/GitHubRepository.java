@@ -18,7 +18,7 @@ package io.micronaut.starter.client.github.v3;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * GitHub repository.

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;

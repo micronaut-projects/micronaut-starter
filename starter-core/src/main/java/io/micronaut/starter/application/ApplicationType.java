@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.application;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.naming.Named;
 
 import java.util.Locale;

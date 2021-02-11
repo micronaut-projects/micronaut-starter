@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.application.generator;
 
-import io.micronaut.core.annotation.Nullable;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.annotation.DefaultImplementation;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;

@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.function.azure;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;

@@ -1,6 +1,6 @@
 package io.micronaut.starter.netty
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
 import io.micronaut.context.event.BeanCreatedEvent

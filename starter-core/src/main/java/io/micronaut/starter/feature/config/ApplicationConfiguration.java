@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.config;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 
 public class ApplicationConfiguration extends Configuration {
 

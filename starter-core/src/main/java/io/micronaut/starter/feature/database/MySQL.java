@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
 import javax.inject.Singleton;

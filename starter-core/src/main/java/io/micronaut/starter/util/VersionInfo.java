@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.util;
 
-import io.micronaut.core.annotation.NonNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.options.JdkVersion;
 
 import java.io.IOException;
