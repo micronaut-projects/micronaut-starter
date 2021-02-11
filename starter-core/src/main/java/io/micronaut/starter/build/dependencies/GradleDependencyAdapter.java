@@ -69,6 +69,10 @@ public class GradleDependencyAdapter implements GradleDependency {
                     }
                     return Optional.of(GradleConfiguration.RUNTIME_ONLY);
                 }
+                if (scope.getPhases().contains(Phase.COMPILATION)) {
+                    return Optional.of(GradleConfiguration.COMPILE_ONLY);
+                }
+
                 break;
 
             case TEST:
@@ -80,6 +84,9 @@ public class GradleDependencyAdapter implements GradleDependency {
                         return Optional.of(GradleConfiguration.TEST_IMPLEMENTATION);
                     }
                     return Optional.of(GradleConfiguration.TEST_RUNTIME_ONLY);
+                }
+                if (scope.getPhases().contains(Phase.COMPILATION)) {
+                    return Optional.of(GradleConfiguration.TEST_COMPILE_ONLY);
                 }
                 break;
 

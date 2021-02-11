@@ -29,5 +29,7 @@ public interface MavenCoordinate {
     String getArtifactId();
 
     @Nullable
-    String getVersion();
+    default String getVersion() {
+        return null;
+    }
 }
