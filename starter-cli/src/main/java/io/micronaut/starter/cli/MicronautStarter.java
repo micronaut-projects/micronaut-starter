@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
-import io.micronaut.context.BeanContext;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
@@ -87,19 +87,19 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     static CommandLine createCommandLine() {
         boolean noOpConsole = MicronautStarter.interactiveShell;
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (ApplicationContext beanContext = ApplicationContext.run()) {
             return createCommandLine(beanContext, noOpConsole);
         }
     }
 
     static int execute(String[] args) {
         boolean noOpConsole = args.length > 0 && args[0].startsWith("update-cli-config");
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (ApplicationContext beanContext = ApplicationContext.run()) {
             return createCommandLine(beanContext, noOpConsole).execute(args);
         }
     }
 
-    private static CommandLine createCommandLine(BeanContext beanContext, boolean noOpConsole) {
+    private static CommandLine createCommandLine(ApplicationContext beanContext, boolean noOpConsole) {
         MicronautStarter starter = beanContext.getBean(MicronautStarter.class);
         CommandLine commandLine = new CommandLine(starter, new MicronautFactory(beanContext));
         commandLine.setExecutionExceptionHandler((ex, commandLine1, parseResult) -> EXCEPTION_HANDLER.apply(ex, commandLine1));

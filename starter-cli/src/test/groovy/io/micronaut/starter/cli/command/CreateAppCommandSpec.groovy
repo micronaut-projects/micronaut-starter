@@ -2,29 +2,24 @@ package io.micronaut.starter.cli.command
 
 import io.micronaut.configuration.picocli.PicocliRunner
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.BeanContext
 import io.micronaut.context.annotation.Parameter
 import io.micronaut.context.env.Environment
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
-import io.micronaut.starter.cli.feature.other.CreateClientCommand
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
-import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.NameUtils
 import spock.lang.AutoCleanup
 import spock.lang.Issue
 import spock.lang.Shared
-import spock.lang.Specification
 import spock.lang.Unroll
 
 import javax.inject.Inject
@@ -37,7 +32,7 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/352")
     void "test micronaut is not a valid application name"() {

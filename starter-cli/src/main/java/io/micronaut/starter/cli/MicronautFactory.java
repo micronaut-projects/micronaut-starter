@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
-import io.micronaut.context.BeanContext;
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.TypeHint;
 import picocli.CommandLine;
 
@@ -31,13 +31,13 @@ import java.util.Optional;
 class MicronautFactory implements CommandLine.IFactory {
 
     private final CommandLine.IFactory defaultFactory;
-    private final BeanContext beanContext;
+    private final ApplicationContext beanContext;
 
     public MicronautFactory() {
-        this(BeanContext.run());
+        this(ApplicationContext.run());
     }
 
-    public MicronautFactory(BeanContext beanContext) {
+    public MicronautFactory(ApplicationContext beanContext) {
         this.beanContext = beanContext;
         defaultFactory = CommandLine.defaultFactory();
     }

@@ -16,7 +16,7 @@
 
 package io.micronaut.starter.cli.feature.acme
 
-import io.micronaut.context.BeanContext
+import io.micronaut.context.ApplicationContext
 import io.micronaut.core.io.socket.SocketUtils
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
@@ -39,7 +39,7 @@ abstract class CliBaseSpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Shared
     int expectedHttpPort
