@@ -14,3 +14,5 @@ src/main/docs/resources/css/*.css
 src/main/docs/resources/img/*.svg
 src/main/docs/resources/js/*.js
 src/main/docs/resources/style/*.html
+.project
+.settings

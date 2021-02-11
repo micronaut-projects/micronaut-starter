@@ -1,0 +1,18 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+    Project project,
+    String configClass
+)
+
+@if (project.getPackageName() != null) {
+    package @project.getPackageName()
+}
+
+import io.micronaut.jms.annotations.JMSProducer
+import static @(configClass).CONNECTION_FACTORY_BEAN_NAME
+
+@@JMSProducer(CONNECTION_FACTORY_BEAN_NAME)
+interface @project.getClassName() {
+
+}

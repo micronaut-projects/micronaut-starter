@@ -158,7 +158,7 @@ tasks @{
         pricingTier = "Consumption"
         region = "westus"
         runtime {
-          os = "windows"
+          os = "linux"
         }
         localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
     }

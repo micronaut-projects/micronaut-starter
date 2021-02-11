@@ -31,16 +31,16 @@ jobs:
           mv tmp/micronaut-cli-* tmp/cli
           ./tmp/cli/bin/mn --version
       - name: Publish to JFrog OSS
-        if: success() && github.event_name == 'push' && matrix.java == '8' && github.ref == 'refs/heads/master'
+        if: success() && github.event_name == 'push' && matrix.java == '8'
         env:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew publish docs
+        run: ./gradlew publish docs --no-daemon
       - name: Publish to Github Pages
-        if: success() && github.event_name == 'push' && matrix.java == '8' && github.ref == 'refs/heads/master'
+        if: success() && github.event_name == 'push' && matrix.java == '8'
         uses: micronaut-projects/github-pages-deploy-action@master
         env:
+          TARGET_REPOSITORY: "micronaut-projects/micronaut-starter"
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          BASE_BRANCH: master
           BRANCH: gh-pages
           FOLDER: build/docs
