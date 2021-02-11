@@ -8,8 +8,6 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import org.jetbrains.annotations.NotNull
-import spock.lang.Shared
 import spock.lang.Unroll
 
 class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
