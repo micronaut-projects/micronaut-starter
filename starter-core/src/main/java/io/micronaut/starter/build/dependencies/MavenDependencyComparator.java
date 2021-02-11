@@ -27,8 +27,11 @@ public class MavenDependencyComparator implements Comparator<Dependency> {
     @Override
     public int compare(Dependency o1, Dependency o2) {
         int comparison = 0;
-        if (o1 instanceof MavenDependency && o2 instanceof MavenDependency) {
-            comparison = Integer.compare(((MavenDependency) o1).getMavenScope().getOrder(), ((MavenDependency) o2).getMavenScope().getOrder());
+        if (o1 instanceof MavenDependency &&
+                o2 instanceof MavenDependency &&
+                ((MavenDependency) o1).getMavenScope().isPresent() &&
+                ((MavenDependency) o2).getMavenScope().isPresent()) {
+            comparison = Integer.compare(((MavenDependency) o1).getMavenScope().get().getOrder(), ((MavenDependency) o2).getMavenScope().get().getOrder());
         }
         if (comparison != 0) {
             return comparison;

@@ -24,7 +24,7 @@ class HystrixSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle netflix-hystrix feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-hystrix'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-hystrix'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.netflix:micronaut-netflix-hystrix")')
@@ -36,7 +36,7 @@ class HystrixSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven netflix-hystrix feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-hystrix'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['netflix-hystrix'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

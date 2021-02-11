@@ -11,12 +11,14 @@
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
 List<Property> properties,
-List<Dependency> dependencies
+List<Dependency> dependencies,
+List<MavenCoordinate> annotationProcessors
 )
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -190,7 +192,6 @@ List<Dependency> dependencies
 @dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
 }
 @if (features.contains("openapi")) {
-@dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
@@ -687,7 +688,7 @@ List<Dependency> dependencies
 }
 }
 @for (f : dependencies) {
-@dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope().get(), f.getVersion())
 }
   </dependencies>
 
@@ -879,13 +880,6 @@ List<Dependency> dependencies
 } else {
           <annotationProcessorPaths combine.children="append">
 }
-@if (features.contains("picocli")) {
-            <path>
-              <groupId>info.picocli</groupId>
-              <artifactId>picocli-codegen</artifactId>
-              <version>${picocli.version}</version>
-            </path>
-}
 @if (features.contains("data")) {
             <path>
               <groupId>io.micronaut.data</groupId>
@@ -893,11 +887,11 @@ List<Dependency> dependencies
               <version>${micronaut.data.version}</version>
             </path>
 }
-@if (features.contains("openapi")) {
+@for (processor : annotationProcessors) {
             <path>
-              <groupId>io.micronaut.openapi</groupId>
-              <artifactId>micronaut-openapi</artifactId>
-              <version>${micronaut.openapi.version}</version>
+              <groupId>@processor.getGroupId()</groupId>
+              <artifactId>@processor.getArtifactId()</artifactId>
+              <version>${@(processor.getArtifactId().replace("-", ".")).version}</version>
             </path>
 }
 @if (features.contains("jax-rs")) {
@@ -1037,13 +1031,6 @@ List<Dependency> dependencies
                   <version>${micronaut.version}</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("picocli")) {
-                <annotationProcessorPath>
-                  <groupId>info.picocli</groupId>
-                  <artifactId>picocli-codegen</artifactId>
-                  <version>${picocli.version}</version>
-                </annotationProcessorPath>
-}
 @if (features.contains("data")) {
                 <annotationProcessorPath>
                   <groupId>io.micronaut.data</groupId>
@@ -1051,11 +1038,11 @@ List<Dependency> dependencies
                   <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("openapi")) {
+@for (processor : annotationProcessors) {
                 <annotationProcessorPath>
-                  <groupId>io.micronaut.openapi</groupId>
-                  <artifactId>micronaut-openapi</artifactId>
-                  <version>${micronaut.openapi.version}</version>
+                  <groupId>@processor.getGroupId()</groupId>
+                  <artifactId>@processor.getArtifactId()</artifactId>
+                  <version>${@(processor.getArtifactId().replace("-", ".")).version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {

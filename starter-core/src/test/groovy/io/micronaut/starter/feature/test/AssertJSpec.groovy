@@ -36,7 +36,7 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle assertj feature for language=#language'() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'],
-                language, TestFramework.JUNIT), false, []).render().toString()
+                language, TestFramework.JUNIT), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.assertj:assertj-core")')
@@ -49,7 +49,7 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test gradle assertj feature fails for language=#language when test framework is not Junit'() {
         when:
         buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'], language, testfw),
-                false, []).render().toString()
+                false, [], []).render().toString()
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -69,7 +69,7 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test maven assertj feature for language=#language'() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'], language,
-                TestFramework.JUNIT), [], []).render().toString()
+                TestFramework.JUNIT), [], [], []).render().toString()
 
         then:
         template.contains("""

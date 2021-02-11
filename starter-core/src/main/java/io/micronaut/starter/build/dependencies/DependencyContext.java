@@ -51,4 +51,8 @@ public interface DependencyContext {
     default void addTestRuntimeDependency(@NonNull String artifactId) {
         addDependency(new ScopedArtifact(new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME)), artifactId));
     }
+
+    default void addAnnotationProcessor(@NonNull String artifactId) {
+        addDependency(new ScopedArtifact(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)), artifactId));
+    }
 }

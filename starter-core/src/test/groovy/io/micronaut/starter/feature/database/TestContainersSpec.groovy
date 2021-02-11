@@ -15,7 +15,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test oracle dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:oracle-xe")')
@@ -24,7 +24,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mysql dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mysql")')
@@ -33,7 +33,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test postgres dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:postgresql")')
@@ -42,7 +42,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mariadb dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mariadb")')
@@ -51,7 +51,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test sqlserver dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mssqlserver")')
@@ -60,7 +60,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mongo-reactive dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-reactive']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-reactive']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
@@ -69,7 +69,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mongo-sync dependency is present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-sync']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-sync']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
@@ -79,7 +79,7 @@ class TestContainersSpec extends BeanContextSpec {
     void "test mongo-gorm dependency is present for gradle"() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(['testcontainers', 'mongo-gorm'], Language.GROOVY), false, []).render().toString()
+                getFeatures(['testcontainers', 'mongo-gorm'], Language.GROOVY), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:mongodb")')
@@ -88,7 +88,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test testcontainers core is present when no testcontainer modules are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:testcontainers")')
@@ -97,7 +97,7 @@ class TestContainersSpec extends BeanContextSpec {
     void "testframework dependency is present for gradle for feature #feature and spock framework"() {
         when:
         def template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK), false, []).render().toString()
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:spock")')
@@ -110,7 +110,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         when:
         def template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT), false, []).render().toString()
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT), false, [], []).render().toString()
 
         then:
         template.contains('testImplementation("org.testcontainers:junit-jupiter")')
@@ -121,7 +121,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test oracle dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'oracle']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -142,7 +142,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mysql dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mysql']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -163,7 +163,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test postgres dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'postgres']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -184,7 +184,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mariadb dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mariadb']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -205,7 +205,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test sqlserver dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'sqlserver']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -226,7 +226,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mongo-reactive dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-reactive']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-reactive']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -247,7 +247,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test mongo-sync dependency is present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-sync']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', 'mongo-sync']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -269,7 +269,7 @@ class TestContainersSpec extends BeanContextSpec {
     void "test mongo-gorm dependency is present for maven"() {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(['testcontainers', 'mongo-gorm'], Language.GROOVY), [], []).render().toString()
+                getFeatures(['testcontainers', 'mongo-gorm'], Language.GROOVY), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -290,7 +290,7 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test testcontainers dependency is present and no testcontainer modules are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers']), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -305,7 +305,7 @@ class TestContainersSpec extends BeanContextSpec {
     void "testframework dependency is present for maven for feature #feature and spock framework"() {
         when:
         def template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK, BuildTool.MAVEN,ApplicationType.DEFAULT),[], []).render().toString()
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.SPOCK, BuildTool.MAVEN,ApplicationType.DEFAULT),[], [], []).render().toString()
 
         then:
         template.contains("""
@@ -324,7 +324,7 @@ class TestContainersSpec extends BeanContextSpec {
 
         when:
         def template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.MAVEN,ApplicationType.DEFAULT),[], []).render().toString()
+                getFeatures([feature], Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.MAVEN,ApplicationType.DEFAULT),[], [], []).render().toString()
 
         then:
         template.contains("""
@@ -341,8 +341,8 @@ class TestContainersSpec extends BeanContextSpec {
 
     void "test there is a dependency for every non embedded driver feature"() {
         when:
-        String mavenTemplate = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), [], []).render().toString()
-        String gradleTemplate = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), false, []).render().toString()
+        String mavenTemplate = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), [], [], []).render().toString()
+        String gradleTemplate = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['testcontainers', driverFeature.getName()]), false, [], []).render().toString()
 
         then:
         gradleTemplate.contains("org.testcontainers")

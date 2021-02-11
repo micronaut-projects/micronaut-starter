@@ -17,12 +17,14 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+import java.util.Optional;
+
 public interface MavenDependency extends Dependency {
     @NonNull
-    MavenScope getMavenScope();
+    Optional<MavenScope> getMavenScope();
 
     @NonNull
-    default String getScope() {
-        return getMavenScope().toString();
+    default Optional<String> getScope() {
+        return getMavenScope().map(MavenScope::toString);
     }
 }

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 public class DependencyResolver implements BuildToolDependencyResolver {
     private final MavenCoordinateResolver mavenCoordinateResolver;
+    private final Comparator<MavenCoordinate> coordinateComparator = new MavenCoordinateComparator();
     private final AdapterBuilder adapterBuilder;
     private final BuildTool buildTool;
     private final Comparator<Dependency> comparator;
@@ -48,7 +49,21 @@ public class DependencyResolver implements BuildToolDependencyResolver {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(dep -> adapterBuilder.build(dep, buildTool))
+                .filter(dep -> dep.getScope().isPresent())
                 .sorted(comparator)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @NonNull
+    public List<MavenCoordinate> annotationProcessors(@NonNull Set<ScopedArtifact> artifacts) {
+        return artifacts
+                .stream()
+                .map(mavenCoordinateResolver::resolve)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(scopedDependency -> scopedDependency.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
+                .sorted(coordinateComparator)
                 .collect(Collectors.toList());
     }
 }

@@ -34,7 +34,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')
@@ -43,7 +43,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), false, [], []).render().toString()
 
         then:
         template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
@@ -51,7 +51,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), [], [], []).render().toString()
 
         then:
         //src/main
@@ -65,7 +65,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), [], [], []).render().toString()
 
         then:
         template.contains("""

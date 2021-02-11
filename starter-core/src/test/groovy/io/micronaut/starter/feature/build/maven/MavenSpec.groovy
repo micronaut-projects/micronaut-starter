@@ -34,6 +34,7 @@ class MavenSpec extends BeanContextSpec {
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
                 generatorContext.getBuildProperties().getProperties(),
+                [],
                 []
         ).render().toString()
 
@@ -72,7 +73,7 @@ class MavenSpec extends BeanContextSpec {
     void 'test annotation processor dependencies'() {
         when:
         Features features = getFeatures([], null, null, BuildTool.MAVEN)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], [], []).render().toString()
 
         then:
         template.contains('''
@@ -82,7 +83,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -102,7 +103,7 @@ class MavenSpec extends BeanContextSpec {
 
         when:
         features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], [], []).render().toString()
 
         then:
         template.contains('''
@@ -127,7 +128,7 @@ class MavenSpec extends BeanContextSpec {
         println features.features
 
         when:
-        String template = pom.template(applicationType, buildProject(), features, [], []).render().toString()
+        String template = pom.template(applicationType, buildProject(), features, [], [], []).render().toString()
 
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")

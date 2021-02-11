@@ -17,6 +17,8 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+import java.util.Optional;
+
 public interface GradleDependency extends Dependency {
 
     @NonNull
@@ -24,7 +26,7 @@ public interface GradleDependency extends Dependency {
 
     @Override
     @NonNull
-    default String getScope() {
-        return getConfiguration().toString();
+    default Optional<String> getScope() {
+        return Optional.of(getConfiguration().toString());
     }
 }

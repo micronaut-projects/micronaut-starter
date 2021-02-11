@@ -33,7 +33,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), false, []).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), false, [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()
@@ -42,7 +42,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), [], [], []).render().toString()
 
         then:
         !template.contains("""
@@ -74,7 +74,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), [], [], []).render().toString()
 
         then:
         !template.contains("""
@@ -101,7 +101,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), [], []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), [], [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

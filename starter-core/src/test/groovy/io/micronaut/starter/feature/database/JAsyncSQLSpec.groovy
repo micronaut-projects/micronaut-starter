@@ -75,7 +75,7 @@ jasync:
     @Unroll
     void 'test gradle jasync-sql feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-jasync-sql")')
@@ -87,7 +87,7 @@ jasync:
     @Unroll
     void 'test maven jasync-sql feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

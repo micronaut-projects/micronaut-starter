@@ -49,7 +49,7 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
@@ -58,7 +58,7 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), [], [], []).render().toString()
 
         then:
         template.contains("""

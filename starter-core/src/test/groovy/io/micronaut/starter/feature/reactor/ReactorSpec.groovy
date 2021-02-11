@@ -51,7 +51,7 @@ class ReactorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature reactor for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -68,7 +68,7 @@ class ReactorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature reactor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.reactor:micronaut-reactor")')

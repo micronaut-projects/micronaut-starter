@@ -19,6 +19,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -62,12 +63,14 @@ public class Maven implements BuildFeature {
         generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
 
         List<Dependency> dependencies = dependencyResolver.resolve(generatorContext.getDependencies());
+        List<MavenCoordinate> annotationProcessors = dependencyResolver.annotationProcessors(generatorContext.getDependencies());
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
                 generatorContext.getBuildProperties().getProperties(),
-                dependencies
+                dependencies,
+                annotationProcessors
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
     }

@@ -14,7 +14,7 @@ class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "test gradle r2dbc feature #driver"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["r2dbc", driver]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["r2dbc", driver]), false, [], []).render().toString()
         driver = getDriverName(driver)
 
         then:
@@ -28,7 +28,7 @@ class R2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "test maven r2dbc feature #driver"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["r2dbc", driver]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["r2dbc", driver]), [], [], []).render().toString()
         driver = getDriverName(driver)
         JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
 

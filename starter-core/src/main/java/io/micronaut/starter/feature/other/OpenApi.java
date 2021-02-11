@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 @Singleton
 public class OpenApi implements Feature, MicronautServerDependent {
+    private final static String ARTIFACT_ID = "micronaut-openapi";
 
     @Override
     public String getName() {
@@ -51,13 +53,20 @@ public class OpenApi implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        applyDependencies(generatorContext);
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.openapi");
+            Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion(ARTIFACT_ID.replace("-", "."));
             generatorContext.getBuildProperties().put(
                     dependencyVersion.getKey(),
                     dependencyVersion.getValue()
             );
         }
+    }
+
+    @Override
+    public void applyDependencies(DependencyContext dependencyContext) {
+        dependencyContext.addAnnotationProcessor(ARTIFACT_ID);
+        dependencyContext.addDependency("swagger-annotations");
     }
 
     @Override

@@ -21,7 +21,7 @@ class Neo4jGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-neo4j-gorm")')
@@ -31,7 +31,7 @@ class Neo4jGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), [], [], []).render().toString()
 
         then:
         template.contains("""

@@ -12,7 +12,7 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle asciidoctor feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), false, [], []).render().toString()
 
         then:
         template.contains('id("org.asciidoctor.jvm.convert")')
@@ -25,7 +25,7 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test maven asciidoctor feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

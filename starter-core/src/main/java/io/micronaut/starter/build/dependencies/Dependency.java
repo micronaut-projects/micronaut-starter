@@ -17,8 +17,10 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+import java.util.Optional;
+
 public interface Dependency extends MavenCoordinate {
 
     @NonNull
-    String getScope();
+    Optional<String> getScope();
 }

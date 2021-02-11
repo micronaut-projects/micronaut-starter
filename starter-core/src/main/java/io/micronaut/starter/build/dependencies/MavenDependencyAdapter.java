@@ -49,12 +49,8 @@ public class MavenDependencyAdapter implements MavenDependency {
 
     @NonNull
     @Override
-    public MavenScope getMavenScope() {
-        Optional<MavenScope> mavenScope = parse(scopedDependency.getScope());
-        if (mavenScope.isPresent()) {
-            return mavenScope.get();
-        }
-        throw new ConfigurationException("Could not parse " + scopedDependency.getScope().toString() + " as a maven scope");
+    public Optional<MavenScope> getMavenScope() {
+        return parse(scopedDependency.getScope());
     }
 
     @NonNull

@@ -56,7 +56,7 @@ class HttpSessionSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test http-session with Gradle for language=#language'() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['http-session'],
-                language), false, []).render().toString()
+                language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-session")')
@@ -73,7 +73,7 @@ class HttpSessionSpec extends BeanContextSpec implements CommandOutputFixture {
                 ['http-session'],
                 new Options(language, BuildTool.MAVEN), ApplicationType.DEFAULT)
         String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                context.getFeatures(), context.getBuildProperties().getProperties(), []).render().toString()
+                context.getFeatures(), context.getBuildProperties().getProperties(), [], []).render().toString()
 
         then:
         template.contains("""

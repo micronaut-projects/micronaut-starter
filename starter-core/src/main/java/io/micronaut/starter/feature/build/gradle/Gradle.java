@@ -19,6 +19,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -62,14 +63,15 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
         List<Dependency> dependencies = dependencyResolver.resolve(generatorContext.getDependencies());
-
+        List<MavenCoordinate> annotationProcessors = dependencyResolver.annotationProcessors(generatorContext.getDependencies());
         BuildTool buildTool = generatorContext.getBuildTool();
         generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
                 buildTool == BuildTool.GRADLE_KOTLIN,
-                dependencies
+                dependencies,
+                annotationProcessors
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));

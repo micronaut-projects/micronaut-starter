@@ -22,7 +22,7 @@ class HibernateGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-hibernate-gorm")')
@@ -33,7 +33,7 @@ class HibernateGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), [], [], []).render().toString()
 
         then:
         template.contains("""

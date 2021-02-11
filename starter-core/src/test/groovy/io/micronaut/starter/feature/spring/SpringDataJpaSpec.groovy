@@ -55,7 +55,7 @@ class SpringDataJpaSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-data-jpa with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jpa'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jpa'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.data:micronaut-data-spring")')
@@ -69,7 +69,7 @@ class SpringDataJpaSpec extends BeanContextSpec {
     @Unroll
     void 'test maven spring-data-jpa feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jpa'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jpa'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

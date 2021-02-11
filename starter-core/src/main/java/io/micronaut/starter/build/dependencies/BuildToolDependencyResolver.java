@@ -23,4 +23,7 @@ import java.util.Set;
 public interface BuildToolDependencyResolver {
     @NonNull
     List<Dependency> resolve(@NonNull Set<ScopedArtifact> artifacts);
+
+    @NonNull
+    List<MavenCoordinate> annotationProcessors(@NonNull Set<ScopedArtifact> artifacts);
 }

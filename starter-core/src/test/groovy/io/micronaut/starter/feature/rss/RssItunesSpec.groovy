@@ -23,7 +23,7 @@ class RssItunesSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle rss-itunes-podcast feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.rss:micronaut-itunespodcast")')
@@ -35,7 +35,7 @@ class RssItunesSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven rss-itunes-podcast feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss-itunes-podcast'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

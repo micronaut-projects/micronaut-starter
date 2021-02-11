@@ -27,7 +27,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
     @Unroll
     void 'test gradle security-session feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), false, [], []).render().toString()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -40,7 +40,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
     @Unroll
     void 'test gradle security-session removes http-session feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['http-session','security-session'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['http-session','security-session'], language), false, [], []).render().toString()
 
         then:
         !template.contains('implementation("io.micronaut.security:micronaut-session")')
@@ -52,7 +52,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
     @Unroll
     void 'test maven security-session feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-session'], language), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -95,7 +95,7 @@ class SecuritySessionSpec extends BeanContextSpec implements CommandOutputFixtur
                 ['http-session','security-session'],
                 new Options(language, BuildTool.MAVEN), ApplicationType.DEFAULT)
         String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                context.getFeatures(), context.getBuildProperties().getProperties(), []).render().toString()
+                context.getFeatures(), context.getBuildProperties().getProperties(), [], []).render().toString()
 
         then:
         !template.contains("micronaut-session")

@@ -24,7 +24,7 @@ class RockerSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-rocker feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
@@ -46,7 +46,7 @@ sourceSets {
     @Unroll
     void 'test maven views-rocker feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

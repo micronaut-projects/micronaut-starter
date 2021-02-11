@@ -7,6 +7,7 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
 @import java.util.List
 
 @args (
@@ -14,10 +15,11 @@ ApplicationType applicationType,
 Project project,
 Features features,
 List<Dependency> dependencies,
+List<MavenCoordinate> annotationProcessors
 )
 
 dependencies {
-@io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
+@io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features, annotationProcessors)
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
@@ -74,9 +76,6 @@ dependencies {
 }
 @if (features.contains("http-session")) {
     @dependency.template("io.micronaut", "micronaut-session", "implementation", null)
-}
-@if (features.contains("openapi")) {
-    @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
 }
 @if (features.contains("lombok")) {
     @dependency.template("org.projectlombok", "lombok", "compileOnly", null)
@@ -533,6 +532,6 @@ dependencies {
 }
 }
 @for (f : dependencies) {
-    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope(), f.getVersion())
+    @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope().get(), f.getVersion())
 }
 }

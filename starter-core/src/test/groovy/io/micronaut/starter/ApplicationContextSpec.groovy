@@ -6,6 +6,7 @@ import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver
 import io.micronaut.starter.build.dependencies.Dependency
 import io.micronaut.starter.build.dependencies.DependencyContext
+import io.micronaut.starter.build.dependencies.MavenCoordinate
 import io.micronaut.starter.build.dependencies.ScopedArtifact
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.ContextFixture
@@ -42,6 +43,18 @@ abstract class ApplicationContextSpec extends Specification implements ProjectFi
             return gradleDependencyResolver.resolve(dependencyContext.scopedArtifacts)
         }
         return mavenDependencyResolver.resolve(dependencyContext.scopedArtifacts)
+    }
+
+    List<MavenCoordinate> getAnnotationProcessors(Class<? extends Feature> feature,
+                                                  BuildTool buildTool,
+                                                  TestFramework testFramework) {
+        MockDependencyContext dependencyContext = new MockDependencyContext(testFramework)
+        beanContext.getBean(feature).applyDependencies(dependencyContext)
+
+        if (buildTool.isGradle()) {
+            return gradleDependencyResolver.annotationProcessors(dependencyContext.scopedArtifacts)
+        }
+        return mavenDependencyResolver.annotationProcessors(dependencyContext.scopedArtifacts)
     }
 
 

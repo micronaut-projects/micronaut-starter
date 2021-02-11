@@ -41,7 +41,7 @@ class GradleDependencyComparatorSpec extends Specification {
     }
 
     private static String str(Dependency dependency) {
-        "${dependency.scope}(\"${dependency.groupId}:${dependency.artifactId}\")"
+        "${dependency.scope.get()}(\"${dependency.groupId}:${dependency.artifactId}\")"
     }
 
     private static Dependency dep(GradleConfiguration configuration, String coordinate) {

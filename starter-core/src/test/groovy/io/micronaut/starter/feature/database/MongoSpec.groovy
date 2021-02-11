@@ -32,7 +32,7 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test mongo sync dependencies are present for gradle"() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(["mongo-sync"]), false, []).render().toString()
+                getFeatures(["mongo-sync"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
@@ -41,7 +41,7 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test mongo sync dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -81,7 +81,7 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
@@ -90,7 +90,7 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), [], [], []).render().toString()
 
         then:
         template.contains("""

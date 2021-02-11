@@ -1,22 +1,26 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.build.gradle.templates.annotationProcessor
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
+@import java.util.List
 
 @args (
-Features features
+Features features,
+List<MavenCoordinate> annotationProcessors
 )
 
 @if (features.contains("lombok")) {
 @annotationProcessor.template(features, "\"org.projectlombok:lombok\"")
 }
-@if (features.contains("picocli")) {
-@annotationProcessor.template(features, "\"info.picocli:picocli-codegen:4.2.0\"")
-}
 @if (features.contains("data")) {
 @annotationProcessor.template(features, "\"io.micronaut.data:micronaut-data-processor\"")
 }
-@if (features.contains("openapi")) {
-@annotationProcessor.template(features, "\"io.micronaut.openapi:micronaut-openapi\"")
+@for (processor : annotationProcessors) {
+@if (processor.getVersion() == null) {
+    @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
+} else {
+    @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
+}
 }
 @if (features.contains("jax-rs")) {
 @annotationProcessor.template(features, "\"io.micronaut.jaxrs:micronaut-jaxrs-processor\"")

@@ -77,7 +77,7 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature ktor for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -134,7 +134,7 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature ktor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false, [], []).render().toString()
 
         then:
         template.contains("mainClass.set(\"example.micronaut.Application\")")
@@ -151,7 +151,7 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false, []).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false, [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

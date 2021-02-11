@@ -13,7 +13,7 @@ class VertxPgSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle vertx-pg-client feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-pg-client")')
@@ -25,7 +25,7 @@ class VertxPgSpec extends BeanContextSpec {
     @Unroll
     void 'test maven vertx-pg-client feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), [], [], []).render().toString()
 
         then:
         template.contains("""

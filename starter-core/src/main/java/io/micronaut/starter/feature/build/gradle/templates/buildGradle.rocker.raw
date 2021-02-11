@@ -6,6 +6,7 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.dependencies.Dependency
+@import io.micronaut.starter.build.dependencies.MavenCoordinate
 @import java.util.List
 
 @args (
@@ -13,7 +14,8 @@ ApplicationType applicationType,
 Project project,
 Features features,
 boolean isKotlinDsl,
-List<Dependency> coordinates
+List<Dependency> coordinates,
+List<MavenCoordinate> annotationProcessors
 )
 
 @if (features.contains("grpc") && isKotlinDsl) {
@@ -96,7 +98,7 @@ micronaut {
     }
 }
 
-@dependencies.template(applicationType, project, features, coordinates)
+@dependencies.template(applicationType, project, features, coordinates, annotationProcessors)
 
 
 @if (features.mainClass().isPresent()) {

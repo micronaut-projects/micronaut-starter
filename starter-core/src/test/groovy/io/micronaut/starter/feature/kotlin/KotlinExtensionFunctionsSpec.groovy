@@ -52,7 +52,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with maven and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -69,7 +69,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'exception with maven and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()
@@ -82,7 +82,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with gradle and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, [], []).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")')
@@ -94,7 +94,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'exception with gradle and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, []).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, [], []).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

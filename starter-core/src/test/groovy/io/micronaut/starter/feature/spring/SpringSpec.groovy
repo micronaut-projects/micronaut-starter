@@ -57,7 +57,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test spring with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), false, []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), false, [], []).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
@@ -72,7 +72,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven spring feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -91,7 +91,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), [], [], []).render().toString()
 
         then:
         template.contains("""
@@ -110,7 +110,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), [], [], []).render().toString()
 
         then:
         template.contains("""
