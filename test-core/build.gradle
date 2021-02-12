@@ -10,6 +10,19 @@ sourceSets {
     }
 }
 
+configurations {
+    all {
+        resolutionStrategy {
+            eachDependency { DependencyResolveDetails details ->
+                // Override any version coming from Micronaut BOM so we can upgrade this independently
+                if (details.requested.group == 'org.testcontainers') {
+                    details.useVersion testcontainersVersion
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":starter-core")
