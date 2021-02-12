@@ -36,7 +36,7 @@ import java.util.Properties;
 @Singleton
 public class MicronautVersionsPropertiesResolver implements PropertiesResolver {
     private static final Logger LOG = LoggerFactory.getLogger(MicronautVersionsPropertiesResolver.class);
-    public static final String MICRONAUT_VERSIONS_PROPERTIES = "/micronaut-versions.properties";
+    private static final String MICRONAUT_VERSIONS_PROPERTIES = "/micronaut-versions.properties";
     private final Map<String, String> dependenciesVersions;
 
     public MicronautVersionsPropertiesResolver() {

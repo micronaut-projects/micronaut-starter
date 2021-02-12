@@ -17,12 +17,8 @@ package io.micronaut.starter.feature.build.maven;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MavenBuild;
 import io.micronaut.starter.build.dependencies.MavenBuildToolDependencyResolver;
-import io.micronaut.starter.build.dependencies.MavenCoordinate;
-import io.micronaut.starter.build.dependencies.MicronautVersionsPropertiesResolver;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -33,9 +29,7 @@ import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.List;
 import java.util.Set;
 
 @Singleton
