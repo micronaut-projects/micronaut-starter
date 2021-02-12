@@ -59,10 +59,10 @@ public class DependencyResolver implements BuildToolDependencyResolver {
     public List<MavenCoordinate> annotationProcessors(@NonNull Set<ScopedArtifact> artifacts) {
         return artifacts
                 .stream()
+                .filter(dep -> dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
                 .map(mavenCoordinateResolver::resolve)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
-                .filter(scopedDependency -> scopedDependency.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
                 .sorted(coordinateComparator)
                 .collect(Collectors.toList());
     }

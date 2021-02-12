@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.spring
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
@@ -63,7 +66,7 @@ class SpringWebSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
@@ -80,7 +83,7 @@ class SpringWebSpec extends BeanContextSpec {
 
     void 'test maven spring-web feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -109,7 +112,7 @@ class SpringWebSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -138,7 +141,7 @@ class SpringWebSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

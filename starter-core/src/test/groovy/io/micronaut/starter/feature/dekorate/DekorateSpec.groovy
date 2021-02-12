@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.dekorate
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -26,7 +29,7 @@ class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle dekorate #feature.name feature with for #language' (Feature feature, Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature.getName()], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature.getName()], language), new GradleBuild()).render().toString()
         String service = feature.getName().replaceFirst("dekorate-", "")
 
         then:
@@ -46,7 +49,7 @@ class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'test maven dekorate #feature.name for #language' (Feature feature, Language language) {
         when:
         String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), [], [], []).render().toString()
+                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), new MavenBuild()).render().toString()
         String service = feature.getName().replaceFirst("dekorate-", "")
 
         then:

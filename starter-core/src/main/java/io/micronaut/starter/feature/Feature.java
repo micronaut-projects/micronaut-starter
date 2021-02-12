@@ -105,10 +105,6 @@ public interface Feature extends Named, Ordered, Described {
      * @param generatorContext THe generator context
      */
     default void apply(GeneratorContext generatorContext) {
-        applyDependencies(generatorContext);
-    }
-
-    default void applyDependencies(DependencyContext dependencyContext) {
 
     }
 

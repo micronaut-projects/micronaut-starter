@@ -60,19 +60,7 @@ public class Picocli implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        applyDependencies(generatorContext);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("picocli");
-            generatorContext.getBuildProperties().put(
-                    ARTIFACT_ID_PICOCLI_CODEGEN.replace("-", ".") + ".version",
-                    entry.getValue()
-            );
-        }
-    }
-
-    @Override
-    public void applyDependencies(DependencyContext dependencyContext) {
-        dependencyContext.addAnnotationProcessor(ARTIFACT_ID_PICOCLI_CODEGEN);
+        generatorContext.addAnnotationProcessor(ARTIFACT_ID_PICOCLI_CODEGEN);
     }
 
     @Override

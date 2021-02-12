@@ -15,11 +15,12 @@
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli-codegen</artifactId>
-            <version>4.2.0</version>
+            <version>${picocli.version}</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.openapi</groupId>
             <artifactId>micronaut-openapi</artifactId>
+            <version>${micronaut.openapi.version}</version>
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>

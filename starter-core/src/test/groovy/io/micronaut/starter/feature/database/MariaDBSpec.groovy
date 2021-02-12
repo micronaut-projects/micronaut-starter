@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.database
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -12,7 +15,7 @@ class MariaDBSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle mariadb feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('runtimeOnly("org.mariadb.jdbc:mariadb-java-client")')
@@ -24,7 +27,7 @@ class MariaDBSpec extends BeanContextSpec {
     @Unroll
     void 'test maven mariadb feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mariadb'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

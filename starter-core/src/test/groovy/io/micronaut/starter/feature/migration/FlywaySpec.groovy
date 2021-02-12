@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.migration
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -22,7 +25,7 @@ class FlywaySpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test the dependency is added to the gradle build"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway']), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway']), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.flyway:micronaut-flyway")')
@@ -30,7 +33,7 @@ class FlywaySpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test the dependency is added to the maven build"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway']), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['flyway']), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

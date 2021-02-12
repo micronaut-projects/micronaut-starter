@@ -10,15 +10,12 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.build.dependencies.Dependency
-@import io.micronaut.starter.build.dependencies.MavenCoordinate
+@import io.micronaut.starter.build.dependencies.MavenBuild
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-List<Property> properties,
-List<Dependency> dependencies,
-List<MavenCoordinate> annotationProcessors
+MavenBuild mavenBuild
 )
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,7 +42,7 @@ List<MavenCoordinate> annotationProcessors
 } else {
     <release.version>@features.javaVersion().majorVersion()</release.version>
 }
-@for (Property prop : properties) {
+@for (Property prop : mavenBuild.getProperties()) {
 @if (prop.isComment()) {
     <!--@prop.getComment()-->
 } else {
@@ -687,7 +684,7 @@ List<MavenCoordinate> annotationProcessors
 @dependency.template("org.testcontainers", "mongodb", "test", null)
 }
 }
-@for (f : dependencies) {
+@for (f : mavenBuild.getDependencies()) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getScope().get(), f.getVersion())
 }
   </dependencies>
@@ -887,11 +884,11 @@ List<MavenCoordinate> annotationProcessors
               <version>${micronaut.data.version}</version>
             </path>
 }
-@for (processor : annotationProcessors) {
+@for (processor : mavenBuild.getAnnotationProcessors()) {
             <path>
               <groupId>@processor.getGroupId()</groupId>
               <artifactId>@processor.getArtifactId()</artifactId>
-              <version>${@(processor.getArtifactId().replace("-", ".")).version}</version>
+              <version>@processor.getVersion()</version>
             </path>
 }
 @if (features.contains("jax-rs")) {
@@ -1038,11 +1035,11 @@ List<MavenCoordinate> annotationProcessors
                   <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
-@for (processor : annotationProcessors) {
+@for (processor : mavenBuild.getAnnotationProcessors()) {
                 <annotationProcessorPath>
                   <groupId>@processor.getGroupId()</groupId>
                   <artifactId>@processor.getArtifactId()</artifactId>
-                  <version>${@(processor.getArtifactId().replace("-", ".")).version}</version>
+                  <version>@processor.getVersion()</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("jax-rs")) {

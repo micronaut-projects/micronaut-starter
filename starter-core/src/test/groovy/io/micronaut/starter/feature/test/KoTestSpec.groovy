@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
@@ -14,7 +15,7 @@ class KoTestSpec extends BeanContextSpec {
         Features features = getFeatures([], null, TestFramework.KOTEST, BuildTool.MAVEN)
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, new MavenBuild()).render().toString()
 
         then:
         template.contains('''

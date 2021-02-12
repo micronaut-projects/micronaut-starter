@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.kotlin
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.Language
@@ -52,7 +55,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with maven and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -69,7 +72,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'exception with maven and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), [], [], []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), new MavenBuild()).render().toString()
 
         then:
         IllegalArgumentException e = thrown()
@@ -82,7 +85,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with gradle and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kotlin:micronaut-kotlin-extension-functions")')
@@ -94,7 +97,7 @@ class KotlinExtensionFunctionsSpec extends BeanContextSpec {
     @Unroll
     void 'exception with gradle and feature kotlin-extension-functions for language=#language'(Language language) {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), false, [], []).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['kotlin-extension-functions'], language), new GradleBuild()).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

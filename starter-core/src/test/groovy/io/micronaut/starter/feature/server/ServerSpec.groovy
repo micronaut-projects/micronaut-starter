@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.server
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
@@ -12,7 +15,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test gradle server feature #serverFeature'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), new GradleBuild()).render().toString()
 
         then:
         template.contains(dependency)
@@ -28,7 +31,7 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test maven server feature #serverFeature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -40,7 +43,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -52,7 +55,7 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

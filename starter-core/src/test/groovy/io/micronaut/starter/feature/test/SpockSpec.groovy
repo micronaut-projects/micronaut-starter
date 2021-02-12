@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -19,7 +22,7 @@ class SpockSpec extends BeanContextSpec {
         Features features = getFeatures([], null, TestFramework.SPOCK, BuildTool.MAVEN)
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -43,7 +46,7 @@ class SpockSpec extends BeanContextSpec {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), new GradleBuild()).render().toString()
 
         then:
         template.contains('''
@@ -63,7 +66,7 @@ java {
         Options options = new Options(language, testFramework, BuildTool.GRADLE, JdkVersion.JDK_15)
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([], options), new GradleBuild()).render().toString()
 
         then:
         template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")

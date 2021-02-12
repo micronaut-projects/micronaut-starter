@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.messaging.jms
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -30,7 +33,7 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Gradle'() {
         when:
-        String template = buildGradle.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), false, [], []).render()
+        String template = buildGradle.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), new GradleBuild()).render()
 
         then:
         template.contains """implementation("io.micronaut.jms:micronaut-jms-$name")"""
@@ -41,7 +44,7 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Maven'() {
         when:
-        String template = pom.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), [], [], []).render()
+        String template = pom.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), new MavenBuild()).render()
 
         then:
         template.contains("""

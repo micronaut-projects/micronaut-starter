@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.view
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -24,7 +27,7 @@ class PebbleSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-pebble feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-pebble")')
@@ -36,7 +39,7 @@ class PebbleSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven views-pebble feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-pebble'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

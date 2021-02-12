@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.database.r2dbc
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -40,7 +43,7 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), new GradleBuild()).render().toString()
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
@@ -53,7 +56,7 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), new MavenBuild()).render().toString()
 
         then:
         //src/main

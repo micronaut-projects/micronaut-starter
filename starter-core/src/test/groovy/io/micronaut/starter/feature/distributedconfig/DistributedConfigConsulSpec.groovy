@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.distributedconfig
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -25,7 +28,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
     @Unroll
     void 'test gradle config-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-discovery-client")')
@@ -36,7 +39,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
 
     void 'test gradle config-consul multiple features'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), new GradleBuild()).render().toString()
 
         then:
         template.count('implementation("io.micronaut:micronaut-discovery-client")') == 1
@@ -45,7 +48,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
     @Unroll
     void 'test maven config-consul feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -62,7 +65,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
 
     void 'test maven config-consul multiple features'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), new MavenBuild()).render().toString()
 
         then:
         template.count("""

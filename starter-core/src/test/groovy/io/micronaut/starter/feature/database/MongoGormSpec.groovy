@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.database
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -39,7 +42,7 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
@@ -49,7 +52,7 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
     void "test testcontainers dependencies are present for gradle"() {
         when:
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(["mongo-gorm", "testcontainers"], Language.GROOVY, TestFramework.SPOCK), false, [], []).render().toString()
+                getFeatures(["mongo-gorm", "testcontainers"], Language.GROOVY, TestFramework.SPOCK), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
@@ -61,7 +64,7 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

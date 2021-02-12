@@ -16,7 +16,7 @@ List<MavenCoordinate> annotationProcessors
 @annotationProcessor.template(features, "\"io.micronaut.data:micronaut-data-processor\"")
 }
 @for (processor : annotationProcessors) {
-@if (processor.getVersion() == null) {
+@if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
     @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
 } else {
     @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")

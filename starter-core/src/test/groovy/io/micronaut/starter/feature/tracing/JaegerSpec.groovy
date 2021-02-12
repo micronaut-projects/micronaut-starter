@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.tracing
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -25,7 +28,7 @@ class JaegerSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle tracing-jaeger feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-tracing")')
@@ -38,7 +41,7 @@ class JaegerSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven tracing-jaeger feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-jaeger'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

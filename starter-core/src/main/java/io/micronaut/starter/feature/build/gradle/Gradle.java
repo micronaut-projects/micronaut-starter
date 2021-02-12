@@ -19,6 +19,10 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.GradleBuild;
+import io.micronaut.starter.build.dependencies.GradleBuildToolDependencyResolver;
+import io.micronaut.starter.build.dependencies.GradleConfiguration;
+import io.micronaut.starter.build.dependencies.GradleDsl;
 import io.micronaut.starter.build.dependencies.MavenCoordinate;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
@@ -34,17 +38,19 @@ import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Singleton
 public class Gradle implements BuildFeature {
     private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
 
-    private final BuildToolDependencyResolver dependencyResolver;
+    private final GradleBuildToolDependencyResolver dependencyResolver;
 
-    public Gradle(@Named("gradle") BuildToolDependencyResolver dependencyResolver) {
+    public Gradle(GradleBuildToolDependencyResolver dependencyResolver) {
         this.dependencyResolver = dependencyResolver;
     }
 
@@ -62,16 +68,15 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
-        List<Dependency> dependencies = dependencyResolver.resolve(generatorContext.getDependencies());
-        List<MavenCoordinate> annotationProcessors = dependencyResolver.annotationProcessors(generatorContext.getDependencies());
+
         BuildTool buildTool = generatorContext.getBuildTool();
+        GradleBuild build = dependencyResolver.gradleBuild(generatorContext);
+
         generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                buildTool == BuildTool.GRADLE_KOTLIN,
-                dependencies,
-                annotationProcessors
+                build
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));

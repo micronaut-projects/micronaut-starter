@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.jdbi
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -38,7 +41,7 @@ class JdbiFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature sql-jdbi for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -56,7 +59,7 @@ class JdbiFeatureSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature sql-jdbi for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['sql-jdbi'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-jdbi")')

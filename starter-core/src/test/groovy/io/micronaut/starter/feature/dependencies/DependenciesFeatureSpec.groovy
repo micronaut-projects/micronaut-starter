@@ -2,14 +2,16 @@ package io.micronaut.starter.feature.dependencies
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.MavenCoordinate
+import io.micronaut.starter.application.Project
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.feature.logging.Log4j2
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
@@ -23,11 +25,15 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     void 'test gradle geb feature for language=#language and spock'() {
         given:
         TestFramework testFramework = TestFramework.SPOCK
-        List<Dependency> dependencies = getFeatureDependencies(GebFeature, BuildTool.GRADLE, testFramework)
-        List<MavenCoordinate> annotationProcessors = getAnnotationProcessors(GebFeature, BuildTool.GRADLE, testFramework)
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.GRADLE
+        ApplicationType type = ApplicationType.DEFAULT
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, testFramework), false, dependencies, annotationProcessors).render().toString()
+        Features features = getFeatures(['geb'], language, testFramework)
+        Options options = new Options(language, testFramework, buildTool)
+        GradleBuild build = gradleBuild(options, features, project, type)
+        String template = buildGradle.template(type, project, features, build).render().toString()
 
         then:
         template.contains('testImplementation("org.gebish:geb-spock:4.0")')
@@ -40,12 +46,17 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
 
     @Unroll
     void 'test gradle geb feature for language=#language and junit'() {
-        when:
+        given:
         TestFramework testFramework = TestFramework.JUNIT
-        List<Dependency> dependencies = getFeatureDependencies(GebFeature, BuildTool.GRADLE, testFramework)
-        List<MavenCoordinate> annotationProcessors = getAnnotationProcessors(GebFeature, BuildTool.GRADLE, testFramework)
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.GRADLE
+        ApplicationType type = ApplicationType.DEFAULT
 
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language, testFramework), false, dependencies, annotationProcessors).render().toString()
+        when:
+        Features features = getFeatures(['geb'], language, testFramework)
+        Options options = new Options(language, testFramework, buildTool)
+        GradleBuild build = gradleBuild(options, features, project, type)
+        String template = buildGradle.template(type, project, features, build).render().toString()
 
         then:
         template.contains('testImplementation("org.gebish:geb-junit5:4.0")')
@@ -59,10 +70,16 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test gradle mybatis feature for language=#language'() {
         given:
-        List<Dependency> dependencies = getFeatureDependencies(MyBatisFeature, BuildTool.GRADLE, TestFramework.SPOCK)
-        List<MavenCoordinate> annotationProcessors = getAnnotationProcessors(MyBatisFeature, BuildTool.GRADLE, TestFramework.SPOCK)
+        TestFramework testFramework = TestFramework.JUNIT
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.GRADLE
+        ApplicationType type = ApplicationType.DEFAULT
+
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), false, dependencies, annotationProcessors).render().toString()
+        Features features = getFeatures(['mybatis'], language, testFramework)
+        Options options = new Options(language, testFramework, buildTool)
+        GradleBuild build = gradleBuild(options, features, project, type)
+        String template = buildGradle.template(type, project, features, build).render().toString()
 
         then:
         template.contains('implementation("org.mybatis:mybatis:3.4.6")')
@@ -74,11 +91,16 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test maven mybatis feature for language=#language'() {
         given:
-        List<Dependency> dependencies = getFeatureDependencies(MyBatisFeature, BuildTool.MAVEN, TestFramework.SPOCK)
-        List<MavenCoordinate> annotationProcessors = getAnnotationProcessors(MyBatisFeature, BuildTool.MAVEN, TestFramework.SPOCK)
+        TestFramework testFramework = TestFramework.JUNIT
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.MAVEN
+        ApplicationType type = ApplicationType.DEFAULT
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['mybatis'], language), [], dependencies, annotationProcessors).render().toString()
+        Features features = getFeatures(['mybatis'], language, testFramework)
+        Options options = new Options(language, testFramework, buildTool)
+        MavenBuild build = mavenBuild(options, features, project, type)
+        String template = pom.template(type, project, features, build).render().toString()
 
         then:
         template.contains("""
@@ -97,11 +119,16 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
     @Unroll
     void 'test maven geb feature for language=#language'() {
         given:
-        List<Dependency> dependencies = getFeatureDependencies(GebFeature, BuildTool.MAVEN, (language == Language.GROOVY) ? TestFramework.SPOCK : TestFramework.JUNIT)
-        List<MavenCoordinate> annotationProcessors = getAnnotationProcessors(GebFeature, BuildTool.MAVEN, (language == Language.GROOVY) ? TestFramework.SPOCK : TestFramework.JUNIT)
+        TestFramework testFramework = language == Language.GROOVY ? TestFramework.SPOCK : TestFramework.JUNIT
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.MAVEN
+        ApplicationType type = ApplicationType.DEFAULT
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['geb'], language), [], dependencies, annotationProcessors).render().toString()
+        Features features = getFeatures(['geb'], language, testFramework)
+        Options options = new Options(language, testFramework, buildTool)
+        MavenBuild build = mavenBuild(options, features, project, type)
+        String template = pom.template(type, project, features, build).render().toString()
 
         then:
         if (language == Language.GROOVY) {

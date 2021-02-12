@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.stackdriver
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -45,7 +48,7 @@ class CloudTraceSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with maven and feature cloudtrace for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -62,7 +65,7 @@ class CloudTraceSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with gradle and feature gcp-cloud-trace for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-tracing")')

@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.distributedconfig
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -24,7 +27,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
     @Unroll
     void 'test gradle kubernetes feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
@@ -38,7 +41,7 @@ class KubernetesConfigSpec extends BeanContextSpec  implements CommandOutputFixt
     @Unroll
     void 'test maven kubernetes feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-kubernetes'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

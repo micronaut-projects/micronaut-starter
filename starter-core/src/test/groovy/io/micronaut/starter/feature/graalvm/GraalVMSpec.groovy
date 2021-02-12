@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.graalvm
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -33,7 +36,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), false, [], []).render().toString()
+        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), new GradleBuild()).render().toString()
 
         then:
         IllegalArgumentException e = thrown()
@@ -42,7 +45,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), new MavenBuild()).render().toString()
 
         then:
         !template.contains("""
@@ -74,7 +77,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), new MavenBuild()).render().toString()
 
         then:
         !template.contains("""
@@ -101,7 +104,7 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), [], [], []).render().toString()
+        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), new MavenBuild()).render().toString()
 
         then:
         IllegalArgumentException e = thrown()

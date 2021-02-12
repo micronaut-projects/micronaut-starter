@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.logging
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -23,7 +26,7 @@ class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test configure slf4j-simple for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('runtimeOnly("org.slf4j:slf4j-simple")')
@@ -36,7 +39,7 @@ class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test slf4j-simple feature for Maven and language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

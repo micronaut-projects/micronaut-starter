@@ -29,8 +29,6 @@ import java.util.Map;
 
 @Singleton
 public class OpenApi implements Feature, MicronautServerDependent {
-    private final static String ARTIFACT_ID = "micronaut-openapi";
-
     @Override
     public String getName() {
         return "openapi";
@@ -53,20 +51,8 @@ public class OpenApi implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        applyDependencies(generatorContext);
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion(ARTIFACT_ID.replace("-", "."));
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
-    }
-
-    @Override
-    public void applyDependencies(DependencyContext dependencyContext) {
-        dependencyContext.addAnnotationProcessor(ARTIFACT_ID);
-        dependencyContext.addDependency("swagger-annotations");
+        generatorContext.addAnnotationProcessor("micronaut-openapi");
+        generatorContext.addDependency("swagger-annotations");
     }
 
     @Override

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.rxjava
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
@@ -44,7 +47,7 @@ class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature rxjava1 for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -61,7 +64,7 @@ class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature rxjava1 for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.rxjava1:micronaut-rxjava1")')

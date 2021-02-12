@@ -19,7 +19,10 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MavenBuild;
+import io.micronaut.starter.build.dependencies.MavenBuildToolDependencyResolver;
 import io.micronaut.starter.build.dependencies.MavenCoordinate;
+import io.micronaut.starter.build.dependencies.MicronautVersionsPropertiesResolver;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -41,9 +44,9 @@ public class Maven implements BuildFeature {
     private static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     private static final String WRAPPER_DOWNLOADER = ".mvn/wrapper/MavenWrapperDownloader.java";
 
-    private final BuildToolDependencyResolver dependencyResolver;
+    private final MavenBuildToolDependencyResolver dependencyResolver;
 
-    public Maven(@Named("maven") BuildToolDependencyResolver dependencyResolver) {
+    public Maven(MavenBuildToolDependencyResolver dependencyResolver) {
         this.dependencyResolver = dependencyResolver;
     }
 
@@ -62,15 +65,12 @@ public class Maven implements BuildFeature {
         generatorContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
         generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
 
-        List<Dependency> dependencies = dependencyResolver.resolve(generatorContext.getDependencies());
-        List<MavenCoordinate> annotationProcessors = dependencyResolver.annotationProcessors(generatorContext.getDependencies());
+        MavenBuild mavenBuild = dependencyResolver.mavenBuild(generatorContext);
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                generatorContext.getBuildProperties().getProperties(),
-                dependencies,
-                annotationProcessors
+                mavenBuild
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
     }

@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.spring
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -57,7 +60,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test spring with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
@@ -72,7 +75,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven spring feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -91,7 +94,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -110,7 +113,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), [], [], []).render().toString()
+        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

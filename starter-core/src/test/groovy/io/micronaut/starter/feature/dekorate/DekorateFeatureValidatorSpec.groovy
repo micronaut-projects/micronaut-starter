@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.dekorate
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -42,7 +43,7 @@ class DekorateFeatureValidatorSpec extends BeanContextSpec implements CommandOut
             Feature feature, Language language) {
         when:
         pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), [], [], []).render().toString()
+                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), new MavenBuild()).render().toString()
 
         then:
         beanContext.containsBean(DekorateKubernetes)

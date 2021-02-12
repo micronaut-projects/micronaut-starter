@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.reactor
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
@@ -51,7 +54,7 @@ class ReactorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature reactor for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -68,7 +71,7 @@ class ReactorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature reactor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['reactor'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.reactor:micronaut-reactor")')

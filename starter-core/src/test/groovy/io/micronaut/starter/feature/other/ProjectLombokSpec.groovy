@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -38,7 +41,7 @@ class ProjectLombokSpec extends BeanContextSpec implements CommandOutputFixture 
     @Unroll
     void 'test lombok with Gradle for Java'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['lombok'], Language.JAVA), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['lombok'], Language.JAVA), new GradleBuild()).render().toString()
 
         then:
         template.contains('annotationProcessor("org.projectlombok:lombok")')
@@ -49,7 +52,7 @@ class ProjectLombokSpec extends BeanContextSpec implements CommandOutputFixture 
     void 'test lombok with Gradle for only Java'() {
         when:
         buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(['lombok'], language), false, [], []).render().toString()
+                getFeatures(['lombok'], language), new GradleBuild()).render().toString()
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -66,7 +69,7 @@ class ProjectLombokSpec extends BeanContextSpec implements CommandOutputFixture 
                 new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN),
                 ApplicationType.DEFAULT)
         String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                context.getFeatures(), context.getBuildProperties().getProperties(), [], []).render().toString()
+                context.getFeatures(), new MavenBuild([], [], context.getBuildProperties().getProperties())).render().toString()
 
         then:
         // ensure we use version from Micronaut BOM

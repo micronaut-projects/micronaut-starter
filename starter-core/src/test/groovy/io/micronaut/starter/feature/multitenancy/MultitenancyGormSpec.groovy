@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.multitenancy
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
@@ -54,7 +57,7 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
 
     void 'dependency is included with maven and feature multi-tenancy-gorm for groovy'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -76,7 +79,7 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
 
     void 'dependency is included with gradle and feature multi-tenancy-gorm for groovy'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-multitenancy-gorm")')

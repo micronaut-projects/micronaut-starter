@@ -2,21 +2,20 @@ package io.micronaut.starter.feature.other
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.Project
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
-import spock.lang.Shared
-import spock.lang.Subject
+import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
 class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixture {
-    @Shared
-    @Subject
-    OpenApi openApi = beanContext.getBean(OpenApi)
 
     void 'test readme.md with feature openapi contains links to micronaut docs'() {
         when:
@@ -31,20 +30,21 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
     void "openApi belongs to API category"() {
         expect:
-        Category.API == openApi.category
+        Category.API == beanContext.getBean(OpenApi).category
     }
 
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
-        when:
-        def dependencies = getFeatureDependencies(OpenApi, BuildTool.GRADLE, TestFramework.JUNIT)
-        def annotationProcessors = getAnnotationProcessors(OpenApi, BuildTool.GRADLE, TestFramework.JUNIT)
-
-        then:
-        dependencies
+        given:
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.GRADLE
+        ApplicationType type = ApplicationType.DEFAULT
 
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language), false, dependencies, annotationProcessors).render().toString()
+        Features features = getFeatures(['openapi'], language)
+        Options options = new Options(language, buildTool)
+        GradleBuild gBuild = gradleBuild(options, features, project, type)
+        String template = buildGradle.template(type, project, features, gBuild).render().toString()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
@@ -58,18 +58,17 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
     }
 
     void 'test maven swagger feature'() {
-        when:
-        def dependencies = getFeatureDependencies(OpenApi, BuildTool.MAVEN, TestFramework.JUNIT)
-        def annotationProcessors = getAnnotationProcessors(OpenApi, BuildTool.MAVEN, TestFramework.JUNIT)
-
-        then:
-        dependencies
-        annotationProcessors
+        given:
+        Language language = Language.JAVA
+        Project project = buildProject()
+        BuildTool buildTool = BuildTool.MAVEN
+        ApplicationType type = ApplicationType.DEFAULT
 
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.JAVA), [], dependencies, annotationProcessors).render().toString()
-
-        println template
+        Features features = getFeatures(['openapi'], language)
+        Options options = new Options(language, buildTool)
+        MavenBuild mvnBuild = mavenBuild(options, features, project, type)
+        String template = pom.template(type, project, features, mvnBuild).render().toString()
         then:
         template.contains("""
     <dependency>
@@ -78,6 +77,8 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains("<micronaut.openapi.version>")
+        template.contains("</micronaut.openapi.version>")
         template.contains('''
             <path>
               <groupId>io.micronaut.openapi</groupId>
@@ -87,7 +88,10 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 ''')
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.KOTLIN), [], dependencies, annotationProcessors).render().toString()
+        features = getFeatures(['openapi'], Language.KOTLIN)
+        options = new Options(language, buildTool)
+        mvnBuild = mavenBuild(options, features, project, type)
+        template = pom.template(type, project, features, mvnBuild).render().toString()
 
         then:
         template.contains("""
@@ -106,7 +110,10 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 ''')
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.GROOVY), [], dependencies, annotationProcessors).render().toString()
+        features = getFeatures(['openapi'], Language.GROOVY)
+        options = new Options(language, buildTool)
+        mvnBuild = mavenBuild(options, features, project, type)
+        template = pom.template(type, project, features, mvnBuild).render().toString()
 
         then:
         template.contains("""

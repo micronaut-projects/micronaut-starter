@@ -28,7 +28,7 @@ public class GebFeature implements Feature {
     }
 
     @Override
-    public void applyDependencies(DependencyContext context) {
+    public void apply(GeneratorContext context) {
         if (context.getTestFramework() == TestFramework.JUNIT) {
             context.addTestDependency("geb-junit5");
         } else if (context.getTestFramework() == TestFramework.SPOCK) {

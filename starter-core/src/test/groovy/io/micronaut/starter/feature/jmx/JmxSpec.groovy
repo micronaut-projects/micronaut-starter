@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.jmx
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -25,7 +28,7 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle jmx feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.jmx:micronaut-jmx")')
@@ -37,7 +40,7 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven jmx feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

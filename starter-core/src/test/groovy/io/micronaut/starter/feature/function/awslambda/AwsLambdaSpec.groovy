@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.function.awslambda
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -68,7 +71,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -80,7 +83,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -93,7 +96,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -111,7 +114,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'function with maven and aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
@@ -250,7 +253,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda features includes dependency to micronaut-function-aws-api-proxy for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), new GradleBuild()).render().toString()
 
         then:
         template.contains('runtime("lambda")')
@@ -264,7 +267,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven micronaut-function-aws-api-proxy feature for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), new MavenBuild()).render().toString()
 
         then:
         template.contains("""

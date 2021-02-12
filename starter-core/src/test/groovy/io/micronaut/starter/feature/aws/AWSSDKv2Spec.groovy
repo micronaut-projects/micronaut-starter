@@ -2,6 +2,9 @@ package io.micronaut.starter.feature.aws
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.GradleBuild
+import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
@@ -14,7 +17,7 @@ class AWSSDKv2Spec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test Oracle Cloud SDK feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language), false, [], []).render().toString()
+        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language), new GradleBuild()).render().toString()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
@@ -26,7 +29,7 @@ class AWSSDKv2Spec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven jmx feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language), [], [], []).render().toString()
+        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-v2-sdk'], language), new MavenBuild()).render().toString()
 
         then:
         template.contains("""
