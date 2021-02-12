@@ -26,6 +26,9 @@ io.micronaut.starter.cli.feature.acme
 io.micronaut.starter.cli.feature.database
 io.micronaut.starter.cli.feature.grpc
 io.micronaut.starter.cli.feature.grpc.template
+io.micronaut.starter.cli.feature.messaging.jms
+io.micronaut.starter.cli.feature.messaging.jms.template.listener
+io.micronaut.starter.cli.feature.messaging.jms.template.producer
 io.micronaut.starter.cli.feature.messaging.kafka
 io.micronaut.starter.cli.feature.messaging.kafka.template.listener
 io.micronaut.starter.cli.feature.messaging.kafka.template.producer
