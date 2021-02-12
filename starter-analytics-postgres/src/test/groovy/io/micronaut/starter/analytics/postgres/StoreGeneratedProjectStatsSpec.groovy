@@ -1,6 +1,6 @@
 package io.micronaut.starter.analytics.postgres
 
-import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.env.Environment
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect

@@ -20,10 +20,8 @@ import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.core.convert.value.ConvertibleValuesMap;
 import io.micronaut.starter.util.VersionInfo;
 
-import javax.annotation.concurrent.Immutable;
 import java.util.*;
 
-@Immutable
 public class Options implements ConvertibleValues<Object> {
 
     private final Language language;

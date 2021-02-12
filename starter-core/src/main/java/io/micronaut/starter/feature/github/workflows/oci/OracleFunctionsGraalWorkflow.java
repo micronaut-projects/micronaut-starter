@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.github.workflows.oci;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 

@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.feature.messaging.jms;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
