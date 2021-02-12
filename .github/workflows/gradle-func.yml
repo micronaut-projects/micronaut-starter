@@ -85,6 +85,8 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
+        env:
+          TESTCONTAINERS_RYUK_DISABLED: true
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.*"
   test-cloud:
     runs-on: ubuntu-latest
