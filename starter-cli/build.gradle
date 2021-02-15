@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
 
-    testImplementation "org.testcontainers:spock:$testcontainersVersion"
+    testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.9.12'
 }
 

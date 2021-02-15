@@ -65,10 +65,6 @@ subprojects { Project subproject ->
     configurations.all {
         resolutionStrategy {
             eachDependency { DependencyResolveDetails details ->
-                if (details.requested.group == 'org.testcontainers') {
-                    // Override any version coming from Micronaut BOM so we can upgrade this independently
-                    details.useVersion testcontainersVersion
-                }
                 if (project.name.startsWith("test-")) {
                     // Gradle TestKit needs Groovy 2.5
                     if (details.requested.group == "org.codehaus.groovy") {
