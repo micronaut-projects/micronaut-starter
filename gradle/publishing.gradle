@@ -34,12 +34,7 @@ ext.pomInfo = {
     ext.extraPomInfo.call()
 }
 
-if (project.name != "micronaut-cli") {
-    java {
-        withJavadocJar()
-        withSourcesJar()
-    }
-} else {
+afterEvaluate {
     project.task('sourcesJar', type:Jar) {
         archiveClassifier.set('sources')
         from project.sourceSets.main.allJava
@@ -111,13 +106,17 @@ publishing {
                     }
                     xmlNode.children().last() + pomInfo
                 }
+                artifact sourcesJar {
+                    classifier "sources"
+                }
+                artifact javadocJar {
+                    classifier "javadoc"
+                }
             } else {
                 from components.java
-                if (project.name == 'micronaut-cli'){
-                    afterEvaluate {
-                        artifact source: sourcesJar, classifier: "sources"
-                        artifact source: javadocJar, classifier: "javadoc"
-                    }
+                afterEvaluate {
+                    artifact source: sourcesJar, classifier: "sources"
+                    artifact source: javadocJar, classifier: "javadoc"
                 }
                 pom.withXml {
                     def xml = asNode()
