@@ -118,9 +118,20 @@ publishing {
     }
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
+afterEvaluate {
+    boolean isPlatform = project.plugins.findPlugin("java-platform") != null
+
+    if (!isPlatform && project.pluginManager.hasPlugin('java')) {
+        project.task('sourcesJar', type: Jar) {
+            archiveClassifier.set('sources')
+            from project.sourceSets.main.allJava
+        }
+
+        project.task('javadocJar', type: Jar) {
+            archiveClassifier.set('javadoc')
+            from project.javadoc.destinationDir
+        }
+    }
 }
 
 def ossUser = System.getenv("SONATYPE_USERNAME") ?: project.hasProperty("sonatypeOssUsername") ? project.sonatypeOssUsername : ''
