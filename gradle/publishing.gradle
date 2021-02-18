@@ -34,6 +34,23 @@ ext.pomInfo = {
     ext.extraPomInfo.call()
 }
 
+if (project.name != "micronaut-cli") {
+    java {
+        withJavadocJar()
+        withSourcesJar()
+    }
+} else {
+    project.task('sourcesJar', type:Jar) {
+        archiveClassifier.set('sources')
+        from project.sourceSets.main.allJava
+    }
+
+    project.task('javadocJar', type:Jar) {
+        archiveClassifier.set('javadoc')
+        from project.javadoc.destinationDir
+    }
+}
+
 publishing {
     publications {
         maven(MavenPublication) { publication ->
@@ -94,19 +111,14 @@ publishing {
                     }
                     xmlNode.children().last() + pomInfo
                 }
-                afterEvaluate {
-
-                    artifact sourcesJar {
-                        classifier "sources"
-                    }
-                    artifact javadocJar {
-                        classifier "javadoc"
-                    }
-                }
-
             } else {
                 from components.java
-
+                if (project.name == 'micronaut-cli'){
+                    afterEvaluate {
+                        artifact source: sourcesJar, classifier: "sources"
+                        artifact source: javadocJar, classifier: "javadoc"
+                    }
+                }
                 pom.withXml {
                     def xml = asNode()
 
@@ -114,20 +126,6 @@ publishing {
                 }
             }
 
-        }
-    }
-}
-
-afterEvaluate {
-    if (project.pluginManager.hasPlugin('java')) {
-        project.task('sourcesJar', type: Jar) {
-            archiveClassifier.set('sources')
-            from project.sourceSets.main.allJava
-        }
-
-        project.task('javadocJar', type: Jar) {
-            archiveClassifier.set('javadoc')
-            from project.javadoc.destinationDir
         }
     }
 }
