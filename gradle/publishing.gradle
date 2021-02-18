@@ -141,16 +141,18 @@ if (file("${rootDir}/secring.gpg").exists()) {
     ext."signing.secretKeyRingFile" = file("${System.getenv('HOME')}/.gnupg/secring.gpg").absolutePath
 }
 
-if (ossUser && ossPass && ext."signing.keyId" && ext."signing.password") {
-    apply plugin: 'signing'
+if (ossUser && ossPass) {
+    if(ext."signing.keyId" && ext."signing.password") {
+        apply plugin: 'signing'
 
-    signing {
-        required { !project.version.endsWith("-SNAPSHOT") && !project.hasProperty("skipSigning") }
-        sign publishing.publications.maven
-    }
+        signing {
+            required { !project.version.endsWith("-SNAPSHOT") && !project.hasProperty("skipSigning") }
+            sign publishing.publications.maven
+        }
 
-    tasks.withType(Sign) {
-        onlyIf { !project.version.endsWith("-SNAPSHOT") }
+        tasks.withType(Sign) {
+            onlyIf { !project.version.endsWith("-SNAPSHOT") }
+        }
     }
 
     rootProject.plugins.apply('io.github.gradle-nexus.publish-plugin')
