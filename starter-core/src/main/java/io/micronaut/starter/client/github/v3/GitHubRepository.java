@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * GitHub repository.
  *
  * @author Pavol Gressa
- * @see <a hreaf="https://docs.github.com/en/rest/reference/repos">Api reference repositories</a>
+ * @see <a href="https://docs.github.com/en/rest/reference/repos">Api reference repositories</a>
  * @since 2.2
  */
 @Introspected

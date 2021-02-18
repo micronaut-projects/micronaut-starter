@@ -1,0 +1,166 @@
+apply plugin: 'maven-publish'
+
+ext.extraPomInfo = {}
+ext.pomInfo = {
+    delegate.name project.title
+    delegate.description project.projectDesc
+    delegate.url projectUrl
+
+    delegate.licenses {
+        delegate.license {
+            delegate.name 'The Apache Software License, Version 2.0'
+            delegate.url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            delegate.distribution 'repo'
+        }
+    }
+
+    delegate.scm {
+        delegate.url "scm:git@github.com:${githubSlug}.git"
+        delegate.connection "scm:git@github.com:${githubSlug}.git"
+        delegate.developerConnection "scm:git@github.com:${githubSlug}.git"
+    }
+
+    if(developers) {
+        delegate.developers {
+            for(dev in developers.split(',')) {
+                delegate.developer {
+                    delegate.id dev.toLowerCase().replace(' ', '')
+                    delegate.name dev
+                }
+            }
+        }
+    }
+    ext.extraPomInfo.delegate = delegate
+    ext.extraPomInfo.call()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) { publication ->
+            artifactId( "micronaut-" + project.name.substring(project.name.indexOf('/') + 1) )
+            def shadowJar = tasks.findByName("shadowJar")
+            if(shadowJar) {
+                artifact(project.tasks.shadowJar) {
+                    classifier = null
+                }
+                pom.withXml { xml ->
+                    def xmlNode = xml.asNode()
+                    def dependenciesNode = xmlNode.appendNode('dependencies')
+
+                    project.configurations.shadow.allDependencies.each {
+                        if (! (it instanceof SelfResolvingDependency)) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            if (it.group.startsWith('io.micronaut')) {
+                                dependencyNode.appendNode('artifactId', "micronaut-$it.name")
+                            } else {
+                                dependencyNode.appendNode('artifactId', it.name)
+                            }
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'runtime')
+                        }
+                    }
+                    project.configurations.shadowCompile.allDependencies.each {
+                        if (! (it instanceof SelfResolvingDependency)) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'compile')
+                        } else if(it instanceof ProjectDependency) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', project.group)
+                            dependencyNode.appendNode('artifactId', "micronaut-$it.name")
+                            dependencyNode.appendNode('version', project.version)
+                            dependencyNode.appendNode('scope', 'compile')
+
+                        }
+                    }
+                    project.configurations.shadowRuntime.allDependencies.each {
+                        if (! (it instanceof SelfResolvingDependency)) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'runtime')
+                        } else if(it instanceof ProjectDependency) {
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', project.group)
+                            dependencyNode.appendNode('artifactId', "micronaut-$it.name")
+                            dependencyNode.appendNode('version', project.version)
+                            dependencyNode.appendNode('scope', 'runtime')
+
+                        }
+                    }
+                    xmlNode.children().last() + pomInfo
+                }
+                afterEvaluate {
+
+                    artifact sourcesJar {
+                        classifier "sources"
+                    }
+                    artifact javadocJar {
+                        classifier "javadoc"
+                    }
+                }
+
+            } else {
+                from components.java
+
+                pom.withXml {
+                    def xml = asNode()
+
+                    xml.children().last() + pomInfo
+                }
+            }
+
+        }
+    }
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+def ossUser = System.getenv("SONATYPE_USERNAME") ?: project.hasProperty("sonatypeOssUsername") ? project.sonatypeOssUsername : ''
+def ossPass = System.getenv("SONATYPE_PASSWORD") ?: project.hasProperty("sonatypeOssPassword") ? project.sonatypeOssPassword : ''
+ext."signing.keyId" = System.getenv("GPG_KEY_ID") ?: project.hasProperty("signing.keyId") ? project.getProperty('signing.keyId') : null
+ext."signing.password" = System.getenv("GPG_PASSWORD") ?: project.hasProperty("signing.password") ? project.getProperty('signing.password') : null
+
+if (file("${rootDir}/secring.gpg").exists()) {
+    ext."signing.secretKeyRingFile" = file("${rootDir}/secring.gpg").absolutePath
+} else if (file("${System.getenv('HOME')}/.gnupg/secring.gpg").exists()){
+    ext."signing.secretKeyRingFile" = file("${System.getenv('HOME')}/.gnupg/secring.gpg").absolutePath
+}
+
+if (ossUser && ossPass && ext."signing.keyId" && ext."signing.password") {
+    apply plugin: 'signing'
+
+    signing {
+        required { !project.version.endsWith("-SNAPSHOT") && !project.hasProperty("skipSigning") }
+        sign publishing.publications.maven
+    }
+
+    tasks.withType(Sign) {
+        onlyIf { !project.version.endsWith("-SNAPSHOT") }
+    }
+
+    rootProject.plugins.apply('io.github.gradle-nexus.publish-plugin')
+    def nexusPublish = rootProject.extensions.getByName("nexusPublishing")
+    nexusPublish.with {
+        if (it.repositories.isEmpty()) {
+            repositoryDescription = "${project.group}:${rootProject.name}:${project.version}"
+            useStaging = !project.version.endsWith("-SNAPSHOT")
+            it.repositories {
+                sonatype {
+                    username = ossUser
+                    password = ossPass
+                    nexusUrl = uri("https://s01.oss.sonatype.org/service/local/")
+                    snapshotRepositoryUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                    stagingProfileId = "11bd7bc41716aa" //can reduce execution time by even 10 seconds
+                }
+            }
+        }
+    }
+}
