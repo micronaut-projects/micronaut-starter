@@ -133,6 +133,9 @@ sdkman {
     ]
 }
 
+shadowDistZip.enabled = false
+shadowDistTar.enabled = false
+
 task copyShadowJar(type: Copy) {
     from shadowJar.outputs
     into "${project.rootProject.buildDir}/libs"

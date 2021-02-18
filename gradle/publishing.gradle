@@ -119,9 +119,7 @@ publishing {
 }
 
 afterEvaluate {
-    boolean isPlatform = project.plugins.findPlugin("java-platform") != null
-
-    if (!isPlatform && project.pluginManager.hasPlugin('java')) {
+    if (project.pluginManager.hasPlugin('java')) {
         project.task('sourcesJar', type: Jar) {
             archiveClassifier.set('sources')
             from project.sourceSets.main.allJava
