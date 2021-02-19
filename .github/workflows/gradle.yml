@@ -30,12 +30,12 @@ jobs:
           unzip cli -d tmp
           mv tmp/micronaut-cli-* tmp/cli
           ./tmp/cli/bin/mn --version
-      - name: Publish to JFrog OSS
+      - name: Publish to Sonatype OSSRH
         if: success() && github.event_name == 'push' && matrix.java == '8'
         env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: ./gradlew publish docs --no-daemon
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        run: ./gradlew publishToSonatype docs --no-daemon
       - name: Publish to Github Pages
         if: success() && github.event_name == 'push' && matrix.java == '8'
         uses: micronaut-projects/github-pages-deploy-action@master

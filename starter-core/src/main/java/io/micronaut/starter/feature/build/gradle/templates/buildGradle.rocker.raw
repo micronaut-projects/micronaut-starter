@@ -36,12 +36,11 @@ val kotlinVersion=project.properties.get("kotlinVersion")
 
 repositories {
     mavenCentral()
-    jcenter()
     @if (VersionInfo.isMicronautSnapshot()) {
     @if(isKotlinDsl) {
-    maven("https://oss.jfrog.org/oss-snapshot-local")
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     } else {
-    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
     }
     @if (features.contains("oracle-function")) {

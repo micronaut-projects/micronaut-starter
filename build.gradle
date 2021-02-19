@@ -4,12 +4,8 @@ buildscript {
     }
     dependencies {
         classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5'
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         classpath "io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE"
         classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0"
-        classpath "de.marcphilipp.gradle:nexus-publish-plugin:0.4.0"
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
         classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
@@ -19,6 +15,7 @@ buildscript {
 
 plugins {
     id "com.diffplug.gradle.spotless" version "5.8.2" apply false
+    id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
 }
 
 repositories {
@@ -29,8 +26,11 @@ version project.projectVersion
 
 subprojects { Project subproject ->
     repositories {
-        jcenter()
-        maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+        mavenCentral()
+        maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+
+        //TODO remove when https://github.com/micronaut-projects/micronaut-docs/issues/24 is implemented
+        maven { url "https://repo.grails.org/grails/core" }
     }
 
     version project.projectVersion
@@ -47,8 +47,7 @@ subprojects { Project subproject ->
 
     if (subproject.hasProperty("publish") && subproject.publish) {
         apply plugin:"java-library"
-        apply from: "https://raw.githubusercontent.com/micronaut-projects/micronaut-build/v${micronautBuildVersion}/publishing.gradle"
-        bintray.publish = true
+        apply from: rootProject.file("gradle/publishing.gradle")
 
         jar {
             manifest {
