@@ -18,7 +18,7 @@ dependencies {
     api "io.micronaut:micronaut-http-client"
     api "io.github.java-diff-utils:java-diff-utils:4.9"
     api "org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r"
-    implementation "org.yaml:snakeyaml:1.26"
+    implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.0'
     implementation 'org.apache.commons:commons-compress:1.20'
 }
