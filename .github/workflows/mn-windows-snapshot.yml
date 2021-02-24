@@ -39,7 +39,7 @@ jobs:
         run: |
           mn create-app test2
           cd test2
-          ./gradlew test
+          ./gradlew test --stacktrace
       - name: ZIP Archive
         run: |
           New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
