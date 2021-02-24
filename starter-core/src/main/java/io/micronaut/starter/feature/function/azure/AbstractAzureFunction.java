@@ -102,7 +102,8 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         return azureFunctionReadme.template(project,
                 generatorContext.getFeatures(),
                 getRunCommand(buildTool),
-                getBuildCommand(buildTool)
+                getBuildCommand(buildTool),
+                buildTool
         );
     }
 
