@@ -36,7 +36,10 @@ jobs:
         run: mn --version
       - name: Verify Create App (CMD)
         shell: cmd
-        run: mn create-app test2
+        run: |
+          mn create-app test2
+          cd test2
+          ./gradlew test
       - name: ZIP Archive
         run: |
           New-Item "./mn-win-amd64-snapshot/bin" -ItemType Directory -ea 0
