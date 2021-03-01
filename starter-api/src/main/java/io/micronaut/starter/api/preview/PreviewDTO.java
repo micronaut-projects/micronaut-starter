@@ -33,7 +33,13 @@ import java.util.Map;
 public class PreviewDTO extends Linkable  {
 
     @JsonInclude
-    private final Map<String, String> contents;
+    private Map<String, String> contents;
+
+    /**
+     * Constructor
+     */
+    public PreviewDTO() {
+    }
 
     /**
      * @param contents The contents
@@ -48,5 +54,13 @@ public class PreviewDTO extends Linkable  {
     @Schema(description = "The contents of the generated ZIP")
     public Map<String, String> getContents() {
         return contents;
+    }
+
+    /**
+     *
+     * @param contents The contents of the ZIP
+     */
+    public void setContents(Map<String, String> contents) {
+        this.contents = contents;
     }
 }
