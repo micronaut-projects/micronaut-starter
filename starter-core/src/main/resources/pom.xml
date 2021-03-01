@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.spring</groupId>
+            <artifactId>micronaut-spring-boot</artifactId>
+            <version>${micronaut.spring.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut.security</groupId>
             <artifactId>micronaut-security-annotations</artifactId>
             <version>${micronaut.security.version}</version>

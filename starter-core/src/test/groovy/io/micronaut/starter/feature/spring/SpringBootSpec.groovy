@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.spring
 
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.dependencies.GradleBuild
@@ -15,7 +16,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringBootSpec extends BeanContextSpec {
+class SpringBootSpec extends ApplicationContextSpec {
 
     @Shared
     @Subject
@@ -58,7 +59,7 @@ class SpringBootSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-boot with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['spring-boot'])
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot\")")
@@ -71,7 +72,7 @@ class SpringBootSpec extends BeanContextSpec {
 
     void 'test maven spring-boot feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.JAVA),new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ['spring-boot'])
 
         then:
         template.contains("""
@@ -95,7 +96,7 @@ class SpringBootSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.KOTLIN), new MavenBuild()).render().toString()
+        template = mavenTemplate(Language.KOTLIN, ['spring-boot'])
 
         then:
         template.contains("""
@@ -119,7 +120,7 @@ class SpringBootSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], Language.GROOVY), new MavenBuild()).render().toString()
+        template = mavenTemplate(Language.GROOVY, ['spring-boot'])
 
         then:
         template.contains("""
@@ -141,7 +142,7 @@ class SpringBootSpec extends BeanContextSpec {
 
     void 'test spring-web and spring-boot only add spring-boot-starter-web dependency once'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-boot'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['spring-boot'])
 
         then:
         template.count('implementation("org.springframework.boot:spring-boot-starter-web")') == 1

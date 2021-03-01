@@ -31,6 +31,3 @@ List<MavenCoordinate> annotationProcessors
 @if (features.contains("spring-web")) {
 @annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-web-annotation\"")
 }
-@if (features.contains("spring-boot")) {
-@annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-boot\"")
-}

@@ -908,13 +908,6 @@ MavenBuild mavenBuild
               <version>${micronaut.spring.version}</version>
             </path>
 }
-@if (features.contains("spring-boot")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-boot</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
 @if (features.contains("dekorate-kubernetes")) {
             <path>
               <groupId>io.dekorate</groupId>
@@ -1059,13 +1052,6 @@ MavenBuild mavenBuild
                   <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("spring-boot")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
 @if (features.contains("dekorate-kubernetes")) {
                 <annotationProcessorPath>
                   <groupId>io.dekorate</groupId>
@@ -1196,13 +1182,6 @@ MavenBuild mavenBuild
                 <annotationProcessorPath>
                   <groupId>io.micronaut.spring</groupId>
                   <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-boot")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
                   <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }

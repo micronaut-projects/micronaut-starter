@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -46,6 +47,10 @@ public class SpringBoot extends SpringFeature {
         return true;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor("micronaut-spring-boot");
+    }
 }
 
 
