@@ -915,13 +915,6 @@ MavenBuild mavenBuild
               <version>${micronaut.spring.version}</version>
             </path>
 }
-@if (features.contains("security-annotations")) {
-            <path>
-              <groupId>io.micronaut.security</groupId>
-              <artifactId>micronaut-security-annotations</artifactId>
-              <version>${micronaut.security.version}</version>
-            </path>
-}
 @if (features.contains("dekorate-kubernetes")) {
             <path>
               <groupId>io.dekorate</groupId>
@@ -1007,6 +1000,13 @@ MavenBuild mavenBuild
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths combine.children="append">
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+                <annotationProcessorPath>
+                  <groupId>@processor.getGroupId()</groupId>
+                  <artifactId>@processor.getArtifactId()</artifactId>
+                  <version>@processor.getVersion()</version>
+                </annotationProcessorPath>
+}
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -1064,13 +1064,6 @@ MavenBuild mavenBuild
                   <groupId>io.micronaut.spring</groupId>
                   <artifactId>micronaut-spring-boot</artifactId>
                   <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("security-annotations")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>${micronaut.security.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("dekorate-kubernetes")) {
@@ -1154,6 +1147,13 @@ MavenBuild mavenBuild
                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+               <annotationProcessorPath>
+                  <groupId>@processor.getGroupId()</groupId>
+                  <artifactId>@processor.getArtifactId()</artifactId>
+                  <version>@processor.getVersion()</version>
+                </annotationProcessorPath>
+}
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -1204,13 +1204,6 @@ MavenBuild mavenBuild
                   <groupId>io.micronaut.spring</groupId>
                   <artifactId>micronaut-spring-boot</artifactId>
                   <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("security-annotations")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>${micronaut.security.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>

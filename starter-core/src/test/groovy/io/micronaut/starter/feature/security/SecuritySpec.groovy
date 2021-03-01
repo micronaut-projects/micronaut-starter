@@ -1,17 +1,11 @@
 package io.micronaut.starter.feature.security
 
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecuritySpec extends BeanContextSpec implements CommandOutputFixture {
+class SecuritySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature security contains links to micronaut docs'() {
         when:
@@ -26,7 +20,7 @@ class SecuritySpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle security feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['security'])
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -39,7 +33,7 @@ class SecuritySpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven security feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security'], language), new MavenBuild()).render().toString()
+        String template = mavenTemplate(language, ['security'])
 
         then:
         template.contains("""

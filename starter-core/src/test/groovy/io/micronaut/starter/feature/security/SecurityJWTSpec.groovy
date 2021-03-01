@@ -1,18 +1,12 @@
 package io.micronaut.starter.feature.security
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature security-jwt contains links to micronaut docs'() {
         when:
@@ -27,7 +21,7 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle security-jwt feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['security-jwt'])
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -40,7 +34,7 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven security-jwt feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language), new MavenBuild()).render().toString()
+        String template = mavenTemplate(language, ['security-jwt'])
 
         then:
         template.contains("""
@@ -75,8 +69,6 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
         where:
         language << Language.values().toList()
     }
-
-
 
     void 'test security-jwt configuration'() {
         when:

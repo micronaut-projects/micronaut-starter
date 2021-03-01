@@ -1,28 +1,22 @@
 package io.micronaut.starter
 
-import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.starter.feature.build.gradle.templates.buildGradle
+import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.context.ApplicationContext
 import io.micronaut.core.version.SemanticVersion
-import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.BuildToolDependencyResolver
-import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.DependencyContext
 import io.micronaut.starter.build.dependencies.GradleBuild
 import io.micronaut.starter.build.dependencies.GradleBuildToolDependencyResolver
 import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.build.dependencies.MavenBuildToolDependencyResolver
-import io.micronaut.starter.build.dependencies.MavenCoordinate
-import io.micronaut.starter.build.dependencies.ScopedArtifact
-import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -49,6 +43,20 @@ abstract class ApplicationContextSpec extends Specification implements ProjectFi
                           ApplicationType type) {
         GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
         mavenDependencyResolver.mavenBuild(ctx)
+    }
+
+    String gradleTemplate(Language language, List<String> featureNames, ApplicationType type = ApplicationType.DEFAULT, Project project = buildProject(), BuildTool buildTool = BuildTool.GRADLE) {
+        Features features = getFeatures(featureNames, language)
+        Options options = new Options(language, buildTool)
+        GradleBuild build = gradleBuild(options, features, project, type)
+        buildGradle.template(type, project, features, build).render().toString()
+    }
+
+    String mavenTemplate(Language language, List<String> featureNames, ApplicationType type = ApplicationType.DEFAULT, Project project = buildProject(), BuildTool buildTool = BuildTool.MAVEN) {
+        Features features = getFeatures(featureNames, language)
+        Options options = new Options(language, buildTool)
+        MavenBuild build = mavenBuild(options, features, project, type)
+        pom.template(type, project, features, build).render().toString()
     }
 
     GradleBuild gradleBuild(Options options,
