@@ -33,7 +33,7 @@ dependencies {
     compileOnly "org.graalvm.nativeimage:svm"
 
     implementation "org.fusesource.jansi:jansi:1.18"
-    implementation "org.yaml:snakeyaml:1.26"
+    implementation "org.yaml:snakeyaml:1.28"
 
     implementation 'org.shredzone.acme4j:acme4j-client:2.10'
     implementation 'org.shredzone.acme4j:acme4j-utils:2.10'
@@ -42,7 +42,7 @@ dependencies {
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
 
-    testImplementation "org.testcontainers:spock:1.15.0"
+    testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.9.12'
 }
 
@@ -132,6 +132,9 @@ sdkman {
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
     ]
 }
+
+shadowDistZip.enabled = false
+shadowDistTar.enabled = false
 
 task copyShadowJar(type: Copy) {
     from shadowJar.outputs

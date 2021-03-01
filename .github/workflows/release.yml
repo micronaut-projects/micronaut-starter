@@ -27,13 +27,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
-      - name: Publish to Bintray
+      - name: Publish to Maven Central
         env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-        run: ./gradlew bintrayUpload docs
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          GPG_FILE: ${{ secrets.GPG_FILE }}
+        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -68,7 +69,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
+      - uses: stefanzweifel/git-auto-commit-action@v4.9.1
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -341,7 +342,7 @@ jobs:
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
           sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
+      - uses: stefanzweifel/git-auto-commit-action@v4.9.1
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -353,10 +354,19 @@ jobs:
     runs-on: windows-latest
     needs: [windows]
     steps:
+      - name: Determine default branch
+        uses: octokit/request-action@v2.x
+        id: get_default_branch
+        with:
+          route: GET /repos/{owner}/{repo}
+          owner: micronaut-projects
+          repo: micronaut-starter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v2.3.4
         with:
+          ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
           token: ${{ secrets.GH_TOKEN }}
-          ref: master
       - name: Download ZIP, update versions and checksum
         id: choco
         working-directory: chocolatey
@@ -394,7 +404,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
+      - uses: stefanzweifel/git-auto-commit-action@v4.9.1
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build

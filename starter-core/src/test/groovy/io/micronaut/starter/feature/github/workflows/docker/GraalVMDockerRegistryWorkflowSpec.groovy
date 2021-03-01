@@ -53,9 +53,9 @@ Add the following GitHub secrets:
         then:
         gradle
         gradle.contains("""
-    dockerBuildNative{
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+dockerBuildNative {
+    images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
+}""")
     }
 
     void 'test push to docker workflow for maven'() {

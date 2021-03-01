@@ -24,11 +24,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DependencyResolver implements BuildToolDependencyResolver {
-    private final MavenCoordinateResolver mavenCoordinateResolver;
-    private final Comparator<MavenCoordinate> coordinateComparator = new MavenCoordinateComparator();
-    private final AdapterBuilder adapterBuilder;
-    private final BuildTool buildTool;
-    private final Comparator<Dependency> comparator;
+    protected final MavenCoordinateResolver mavenCoordinateResolver;
+    protected final Comparator<MavenCoordinate> coordinateComparator = new MavenCoordinateComparator();
+    protected final AdapterBuilder adapterBuilder;
+    protected final BuildTool buildTool;
+    protected final Comparator<Dependency> comparator;
 
     public DependencyResolver(MavenCoordinateResolver mavenCoordinateResolver,
                               AdapterBuilder adapterBuilder,
@@ -45,7 +45,7 @@ public class DependencyResolver implements BuildToolDependencyResolver {
     public List<Dependency> resolve(@NonNull Set<ScopedArtifact> artifacts) {
         return artifacts
                 .stream()
-                .map(mavenCoordinateResolver::resolve)
+                .map(scopedArtifact -> mavenCoordinateResolver.resolve(scopedArtifact, false))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(dep -> adapterBuilder.build(dep, buildTool))
@@ -60,7 +60,7 @@ public class DependencyResolver implements BuildToolDependencyResolver {
         return artifacts
                 .stream()
                 .filter(dep -> dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
-                .map(mavenCoordinateResolver::resolve)
+                .map(scopedArtifact -> mavenCoordinateResolver.resolve(scopedArtifact, false))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .sorted(coordinateComparator)

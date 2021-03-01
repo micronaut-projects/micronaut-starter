@@ -1,29 +1,30 @@
 name: Maven Central Sync
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version (eg: 1.2.3)'
+        required: true
 jobs:
   build:
     name: Maven Central Sync
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.4
+        with:
+          ref: v${{ github.event.inputs.release_version }}
+      - uses: gradle/wrapper-validation-action@v1
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          ref: ${{ github.head_ref }}
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
-      - name: Publish to Maven Central
+      - name: Publish to Sonatype OSSRH
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_FILE: ${{ secrets.GPG_FILE }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publish closeAndReleaseRepository
+        run: |
+          echo $GPG_FILE | base64 -d > secring.gpg
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository

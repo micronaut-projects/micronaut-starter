@@ -90,10 +90,10 @@ dependencies {
     @dependency.template("io.micronaut.groovy", "micronaut-multitenancy-gorm", "implementation", null)
 }
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
-    @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
+    @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
 }
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
-    @dependency.template("io.micronaut", "micronaut-discovery-client", "implementation", null)
+    @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
 }
 @if (features.contains("config-kubernetes")) {
     @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "implementation", null)
@@ -387,27 +387,6 @@ dependencies {
 }
 @if (features.contains("jmx")) {
     @dependency.template("io.micronaut.jmx", "micronaut-jmx", "implementation", null)
-}
-@if (features.contains("dekorate-kubernetes")) {
-    @dependency.template("io.dekorate", "kubernetes-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-openshift")) {
-    @dependency.template("io.dekorate", "openshift-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-knative")) {
-    @dependency.template("io.dekorate", "knative-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-prometheus")) {
-    @dependency.template("io.dekorate", "prometheus-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-jaeger")) {
-    @dependency.template("io.dekorate", "jaeger-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-servicecatalog")) {
-    @dependency.template("io.dekorate", "servicecatalog-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-halkyon")) {
-    @dependency.template("io.dekorate", "halkyon-annotations", "implementation", "${dekorateVersion}")
 }
 @if (features.contains("r2dbc")) {
     @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)

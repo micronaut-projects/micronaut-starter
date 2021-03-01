@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.dekorate;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -54,4 +55,12 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#jaeger-annotations";
     }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor("jaeger-annotations");
+        generatorContext.addDependency("jaeger-annotations");
+    }
 }
+
+

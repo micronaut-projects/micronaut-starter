@@ -2,6 +2,7 @@ package io.micronaut.starter
 
 import edu.umd.cs.findbugs.annotations.NonNull
 import io.micronaut.context.ApplicationContext
+import io.micronaut.core.version.SemanticVersion
 import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
@@ -65,5 +66,28 @@ abstract class ApplicationContextSpec extends Specification implements ProjectFi
         GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features)
         features.features.each {feat -> feat.apply(ctx)}
         ctx
+    }
+
+    protected static Optional<SemanticVersion> parsePropertySemanticVersion(String template, String propertyName) {
+        List<String> lines = template.split("\n")
+        for (String line : lines) {
+            if (line.contains("<" + propertyName + ">") && line.contains("</" + propertyName + ">")) {
+                String version = line.substring(line.indexOf("<" + propertyName + ">") + ("<" + propertyName + ">").length(), line.indexOf("</" + propertyName + ">"))
+                return Optional.of(new SemanticVersion(version))
+            }
+        }
+        return Optional.empty()
+    }
+
+    protected static Optional<SemanticVersion> parseDependencySemanticVersion(String template, String groupArtifactId) {
+        List<String> lines = template.split("\n")
+        for (String line : lines) {
+            if (line.contains(groupArtifactId)) {
+                String str = line.substring(line.indexOf(groupArtifactId) + groupArtifactId.length() + ":".length())
+                String version = str.substring(0, str.indexOf("\")"))
+                return Optional.of(new SemanticVersion(version))
+            }
+        }
+        return Optional.empty()
     }
 }

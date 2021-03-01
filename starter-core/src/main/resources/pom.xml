@@ -13,6 +13,41 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>kubernetes-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>openshift-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>knative-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>prometheus-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>jaeger-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>servicecatalog-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dekorate</groupId>
+            <artifactId>halkyon-annotations</artifactId>
+            <version>${dekorate.version}</version>
+        </dependency>
+        <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli-codegen</artifactId>
             <version>${picocli.version}</version>

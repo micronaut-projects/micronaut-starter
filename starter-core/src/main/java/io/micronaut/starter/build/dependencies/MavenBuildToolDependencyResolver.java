@@ -23,18 +23,16 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Singleton
 public class MavenBuildToolDependencyResolver extends DependencyResolver {
 
-    public static final String PROPERTY_PREFIX = "${";
-    public static final String PROPERTY_SUFFIX = ".version}";
-    public static final String CLOSE_BRACKET = "}";
-    private final MicronautVersionsPropertiesResolver propertiesResolver;
+    private final PropertiesResolver propertiesResolver;
 
     public MavenBuildToolDependencyResolver(MavenCoordinateResolver mavenCoordinateResolver,
                                             AdapterBuilder adapterBuilder,
-                                            MicronautVersionsPropertiesResolver propertiesResolver) {
+                                            PropertiesResolver propertiesResolver) {
         super(mavenCoordinateResolver, adapterBuilder, BuildTool.MAVEN, new MavenDependencyComparator());
         this.propertiesResolver = propertiesResolver;
     }
@@ -43,11 +41,9 @@ public class MavenBuildToolDependencyResolver extends DependencyResolver {
     public Map<String, String> buildProperties(@NonNull List<MavenCoordinate> coordinates) {
         Map<String, String> result = new HashMap<>();
         for (MavenCoordinate coordinate : coordinates) {
-            if (coordinate.getVersion() != null &&
-                    coordinate.getVersion().startsWith(PROPERTY_PREFIX) &&
-                    coordinate.getVersion().endsWith(PROPERTY_SUFFIX)) {
-                String k = coordinate.getVersion().substring(coordinate.getVersion().indexOf(PROPERTY_PREFIX) + PROPERTY_PREFIX.length(),
-                        coordinate.getVersion().indexOf(CLOSE_BRACKET));
+            Optional<String> kOptional = propertiesResolver.getPropertyKey(coordinate.getVersion());
+            if (kOptional.isPresent()) {
+                String k = kOptional.get();
                 propertiesResolver.resolve(k).ifPresent(val -> result.put(k, val));
             }
         }

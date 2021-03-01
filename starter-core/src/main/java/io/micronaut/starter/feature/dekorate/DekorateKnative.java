@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.dekorate;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -54,5 +55,11 @@ public class DekorateKnative extends AbstractDekoratePlatformFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#knative";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor("knative-annotations");
+        generatorContext.addDependency("knative-annotations");
     }
 }

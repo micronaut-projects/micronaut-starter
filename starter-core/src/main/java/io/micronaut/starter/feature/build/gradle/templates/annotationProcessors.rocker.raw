@@ -17,9 +17,9 @@ List<MavenCoordinate> annotationProcessors
 }
 @for (processor : annotationProcessors) {
 @if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
-    @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
 } else {
-    @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
 }
 }
 @if (features.contains("jax-rs")) {
@@ -36,25 +36,4 @@ List<MavenCoordinate> annotationProcessors
 }
 @if (features.contains("security-annotations")) {
 @annotationProcessor.template(features, "\"io.micronaut.security:micronaut-security-annotations\"")
-}
-@if (features.contains("dekorate-kubernetes")) {
-@annotationProcessor.template(features, "\"io.dekorate:kubernetes-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-openshift")) {
-@annotationProcessor.template(features, "\"io.dekorate:openshift-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-knative")) {
-@annotationProcessor.template(features, "\"io.dekorate:knative-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-prometheus")) {
-@annotationProcessor.template(features, "\"io.dekorate:prometheus-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-jaeger")) {
-@annotationProcessor.template(features, "\"io.dekorate:jaeger-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-servicecatalog")) {
-@annotationProcessor.template(features, "\"io.dekorate:servicecatalog-annotations:${dekorateVersion}\"")
-}
-@if (features.contains("dekorate-halkyon")) {
-@annotationProcessor.template(features, "\"io.dekorate:halkyon-annotations:${dekorateVersion}\"")
 }

@@ -17,11 +17,8 @@ package io.micronaut.starter.feature.dekorate;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
 
 /**
  * Abstract implementation of Dekorate feature.
@@ -39,15 +36,6 @@ public abstract class AbstractDekorateFeature implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.GRPC;
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().equals(BuildTool.MAVEN)) {
-            generatorContext.getBuildProperties().put("dekorate.version", VersionInfo.getBomVersion("dekorate"));
-        } else {
-            generatorContext.getBuildProperties().put("dekorateVersion", VersionInfo.getBomVersion("dekorate"));
-        }
     }
 
     @Override

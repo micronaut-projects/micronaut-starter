@@ -31,7 +31,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul'], language), new GradleBuild()).render().toString()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-discovery-client")')
+        template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
 
         where:
         language << Language.values().toList()
@@ -42,7 +42,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
         String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['config-consul', 'discovery-consul']), new GradleBuild()).render().toString()
 
         then:
-        template.count('implementation("io.micronaut:micronaut-discovery-client")') == 1
+        template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
     }
 
     @Unroll
@@ -53,7 +53,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.discovery</groupId>
       <artifactId>micronaut-discovery-client</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -70,7 +70,7 @@ class DistributedConfigConsulSpec extends BeanContextSpec  implements CommandOut
         then:
         template.count("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.discovery</groupId>
       <artifactId>micronaut-discovery-client</artifactId>
       <scope>compile</scope>
     </dependency>

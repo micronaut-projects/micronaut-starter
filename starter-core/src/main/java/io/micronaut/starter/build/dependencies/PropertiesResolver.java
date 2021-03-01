@@ -16,10 +16,23 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 
 import java.util.Optional;
 
 public interface PropertiesResolver {
+    String PROPERTY_PREFIX = "${";
+    String PROPERTY_SUFFIX = ".version}";
+    String CLOSE_BRACKET = "}";
 
     Optional<String> resolve(@NonNull String key);
+
+    default Optional<String> getPropertyKey(@Nullable String version) {
+        if (version != null &&
+                version.startsWith(PROPERTY_PREFIX) &&
+                version.endsWith(PROPERTY_SUFFIX)) {
+            return Optional.of(version.substring(version.indexOf(PROPERTY_PREFIX) + PROPERTY_PREFIX.length(), version.indexOf(CLOSE_BRACKET)));
+        }
+        return Optional.empty();
+    }
 }
