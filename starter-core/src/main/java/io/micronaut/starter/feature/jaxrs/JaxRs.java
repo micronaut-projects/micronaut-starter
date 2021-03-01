@@ -46,13 +46,7 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.jaxrs");
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
+        generatorContext.addAnnotationProcessor("micronaut-jaxrs-processor");
     }
 
     @Override

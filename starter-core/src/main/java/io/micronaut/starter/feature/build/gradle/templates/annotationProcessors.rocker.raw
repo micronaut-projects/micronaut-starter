@@ -22,9 +22,6 @@ List<MavenCoordinate> annotationProcessors
 @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
 }
 }
-@if (features.contains("jax-rs")) {
-@annotationProcessor.template(features, "\"io.micronaut.jaxrs:micronaut-jaxrs-processor\"")
-}
 @if (features.contains("spring")) {
 @annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-annotation\"")
 }

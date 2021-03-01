@@ -887,13 +887,6 @@ MavenBuild mavenBuild
               <version>@processor.getVersion()</version>
             </path>
 }
-@if (features.contains("jax-rs")) {
-            <path>
-              <groupId>io.micronaut.jaxrs</groupId>
-              <artifactId>micronaut-jaxrs-processor</artifactId>
-              <version>${micronaut.jaxrs.version}</version>
-            </path>
-}
 @if (features.contains("spring")) {
             <path>
               <groupId>io.micronaut.spring</groupId>
@@ -1031,13 +1024,6 @@ MavenBuild mavenBuild
                   <version>@processor.getVersion()</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("jax-rs")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>${micronaut.jaxrs.version}</version>
-                </annotationProcessorPath>
-}
 @if (features.contains("spring")) {
                 <annotationProcessorPath>
                   <groupId>io.micronaut.spring</groupId>
@@ -1162,13 +1148,6 @@ MavenBuild mavenBuild
                   <groupId>io.micronaut.data</groupId>
                   <artifactId>micronaut-data-processor</artifactId>
                   <version>${micronaut.data.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("jax-rs")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>${micronaut.jaxrs.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {
