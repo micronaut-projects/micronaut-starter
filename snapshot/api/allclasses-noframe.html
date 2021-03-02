@@ -38,8 +38,6 @@
 <li><a href="io/micronaut/starter/feature/other/AnnotationApi.html" title="class in io.micronaut.starter.feature.other">AnnotationApi</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessor.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessor</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessor.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessor.Template</a></li>
-<li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessors.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessors</a></li>
-<li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessors.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessors.Template</a></li>
 <li><a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></li>
 <li><a href="io/micronaut/starter/feature/lang/groovy/application.html" title="class in io.micronaut.starter.feature.lang.groovy">application</a></li>
 <li><a href="io/micronaut/starter/feature/lang/java/application.html" title="class in io.micronaut.starter.feature.lang.java">application</a></li>
@@ -180,6 +178,8 @@
 <li><a href="io/micronaut/starter/feature/build/BuildFeature.html" title="interface in io.micronaut.starter.feature.build"><span class="interfaceName">BuildFeature</span></a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/buildGradle.html" title="class in io.micronaut.starter.feature.build.gradle.templates">buildGradle</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/buildGradle.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">buildGradle.Template</a></li>
+<li><a href="io/micronaut/starter/build/BuildPlugin.html" title="interface in io.micronaut.starter.build"><span class="interfaceName">BuildPlugin</span></a></li>
+<li><a href="io/micronaut/starter/build/BuildPluginContext.html" title="interface in io.micronaut.starter.build"><span class="interfaceName">BuildPluginContext</span></a></li>
 <li><a href="io/micronaut/starter/build/BuildProperties.html" title="class in io.micronaut.starter.build">BuildProperties</a></li>
 <li><a href="io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></li>
 <li><a href="io/micronaut/starter/cli/command/BuildToolCandidates.html" title="class in io.micronaut.starter.cli.command">BuildToolCandidates</a></li>
@@ -218,6 +218,7 @@
 <li><a href="io/micronaut/starter/cli/CodeGenConfig.html" title="class in io.micronaut.starter.cli">CodeGenConfig</a></li>
 <li><a href="io/micronaut/starter/build/Comment.html" title="interface in io.micronaut.starter.build"><span class="interfaceName">Comment</span></a></li>
 <li><a href="io/micronaut/starter/cli/CommonOptionsMixin.html" title="class in io.micronaut.starter.cli">CommonOptionsMixin</a></li>
+<li><a href="io/micronaut/starter/build/gradle/CommunityGradlePlugin.html" title="class in io.micronaut.starter.build.gradle">CommunityGradlePlugin</a></li>
 <li><a href="io/micronaut/starter/feature/validation/CompositeFeatureValidator.html" title="class in io.micronaut.starter.feature.validation">CompositeFeatureValidator</a></li>
 <li><a href="io/micronaut/starter/feature/config/Config4k.html" title="class in io.micronaut.starter.feature.config">Config4k</a></li>
 <li><a href="io/micronaut/starter/template/Config4kTemplate.html" title="class in io.micronaut.starter.template">Config4kTemplate</a></li>
@@ -227,6 +228,7 @@
 <li><a href="io/micronaut/starter/feature/consul/Consul.html" title="class in io.micronaut.starter.feature.consul">Consul</a></li>
 <li><a href="io/micronaut/starter/application/ContextFactory.html" title="class in io.micronaut.starter.application">ContextFactory</a></li>
 <li><a href="io/micronaut/starter/feature/micrometer/Core.html" title="class in io.micronaut.starter.feature.micrometer">Core</a></li>
+<li><a href="io/micronaut/starter/build/gradle/CoreGradlePlugin.html" title="class in io.micronaut.starter.build.gradle">CoreGradlePlugin</a></li>
 <li><a href="io/micronaut/starter/cli/feature/acme/CreateAccount.html" title="class in io.micronaut.starter.cli.feature.acme">CreateAccount</a></li>
 <li><a href="io/micronaut/starter/cli/command/CreateAppCommand.html" title="class in io.micronaut.starter.cli.command">CreateAppCommand</a></li>
 <li><a href="io/micronaut/starter/cli/command/project/bean/CreateBeanCommand.html" title="class in io.micronaut.starter.cli.command.project.bean">CreateBeanCommand</a></li>
@@ -422,13 +424,15 @@
 <li><a href="io/micronaut/starter/feature/github/workflows/templates/graalvmSetup.html" title="class in io.micronaut.starter.feature.github.workflows.templates">graalvmSetup</a></li>
 <li><a href="io/micronaut/starter/feature/github/workflows/templates/graalvmSetup.Template.html" title="class in io.micronaut.starter.feature.github.workflows.templates">graalvmSetup.Template</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/Gradle.html" title="class in io.micronaut.starter.feature.build.gradle">Gradle</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleBuild.html" title="class in io.micronaut.starter.build.dependencies">GradleBuild</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.dependencies">GradleBuildToolDependencyResolver</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleConfiguration.html" title="enum in io.micronaut.starter.build.dependencies">GradleConfiguration</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleDependency.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">GradleDependency</span></a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleDependencyAdapter.html" title="class in io.micronaut.starter.build.dependencies">GradleDependencyAdapter</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleDependencyComparator.html" title="class in io.micronaut.starter.build.dependencies">GradleDependencyComparator</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/GradleDsl.html" title="enum in io.micronaut.starter.build.dependencies">GradleDsl</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleBuild.html" title="class in io.micronaut.starter.build.gradle">GradleBuild</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.gradle">GradleBuildToolDependencyResolver</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleConfiguration.html" title="enum in io.micronaut.starter.build.gradle">GradleConfiguration</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDependency.html" title="interface in io.micronaut.starter.build.gradle"><span class="interfaceName">GradleDependency</span></a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDependencyAdapter.html" title="class in io.micronaut.starter.build.gradle">GradleDependencyAdapter</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDependencyComparator.html" title="class in io.micronaut.starter.build.gradle">GradleDependencyComparator</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle">GradleDsl</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradlePlugin.html" title="interface in io.micronaut.starter.build.gradle"><span class="interfaceName">GradlePlugin</span></a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradlePluginCoordinate.html" title="class in io.micronaut.starter.build.gradle">GradlePluginCoordinate</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradlePlugins.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradlePlugins</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradlePlugins.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradlePlugins.Template</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradleProperties.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradleProperties</a></li>
@@ -697,16 +701,16 @@
 <li><a href="io/micronaut/starter/io/MapOutputHandler.html" title="class in io.micronaut.starter.io">MapOutputHandler</a></li>
 <li><a href="io/micronaut/starter/feature/database/MariaDB.html" title="class in io.micronaut.starter.feature.database">MariaDB</a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/Maven.html" title="class in io.micronaut.starter.feature.build.maven">Maven</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenBuild.html" title="class in io.micronaut.starter.build.dependencies">MavenBuild</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenBuildToolDependencyResolver</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenCoordinate.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">MavenCoordinate</span></a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenCoordinateComparator.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateComparator</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenCoordinateImpl.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateImpl</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateResolver</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenDependency.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">MavenDependency</span></a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenDependencyAdapter.html" title="class in io.micronaut.starter.build.dependencies">MavenDependencyAdapter</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenDependencyComparator.html" title="class in io.micronaut.starter.build.dependencies">MavenDependencyComparator</a></li>
-<li><a href="io/micronaut/starter/build/dependencies/MavenScope.html" title="enum in io.micronaut.starter.build.dependencies">MavenScope</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.maven">MavenBuildToolDependencyResolver</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenCoordinate.html" title="interface in io.micronaut.starter.build.maven"><span class="interfaceName">MavenCoordinate</span></a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenCoordinateComparator.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateComparator</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenCoordinateImpl.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateImpl</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateResolver</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenDependency.html" title="interface in io.micronaut.starter.build.maven"><span class="interfaceName">MavenDependency</span></a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenDependencyAdapter.html" title="class in io.micronaut.starter.build.maven">MavenDependencyAdapter</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenDependencyComparator.html" title="class in io.micronaut.starter.build.maven">MavenDependencyComparator</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenScope.html" title="enum in io.micronaut.starter.build.maven">MavenScope</a></li>
 <li><a href="io/micronaut/starter/application/MessagingAvailableFeatures.html" title="class in io.micronaut.starter.application">MessagingAvailableFeatures</a></li>
 <li><a href="io/micronaut/starter/feature/messaging/MessagingFeature.html" title="interface in io.micronaut.starter.feature.messaging"><span class="interfaceName">MessagingFeature</span></a></li>
 <li><a href="io/micronaut/starter/feature/micrometer/MicrometerFeature.html" title="class in io.micronaut.starter.feature.micrometer">MicrometerFeature</a></li>

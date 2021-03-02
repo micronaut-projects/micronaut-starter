@@ -111,7 +111,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../../io/micronaut/starter/build/dependencies/GradleBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.dependencies">GradleBuildToolDependencyResolver</a>, <a href="../../../../../io/micronaut/starter/build/dependencies/MavenBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenBuildToolDependencyResolver</a></dd>
+<dd><a href="../../../../../io/micronaut/starter/build/gradle/GradleBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.gradle">GradleBuildToolDependencyResolver</a>, <a href="../../../../../io/micronaut/starter/build/maven/MavenBuildToolDependencyResolver.html" title="class in io.micronaut.starter.build.maven">MavenBuildToolDependencyResolver</a></dd>
 </dl>
 <hr>
 <br>
@@ -149,11 +149,11 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#comparator">comparator</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinate.html" title="interface in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt;</code></td>
+<td class="colFirst"><code>protected java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinate.html" title="interface in io.micronaut.starter.build.maven">MavenCoordinate</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#coordinateComparator">coordinateComparator</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateResolver</a></code></td>
+<td class="colFirst"><code>protected <a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateResolver</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#mavenCoordinateResolver">mavenCoordinateResolver</a></span></code>&nbsp;</td>
 </tr>
 </table>
@@ -171,7 +171,7 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#DependencyResolver-io.micronaut.starter.build.dependencies.MavenCoordinateResolver-io.micronaut.starter.build.dependencies.AdapterBuilder-io.micronaut.starter.options.BuildTool-java.util.Comparator-">DependencyResolver</a></span>(<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateResolver</a>&nbsp;mavenCoordinateResolver,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#DependencyResolver-io.micronaut.starter.build.maven.MavenCoordinateResolver-io.micronaut.starter.build.dependencies.AdapterBuilder-io.micronaut.starter.options.BuildTool-java.util.Comparator-">DependencyResolver</a></span>(<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateResolver</a>&nbsp;mavenCoordinateResolver,
                   <a href="../../../../../io/micronaut/starter/build/dependencies/AdapterBuilder.html" title="class in io.micronaut.starter.build.dependencies">AdapterBuilder</a>&nbsp;adapterBuilder,
                   <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
                   java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="interface in io.micronaut.starter.build.dependencies">Dependency</a>&gt;&nbsp;comparator)</code>&nbsp;</td>
@@ -192,7 +192,7 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinate.html" title="interface in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.List&lt;<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinate.html" title="interface in io.micronaut.starter.build.maven">MavenCoordinate</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyResolver.html#annotationProcessors-java.util.Set-">annotationProcessors</a></span>(java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/ScopedArtifact.html" title="class in io.micronaut.starter.build.dependencies">ScopedArtifact</a>&gt;&nbsp;artifacts)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -227,7 +227,7 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <ul class="blockList">
 <li class="blockList">
 <h4>mavenCoordinateResolver</h4>
-<pre>protected final&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateResolver</a> mavenCoordinateResolver</pre>
+<pre>protected final&nbsp;<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateResolver</a> mavenCoordinateResolver</pre>
 </li>
 </ul>
 <a name="coordinateComparator">
@@ -236,7 +236,7 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <ul class="blockList">
 <li class="blockList">
 <h4>coordinateComparator</h4>
-<pre>protected final&nbsp;java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinate.html" title="interface in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt; coordinateComparator</pre>
+<pre>protected final&nbsp;java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinate.html" title="interface in io.micronaut.starter.build.maven">MavenCoordinate</a>&gt; coordinateComparator</pre>
 </li>
 </ul>
 <a name="adapterBuilder">
@@ -274,13 +274,13 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Build
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DependencyResolver-io.micronaut.starter.build.dependencies.MavenCoordinateResolver-io.micronaut.starter.build.dependencies.AdapterBuilder-io.micronaut.starter.options.BuildTool-java.util.Comparator-">
+<a name="DependencyResolver-io.micronaut.starter.build.maven.MavenCoordinateResolver-io.micronaut.starter.build.dependencies.AdapterBuilder-io.micronaut.starter.options.BuildTool-java.util.Comparator-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DependencyResolver</h4>
-<pre>public&nbsp;DependencyResolver(<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">MavenCoordinateResolver</a>&nbsp;mavenCoordinateResolver,
+<pre>public&nbsp;DependencyResolver(<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinateResolver.html" title="class in io.micronaut.starter.build.maven">MavenCoordinateResolver</a>&nbsp;mavenCoordinateResolver,
                           <a href="../../../../../io/micronaut/starter/build/dependencies/AdapterBuilder.html" title="class in io.micronaut.starter.build.dependencies">AdapterBuilder</a>&nbsp;adapterBuilder,
                           <a href="../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a>&nbsp;buildTool,
                           java.util.Comparator&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="interface in io.micronaut.starter.build.dependencies">Dependency</a>&gt;&nbsp;comparator)</pre>
@@ -316,7 +316,7 @@ public&nbsp;java.util.List&lt;<a href="../../../../../io/micronaut/starter/build
 <li class="blockList">
 <h4>annotationProcessors</h4>
 <pre>@NonNull
-public&nbsp;java.util.List&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/MavenCoordinate.html" title="interface in io.micronaut.starter.build.dependencies">MavenCoordinate</a>&gt;&nbsp;annotationProcessors(@NonNull
+public&nbsp;java.util.List&lt;<a href="../../../../../io/micronaut/starter/build/maven/MavenCoordinate.html" title="interface in io.micronaut.starter.build.maven">MavenCoordinate</a>&gt;&nbsp;annotationProcessors(@NonNull
                                                                      java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/ScopedArtifact.html" title="class in io.micronaut.starter.build.dependencies">ScopedArtifact</a>&gt;&nbsp;artifacts)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
