@@ -325,11 +325,6 @@ public class GeneratorContext implements DependencyContext, BuildPluginContext {
         buildPlugins.add(buildPlugin);
     }
 
-    @Override
-    public void addGradlePlugin(@NonNull String id, @NonNull String artifactId) {
-        buildPlugins.add(new GradlePluginCoordinate(id, artifactId));
-    }
-
     @NonNull
     public Collection<BuildPlugin> getBuildPlugins() {
         return buildPlugins;

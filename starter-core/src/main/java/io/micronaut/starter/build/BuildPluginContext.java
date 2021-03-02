@@ -16,6 +16,7 @@
 package io.micronaut.starter.build;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.build.gradle.GradlePluginCoordinate;
 
 import java.util.Collection;
 
@@ -23,8 +24,11 @@ public interface BuildPluginContext {
 
     void addBuildPlugin(@NonNull BuildPlugin buildPlugin);
 
-    void addGradlePlugin(@NonNull String id, @NonNull String artifactId);
-
     @NonNull
     Collection<BuildPlugin> getBuildPlugins();
+
+    default void addGradlePlugin(@NonNull String id, @NonNull String artifactId) {
+        addBuildPlugin(new GradlePluginCoordinate(id, artifactId));
+    }
+
 }
