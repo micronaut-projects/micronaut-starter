@@ -9,7 +9,7 @@ RUN gradle starter-web-netty:shadowJar --no-daemon
 RUN gradle starter-analytics-postgres:jar --no-daemon
 
 # Stage 2: Build the native image
-FROM ghcr.io/graalvm/graalvm-ce:java8-21.0.0 as graalvm
+FROM ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2 as graalvm
 COPY --from=gradle /home/app/starter-web-netty/build/libs/*.jar /home/app/server.jar
 WORKDIR /home/app
 RUN gu install native-image
