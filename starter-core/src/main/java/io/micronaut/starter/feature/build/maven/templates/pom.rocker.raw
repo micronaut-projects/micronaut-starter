@@ -880,55 +880,6 @@ MavenBuild mavenBuild
               <version>@processor.getVersion()</version>
             </path>
 }
-@if (features.contains("dekorate-kubernetes")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>kubernetes-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-openshift")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>openshift-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-knative")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>knative-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-servicecatalog")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>servicecatalog-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-jaeger")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>jaeger-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-prometheus")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>prometheus-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-halkyon")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>halkyon-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
 
           </annotationProcessorPaths>
           <compilerArgs>
@@ -994,55 +945,6 @@ MavenBuild mavenBuild
                   <groupId>@processor.getGroupId()</groupId>
                   <artifactId>@processor.getArtifactId()</artifactId>
                   <version>@processor.getVersion()</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-kubernetes")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>kubernetes-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-openshift")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>openshift-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-knative")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>knative-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-servicecatalog")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>servicecatalog-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-prometheus")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>prometheus-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-jaeger")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>jaeger-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-halkyon")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>halkyon-annotations</artifactId>
-                  <version>${dekorate.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
