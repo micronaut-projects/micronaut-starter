@@ -17,6 +17,8 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 
+import java.util.Objects;
+
 public class ScopedArtifact {
 
     @NonNull
@@ -46,5 +48,18 @@ public class ScopedArtifact {
 
     public void setArtifactId(@NonNull String artifactId) {
         this.artifactId = artifactId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ScopedArtifact that = (ScopedArtifact) o;
+        return scope.equals(that.scope) && artifactId.equals(that.artifactId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(scope, artifactId);
     }
 }
