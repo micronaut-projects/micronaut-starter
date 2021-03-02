@@ -880,20 +880,6 @@ MavenBuild mavenBuild
               <version>@processor.getVersion()</version>
             </path>
 }
-@if (features.contains("spring")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-annotation</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
-@if (features.contains("spring-web")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-web-annotation</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
 @if (features.contains("dekorate-kubernetes")) {
             <path>
               <groupId>io.dekorate</groupId>
@@ -1010,20 +996,6 @@ MavenBuild mavenBuild
                   <version>@processor.getVersion()</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("spring")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-web")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
 @if (features.contains("dekorate-kubernetes")) {
                 <annotationProcessorPath>
                   <groupId>io.dekorate</groupId>
@@ -1127,20 +1099,6 @@ MavenBuild mavenBuild
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-web")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>

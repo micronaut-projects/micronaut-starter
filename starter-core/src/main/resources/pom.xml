@@ -13,6 +13,16 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.spring</groupId>
+            <artifactId>micronaut-spring-web-annotation</artifactId>
+            <version>${micronaut.spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.spring</groupId>
+            <artifactId>micronaut-spring-annotation</artifactId>
+            <version>${micronaut.spring.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut.data</groupId>
             <artifactId>micronaut-data-processor</artifactId>
             <version>${micronaut.data.version}</version>

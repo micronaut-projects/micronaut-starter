@@ -1,5 +1,7 @@
 package io.micronaut.starter.feature.spring
 
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.dependencies.GradleBuild
@@ -14,7 +16,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -60,7 +62,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test spring with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['spring'])
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
@@ -75,7 +77,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven spring feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ['spring'])
 
         then:
         template.contains("""
@@ -94,7 +96,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), new MavenBuild()).render().toString()
+        template = mavenTemplate(Language.KOTLIN, ['spring'])
 
         then:
         template.contains("""
@@ -113,7 +115,7 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), new MavenBuild()).render().toString()
+        template = mavenTemplate(Language.GROOVY, ['spring'])
 
         then:
         template.contains("""
@@ -131,5 +133,11 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     </dependency>
 """)
 
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 }

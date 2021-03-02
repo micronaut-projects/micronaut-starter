@@ -41,13 +41,7 @@ public abstract class SpringFeature implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.spring");
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
+        generatorContext.addAnnotationProcessor("micronaut-spring-annotation");
     }
 
     @Override

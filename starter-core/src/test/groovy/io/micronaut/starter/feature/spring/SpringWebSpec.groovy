@@ -1,5 +1,7 @@
 package io.micronaut.starter.feature.spring
 
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.dependencies.GradleBuild
@@ -14,7 +16,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringWebSpec extends BeanContextSpec {
+class SpringWebSpec extends ApplicationContextSpec {
 
     @Shared
     @Subject
@@ -66,7 +68,7 @@ class SpringWebSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['spring-web'])
 
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
@@ -83,7 +85,7 @@ class SpringWebSpec extends BeanContextSpec {
 
     void 'test maven spring-web feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ['spring-web'])
 
         then:
         template.contains("""
@@ -112,7 +114,14 @@ class SpringWebSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), new MavenBuild()).render().toString()
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
+        when:
+        template = mavenTemplate(Language.KOTLIN, ['spring-web'])
 
         then:
         template.contains("""
@@ -141,7 +150,14 @@ class SpringWebSpec extends BeanContextSpec {
 """) == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), new MavenBuild()).render().toString()
+        semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
+        when:
+        template = mavenTemplate(Language.GROOVY, ['spring-web'])
 
         then:
         template.contains("""
@@ -169,5 +185,11 @@ class SpringWebSpec extends BeanContextSpec {
     </dependency>
 """)
 
+        when:
+        semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 }

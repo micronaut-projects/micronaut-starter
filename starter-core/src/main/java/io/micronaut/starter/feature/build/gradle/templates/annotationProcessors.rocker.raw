@@ -19,9 +19,3 @@ List<MavenCoordinate> annotationProcessors
 @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
 }
 }
-@if (features.contains("spring")) {
-@annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-annotation\"")
-}
-@if (features.contains("spring-web")) {
-@annotationProcessor.template(features, "\"io.micronaut.spring:micronaut-spring-web-annotation\"")
-}
