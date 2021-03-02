@@ -22,11 +22,14 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
+import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import static io.micronaut.starter.feature.database.DataFeature.MICRONAUT_DATA_PROCESSOR;
 
 @Singleton
 public class DataR2dbc implements R2dbcFeature {
@@ -48,6 +51,7 @@ public class DataR2dbc implements R2dbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor(MICRONAUT_DATA_PROCESSOR);
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }

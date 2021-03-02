@@ -23,7 +23,6 @@ import javax.inject.Singleton;
 
 @Singleton
 public class DataJdbc implements DataFeature {
-
     private final Data data;
     private final JdbcFeature jdbcFeature;
 
@@ -57,6 +56,7 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor(MICRONAUT_DATA_PROCESSOR);
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }

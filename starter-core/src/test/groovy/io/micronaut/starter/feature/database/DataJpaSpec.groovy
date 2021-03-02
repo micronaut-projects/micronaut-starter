@@ -1,17 +1,12 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 
-class DataJpaSpec extends BeanContextSpec {
+class DataJpaSpec extends ApplicationContextSpec {
 
     void "test data jpa features"() {
         when:
@@ -26,7 +21,7 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"]), new GradleBuild()).render().toString()
+        String template = gradleTemplate(Language.JAVA, ["data-jpa"])
 
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
@@ -37,7 +32,7 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), new GradleBuild()).render().toString()
+        String template = gradleTemplate(Language.KOTLIN, ["data-jpa"])
 
         then:
         template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
@@ -45,52 +40,59 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"]), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ["data-jpa"])
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''\
             <path>
               <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
-              <version>\${micronaut.data.version}</version>
+              <version>${micronaut.data.version}</version>
             </path>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-hibernate-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
-""")
+''')
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.KOTLIN, ["data-jpa"])
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''
           <compilerPlugins>
             <plugin>jpa</plugin>
             <plugin>all-open</plugin>
           </compilerPlugins>
-""")
+''')
     }
 
     void "test config"() {

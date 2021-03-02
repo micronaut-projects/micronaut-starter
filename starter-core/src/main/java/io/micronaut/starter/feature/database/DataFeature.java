@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public interface DataFeature extends OneOfFeature {
+    String MICRONAUT_DATA_PROCESSOR = "micronaut-data-processor";
 
     @Override
     default Class<?> getFeatureClass() {

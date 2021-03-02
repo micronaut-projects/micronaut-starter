@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.data</groupId>
+            <artifactId>micronaut-data-processor</artifactId>
+            <version>${micronaut.data.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.micronaut.jaxrs</groupId>
             <artifactId>micronaut-jaxrs-processor</artifactId>
             <version>${micronaut.jaxrs.version}</version>

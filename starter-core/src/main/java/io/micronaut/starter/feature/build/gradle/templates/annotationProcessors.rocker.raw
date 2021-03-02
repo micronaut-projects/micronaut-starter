@@ -12,9 +12,6 @@ List<MavenCoordinate> annotationProcessors
 @if (features.contains("lombok")) {
 @annotationProcessor.template(features, "\"org.projectlombok:lombok\"")
 }
-@if (features.contains("data")) {
-@annotationProcessor.template(features, "\"io.micronaut.data:micronaut-data-processor\"")
-}
 @for (processor : annotationProcessors) {
 @if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
 @annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")

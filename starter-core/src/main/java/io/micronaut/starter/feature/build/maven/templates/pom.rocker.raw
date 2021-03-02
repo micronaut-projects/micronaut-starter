@@ -873,13 +873,6 @@ MavenBuild mavenBuild
 } else {
           <annotationProcessorPaths combine.children="append">
 }
-@if (features.contains("data")) {
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-}
 @for (processor : mavenBuild.getAnnotationProcessors()) {
             <path>
               <groupId>@processor.getGroupId()</groupId>
@@ -1010,13 +1003,6 @@ MavenBuild mavenBuild
                   <version>${micronaut.version}</version>
                 </annotationProcessorPath>
 }
-@if (features.contains("data")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>${micronaut.data.version}</version>
-                </annotationProcessorPath>
-}
 @for (processor : mavenBuild.getAnnotationProcessors()) {
                 <annotationProcessorPath>
                   <groupId>@processor.getGroupId()</groupId>
@@ -1141,13 +1127,6 @@ MavenBuild mavenBuild
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("data")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>${micronaut.data.version}</version>
                 </annotationProcessorPath>
 }
 @if (features.contains("spring")) {

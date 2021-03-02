@@ -1,20 +1,16 @@
 package io.micronaut.starter.feature.database.r2dbc
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Unroll
 
-class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
+class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
@@ -43,7 +39,7 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), new GradleBuild()).render().toString()
+        String template = gradleTemplate(Language.JAVA, ["data-r2dbc"])
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
@@ -56,47 +52,55 @@ class DataR2dbcSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-r2dbc"]), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ["data-r2dbc"])
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''
             <path>
               <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
-              <version>\${micronaut.data.version}</version>
+              <version>${micronaut.data.version}</version>
             </path>
-""")
+          </annotationProcessorPaths>
+''')
 
-        template.contains("""
+        template.contains('''
     <dependency>
       <groupId>io.micronaut.r2dbc</groupId>
       <artifactId>micronaut-data-r2dbc</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''
     <dependency>
       <groupId>io.micronaut.r2dbc</groupId>
       <artifactId>micronaut-r2dbc-core</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''
     <dependency>
       <groupId>io.r2dbc</groupId>
       <artifactId>r2dbc-h2</artifactId>
       <scope>runtime</scope>
     </dependency>
-""")
+''')
         jdbcFeature.name == 'jdbc-hikari'
-        !template.contains("""
+        !template.contains('''
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
+''')
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 
     @Unroll
