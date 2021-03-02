@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.database
 
-
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -12,7 +13,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 
-class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture {
+class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature hibernate-jpa contains links to micronaut docs'() {
         when:
@@ -36,7 +37,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), new GradleBuild()).render().toString()
+        String template = gradleTemplate(Language.JAVA, ["hibernate-jpa"])
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')
@@ -45,15 +46,25 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), new GradleBuild()).render().toString()
+        String template = gradleTemplate(Language.KOTLIN, ["hibernate-jpa"])
+        String pluginId = 'org.jetbrains.kotlin.plugin.jpa'
+        String applyPlugin = 'id("' + pluginId + '") version "'
 
         then:
-        template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.KOTLIN, ["hibernate-jpa"])
 
         then:
         //src/main
@@ -67,7 +78,7 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), new MavenBuild()).render().toString()
+        String template = mavenTemplate(Language.JAVA, ["hibernate-jpa"])
 
         then:
         template.contains("""

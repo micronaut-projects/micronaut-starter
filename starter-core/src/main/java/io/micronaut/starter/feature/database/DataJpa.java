@@ -57,6 +57,7 @@ public class DataJpa implements JpaFeature, DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addKotlinJpaGradlePlugin(generatorContext);
         generatorContext.addAnnotationProcessor(MICRONAUT_DATA_PROCESSOR);
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));

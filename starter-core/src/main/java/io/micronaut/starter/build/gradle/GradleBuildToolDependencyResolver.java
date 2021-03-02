@@ -62,6 +62,13 @@ public class GradleBuildToolDependencyResolver extends DependencyResolver {
                 .filter(plugin -> plugin instanceof GradlePlugin)
                 .map(plugin -> (GradlePlugin) plugin)
                 .collect(Collectors.toList());
+
+        if (generatorContext.getFeatures().language().isKotlin() || generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {
+            plugins.add(new CommunityGradlePlugin("org.jetbrains.kotlin.jvm", "kotlin-gradle-plugin"));
+            plugins.add(new CommunityGradlePlugin("org.jetbrains.kotlin.kapt", "kotlin-gradle-plugin"));
+            plugins.add(new CommunityGradlePlugin("org.jetbrains.kotlin.plugin.allopen", "kotlin-allopen"));
+        }
+
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             plugins.add(new CoreGradlePlugin("groovy"));
         }
