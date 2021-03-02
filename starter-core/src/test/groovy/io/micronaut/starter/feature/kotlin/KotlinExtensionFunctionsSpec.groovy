@@ -2,9 +2,8 @@ package io.micronaut.starter.feature.kotlin
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
 import io.micronaut.starter.options.Language

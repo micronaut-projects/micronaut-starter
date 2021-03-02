@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
@@ -46,4 +47,12 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker";
     }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addGradlePlugin("com.fizzed.rocker", "rocker-gradle-plugin");
+        }
+    }
+
 }

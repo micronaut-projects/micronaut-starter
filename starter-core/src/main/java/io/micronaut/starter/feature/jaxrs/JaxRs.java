@@ -20,11 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
-
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
 public class JaxRs implements Feature, MicronautServerDependent {

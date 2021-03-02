@@ -5,8 +5,8 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.build.dependencies.GradleBuild
-@import io.micronaut.starter.build.dependencies.GradleDsl
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDsl
 @args (
 ApplicationType applicationType,
 Project project,
@@ -18,7 +18,7 @@ GradleBuild gradleBuild
 import com.google.protobuf.gradle.*
 }
 
-@gradlePlugins.template(applicationType, project, features)
+@gradlePlugins.template(applicationType, project, features, gradleBuild.getPlugins())
 
 version = "0.1"
 group = "@project.getPackageName()"

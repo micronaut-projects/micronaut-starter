@@ -4,8 +4,8 @@ import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle

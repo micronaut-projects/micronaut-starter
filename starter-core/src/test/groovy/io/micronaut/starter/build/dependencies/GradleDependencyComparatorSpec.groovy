@@ -1,6 +1,9 @@
 package io.micronaut.starter.build.dependencies
 
 import edu.umd.cs.findbugs.annotations.NonNull
+import io.micronaut.starter.build.gradle.GradleConfiguration
+import io.micronaut.starter.build.gradle.GradleDependency
+import io.micronaut.starter.build.gradle.GradleDependencyComparator
 import spock.lang.Specification
 
 class GradleDependencyComparatorSpec extends Specification {

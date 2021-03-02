@@ -1,5 +1,6 @@
 package io.micronaut.starter.build.dependencies
 
+import io.micronaut.starter.build.gradle.GradleConfiguration
 import spock.lang.Specification
 
 class GradleConfigurationSpec extends Specification {

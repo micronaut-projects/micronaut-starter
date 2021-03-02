@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.AdapterBuilder;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyResolver;
+import io.micronaut.starter.build.dependencies.PropertiesResolver;
 import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;

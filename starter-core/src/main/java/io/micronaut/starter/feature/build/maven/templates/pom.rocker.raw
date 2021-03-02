@@ -10,7 +10,7 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.build.dependencies.MavenBuild
+@import io.micronaut.starter.build.maven.MavenBuild
 @args (
 ApplicationType applicationType,
 Project project,

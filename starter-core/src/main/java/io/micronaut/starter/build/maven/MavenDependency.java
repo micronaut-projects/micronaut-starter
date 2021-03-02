@@ -13,23 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.starter.build.dependencies.Dependency;
 
-@Introspected
-public interface MavenCoordinate {
+import java.util.Optional;
+
+public interface MavenDependency extends Dependency {
+    @NonNull
+    Optional<MavenScope> getMavenScope();
 
     @NonNull
-    String getGroupId();
-
-    @NonNull
-    String getArtifactId();
-
-    @Nullable
-    default String getVersion() {
-        return null;
+    default Optional<String> getScope() {
+        return getMavenScope().map(MavenScope::toString);
     }
 }

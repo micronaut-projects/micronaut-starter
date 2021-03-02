@@ -16,6 +16,8 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.build.gradle.GradleDependencyAdapter;
+import io.micronaut.starter.build.maven.MavenDependencyAdapter;
 import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;

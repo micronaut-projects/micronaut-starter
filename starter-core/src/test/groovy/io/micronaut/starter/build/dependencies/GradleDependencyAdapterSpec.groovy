@@ -1,5 +1,7 @@
 package io.micronaut.starter.build.dependencies
 
+import io.micronaut.starter.build.gradle.GradleConfiguration
+import io.micronaut.starter.build.gradle.GradleDependencyAdapter
 import spock.lang.Specification
 import spock.lang.Unroll
 

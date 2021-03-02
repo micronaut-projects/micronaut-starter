@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.build.maven.MavenCoordinate;
 
 public interface ScopedDependency extends MavenCoordinate {
 

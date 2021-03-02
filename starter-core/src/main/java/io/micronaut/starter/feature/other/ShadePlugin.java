@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.other;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -38,6 +39,13 @@ public class ShadePlugin implements DefaultFeature {
             Set<Feature> selectedFeatures) {
         // maybe should not apply if JIB is selected
         return true;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addGradlePlugin("com.github.johnrengelman.shadow", "shadow");
+        }
     }
 
     @NonNull

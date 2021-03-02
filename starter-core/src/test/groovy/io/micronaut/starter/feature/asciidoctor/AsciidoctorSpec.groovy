@@ -1,25 +1,38 @@
 package io.micronaut.starter.feature.asciidoctor
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class AsciidoctorSpec extends BeanContextSpec {
+class AsciidoctorSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle asciidoctor feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), new GradleBuild()).render().toString()
+        String template = gradleTemplate(language, ['asciidoctor'])
 
         then:
-        template.contains('id("org.asciidoctor.jvm.convert")')
         template.contains("apply from: \"gradle/asciidoc.gradle\"")
+
+        when:
+        String pluginId = 'org.asciidoctor.jvm.convert'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
 
         where:
         language << Language.values().toList()
@@ -28,7 +41,7 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test maven asciidoctor feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), new MavenBuild()).render().toString()
+        String template = mavenTemplate(language, ['asciidoctor'])
 
         then:
         template.contains("""

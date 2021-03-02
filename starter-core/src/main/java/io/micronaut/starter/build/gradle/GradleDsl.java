@@ -13,17 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.gradle;
 
-import java.util.Comparator;
-
-public class MavenCoordinateComparator implements Comparator<MavenCoordinate> {
-    @Override
-    public int compare(MavenCoordinate o1, MavenCoordinate o2) {
-        int comparison = o1.getGroupId().compareTo(o2.getGroupId());
-        if (comparison != 0) {
-            return comparison;
-        }
-        return o1.getArtifactId().compareTo(o2.getArtifactId());
-    }
+public enum GradleDsl {
+    KOTLIN,
+    GROOVY
 }

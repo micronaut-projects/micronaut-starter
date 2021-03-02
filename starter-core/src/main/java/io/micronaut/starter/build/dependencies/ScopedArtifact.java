@@ -52,8 +52,12 @@ public class ScopedArtifact {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         ScopedArtifact that = (ScopedArtifact) o;
         return scope.equals(that.scope) && artifactId.equals(that.artifactId);
     }

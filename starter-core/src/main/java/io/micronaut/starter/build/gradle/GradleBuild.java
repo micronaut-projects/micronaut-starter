@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.gradle;
+
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.maven.MavenCoordinate;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,17 +25,20 @@ public class GradleBuild {
     private final GradleDsl dsl;
     private final List<Dependency> dependencies;
     private final List<MavenCoordinate> annotationProcessors;
+    private final List<GradlePlugin> plugins;
 
     public GradleBuild() {
-        this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList());
+        this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
     }
 
     public GradleBuild(GradleDsl gradleDsl,
                        List<Dependency> dependencies,
-                       List<MavenCoordinate> annotationProcessors) {
+                       List<MavenCoordinate> annotationProcessors,
+                       List<GradlePlugin> plugins) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
         this.annotationProcessors = annotationProcessors;
+        this.plugins = plugins;
     }
 
     public GradleDsl getDsl() {
@@ -45,5 +51,9 @@ public class GradleBuild {
 
     public List<MavenCoordinate> getAnnotationProcessors() {
         return annotationProcessors;
+    }
+
+    public List<GradlePlugin> getPlugins() {
+        return plugins;
     }
 }

@@ -18,6 +18,8 @@ package io.micronaut.starter.build.dependencies;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.starter.build.maven.MavenCoordinate;
+import io.micronaut.starter.build.maven.MavenCoordinateImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

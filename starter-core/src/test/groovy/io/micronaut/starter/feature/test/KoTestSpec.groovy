@@ -2,7 +2,7 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool

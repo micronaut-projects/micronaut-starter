@@ -2,9 +2,8 @@ package io.micronaut.starter.feature.aws
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll

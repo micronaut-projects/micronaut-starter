@@ -16,6 +16,9 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.build.maven.MavenCoordinate;
+import io.micronaut.starter.build.maven.MavenCoordinateComparator;
+import io.micronaut.starter.build.maven.MavenCoordinateResolver;
 import io.micronaut.starter.options.BuildTool;
 import java.util.Comparator;
 import java.util.List;

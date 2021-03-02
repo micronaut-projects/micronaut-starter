@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.build.dependencies.Phase;
+import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.build.dependencies.ScopedDependency;
 
 import java.util.Optional;
 

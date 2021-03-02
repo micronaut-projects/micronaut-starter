@@ -2,7 +2,7 @@ package io.micronaut.starter.feature.dekorate
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.MavenBuild
+import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture

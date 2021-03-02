@@ -7,7 +7,7 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.dependencies.Dependency
-@import io.micronaut.starter.build.dependencies.MavenCoordinate
+@import io.micronaut.starter.build.maven.MavenCoordinate
 @import java.util.List
 
 @args (
@@ -19,7 +19,16 @@ List<MavenCoordinate> annotationProcessors
 )
 
 dependencies {
-@io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features, annotationProcessors)
+@if (features.contains("lombok")) {
+@annotationProcessor.template(features, "\"org.projectlombok:lombok\"")
+}
+@for (processor : annotationProcessors) {
+@if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
+} else {
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
+}
+}
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }

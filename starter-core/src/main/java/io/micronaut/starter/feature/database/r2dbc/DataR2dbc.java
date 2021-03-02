@@ -22,7 +22,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
-import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;

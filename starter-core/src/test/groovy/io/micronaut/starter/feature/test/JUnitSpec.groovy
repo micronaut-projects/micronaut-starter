@@ -2,8 +2,7 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.GradleBuild
-import io.micronaut.starter.build.dependencies.GradleDsl
+import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

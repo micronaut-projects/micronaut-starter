@@ -13,35 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.core.annotation.Introspected;
 
-@Introspected
-public class MavenCoordinateImpl implements MavenCoordinate {
+import javax.validation.constraints.NotBlank;
+
+public class GradlePluginCoordinate implements GradlePlugin {
     @NonNull
-    private String groupId;
+    @NotBlank
+    private String id;
 
     @NonNull
+    @NotBlank
     private String artifactId;
 
     @Nullable
-    private String version;
+    private String groupId;
 
-    @NonNull
-    @Override
-    public String getGroupId() {
-        return groupId;
+    public GradlePluginCoordinate(@NonNull String id, @NonNull String artifactId) {
+        this.id = id;
+        this.artifactId = artifactId;
     }
 
-    public void setGroupId(@NonNull String groupId) {
+    public GradlePluginCoordinate(@NonNull String id, @NonNull String artifactId, @Nullable String groupId) {
+        this.id = id;
+        this.artifactId = artifactId;
         this.groupId = groupId;
     }
 
     @NonNull
     @Override
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
+    @NonNull
     public String getArtifactId() {
         return artifactId;
     }
@@ -51,12 +63,11 @@ public class MavenCoordinateImpl implements MavenCoordinate {
     }
 
     @Nullable
-    @Override
-    public String getVersion() {
-        return version;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setVersion(@Nullable String version) {
-        this.version = version;
+    public void setGroupId(@Nullable String groupId) {
+        this.groupId = groupId;
     }
 }

@@ -21,9 +21,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.build.BuildPluginContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.ScopedArtifact;
+import io.micronaut.starter.build.gradle.GradlePluginCoordinate;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -41,6 +44,7 @@ import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -56,7 +60,7 @@ import java.util.Set;
  * @author graemerocher
  * @since 1.0.0
  */
-public class GeneratorContext implements DependencyContext {
+public class GeneratorContext implements DependencyContext, BuildPluginContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
@@ -73,6 +77,7 @@ public class GeneratorContext implements DependencyContext {
     private final Features features;
     private final Options options;
     private final Set<ScopedArtifact> scopedArtifactIds = new HashSet<>();
+    private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -313,5 +318,20 @@ public class GeneratorContext implements DependencyContext {
     @Override
     public void addDependency(@NonNull ScopedArtifact scopedArtifact) {
         this.scopedArtifactIds.add(scopedArtifact);
+    }
+
+    @Override
+    public void addBuildPlugin(@NonNull BuildPlugin buildPlugin) {
+        buildPlugins.add(buildPlugin);
+    }
+
+    @Override
+    public void addGradlePlugin(@NonNull String id, @NonNull String artifactId) {
+        buildPlugins.add(new GradlePluginCoordinate(id, artifactId));
+    }
+
+    @NonNull
+    public Collection<BuildPlugin> getBuildPlugins() {
+        return buildPlugins;
     }
 }

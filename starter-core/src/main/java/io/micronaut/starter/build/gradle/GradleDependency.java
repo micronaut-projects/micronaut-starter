@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import java.util.Optional;
 
-public interface MavenDependency extends Dependency {
-    @NonNull
-    Optional<MavenScope> getMavenScope();
+public interface GradleDependency extends Dependency {
 
     @NonNull
+    GradleConfiguration getConfiguration();
+
+    @Override
+    @NonNull
     default Optional<String> getScope() {
-        return getMavenScope().map(MavenScope::toString);
+        return Optional.of(getConfiguration().toString());
     }
 }

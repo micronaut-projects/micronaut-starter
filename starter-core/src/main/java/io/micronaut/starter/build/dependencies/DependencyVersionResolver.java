@@ -17,6 +17,8 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.order.Ordered;
+import io.micronaut.starter.build.maven.MavenCoordinate;
+
 import java.util.Optional;
 
 public interface DependencyVersionResolver extends Ordered {

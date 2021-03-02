@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.dependencies;
+package io.micronaut.starter.build.gradle;
+
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.maven.MavenCoordinateComparator;
 
 import java.util.Comparator;
 
-public class MavenDependencyComparator implements Comparator<Dependency> {
+public class GradleDependencyComparator implements Comparator<Dependency> {
     private final MavenCoordinateComparator mavenCoordinateComparator;
 
-    public MavenDependencyComparator() {
+    public GradleDependencyComparator() {
         this.mavenCoordinateComparator = new MavenCoordinateComparator();
     }
 
     @Override
     public int compare(Dependency o1, Dependency o2) {
         int comparison = 0;
-        if (o1 instanceof MavenDependency &&
-                o2 instanceof MavenDependency &&
-                ((MavenDependency) o1).getMavenScope().isPresent() &&
-                ((MavenDependency) o2).getMavenScope().isPresent()) {
-            comparison = Integer.compare(((MavenDependency) o1).getMavenScope().get().getOrder(), ((MavenDependency) o2).getMavenScope().get().getOrder());
+        if (o1 instanceof GradleDependency && o2 instanceof GradleDependency) {
+            comparison = Integer.compare(((GradleDependency) o1).getConfiguration().getOrder(), ((GradleDependency) o2).getConfiguration().getOrder());
         }
         if (comparison != 0) {
             return comparison;

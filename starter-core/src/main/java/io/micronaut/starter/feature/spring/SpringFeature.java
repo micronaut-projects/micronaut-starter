@@ -19,10 +19,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
-
-import java.util.Map;
 
 public abstract class SpringFeature implements Feature {
 

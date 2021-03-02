@@ -44,9 +44,7 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
                 [GoogleCloudRunJavaWorkflow.NAME])
-        println(output)
         def workflow = output[".github/workflows/google-cloud-run.yml"]
-
 
         then:
         workflow
