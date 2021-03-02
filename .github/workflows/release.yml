@@ -174,7 +174,7 @@ jobs:
           asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
-    runs-on: windows-latest
+    runs-on: windows-2016
     needs: [build]
     steps:
       - name: Checkout repository
