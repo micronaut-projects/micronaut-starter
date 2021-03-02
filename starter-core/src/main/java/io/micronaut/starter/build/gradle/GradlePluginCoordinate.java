@@ -19,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 public class GradlePluginCoordinate implements GradlePlugin {
     @NonNull
@@ -69,5 +70,22 @@ public class GradlePluginCoordinate implements GradlePlugin {
 
     public void setGroupId(@Nullable String groupId) {
         this.groupId = groupId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        GradlePluginCoordinate that = (GradlePluginCoordinate) o;
+        return id.equals(that.id) && artifactId.equals(that.artifactId) && Objects.equals(groupId, that.groupId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, artifactId, groupId);
     }
 }
