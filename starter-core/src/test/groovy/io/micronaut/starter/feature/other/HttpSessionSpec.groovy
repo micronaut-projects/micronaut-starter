@@ -1,20 +1,17 @@
 package io.micronaut.starter.feature.other
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class HttpSessionSpec extends BeanContextSpec implements CommandOutputFixture {
+class HttpSessionSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
     HttpSession httpSession = beanContext.getBean(HttpSession)
@@ -55,8 +52,10 @@ class HttpSessionSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test http-session with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['http-session'],
-                language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['http-session'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-session")')
@@ -69,11 +68,9 @@ class HttpSessionSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test http-session with Maven for language=#language'() {
         when:
-        def context = buildGeneratorContext(
-                ['http-session'],
-                new Options(language, BuildTool.MAVEN), ApplicationType.DEFAULT)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                context.getFeatures(), context.getBuildProperties().getProperties()).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['http-session'])
+                .render()
 
         then:
         template.contains("""

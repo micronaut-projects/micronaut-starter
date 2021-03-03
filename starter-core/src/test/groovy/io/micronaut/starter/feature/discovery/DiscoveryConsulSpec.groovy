@@ -1,16 +1,16 @@
 package io.micronaut.starter.feature.discovery
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
 import spock.lang.Unroll
 
-class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixture {
+class DiscoveryConsulSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature discovery-consul contains links to micronaut docs'() {
         when:
@@ -26,7 +26,10 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
     @Unroll
     void 'test gradle discovery-consul feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['discovery-consul'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['discovery-consul'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
@@ -38,7 +41,10 @@ class DiscoveryConsulSpec extends BeanContextSpec  implements CommandOutputFixtu
     @Unroll
     void 'test maven discovery-consul feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['discovery-consul'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['discovery-consul'])
+                .render()
 
         then:
         template.contains("""

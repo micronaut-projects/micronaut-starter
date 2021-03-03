@@ -1,6 +1,8 @@
 package io.micronaut.starter.feature.kotlin
 
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.LanguageSpecificFeature
@@ -12,10 +14,8 @@ import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 
-class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
+class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
 
     @Subject
@@ -77,7 +77,10 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature ktor for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['ktor'])
+                .render()
 
         then:
         template.contains("""
@@ -121,7 +124,10 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'exception for maven and feature ktor for language=#language'(Language language) {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), []).render().toString()
+        new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['ktor'])
+                .render()
 
         then:
         IllegalArgumentException e = thrown()
@@ -134,7 +140,10 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature ktor for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['ktor'])
+                .language(language)
+                .render()
 
         then:
         template.contains("mainClass.set(\"example.micronaut.Application\")")
@@ -151,7 +160,10 @@ class KtorSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'exception with gradle and feature ktor for language=#language'(Language language) {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['ktor'], language), false).render().toString()
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['ktor'])
+                .language(language)
+                .render()
 
         then:
         IllegalArgumentException e = thrown()

@@ -1,12 +1,11 @@
 package io.micronaut.starter.feature.migration
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 
-class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
+class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature liquibase contains links to micronaut docs'() {
         when:
@@ -21,7 +20,9 @@ class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test the dependency is added to the gradle build"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['liquibase']), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['liquibase'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.liquibase:micronaut-liquibase")')
@@ -29,7 +30,9 @@ class LiquibaseSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test the dependency is added to the maven build"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['liquibase']), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['liquibase'])
+                .render()
 
         then:
         template.contains("""

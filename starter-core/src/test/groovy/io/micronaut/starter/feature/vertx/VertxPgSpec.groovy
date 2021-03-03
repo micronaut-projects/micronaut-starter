@@ -1,19 +1,21 @@
 package io.micronaut.starter.feature.vertx
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class VertxPgSpec extends BeanContextSpec {
+class VertxPgSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle vertx-pg-client feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['vertx-pg-client'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-vertx-pg-client")')
@@ -25,8 +27,10 @@ class VertxPgSpec extends BeanContextSpec {
     @Unroll
     void 'test maven vertx-pg-client feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['vertx-pg-client'], language), []).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['vertx-pg-client'])
+                .render()
         then:
         template.contains("""
     <dependency>

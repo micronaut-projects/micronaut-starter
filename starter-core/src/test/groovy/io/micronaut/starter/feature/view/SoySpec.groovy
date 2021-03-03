@@ -1,14 +1,13 @@
 package io.micronaut.starter.feature.view
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SoySpec extends BeanContextSpec implements CommandOutputFixture {
+class SoySpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-soy contains links to micronaut docs'() {
         when:
@@ -24,7 +23,10 @@ class SoySpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-soy feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['views-soy'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-soy")')
@@ -36,7 +38,10 @@ class SoySpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven views-soy feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-soy'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['views-soy'])
+                .render()
 
         then:
         template.contains("""

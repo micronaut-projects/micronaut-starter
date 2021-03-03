@@ -1,16 +1,20 @@
 package io.micronaut.starter.feature.messaging.jms
 
+import io.micronaut.context.ApplicationContext
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 
 import java.util.stream.Collectors
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
 
-class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
+class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test README.md with feature jms contains links to micronaut docs'() {
         when:
@@ -30,7 +34,9 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Gradle'() {
         when:
-        String template = buildGradle.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), false).render()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jms-' + name])
+                .render()
 
         then:
         template.contains """implementation("io.micronaut.jms:micronaut-jms-$name")"""
@@ -41,7 +47,9 @@ class JmsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test dependencies are present for Maven'() {
         when:
-        String template = pom.template(DEFAULT, buildProject(), getFeatures(['jms-' + name]), []).render()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['jms-' + name])
+                .render()
 
         then:
         template.contains("""

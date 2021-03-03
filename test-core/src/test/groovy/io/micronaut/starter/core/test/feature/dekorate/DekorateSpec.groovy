@@ -38,7 +38,6 @@ class DekorateSpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN]].combinations()
     }
 
-
     @Unroll
     void "test maven dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:

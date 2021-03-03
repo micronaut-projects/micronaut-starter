@@ -1,16 +1,15 @@
 package io.micronaut.starter.feature.database
 
-
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
-class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture {
+class HibernateJpaSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature hibernate-jpa contains links to micronaut docs'() {
         when:
@@ -34,7 +33,9 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["hibernate-jpa"])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-jpa")')
@@ -43,15 +44,32 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["hibernate-jpa"])
+                .language(Language.KOTLIN)
+                .render()
+
+        String pluginId = 'org.jetbrains.kotlin.plugin.jpa'
+        String applyPlugin = 'id("' + pluginId + '") version "'
 
         then:
-        template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"], Language.KOTLIN), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['hibernate-jpa'])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         //src/main
@@ -65,7 +83,9 @@ class HibernateJpaSpec extends BeanContextSpec  implements CommandOutputFixture 
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-jpa"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['hibernate-jpa'])
+                .render()
 
         then:
         template.contains("""

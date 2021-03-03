@@ -1,14 +1,13 @@
 package io.micronaut.starter.feature.jmx
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
+class JmxSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     @Unroll
     void 'test readme.md contains links to jmx and micronaut docs'() {
@@ -25,7 +24,10 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle jmx feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jmx'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.jmx:micronaut-jmx")')
@@ -37,7 +39,10 @@ class JmxSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven jmx feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jmx'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['jmx'])
+                .render()
 
         then:
         template.contains("""
