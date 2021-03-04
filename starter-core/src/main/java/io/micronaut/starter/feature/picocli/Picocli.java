@@ -27,8 +27,6 @@ import java.util.Set;
 @Singleton
 public class Picocli implements DefaultFeature {
 
-    public static final String ARTIFACT_ID_PICOCLI_CODEGEN = "picocli-codegen";
-
     @Override
     public String getName() {
         return "picocli";
