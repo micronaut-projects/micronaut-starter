@@ -31,18 +31,9 @@ public class GradlePluginLookup implements BuildPluginLookup {
     @NotBlank
     private String artifactId;
 
-    @Nullable
-    private String groupId;
-
     public GradlePluginLookup(@NonNull String id, @NonNull String artifactId) {
         this.id = id;
         this.artifactId = artifactId;
-    }
-
-    public GradlePluginLookup(@NonNull String id, @NonNull String artifactId, @Nullable String groupId) {
-        this.id = id;
-        this.artifactId = artifactId;
-        this.groupId = groupId;
     }
 
     @NonNull
@@ -63,15 +54,6 @@ public class GradlePluginLookup implements BuildPluginLookup {
         this.artifactId = artifactId;
     }
 
-    @Nullable
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(@Nullable String groupId) {
-        this.groupId = groupId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -81,11 +63,11 @@ public class GradlePluginLookup implements BuildPluginLookup {
             return false;
         }
         GradlePluginLookup that = (GradlePluginLookup) o;
-        return id.equals(that.id) && artifactId.equals(that.artifactId) && Objects.equals(groupId, that.groupId);
+        return id.equals(that.id) && artifactId.equals(that.artifactId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, artifactId, groupId);
+        return Objects.hash(id, artifactId);
     }
 }
