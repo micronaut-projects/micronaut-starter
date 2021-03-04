@@ -1,27 +1,16 @@
 package io.micronaut.starter.feature.lang
 
-import io.micronaut.context.BeanContext
+import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature
-import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
-import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.feature.lang.java.application
-import io.micronaut.starter.fixture.ProjectFixture
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.AutoCleanup
-import spock.lang.Shared
-import spock.lang.Specification
-import spock.lang.Unroll
 
-class JavaApplicationSpec extends Specification implements ProjectFixture, ContextFixture, CommandOutputFixture {
-
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'Application file is generated for a default application type with gradle and referenced in build.gradle mainClassName for language: java'() {
         given:

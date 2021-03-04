@@ -114,13 +114,13 @@ class SpringBootSpec extends ApplicationContextSpec {
       <scope>runtime</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-boot</artifactId>
+                 <version>${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)

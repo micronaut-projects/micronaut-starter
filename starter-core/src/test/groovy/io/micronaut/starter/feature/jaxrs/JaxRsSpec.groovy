@@ -75,13 +75,13 @@ class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture 
       <scope>compile</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>\${micronaut.jaxrs.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.jaxrs</groupId>
+                 <artifactId>micronaut-jaxrs-processor</artifactId>
+                 <version>${micronaut.jaxrs.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)

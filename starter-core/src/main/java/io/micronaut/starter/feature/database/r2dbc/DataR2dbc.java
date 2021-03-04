@@ -48,6 +48,7 @@ public class DataR2dbc implements R2dbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor("io.micronaut.data", "micronaut-data-processor", "${micronaut.data.version}");
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }

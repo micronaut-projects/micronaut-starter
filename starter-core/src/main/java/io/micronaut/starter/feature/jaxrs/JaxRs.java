@@ -20,11 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
-
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
 public class JaxRs implements Feature, MicronautServerDependent {
@@ -46,13 +42,8 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.jaxrs");
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
+        generatorContext.addAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor", "${micronaut.jaxrs.version}");
+        generatorContext.addTestAnnotationProcessor("io.micronaut.jaxrs", "micronaut-jaxrs-processor", "${micronaut.jaxrs.version}");
     }
 
     @Override

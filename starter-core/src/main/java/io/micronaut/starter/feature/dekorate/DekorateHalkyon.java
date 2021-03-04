@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.dekorate;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 import javax.inject.Singleton;
 
@@ -54,5 +55,11 @@ public class DekorateHalkyon extends AbstractDekorateServiceFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#halkyon-crd";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addAnnotationProcessor("io.dekorate", "halkyon-annotations", "${dekorate.version}");
+        generatorContext.addDependency("io.dekorate", "halkyon-annotations");
     }
 }

@@ -56,6 +56,7 @@ public class HibernateJpa implements JpaFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addKotlinJpaGradlePlugin(generatorContext);
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
     }
 

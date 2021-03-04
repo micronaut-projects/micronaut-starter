@@ -57,6 +57,8 @@ public class DataJpa implements JpaFeature, DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addKotlinJpaGradlePlugin(generatorContext);
+        generatorContext.addAnnotationProcessor("io.micronaut.data", "micronaut-data-processor", "${micronaut.data.version}");
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");

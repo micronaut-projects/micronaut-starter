@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class OracleRawFunction extends OracleFunction {
+    public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
     private final OracleFunction httpFunction;
 
     public OracleRawFunction(SimpleLogging simpleLogging, OracleFunction httpFunction) {
@@ -39,7 +40,7 @@ public class OracleRawFunction extends OracleFunction {
 
     @Override
     public String getName() {
-        return "oracle-function";
+        return FEATURE_NAME_ORACLE_RAW_FUNCTION;
     }
 
     @Override

@@ -15,20 +15,19 @@
  */
 package io.micronaut.starter.feature.picocli;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.Map;
 import java.util.Set;
 
 @Singleton
 public class Picocli implements DefaultFeature {
+
+    public static final String ARTIFACT_ID_PICOCLI_CODEGEN = "picocli-codegen";
 
     @Override
     public String getName() {
@@ -57,13 +56,9 @@ public class Picocli implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("picocli");
-            generatorContext.getBuildProperties().put(
-                    entry.getKey(),
-                    entry.getValue()
-            );
-        }
+        generatorContext.addAnnotationProcessor("info.picocli", "picocli-codegen", "${picocli.version}");
+        generatorContext.addDependency("info.picocli", "picocli");
+        generatorContext.addDependency("io.micronaut.picocli", "micronaut-picocli");
     }
 
     @Override

@@ -10,12 +10,14 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.build.maven.MavenBuild
+@import io.micronaut.starter.build.maven.MavenDependency
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-List<Property> properties
+MavenBuild mavenBuild
 )
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,7 +44,7 @@ List<Property> properties
 } else {
     <release.version>@features.javaVersion().majorVersion()</release.version>
 }
-@for (Property prop : properties) {
+@for (Property prop : mavenBuild.getProperties()) {
 @if (prop.isComment()) {
     <!--@prop.getComment()-->
 } else {
@@ -177,21 +179,13 @@ List<Property> properties
 @if (features.contains("grpc")) {
 @dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "compile", null)
 }
-@if (features.contains("picocli")) {
-@dependency.template("info.picocli", "picocli", "compile", null)
-@dependency.template("io.micronaut.picocli", "micronaut-picocli", "compile", null)
-}
 @if (features.contains("annotation-api")) {
 @dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
 }
 @if (features.contains("openapi")) {
-@dependency.template("io.swagger.core.v3", "swagger-annotations", "compile", null)
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
-}
-@if (features.contains("lombok")) {
-@dependency.template("org.projectlombok", "lombok", "provided", null)
 }
 @if (features.contains("management")) {
 @dependency.template("io.micronaut", "micronaut-management", "compile", null)
@@ -279,12 +273,6 @@ List<Property> properties
 }
 @if (features.contains("netflix-ribbon")) {
 @dependency.template("io.micronaut.netflix", "micronaut-netflix-ribbon", "compile", null)
-}
-@if (features.contains("tracing-zipkin")) {
-@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
-@dependency.template("io.opentracing.brave", "brave-opentracing", "compile", null)
-@dependency.template("io.zipkin.brave", "brave-instrumentation-http", "runtime", null)
-@dependency.template("io.zipkin.reporter2", "zipkin-reporter", "runtime", null)
 }
 @if (features.contains("tracing-jaeger")) {
 @dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
@@ -565,11 +553,6 @@ List<Property> properties
 @dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
 @dependency.template("org.springframework", "spring-jdbc", "compile", null)
 }
-@if (features.contains("log4j2")) {
-@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.12.1")
-@dependency.template("org.apache.logging.log4j", "log4j-api", "runtime", "2.12.1")
-@dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtime", "2.12.1")
-}
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
 }
@@ -685,6 +668,9 @@ List<Property> properties
 @if (features.isFeaturePresent(MongoFeature.class)) {
 @dependency.template("org.testcontainers", "mongodb", "test", null)
 }
+}
+@for (MavenDependency f : mavenBuild.getDependencies()) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion())
 }
   </dependencies>
 
@@ -876,109 +862,11 @@ List<Property> properties
 } else {
           <annotationProcessorPaths combine.children="append">
 }
-@if (features.contains("picocli")) {
+@for (processor : mavenBuild.getAnnotationProcessors()) {
             <path>
-              <groupId>info.picocli</groupId>
-              <artifactId>picocli-codegen</artifactId>
-              <version>${picocli.version}</version>
-            </path>
-}
-@if (features.contains("data")) {
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-}
-@if (features.contains("openapi")) {
-            <path>
-              <groupId>io.micronaut.openapi</groupId>
-              <artifactId>micronaut-openapi</artifactId>
-              <version>${micronaut.openapi.version}</version>
-            </path>
-}
-@if (features.contains("jax-rs")) {
-            <path>
-              <groupId>io.micronaut.jaxrs</groupId>
-              <artifactId>micronaut-jaxrs-processor</artifactId>
-              <version>${micronaut.jaxrs.version}</version>
-            </path>
-}
-@if (features.contains("spring")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-annotation</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
-@if (features.contains("spring-web")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-web-annotation</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
-@if (features.contains("spring-boot")) {
-            <path>
-              <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-boot</artifactId>
-              <version>${micronaut.spring.version}</version>
-            </path>
-}
-@if (features.contains("security-annotations")) {
-            <path>
-              <groupId>io.micronaut.security</groupId>
-              <artifactId>micronaut-security-annotations</artifactId>
-              <version>${micronaut.security.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-kubernetes")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>kubernetes-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-openshift")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>openshift-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-knative")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>knative-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-servicecatalog")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>servicecatalog-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-jaeger")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>jaeger-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-prometheus")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>prometheus-annotations</artifactId>
-              <version>${dekorate.version}</version>
-            </path>
-}
-@if (features.contains("dekorate-halkyon")) {
-            <path>
-              <groupId>io.dekorate</groupId>
-              <artifactId>halkyon-annotations</artifactId>
-              <version>${dekorate.version}</version>
+              <groupId>@processor.getGroupId()</groupId>
+              <artifactId>@processor.getArtifactId()</artifactId>
+              <version>@processor.getVersion()</version>
             </path>
 }
 
@@ -1017,6 +905,13 @@ List<Property> properties
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths combine.children="append">
+@for (processor : mavenBuild.getAnnotationProcessors()) {
+               <annotationProcessorPath>
+                 <groupId>@processor.getGroupId()</groupId>
+                 <artifactId>@processor.getArtifactId()</artifactId>
+                 <version>@processor.getVersion()</version>
+               </annotationProcessorPath>
+}
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -1032,111 +927,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("picocli")) {
-                <annotationProcessorPath>
-                  <groupId>info.picocli</groupId>
-                  <artifactId>picocli-codegen</artifactId>
-                  <version>${picocli.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("data")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>${micronaut.data.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("openapi")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.openapi</groupId>
-                  <artifactId>micronaut-openapi</artifactId>
-                  <version>${micronaut.openapi.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("jax-rs")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>${micronaut.jaxrs.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-web")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-boot")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("security-annotations")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>${micronaut.security.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-kubernetes")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>kubernetes-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-openshift")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>openshift-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-knative")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>knative-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-servicecatalog")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>servicecatalog-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-prometheus")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>prometheus-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-jaeger")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>jaeger-annotations</artifactId>
-                  <version>${dekorate.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("dekorate-halkyon")) {
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>halkyon-annotations</artifactId>
-                  <version>${dekorate.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>
@@ -1171,6 +961,13 @@ List<Property> properties
                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
               </sourceDirs>
               <annotationProcessorPaths>
+@for (processor : mavenBuild.getTestAnnotationProcessors()) {
+               <annotationProcessorPath>
+                 <groupId>@processor.getGroupId()</groupId>
+                 <artifactId>@processor.getArtifactId()</artifactId>
+                 <version>@processor.getVersion()</version>
+               </annotationProcessorPath>
+}
                 <annotationProcessorPath>
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-inject-java</artifactId>
@@ -1186,48 +983,6 @@ List<Property> properties
                   <groupId>io.micronaut</groupId>
                   <artifactId>micronaut-graal</artifactId>
                   <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("data")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.data</groupId>
-                  <artifactId>micronaut-data-processor</artifactId>
-                  <version>${micronaut.data.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("jax-rs")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>${micronaut.jaxrs.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-web")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("spring-boot")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-boot</artifactId>
-                  <version>${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-}
-@if (features.contains("security-annotations")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>${micronaut.security.version}</version>
                 </annotationProcessorPath>
 }
               </annotationProcessorPaths>

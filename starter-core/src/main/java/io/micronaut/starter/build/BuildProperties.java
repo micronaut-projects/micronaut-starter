@@ -24,6 +24,12 @@ public class BuildProperties {
 
     private final Map<String, Property> propertyMap = new LinkedHashMap<>();
 
+    public void putAll(Map<String, String> map) {
+        for (String k : map.keySet()) {
+            put(k, map.get(k));
+        }
+    }
+
     public void put(String key, String value) {
         propertyMap.put(key, new Property() {
             @Override

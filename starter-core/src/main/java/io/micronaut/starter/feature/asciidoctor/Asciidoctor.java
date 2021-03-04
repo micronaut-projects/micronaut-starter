@@ -48,6 +48,7 @@ public class Asciidoctor implements Feature {
     public void apply(GeneratorContext generatorContext) {
 
         if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addGradlePluginLookup("org.asciidoctor.jvm.convert", "asciidoctor-gradle-jvm");
             generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");

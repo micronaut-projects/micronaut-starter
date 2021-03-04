@@ -42,6 +42,9 @@ public class Log4j2 implements LoggingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependencyLookup("log4j-core");
+        generatorContext.addRuntimeDependencyLookup("log4j-api");
+        generatorContext.addRuntimeDependencyLookup("log4j-slf4j-impl");
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(generatorContext.getProject())));
     }
 

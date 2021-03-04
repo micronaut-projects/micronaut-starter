@@ -1,5 +1,6 @@
 package io.micronaut.starter.cli.feature.database
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
@@ -16,7 +17,7 @@ class CreateRepositorySpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Unroll
     void "test creating a repository - #language.getName()"(Language language) {

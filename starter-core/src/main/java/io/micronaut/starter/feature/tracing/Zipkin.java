@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-
 import javax.inject.Singleton;
 
 @Singleton
@@ -40,6 +39,12 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+
+        generatorContext.addDependency("io.micronaut", "micronaut-tracing");
+        generatorContext.addDependency("io.opentracing.brave", "brave-opentracing");
+        generatorContext.addRuntimeDependency("io.zipkin.brave", "brave-instrumentation-http");
+        generatorContext.addRuntimeDependency("io.zipkin.reporter2", "zipkin-reporter");
+
         generatorContext.getConfiguration().put("tracing.zipkin.enabled", true);
         generatorContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
         generatorContext.getConfiguration().put("tracing.zipkin.sampler.probability", 0.1);

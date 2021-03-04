@@ -21,7 +21,13 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.build.BuildPluginContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.DependencyContext;
+import io.micronaut.starter.build.dependencies.DependencyLookup;
+import io.micronaut.starter.build.BuildPluginLookup;
+import io.micronaut.starter.build.dependencies.ScopedDependency;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -39,6 +45,7 @@ import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -54,7 +61,7 @@ import java.util.Set;
  * @author graemerocher
  * @since 1.0.0
  */
-public class GeneratorContext {
+public class GeneratorContext implements DependencyContext, BuildPluginContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
@@ -70,6 +77,10 @@ public class GeneratorContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
+    private final Set<ScopedDependency> dependencies = new HashSet<>();
+    private final Set<DependencyLookup> dependencyLookups = new HashSet<>();
+    private final Set<BuildPlugin> buildPlugins = new HashSet<>();
+    private final Set<BuildPluginLookup> buildPluginLookups = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -196,7 +207,8 @@ public class GeneratorContext {
     /**
      * @return The test framework
      */
-    @NonNull public TestFramework getTestFramework() {
+    @NonNull
+    public TestFramework getTestFramework() {
         return options.getTestFramework();
     }
 
@@ -301,4 +313,47 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
+    @Override
+    @NonNull
+    public Collection<DependencyLookup> getDependencyLookups() {
+        return this.dependencyLookups;
+    }
+
+    @Override
+    public void addDependencyLookup(@NonNull DependencyLookup dependencyLookup) {
+        this.dependencyLookups.add(dependencyLookup);
+    }
+
+    @Override
+    public void addBuildPlugin(@NonNull BuildPlugin buildPlugin) {
+        buildPlugins.add(buildPlugin);
+    }
+
+    @Override
+    @NonNull
+    public Collection<BuildPlugin> getBuildPlugins() {
+        return buildPlugins;
+    }
+
+    @Override
+    public void addBuildPluginLookup(@NonNull BuildPluginLookup buildPluginLookup) {
+        this.buildPluginLookups.add(buildPluginLookup);
+    }
+
+    @Override
+    @NonNull
+    public Collection<BuildPluginLookup> getBuildPluginLookups() {
+        return buildPluginLookups;
+    }
+
+    @Override
+    public void addDependency(@NonNull ScopedDependency scopedDependency) {
+        this.dependencies.add(scopedDependency);
+    }
+
+    @NonNull
+    @Override
+    public Collection<ScopedDependency> getDependencies() {
+        return dependencies;
+    }
 }

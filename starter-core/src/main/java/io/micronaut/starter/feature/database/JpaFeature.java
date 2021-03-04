@@ -15,10 +15,18 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 
 /**
  * Marker interface for JPA features, such as DataJpa and HibernateJpa.
  */
 public interface JpaFeature extends Feature {
+
+    default void addKotlinJpaGradlePlugin(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle() &&
+                (generatorContext.getFeatures().language().isKotlin() || generatorContext.getFeatures().testFramework().isKotlinTestFramework()))  {
+            generatorContext.addGradlePluginLookup("org.jetbrains.kotlin.plugin.jpa", "kotlin-noarg");
+        }
+    }
 }

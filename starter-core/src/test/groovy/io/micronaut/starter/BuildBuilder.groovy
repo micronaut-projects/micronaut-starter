@@ -5,7 +5,10 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.Property
+import io.micronaut.starter.build.gradle.GradleBuild
+import io.micronaut.starter.build.gradle.GradleBuildCreator
+import io.micronaut.starter.build.maven.MavenBuild
+import io.micronaut.starter.build.maven.MavenBuildCreator
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
@@ -19,14 +22,16 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 
 class BuildBuilder implements ProjectFixture, ContextFixture {
 
-    BuildTool buildTool
-    List<String> features
-    Language language
-    TestFramework testFramework
-    ApplicationType applicationType
-    JdkVersion jdkVersion
-    Project project
-    ApplicationContext ctx
+    private BuildTool buildTool
+    private List<String> features
+    private Language language
+    private TestFramework testFramework
+    private ApplicationType applicationType
+    private JdkVersion jdkVersion
+    private Project project
+    private ApplicationContext ctx
+    private GradleBuildCreator gradleDependencyResolver
+    private MavenBuildCreator mavenDependencyResolver
 
     BuildBuilder(ApplicationContext ctx, BuildTool buildTool) {
         this.ctx = ctx
@@ -73,15 +78,39 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
 
         Options options = new Options(language, testFramework, buildTool, jdkVersion)
         Features features = getFeatures(featureNames, options, type)
+
         if (buildTool.isGradle()) {
-            return buildGradle.template(type, project, features, buildTool == BuildTool.GRADLE_KOTLIN).render().toString()
+            GradleBuild build = gradleBuild(options, features, project, type)
+            return buildGradle.template(type, project, features, build).render().toString()
         } else if (buildTool == BuildTool.MAVEN) {
-            GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
-            List<Property> properties = ctx.getBuildProperties().getProperties()
-            return pom.template(type, project, features, properties).render().toString()
+            MavenBuild build = mavenBuild(options, features, project, type)
+            return pom.template(type, project, features, build).render().toString()
         }
         null
+    }
 
+    private GradleBuildCreator getGradleDependencyResolver() {
+        if (gradleDependencyResolver == null) {
+            gradleDependencyResolver = ctx.getBean(GradleBuildCreator)
+        }
+        gradleDependencyResolver
+    }
+
+    private MavenBuildCreator getMavenDependencyResolver() {
+        if (mavenDependencyResolver == null) {
+            mavenDependencyResolver = ctx.getBean(MavenBuildCreator)
+        }
+        mavenDependencyResolver
+    }
+
+    MavenBuild mavenBuild(Options options, Features features, Project project, ApplicationType type) {
+        GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
+        getMavenDependencyResolver().create(ctx)
+    }
+
+    GradleBuild gradleBuild(Options options, Features features, Project project, ApplicationType type) {
+        GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
+        getGradleDependencyResolver().create(ctx)
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {

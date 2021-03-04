@@ -1,6 +1,6 @@
 package io.micronaut.starter
 
-import io.micronaut.context.BeanContext
+import io.micronaut.context.ApplicationContext
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import spock.lang.AutoCleanup
@@ -11,5 +11,5 @@ abstract class BeanContextSpec extends Specification implements ProjectFixture, 
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 }
