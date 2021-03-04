@@ -1,15 +1,13 @@
 package io.micronaut.starter.feature.logging
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 
-
-class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SimpleLoggingSpec extends ApplicationContextSpec  implements CommandOutputFixture {
     void 'test generate simple logger properties'() {
         when:
         def output = generate(['slf4j-simple'])
@@ -23,7 +21,10 @@ class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test configure slf4j-simple for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['slf4j-simple'])
+                .language(language)
+                .render()
 
         then:
         template.contains('runtimeOnly("org.slf4j:slf4j-simple")')
@@ -36,7 +37,10 @@ class SimpleLoggingSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test slf4j-simple feature for Maven and language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['slf4j-simple'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['slf4j-simple'])
+                .render()
 
         then:
         template.contains("""

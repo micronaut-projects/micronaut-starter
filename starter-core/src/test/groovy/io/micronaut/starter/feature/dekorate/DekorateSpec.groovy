@@ -1,17 +1,15 @@
 package io.micronaut.starter.feature.dekorate
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
+class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature dekorate-kubernetes contains links to micronaut docs'() {
         when:
@@ -26,30 +24,38 @@ class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle dekorate #feature.name feature with for #language' (Feature feature, Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature.getName()], language), false).render().toString()
-        String service = feature.getName().replaceFirst("dekorate-", "")
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([feature.getName()])
+                .language(language)
+                .render()
 
         then:
-        if(language == Language.JAVA) {
-            assert template.contains(String.format('annotationProcessor("io.dekorate:%s-annotations:${dekorateVersion}")', service))
-        }
-        template.contains(String.format('implementation("io.dekorate:%s-annotations:${dekorateVersion}")', service))
         template.contains('implementation("io.micronaut:micronaut-management")')
+        if(language == Language.JAVA) {
+            assert template.contains(String.format('annotationProcessor("io.dekorate:%s-annotations:', service))
+        }
+        template.contains(String.format('implementation("io.dekorate:%s-annotations:', service))
 
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(AbstractDekorateFeature),
-                Language.JAVA, Language.KOTLIN].combinations()
+                [Language.JAVA, Language.KOTLIN]
+        ].combinations()
+
+        service = feature.getName().replaceFirst("dekorate-", "")
     }
 
     @Unroll
     void 'test maven dekorate #feature.name for #language' (Feature feature, Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures([feature.getName()], language, TestFramework.JUNIT, BuildTool.MAVEN), []).render().toString()
-        String service = feature.getName().replaceFirst("dekorate-", "")
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([feature.getName()])
+                .language(language)
+                .render()
 
         then:
+        template.contains("<dekorate.version>")
+        template.contains("</dekorate.version>")
         template.contains(String.format("""
     <dependency>
       <groupId>io.dekorate</groupId>
@@ -74,10 +80,19 @@ class DekorateSpec extends BeanContextSpec implements CommandOutputFixture {
             </path>""", service))
         }
 
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "dekorate.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
 
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(AbstractDekorateFeature),
-                [Language.JAVA, Language.KOTLIN]].combinations()
+                [Language.JAVA, Language.KOTLIN],
+        ].combinations()
+
+        service = feature.getName().replaceFirst("dekorate-", "")
     }
 }

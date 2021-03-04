@@ -1,22 +1,39 @@
 package io.micronaut.starter.feature.jib
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class JibSpec extends BeanContextSpec {
+class JibSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle jib feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jib'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jib'])
+                .language(language)
+                .render()
 
         then:
-        template.contains('id("com.google.cloud.tools.jib")')
         template.contains("image = \"gcr.io/myapp/jib-image\"")
+
+        when:
+        String pluginId = 'com.google.cloud.tools.jib'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
 
         where:
         language << Language.values().toList()

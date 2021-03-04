@@ -1,14 +1,13 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class JAsyncSQLSpec extends BeanContextSpec implements CommandOutputFixture {
+class JAsyncSQLSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature jasync-sql contains links to micronaut and 3rd party docs'() {
         when:
@@ -75,7 +74,10 @@ jasync:
     @Unroll
     void 'test gradle jasync-sql feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jasync-sql','mysql'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.sql:micronaut-jasync-sql")')
@@ -87,7 +89,10 @@ jasync:
     @Unroll
     void 'test maven jasync-sql feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jasync-sql','mysql'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['jasync-sql','mysql'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""

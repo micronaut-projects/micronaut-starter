@@ -1,14 +1,14 @@
 package io.micronaut.starter.feature.view
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class RockerSpec extends BeanContextSpec implements CommandOutputFixture {
+class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature views-rocker contains links to micronaut docs'() {
         when:
@@ -24,11 +24,13 @@ class RockerSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle views-rocker feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['views-rocker'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
-        template.contains('id("com.fizzed.rocker") version "1.3.0"')
         template.contains("""
 sourceSets {
     main {
@@ -39,6 +41,20 @@ sourceSets {
 }
 """)
 
+        when:
+        String pluginId = 'com.fizzed.rocker'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
         where:
         language << Language.values().toList()
     }
@@ -46,7 +62,10 @@ sourceSets {
     @Unroll
     void 'test maven views-rocker feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['views-rocker'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['views-rocker'])
+                .render()
 
         then:
         template.contains("""
@@ -79,5 +98,5 @@ sourceSets {
         where:
         language << Language.values().toList()
     }
-
 }
+

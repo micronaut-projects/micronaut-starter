@@ -1,14 +1,14 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
-class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
+class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
         when:
@@ -31,8 +31,9 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test mongo sync dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(["mongo-sync"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-sync"])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
@@ -41,7 +42,9 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test mongo sync dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-sync'])
+                .render()
 
         then:
         template.contains("""
@@ -81,8 +84,9 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), false).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-reactive"])
+                .render()
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
         template.contains('testImplementation("org.testcontainers:mongodb")')
@@ -90,7 +94,9 @@ class MongoSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-reactive'])
+                .render()
 
         then:
         template.contains("""

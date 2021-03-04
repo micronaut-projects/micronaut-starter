@@ -1,14 +1,13 @@
 package io.micronaut.starter.feature.security
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
+class SecurityLdapSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature security-ldap contains links to micronaut docs'() {
         when:
@@ -23,7 +22,10 @@ class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle security-ldap feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['security-ldap'])
+                .render()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -36,7 +38,10 @@ class SecurityLdapSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven security-ldap feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-ldap'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['security-ldap'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""

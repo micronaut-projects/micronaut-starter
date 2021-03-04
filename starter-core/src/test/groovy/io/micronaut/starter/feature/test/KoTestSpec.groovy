@@ -1,20 +1,17 @@
 package io.micronaut.starter.feature.test
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.TestFramework
 
-class KoTestSpec extends BeanContextSpec {
+class KoTestSpec extends ApplicationContextSpec {
 
     void 'test maven configure unit tests'() {
-        given:
-        Features features = getFeatures([], null, TestFramework.KOTEST, BuildTool.MAVEN)
-
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .testFramework(TestFramework.KOTEST)
+                .render()
 
         then:
         template.contains('''

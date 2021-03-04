@@ -1,19 +1,20 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class PostgreSQLSpec extends BeanContextSpec {
+class PostgreSQLSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle postgres feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), false).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['postgres'])
+                .language(language)
+                .render()
         then:
         template.contains('runtimeOnly("org.postgresql:postgresql")')
 
@@ -24,7 +25,10 @@ class PostgreSQLSpec extends BeanContextSpec {
     @Unroll
     void 'test maven postgres feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['postgres'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['postgres'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""

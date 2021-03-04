@@ -1,18 +1,17 @@
 package io.micronaut.starter.feature.test
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
+class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
     AssertJ assertj = beanContext.getBean(AssertJ)
@@ -35,8 +34,11 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle assertj feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'],
-                language, TestFramework.JUNIT), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['assertj'])
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .render()
 
         then:
         template.contains('testImplementation("org.assertj:assertj-core")')
@@ -48,8 +50,11 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle assertj feature fails for language=#language when test framework is not Junit'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'], language, testfw),
-                false).render().toString()
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['assertj'])
+                .language(language)
+                .testFramework(testfw)
+                .render()
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -68,8 +73,11 @@ class AssertJSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven assertj feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['assertj'], language,
-                TestFramework.JUNIT), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['assertj'])
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .render()
 
         then:
         template.contains("""

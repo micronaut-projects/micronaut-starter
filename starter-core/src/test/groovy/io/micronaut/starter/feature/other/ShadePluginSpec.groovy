@@ -1,35 +1,20 @@
-package io.micronaut.starter.feature.grpc
+package io.micronaut.starter.feature.other
 
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Shared
-import spock.lang.Subject
 import spock.lang.Unroll
 
-class GrpcSpec extends ApplicationContextSpec {
-
-    @Shared
-    @Subject
-    Grpc grpc = beanContext.getBean(Grpc)
-
-    void "grpc belongs to API category"() {
-        expect:
-        Category.API == grpc.category
-    }
+class ShadePluginSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test grpc plugin is applied by default for Gradle and language=#language'(Language language) {
+    void 'test shade plugin is applied by default for Gradle and language=#language'(Language language) {
         given:
-        String pluginId = 'com.google.protobuf'
-
+        String pluginId = 'com.github.johnrengelman.shadow'
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .applicationType(ApplicationType.GRPC)
                 .language(language)
                 .render()
 

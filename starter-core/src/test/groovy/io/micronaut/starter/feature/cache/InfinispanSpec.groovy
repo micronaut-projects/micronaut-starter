@@ -1,15 +1,14 @@
 package io.micronaut.starter.feature.cache
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class InfinispanSpec extends BeanContextSpec  implements CommandOutputFixture {
+class InfinispanSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature cache-infinispan contains links to micronaut docs'() {
         when:
@@ -25,7 +24,10 @@ class InfinispanSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle cache-infinispan feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-infinispan'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['cache-infinispan'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.cache:micronaut-cache-infinispan")')
@@ -37,7 +39,10 @@ class InfinispanSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven cache-infinispan feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-infinispan'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['cache-infinispan'])
+                .render()
 
         then:
         template.contains("""

@@ -1,9 +1,8 @@
 package io.micronaut.starter.feature.graalvm
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -16,7 +15,7 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @Requires({ jvm.isJava8() || jvm.isJava11() })
-class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
+class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Subject
     @Shared
@@ -33,7 +32,10 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for groovy and gradle'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), false).render().toString()
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['graalvm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         IllegalArgumentException e = thrown()
@@ -42,7 +44,9 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test maven graalvm feature doesn't add dependencies and processor defined in parent pom"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(["graalvm"])
+                .render()
 
         then:
         !template.contains("""
@@ -74,7 +78,10 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .features(["graalvm"])
+                .render()
 
         then:
         !template.contains("""
@@ -101,7 +108,10 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'graalvm feature not supported for Groovy and maven'() {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["graalvm"], Language.GROOVY), []).render().toString()
+        new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.GROOVY)
+                .features(["graalvm"])
+                .render()
 
         then:
         IllegalArgumentException e = thrown()
@@ -112,9 +122,9 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'it is not possible to use graalvm with JDK versions different than JDK8 through JDK11'(JdkVersion jdkVersion) {
         when:
         generate(
-            ApplicationType.DEFAULT,
-            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-            ['graalvm']
+                ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                ['graalvm']
         )
 
         then:
@@ -129,9 +139,9 @@ class GraalVMSpec extends BeanContextSpec implements CommandOutputFixture {
     void 'Application file is generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(
-            ApplicationType.DEFAULT,
-            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-            ['graalvm', 'aws-lambda']
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                ['graalvm', 'aws-lambda']
         )
 
         then:

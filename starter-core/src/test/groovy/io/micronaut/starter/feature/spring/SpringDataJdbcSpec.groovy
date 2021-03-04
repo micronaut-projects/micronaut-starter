@@ -1,17 +1,17 @@
 package io.micronaut.starter.feature.spring
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringDataJdbcSpec extends BeanContextSpec {
+class SpringDataJdbcSpec extends ApplicationContextSpec {
 
     @Shared
     @Subject
@@ -55,7 +55,10 @@ class SpringDataJdbcSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-data-jdbc with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['spring-data-jdbc'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.data:micronaut-data-spring")')
@@ -68,7 +71,10 @@ class SpringDataJdbcSpec extends BeanContextSpec {
     @Unroll
     void 'test maven spring-data-jdbc feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-data-jdbc'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""

@@ -1,22 +1,38 @@
 package io.micronaut.starter.feature.asciidoctor
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class AsciidoctorSpec extends BeanContextSpec {
+class AsciidoctorSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle asciidoctor feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['asciidoctor'])
+                .render()
 
         then:
-        template.contains('id("org.asciidoctor.jvm.convert")')
         template.contains("apply from: \"gradle/asciidoc.gradle\"")
+
+        when:
+        String pluginId = 'org.asciidoctor.jvm.convert'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
 
         where:
         language << Language.values().toList()
@@ -25,7 +41,10 @@ class AsciidoctorSpec extends BeanContextSpec {
     @Unroll
     void 'test maven asciidoctor feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['asciidoctor'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['asciidoctor'])
+                .render()
 
         then:
         template.contains("""
