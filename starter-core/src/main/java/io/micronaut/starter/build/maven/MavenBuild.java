@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.build.Coordinate;
 import io.micronaut.starter.build.Property;
 
@@ -23,6 +24,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class MavenBuild {
+
+    private final MavenCombineAttribute annotationProcessorCombineAttribute;
+
+    private final MavenCombineAttribute testAnnotationProcessorCombineAttribute;
 
     private final List<? extends Coordinate> testAnnotationProcessors;
 
@@ -33,17 +38,21 @@ public class MavenBuild {
     private final List<Property> properties;
 
     public MavenBuild() {
-        this(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+        this(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), MavenCombineAttribute.CHILDREN_APPEND, MavenCombineAttribute.CHILDREN_APPEND);
     }
 
     public MavenBuild(@NonNull List<? extends Coordinate> annotationProcessors,
                       @NonNull List<? extends Coordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
-                      @NonNull List<Property> properties) {
+                      @NonNull List<Property> properties,
+                      @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
+                      @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute) {
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
         this.dependencies = dependencies;
         this.properties = properties;
+        this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
+        this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
     }
 
     @NonNull
@@ -64,5 +73,13 @@ public class MavenBuild {
     @NonNull
     public List<Property> getProperties() {
         return properties;
+    }
+
+    public MavenCombineAttribute getAnnotationProcessorCombineAttribute() {
+        return annotationProcessorCombineAttribute;
+    }
+
+    public MavenCombineAttribute getTestAnnotationProcessorCombineAttribute() {
+        return testAnnotationProcessorCombineAttribute;
     }
 }

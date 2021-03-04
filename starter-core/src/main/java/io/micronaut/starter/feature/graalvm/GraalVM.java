@@ -16,8 +16,11 @@
 package io.micronaut.starter.feature.graalvm;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 
@@ -49,4 +52,10 @@ public class GraalVM implements Feature {
         return Category.PACKAGING;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN) {
+            generatorContext.addAnnotationProcessor("io.micronaut", "micronaut-graal", "${micronaut.version}");
+        }
+    }
 }

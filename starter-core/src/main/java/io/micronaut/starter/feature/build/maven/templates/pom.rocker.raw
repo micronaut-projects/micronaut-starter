@@ -841,27 +841,8 @@ MavenBuild mavenBuild
         <configuration>
           <!-- Uncomment to enable incremental compilation -->
           <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-@if (features.contains("lombok")) {
-          <annotationProcessorPaths combine.self="override">
-            <path>
-              <!-- must precede micronaut-inject-java -->
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-inject-java</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-            <path>
-              <groupId>io.micronaut</groupId>
-              <artifactId>micronaut-validation</artifactId>
-              <version>${micronaut.version}</version>
-            </path>
-} else {
-          <annotationProcessorPaths combine.children="append">
-}
+
+          <annotationProcessorPaths @mavenBuild.getAnnotationProcessorCombineAttribute()>
 @for (processor : mavenBuild.getAnnotationProcessors()) {
             <path>
               <groupId>@processor.getGroupId()</groupId>
@@ -869,7 +850,6 @@ MavenBuild mavenBuild
               <version>@processor.getVersion()</version>
             </path>
 }
-
           </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Amicronaut.processing.group=@project.getPackageName()</arg>
@@ -904,30 +884,13 @@ MavenBuild mavenBuild
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
               </sourceDirs>
-              <annotationProcessorPaths combine.children="append">
+              <annotationProcessorPaths @mavenBuild.getAnnotationProcessorCombineAttribute()>
 @for (processor : mavenBuild.getAnnotationProcessors()) {
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
                  <version>@processor.getVersion()</version>
                </annotationProcessorPath>
-}
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-@if (features.contains("graalvm")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-graal</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
 }
               </annotationProcessorPaths>
               <annotationProcessorArgs>
@@ -960,30 +923,13 @@ MavenBuild mavenBuild
               <sourceDirs>
                 <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
               </sourceDirs>
-              <annotationProcessorPaths>
+              <annotationProcessorPaths @mavenBuild.getTestAnnotationProcessorCombineAttribute()>
 @for (processor : mavenBuild.getTestAnnotationProcessors()) {
                <annotationProcessorPath>
                  <groupId>@processor.getGroupId()</groupId>
                  <artifactId>@processor.getArtifactId()</artifactId>
                  <version>@processor.getVersion()</version>
                </annotationProcessorPath>
-}
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
-@if (features.contains("graalvm")) {
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-graal</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
 }
               </annotationProcessorPaths>
             </configuration>

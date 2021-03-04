@@ -1,9 +1,11 @@
 package io.micronaut.starter.feature.build.maven
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.maven.MavenBuild
+import io.micronaut.starter.build.maven.MavenCombineAttribute
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.options.BuildTool
@@ -25,7 +27,7 @@ class MavenSpec extends BeanContextSpec {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties()),
+                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties(), MavenCombineAttribute.CHILDREN_APPEND, MavenCombineAttribute.CHILDREN_APPEND),
         ).render().toString()
 
         then: 'parent pom is used'
@@ -62,8 +64,7 @@ class MavenSpec extends BeanContextSpec {
 
     void 'test annotation processor dependencies'() {
         when:
-        Features features = getFeatures([], null, null, BuildTool.MAVEN)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, new MavenBuild()).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN).render()
 
         then:
         template.contains('''
@@ -72,28 +73,30 @@ class MavenSpec extends BeanContextSpec {
 ''')
 
         when:
-        features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, new MavenBuild()).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .render()
 
         then:
-        template.contains("""
-              <annotationProcessorPaths>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>\${micronaut.version}</version>
-                </annotationProcessorPath>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>\${micronaut.version}</version>
-                </annotationProcessorPath>
+        template.contains('''\
+              <annotationProcessorPaths combine.children="append">
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-inject-java</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-validation</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
               </annotationProcessorPaths>
-""")
+''')
 
         when:
-        features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, new MavenBuild()).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('''

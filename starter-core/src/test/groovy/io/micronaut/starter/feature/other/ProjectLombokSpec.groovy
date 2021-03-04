@@ -71,15 +71,14 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
 //    <lombok.version>1.18.16</lombok.version>
 //""")
         // make sure lombok is before inject-java or it won't work
-        template.contains("""
+        template.contains('''\
           <annotationProcessorPaths combine.self="override">
             <path>
-              <!-- must precede micronaut-inject-java -->
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>\${lombok.version}</version>
+              <version>${lombok.version}</version>
             </path>
-""")
+''')
         template.contains("""
     <dependency>
       <groupId>org.projectlombok</groupId>

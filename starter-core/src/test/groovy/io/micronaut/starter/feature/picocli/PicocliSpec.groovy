@@ -57,14 +57,14 @@ class PicocliSpec extends ApplicationContextSpec {
               <artifactId>micronaut-inject-java</artifactId>
               <version>${micronaut.version}</version>
             </path>
-''') == 0
+''') == 1
         template.count('''\
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-validation</artifactId>
               <version>${micronaut.version}</version>
             </path>
-''') == 0
+''') == 1
         template.count('''\
     <dependency>
       <groupId>info.picocli</groupId>
@@ -100,18 +100,18 @@ class PicocliSpec extends ApplicationContextSpec {
                </annotationProcessorPath>
 ''') == 1
         template.count('''\
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-inject-java</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
 ''') == 2
         template.count('''\
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>${micronaut.version}</version>
-                </annotationProcessorPath>
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-validation</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
 ''') == 2
         template.count('''\
     <dependency>

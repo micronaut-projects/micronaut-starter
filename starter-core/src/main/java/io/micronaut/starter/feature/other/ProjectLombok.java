@@ -69,9 +69,7 @@ public class ProjectLombok implements LanguageSpecificFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addAnnotationProcessorLookup("lombok", Ordered.HIGHEST_PRECEDENCE);
-        }
+        generatorContext.addAnnotationProcessor("org.projectlombok", "lombok", "${lombok.version}", Ordered.HIGHEST_PRECEDENCE);
         generatorContext.addCompileOnlyDependency("org.projectlombok", "lombok");
     }
 }
