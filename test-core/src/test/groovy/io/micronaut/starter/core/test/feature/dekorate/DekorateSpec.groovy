@@ -40,7 +40,6 @@ class DekorateSpec extends CommandSpec {
     }
 
     @Unroll
-    @IgnoreIf({ feature.name == "dekorate-halkyon" })
     void "test maven dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [feature.getName()])

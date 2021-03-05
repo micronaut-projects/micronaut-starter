@@ -23,7 +23,6 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    @IgnoreIf({ feature.name == "dekorate-halkyon" })
     void 'test gradle dekorate #feature.name feature with for #language' (Feature feature, Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -48,7 +47,6 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
-    @IgnoreIf({ feature.name == "dekorate-halkyon" })
     void 'test maven dekorate #feature.name for #language' (Feature feature, Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
