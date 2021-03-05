@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.logging.template.log4j2;
 import io.micronaut.starter.template.RockerTemplate;
 
@@ -42,9 +43,9 @@ public class Log4j2 implements LoggingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependencyLookup("log4j-core");
-        generatorContext.addRuntimeDependencyLookup("log4j-api");
-        generatorContext.addRuntimeDependencyLookup("log4j-slf4j-impl");
+        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-core").compile());
+        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-api").runtime());
+        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-slf4j-impl").runtime());
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(generatorContext.getProject())));
     }
 

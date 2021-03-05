@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
@@ -57,7 +58,11 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("io.micronaut.data", "micronaut-data-processor", "${micronaut.data.version}");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-processor")
+                .version("${micronaut.data.version}")
+                .annotationProcessor());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }

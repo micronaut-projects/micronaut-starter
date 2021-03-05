@@ -63,9 +63,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addGradlePluginLookup("com.microsoft.azure.azurefunctions", "azure-functions-gradle-plugin");
-        }
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         ApplicationType type = generatorContext.getApplicationType();
         generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));

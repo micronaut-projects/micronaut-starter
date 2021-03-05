@@ -1,12 +1,8 @@
-@import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.database.DatabaseDriverFeature
 @import io.micronaut.starter.feature.database.MongoFeature
-@import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.build.Coordinate
 @import io.micronaut.starter.build.gradle.GradleConfiguration
 @import io.micronaut.starter.build.gradle.GradleDependency
 @import java.util.stream.Collectors

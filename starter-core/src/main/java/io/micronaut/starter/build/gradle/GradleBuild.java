@@ -20,25 +20,21 @@ import java.util.Collections;
 import java.util.List;
 
 public class GradleBuild {
+
     @NonNull
     private final GradleDsl dsl;
 
     @NonNull
     private final List<GradleDependency> dependencies;
 
-    @NonNull
-    private final List<GradlePlugin> plugins;
-
     public GradleBuild() {
-        this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList());
+        this(GradleDsl.GROOVY, Collections.emptyList());
     }
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
-                       @NonNull List<GradleDependency> dependencies,
-                       @NonNull List<GradlePlugin> plugins) {
+                       @NonNull List<GradleDependency> dependencies) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
-        this.plugins = plugins;
     }
 
     @NonNull
@@ -51,8 +47,4 @@ public class GradleBuild {
         return dependencies;
     }
 
-    @NonNull
-    public List<GradlePlugin> getPlugins() {
-        return plugins;
-    }
 }

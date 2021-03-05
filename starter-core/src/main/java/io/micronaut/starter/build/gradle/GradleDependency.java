@@ -17,28 +17,41 @@ package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.starter.build.MavenCoordinate;
+import io.micronaut.core.order.OrderUtil;
+import io.micronaut.core.order.Ordered;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 
-public class GradleDependency extends MavenCoordinate {
+import java.util.Comparator;
+import java.util.Objects;
+
+public class GradleDependency extends DependencyCoordinate {
+
+    public static Comparator<GradleDependency> COMPARATOR = (o1, o2) -> {
+        int comparison = OrderUtil.COMPARATOR.compare(o1, o2);
+        if (comparison != 0) {
+            return comparison;
+        }
+        comparison = Integer.compare(o1.getConfiguration().getOrder(), o2.getConfiguration().getOrder());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return Coordinate.COMPARATOR.compare(o1, o2);
+    };
+
     @NonNull
     private GradleConfiguration gradleConfiguration;
 
-    public GradleDependency(@NonNull GradleConfiguration gradleConfiguration, @NonNull String groupId, @NonNull String artifactId, @Nullable String version) {
-        this(gradleConfiguration, groupId, artifactId, version, 0);
-    }
-
-    public GradleDependency(@NonNull GradleConfiguration gradleConfiguration, @NonNull String groupId, @NonNull String artifactId, @Nullable String version, int order) {
-        super(groupId, artifactId, version, order);
-        this.gradleConfiguration = gradleConfiguration;
+    public GradleDependency(@NonNull Dependency dependency) {
+        super(dependency);
+        this.gradleConfiguration = GradleConfiguration.of(dependency.getScope()).orElseThrow(() ->
+                new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
     }
 
     @NonNull
     public GradleConfiguration getConfiguration() {
         return gradleConfiguration;
-    }
-
-    public void setGradleConfiguration(@NonNull GradleConfiguration gradleConfiguration) {
-        this.gradleConfiguration = gradleConfiguration;
     }
 
     @Override
@@ -52,10 +65,9 @@ public class GradleDependency extends MavenCoordinate {
         if (!super.equals(o)) {
             return false;
         }
-
         GradleDependency that = (GradleDependency) o;
 
-        return gradleConfiguration == that.gradleConfiguration;
+        return Objects.equals(gradleConfiguration, that.gradleConfiguration);
     }
 
     @Override

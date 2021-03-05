@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.dekorate;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -59,7 +60,12 @@ public class DekorateOpenshift extends AbstractDekoratePlatformFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("io.dekorate", "openshift-annotations", "${dekorate.version}");
-        generatorContext.addDependency("io.dekorate", "openshift-annotations");
+        Dependency.Builder openshift = Dependency.builder()
+                .groupId("io.dekorate")
+                .artifactId("openshift-annotations")
+                .template();
+
+        generatorContext.addDependency(openshift.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(openshift.compile());
     }
 }

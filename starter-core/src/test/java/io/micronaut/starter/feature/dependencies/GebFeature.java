@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.dependencies;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.TestFramework;
 import org.jetbrains.annotations.NotNull;
@@ -29,11 +30,11 @@ public class GebFeature implements Feature {
     @Override
     public void apply(GeneratorContext context) {
         if (context.getTestFramework() == TestFramework.JUNIT) {
-            context.addTestDependencyLookup("geb-junit5");
+            context.addDependency(Dependency.builder().lookupArtifactId("geb-junit5").test());
         } else if (context.getTestFramework() == TestFramework.SPOCK) {
-            context.addTestDependencyLookup("geb-spock");
+            context.addDependency(Dependency.builder().lookupArtifactId("geb-spock").test());
         }
-        context.addTestRuntimeDependencyLookup("selenium-firefox-driver");
-        context.addTestRuntimeDependencyLookup("selenium-support");
+        context.addDependency(Dependency.builder().lookupArtifactId("selenium-firefox-driver").testRuntime());
+        context.addDependency(Dependency.builder().lookupArtifactId("selenium-support").testRuntime());
     }
 }

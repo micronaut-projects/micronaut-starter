@@ -16,27 +16,32 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.order.Ordered;
 
 import java.util.Objects;
 
-public class DependencyLookup implements Ordered {
+@Introspected
+public class DependencyCoordinate implements Coordinate, Ordered {
 
-    @NonNull
-    private Scope scope;
+    private final String groupId;
+    private final String artifactId;
+    @Nullable
+    private final String version;
+    private final int order;
 
-    @NonNull
-    private String artifactId;
-
-    private int order;
-
-    public DependencyLookup(@NonNull Scope scope, @NonNull String artifactId) {
-        this(scope, artifactId, 0);
+    public DependencyCoordinate(Dependency dependency) {
+        this.groupId = dependency.getGroupId();
+        this.artifactId = dependency.getArtifactId();
+        this.version = dependency.getVersion();
+        this.order = dependency.getOrder();
     }
 
-    public DependencyLookup(@NonNull Scope scope, @NonNull String artifactId, int order) {
-        this.scope = scope;
+    public DependencyCoordinate(String groupId, String artifactId, @Nullable String version, int order) {
+        this.groupId = groupId;
         this.artifactId = artifactId;
+        this.version = version;
         this.order = order;
     }
 
@@ -45,26 +50,22 @@ public class DependencyLookup implements Ordered {
         return order;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    @NonNull
+    @Override
+    public String getGroupId() {
+        return groupId;
     }
 
     @NonNull
-    public Scope getScope() {
-        return scope;
-    }
-
-    public void setScope(@NonNull Scope scope) {
-        this.scope = scope;
-    }
-
-    @NonNull
+    @Override
     public String getArtifactId() {
         return artifactId;
     }
 
-    public void setArtifactId(@NonNull String artifactId) {
-        this.artifactId = artifactId;
+    @Nullable
+    @Override
+    public String getVersion() {
+        return version;
     }
 
     @Override
@@ -75,12 +76,16 @@ public class DependencyLookup implements Ordered {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        DependencyLookup that = (DependencyLookup) o;
-        return scope.equals(that.scope) && artifactId.equals(that.artifactId);
+        DependencyCoordinate that = (DependencyCoordinate) o;
+
+        return Objects.equals(getGroupId(), that.getGroupId()) &&
+                Objects.equals(getArtifactId(), that.getArtifactId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(scope, artifactId);
+        int result = getGroupId().hashCode();
+        result = 31 * result + getArtifactId().hashCode();
+        return result;
     }
 }

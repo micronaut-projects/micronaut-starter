@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import javax.inject.Singleton;
@@ -41,8 +42,14 @@ public class Spring implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("io.micronaut.spring", "micronaut-spring-annotation", "${micronaut.spring.version}");
-        generatorContext.addTestAnnotationProcessor("io.micronaut.spring", "micronaut-spring-annotation", "${micronaut.spring.version}");
+        Dependency.Builder springAnnotation = Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-annotation")
+                .version("${micronaut.spring.version}")
+                .template();
+
+        generatorContext.addDependency(springAnnotation.annotationProcessor());
+        generatorContext.addDependency(springAnnotation.testAnnotationProcessor());
     }
 
     @Override

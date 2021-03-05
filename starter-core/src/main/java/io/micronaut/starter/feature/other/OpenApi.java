@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -47,8 +48,15 @@ public class OpenApi implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("io.micronaut.openapi", "micronaut-openapi", "${micronaut.openapi.version}");
-        generatorContext.addDependency("io.swagger.core.v3", "swagger-annotations");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.openapi")
+                .artifactId("micronaut-openapi")
+                .version("${micronaut.openapi.version}")
+                .annotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.swagger.core.v3")
+                .artifactId("swagger-annotations")
+                .compile());
     }
 
     @Override

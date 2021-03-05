@@ -18,8 +18,6 @@ package io.micronaut.starter.build.dependencies;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.build.Coordinate;
-import io.micronaut.starter.build.MavenCoordinate;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,7 +36,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Singleton
-public class PomDependencyVersionResolver implements DependencyVersionResolver {
+public class PomDependencyVersionResolver implements CoordinateResolver {
 
     private static final String NODE_NAME_TEXT = "#text";
     private Map<String, Coordinate> coordinates;
@@ -76,8 +74,8 @@ public class PomDependencyVersionResolver implements DependencyVersionResolver {
                         }
                     }
                     if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
-                        MavenCoordinate mavenCoordinate = new MavenCoordinate(groupId, artifactId, version);
-                        coordinates.put(mavenCoordinate.getArtifactId(), mavenCoordinate);
+                        DependencyCoordinate dependencyCoordinate = Dependency.builder().groupId(groupId).artifactId(artifactId).version(version).buildCoordinate();
+                        coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
                     }
                 }
             } catch (IOException | SAXException | ParserConfigurationException e) {
@@ -89,7 +87,7 @@ public class PomDependencyVersionResolver implements DependencyVersionResolver {
 
     @Override
     @NonNull
-    public Optional<Coordinate> findByArtifactId(@NonNull String artifactId) {
+    public Optional<Coordinate> resolve(@NonNull String artifactId) {
         return Optional.ofNullable(coordinates.get(artifactId));
     }
 

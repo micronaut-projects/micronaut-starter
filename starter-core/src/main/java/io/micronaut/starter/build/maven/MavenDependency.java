@@ -17,30 +17,37 @@ package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.starter.build.MavenCoordinate;
+import io.micronaut.core.order.OrderUtil;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 
-public class MavenDependency extends MavenCoordinate {
+import java.util.Comparator;
+
+public class MavenDependency extends DependencyCoordinate {
+
+    public static Comparator<MavenDependency> COMPARATOR = (o1, o2) -> {
+        int comparison = OrderUtil.COMPARATOR.compare(o1, o2);
+        if (comparison != 0) {
+            return comparison;
+        }
+        comparison = Integer.compare(o1.getMavenScope().getOrder(), o2.getMavenScope().getOrder());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return DependencyCoordinate.COMPARATOR.compare(o1, o2);
+    };
 
     @NonNull
     private MavenScope mavenScope;
 
-    public MavenDependency(@NonNull MavenScope scope, @NonNull String artifactId, @NonNull String groupId, @Nullable String version) {
-        super(artifactId, groupId, version);
-        this.mavenScope = scope;
-    }
-
-    public MavenDependency(@NonNull MavenScope scope, @NonNull String artifactId, @NonNull String groupId, @Nullable String version, int order) {
-        super(artifactId, groupId, version, order);
-        this.mavenScope = scope;
-
+    public MavenDependency(@NonNull Dependency dependency) {
+        super(dependency);
+        this.mavenScope = MavenScope.of(dependency.getScope()).orElseThrow(() ->
+                new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));;
     }
 
     public MavenScope getMavenScope() {
         return this.mavenScope;
-    }
-
-    public void setMavenScope(@NonNull MavenScope mavenScope) {
-        this.mavenScope = mavenScope;
     }
 
     @Override

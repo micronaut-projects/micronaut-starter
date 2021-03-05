@@ -7,9 +7,7 @@
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.gradle.GradleBuild
 @import io.micronaut.starter.build.gradle.GradleDsl
-@import io.micronaut.starter.build.gradle.CommunityGradlePlugin
-@import io.micronaut.starter.build.gradle.CoreGradlePlugin
-@import io.micronaut.starter.build.gradle.GradlePlugin
+
 @args (
 ApplicationType applicationType,
 Project project,
@@ -21,15 +19,7 @@ GradleBuild gradleBuild
 import com.google.protobuf.gradle.*
 }
 
-plugins {
-@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
-    @if (gradlePlugin instanceof CommunityGradlePlugin) {
-        id("@gradlePlugin.getId()") version "@(((CommunityGradlePlugin)gradlePlugin).getVersion())"
-    } else if (gradlePlugin instanceof CoreGradlePlugin) {
-        id("@gradlePlugin.getId()")
-    }
-}
-}
+@gradlePlugins.template(applicationType, project, features)
 
 version = "0.1"
 group = "@project.getPackageName()"

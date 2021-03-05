@@ -17,6 +17,7 @@ package io.micronaut.starter.application;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -34,9 +35,12 @@ import java.util.*;
 public class ContextFactory {
 
     private final FeatureValidator featureValidator;
+    private final DefaultCoordinateResolver coordinateResolver;
 
-    public ContextFactory(FeatureValidator featureValidator) {
+    public ContextFactory(FeatureValidator featureValidator,
+                          DefaultCoordinateResolver coordinateResolver) {
         this.featureValidator = featureValidator;
+        this.coordinateResolver = coordinateResolver;
     }
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
@@ -77,7 +81,7 @@ public class ContextFactory {
 
         featureValidator.validatePostProcessing(featureContext.getOptions(), featureContext.getApplicationType(), featureList);
 
-        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList);
+        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList, coordinateResolver);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {

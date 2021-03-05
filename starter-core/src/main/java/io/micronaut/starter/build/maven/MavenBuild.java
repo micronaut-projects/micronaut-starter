@@ -16,8 +16,7 @@
 package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
-import io.micronaut.starter.build.Coordinate;
+import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.Property;
 
 import java.util.Collections;
@@ -29,20 +28,20 @@ public class MavenBuild {
 
     private final MavenCombineAttribute testAnnotationProcessorCombineAttribute;
 
-    private final List<? extends Coordinate> testAnnotationProcessors;
+    private final List<Coordinate> testAnnotationProcessors;
 
-    private final List<? extends Coordinate> annotationProcessors;
+    private final List<Coordinate> annotationProcessors;
 
     private final List<MavenDependency> dependencies;
 
     private final List<Property> properties;
 
     public MavenBuild() {
-        this(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), MavenCombineAttribute.CHILDREN_APPEND, MavenCombineAttribute.CHILDREN_APPEND);
+        this(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND);
     }
 
-    public MavenBuild(@NonNull List<? extends Coordinate> annotationProcessors,
-                      @NonNull List<? extends Coordinate> testAnnotationProcessors,
+    public MavenBuild(@NonNull List<Coordinate> annotationProcessors,
+                      @NonNull List<Coordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
@@ -56,12 +55,12 @@ public class MavenBuild {
     }
 
     @NonNull
-    public List<? extends Coordinate> getAnnotationProcessors() {
+    public List<Coordinate> getAnnotationProcessors() {
         return annotationProcessors;
     }
 
     @NonNull
-    public List<? extends Coordinate> getTestAnnotationProcessors() {
+    public List<Coordinate> getTestAnnotationProcessors() {
         return testAnnotationProcessors;
     }
 
@@ -79,6 +78,7 @@ public class MavenBuild {
         return annotationProcessorCombineAttribute;
     }
 
+    @NonNull
     public MavenCombineAttribute getTestAnnotationProcessorCombineAttribute() {
         return testAnnotationProcessorCombineAttribute;
     }

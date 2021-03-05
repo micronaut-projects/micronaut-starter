@@ -57,14 +57,14 @@ class PicocliSpec extends ApplicationContextSpec {
               <artifactId>micronaut-inject-java</artifactId>
               <version>${micronaut.version}</version>
             </path>
-''') == 1
+''') == 0
         template.count('''\
             <path>
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-validation</artifactId>
               <version>${micronaut.version}</version>
             </path>
-''') == 1
+''') == 0
         template.count('''\
     <dependency>
       <groupId>info.picocli</groupId>
@@ -105,14 +105,14 @@ class PicocliSpec extends ApplicationContextSpec {
                  <artifactId>micronaut-inject-java</artifactId>
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 0
         template.count('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
                  <artifactId>micronaut-validation</artifactId>
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 0
         template.count('''\
     <dependency>
       <groupId>info.picocli</groupId>

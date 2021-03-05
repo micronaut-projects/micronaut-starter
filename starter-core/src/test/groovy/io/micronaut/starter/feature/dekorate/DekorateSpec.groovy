@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -22,6 +23,7 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
+    @IgnoreIf({ feature.name == "dekorate-halkyon" })
     void 'test gradle dekorate #feature.name feature with for #language' (Feature feature, Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -46,6 +48,7 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
     }
 
     @Unroll
+    @IgnoreIf({ feature.name == "dekorate-halkyon" })
     void 'test maven dekorate #feature.name for #language' (Feature feature, Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -60,7 +63,6 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
     <dependency>
       <groupId>io.dekorate</groupId>
       <artifactId>%s-annotations</artifactId>
-      <version>\${dekorate.version}</version>
       <scope>compile</scope>
     </dependency>""", service))
 

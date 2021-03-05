@@ -25,84 +25,12 @@ import java.util.Collections;
 public interface DependencyContext {
 
     @NonNull
-    Collection<DependencyLookup> getDependencyLookups();
+    Collection<Dependency> getDependencies();
 
-    @NonNull
-    Collection<ScopedDependency> getDependencies();
+    void addDependency(Dependency dependency);
 
-    void addDependencyLookup(@NonNull DependencyLookup dependencyLookup);
-
-    void addDependency(@NonNull ScopedDependency dependency);
-
-    default void addDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)), artifactId));
+    default void addDependency(Dependency.Builder dependency) {
+        addDependency(dependency.build());
     }
 
-    default void addDependency(@NonNull String groupId, @NonNull String artifactId) {
-        addDependency(groupId, artifactId, null);
-    }
-
-    default void addDependency(@NonNull String groupId, @NonNull String artifactId, @Nullable String version) {
-        addScopedDependency(new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)), groupId, artifactId, version);
-    }
-
-    default void addScopedDependency(@NonNull Scope scope, @NonNull String groupId, @NonNull String artifactId, @Nullable String version) {
-        addDependency(new ScopedDependency(scope, groupId, artifactId, version));
-    }
-
-    default void addCompileOnlyDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION)), artifactId));
-    }
-
-    default void addCompileOnlyDependency(@NonNull String groupId, @NonNull String artifactId) {
-        addScopedDependency(new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION)), groupId, artifactId, null);
-    }
-
-    default void addRuntimeDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME)), artifactId));
-    }
-
-    default void addRuntimeDependency(@NonNull String groupId, @NonNull String artifactId) {
-        addRuntimeDependency(groupId, artifactId, null);
-    }
-
-    default void addRuntimeDependency(@NonNull String groupId, @NonNull String artifactId, @Nullable String version) {
-        addScopedDependency(new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME)), groupId, artifactId, version);
-    }
-
-    default void addTestDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)), artifactId));
-    }
-
-    default void addTestCompileOnlyDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION)), artifactId));
-    }
-
-    default void addTestRuntimeDependencyLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME)), artifactId));
-    }
-
-    default void addAnnotationProcessorLookup(@NonNull String artifactId) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)), artifactId));
-    }
-
-    default void addAnnotationProcessorLookup(@NonNull String artifactId, int order) {
-        addDependencyLookup(new DependencyLookup(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)), artifactId, order));
-    }
-
-    default void addAnnotationProcessor(@NonNull String artifactId, @NonNull String groupId, @NonNull String version) {
-        addAnnotationProcessor(artifactId, groupId, version, 0);
-    }
-
-    default void addAnnotationProcessor(@NonNull String artifactId, @NonNull String groupId, @NonNull String version, int order) {
-        addDependency(new ScopedDependency(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)), artifactId, groupId, version, order));
-    }
-
-    default void addTestAnnotationProcessor(@NonNull String artifactId, @NonNull String groupId, @NonNull String version) {
-        addTestAnnotationProcessor(artifactId, groupId, version, 0);
-    }
-
-    default void addTestAnnotationProcessor(@NonNull String artifactId, @NonNull String groupId, @NonNull String version, int order) {
-        addDependency(new ScopedDependency(new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING)), artifactId, groupId, version, order));
-    }
 }

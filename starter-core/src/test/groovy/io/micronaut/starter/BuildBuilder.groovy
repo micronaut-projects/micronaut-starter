@@ -5,6 +5,7 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradleBuildCreator
 import io.micronaut.starter.build.maven.MavenBuild
@@ -114,7 +115,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {
-        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features)
+        GeneratorContext ctx = new GeneratorContext(project, type, options, null, features.features, ctx.getBean(CoordinateResolver))
         features.features.each {feat -> feat.apply(ctx)}
         ctx
     }

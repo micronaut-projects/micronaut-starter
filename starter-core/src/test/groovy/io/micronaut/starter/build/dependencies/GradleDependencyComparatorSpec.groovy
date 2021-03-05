@@ -2,7 +2,6 @@ package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.build.gradle.GradleConfiguration
 import io.micronaut.starter.build.gradle.GradleDependency
-import io.micronaut.starter.build.gradle.GradleDependencyComparator
 import spock.lang.Specification
 
 class GradleDependencyComparatorSpec extends Specification {
@@ -10,22 +9,22 @@ class GradleDependencyComparatorSpec extends Specification {
     void "sort based on gradle configuration"() {
         given:
         List<GradleDependency> dependencies = [
-                dep(GradleConfiguration.IMPLEMENTATION, "io.micronaut:micronaut-validation"),
-                dep(GradleConfiguration.IMPLEMENTATION, "io.swagger.core.v3:swagger-annotations"),
-                dep(GradleConfiguration.IMPLEMENTATION, "io.micronaut:micronaut-runtime"),
-                dep(GradleConfiguration.IMPLEMENTATION, "javax.annotation:javax.annotation-api"),
-                dep(GradleConfiguration.IMPLEMENTATION, "io.micronaut:micronaut-http-client"),
-                dep(GradleConfiguration.ANNOTATION_PROCESSOR, "io.micronaut.openapi:micronaut-openapi"),
-                dep(GradleConfiguration.IMPLEMENTATION, "io.micronaut.sql:micronaut-jdbc-hikari"),
-                dep(GradleConfiguration.TEST_IMPLEMENTATION, "org.testcontainers:testcontainers"),
-                dep(GradleConfiguration.RUNTIME_ONLY, "mysql:mysql-connector-java"),
-                dep(GradleConfiguration.TEST_IMPLEMENTATION, "org.testcontainers:junit-jupiter"),
-                dep(GradleConfiguration.TEST_IMPLEMENTATION, "org.testcontainers:mysql"),
-                dep(GradleConfiguration.RUNTIME_ONLY, "ch.qos.logback:logback-classic"),
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-validation").compile()),
+                dep(Dependency.builder().groupId("io.swagger.core.v3").artifactId("swagger-annotations").compile()),
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-runtime").compile()),
+                dep(Dependency.builder().groupId("javax.annotation").artifactId("javax.annotation-api").compile()),
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-http-client").compile()),
+                dep(Dependency.builder().groupId("io.micronaut.openapi").artifactId("micronaut-openapi").annotationProcessor()),
+                dep(Dependency.builder().groupId("io.micronaut.sql").artifactId("micronaut-jdbc-hikari").compile()),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("testcontainers").test()),
+                dep(Dependency.builder().groupId("mysql").artifactId("mysql-connector-java").runtime()),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("junit-jupiter").test()),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("mysql").test()),
+                dep(Dependency.builder().groupId("ch.qos.logback").artifactId("logback-classic").runtime())
         ]
 
         when:
-        dependencies.sort(new GradleDependencyComparator())
+        dependencies.sort(GradleDependency.COMPARATOR)
 
         then:
         "${str(dependencies[0])}" == 'annotationProcessor("io.micronaut.openapi:micronaut-openapi")'
@@ -46,7 +45,7 @@ class GradleDependencyComparatorSpec extends Specification {
         "${dependency.getConfiguration().toString()}(\"${dependency.groupId}:${dependency.artifactId}\")"
     }
 
-    private static GradleDependency dep(GradleConfiguration configuration, String coordinate) {
-        new GradleDependency(configuration, coordinate.split(":")[0] as String, coordinate.split(":")[1] as String, null)
+    private static GradleDependency dep(Dependency.Builder dependency) {
+        new GradleDependency(dependency.build())
     }
 }

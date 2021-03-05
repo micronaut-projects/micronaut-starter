@@ -17,22 +17,35 @@ package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.order.OrderUtil;
 
-import java.util.Optional;
+import java.util.Comparator;
 
-public interface PropertiesResolver {
-    String PROPERTY_PREFIX = "${";
-    String PROPERTY_SUFFIX = ".version}";
-    String CLOSE_BRACKET = "}";
+@Introspected
+public interface Coordinate {
 
-    Optional<String> resolve(@NonNull String key);
-
-    default Optional<String> getPropertyKey(@Nullable String version) {
-        if (version != null &&
-                version.startsWith(PROPERTY_PREFIX) &&
-                version.endsWith(PROPERTY_SUFFIX)) {
-            return Optional.of(version.substring(version.indexOf(PROPERTY_PREFIX) + PROPERTY_PREFIX.length(), version.indexOf(CLOSE_BRACKET)));
+    Comparator<Coordinate> COMPARATOR = (o1, o2) -> {
+        int comparison = OrderUtil.COMPARATOR.compare(o1, o2);
+        if (comparison != 0) {
+            return comparison;
         }
-        return Optional.empty();
+        comparison = o1.getGroupId().compareTo(o2.getGroupId());
+        if (comparison != 0) {
+            return comparison;
+        }
+        return o1.getArtifactId().compareTo(o2.getArtifactId());
+    };
+
+
+    @NonNull
+    String getGroupId();
+
+    @NonNull
+    String getArtifactId();
+
+    @Nullable
+    default String getVersion() {
+        return null;
     }
 }

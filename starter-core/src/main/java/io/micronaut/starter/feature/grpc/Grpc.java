@@ -37,9 +37,6 @@ public class Grpc implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addGradlePluginLookup("com.google.protobuf", "protobuf-gradle-plugin");
-        }
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
     }
 

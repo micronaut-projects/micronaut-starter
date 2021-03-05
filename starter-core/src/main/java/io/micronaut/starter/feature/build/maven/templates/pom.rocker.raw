@@ -499,27 +499,6 @@ MavenBuild mavenBuild
 @if (features.contains("jmx")) {
 @dependency.template("io.micronaut.jmx", "micronaut-jmx", "compile", null)
 }
-@if (features.contains("dekorate-kubernetes")) {
-@dependency.template("io.dekorate", "kubernetes-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-openshift")) {
-@dependency.template("io.dekorate", "openshift-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-knative")) {
-@dependency.template("io.dekorate", "knative-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-servicecatalog")) {
-@dependency.template("io.dekorate", "servicecatalog-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-halkyon")) {
-@dependency.template("io.dekorate", "halkyon-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-prometheus")) {
-@dependency.template("io.dekorate", "prometheus-annotations", "compile", "${dekorate.version}")
-}
-@if (features.contains("dekorate-jaeger")) {
-@dependency.template("io.dekorate", "jaeger-annotations", "compile", "${dekorate.version}")
-}
 @if (features.contains("spring")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
 @if (features.language().isGroovy()) {

@@ -21,13 +21,12 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
-import io.micronaut.starter.build.BuildPlugin;
-import io.micronaut.starter.build.BuildPluginContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
-import io.micronaut.starter.build.dependencies.DependencyLookup;
-import io.micronaut.starter.build.BuildPluginLookup;
-import io.micronaut.starter.build.dependencies.ScopedDependency;
+import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -45,7 +44,6 @@ import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -61,10 +59,11 @@ import java.util.Set;
  * @author graemerocher
  * @since 1.0.0
  */
-public class GeneratorContext implements DependencyContext, BuildPluginContext {
+public class GeneratorContext implements DependencyContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
+    private final CoordinateResolver coordinateResolver;
     private final BuildProperties buildProperties = new BuildProperties();
     private final ApplicationConfiguration configuration = new ApplicationConfiguration();
     private final Map<String, ApplicationConfiguration> applicationEnvironmentConfiguration = new LinkedHashMap<>();
@@ -77,19 +76,18 @@ public class GeneratorContext implements DependencyContext, BuildPluginContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
-    private final Set<ScopedDependency> dependencies = new HashSet<>();
-    private final Set<DependencyLookup> dependencyLookups = new HashSet<>();
-    private final Set<BuildPlugin> buildPlugins = new HashSet<>();
-    private final Set<BuildPluginLookup> buildPluginLookups = new HashSet<>();
+    private final Set<Dependency> dependencies = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
                             Options options,
                             @Nullable OperatingSystem operatingSystem,
-                            Set<Feature> features) {
+                            Set<Feature> features,
+                            CoordinateResolver coordinateResolver) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
+        this.coordinateResolver = coordinateResolver;
         this.features = new Features(this, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
@@ -314,46 +312,19 @@ public class GeneratorContext implements DependencyContext, BuildPluginContext {
     }
 
     @Override
-    @NonNull
-    public Collection<DependencyLookup> getDependencyLookups() {
-        return this.dependencyLookups;
-    }
-
-    @Override
-    public void addDependencyLookup(@NonNull DependencyLookup dependencyLookup) {
-        this.dependencyLookups.add(dependencyLookup);
-    }
-
-    @Override
-    public void addBuildPlugin(@NonNull BuildPlugin buildPlugin) {
-        buildPlugins.add(buildPlugin);
-    }
-
-    @Override
-    @NonNull
-    public Collection<BuildPlugin> getBuildPlugins() {
-        return buildPlugins;
-    }
-
-    @Override
-    public void addBuildPluginLookup(@NonNull BuildPluginLookup buildPluginLookup) {
-        this.buildPluginLookups.add(buildPluginLookup);
-    }
-
-    @Override
-    @NonNull
-    public Collection<BuildPluginLookup> getBuildPluginLookups() {
-        return buildPluginLookups;
-    }
-
-    @Override
-    public void addDependency(@NonNull ScopedDependency scopedDependency) {
-        this.dependencies.add(scopedDependency);
+    public void addDependency(@NonNull Dependency dependency) {
+        if (dependency.requiresLookup()) {
+            Coordinate coordinate = coordinateResolver.resolve(dependency.getArtifactId())
+                    .orElseThrow(() -> new LookupFailedException(dependency.getArtifactId()));
+            this.dependencies.add(dependency.resolved(coordinate));
+        } else {
+            this.dependencies.add(dependency);
+        }
     }
 
     @NonNull
     @Override
-    public Collection<ScopedDependency> getDependencies() {
+    public Set<Dependency> getDependencies() {
         return dependencies;
     }
 }

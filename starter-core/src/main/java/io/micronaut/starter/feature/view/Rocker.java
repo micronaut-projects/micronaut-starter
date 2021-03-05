@@ -48,11 +48,4 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker";
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addGradlePluginLookup("com.fizzed.rocker", "rocker-gradle-plugin");
-        }
-    }
-
 }

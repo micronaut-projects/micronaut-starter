@@ -41,13 +41,6 @@ public class ShadePlugin implements DefaultFeature {
         return true;
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addGradlePluginLookup("com.github.johnrengelman.shadow", "shadow");
-        }
-    }
-
     @NonNull
     @Override
     public String getName() {

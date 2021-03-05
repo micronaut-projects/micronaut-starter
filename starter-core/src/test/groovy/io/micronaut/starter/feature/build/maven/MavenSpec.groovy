@@ -27,7 +27,7 @@ class MavenSpec extends BeanContextSpec {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties(), MavenCombineAttribute.CHILDREN_APPEND, MavenCombineAttribute.CHILDREN_APPEND),
+                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties(), MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND),
         ).render().toString()
 
         then: 'parent pom is used'
@@ -78,7 +78,7 @@ class MavenSpec extends BeanContextSpec {
                 .render()
 
         then:
-        template.contains('''\
+        !template.contains('''\
               <annotationProcessorPaths combine.children="append">
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>

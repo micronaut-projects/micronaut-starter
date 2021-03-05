@@ -50,10 +50,4 @@ public class Jib implements Feature {
         return Category.PACKAGING;
     }
 
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addGradlePluginLookup("com.google.cloud.tools.jib", "jib-gradle-plugin");
-        }
-    }
 }

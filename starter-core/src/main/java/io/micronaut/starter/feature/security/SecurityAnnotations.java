@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
@@ -42,7 +43,12 @@ public class SecurityAnnotations implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("io.micronaut.security", "micronaut-security-annotations", "${micronaut.security.version}");
-        generatorContext.addTestAnnotationProcessor("io.micronaut.security", "micronaut-security-annotations", "${micronaut.security.version}");
+        Dependency.Builder securityAnnotations = Dependency.builder()
+                .groupId("io.micronaut.security")
+                .artifactId("micronaut-security-annotations")
+                .version("${micronaut.security.version}")
+                .template();
+        generatorContext.addDependency(securityAnnotations.annotationProcessor());
+        generatorContext.addDependency(securityAnnotations.testAnnotationProcessor());
     }
 }

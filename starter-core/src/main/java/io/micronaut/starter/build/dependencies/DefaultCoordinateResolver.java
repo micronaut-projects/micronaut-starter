@@ -16,13 +16,28 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.core.order.Ordered;
-import io.micronaut.starter.build.Coordinate;
+import io.micronaut.context.annotation.Primary;
 
+import javax.inject.Singleton;
+import java.util.Arrays;
 import java.util.Optional;
 
-public interface DependencyVersionResolver extends Ordered {
+@Singleton
+@Primary
+public class DefaultCoordinateResolver implements CoordinateResolver {
+
+    private final CoordinateResolver[] coordinateResolvers;
+
+    public DefaultCoordinateResolver(CoordinateResolver[] coordinateResolvers) {
+        this.coordinateResolvers = coordinateResolvers;
+    }
 
     @NonNull
-    Optional<Coordinate> findByArtifactId(@NonNull String artifactId);
+    public Optional<Coordinate> resolve(@NonNull String artifactId) {
+        return Arrays.stream(coordinateResolvers)
+                .map(resolver -> resolver.resolve(artifactId))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst();
+    }
 }

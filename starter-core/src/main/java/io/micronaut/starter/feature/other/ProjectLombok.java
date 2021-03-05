@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.other;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
@@ -69,7 +70,12 @@ public class ProjectLombok implements LanguageSpecificFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addAnnotationProcessor("org.projectlombok", "lombok", "${lombok.version}", Ordered.HIGHEST_PRECEDENCE);
-        generatorContext.addCompileOnlyDependency("org.projectlombok", "lombok");
+        Dependency.Builder lombok = Dependency.builder()
+                .groupId("org.projectlombok")
+                .artifactId("lombok")
+                .template();
+
+        generatorContext.addDependency(lombok.version("${lombok.version}").order(Ordered.HIGHEST_PRECEDENCE).annotationProcessor(true));
+        generatorContext.addDependency(lombok.compileOnly());
     }
 }

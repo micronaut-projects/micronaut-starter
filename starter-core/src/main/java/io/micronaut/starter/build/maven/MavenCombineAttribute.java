@@ -3,8 +3,9 @@ package io.micronaut.starter.build.maven;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MavenCombineAttribute {
-    CHILDREN_APPEND("combine.children=\"append\""),
-    SELF_OVERRIDE("combine.self=\"override\"");
+
+    APPEND("combine.children=\"append\""),
+    OVERRIDE("combine.self=\"override\"");
 
     private final String attribute;
 
