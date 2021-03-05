@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
@@ -38,8 +39,9 @@ public class MavenBuildCreator {
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
         List<Coordinate> testAnnotationProcessorsCoordinates = new ArrayList<>();
-        MavenCombineAttribute combineAttribute = MavenCombineAttribute.APPEND;
-        MavenCombineAttribute testCombineAttribute = MavenCombineAttribute.APPEND;
+        boolean isKotlin = generatorContext.getLanguage() == Language.KOTLIN;
+        MavenCombineAttribute combineAttribute = isKotlin ? MavenCombineAttribute.OVERRIDE : MavenCombineAttribute.APPEND;
+        MavenCombineAttribute testCombineAttribute = combineAttribute;
 
         for (Dependency dependency : generatorContext.getDependencies()) {
             if (dependency.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
