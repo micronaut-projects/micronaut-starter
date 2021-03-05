@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.view;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;

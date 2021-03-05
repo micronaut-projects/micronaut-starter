@@ -16,9 +16,7 @@
 package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
@@ -28,7 +26,7 @@ import java.util.Objects;
 
 public class GradleDependency extends DependencyCoordinate {
 
-    public static Comparator<GradleDependency> COMPARATOR = (o1, o2) -> {
+    public static final Comparator<GradleDependency> COMPARATOR = (o1, o2) -> {
         int comparison = OrderUtil.COMPARATOR.compare(o1, o2);
         if (comparison != 0) {
             return comparison;

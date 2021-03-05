@@ -37,7 +37,6 @@ public interface Coordinate {
         return o1.getArtifactId().compareTo(o2.getArtifactId());
     };
 
-
     @NonNull
     String getGroupId();
 

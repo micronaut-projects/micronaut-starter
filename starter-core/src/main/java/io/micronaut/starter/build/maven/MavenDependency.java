@@ -16,7 +16,6 @@
 package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
@@ -25,7 +24,7 @@ import java.util.Comparator;
 
 public class MavenDependency extends DependencyCoordinate {
 
-    public static Comparator<MavenDependency> COMPARATOR = (o1, o2) -> {
+    public static final Comparator<MavenDependency> COMPARATOR = (o1, o2) -> {
         int comparison = OrderUtil.COMPARATOR.compare(o1, o2);
         if (comparison != 0) {
             return comparison;
@@ -43,7 +42,7 @@ public class MavenDependency extends DependencyCoordinate {
     public MavenDependency(@NonNull Dependency dependency) {
         super(dependency);
         this.mavenScope = MavenScope.of(dependency.getScope()).orElseThrow(() ->
-                new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));;
+                new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));
     }
 
     public MavenScope getMavenScope() {

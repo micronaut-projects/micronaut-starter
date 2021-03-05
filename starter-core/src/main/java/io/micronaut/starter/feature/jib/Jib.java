@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.jib;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 

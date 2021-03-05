@@ -16,20 +16,17 @@
 package io.micronaut.starter.build.dependencies;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public interface DependencyContext {
 
     @NonNull
     Collection<Dependency> getDependencies();
 
-    void addDependency(Dependency dependency);
+    void addDependency(@NonNull Dependency dependency);
 
-    default void addDependency(Dependency.Builder dependency) {
+    default void addDependency(@NonNull Dependency.Builder dependency) {
         addDependency(dependency.build());
     }
 
