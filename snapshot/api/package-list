@@ -15,6 +15,9 @@ io.micronaut.starter.application
 io.micronaut.starter.application.generator
 io.micronaut.starter.azure
 io.micronaut.starter.build
+io.micronaut.starter.build.dependencies
+io.micronaut.starter.build.gradle
+io.micronaut.starter.build.maven
 io.micronaut.starter.cli
 io.micronaut.starter.cli.command
 io.micronaut.starter.cli.command.project.bean

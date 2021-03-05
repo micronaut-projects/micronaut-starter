@@ -37,8 +37,6 @@
 <li><a href="io/micronaut/starter/feature/other/AnnotationApi.html" title="class in io.micronaut.starter.feature.other">AnnotationApi</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessor.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessor</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessor.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessor.Template</a></li>
-<li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessors.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessors</a></li>
-<li><a href="io/micronaut/starter/feature/build/gradle/templates/annotationProcessors.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">annotationProcessors.Template</a></li>
 <li><a href="io/micronaut/starter/analytics/postgres/Application.html" title="class in io.micronaut.starter.analytics.postgres">Application</a></li>
 <li><a href="io/micronaut/starter/feature/lang/groovy/application.html" title="class in io.micronaut.starter.feature.lang.groovy">application</a></li>
 <li><a href="io/micronaut/starter/feature/lang/java/application.html" title="class in io.micronaut.starter.feature.lang.java">application</a></li>
@@ -224,6 +222,8 @@
 <li><a href="io/micronaut/starter/io/ConsoleOutput.html" title="interface in io.micronaut.starter.io"><span class="interfaceName">ConsoleOutput</span></a></li>
 <li><a href="io/micronaut/starter/feature/consul/Consul.html" title="class in io.micronaut.starter.feature.consul">Consul</a></li>
 <li><a href="io/micronaut/starter/application/ContextFactory.html" title="class in io.micronaut.starter.application">ContextFactory</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Coordinate.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">Coordinate</span></a></li>
+<li><a href="io/micronaut/starter/build/dependencies/CoordinateResolver.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">CoordinateResolver</span></a></li>
 <li><a href="io/micronaut/starter/feature/micrometer/Core.html" title="class in io.micronaut.starter.feature.micrometer">Core</a></li>
 <li><a href="io/micronaut/starter/cli/feature/acme/CreateAccount.html" title="class in io.micronaut.starter.cli.feature.acme">CreateAccount</a></li>
 <li><a href="io/micronaut/starter/cli/command/CreateAppCommand.html" title="class in io.micronaut.starter.cli.command">CreateAppCommand</a></li>
@@ -266,6 +266,7 @@
 <li><a href="io/micronaut/starter/feature/database/jdbc/Dbcp.html" title="class in io.micronaut.starter.feature.database.jdbc">Dbcp</a></li>
 <li><a href="io/micronaut/starter/cli/feature/acme/DeactivateAccount.html" title="class in io.micronaut.starter.cli.feature.acme">DeactivateAccount</a></li>
 <li><a href="io/micronaut/starter/application/DefaultAvailableFeatures.html" title="class in io.micronaut.starter.application">DefaultAvailableFeatures</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/DefaultCoordinateResolver.html" title="class in io.micronaut.starter.build.dependencies">DefaultCoordinateResolver</a></li>
 <li><a href="io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature"><span class="interfaceName">DefaultFeature</span></a></li>
 <li><a href="io/micronaut/starter/application/generator/DefaultProjectGenerator.html" title="class in io.micronaut.starter.application.generator">DefaultProjectGenerator</a></li>
 <li><a href="io/micronaut/starter/template/DefaultTemplateRenderer.html" title="class in io.micronaut.starter.template">DefaultTemplateRenderer</a></li>
@@ -280,10 +281,14 @@
 <li><a href="io/micronaut/starter/feature/dekorate/DekorateServiceCatalog.html" title="class in io.micronaut.starter.feature.dekorate">DekorateServiceCatalog</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/dependencies.html" title="class in io.micronaut.starter.feature.build.gradle.templates">dependencies</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/dependencies.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">dependencies.Template</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/dependency.html" title="class in io.micronaut.starter.feature.build.gradle.templates">dependency</a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/templates/dependency.html" title="class in io.micronaut.starter.feature.build.maven.templates">dependency</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/dependency.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">dependency.Template</a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/templates/dependency.Template.html" title="class in io.micronaut.starter.feature.build.maven.templates">dependency.Template</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies"><span class="interfaceName">DependencyContext</span></a></li>
+<li><a href="io/micronaut/starter/build/dependencies/DependencyCoordinate.html" title="class in io.micronaut.starter.build.dependencies">DependencyCoordinate</a></li>
 <li><a href="io/micronaut/starter/api/diff/DiffController.html" title="class in io.micronaut.starter.api.diff">DiffController</a></li>
 <li><a href="io/micronaut/starter/api/diff/DiffOperations.html" title="interface in io.micronaut.starter.api.diff"><span class="interfaceName">DiffOperations</span></a></li>
 <li><a href="io/micronaut/starter/feature/discovery/DiscoveryConsul.html" title="class in io.micronaut.starter.feature.discovery">DiscoveryConsul</a></li>
@@ -416,6 +421,11 @@
 <li><a href="io/micronaut/starter/feature/github/workflows/templates/graalvmSetup.html" title="class in io.micronaut.starter.feature.github.workflows.templates">graalvmSetup</a></li>
 <li><a href="io/micronaut/starter/feature/github/workflows/templates/graalvmSetup.Template.html" title="class in io.micronaut.starter.feature.github.workflows.templates">graalvmSetup.Template</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/Gradle.html" title="class in io.micronaut.starter.feature.build.gradle">Gradle</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleBuild.html" title="class in io.micronaut.starter.build.gradle">GradleBuild</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleBuildCreator.html" title="class in io.micronaut.starter.build.gradle">GradleBuildCreator</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleConfiguration.html" title="enum in io.micronaut.starter.build.gradle">GradleConfiguration</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDependency.html" title="class in io.micronaut.starter.build.gradle">GradleDependency</a></li>
+<li><a href="io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle">GradleDsl</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradlePlugins.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradlePlugins</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradlePlugins.Template.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradlePlugins.Template</a></li>
 <li><a href="io/micronaut/starter/feature/build/gradle/templates/gradleProperties.html" title="class in io.micronaut.starter.feature.build.gradle.templates">gradleProperties</a></li>
@@ -678,6 +688,7 @@
 <li><a href="io/micronaut/starter/feature/logging/template/logback.html" title="class in io.micronaut.starter.feature.logging.template">logback</a></li>
 <li><a href="io/micronaut/starter/feature/logging/template/logback.Template.html" title="class in io.micronaut.starter.feature.logging.template">logback.Template</a></li>
 <li><a href="io/micronaut/starter/feature/logging/LoggingFeature.html" title="interface in io.micronaut.starter.feature.logging"><span class="interfaceName">LoggingFeature</span></a></li>
+<li><a href="io/micronaut/starter/build/dependencies/LookupFailedException.html" title="class in io.micronaut.starter.build.dependencies">LookupFailedException</a></li>
 <li><a href="io/micronaut/starter/analytics/postgres/Main.html" title="class in io.micronaut.starter.analytics.postgres">Main</a></li>
 <li><a href="io/micronaut/starter/feature/other/template/maindocs.html" title="class in io.micronaut.starter.feature.other.template">maindocs</a></li>
 <li><a href="io/micronaut/starter/feature/other/template/maindocs.Template.html" title="class in io.micronaut.starter.feature.other.template">maindocs.Template</a></li>
@@ -685,6 +696,11 @@
 <li><a href="io/micronaut/starter/io/MapOutputHandler.html" title="class in io.micronaut.starter.io">MapOutputHandler</a></li>
 <li><a href="io/micronaut/starter/feature/database/MariaDB.html" title="class in io.micronaut.starter.feature.database">MariaDB</a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/Maven.html" title="class in io.micronaut.starter.feature.build.maven">Maven</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenBuild.html" title="class in io.micronaut.starter.build.maven">MavenBuild</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenCombineAttribute.html" title="enum in io.micronaut.starter.build.maven">MavenCombineAttribute</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenDependency.html" title="class in io.micronaut.starter.build.maven">MavenDependency</a></li>
+<li><a href="io/micronaut/starter/build/maven/MavenScope.html" title="enum in io.micronaut.starter.build.maven">MavenScope</a></li>
 <li><a href="io/micronaut/starter/application/MessagingAvailableFeatures.html" title="class in io.micronaut.starter.application">MessagingAvailableFeatures</a></li>
 <li><a href="io/micronaut/starter/feature/messaging/MessagingFeature.html" title="interface in io.micronaut.starter.feature.messaging"><span class="interfaceName">MessagingFeature</span></a></li>
 <li><a href="io/micronaut/starter/feature/micrometer/MicrometerFeature.html" title="class in io.micronaut.starter.feature.micrometer">MicrometerFeature</a></li>
@@ -747,6 +763,7 @@
 <li><a href="io/micronaut/starter/feature/function/oraclefunction/template/raw/oracleRawFunctionKotlinKoTest.Template.html" title="class in io.micronaut.starter.feature.function.oraclefunction.template.raw">oracleRawFunctionKotlinKoTest.Template</a></li>
 <li><a href="io/micronaut/starter/io/OutputHandler.html" title="interface in io.micronaut.starter.io"><span class="interfaceName">OutputHandler</span></a></li>
 <li><a href="io/micronaut/starter/feature/view/Pebble.html" title="class in io.micronaut.starter.feature.view">Pebble</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Phase.html" title="enum in io.micronaut.starter.build.dependencies">Phase</a></li>
 <li><a href="io/micronaut/starter/feature/picocli/Picocli.html" title="class in io.micronaut.starter.feature.picocli">Picocli</a></li>
 <li><a href="io/micronaut/starter/feature/picocli/lang/groovy/picocliApplication.html" title="class in io.micronaut.starter.feature.picocli.lang.groovy">picocliApplication</a></li>
 <li><a href="io/micronaut/starter/feature/picocli/lang/java/picocliApplication.html" title="class in io.micronaut.starter.feature.picocli.lang.java">picocliApplication</a></li>
@@ -773,6 +790,7 @@
 <li><a href="io/micronaut/starter/feature/picocli/test/PicocliTestFeature.html" title="interface in io.micronaut.starter.feature.picocli.test"><span class="interfaceName">PicocliTestFeature</span></a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/templates/pom.html" title="class in io.micronaut.starter.feature.build.maven.templates">pom</a></li>
 <li><a href="io/micronaut/starter/feature/build/maven/templates/pom.Template.html" title="class in io.micronaut.starter.feature.build.maven.templates">pom.Template</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/PomDependencyVersionResolver.html" title="class in io.micronaut.starter.build.dependencies">PomDependencyVersionResolver</a></li>
 <li><a href="io/micronaut/starter/feature/database/PostgreSQL.html" title="class in io.micronaut.starter.feature.database">PostgreSQL</a></li>
 <li><a href="io/micronaut/starter/api/preview/PreviewController.html" title="class in io.micronaut.starter.api.preview">PreviewController</a></li>
 <li><a href="io/micronaut/starter/api/preview/PreviewDTO.html" title="class in io.micronaut.starter.api.preview">PreviewDTO</a></li>
@@ -813,6 +831,7 @@
 <li><a href="io/micronaut/starter/feature/rss/RssItunes.html" title="class in io.micronaut.starter.feature.rss">RssItunes</a></li>
 <li><a href="io/micronaut/starter/feature/rxjava/RxJavaOne.html" title="class in io.micronaut.starter.feature.rxjava">RxJavaOne</a></li>
 <li><a href="io/micronaut/starter/feature/rxjava/RxJavaThree.html" title="class in io.micronaut.starter.feature.rxjava">RxJavaThree</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Scope.html" title="class in io.micronaut.starter.build.dependencies">Scope</a></li>
 <li><a href="io/micronaut/starter/feature/github/workflows/Secret.html" title="class in io.micronaut.starter.feature.github.workflows">Secret</a></li>
 <li><a href="io/micronaut/starter/feature/security/Security.html" title="class in io.micronaut.starter.feature.security">Security</a></li>
 <li><a href="io/micronaut/starter/feature/security/SecurityAnnotations.html" title="class in io.micronaut.starter.feature.security">SecurityAnnotations</a></li>
@@ -850,6 +869,7 @@
 <li><a href="io/micronaut/starter/feature/logging/SimpleLogging.html" title="class in io.micronaut.starter.feature.logging">SimpleLogging</a></li>
 <li><a href="io/micronaut/starter/feature/logging/template/slf4jSimple.html" title="class in io.micronaut.starter.feature.logging.template">slf4jSimple</a></li>
 <li><a href="io/micronaut/starter/feature/logging/template/slf4jSimple.Template.html" title="class in io.micronaut.starter.feature.logging.template">slf4jSimple.Template</a></li>
+<li><a href="io/micronaut/starter/build/dependencies/Source.html" title="enum in io.micronaut.starter.build.dependencies">Source</a></li>
 <li><a href="io/micronaut/starter/feature/view/Soy.html" title="class in io.micronaut.starter.feature.view">Soy</a></li>
 <li><a href="io/micronaut/starter/feature/server/template/spock.html" title="class in io.micronaut.starter.feature.server.template">spock</a></li>
 <li><a href="io/micronaut/starter/feature/test/Spock.html" title="class in io.micronaut.starter.feature.test">Spock</a></li>
