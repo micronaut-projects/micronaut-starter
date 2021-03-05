@@ -105,14 +105,14 @@ class PicocliSpec extends ApplicationContextSpec {
                  <artifactId>micronaut-inject-java</artifactId>
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
-''') == 0
+''') == 2
         template.count('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut</groupId>
                  <artifactId>micronaut-validation</artifactId>
                  <version>${micronaut.version}</version>
                </annotationProcessorPath>
-''') == 0
+''') == 2
         template.count('''\
     <dependency>
       <groupId>info.picocli</groupId>
