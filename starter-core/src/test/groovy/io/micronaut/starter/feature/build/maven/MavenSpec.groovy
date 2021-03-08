@@ -1,19 +1,13 @@
 package io.micronaut.starter.feature.build.maven
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.build.maven.MavenBuild
+import io.micronaut.starter.build.maven.MavenCombineAttribute
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.feature.function.awslambda.AwsLambda
-import io.micronaut.starter.feature.function.azure.AzureHttpFunction
-import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
-import io.micronaut.starter.feature.function.oraclefunction.OracleFunction
-import io.micronaut.starter.feature.server.Jetty
-import io.micronaut.starter.feature.server.Netty
-import io.micronaut.starter.feature.server.Tomcat
-import io.micronaut.starter.feature.server.Undertow
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
@@ -33,7 +27,7 @@ class MavenSpec extends BeanContextSpec {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                generatorContext.getBuildProperties().getProperties()
+                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties(), MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND),
         ).render().toString()
 
         then: 'parent pom is used'
@@ -70,8 +64,7 @@ class MavenSpec extends BeanContextSpec {
 
     void 'test annotation processor dependencies'() {
         when:
-        Features features = getFeatures([], null, null, BuildTool.MAVEN)
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN).render()
 
         then:
         template.contains('''
@@ -80,28 +73,30 @@ class MavenSpec extends BeanContextSpec {
 ''')
 
         when:
-        features = getFeatures([], Language.KOTLIN, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .render()
 
         then:
-        template.contains("""
-              <annotationProcessorPaths>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-inject-java</artifactId>
-                  <version>\${micronaut.version}</version>
-                </annotationProcessorPath>
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-validation</artifactId>
-                  <version>\${micronaut.version}</version>
-                </annotationProcessorPath>
+        !template.contains('''\
+              <annotationProcessorPaths combine.children="append">
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-inject-java</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-validation</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
               </annotationProcessorPaths>
-""")
+''')
 
         when:
-        features = getFeatures([], Language.GROOVY, null, BuildTool.MAVEN)
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), features, []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('''
@@ -126,7 +121,7 @@ class MavenSpec extends BeanContextSpec {
         println features.features
 
         when:
-        String template = pom.template(applicationType, buildProject(), features, []).render().toString()
+        String template = pom.template(applicationType, buildProject(), features, new MavenBuild()).render().toString()
 
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")

@@ -1,5 +1,6 @@
 package io.micronaut.starter.cli.command
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import spock.lang.AutoCleanup
@@ -8,7 +9,8 @@ import spock.lang.Specification
 
 class CodeGenCommandSpec extends Specification {
 
-    @Shared @AutoCleanup BeanContext beanContext = BeanContext.run()
+    @Shared @AutoCleanup
+    ApplicationContext beanContext = ApplicationContext.run()
 
     void "test all codegen commands can be created"() {
         CodeGenConfig codeGenConfig = new CodeGenConfig()

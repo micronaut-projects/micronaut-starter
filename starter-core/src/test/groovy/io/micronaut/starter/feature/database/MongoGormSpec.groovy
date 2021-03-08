@@ -1,18 +1,16 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
 
-class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
+class MongoGormSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
         when:
@@ -39,7 +37,10 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-gorm"])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
@@ -48,8 +49,10 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test testcontainers dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(),
-                getFeatures(["mongo-gorm", "testcontainers"], Language.GROOVY, TestFramework.SPOCK), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-gorm", "testcontainers"])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
@@ -61,7 +64,10 @@ class MongoGormSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""

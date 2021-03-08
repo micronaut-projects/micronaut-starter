@@ -1,17 +1,18 @@
 package io.micronaut.starter.feature.spring
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -57,8 +58,10 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test spring with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], language), false).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['spring'])
+                .language(language)
+                .render()
         then:
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter")')
@@ -72,7 +75,9 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven spring feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.JAVA), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring'])
+                .render()
 
         then:
         template.contains("""
@@ -91,7 +96,10 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring'])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         template.contains("""
@@ -101,16 +109,19 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-annotation</artifactId>
+                 <version>${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring'], Language.GROOVY), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
@@ -128,5 +139,11 @@ class SpringSpec extends BeanContextSpec  implements CommandOutputFixture {
     </dependency>
 """)
 
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        !semanticVersionOptional.isPresent()
     }
 }

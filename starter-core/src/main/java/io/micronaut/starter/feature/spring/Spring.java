@@ -17,13 +17,10 @@ package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
-
 import javax.inject.Singleton;
-import java.util.Map;
 
 @Singleton
 public class Spring implements Feature {
@@ -45,13 +42,14 @@ public class Spring implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Map.Entry<String, String> dependencyVersion = VersionInfo.getDependencyVersion("micronaut.spring");
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(
-                    dependencyVersion.getKey(),
-                    dependencyVersion.getValue()
-            );
-        }
+        Dependency.Builder springAnnotation = Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-annotation")
+                .version("${micronaut.spring.version}")
+                .template();
+
+        generatorContext.addDependency(springAnnotation.annotationProcessor());
+        generatorContext.addDependency(springAnnotation.testAnnotationProcessor());
     }
 
     @Override

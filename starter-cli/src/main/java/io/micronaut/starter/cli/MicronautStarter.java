@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
@@ -87,14 +88,14 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     static CommandLine createCommandLine() {
         boolean noOpConsole = MicronautStarter.interactiveShell;
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.run()) {
             return createCommandLine(beanContext, noOpConsole);
         }
     }
 
     static int execute(String[] args) {
         boolean noOpConsole = args.length > 0 && args[0].startsWith("update-cli-config");
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.run()) {
             return createCommandLine(beanContext, noOpConsole).execute(args);
         }
     }

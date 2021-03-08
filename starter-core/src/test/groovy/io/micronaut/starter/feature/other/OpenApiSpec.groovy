@@ -1,20 +1,14 @@
 package io.micronaut.starter.feature.other
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.Shared
-import spock.lang.Subject
 import spock.lang.Unroll
 
-class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
-    @Shared
-    @Subject
-    OpenApi openApi = beanContext.getBean(OpenApi)
+class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature openapi contains links to micronaut docs'() {
         when:
@@ -29,13 +23,16 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "openApi belongs to API category"() {
         expect:
-        Category.API == openApi.category
+        Category.API == beanContext.getBean(OpenApi).category
     }
 
     @Unroll
     void 'test swagger with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['openapi'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.swagger.core.v3:swagger-annotations")')
@@ -50,7 +47,9 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven swagger feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.JAVA), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['openapi'])
+                .render()
 
         then:
         template.contains("""
@@ -60,16 +59,21 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
+        !template.contains("<micronaut.openapi.version>")
+        !template.contains("</micronaut.openapi.version>")
+        template.count('''
             <path>
               <groupId>io.micronaut.openapi</groupId>
               <artifactId>micronaut-openapi</artifactId>
-              <version>\${micronaut.openapi.version}</version>
+              <version>${micronaut.openapi.version}</version>
             </path>
-""")
+''') == 1
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['openapi'])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         template.contains("""
@@ -79,16 +83,19 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.openapi</groupId>
-                  <artifactId>micronaut-openapi</artifactId>
-                  <version>\${micronaut.openapi.version}</version>
-                </annotationProcessorPath>
-""")
+        template.contains('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.openapi</groupId>
+                 <artifactId>micronaut-openapi</artifactId>
+                 <version>${micronaut.openapi.version}</version>
+               </annotationProcessorPath>
+''')
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['openapi'], Language.GROOVY), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['openapi'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
@@ -105,5 +112,8 @@ class OpenApiSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+
+        and: 'property is not defined it is inherited via the bom'
+        !parsePropertySemanticVersion(template, "micronaut.openapi.version").isPresent()
     }
 }

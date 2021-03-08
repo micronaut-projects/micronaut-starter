@@ -30,12 +30,14 @@ import io.micronaut.starter.util.GitHubUtil
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.revwalk.RevCommit
 import org.eclipse.jgit.transport.URIish
+import spock.lang.Retry
 import spock.lang.Specification
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+@Retry
 class GitHubCreateControllerSpec extends Specification{
 
     static Map<String, Object> getConfiguration(MapEntry ...entries) {

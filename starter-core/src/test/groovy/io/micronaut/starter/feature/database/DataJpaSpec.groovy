@@ -1,14 +1,15 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 
-class DataJpaSpec extends BeanContextSpec {
+class DataJpaSpec extends ApplicationContextSpec {
 
     void "test data jpa features"() {
         when:
@@ -23,7 +24,9 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["data-jpa"])
+                .render()
 
         then:
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
@@ -34,7 +37,10 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["data-jpa"])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         template.contains('id("org.jetbrains.kotlin.plugin.jpa")')
@@ -42,52 +48,64 @@ class DataJpaSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['data-jpa'])
+                .render()
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''\
             <path>
               <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
-              <version>\${micronaut.data.version}</version>
+              <version>${micronaut.data.version}</version>
             </path>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-hibernate-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''\
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
-""")
+''')
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jpa"], Language.KOTLIN), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['data-jpa'])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''
           <compilerPlugins>
             <plugin>jpa</plugin>
             <plugin>all-open</plugin>
           </compilerPlugins>
-""")
+''')
     }
 
     void "test config"() {
@@ -133,5 +151,23 @@ class DataJpaSpec extends BeanContextSpec {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
+    void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .language(Language.GROOVY)
+            .features(["data-jpa"])
+            .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-processor</artifactId>
+      <scope>provided</scope>
+    </dependency>
+''')
     }
 }

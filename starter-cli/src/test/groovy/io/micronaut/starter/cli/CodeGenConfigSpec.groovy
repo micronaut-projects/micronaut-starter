@@ -1,5 +1,6 @@
 package io.micronaut.starter.cli
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
@@ -15,7 +16,9 @@ import java.nio.file.Files
 
 class CodeGenConfigSpec extends Specification {
 
-    @Shared @AutoCleanup BeanContext ctx = BeanContext.run()
+    @Shared
+    @AutoCleanup
+    ApplicationContext ctx = ApplicationContext.run()
 
     void "test config is compatible with the old format"() {
         when:

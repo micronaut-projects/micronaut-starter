@@ -18,7 +18,7 @@ dependencies {
     api "io.micronaut:micronaut-http-client"
     api "io.github.java-diff-utils:java-diff-utils:4.9"
     api "org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r"
-    implementation "org.yaml:snakeyaml:1.26"
+    implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.0'
     implementation 'org.apache.commons:commons-compress:1.20'
 }
@@ -28,22 +28,20 @@ task micronautVersionInfo(type: WriteProperties) {
     outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
     property 'micronaut.version', micronautVersion
     WriteProperties wp = delegate
-    boolean resolved = false
-    repositories.each { ArtifactRepository repo ->
-        if (repo instanceof MavenArtifactRepository) {
-            def url = ((MavenArtifactRepository) repo).getUrl()
-            try {
-                def xml = new XmlSlurper().parse(new URL("$url/io/micronaut/micronaut-bom/$micronautVersion/micronaut-bom-${micronautVersion}.pom").openStream())
-                xml.properties.children().each {
-                    wp.property it.name(), it.text()
-                }
-                resolved = true
-            } catch (e) {
+
+    ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
+            .forModule("io.micronaut", "micronaut-bom", "${micronautVersion}")
+            .withArtifacts(MavenModule, MavenPomArtifact)
+            .execute()
+
+    for (component in result.resolvedComponents) {
+        component.getArtifacts(MavenPomArtifact).each {
+            def pom = new XmlSlurper().parse(it.file)
+
+            pom.properties.children().each {
+                wp.property it.name(), it.text()
             }
         }
-    }
-    if (!resolved) {
-        throw new RuntimeException("Dependency versions couldn't be resolved for Micronaut version: $micronautVersion")
     }
 }
 

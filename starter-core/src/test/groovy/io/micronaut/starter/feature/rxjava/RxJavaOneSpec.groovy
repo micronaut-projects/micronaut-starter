@@ -1,17 +1,17 @@
 package io.micronaut.starter.feature.rxjava
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import io.micronaut.starter.feature.Category
 
-class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
+class RxJavaOneSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature rxjava1 contains links to micronaut docs'() {
         when:
@@ -44,7 +44,10 @@ class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with maven and feature rxjava1 for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['rxjava1'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""
@@ -61,7 +64,10 @@ class RxJavaOneSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'dependency is included with gradle and feature rxjava1 for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rxjava1'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['rxjava1'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.rxjava1:micronaut-rxjava1")')

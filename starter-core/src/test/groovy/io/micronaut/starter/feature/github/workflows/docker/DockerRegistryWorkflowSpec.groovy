@@ -69,9 +69,9 @@ Add the following GitHub secrets:
         then:
         gradle
         gradle.contains("""
-    dockerBuild{
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
-    }""")
+dockerBuild {
+    images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version"]
+}""")
     }
 
     @Unroll

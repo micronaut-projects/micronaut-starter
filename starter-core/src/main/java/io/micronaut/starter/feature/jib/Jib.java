@@ -48,4 +48,5 @@ public class Jib implements Feature {
     public String getCategory() {
         return Category.PACKAGING;
     }
+
 }

@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.dekorate;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -54,5 +56,16 @@ public class DekorateServiceCatalog extends AbstractDekorateServiceFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#service-catalog";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder servicecatalog = Dependency.builder()
+                .groupId("io.dekorate")
+                .artifactId("servicecatalog-annotations")
+                .template();
+
+        generatorContext.addDependency(servicecatalog.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(servicecatalog.compile());
     }
 }

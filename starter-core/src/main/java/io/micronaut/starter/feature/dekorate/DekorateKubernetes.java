@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.dekorate;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -54,5 +56,16 @@ public class DekorateKubernetes extends AbstractDekoratePlatformFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#kubernetes";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder kubernetes = Dependency.builder()
+                .groupId("io.dekorate")
+                .artifactId("kubernetes-annotations")
+                .template();
+
+        generatorContext.addDependency(kubernetes.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(kubernetes.compile());
     }
 }
