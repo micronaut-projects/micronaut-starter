@@ -37,7 +37,7 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/352")
     void "test micronaut is not a valid application name"() {

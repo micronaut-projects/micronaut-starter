@@ -53,21 +53,21 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
     </dependency>
 """)
         if (language == Language.JAVA) {
-            assert template.contains("""
+            assert template.count("""
             <path>
               <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
-""")
+""") == 1
         } else if (language == Language.KOTLIN) {
-            assert template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </annotationProcessorPath>
-""") == 2
+            assert template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.security</groupId>
+                 <artifactId>micronaut-security-annotations</artifactId>
+                 <version>${micronaut.security.version}</version>
+               </annotationProcessorPath>
+''') == 2
         } else if (language == Language.GROOVY) {
             assert true
         } else {

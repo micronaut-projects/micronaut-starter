@@ -52,21 +52,21 @@ class SecurityLdapSpec extends ApplicationContextSpec implements CommandOutputFi
     </dependency>
 """)
         if (language == Language.JAVA) {
-            assert template.contains("""
+            assert template.contains('''\
             <path>
               <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
-              <version>\${micronaut.security.version}</version>
+              <version>${micronaut.security.version}</version>
             </path>
-""")
+''')
         } else if (language == Language.KOTLIN) {
-            assert template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </annotationProcessorPath>
-""") == 2
+            assert template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.security</groupId>
+                 <artifactId>micronaut-security-annotations</artifactId>
+                 <version>${micronaut.security.version}</version>
+               </annotationProcessorPath>
+''') == 2
         } else if (language == Language.GROOVY) {
             assert true
         } else {

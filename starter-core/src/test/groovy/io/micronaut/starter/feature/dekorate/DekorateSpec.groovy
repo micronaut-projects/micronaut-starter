@@ -7,6 +7,7 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -32,9 +33,9 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
         then:
         template.contains('implementation("io.micronaut:micronaut-management")')
         if(language == Language.JAVA) {
-            assert template.contains(String.format('annotationProcessor("io.dekorate:%s-annotations:', service))
+            assert template.contains(String.format('annotationProcessor("io.dekorate:%s-annotations")', service))
         }
-        template.contains(String.format('implementation("io.dekorate:%s-annotations:', service))
+        template.contains(String.format('implementation("io.dekorate:%s-annotations")', service))
 
         where:
         [feature, language] << [
@@ -54,23 +55,22 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 .render()
 
         then:
-        template.contains("<dekorate.version>")
-        template.contains("</dekorate.version>")
+        !template.contains("<dekorate.version>")
+        !template.contains("</dekorate.version>")
         template.contains(String.format("""
     <dependency>
       <groupId>io.dekorate</groupId>
       <artifactId>%s-annotations</artifactId>
-      <version>\${dekorate.version}</version>
       <scope>compile</scope>
     </dependency>""", service))
 
         if (language == Language.KOTLIN) {
             assert template.contains(String.format("""
-                <annotationProcessorPath>
-                  <groupId>io.dekorate</groupId>
-                  <artifactId>%s-annotations</artifactId>
-                  <version>\${dekorate.version}</version>
-                </annotationProcessorPath>""", service))
+               <annotationProcessorPath>
+                 <groupId>io.dekorate</groupId>
+                 <artifactId>%s-annotations</artifactId>
+                 <version>\${dekorate.version}</version>
+               </annotationProcessorPath>""", service))
         } else {
             assert template.contains(String.format("""
             <path>
@@ -85,7 +85,7 @@ class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        !semanticVersionOptional.isPresent()
 
         where:
         [feature, language] << [

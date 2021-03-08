@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.TypeHint;
 import picocli.CommandLine;
@@ -34,7 +35,7 @@ class MicronautFactory implements CommandLine.IFactory {
     private final BeanContext beanContext;
 
     public MicronautFactory() {
-        this(BeanContext.run());
+        this(ApplicationContext.run());
     }
 
     public MicronautFactory(BeanContext beanContext) {

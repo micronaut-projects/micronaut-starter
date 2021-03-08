@@ -1,20 +1,28 @@
-@import io.micronaut.starter.options.TestFramework
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.database.DatabaseDriverFeature
 @import io.micronaut.starter.feature.database.MongoFeature
-@import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.build.gradle.GradleConfiguration
+@import io.micronaut.starter.build.gradle.GradleDependency
+@import java.util.stream.Collectors
+@import java.util.List
 
 @args (
 ApplicationType applicationType,
 Project project,
-Features features
+Features features,
+List<GradleDependency> dependencies,
 )
 
 dependencies {
-@io.micronaut.starter.feature.build.gradle.templates.annotationProcessors.template(features)
+@for (GradleDependency processor : dependencies.stream().filter(dep -> dep.getConfiguration() == GradleConfiguration.ANNOTATION_PROCESSOR).collect(Collectors.toList())) {
+@if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
+} else {
+@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
+}
+}
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
@@ -31,10 +39,6 @@ dependencies {
 }
 @if (features.contains("grpc")) {
     @dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "implementation", null)
-}
-@if (features.contains("picocli")) {
-    @dependency.template("info.picocli", "picocli", "implementation", null)
-    @dependency.template("io.micronaut.picocli", "micronaut-picocli", "implementation", null)
 }
 @if (features.contains("annotation-api")) {
     @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
@@ -71,12 +75,6 @@ dependencies {
 }
 @if (features.contains("http-session")) {
     @dependency.template("io.micronaut", "micronaut-session", "implementation", null)
-}
-@if (features.contains("openapi")) {
-    @dependency.template("io.swagger.core.v3", "swagger-annotations", "implementation", null)
-}
-@if (features.contains("lombok")) {
-    @dependency.template("org.projectlombok", "lombok", "compileOnly", null)
 }
 @if (features.contains("management")) {
     @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
@@ -165,12 +163,7 @@ dependencies {
 @if (features.contains("netflix-ribbon")) {
     @dependency.template("io.micronaut.netflix", "micronaut-netflix-ribbon", "implementation", null)
 }
-@if (features.contains("tracing-zipkin")) {
-    @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
-    @dependency.template("io.opentracing.brave", "brave-opentracing", "implementation", null)
-    @dependency.template("io.zipkin.brave", "brave-instrumentation-http", "runtimeOnly", null)
-    @dependency.template("io.zipkin.reporter2", "zipkin-reporter", "runtimeOnly", null)
-}
+
 @if (features.contains("tracing-jaeger")) {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
@@ -386,27 +379,6 @@ dependencies {
 @if (features.contains("jmx")) {
     @dependency.template("io.micronaut.jmx", "micronaut-jmx", "implementation", null)
 }
-@if (features.contains("dekorate-kubernetes")) {
-    @dependency.template("io.dekorate", "kubernetes-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-openshift")) {
-    @dependency.template("io.dekorate", "openshift-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-knative")) {
-    @dependency.template("io.dekorate", "knative-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-prometheus")) {
-    @dependency.template("io.dekorate", "prometheus-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-jaeger")) {
-    @dependency.template("io.dekorate", "jaeger-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-servicecatalog")) {
-    @dependency.template("io.dekorate", "servicecatalog-annotations", "implementation", "${dekorateVersion}")
-}
-@if (features.contains("dekorate-halkyon")) {
-    @dependency.template("io.dekorate", "halkyon-annotations", "implementation", "${dekorateVersion}")
-}
 @if (features.contains("r2dbc")) {
     @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)
 }
@@ -435,11 +407,6 @@ dependencies {
 @if (features.contains("spring-data-jdbc")) {
     @dependency.template("io.micronaut.data", "micronaut-data-spring", "implementation", null)
     @dependency.template("org.springframework", "spring-jdbc", "implementation", null)
-}
-@if (features.contains("log4j2")) {
-    @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.12.1")
-    @dependency.template("org.apache.logging.log4j", "log4j-api", "runtimeOnly", "2.12.1")
-    @dependency.template("org.apache.logging.log4j", "log4j-slf4j-impl", "runtimeOnly", "2.12.1")
 }
 @if (features.contains("logback")) {
     @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
@@ -533,5 +500,9 @@ dependencies {
 @if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
 }
+}
+
+@for (GradleDependency d : dependencies.stream().filter(dep -> dep.getConfiguration() != GradleConfiguration.ANNOTATION_PROCESSOR).collect(Collectors.toList())) {
+    @dependency.template(d.getGroupId(), d.getArtifactId(), d.getConfiguration().toString(), d.getVersion())
 }
 }

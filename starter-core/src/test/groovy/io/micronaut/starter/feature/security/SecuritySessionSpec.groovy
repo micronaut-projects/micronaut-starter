@@ -77,13 +77,13 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
             </path>
 """)
         } else if (language == Language.KOTLIN) {
-            assert template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </annotationProcessorPath>
-""") == 2
+            assert template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.security</groupId>
+                 <artifactId>micronaut-security-annotations</artifactId>
+                 <version>${micronaut.security.version}</version>
+               </annotationProcessorPath>
+''') == 2
         } else if (language == Language.GROOVY) {
             assert true
         } else {

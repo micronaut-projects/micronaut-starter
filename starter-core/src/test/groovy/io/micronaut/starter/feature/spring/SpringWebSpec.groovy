@@ -119,7 +119,7 @@ class SpringWebSpec extends ApplicationContextSpec {
 
         then:
         noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        !semanticVersionOptional.isPresent()
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -145,20 +145,20 @@ class SpringWebSpec extends ApplicationContextSpec {
       <scope>runtime</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-web-annotation</artifactId>
+                 <version>${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
         semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
 
         then:
         noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        !semanticVersionOptional.isPresent()
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -197,6 +197,6 @@ class SpringWebSpec extends ApplicationContextSpec {
 
         then:
         noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        !semanticVersionOptional.isPresent()
     }
 }

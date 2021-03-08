@@ -109,13 +109,13 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
       <scope>compile</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-annotation</artifactId>
+                 <version>${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -144,6 +144,6 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
 
         then:
         noExceptionThrown()
-        semanticVersionOptional.isPresent()
+        !semanticVersionOptional.isPresent()
     }
 }

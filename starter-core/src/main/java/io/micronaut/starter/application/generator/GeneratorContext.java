@@ -22,6 +22,11 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyContext;
+import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -54,10 +59,11 @@ import java.util.Set;
  * @author graemerocher
  * @since 1.0.0
  */
-public class GeneratorContext {
+public class GeneratorContext implements DependencyContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
+    private final CoordinateResolver coordinateResolver;
     private final BuildProperties buildProperties = new BuildProperties();
     private final ApplicationConfiguration configuration = new ApplicationConfiguration();
     private final Map<String, ApplicationConfiguration> applicationEnvironmentConfiguration = new LinkedHashMap<>();
@@ -70,15 +76,18 @@ public class GeneratorContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
+    private final Set<Dependency> dependencies = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
                             Options options,
                             @Nullable OperatingSystem operatingSystem,
-                            Set<Feature> features) {
+                            Set<Feature> features,
+                            CoordinateResolver coordinateResolver) {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
+        this.coordinateResolver = coordinateResolver;
         this.features = new Features(this, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
@@ -196,7 +205,8 @@ public class GeneratorContext {
     /**
      * @return The test framework
      */
-    @NonNull public TestFramework getTestFramework() {
+    @NonNull
+    public TestFramework getTestFramework() {
         return options.getTestFramework();
     }
 
@@ -301,4 +311,20 @@ public class GeneratorContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
+    @Override
+    public void addDependency(@NonNull Dependency dependency) {
+        if (dependency.requiresLookup()) {
+            Coordinate coordinate = coordinateResolver.resolve(dependency.getArtifactId())
+                    .orElseThrow(() -> new LookupFailedException(dependency.getArtifactId()));
+            this.dependencies.add(dependency.resolved(coordinate));
+        } else {
+            this.dependencies.add(dependency);
+        }
+    }
+
+    @NonNull
+    @Override
+    public Set<Dependency> getDependencies() {
+        return dependencies;
+    }
 }

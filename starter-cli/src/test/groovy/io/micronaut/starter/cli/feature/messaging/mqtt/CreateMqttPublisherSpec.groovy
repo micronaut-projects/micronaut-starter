@@ -1,5 +1,6 @@
 package io.micronaut.starter.cli.feature.messaging.mqtt
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
@@ -15,7 +16,7 @@ class CreateMqttPublisherSpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Unroll
     void "test creating an mqtt #version publisher - #language.getName()"(Language language) {

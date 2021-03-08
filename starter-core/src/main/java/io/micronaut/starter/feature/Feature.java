@@ -21,8 +21,8 @@ import io.micronaut.core.annotation.Indexed;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 /**
  * A feature is a class that affects the outcome of a generated

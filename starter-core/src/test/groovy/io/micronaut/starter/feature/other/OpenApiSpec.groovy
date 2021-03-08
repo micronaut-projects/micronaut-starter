@@ -59,15 +59,15 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("<micronaut.openapi.version>")
-        template.contains("</micronaut.openapi.version>")
-        template.contains('''
+        !template.contains("<micronaut.openapi.version>")
+        !template.contains("</micronaut.openapi.version>")
+        template.count('''
             <path>
               <groupId>io.micronaut.openapi</groupId>
               <artifactId>micronaut-openapi</artifactId>
               <version>${micronaut.openapi.version}</version>
             </path>
-''')
+''') == 1
 
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -83,12 +83,12 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains('''
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.openapi</groupId>
-                  <artifactId>micronaut-openapi</artifactId>
-                  <version>${micronaut.openapi.version}</version>
-                </annotationProcessorPath>
+        template.contains('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.openapi</groupId>
+                 <artifactId>micronaut-openapi</artifactId>
+                 <version>${micronaut.openapi.version}</version>
+               </annotationProcessorPath>
 ''')
 
         when:
@@ -112,5 +112,8 @@ class OpenApiSpec extends ApplicationContextSpec  implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
+
+        and: 'property is not defined it is inherited via the bom'
+        !parsePropertySemanticVersion(template, "micronaut.openapi.version").isPresent()
     }
 }

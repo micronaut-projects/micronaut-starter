@@ -94,7 +94,8 @@ class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {
                                  applicationType,
                                  options,
                                  operatingSystem,
-                                 [] as Set<Feature>)
+                                 [] as Set<Feature>,
+                    () -> Optional.empty())
         }
     }
 

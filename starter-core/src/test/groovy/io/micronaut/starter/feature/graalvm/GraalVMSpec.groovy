@@ -91,13 +91,13 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
       <scope>provided</scope>
     </dependency>
 """)
-        template.contains("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut</groupId>
-                  <artifactId>micronaut-graal</artifactId>
-                  <version>\${micronaut.version}</version>
-                </annotationProcessorPath>
-""")
+        template.contains('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut</groupId>
+                 <artifactId>micronaut-graal</artifactId>
+                 <version>${micronaut.version}</version>
+               </annotationProcessorPath>
+''')
         template.contains("""
               <annotationProcessorArgs>
                 <annotationProcessorArg>micronaut.processing.group=example.micronaut</annotationProcessorArg>

@@ -5,15 +5,17 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDsl
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-boolean isKotlinDsl
+GradleBuild gradleBuild
 )
 
-@if (features.contains("grpc") && isKotlinDsl) {
+@if (features.contains("grpc") && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 import com.google.protobuf.gradle.*
 }
 
@@ -23,21 +25,21 @@ version = "0.1"
 group = "@project.getPackageName()"
 
 @if (features.contains("asciidoctor")) {
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 apply(from="gradle/asciidoc.gradle")
 } else {
 apply from: "gradle/asciidoc.gradle"
 }
 }
 
-@if(features.language().isKotlin() && isKotlinDsl) {
+@if(features.language().isKotlin() && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 val kotlinVersion=project.properties.get("kotlinVersion")
 }
 
 repositories {
     mavenCentral()
     @if (VersionInfo.isMicronautSnapshot()) {
-    @if(isKotlinDsl) {
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     } else {
     maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
@@ -45,7 +47,7 @@ repositories {
     }
     @if (features.contains("oracle-function")) {
         @if (!features.contains("oracle-function-http")) {
-    @if(isKotlinDsl) {
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     maven("https://dl.bintray.com/fnproject/fnproject")
     } else {
     maven { url "https://dl.bintray.com/fnproject/fnproject" }
@@ -92,8 +94,7 @@ micronaut {
     }
 }
 
-@dependencies.template(applicationType, project, features)
-
+@dependencies.template(applicationType, project, features, gradleBuild.getDependencies())
 
 @if (features.mainClass().isPresent()) {
 application {
@@ -104,7 +105,6 @@ application {
     mainClass.set("com.fnproject.fn.runtime.EntryPoint")
 }
 }
-
 
 java {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
@@ -194,7 +194,7 @@ dockerBuild {
     @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
     images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     } else {
-        @if(isKotlinDsl) {
+        @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
         } else {
     images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
@@ -206,7 +206,7 @@ dockerBuildNative {
     @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
     images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     } else {
-        @if(isKotlinDsl) {
+        @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
         } else {
     images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
@@ -246,7 +246,7 @@ sourceSets {
     }
 }
 
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")"

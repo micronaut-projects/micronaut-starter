@@ -1,5 +1,6 @@
 package io.micronaut.starter.cli.feature.other
 
+import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
@@ -16,7 +17,7 @@ class CreateClientSpec extends CommandSpec implements CommandFixture {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     @Unroll
     void "test creating a client - #language.getName()"(Language language) {
