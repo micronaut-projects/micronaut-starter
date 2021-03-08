@@ -55,7 +55,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
-            .contains("class FooController {")
+                .contains("class FooController {")
         output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
                 .contains("class FooControllerTest")
 

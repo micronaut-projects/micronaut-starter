@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.function.azure
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -10,7 +11,7 @@ import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
-class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void "#jdkVersion supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
@@ -85,7 +86,6 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         def readme = output["README.md"]
 
         then:
-        build.contains('id("com.microsoft.azure.azurefunctions")')
         build.contains('runtime("azure_function")')
         build.contains('azurefunctions {')
         build.contains('os = "linux"')
@@ -105,6 +105,21 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
                 .contains("HttpRequestMessageBuilder")
+
+        when:
+        String pluginId = 'com.microsoft.azure.azurefunctions'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        build.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, build).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
         where:
         language << Language.values().toList()
         extension << Language.extensions()

@@ -5,15 +5,17 @@
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDsl
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-boolean isKotlinDsl
+GradleBuild gradleBuild
 )
 
-@if (features.contains("grpc") && isKotlinDsl) {
+@if (features.contains("grpc") && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 import com.google.protobuf.gradle.*
 }
 
@@ -23,30 +25,29 @@ version = "0.1"
 group = "@project.getPackageName()"
 
 @if (features.contains("asciidoctor")) {
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 apply(from="gradle/asciidoc.gradle")
 } else {
 apply from: "gradle/asciidoc.gradle"
 }
 }
 
-@if(features.language().isKotlin() && isKotlinDsl) {
+@if(features.language().isKotlin() && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 val kotlinVersion=project.properties.get("kotlinVersion")
 }
 
 repositories {
     mavenCentral()
-    jcenter()
     @if (VersionInfo.isMicronautSnapshot()) {
-    @if(isKotlinDsl) {
-    maven("https://oss.jfrog.org/oss-snapshot-local")
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     } else {
-    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
     }
     @if (features.contains("oracle-function")) {
         @if (!features.contains("oracle-function-http")) {
-    @if(isKotlinDsl) {
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     maven("https://dl.bintray.com/fnproject/fnproject")
     } else {
     maven { url "https://dl.bintray.com/fnproject/fnproject" }
@@ -93,8 +94,7 @@ micronaut {
     }
 }
 
-@dependencies.template(applicationType, project, features)
-
+@dependencies.template(applicationType, project, features, gradleBuild.getDependencies())
 
 @if (features.mainClass().isPresent()) {
 application {
@@ -105,7 +105,6 @@ application {
     mainClass.set("com.fnproject.fn.runtime.EntryPoint")
 }
 }
-
 
 java {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
@@ -134,104 +133,104 @@ tasks @{
 }
 
 @if (features.contains("jrebel")) {
-    run.dependsOn(generateRebel)
+run.dependsOn(generateRebel)
 }
 
 @if (features.contains("springloaded")) {
-    run {
-        jvmArgs("-noverify", "-javaagent:agent/springloaded-1.2.8.RELEASE.jar")
-    }
+run {
+    jvmArgs("-noverify", "-javaagent:agent/springloaded-1.2.8.RELEASE.jar")
+}
 }
 @if (features.contains("jrebel")) {
-    run {
-        if (project.hasProperty("rebelAgent")) {
-            jvmArgs(rebelAgent)
-        }
+run {
+    if (project.hasProperty("rebelAgent")) {
+        jvmArgs(rebelAgent)
     }
+}
 }
 
 
 @if (features.contains("azure-function")) {
-    azurefunctions {
-        resourceGroup = "java-functions-group"
-        appName = "@project.getName()"
-        pricingTier = "Consumption"
-        region = "westus"
-        runtime {
-          os = "linux"
-        }
-        localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+azurefunctions {
+    resourceGroup = "java-functions-group"
+    appName = "@project.getName()"
+    pricingTier = "Consumption"
+    region = "westus"
+    runtime {
+      os = "linux"
     }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
 }
 
 @if (features.contains("oracle-function")) {
 @if (features.contains("oracle-function-http")) {
-    dockerfileNative {
-      args("-XX:MaximumHeapSizePercent=80")
-    }
-    nativeImage {
-        args("--initialize-at-build-time=@project.getPackageName()")
-    }
+dockerfileNative {
+  args("-XX:MaximumHeapSizePercent=80")
+}
+nativeImage {
+    args("--initialize-at-build-time=@project.getPackageName()")
+}
 } else {
-    nativeImage {
-      args("--static",
-           "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
-           "--initialize-at-build-time=@project.getPackageName()")
-    }
+nativeImage {
+    args("--static",
+         "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+         "--initialize-at-build-time=@project.getPackageName()")
+}
 
-    dockerfileNative {
-      args("-XX:MaximumHeapSizePercent=80")
-      buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-      defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
-    }
+dockerfileNative {
+    args("-XX:MaximumHeapSizePercent=80")
+    buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
+    defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+}
 
-    dockerfile {
-      buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-      defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+dockerfile {
+    buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
+    defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+}
+}
+
+dockerBuild {
+    @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+    images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    } else {
+        @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+        } else {
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+        }
     }
 }
 
-    dockerBuild {
-        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+dockerBuildNative {
+    @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+    images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    } else {
+        @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
         } else {
-            @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
-            } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
-            }
+    images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
         }
     }
-
-    dockerBuildNative {
-        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-        } else {
-            @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
-            } else {
-        images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
-            }
-        }
-    }
+}
 } else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
-    dockerBuild{
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-    }
+dockerBuild {
+    images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+}
 
-    dockerBuildNative{
-        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
-    }
+dockerBuildNative {
+    images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+}
 }
 
 
-    @if (features.contains("jib")) {
-    jib {
-        to {
-            image = "gcr.io/myapp/jib-image"
-        }
+@if (features.contains("jib")) {
+jib {
+    to {
+        image = "gcr.io/myapp/jib-image"
     }
-    }
+}
+}
 
 @if (features.testFramework().isKotlinTestFramework() || features.language().isKotlin()) {
 @}
@@ -247,7 +246,7 @@ sourceSets {
     }
 }
 
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")"

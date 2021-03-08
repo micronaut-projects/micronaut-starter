@@ -1,14 +1,14 @@
 package io.micronaut.starter.feature.jaxrs
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
+class JaxRsSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature jax-rs contains links to micronaut docs'() {
         when:
@@ -20,11 +20,13 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-jaxrs/latest/guide/index.html")
     }
 
-
     @Unroll
     void 'test jax-rs with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jax-rs'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")')
@@ -39,7 +41,9 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void 'test maven jax-rs feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.JAVA), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['jax-rs'])
+                .render()
 
         then:
         template.contains("""
@@ -58,7 +62,10 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .features(['jax-rs'])
+                .render()
 
         then:
         template.contains("""
@@ -68,16 +75,19 @@ class JaxRsSpec extends BeanContextSpec  implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.jaxrs</groupId>
-                  <artifactId>micronaut-jaxrs-processor</artifactId>
-                  <version>\${micronaut.jaxrs.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.jaxrs</groupId>
+                 <artifactId>micronaut-jaxrs-processor</artifactId>
+                 <version>${micronaut.jaxrs.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['jax-rs'], Language.GROOVY), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.GROOVY)
+                .features(['jax-rs'])
+                .render()
 
         then:
         template.contains("""

@@ -29,8 +29,18 @@ import java.util.List;
 @Schema(description = "A list of application types")
 @Introspected
 public class ApplicationTypeList extends Linkable {
-    private final List<ApplicationTypeDTO> types;
+    private List<ApplicationTypeDTO> types;
 
+    /**
+     * Constructor.
+     */
+    public ApplicationTypeList() {
+    }
+
+    /**
+     *
+     * @param types The application types
+     */
     public ApplicationTypeList(List<ApplicationTypeDTO> types) {
         this.types = types;
     }
@@ -41,5 +51,13 @@ public class ApplicationTypeList extends Linkable {
     @Schema(description = "The application types")
     public List<ApplicationTypeDTO> getTypes() {
         return types;
+    }
+
+    /**
+     *
+     * @param types The application types
+     */
+    public void setTypes(List<ApplicationTypeDTO> types) {
+        this.types = types;
     }
 }

@@ -1,15 +1,15 @@
 package io.micronaut.starter.feature.messaging.mqtt
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
 import java.util.stream.Collectors
 
-class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
+class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature mqtt contains links to micronaut docs'() {
         when:
@@ -28,7 +28,9 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([feature])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
@@ -41,8 +43,9 @@ class MqttSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([feature]), []).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([feature])
+                .render()
         then:
         template.contains("""
     <dependency>

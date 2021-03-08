@@ -1,18 +1,18 @@
 package io.micronaut.starter.feature.test
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
+class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
     Hamcrest hamcrest = beanContext.getBean(Hamcrest)
@@ -35,8 +35,11 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle hamcrest feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'],
-                language, TestFramework.JUNIT), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['hamcrest'])
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .render()
 
         then:
         template.contains('testImplementation("org.hamcrest:hamcrest")')
@@ -48,8 +51,11 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle hamcrest feature fails for language=#language when test framework is not Junit'() {
         when:
-        buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language, testfw),
-                false).render().toString()
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['hamcrest'])
+                .language(language)
+                .testFramework(testfw)
+                .render()
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -68,8 +74,11 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven hamcrest feature fails for language=#language when test framework is not Junit'() {
         when:
-        pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language,
-                testfw), []).render().toString()
+        new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['hamcrest'])
+                .language(language)
+                .testFramework(testfw)
+                .render()
 
         then:
         def e = thrown(IllegalArgumentException)
@@ -88,8 +97,11 @@ class HamcrestSpec  extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven hamcrest feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['hamcrest'], language,
-                TestFramework.JUNIT), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['hamcrest'])
+                .language(language)
+                .testFramework(TestFramework.JUNIT)
+                .render()
 
         then:
         template.contains("""

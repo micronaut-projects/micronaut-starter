@@ -1,13 +1,13 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
-class HibernateGormSpec extends BeanContextSpec {
+class HibernateGormSpec extends ApplicationContextSpec {
 
     void "test hibernate gorm features"() {
         when:
@@ -22,7 +22,10 @@ class HibernateGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["hibernate-gorm"])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-hibernate-gorm")')
@@ -33,7 +36,10 @@ class HibernateGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["hibernate-gorm"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['hibernate-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""

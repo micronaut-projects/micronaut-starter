@@ -1,15 +1,14 @@
 package io.micronaut.starter.feature.tracing
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class ZipkinSpec extends BeanContextSpec  implements CommandOutputFixture {
+class ZipkinSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature tracing-zipkin contains links to micronaut docs'() {
         when:
@@ -25,7 +24,10 @@ class ZipkinSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle tracing-zipkin feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-zipkin'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['tracing-zipkin'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut:micronaut-tracing")')
@@ -40,7 +42,10 @@ class ZipkinSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven tracing-zipkin feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['tracing-zipkin'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['tracing-zipkin'])
+                .render()
 
         then:
         template.contains("""

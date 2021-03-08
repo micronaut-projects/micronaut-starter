@@ -131,14 +131,14 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         then:
         gradle
         gradle.contains("""
-    dockerBuild {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version\"]
-    }""")
+dockerBuild {
+    images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version\"]
+}""")
 
         gradle.contains("""
-    dockerBuildNative {
-        images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version\"]
-    }""")
+dockerBuildNative {
+    images = [\"\${System.env.DOCKER_IMAGE ?: project.name}:\$project.version\"]
+}""")
 
         where:
         feature << [OracleFunctionsJavaWorkflow.NAME, OracleFunctionsGraalWorkflow.NAME]

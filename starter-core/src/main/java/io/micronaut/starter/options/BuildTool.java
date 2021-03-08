@@ -17,9 +17,11 @@ package io.micronaut.starter.options;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.gradle.GradleDsl;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public enum BuildTool {
     GRADLE("build/libs", "build.gradle", "-*-all.jar"),
@@ -63,5 +65,16 @@ public enum BuildTool {
 
     public boolean isGradle() {
         return this == GRADLE || this == GRADLE_KOTLIN;
+    }
+
+    public Optional<GradleDsl> getGradleDsl() {
+        if (isGradle()) {
+            if (this == BuildTool.GRADLE_KOTLIN) {
+                return Optional.of(GradleDsl.KOTLIN);
+            } else if (this == BuildTool.GRADLE) {
+                return Optional.of(GradleDsl.GROOVY);
+            }
+        }
+        return Optional.empty();
     }
 }

@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.dekorate;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.micrometer.Prometheus;
 
@@ -60,6 +62,17 @@ public class DekoratePrometheus extends AbstractDekorateServiceFeature {
         if (!featureContext.isPresent(Prometheus.class)) {
             featureContext.addFeature(prometheus);
         }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder prometheus = Dependency.builder()
+                .groupId("io.dekorate")
+                .artifactId("prometheus-annotations")
+                .template();
+
+        generatorContext.addDependency(prometheus.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(prometheus.compile());
     }
 
     @Nullable

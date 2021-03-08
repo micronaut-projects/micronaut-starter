@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.feature.grpc;
 
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.grpc.template.proto;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;

@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
@@ -47,6 +49,17 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
         return applicationType == ApplicationType.DEFAULT;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder springWebAnnotation = Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-web-annotation")
+                .version("${micronaut.spring.version}")
+                .template();
+
+        generatorContext.addDependency(springWebAnnotation.annotationProcessor());
+        generatorContext.addDependency(springWebAnnotation.testAnnotationProcessor());
+    }
 }
 
 

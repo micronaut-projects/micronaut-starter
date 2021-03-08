@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -46,6 +48,17 @@ public class SpringBoot extends SpringFeature {
         return true;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder springBoot = Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-boot")
+                .version("${micronaut.spring.version}")
+                .template();
+
+        generatorContext.addDependency(springBoot.annotationProcessor());
+        generatorContext.addDependency(springBoot.testAnnotationProcessor());
+    }
 }
 
 

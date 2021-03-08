@@ -46,4 +46,5 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#rocker";
     }
+
 }

@@ -1,13 +1,13 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 
-class Neo4jGormSpec extends BeanContextSpec {
+class Neo4jGormSpec extends ApplicationContextSpec {
 
     void "test neo4j gorm features"() {
         when:
@@ -21,7 +21,10 @@ class Neo4jGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["neo4j-gorm"])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-neo4j-gorm")')
@@ -31,7 +34,10 @@ class Neo4jGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["neo4j-gorm"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['neo4j-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
