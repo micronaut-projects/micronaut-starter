@@ -7,6 +7,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 
 class DataJpaSpec extends ApplicationContextSpec {
 
@@ -150,5 +151,23 @@ class DataJpaSpec extends ApplicationContextSpec {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
+    void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .language(Language.GROOVY)
+            .features(["data-jpa"])
+            .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-processor</artifactId>
+      <scope>provided</scope>
+    </dependency>
+''')
     }
 }
