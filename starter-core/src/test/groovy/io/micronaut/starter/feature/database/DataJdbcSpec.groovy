@@ -8,6 +8,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Issue
 
 class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -132,5 +133,23 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
+    void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .language(Language.GROOVY)
+            .features(["data-jdbc"])
+            .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-processor</artifactId>
+      <scope>provided</scope>
+    </dependency>
+''')
     }
 }
