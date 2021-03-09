@@ -9,7 +9,7 @@ buildscript {
         classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
         classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
         classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
-        classpath "com.adarshr:gradle-test-logger-plugin:2.1.0"
+        classpath "com.adarshr:gradle-test-logger-plugin:2.1.1"
     }
 }
 
