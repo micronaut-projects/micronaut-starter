@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.security
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.Source
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -30,7 +31,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut.security:micronaut-security-jwt")')
+        !template.contains(getGradleAnnotationProcessorScope(language) + '("io.micronaut.security:micronaut-security-annotations:${micronaut.security.version}")')
 
         where:
         language << Language.values().toList()
@@ -67,7 +68,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
                  <artifactId>micronaut-security-annotations</artifactId>
                  <version>${micronaut.security.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {

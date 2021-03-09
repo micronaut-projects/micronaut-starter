@@ -17,10 +17,10 @@ package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.order.OrderUtil;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -41,9 +41,9 @@ public class GradleDependency extends DependencyCoordinate {
     @NonNull
     private GradleConfiguration gradleConfiguration;
 
-    public GradleDependency(@NonNull Dependency dependency) {
+    public GradleDependency(@NonNull Dependency dependency, @NonNull GeneratorContext generatorContext) {
         super(dependency);
-        this.gradleConfiguration = GradleConfiguration.of(dependency.getScope()).orElseThrow(() ->
+        this.gradleConfiguration = GradleConfiguration.of(dependency.getScope(), generatorContext.getLanguage(), generatorContext.getTestFramework()).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
     }
 
@@ -73,5 +73,11 @@ public class GradleDependency extends DependencyCoordinate {
         int result = super.hashCode();
         result = 31 * result + gradleConfiguration.hashCode();
         return result;
+    }
+
+    @NonNull
+    public String toSnippet() {
+        return gradleConfiguration.getConfigurationName() + "(\"" + getGroupId() + ":" + getArtifactId() +
+                ((getVersion() != null && !(getVersion().startsWith("${") && getVersion().endsWith("}"))) ? (":" + getVersion()) : "") + "\")";
     }
 }

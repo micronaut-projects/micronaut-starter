@@ -15,23 +15,27 @@
  */
 package io.micronaut.starter.build.gradle;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.TestFramework;
 
 import java.util.Optional;
 
 public enum GradleConfiguration implements Ordered {
     ANNOTATION_PROCESSOR("annotationProcessor", 0),
-    API("api", 1),
-    IMPLEMENTATION("implementation", 2),
-    COMPILE_ONLY("compileOnly", 3),
-    COMPILE_ONLY_API("compileOnlyApi", 4),
+    KAPT("kapt", 1),
+    API("api", 2),
+    IMPLEMENTATION("implementation", 3),
+    COMPILE_ONLY("compileOnly", 4),
     RUNTIME_ONLY("runtimeOnly", 5),
-    TEST_ANNOTATION_PROCESSOR("annotationProcessor", 6),
-    TEST_IMPLEMENTATION("testImplementation", 7),
-    TEST_COMPILE_ONLY("testCompileOnly", 8),
-    TEST_RUNTIME_ONLY("testRuntimeOnly", 9);
+    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 6),
+    TEST_KAPT("kaptTest", 7),
+    TEST_IMPLEMENTATION("testImplementation", 8),
+    TEST_COMPILE_ONLY("testCompileOnly", 9),
+    TEST_RUNTIME_ONLY("testRuntimeOnly", 10);
 
     private final String configurationName;
     private final int order;
@@ -55,10 +59,22 @@ public enum GradleConfiguration implements Ordered {
         return order;
     }
 
-    public static Optional<GradleConfiguration> of(Scope scope) {
+    @NonNull
+    public static Optional<GradleConfiguration> of(@NonNull Scope scope, @NonNull Language language, @NonNull TestFramework testFramework) {
         switch (scope.getSource()) {
             case MAIN:
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
+                    if (language == Language.JAVA) {
+                        if (testFramework == TestFramework.KOTEST) {
+                            return Optional.of(GradleConfiguration.KAPT);
+                        } else {
+                            return Optional.of(GradleConfiguration.ANNOTATION_PROCESSOR);
+                        }
+                    } else if (language == Language.KOTLIN) {
+                        return Optional.of(GradleConfiguration.KAPT);
+                    } else if (language == Language.GROOVY) {
+                        return Optional.of(GradleConfiguration.COMPILE_ONLY);
+                    }
                     return Optional.of(GradleConfiguration.ANNOTATION_PROCESSOR);
                 }
                 if (scope.getPhases().contains(Phase.RUNTIME)) {
@@ -70,11 +86,21 @@ public enum GradleConfiguration implements Ordered {
                 if (scope.getPhases().contains(Phase.COMPILATION)) {
                     return Optional.of(GradleConfiguration.COMPILE_ONLY);
                 }
-
                 break;
 
             case TEST:
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
+                    if (language == Language.JAVA) {
+                        if (testFramework == TestFramework.KOTEST) {
+                            return Optional.of(GradleConfiguration.TEST_KAPT);
+                        } else {
+                            return Optional.of(GradleConfiguration.TEST_ANNOTATION_PROCESSOR);
+                        }
+                    } else if (language == Language.KOTLIN) {
+                        return Optional.of(GradleConfiguration.TEST_KAPT);
+                    } else if (language == Language.GROOVY) {
+                        return Optional.of(GradleConfiguration.TEST_COMPILE_ONLY);
+                    }
                     return Optional.of(GradleConfiguration.TEST_ANNOTATION_PROCESSOR);
                 }
                 if (scope.getPhases().contains(Phase.RUNTIME)) {

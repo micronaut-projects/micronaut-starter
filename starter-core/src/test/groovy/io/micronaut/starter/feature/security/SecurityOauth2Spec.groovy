@@ -67,7 +67,7 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
                  <artifactId>micronaut-security-annotations</artifactId>
                  <version>${micronaut.security.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {

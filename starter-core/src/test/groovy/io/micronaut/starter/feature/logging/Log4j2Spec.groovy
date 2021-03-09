@@ -13,9 +13,9 @@ class Log4j2Spec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.12.1")')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.13.2")')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-api:2.13.2")')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.13.2")')
     }
 
     void "org.apache.logging.log4j dependencies are present for log4j2 feature and build maven"() {
@@ -29,7 +29,7 @@ class Log4j2Spec extends ApplicationContextSpec {
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.12.1</version>
+      <version>2.13.2</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -37,7 +37,7 @@ class Log4j2Spec extends ApplicationContextSpec {
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.12.1</version>
+      <version>2.13.2</version>
       <scope>runtime</scope>
     </dependency>
 """)
@@ -45,7 +45,7 @@ class Log4j2Spec extends ApplicationContextSpec {
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.12.1</version>
+      <version>2.13.2</version>
       <scope>runtime</scope>
     </dependency>
 """)
