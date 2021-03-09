@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -207,13 +207,17 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/coherence/CoherenceGrpcClient.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/coherence/CoherenceGrpcClient.html#isPreview--">isPreview</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/coherence/CoherenceGrpcClient.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/coherence/CoherenceGrpcClient.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -233,7 +237,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isPreview--">isPreview</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
 </ul>
 </li>
 </ul>
@@ -418,7 +422,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <a name="getCategory--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getCategory</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getCategory()</pre>
@@ -427,6 +431,21 @@ implements <a href="../../../../../io/micronaut/starter/feature/Feature.html" ti
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#getCategory--">getCategory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The <a href="../../../../../io/micronaut/starter/feature/Category.html" title="class in io.micronaut.starter.feature"><code>Category</code></a> to which the feature belongs to.</dd>
+</dl>
+</li>
+</ul>
+<a name="isPreview--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>isPreview</h4>
+<pre>public&nbsp;boolean&nbsp;isPreview()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#isPreview--">isPreview</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Indicates the feature is in preview status and is subject to change.</dd>
 </dl>
 </li>
 </ul>
