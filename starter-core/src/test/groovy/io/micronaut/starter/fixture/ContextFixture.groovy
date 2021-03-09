@@ -3,6 +3,8 @@ package io.micronaut.starter.fixture
 import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
 import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.build.dependencies.Phase
+import io.micronaut.starter.build.dependencies.Source
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -24,13 +26,21 @@ trait ContextFixture {
 
     abstract BeanContext getBeanContext()
 
-    String getGradleAnnotationProcessorScope(Language language) {
+    String getGradleAnnotationProcessorScope(Language language, Source source = Source.MAIN) {
         if (language == Language.JAVA) {
-            "annotationProcessor"
+            if (source == Source.MAIN) {
+                return "annotationProcessor"
+            } else if (source == Source.TEST) {
+                return "testAnnotationProcessor"
+            }
         } else if (language == Language.KOTLIN) {
             "kapt"
         } else if (language == Language.GROOVY) {
-            "compileOnly"
+            if (source == Source.MAIN) {
+                return "compileOnly"
+            } else if (source == Source.TEST) {
+                return "testCompileOnly"
+            }
         }
     }
 

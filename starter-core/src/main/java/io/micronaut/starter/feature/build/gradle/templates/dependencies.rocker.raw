@@ -3,26 +3,14 @@
 @import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.build.gradle.GradleConfiguration
-@import io.micronaut.starter.build.gradle.GradleDependency
 @import java.util.stream.Collectors
-@import java.util.List
 
 @args (
 ApplicationType applicationType,
 Project project,
-Features features,
-List<GradleDependency> dependencies,
+Features features
 )
 
-dependencies {
-@for (GradleDependency processor : dependencies.stream().filter(dep -> dep.getConfiguration() == GradleConfiguration.ANNOTATION_PROCESSOR).collect(Collectors.toList())) {
-@if (processor.getVersion() == null || (processor.getVersion().startsWith("${") || processor.getVersion().endsWith(".version}"))) {
-@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + "\"")
-} else {
-@annotationProcessor.template(features, "\"" + processor.getGroupId() + ":" + processor.getArtifactId() + ":" + processor.getVersion() + "\"")
-}
-}
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
@@ -499,10 +487,5 @@ dependencies {
 }
 @if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
-}
-}
-
-@for (GradleDependency d : dependencies.stream().filter(dep -> dep.getConfiguration() != GradleConfiguration.ANNOTATION_PROCESSOR).collect(Collectors.toList())) {
-    @dependency.template(d.getGroupId(), d.getArtifactId(), d.getConfiguration().toString(), d.getVersion())
 }
 }

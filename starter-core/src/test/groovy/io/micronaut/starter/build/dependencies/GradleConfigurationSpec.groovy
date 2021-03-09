@@ -1,6 +1,8 @@
 package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.build.gradle.GradleConfiguration
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -14,7 +16,7 @@ class GradleConfigurationSpec extends Specification {
     void "it is possible to adapt from source and phases to Gradle configuration"(Source source,
                                                                                   List<Phase> phases, GradleConfiguration configuration,
                                                                                   String description) {
-        configuration == GradleConfiguration.of(new Scope(source, phases)).get()
+        configuration == GradleConfiguration.of(new Scope(source, phases), Language.JAVA, TestFramework.JUNIT).get()
 
         where:
         source      | phases                              || configuration

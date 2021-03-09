@@ -83,7 +83,7 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
                  <artifactId>micronaut-security-annotations</artifactId>
                  <version>${micronaut.security.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {

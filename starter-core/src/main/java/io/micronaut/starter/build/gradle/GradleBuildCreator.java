@@ -38,7 +38,7 @@ public class GradleBuildCreator {
     private List<GradleDependency> resolveDependencies(@NonNull GeneratorContext generatorContext) {
         return generatorContext.getDependencies()
                 .stream()
-                .map(GradleDependency::new)
+                .map(dep -> new GradleDependency(dep, generatorContext))
                 .sorted(GradleDependency.COMPARATOR)
                 .collect(Collectors.toList());
     }

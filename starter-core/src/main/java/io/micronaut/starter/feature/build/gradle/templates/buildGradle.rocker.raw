@@ -2,11 +2,11 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.util.VersionInfo
-@import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.gradle.GradleBuild
 @import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.build.gradle.GradleDependency
 
 @args (
 ApplicationType applicationType,
@@ -94,7 +94,12 @@ micronaut {
     }
 }
 
-@dependencies.template(applicationType, project, features, gradleBuild.getDependencies())
+dependencies {
+@for (GradleDependency dependency : gradleBuild.getDependencies()) {
+    @dependency.toSnippet()
+}
+@dependencies.template(applicationType, project, features)
+}
 
 @if (features.mainClass().isPresent()) {
 application {

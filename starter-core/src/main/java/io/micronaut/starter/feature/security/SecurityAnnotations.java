@@ -43,12 +43,10 @@ public class SecurityAnnotations implements Feature, MicronautServerDependent {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder securityAnnotations = Dependency.builder()
+        generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-annotations")
                 .version("${micronaut.security.version}")
-                .template();
-        generatorContext.addDependency(securityAnnotations.annotationProcessor());
-        generatorContext.addDependency(securityAnnotations.testAnnotationProcessor());
+                .annotationProcessor());
     }
 }
