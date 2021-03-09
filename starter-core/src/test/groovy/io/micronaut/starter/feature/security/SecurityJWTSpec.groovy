@@ -31,7 +31,6 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
-        template.contains("${getGradleAnnotationProcessorScope(language, Source.TEST)}(\"io.micronaut.security:micronaut-security-annotations\")")
         !template.contains(getGradleAnnotationProcessorScope(language) + '("io.micronaut.security:micronaut-security-annotations:${micronaut.security.version}")')
 
         where:
@@ -69,7 +68,7 @@ class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFi
                  <artifactId>micronaut-security-annotations</artifactId>
                  <version>${micronaut.security.version}</version>
                </annotationProcessorPath>
-''') == 2
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {
