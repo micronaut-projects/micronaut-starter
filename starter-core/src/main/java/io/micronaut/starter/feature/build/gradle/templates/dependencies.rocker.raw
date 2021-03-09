@@ -3,14 +3,21 @@
 @import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDependency
 @import java.util.stream.Collectors
 
 @args (
 ApplicationType applicationType,
 Project project,
-Features features
+Features features,
+GradleBuild gradleBuild
 )
 
+dependencies {
+@for (GradleDependency dependency : gradleBuild.getDependencies()) {
+    @dependency.toSnippet()
+}
 @if (features.contains("graalvm")) {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
@@ -487,5 +494,6 @@ Features features
 }
 @if (features.isFeaturePresent(MongoFeature.class)) {
     @dependency.template("org.testcontainers", "mongodb", "testImplementation", null)
+}
 }
 }

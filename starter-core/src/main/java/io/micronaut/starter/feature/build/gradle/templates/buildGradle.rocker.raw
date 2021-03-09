@@ -94,12 +94,8 @@ micronaut {
     }
 }
 
-dependencies {
-@for (GradleDependency dependency : gradleBuild.getDependencies()) {
-    @dependency.toSnippet()
-}
-@dependencies.template(applicationType, project, features)
-}
+@dependencies.template(applicationType, project, features, gradleBuild)
+
 
 @if (features.mainClass().isPresent()) {
 application {
