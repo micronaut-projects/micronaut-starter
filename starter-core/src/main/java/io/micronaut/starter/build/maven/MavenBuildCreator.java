@@ -46,13 +46,13 @@ public class MavenBuildCreator {
         for (Dependency dependency : generatorContext.getDependencies()) {
             if (dependency.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
                 if (dependency.getScope().getSource() == Source.MAIN) {
-                    annotationProcessorsCoordinates.add(new DependencyCoordinate(dependency));
+                    annotationProcessorsCoordinates.add(new DependencyCoordinate(dependency, true));
                     if (dependency.isAnnotationProcessorPriority()) {
                         combineAttribute = MavenCombineAttribute.OVERRIDE;
                     }
                 }
                 if (dependency.getScope().getSource() == Source.TEST) {
-                    testAnnotationProcessorsCoordinates.add(new DependencyCoordinate(dependency));
+                    testAnnotationProcessorsCoordinates.add(new DependencyCoordinate(dependency, true));
                     if (dependency.isAnnotationProcessorPriority()) {
                         testCombineAttribute = MavenCombineAttribute.OVERRIDE;
                     }
@@ -63,13 +63,13 @@ public class MavenBuildCreator {
         Coordinate injectJava = Dependency.builder()
                 .groupId("io.micronaut")
                 .artifactId("micronaut-inject-java")
-                .version("${micronaut.version}")
-                .buildCoordinate();
+                .versionProperty("micronaut.version")
+                .buildCoordinate(true);
         Coordinate validation = Dependency.builder()
                 .groupId("io.micronaut")
                 .artifactId("micronaut-validation")
-                .version("${micronaut.version}")
-                .buildCoordinate();
+                .versionProperty("micronaut.version")
+                .buildCoordinate(true);
 
         if (combineAttribute == MavenCombineAttribute.OVERRIDE) {
             annotationProcessorsCoordinates.add(injectJava);

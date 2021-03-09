@@ -58,7 +58,7 @@ public class Picocli implements DefaultFeature {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("info.picocli")
                 .artifactId("picocli-codegen")
-                .version("${picocli.version}")
+                .versionProperty("picocli.version")
                 .annotationProcessor());
         generatorContext.addDependency(Dependency.builder().groupId("info.picocli").artifactId("picocli").compile());
         generatorContext.addDependency(Dependency.builder().groupId("io.micronaut.picocli").artifactId("micronaut-picocli").compile());

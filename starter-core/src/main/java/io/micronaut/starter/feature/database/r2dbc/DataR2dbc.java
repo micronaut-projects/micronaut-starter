@@ -52,7 +52,7 @@ public class DataR2dbc implements R2dbcFeature {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-processor")
-                .version("${micronaut.data.version}")
+                .versionProperty("micronaut.data.version")
                 .annotationProcessor());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));

@@ -59,7 +59,7 @@ public class GraalVM implements Feature {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut")
                     .artifactId("micronaut-graal")
-                    .version("${micronaut.version}")
+                    .versionProperty("micronaut.version")
                     .annotationProcessor());
         }
     }

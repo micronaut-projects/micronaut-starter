@@ -24,19 +24,21 @@ import java.util.Objects;
 
 public final class Dependency {
 
-    private Scope scope;
-    private String groupId;
-    private String artifactId;
-    private String version;
-    private boolean requiresLookup;
-    private int order;
-    private boolean annotationProcessorPriority;
+    private final Scope scope;
+    private final String groupId;
+    private final String artifactId;
+    private final String version;
+    private final String versionProperty;
+    private final boolean requiresLookup;
+    private final int order;
+    private final boolean annotationProcessorPriority;
 
-    private Dependency(Scope scope, String groupId, String artifactId, String version, boolean requiresLookup, boolean annotationProcessorPriority, int order) {
+    private Dependency(Scope scope, String groupId, String artifactId, String version, String versionProperty, boolean requiresLookup, boolean annotationProcessorPriority, int order) {
         this.scope = scope;
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
+        this.versionProperty = versionProperty;
         this.requiresLookup = requiresLookup;
         this.annotationProcessorPriority = annotationProcessorPriority;
         this.order = order;
@@ -59,6 +61,11 @@ public final class Dependency {
         return version;
     }
 
+    @Nullable
+    public String getVersionProperty() {
+        return versionProperty;
+    }
+
     public int getOrder() {
         return order;
     }
@@ -72,11 +79,31 @@ public final class Dependency {
     }
 
     public Dependency resolved(Coordinate coordinate) {
-        return new Dependency(scope, coordinate.getGroupId(), artifactId, coordinate.getVersion(), false, annotationProcessorPriority, order);
+        return new Dependency(scope, coordinate.getGroupId(), artifactId, coordinate.getVersion(), null, false, annotationProcessorPriority, order);
     }
 
     public boolean isAnnotationProcessorPriority() {
         return annotationProcessorPriority;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dependency that = (Dependency) o;
+
+        return Objects.equals(getGroupId(), that.getGroupId()) &&
+                Objects.equals(getArtifactId(), that.getArtifactId()) &&
+                Objects.equals(getScope(), that.getScope());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getGroupId(), getArtifactId(), getScope());
     }
 
     public static class Builder {
@@ -85,6 +112,7 @@ public final class Dependency {
         private String groupId;
         private String artifactId;
         private String version;
+        private String versionProperty;
         private boolean requiresLookup;
         private int order = 0;
         private boolean template = false;
@@ -178,6 +206,15 @@ public final class Dependency {
             }
         }
 
+        public Builder versionProperty(@Nullable String versionProperty) {
+            if (template) {
+                return copy().versionProperty(versionProperty);
+            } else {
+                this.versionProperty = versionProperty;
+                return this;
+            }
+        }
+
         public Builder order(int order) {
             if (template) {
                 return copy().order(order);
@@ -196,13 +233,21 @@ public final class Dependency {
             Objects.requireNonNull(scope, "The dependency scope must be set");
             Objects.requireNonNull(artifactId, "The artifact id must be set");
 
-            return new Dependency(scope, groupId, artifactId, version, requiresLookup, annotationProcessorPriority, order);
+            return buildInternal();
         }
 
         public DependencyCoordinate buildCoordinate() {
+            return buildCoordinate(false);
+        }
+
+        public DependencyCoordinate buildCoordinate(boolean showVersionProperty) {
             Objects.requireNonNull(artifactId, "The artifact id must be set");
 
-            return new DependencyCoordinate(groupId, artifactId, version, order);
+            return new DependencyCoordinate(buildInternal(), showVersionProperty);
+        }
+
+        private Dependency buildInternal() {
+            return new Dependency(scope, groupId, artifactId, version, versionProperty, requiresLookup, annotationProcessorPriority, order);
         }
 
         private Builder copy() {
@@ -210,7 +255,12 @@ public final class Dependency {
             if (requiresLookup) {
                 builder.lookupArtifactId(artifactId);
             } else {
-                builder.groupId(groupId).artifactId(artifactId).version(version);
+                builder.groupId(groupId).artifactId(artifactId);
+                if (versionProperty != null) {
+                    builder.versionProperty(versionProperty);
+                } else {
+                    builder.version(version);
+                }
             }
             return builder.order(order);
         }

@@ -65,7 +65,7 @@ public class DekorateOpenshift extends AbstractDekoratePlatformFeature {
                 .artifactId("openshift-annotations")
                 .template();
 
-        generatorContext.addDependency(openshift.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(openshift.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(openshift.compile());
     }
 }

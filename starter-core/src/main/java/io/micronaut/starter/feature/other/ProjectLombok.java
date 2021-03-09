@@ -75,7 +75,7 @@ public class ProjectLombok implements LanguageSpecificFeature {
                 .artifactId("lombok")
                 .template();
 
-        generatorContext.addDependency(lombok.version("${lombok.version}").order(Ordered.HIGHEST_PRECEDENCE).annotationProcessor(true));
+        generatorContext.addDependency(lombok.versionProperty("lombok.version").order(Ordered.HIGHEST_PRECEDENCE).annotationProcessor(true));
         generatorContext.addDependency(lombok.compileOnly());
     }
 }

@@ -65,7 +65,7 @@ public class DekorateKnative extends AbstractDekoratePlatformFeature {
                 .artifactId("knative-annotations")
                 .template();
 
-        generatorContext.addDependency(knative.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(knative.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(knative.compile());
     }
 }

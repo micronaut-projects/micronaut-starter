@@ -65,7 +65,7 @@ public class DekorateHalkyon extends AbstractDekorateServiceFeature {
                 .artifactId("halkyon-annotations")
                 .template();
 
-        generatorContext.addDependency(halkyon.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(halkyon.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(halkyon.compile());
     }
 }

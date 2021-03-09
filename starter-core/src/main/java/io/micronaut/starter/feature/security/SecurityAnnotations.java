@@ -46,7 +46,7 @@ public class SecurityAnnotations implements Feature, MicronautServerDependent {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-annotations")
-                .version("${micronaut.security.version}")
+                .versionProperty("micronaut.security.version")
                 .annotationProcessor());
     }
 }

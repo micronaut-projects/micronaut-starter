@@ -65,7 +65,7 @@ public class DekorateServiceCatalog extends AbstractDekorateServiceFeature {
                 .artifactId("servicecatalog-annotations")
                 .template();
 
-        generatorContext.addDependency(servicecatalog.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(servicecatalog.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(servicecatalog.compile());
     }
 }

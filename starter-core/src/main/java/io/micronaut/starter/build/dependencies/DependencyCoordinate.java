@@ -32,9 +32,17 @@ public class DependencyCoordinate implements Coordinate, Ordered {
     private final int order;
 
     public DependencyCoordinate(Dependency dependency) {
+        this(dependency, false);
+    }
+
+    public DependencyCoordinate(Dependency dependency, boolean showVersionProperty) {
         this.groupId = dependency.getGroupId();
         this.artifactId = dependency.getArtifactId();
-        this.version = dependency.getVersion();
+        if (showVersionProperty && dependency.getVersionProperty() != null) {
+            this.version = "${" + dependency.getVersionProperty() + "}";
+        } else {
+            this.version = dependency.getVersion();
+        }
         this.order = dependency.getOrder();
     }
 

@@ -45,7 +45,7 @@ public class Spring implements Feature {
         Dependency.Builder springAnnotation = Dependency.builder()
                 .groupId("io.micronaut.spring")
                 .artifactId("micronaut-spring-annotation")
-                .version("${micronaut.spring.version}")
+                .versionProperty("micronaut.spring.version")
                 .template();
 
         generatorContext.addDependency(springAnnotation.annotationProcessor());

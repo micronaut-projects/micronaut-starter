@@ -78,6 +78,6 @@ public class GradleDependency extends DependencyCoordinate {
     @NonNull
     public String toSnippet() {
         return gradleConfiguration.getConfigurationName() + "(\"" + getGroupId() + ":" + getArtifactId() +
-                ((getVersion() != null && !(getVersion().startsWith("${") && getVersion().endsWith("}"))) ? (":" + getVersion()) : "") + "\")";
+                (getVersion() != null ? (":" + getVersion()) : "") + "\")";
     }
 }

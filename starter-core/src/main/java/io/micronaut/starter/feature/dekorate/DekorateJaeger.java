@@ -64,7 +64,7 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
                 .artifactId("jaeger-annotations")
                 .template();
 
-        generatorContext.addDependency(jaeger.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(jaeger.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(jaeger.compile());
     }
 }

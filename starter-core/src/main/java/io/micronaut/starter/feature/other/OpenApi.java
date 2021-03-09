@@ -51,7 +51,7 @@ public class OpenApi implements Feature, MicronautServerDependent {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.openapi")
                 .artifactId("micronaut-openapi")
-                .version("${micronaut.openapi.version}")
+                .versionProperty("micronaut.openapi.version")
                 .annotationProcessor());
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.swagger.core.v3")

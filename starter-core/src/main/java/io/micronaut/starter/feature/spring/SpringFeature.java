@@ -41,7 +41,7 @@ public abstract class SpringFeature implements Feature {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.spring")
                 .artifactId("micronaut-spring-annotation")
-                .version("${micronaut.spring.version}")
+                .versionProperty("micronaut.spring.version")
                 .annotationProcessor());
     }
 

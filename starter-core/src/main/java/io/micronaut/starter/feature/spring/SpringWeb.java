@@ -54,7 +54,7 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
         Dependency.Builder springWebAnnotation = Dependency.builder()
                 .groupId("io.micronaut.spring")
                 .artifactId("micronaut-spring-web-annotation")
-                .version("${micronaut.spring.version}")
+                .versionProperty("micronaut.spring.version")
                 .template();
 
         generatorContext.addDependency(springWebAnnotation.annotationProcessor());
