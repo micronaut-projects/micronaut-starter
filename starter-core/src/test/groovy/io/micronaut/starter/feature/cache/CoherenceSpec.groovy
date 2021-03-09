@@ -2,7 +2,6 @@ package io.micronaut.starter.feature.cache
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.feature.coherence.CoherenceFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -52,12 +51,16 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
       <artifactId>micronaut-coherence</artifactId>
       <scope>compile</scope>
     </dependency>
+    """)
+        template.contains("""
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>${CoherenceFeature.COHERENCE_VERSION}</version>
+      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
+    """)
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.coherence</groupId>
       <artifactId>micronaut-coherence-cache</artifactId>
