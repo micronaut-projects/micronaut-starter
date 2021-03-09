@@ -49,7 +49,7 @@ micronaut:
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-data")')
-        template.contains("annotationProcessor(\"io.micronaut.coherence:micronaut-coherence-processor:${VersionInfo.getBomVersion("micronaut.coherence")}\"")
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.coherence:micronaut-coherence-processor:${VersionInfo.getBomVersion("micronaut.coherence")}\"")
         template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
 
         where:
