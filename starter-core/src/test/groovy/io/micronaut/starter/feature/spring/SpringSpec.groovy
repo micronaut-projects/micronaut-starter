@@ -135,7 +135,7 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-annotation</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 """)
 

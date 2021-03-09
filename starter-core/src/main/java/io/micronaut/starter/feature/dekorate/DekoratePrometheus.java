@@ -71,7 +71,7 @@ public class DekoratePrometheus extends AbstractDekorateServiceFeature {
                 .artifactId("prometheus-annotations")
                 .template();
 
-        generatorContext.addDependency(prometheus.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(prometheus.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(prometheus.compile());
     }
 

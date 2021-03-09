@@ -94,7 +94,13 @@ class SpringBootSpec extends ApplicationContextSpec {
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
-
+        template.contains("""
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-annotation</artifactId>
+              <version>\${micronaut.spring.version}</version>
+            </path>
+""")
         when:
         template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['spring-boot'])

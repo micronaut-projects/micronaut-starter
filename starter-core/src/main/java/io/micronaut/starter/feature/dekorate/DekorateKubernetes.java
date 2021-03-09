@@ -65,7 +65,7 @@ public class DekorateKubernetes extends AbstractDekoratePlatformFeature {
                 .artifactId("kubernetes-annotations")
                 .template();
 
-        generatorContext.addDependency(kubernetes.version("${dekorate.version}").annotationProcessor());
+        generatorContext.addDependency(kubernetes.versionProperty("dekorate.version").annotationProcessor());
         generatorContext.addDependency(kubernetes.compile());
     }
 }
