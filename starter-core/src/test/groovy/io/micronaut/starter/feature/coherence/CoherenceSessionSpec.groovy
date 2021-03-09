@@ -1,48 +1,62 @@
-package io.micronaut.starter.feature.cache
+package io.micronaut.starter.feature.coherence
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.feature.coherence.CoherenceFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
+class CoherenceSessionSpec extends BeanContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature cache-coherence contains links to micronaut docs'() {
+    void 'test readme.md with feature coherence-session contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-coherence'])
+        def output = generate(['coherence-session'])
         def readme = output["README.md"]
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#cache")
+        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#coherenceHttpSessions")
         readme.contains("https://coherence.java.net/")
     }
 
+    void 'test configuration with feature coherence-session'() {
+        when:
+        def output = generate(['coherence-session'])
+        def configuration = output['src/main/resources/application.yml']
+
+        then:
+        configuration
+        configuration.contains("""
+  session:
+    http:
+      coherence:
+        enabled: true
+""")
+    }
+
     @Unroll
-    void 'test gradle cache-coherence feature for language=#language'(Language language) {
+    void 'test gradle coherence-session feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['cache-coherence'])
+                .features(['coherence-session'])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
-        template.contains('implementation("io.micronaut.coherence:micronaut-coherence-cache")')
+        template.contains('implementation("io.micronaut.coherence:micronaut-coherence-session")')
         template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
 
         where:
         language << Language.values().toList()
     }
     @Unroll
-    void 'test maven cache-coherence feature for language=#language'(Language language) {
+    void 'test maven coherence-session feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['cache-coherence'])
+                .features(['coherence-session'])
                 .render()
 
         then:
@@ -52,15 +66,19 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
       <artifactId>micronaut-coherence</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>${CoherenceFeature.COHERENCE_VERSION}</version>
+      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.coherence</groupId>
-      <artifactId>micronaut-coherence-cache</artifactId>
+      <artifactId>micronaut-coherence-session</artifactId>
       <scope>compile</scope>
     </dependency>
 """)

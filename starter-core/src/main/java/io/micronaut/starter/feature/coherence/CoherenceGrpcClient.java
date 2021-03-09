@@ -13,37 +13,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.cache;
+package io.micronaut.starter.feature.coherence;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.coherence.CoherenceFeature;
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 
 import javax.inject.Singleton;
+import java.util.Map;
 
+/**
+ * Coherence as a Distributed Configuration
+ *
+ * @author Pavol Gressa
+ * @since 2.4
+ */
 @Singleton
-public class Coherence implements CacheFeature {
+public class CoherenceGrpcClient implements Feature {
 
     private CoherenceFeature coherenceFeature;
 
-    public Coherence(CoherenceFeature coherenceFeature) {
+    public CoherenceGrpcClient(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;
     }
 
     @Override
     public String getName() {
-        return "cache-coherence";
+        return "coherence-grpc-client";
     }
 
     @Override
     public String getTitle() {
-        return "Coherence Cache";
+        return "Coherence gRPC Client";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Coherence";
+        return "Adds support for to use Coherence by gRPC client.";
     }
 
     @Override
@@ -53,7 +63,7 @@ public class Coherence implements CacheFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#cache";
+        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#grpc";
     }
 
     @Override
@@ -65,10 +75,35 @@ public class Coherence implements CacheFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        Map<String, Object> config;
+        if (generatorContext.isFeaturePresent(DistributedConfigFeature.class)) {
+            config = generatorContext.getBootstrapConfiguration();
+        } else {
+            config = generatorContext.getConfiguration();
+        }
+
+        config.put("coherence.session.default.type", "grpc");
+
         Dependency.Builder coherenceMicronaut = Dependency.builder()
                 .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-cache")
+                .artifactId("micronaut-coherence-grpc-client")
                 .template();
+        Dependency.Builder coherence = Dependency.builder()
+                .groupId("com.oracle.coherence.ce")
+                .artifactId("coherence-java-client")
+                .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
+                .template();
+        generatorContext.addDependency(coherence.compile());
         generatorContext.addDependency(coherenceMicronaut.compile());
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.DATABASE;
     }
 }

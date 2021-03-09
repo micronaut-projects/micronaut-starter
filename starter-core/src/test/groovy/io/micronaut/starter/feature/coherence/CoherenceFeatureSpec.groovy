@@ -1,48 +1,57 @@
-package io.micronaut.starter.feature.cache
+package io.micronaut.starter.feature.coherence
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.feature.coherence.CoherenceFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.PendingFeature
 import spock.lang.Unroll
 
-class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
+class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature cache-coherence contains links to micronaut docs'() {
+    void 'test readme.md with feature coherence contains links to micronaut docs'() {
         when:
-        def output = generate(['cache-coherence'])
+        def output = generate(['coherence'])
         def readme = output["README.md"]
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#cache")
+        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html")
         readme.contains("https://coherence.java.net/")
     }
 
+    void 'test gradle.properties contains coherence version'() {
+        when:
+        def output = generate(['coherence'])
+        def properties = output["gradle.properties"]
+
+        then:
+        properties
+        properties.contains("coherenceVersion=${CoherenceFeature.COHERENCE_VERSION}")
+    }
+
     @Unroll
-    void 'test gradle cache-coherence feature for language=#language'(Language language) {
+    void 'test gradle coherence feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['cache-coherence'])
+                .features(['coherence'])
                 .render()
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
-        template.contains('implementation("io.micronaut.coherence:micronaut-coherence-cache")')
         template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
 
         where:
         language << Language.values().toList()
     }
     @Unroll
-    void 'test maven cache-coherence feature for language=#language'(Language language) {
+    void 'test maven coherence-data feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['cache-coherence'])
+                .features(['coherence-data'])
                 .render()
 
         then:
@@ -52,15 +61,12 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
       <artifactId>micronaut-coherence</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>${CoherenceFeature.COHERENCE_VERSION}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.micronaut.coherence</groupId>
-      <artifactId>micronaut-coherence-cache</artifactId>
+      <version>\${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
 """)
