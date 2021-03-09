@@ -93,4 +93,9 @@ public class CoherenceSessionStore implements Feature {
     public String getCategory() {
         return Category.CLIENT;
     }
+
+    @Override
+    public boolean isPreview() {
+        return true;
+    }
 }

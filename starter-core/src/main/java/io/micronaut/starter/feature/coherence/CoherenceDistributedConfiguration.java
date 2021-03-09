@@ -98,4 +98,9 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
             generatorContext.addDependency(coherenceJava.compile());
         }
     }
+
+    @Override
+    public boolean isPreview() {
+        return true;
+    }
 }
