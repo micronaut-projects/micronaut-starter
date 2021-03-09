@@ -1,26 +1,33 @@
 package io.micronaut.starter.build.dependencies
 
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.gradle.GradleConfiguration
 import io.micronaut.starter.build.gradle.GradleDependency
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
 
 class GradleDependencyComparatorSpec extends Specification {
 
     void "sort based on gradle configuration"() {
         given:
+        def ctx = Stub(GeneratorContext) {
+            getLanguage() >> Language.JAVA
+            getTestFramework() >> TestFramework.JUNIT
+        }
         List<GradleDependency> dependencies = [
-                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-validation").compile()),
-                dep(Dependency.builder().groupId("io.swagger.core.v3").artifactId("swagger-annotations").compile()),
-                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-runtime").compile()),
-                dep(Dependency.builder().groupId("javax.annotation").artifactId("javax.annotation-api").compile()),
-                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-http-client").compile()),
-                dep(Dependency.builder().groupId("io.micronaut.openapi").artifactId("micronaut-openapi").annotationProcessor()),
-                dep(Dependency.builder().groupId("io.micronaut.sql").artifactId("micronaut-jdbc-hikari").compile()),
-                dep(Dependency.builder().groupId("org.testcontainers").artifactId("testcontainers").test()),
-                dep(Dependency.builder().groupId("mysql").artifactId("mysql-connector-java").runtime()),
-                dep(Dependency.builder().groupId("org.testcontainers").artifactId("junit-jupiter").test()),
-                dep(Dependency.builder().groupId("org.testcontainers").artifactId("mysql").test()),
-                dep(Dependency.builder().groupId("ch.qos.logback").artifactId("logback-classic").runtime())
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-validation").compile(), ctx),
+                dep(Dependency.builder().groupId("io.swagger.core.v3").artifactId("swagger-annotations").compile(), ctx),
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-runtime").compile(), ctx),
+                dep(Dependency.builder().groupId("javax.annotation").artifactId("javax.annotation-api").compile(), ctx),
+                dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-http-client").compile(), ctx),
+                dep(Dependency.builder().groupId("io.micronaut.openapi").artifactId("micronaut-openapi").annotationProcessor(), ctx),
+                dep(Dependency.builder().groupId("io.micronaut.sql").artifactId("micronaut-jdbc-hikari").compile(), ctx),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("testcontainers").test(), ctx),
+                dep(Dependency.builder().groupId("mysql").artifactId("mysql-connector-java").runtime(), ctx),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("junit-jupiter").test(), ctx),
+                dep(Dependency.builder().groupId("org.testcontainers").artifactId("mysql").test(), ctx),
+                dep(Dependency.builder().groupId("ch.qos.logback").artifactId("logback-classic").runtime(), ctx)
         ]
 
         when:
@@ -45,7 +52,7 @@ class GradleDependencyComparatorSpec extends Specification {
         "${dependency.getConfiguration().toString()}(\"${dependency.groupId}:${dependency.artifactId}\")"
     }
 
-    private static GradleDependency dep(Dependency.Builder dependency) {
-        new GradleDependency(dependency.build())
+    private static GradleDependency dep(Dependency.Builder dependency, GeneratorContext ctx) {
+        new GradleDependency(dependency.build(), ctx)
     }
 }
