@@ -1,6 +1,5 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.coherence.CoherenceFeature
 @import io.micronaut.starter.feature.database.DatabaseDriverFeature
 @import io.micronaut.starter.feature.database.MongoFeature
 @import java.util.List

@@ -2,7 +2,6 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
-@import io.micronaut.starter.feature.coherence.CoherenceFeature
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.gradle.GradleConfiguration
 @import io.micronaut.starter.build.gradle.GradleDependency

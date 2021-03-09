@@ -92,7 +92,7 @@ micronaut:
                <annotationProcessorPath>
                  <groupId>io.micronaut.coherence</groupId>
                  <artifactId>micronaut-coherence-processor</artifactId>
-                 <version>\${coherence.version}</version>
+                 <version>${VersionInfo.getBomVersion("micronaut.coherence")}</version>
                </annotationProcessorPath>
 """)
         } else if (language.equals(Language.JAVA)) {
@@ -100,7 +100,7 @@ micronaut:
             <path>
               <groupId>io.micronaut.coherence</groupId>
               <artifactId>micronaut-coherence-processor</artifactId>
-              <version>\${coherence.version}</version>
+              <version>${VersionInfo.getBomVersion("micronaut.coherence")}</version>
             </path>
 """)
         }
