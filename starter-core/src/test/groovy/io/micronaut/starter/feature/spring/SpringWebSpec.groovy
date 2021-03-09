@@ -70,6 +70,7 @@ class SpringWebSpec extends ApplicationContextSpec {
                 .render()
 
         then:
+        template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
         template.contains('implementation("io.micronaut:micronaut-http-server")')
@@ -113,7 +114,13 @@ class SpringWebSpec extends ApplicationContextSpec {
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
-
+        template.contains("""
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-annotation</artifactId>
+              <version>\${micronaut.spring.version}</version>
+            </path>
+""")
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
 
@@ -187,8 +194,13 @@ class SpringWebSpec extends ApplicationContextSpec {
         template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
+      <artifactId>micronaut-spring-annotation</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web-annotation</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 """)
 

@@ -504,17 +504,11 @@ MavenBuild mavenBuild
 }
 @if (features.contains("spring")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.spring", "micronaut-spring-annotation", "compile", null)
-}
 }
 @if (features.contains("spring-web")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter-web", "compile", null)
 @dependency.template("io.micronaut", "micronaut-http-server", "compile", null)
 @dependency.template("io.micronaut.spring", "micronaut-spring-web", "runtime", null)
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.spring", "micronaut-spring-web-annotation", "compile", null)
-}
 }
 @if (features.contains("spring-boot")) {
 @if (!features.contains("spring-web")) {
