@@ -1,5 +1,6 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.coherence.CoherenceFeature
 @import io.micronaut.starter.feature.database.DatabaseDriverFeature
 @import io.micronaut.starter.feature.database.MongoFeature
 @import java.util.List
@@ -406,9 +407,12 @@ MavenBuild mavenBuild
 @if (features.contains("cache-infinispan")) {
 @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)
 }
+@if(features.isFeaturePresent(CoherenceFeature.class)){
+@dependency.template("io.micronaut.coherence", "micronaut-coherence", "compile", null)
+@dependency.template("com.oracle.coherence.ce", "coherence", "compile", CoherenceFeature.COHERENCE_VERSION)
+}
 @if (features.contains("cache-coherence")) {
 @dependency.template("io.micronaut.coherence", "micronaut-coherence-cache", "compile", null)
-@dependency.template("com.oracle.coherence.ce", "coherence", "compile", null)
 }
 @if (features.contains("postgres-reactive")) {
 @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "compile", null)

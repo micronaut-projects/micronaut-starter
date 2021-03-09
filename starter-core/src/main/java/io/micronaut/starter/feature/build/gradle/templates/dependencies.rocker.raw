@@ -2,6 +2,7 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.database.MongoFeature
 @import io.micronaut.starter.feature.build.gradle.templates.dependency
+@import io.micronaut.starter.feature.coherence.CoherenceFeature
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.gradle.GradleConfiguration
 @import io.micronaut.starter.build.gradle.GradleDependency
@@ -304,9 +305,12 @@ dependencies {
 @if (features.contains("cache-infinispan")) {
     @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "implementation", null)
 }
+@if(features.isFeaturePresent(CoherenceFeature.class)){
+    @dependency.template("io.micronaut.coherence", "micronaut-coherence", "implementation", null)
+    @dependency.template("com.oracle.coherence.ce", "coherence", "implementation", CoherenceFeature.COHERENCE_VERSION)
+}
 @if (features.contains("cache-coherence")) {
     @dependency.template("io.micronaut.coherence", "micronaut-coherence-cache", "implementation", null)
-    @dependency.template("com.oracle.coherence.ce", "coherence", "implementation", null)
 }
 @if (features.contains("kafka")) {
     @dependency.template("io.micronaut.kafka", "micronaut-kafka", "implementation", null)

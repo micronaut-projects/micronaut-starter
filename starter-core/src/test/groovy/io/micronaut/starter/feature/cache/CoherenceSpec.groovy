@@ -1,10 +1,12 @@
 package io.micronaut.starter.feature.cache
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
@@ -24,9 +26,14 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle cache-coherence feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-coherence'], language), false).render().toString()
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['cache-coherence'])
+                .render()
 
         then:
+        template.contains('implementation("io.micronaut.coherence:micronaut-coherence")')
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-cache")')
         template.contains('implementation("com.oracle.coherence.ce:coherence")')
 
@@ -36,10 +43,18 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven cache-coherence feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['cache-coherence'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['cache-coherence'])
+                .render()
 
         then:
         template.contains("""
+    <dependency>
+      <groupId>io.micronaut.coherence</groupId>
+      <artifactId>micronaut-coherence</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>io.micronaut.coherence</groupId>
       <artifactId>micronaut-coherence-cache</artifactId>

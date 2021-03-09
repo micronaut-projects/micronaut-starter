@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.cache;
 
+import io.micronaut.starter.feature.coherence.CoherenceFeature;
+
 import javax.inject.Singleton;
 
 @Singleton
-public class Coherence implements CacheFeature {
+public class Coherence implements CacheFeature, CoherenceFeature {
 
     @Override
     public String getName() {
