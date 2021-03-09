@@ -30,13 +30,12 @@ public enum GradleConfiguration implements Ordered {
     API("api", 2),
     IMPLEMENTATION("implementation", 3),
     COMPILE_ONLY("compileOnly", 4),
-    COMPILE_ONLY_API("compileOnlyApi", 5),
-    RUNTIME_ONLY("runtimeOnly", 6),
-    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 7),
-    TEST_KAPT("kaptTest", 8),
-    TEST_IMPLEMENTATION("testImplementation", 9),
-    TEST_COMPILE_ONLY("testCompileOnly", 10),
-    TEST_RUNTIME_ONLY("testRuntimeOnly", 11);
+    RUNTIME_ONLY("runtimeOnly", 5),
+    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 6),
+    TEST_KAPT("kaptTest", 7),
+    TEST_IMPLEMENTATION("testImplementation", 8),
+    TEST_COMPILE_ONLY("testCompileOnly", 9),
+    TEST_RUNTIME_ONLY("testRuntimeOnly", 10);
 
     private final String configurationName;
     private final int order;
