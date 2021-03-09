@@ -40,9 +40,9 @@ plugins {
 
 @if (features.mainClass().isPresent() || features.contains("oracle-function")
     || applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    id("io.micronaut.application") version "1.4.1"
+    id("io.micronaut.application") version "1.4.2"
 } else {
-    id("io.micronaut.library") version "1.4.1"
+    id("io.micronaut.library") version "1.4.2"
 }
 @if (features.contains("grpc")) {
     id("com.google.protobuf") version "0.8.13"
