@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.Kubernetes;
 
@@ -67,6 +68,10 @@ public class KubernetesConfig implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.kubernetes")
+                .artifactId("micronaut-kubernetes-discovery-client")
+                .compile());
     }
 
     @Override

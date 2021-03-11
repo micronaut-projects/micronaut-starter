@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -44,5 +45,9 @@ public class Statsd extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.host", "localhost");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.port", 8125);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.step", "PT1M");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.micrometer")
+                .artifactId("micronaut-micrometer-registry-statsd")
+                .compile());
     }
 }

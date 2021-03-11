@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -42,5 +43,9 @@ public class Prometheus extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.descriptions", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.step", "PT1M");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.micrometer")
+                .artifactId("micronaut-micrometer-registry-prometheus")
+                .compile());
     }
 }
