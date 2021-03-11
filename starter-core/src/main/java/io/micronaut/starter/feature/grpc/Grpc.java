@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.grpc;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -38,6 +39,10 @@ public class Grpc implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.grpc")
+                .artifactId("micronaut-grpc-runtime")
+                .compile());
     }
 
     @Override

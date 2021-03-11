@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
@@ -49,6 +51,14 @@ public class Java implements LanguageFeature {
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
         }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-runtime")
+                .compile());
     }
 
     @Override

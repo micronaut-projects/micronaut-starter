@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.lang.groovy;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
@@ -60,6 +61,10 @@ public class Groovy implements LanguageFeature {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.groovy")
+                .artifactId("micronaut-runtime-groovy")
+                .compile());
     }
 
     @Override

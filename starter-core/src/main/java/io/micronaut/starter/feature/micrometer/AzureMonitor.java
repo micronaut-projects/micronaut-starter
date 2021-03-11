@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -42,5 +43,11 @@ public class AzureMonitor extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.micrometer")
+                .artifactId("micronaut-micrometer-registry-azure-monitor")
+                .compile());
     }
+
+
 }

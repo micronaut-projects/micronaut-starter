@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.multitenancy;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -56,5 +58,13 @@ public class Multitenancy implements Feature, MicronautServerDependent {
     @Override
     public String getMicronautDocumentation() {
         return "https://docs.micronaut.io/latest/guide/index.html#multitenancy";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-multitenancy")
+                .compile());
     }
 }

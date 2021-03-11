@@ -158,115 +158,19 @@ MavenBuild mavenBuild
 @if (features.contains("tomcat-server")) {
 @dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "compile", null)
 }
-@if (features.contains("http-client")) {
-@dependency.template("io.micronaut", "micronaut-http-client", "compile", null)
-} else {
-@dependency.template("io.micronaut", "micronaut-http-client", "test", null)
-}
-@if (features.contains("http-session")) {
-@dependency.template("io.micronaut", "micronaut-session", "compile", null)
-}
-@if (features.language().isKotlin()) {
-@dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "compile", "${kotlinVersion}")
-@dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "compile", "${kotlinVersion}")
-@dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "compile", null)
-}
 @if (features.contains("graalvm") && features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
-}
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.groovy", "micronaut-runtime-groovy", "compile", null)
-} else {
-@dependency.template("io.micronaut", "micronaut-runtime", "compile", null)
-}
-@if (features.contains("grpc")) {
-@dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "compile", null)
-}
-@if (features.contains("annotation-api")) {
-@dependency.template("javax.annotation", "javax.annotation-api", "compile", null)
 }
 @if (features.contains("openapi")) {
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
 }
-@if (features.contains("management")) {
-@dependency.template("io.micronaut", "micronaut-management", "compile", null)
-}
-@if (features.contains("multi-tenancy")) {
-@dependency.template("io.micronaut", "micronaut-multitenancy", "compile", null)
-}
-@if (features.contains("multi-tenancy-gorm")) {
-@dependency.template("io.micronaut.groovy", "micronaut-multitenancy-gorm", "compile", null)
-}
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
 @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "compile", null)
 }
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
 @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "compile", null)
-}
-@if (features.contains("config-kubernetes")) {
-@dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "compile", null)
-}
-@if (features.contains("micrometer")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-core", "compile", null)
-}
-@if (features.contains("micrometer-appoptics")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-appoptics", "compile", null)
-}
-@if (features.contains("micrometer-atlas")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", "compile", null)
-}
-@if (features.contains("micrometer-azure-monitor")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-azure-monitor", "compile", null)
-}
-@if (features.contains("micrometer-cloudwatch")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-cloudwatch", "compile", null)
-}
-@if (features.contains("micrometer-datadog")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-datadog", "compile", null)
-}
-@if (features.contains("micrometer-dynatrace")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-dynatrace", "compile", null)
-}
-@if (features.contains("micrometer-elastic")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-elastic", "compile", null)
-}
-@if (features.contains("micrometer-ganglia")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-ganglia", "compile", null)
-}
-@if (features.contains("micrometer-graphite")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-graphite", "compile", null)
-}
-@if (features.contains("micrometer-humio")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-humio", "compile", null)
-}
-@if (features.contains("micrometer-influx")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", "compile", null)
-}
-@if (features.contains("micrometer-jmx")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-jmx", "compile", null)
-}
-@if (features.contains("micrometer-kairos")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-kairos", "compile", null)
-}
-@if (features.contains("micrometer-new-relic")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-new-relic", "compile", null)
-}
-@if (features.contains("micrometer-prometheus")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-prometheus", "compile", null)
-}
-@if (features.contains("micrometer-signalfx")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-signalfx", "compile", null)
-}
-@if (features.contains("micrometer-stackdriver")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-stackdriver", "compile", null)
-}
-@if (features.contains("micrometer-statsd")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-statsd", "compile", null)
-}
-@if (features.contains("micrometer-wavefront")) {
-@dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "compile", null)
 }
 @if (features.contains("netflix-archaius")) {
 @dependency.template("io.micronaut.netflix", "micronaut-netflix-archaius", "compile", null)
@@ -579,6 +483,9 @@ MavenBuild mavenBuild
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null)
+}
+@if (!features.contains("http-client")) {
+@dependency.template("io.micronaut", "micronaut-http-client", "test", null)
 }
 @if (features.testFramework().isJunit()) {
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)

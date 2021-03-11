@@ -22,22 +22,6 @@ dependencies {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null)
-@if (features.language().isKotlin()) {
-    @dependency.template("org.jetbrains.kotlin", "kotlin-stdlib-jdk8", "implementation", "${kotlinVersion}")
-    @dependency.template("org.jetbrains.kotlin", "kotlin-reflect", "implementation", "${kotlinVersion}")
-    @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-runtime", "implementation", null)
-}
-@if (features.language().isGroovy()) {
-    @dependency.template("io.micronaut.groovy", "micronaut-runtime-groovy", "implementation", null)
-} else {
-    @dependency.template("io.micronaut", "micronaut-runtime", "implementation", null)
-}
-@if (features.contains("grpc")) {
-    @dependency.template("io.micronaut.grpc", "micronaut-grpc-runtime", "implementation", null)
-}
-@if (features.contains("annotation-api")) {
-    @dependency.template("javax.annotation", "javax.annotation-api", "implementation", null)
-}
 @if (features.contains("oracle-cloud-sdk")) {
     @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "implementation", null)
 }
@@ -65,89 +49,11 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
     }
 }
-@if (features.contains("http-client")) {
-    @dependency.template("io.micronaut", "micronaut-http-client", "implementation", null)
-}
-@if (features.contains("http-session")) {
-    @dependency.template("io.micronaut", "micronaut-session", "implementation", null)
-}
-@if (features.contains("management")) {
-    @dependency.template("io.micronaut", "micronaut-management", "implementation", null)
-}
-@if (features.contains("multi-tenancy")) {
-    @dependency.template("io.micronaut", "micronaut-multitenancy", "implementation", null)
-}
-@if (features.contains("multi-tenancy-gorm")) {
-    @dependency.template("io.micronaut.groovy", "micronaut-multitenancy-gorm", "implementation", null)
-}
 @if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
     @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
 }
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
     @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
-}
-@if (features.contains("config-kubernetes")) {
-    @dependency.template("io.micronaut.kubernetes", "micronaut-kubernetes-discovery-client", "implementation", null)
-}
-@if (features.contains("micrometer")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-core", "implementation", null)
-}
-@if (features.contains("micrometer-appoptics")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-appoptics", "implementation", null)
-}
-@if (features.contains("micrometer-atlas")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-atlas", "implementation", null)
-}
-@if (features.contains("micrometer-azure-monitor")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-azure-monitor", "implementation", null)
-}
-@if (features.contains("micrometer-cloudwatch")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-cloudwatch", "implementation", null)
-}
-@if (features.contains("micrometer-datadog")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-datadog", "implementation", null)
-}
-@if (features.contains("micrometer-dynatrace")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-dynatrace", "implementation", null)
-}
-@if (features.contains("micrometer-elastic")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-elastic", "implementation", null)
-}
-@if (features.contains("micrometer-ganglia")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-ganglia", "implementation", null)
-}
-@if (features.contains("micrometer-graphite")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-graphite", "implementation", null)
-}
-@if (features.contains("micrometer-humio")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-humio", "implementation", null)
-}
-@if (features.contains("micrometer-influx")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-influx", "implementation", null)
-}
-@if (features.contains("micrometer-jmx")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-jmx", "implementation", null)
-}
-@if (features.contains("micrometer-kairos")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-kairos", "implementation", null)
-}
-@if (features.contains("micrometer-new-relic")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-new-relic", "implementation", null)
-}
-@if (features.contains("micrometer-prometheus")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-prometheus", "implementation", null)
-}
-@if (features.contains("micrometer-signalfx")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-signalfx", "implementation", null)
-}
-@if (features.contains("micrometer-stackdriver")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-stackdriver", "implementation", null)
-}
-@if (features.contains("micrometer-statsd")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-statsd", "implementation", null)
-}
-@if (features.contains("micrometer-wavefront")) {
-    @dependency.template("io.micronaut.micrometer", "micronaut-micrometer-registry-wavefront", "implementation", null)
 }
 @if (features.contains("netflix-archaius")) {
     @dependency.template("io.micronaut.netflix", "micronaut-netflix-archaius", "implementation", null)

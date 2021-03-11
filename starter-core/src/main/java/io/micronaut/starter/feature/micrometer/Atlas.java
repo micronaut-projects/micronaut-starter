@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import javax.inject.Singleton;
@@ -42,5 +43,9 @@ public class Atlas extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.uri", "http://localhost:7101/api/v1/publish");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.step", "PT1M");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.micrometer")
+                .artifactId("micronaut-micrometer-registry-atlas")
+                .compile());
     }
 }
