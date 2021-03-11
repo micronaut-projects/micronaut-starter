@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.database.jdbc;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import javax.inject.Singleton;
@@ -41,4 +43,11 @@ public class Dbcp extends JdbcFeature {
         return "Configures SQL DataSource instances using Commons DBCP";
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.sql")
+                .artifactId("micronaut-jdbc-dbcp")
+                .compile());
+    }
 }

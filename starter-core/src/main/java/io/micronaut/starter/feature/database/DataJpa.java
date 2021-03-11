@@ -63,6 +63,10 @@ public class DataJpa implements JpaFeature, DataFeature {
                 .artifactId("micronaut-data-processor")
                 .versionProperty("micronaut.data.version")
                 .annotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-hibernate-jpa")
+                .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
