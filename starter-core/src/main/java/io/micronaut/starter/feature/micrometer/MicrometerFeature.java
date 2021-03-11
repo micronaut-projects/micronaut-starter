@@ -16,8 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -51,7 +49,6 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT;
     }
-
 
     @Override
     public String getCategory() {

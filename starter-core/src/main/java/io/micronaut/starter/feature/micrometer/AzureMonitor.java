@@ -49,5 +49,4 @@ public class AzureMonitor extends MicrometerFeature {
                 .compile());
     }
 
-
 }
