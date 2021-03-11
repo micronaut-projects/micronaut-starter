@@ -51,8 +51,8 @@ public class AnnotationApi implements Feature, DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .artifactId("javax.annotation")
-                .groupId("javax.annotation-api")
+                .groupId("javax.annotation")
+                .artifactId("javax.annotation-api")
                 .compile());
     }
 }
