@@ -63,6 +63,10 @@ public class DataJdbc implements DataFeature {
                 .artifactId("micronaut-data-processor")
                 .versionProperty("micronaut.data.version")
                 .annotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-jdbc")
+                .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }

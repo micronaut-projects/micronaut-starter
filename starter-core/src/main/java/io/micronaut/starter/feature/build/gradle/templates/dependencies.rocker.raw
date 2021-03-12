@@ -55,55 +55,9 @@ dependencies {
 @if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
     @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
 }
-@if (features.contains("netflix-archaius")) {
-    @dependency.template("io.micronaut.netflix", "micronaut-netflix-archaius", "implementation", null)
-}
-@if (features.contains("netflix-hystrix")) {
-    @dependency.template("io.micronaut.netflix", "micronaut-netflix-hystrix", "implementation", null)
-}
-@if (features.contains("netflix-ribbon")) {
-    @dependency.template("io.micronaut.netflix", "micronaut-netflix-ribbon", "implementation", null)
-}
-
 @if (features.contains("tracing-jaeger")) {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
-}
-@if (features.contains("flyway")) {
-    @dependency.template("io.micronaut.flyway", "micronaut-flyway", "implementation", null)
-}
-@if (features.contains("liquibase")) {
-    @dependency.template("io.micronaut.liquibase", "micronaut-liquibase", "implementation", null)
-}
-@if (features.contains("jdbc-dbcp")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jdbc-dbcp", "implementation", null)
-}
-@if (features.contains("jdbc-tomcat")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jdbc-tomcat", "implementation", null)
-}
-@if (features.contains("jdbc-hikari")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jdbc-hikari", "implementation", null)
-}
-@if (features.contains("jdbc-ucp")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jdbc-ucp", "implementation", null)
-}
-@if (features.contains("data-jpa")) {
-    @dependency.template("io.micronaut.data", "micronaut-data-hibernate-jpa", "implementation", null)
-}
-@if (features.contains("data-jdbc")) {
-    @dependency.template("io.micronaut.data", "micronaut-data-jdbc", "implementation", null)
-}
-@if (features.contains("hibernate-validator")) {
-    @dependency.template("io.micronaut.beanvalidation", "micronaut-hibernate-validator", "implementation", null)
-}
-@if (features.contains("hibernate-gorm")) {
-    @dependency.template("io.micronaut.groovy", "micronaut-hibernate-gorm", "implementation", null)
-}
-@if (features.contains("hibernate-jpa")) {
-    @dependency.template("io.micronaut.sql", "micronaut-hibernate-jpa", "implementation", null)
-}
-@if (features.contains("jooq")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jooq", "implementation", null)
 }
 @if (features.contains("jasync-sql")) {
     @dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "implementation", null)
