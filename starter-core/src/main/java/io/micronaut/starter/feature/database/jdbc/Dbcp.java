@@ -45,6 +45,7 @@ public class Dbcp extends JdbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.sql")
                 .artifactId("micronaut-jdbc-dbcp")
