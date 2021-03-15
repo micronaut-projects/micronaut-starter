@@ -176,39 +176,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
 @dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
 }
-@if (features.contains("jasync-sql")) {
-@dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "compile", null)
-}
-@if (features.contains("mongo-reactive")) {
-@dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "compile", null)
-}
-@if (features.contains("mongo-sync")) {
-@dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "compile", null)
-}
-@if (features.contains("mongo-gorm")) {
-@dependency.template("io.micronaut.groovy", "micronaut-mongo-gorm", "compile", null)
-}
-@if (features.contains("neo4j-bolt")) {
-@dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "compile", null)
-}
-@if (features.contains("neo4j-gorm")) {
-@dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "compile", null)
-}
-@if (features.contains("security")) {
-@dependency.template("io.micronaut.security", "micronaut-security", "compile", null)
-}
-@if (features.contains("security-jwt")) {
-@dependency.template("io.micronaut.security", "micronaut-security-jwt", "compile", null)
-}
-@if (features.contains("security-session")) {
-@dependency.template("io.micronaut.security", "micronaut-security-session", "compile", null)
-}
-@if (features.contains("security-oauth2")) {
-@dependency.template("io.micronaut.security", "micronaut-security-oauth2", "compile", null)
-}
-@if (features.contains("security-ldap")) {
-@dependency.template("io.micronaut.security", "micronaut-security-ldap", "compile", null)
-}
 @if (features.contains("kafka")) {
 @dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
 }

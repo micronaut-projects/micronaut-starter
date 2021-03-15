@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.security;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -66,6 +67,10 @@ public class SecurityOAuth2 implements Feature, MicronautServerDependent {
         if (generatorContext.isFeaturePresent(SecurityJWT.class)) {
             generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.openid.issuer", "${OAUTH_ISSUER}");
         }
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.security")
+                .artifactId("micronaut-security-oauth2")
+                .compile());
     }
 
     @Override

@@ -59,39 +59,6 @@ dependencies {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
 }
-@if (features.contains("jasync-sql")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "implementation", null)
-}
-@if (features.contains("mongo-reactive")) {
-    @dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "implementation", null)
-}
-@if (features.contains("mongo-sync")) {
-    @dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "implementation", null)
-}
-@if (features.contains("mongo-gorm")) {
-    @dependency.template("io.micronaut.groovy", "micronaut-mongo-gorm", "implementation", null)
-}
-@if (features.contains("neo4j-bolt")) {
-    @dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "implementation", null)
-}
-@if (features.contains("neo4j-gorm")) {
-    @dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "implementation", null)
-}
-@if (features.contains("security")) {
-    @dependency.template("io.micronaut.security", "micronaut-security", "implementation", null)
-}
-@if (features.contains("security-jwt")) {
-    @dependency.template("io.micronaut.security", "micronaut-security-jwt", "implementation", null)
-}
-@if (features.contains("security-session")) {
-    @dependency.template("io.micronaut.security", "micronaut-security-session", "implementation", null)
-}
-@if (features.contains("security-oauth2")) {
-    @dependency.template("io.micronaut.security", "micronaut-security-oauth2", "implementation", null)
-}
-@if (features.contains("security-ldap")) {
-    @dependency.template("io.micronaut.security", "micronaut-security-ldap", "implementation", null)
-}
 @if (features.contains("cassandra")) {
     @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)
 }
