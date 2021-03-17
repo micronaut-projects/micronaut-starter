@@ -49,12 +49,6 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
     }
 }
-@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
-    @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
-}
-@if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
-    @dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "implementation", null)
-}
 @if (features.contains("tracing-jaeger")) {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
