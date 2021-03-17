@@ -59,10 +59,6 @@ dependencies {
     @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
     @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
 }
-@if (features.contains("neo4j-gorm")) {
-    @dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "implementation", null)
-}
-
 @if (features.contains("cassandra")) {
     @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)
 }
