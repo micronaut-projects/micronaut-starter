@@ -13,6 +13,16 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>org.camunda.bpm.assert</groupId>
+            <artifactId>camunda-bpm-assert</artifactId>
+            <version>8.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>info.novatec</groupId>
+            <artifactId>micronaut-camunda-bpm-feature</artifactId>
+            <version>0.20.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-noarg</artifactId>
             <version>1.4.31</version>
