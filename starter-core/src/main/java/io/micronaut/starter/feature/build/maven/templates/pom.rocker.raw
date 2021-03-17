@@ -241,11 +241,6 @@ MavenBuild mavenBuild
 @if (features.contains("kotlin-extension-functions")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "compile", null)
 }
-@if (features.contains("ktor")) {
-@dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
-@dependency.template("io.ktor", "ktor-server-netty", "compile", null)
-@dependency.template("io.ktor", "ktor-jackson", "compile", null)
-}
 @if (features.contains("oracle-cloud-sdk")) {
 @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "compile", null)
 }
@@ -448,31 +443,6 @@ MavenBuild mavenBuild
 }
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
-}
-@if (features.contains("testcontainers")) {
-@dependency.template("org.testcontainers", "testcontainers", "test", null)
-@if (features.testFramework().isSpock()) {
-@dependency.template("org.testcontainers", "spock", "test", null)
-} else if (features.testFramework().isJunit()) {
-@dependency.template("org.testcontainers", "junit-jupiter", "test", null)
-}
-@if (features.contains("r2dbc")) {
-@dependency.template("org.testcontainers", "r2dbc", "test", null)
-}
-@if (features.contains("mysql")) {
-@dependency.template("org.testcontainers", "mysql", "test", null)
-} else if (features.contains("postgres")) {
-@dependency.template("org.testcontainers", "postgresql", "test", null)
-} else if (features.contains("mariadb")) {
-@dependency.template("org.testcontainers", "mariadb", "test", null)
-} else if (features.contains("oracle")) {
-@dependency.template("org.testcontainers", "oracle-xe", "test", null)
-} else if (features.contains("sqlserver")) {
-@dependency.template("org.testcontainers", "mssqlserver", "test", null)
-}
-@if (features.isFeaturePresent(MongoFeature.class)) {
-@dependency.template("org.testcontainers", "mongodb", "test", null)
-}
 }
 @for (MavenDependency f : mavenBuild.getDependencies()) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion())
