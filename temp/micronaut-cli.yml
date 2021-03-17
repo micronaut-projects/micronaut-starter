@@ -1,6 +1,0 @@
-applicationType: default
-defaultPackage: temp
-testFramework: junit
-sourceLanguage: java
-buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, java, java-application, junit, log4j2, netty-server, readme, shade, yaml]
