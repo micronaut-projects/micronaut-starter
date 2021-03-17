@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
@@ -63,6 +65,14 @@ public class MongoGorm implements LanguageSpecificFeature {
         if (!featureContext.isPresent(MongoReactive.class)) {
             featureContext.addFeature(mongoReactive);
         }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.groovy")
+                .artifactId("micronaut-mongo-gorm")
+                .compile());
     }
 
     @Override

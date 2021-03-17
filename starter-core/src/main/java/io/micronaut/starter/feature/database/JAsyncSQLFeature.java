@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -50,6 +51,10 @@ public class JAsyncSQLFeature implements Feature {
         configuration.put("jasync.client.username", "test");
         configuration.put("jasync.client.password", "test");
         configuration.put("jasync.client.maxActiveConnections", 5);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.sql")
+                .artifactId("micronaut-jasync-sql")
+                .compile());
     }
 
     @Override

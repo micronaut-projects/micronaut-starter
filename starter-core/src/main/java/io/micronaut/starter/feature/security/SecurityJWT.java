@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -60,6 +61,10 @@ public class SecurityJWT implements Feature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.security.authentication", "bearer");
         generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.security")
+                .artifactId("micronaut-security-jwt")
+                .compile());
     }
 
     @Override
