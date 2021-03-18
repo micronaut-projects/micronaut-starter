@@ -44,10 +44,6 @@ public class AwsParameterStore implements DistributedConfigFeature {
                 .groupId("io.micronaut.aws")
                 .artifactId("micronaut-aws-parameter-store")
                 .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.discovery")
-                .artifactId("micronaut-discovery-client")
-                .compile());
         Map<String, Object> config = generatorContext.getBootstrapConfiguration();
         config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
         config.put("micronaut.config-client.enabled", true);

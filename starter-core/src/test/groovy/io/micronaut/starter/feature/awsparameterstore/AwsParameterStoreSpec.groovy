@@ -48,7 +48,6 @@ aws.client.system-manager.parameterstore.enabled: true
 
         then:
         template.count('implementation("io.micronaut.aws:micronaut-aws-parameter-store")') == 1
-        template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         and: 'micronaut-aws-parameter-store exposes aws-sdk-v2 transitively'
         !template.contains('implementation("io.micronaut.aws:aws-sdk-v2")')
@@ -70,13 +69,6 @@ aws.client.system-manager.parameterstore.enabled: true
     <dependency>
       <groupId>io.micronaut.aws</groupId>
       <artifactId>micronaut-aws-parameter-store</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>io.micronaut.discovery</groupId>
-      <artifactId>micronaut-discovery-client</artifactId>
       <scope>compile</scope>
     </dependency>
 ''') == 1
