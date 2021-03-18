@@ -95,8 +95,8 @@ public class PreviewController extends AbstractCreateController implements Previ
                     new Options(
                             lang,
                             test != null ? test.toTestFramework() : null,
-                            build == null ? BuildTool.GRADLE : build,
-                            javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
+                            build == null ? BuildTool.DEFAULT_OPTION : build,
+                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,

@@ -89,13 +89,12 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
                 .artifactId("micronaut-coherence-distributed-configuration")
                 .template();
         generatorContext.addDependency(distributedConfiguration.compile());
-        if (generatorContext.getBuildTool().equals(BuildTool.GRADLE) && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
-            Dependency.Builder coherenceJava = Dependency.builder()
+        if (generatorContext.getBuildTool().isGradle() && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
+            generatorContext.addDependency(Dependency.builder()
                     .groupId("com.oracle.coherence.ce")
                     .artifactId("coherence-java-client")
                     .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
-                    .template();
-            generatorContext.addDependency(coherenceJava.compile());
+                    .compile());
         }
     }
 
