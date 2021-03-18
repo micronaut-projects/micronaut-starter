@@ -122,12 +122,10 @@ public class TestContainers implements Feature {
                     .artifactId("spock")
                     .test());
         } else if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
-                generatorContext.addDependency(Dependency.builder()
-                        .groupId("org.testcontainers")
-                        .artifactId("junit-jupiter")
-                        .test());
-            }
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("org.testcontainers")
+                    .artifactId("junit-jupiter")
+                    .test());
         }
         if (generatorContext.isFeaturePresent(MongoFeature.class)) {
             generatorContext.addDependency(Dependency.builder()
