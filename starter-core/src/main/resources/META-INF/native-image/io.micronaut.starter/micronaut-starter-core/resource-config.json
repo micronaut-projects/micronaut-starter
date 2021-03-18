@@ -6,6 +6,7 @@
     {"pattern":"kotest/.*$"},
     {"pattern":".gitkeep"},
     {"pattern":"springloaded/.*$"},
-    {"pattern":"\\Qmicronaut-versions.properties\\E"}
+    {"pattern":"\\Qmicronaut-versions.properties\\E"},
+    {"pattern":"pom.xml"}
   ]
 }

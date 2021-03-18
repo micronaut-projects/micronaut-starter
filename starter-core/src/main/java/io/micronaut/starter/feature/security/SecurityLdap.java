@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -54,6 +56,14 @@ public class SecurityLdap implements Feature, MicronautServerDependent {
         if (!featureContext.isPresent(SecurityAnnotations.class)) {
             featureContext.addFeature(securityAnnotations);
         }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.security")
+                .artifactId("micronaut-security-ldap")
+                .compile());
     }
 
     @Override

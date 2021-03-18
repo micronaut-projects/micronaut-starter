@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -98,15 +99,23 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 
-            generatorContext.addTemplate("application", new RockerTemplate("src/main/kotlin/{packagePath}/Application.kt", applicationKotlin.template(generatorContext.getProject())));
-
+        generatorContext.addTemplate("application", new RockerTemplate("src/main/kotlin/{packagePath}/Application.kt", applicationKotlin.template(generatorContext.getProject())));
         generatorContext.addTemplate("homeRoute", new RockerTemplate("src/main/kotlin/{packagePath}/HomeRoute.kt", homeRouteKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("jacksonFeature", new RockerTemplate("src/main/kotlin/{packagePath}/JacksonFeature.kt", jacksonFeatureKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("nameTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/NameTransformer.kt", nameTransformerKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/UppercaseTransformer.kt", uppercaseTransformerKotlin.template(generatorContext.getProject())));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.kotlin")
+                .artifactId("micronaut-ktor")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.ktor")
+                .artifactId("ktor-server-netty")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.ktor")
+                .artifactId("ktor-jackson")
+                .compile());
     }
 
     @Override

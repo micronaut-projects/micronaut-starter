@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.security;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -61,6 +62,10 @@ public class SecuritySession implements Feature, MicronautServerDependent {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.security.authentication", "session");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.security")
+                .artifactId("micronaut-security-session")
+                .compile());
     }
 
     @Override
