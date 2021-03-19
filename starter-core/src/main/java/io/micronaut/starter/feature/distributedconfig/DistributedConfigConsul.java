@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.distributedconfig;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.consul.Consul;
 
@@ -56,6 +57,10 @@ public class DistributedConfigConsul implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.discovery")
+                .artifactId("micronaut-discovery-client")
+                .compile());
         generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
     }
 

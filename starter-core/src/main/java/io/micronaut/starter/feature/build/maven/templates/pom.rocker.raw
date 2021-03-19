@@ -166,12 +166,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
 }
-@if (features.contains("discovery-consul") || features.contains("discovery-eureka")) {
-@dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "compile", null)
-}
-@if (features.contains("config-consul") && features.stream().noneMatch( f -> f.startsWith("discovery-"))) {
-@dependency.template("io.micronaut.discovery", "micronaut-discovery-client", "compile", null)
-}
 @if (features.contains("tracing-jaeger")) {
 @dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
 @dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)

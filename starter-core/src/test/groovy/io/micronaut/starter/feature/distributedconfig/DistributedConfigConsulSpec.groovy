@@ -30,7 +30,22 @@ class DistributedConfigConsulSpec extends ApplicationContextSpec  implements Com
                 .render()
 
         then:
-        template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
+        template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'gradle with features config-consul and discovery-consul adds micronaut-discovery-client only once for language=#language'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['config-consul', 'discovery-consul'])
+                .language(language)
+                .render()
+
+        then:
+        template.count('implementation("io.micronaut.discovery:micronaut-discovery-client")') == 1
 
         where:
         language << Language.values().toList()

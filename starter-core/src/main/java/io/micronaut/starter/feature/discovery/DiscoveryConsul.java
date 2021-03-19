@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.consul.Consul;
 
@@ -57,6 +58,10 @@ public class DiscoveryConsul implements DiscoveryFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.discovery")
+                .artifactId("micronaut-discovery-client")
+                .compile());
     }
 
     @Override
