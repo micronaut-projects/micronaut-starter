@@ -88,14 +88,14 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     static CommandLine createCommandLine() {
         boolean noOpConsole = MicronautStarter.interactiveShell;
-        try (BeanContext beanContext = ApplicationContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.builder().deduceEnvironment(false).start()) {
             return createCommandLine(beanContext, noOpConsole);
         }
     }
 
     static int execute(String[] args) {
         boolean noOpConsole = args.length > 0 && args[0].startsWith("update-cli-config");
-        try (BeanContext beanContext = ApplicationContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.builder().deduceEnvironment(false).start()) {
             return createCommandLine(beanContext, noOpConsole).execute(args);
         }
     }
