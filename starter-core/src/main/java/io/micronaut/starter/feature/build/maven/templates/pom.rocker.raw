@@ -170,39 +170,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
 @dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
 }
-@if (features.contains("jasync-sql")) {
-@dependency.template("io.micronaut.sql", "micronaut-jasync-sql", "compile", null)
-}
-@if (features.contains("mongo-reactive")) {
-@dependency.template("io.micronaut.mongodb", "micronaut-mongo-reactive", "compile", null)
-}
-@if (features.contains("mongo-sync")) {
-@dependency.template("io.micronaut.mongodb", "micronaut-mongo-sync", "compile", null)
-}
-@if (features.contains("mongo-gorm")) {
-@dependency.template("io.micronaut.groovy", "micronaut-mongo-gorm", "compile", null)
-}
-@if (features.contains("neo4j-bolt")) {
-@dependency.template("io.micronaut.neo4j", "micronaut-neo4j-bolt", "compile", null)
-}
-@if (features.contains("neo4j-gorm")) {
-@dependency.template("io.micronaut.groovy", "micronaut-neo4j-gorm", "compile", null)
-}
-@if (features.contains("security")) {
-@dependency.template("io.micronaut.security", "micronaut-security", "compile", null)
-}
-@if (features.contains("security-jwt")) {
-@dependency.template("io.micronaut.security", "micronaut-security-jwt", "compile", null)
-}
-@if (features.contains("security-session")) {
-@dependency.template("io.micronaut.security", "micronaut-security-session", "compile", null)
-}
-@if (features.contains("security-oauth2")) {
-@dependency.template("io.micronaut.security", "micronaut-security-oauth2", "compile", null)
-}
-@if (features.contains("security-ldap")) {
-@dependency.template("io.micronaut.security", "micronaut-security-ldap", "compile", null)
-}
 @if (features.contains("kafka")) {
 @dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
 }
@@ -267,11 +234,6 @@ MavenBuild mavenBuild
 }
 @if (features.contains("kotlin-extension-functions")) {
 @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "compile", null)
-}
-@if (features.contains("ktor")) {
-@dependency.template("io.micronaut.kotlin", "micronaut-ktor", "compile", null)
-@dependency.template("io.ktor", "ktor-server-netty", "compile", null)
-@dependency.template("io.ktor", "ktor-jackson", "compile", null)
 }
 @if (features.contains("oracle-cloud-sdk")) {
 @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "compile", null)
@@ -440,9 +402,6 @@ MavenBuild mavenBuild
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null)
-    @if (features.contains("assertj")) {
-@dependency.template("org.assertj", "assertj-core", "test", null)
-    }
     @if (features.contains("hamcrest")) {
 @dependency.template("org.hamcrest", "hamcrest", "test", null)
     }
@@ -475,31 +434,6 @@ MavenBuild mavenBuild
 }
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null)
-}
-@if (features.contains("testcontainers")) {
-@dependency.template("org.testcontainers", "testcontainers", "test", null)
-@if (features.testFramework().isSpock()) {
-@dependency.template("org.testcontainers", "spock", "test", null)
-} else if (features.testFramework().isJunit()) {
-@dependency.template("org.testcontainers", "junit-jupiter", "test", null)
-}
-@if (features.contains("r2dbc")) {
-@dependency.template("org.testcontainers", "r2dbc", "test", null)
-}
-@if (features.contains("mysql")) {
-@dependency.template("org.testcontainers", "mysql", "test", null)
-} else if (features.contains("postgres")) {
-@dependency.template("org.testcontainers", "postgresql", "test", null)
-} else if (features.contains("mariadb")) {
-@dependency.template("org.testcontainers", "mariadb", "test", null)
-} else if (features.contains("oracle")) {
-@dependency.template("org.testcontainers", "oracle-xe", "test", null)
-} else if (features.contains("sqlserver")) {
-@dependency.template("org.testcontainers", "mssqlserver", "test", null)
-}
-@if (features.isFeaturePresent(MongoFeature.class)) {
-@dependency.template("org.testcontainers", "mongodb", "test", null)
-}
 }
 @for (MavenDependency f : mavenBuild.getDependencies()) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion())

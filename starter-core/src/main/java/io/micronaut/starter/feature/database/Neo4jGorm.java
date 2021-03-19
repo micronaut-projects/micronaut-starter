@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
@@ -62,6 +64,14 @@ public class Neo4jGorm implements LanguageSpecificFeature {
         if (!featureContext.isPresent(Neo4jBolt.class)) {
             featureContext.addFeature(neo4jBolt);
         }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.groovy")
+                .artifactId("micronaut-neo4j-gorm")
+                .compile());
     }
 
     @Override

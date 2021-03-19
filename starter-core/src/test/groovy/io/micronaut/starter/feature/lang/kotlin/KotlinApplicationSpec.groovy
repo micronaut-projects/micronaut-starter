@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.lang.kotlin
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.options.BuildTool
@@ -20,10 +21,6 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
 
     @Unroll
     void 'Application file is generated for a default application type with #buildTool and language: kotlin and testing framework: #testFramework'(BuildTool buildTool, TestFramework testFramework) {
-        given:
-        def policy = VersionInfo.isMicronautSnapshot() ? "enforcedPlatform" : "platform"
-        def testPolicy = "enforcedPlatform"
-
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -84,5 +81,15 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
                 ApplicationType.FUNCTION
         ]
         description = applicationType.name
+    }
+
+    void "test kotlin app gradle build plugins"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(Language.KOTLIN)
+                .render()
+
+        then:
+        template.contains('id("org.jetbrains.kotlin.jvm") version "1.4.30"')
     }
 }

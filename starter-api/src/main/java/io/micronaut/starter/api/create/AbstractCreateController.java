@@ -83,10 +83,14 @@ public abstract class AbstractCreateController {
 
         GeneratorContext generatorContext;
         try {
+            Language language = lang != null ? lang : Language.DEFAULT_OPTION;
             generatorContext = projectGenerator.createGeneratorContext(
                     type,
                     project,
-                    new Options(lang, testFramework != null ? testFramework.toTestFramework() : null, buildTool == null ? BuildTool.GRADLE : buildTool, javaVersion != null ? javaVersion : JdkVersion.JDK_8),
+                    new Options(lang,
+                            testFramework != null ? testFramework.toTestFramework() : language.getDefaults().getTest(),
+                            buildTool == null ? language.getDefaults().getBuild() : buildTool,
+                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(userAgent),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP

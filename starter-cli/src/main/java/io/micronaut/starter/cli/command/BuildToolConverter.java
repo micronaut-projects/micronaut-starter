@@ -22,18 +22,15 @@ import picocli.CommandLine;
 @Introspected
 public class BuildToolConverter implements CommandLine.ITypeConverter<BuildTool> {
 
-    public static final BuildTool DEFAULT_BUILD_TOOL = BuildTool.GRADLE;
-
     @Override
     public BuildTool convert(String value) throws Exception {
-        if (value == null) {
-            return DEFAULT_BUILD_TOOL;
-        }
-        for (BuildTool bt : BuildTool.values()) {
-            if (value.equalsIgnoreCase(bt.toString())) {
-                return bt;
+        if (value != null) {
+            for (BuildTool bt : BuildTool.values()) {
+                if (value.equalsIgnoreCase(bt.toString())) {
+                    return bt;
+                }
             }
         }
-        return DEFAULT_BUILD_TOOL;
+        return BuildTool.DEFAULT_OPTION;
     }
 }

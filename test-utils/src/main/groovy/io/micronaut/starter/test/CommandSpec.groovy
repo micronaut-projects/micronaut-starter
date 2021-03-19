@@ -96,7 +96,7 @@ abstract class CommandSpec extends Specification {
     }
 
     void generateProject(Language lang,
-                         BuildTool buildTool = BuildTool.GRADLE,
+                         BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = null) {
@@ -112,7 +112,7 @@ abstract class CommandSpec extends Specification {
 
     void generateProject(Project project,
                          Language lang,
-                         BuildTool buildTool = BuildTool.GRADLE,
+                         BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = null) {
