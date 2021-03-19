@@ -24,7 +24,6 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
-import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.feature.test.AssertJ;
 
 import javax.inject.Singleton;
@@ -34,6 +33,7 @@ public class Camunda implements Feature {
 
     private final AssertJ assertJ;
     private final DatabaseDriverFeature defaultDbFeature;
+
     public Camunda(DatabaseDriverFeature defaultDbFeature, AssertJ assertJ) {
         this.defaultDbFeature = defaultDbFeature;
         this.assertJ = assertJ;
