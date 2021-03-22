@@ -20,7 +20,7 @@
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-bpm-feature</artifactId>
-            <version>0.20.0</version>
+            <version>0.21.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
