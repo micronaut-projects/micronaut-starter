@@ -20,7 +20,7 @@ dependencies {
     testImplementation 'com.google.auth:google-auth-library-oauth2-http:0.22.2'
     testImplementation 'com.azure:azure-identity:1.2.3'
     testImplementation 'com.azure:azure-core-http-netty:1.7.0'
-    testImplementation 'com.azure.resourcemanager:azure-resourcemanager-containerinstance:2.1.0'
+    testImplementation 'com.azure.resourcemanager:azure-resourcemanager-containerinstance:2.3.0'
 }
 
 tasks.withType(Test) {
