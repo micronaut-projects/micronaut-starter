@@ -5,9 +5,9 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradlePlugin
 @import io.micronaut.starter.build.gradle.GradleDsl
 @import io.micronaut.starter.build.gradle.GradleDependency
-
 @args (
 ApplicationType applicationType,
 Project project,
@@ -19,7 +19,7 @@ GradleBuild gradleBuild
 import com.google.protobuf.gradle.*
 }
 
-@gradlePlugins.template(applicationType, project, features)
+@gradlePlugins.template(applicationType, project, features, gradleBuild)
 
 version = "0.1"
 group = "@project.getPackageName()"
@@ -278,13 +278,4 @@ protobuf {
 }
 }
 }
-
-@if (features.contains("views-rocker")) {
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/resources")
-        }
-    }
-}
-}
+@gradleBuild.renderExtensions()

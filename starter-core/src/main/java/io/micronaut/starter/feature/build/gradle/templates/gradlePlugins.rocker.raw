@@ -4,18 +4,18 @@
 @import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.application.ApplicationType
-
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.CoreGradlePlugin
+@import io.micronaut.starter.build.gradle.CommunityGradlePlugin
+@import io.micronaut.starter.build.gradle.GradlePlugin
 @args (
 ApplicationType applicationType,
 Project project,
-Features features
+Features features,
+GradleBuild gradleBuild
 )
 
 plugins {
-@if (features.contains("asciidoctor")) {
-    id("org.asciidoctor.jvm.convert") version "3.3.0"
-}
-
 @if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
     id("org.jetbrains.kotlin.jvm") version "1.4.10"
     id("org.jetbrains.kotlin.kapt") version "1.4.10"
@@ -49,7 +49,10 @@ plugins {
 @if (features.contains("jib")) {
     id("com.google.cloud.tools.jib") version "2.6.0"
 }
-@if (features.contains("views-rocker")) {
-    id("com.fizzed.rocker") version "1.3.0"
+@for (CoreGradlePlugin gradlePlugin : gradleBuild.getCorePlugins()) {
+    id("@gradlePlugin.getId()")
+}
+@for (CommunityGradlePlugin gradlePlugin : gradleBuild.getCommunityPlugins()) {
+    id("@gradlePlugin.getId()") version "@(((CommunityGradlePlugin)gradlePlugin).getVersion())"
 }
 }

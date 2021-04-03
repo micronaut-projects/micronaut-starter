@@ -350,9 +350,6 @@ dependencies {
 @if (features.contains("views-freemarker")) {
     @dependency.template("io.micronaut.views", "micronaut-views-freemarker", "implementation", null)
 }
-@if (features.contains("views-rocker")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-rocker", "implementation", null)
-}
 @if (features.contains("views-soy")) {
     @dependency.template("io.micronaut.views", "micronaut-views-soy", "implementation", null)
 }

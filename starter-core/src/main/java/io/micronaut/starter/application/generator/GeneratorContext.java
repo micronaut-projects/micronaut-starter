@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
@@ -77,6 +78,8 @@ public class GeneratorContext implements DependencyContext {
     private final Features features;
     private final Options options;
     private final Set<Dependency> dependencies = new HashSet<>();
+
+    private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -326,5 +329,24 @@ public class GeneratorContext implements DependencyContext {
     @Override
     public Set<Dependency> getDependencies() {
         return dependencies;
+    }
+
+    public void addBuildPlugin(BuildPlugin buildPlugin) {
+        if (buildPlugin.requiresLookup()) {
+            Coordinate coordinate = coordinateResolver.resolve(buildPlugin.getArtifactId())
+                    .orElseThrow(() -> new LookupFailedException(buildPlugin.getArtifactId()));
+            this.buildPlugins.add(buildPlugin.resolved(coordinate));
+        } else {
+            this.buildPlugins.add(buildPlugin);
+        }
+    }
+
+    public Coordinate resolveCoordinate(String artifactId) {
+        return coordinateResolver.resolve(artifactId)
+                    .orElseThrow(() -> new LookupFailedException(artifactId));
+    }
+
+    public Set<BuildPlugin> getBuildPlugins() {
+        return buildPlugins;
     }
 }

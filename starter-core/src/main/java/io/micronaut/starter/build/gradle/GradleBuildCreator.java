@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.gradle;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import javax.inject.Singleton;
 import java.util.List;
@@ -30,8 +31,17 @@ public class GradleBuildCreator {
                 .getBuildTool()
                 .getGradleDsl()
                 .orElseThrow(() -> new IllegalArgumentException("GradleBuildCreator can only create Gradle builds"));
-
-        return new GradleBuild(gradleDsl, resolveDependencies(generatorContext));
+        List<? extends GradlePlugin> gradlePlugins = generatorContext.getBuildPlugins()
+                .stream()
+                .filter(buildPlugin -> buildPlugin.getBuildTool().isGradle() && buildPlugin.getId() != null)
+                .sorted(OrderUtil.COMPARATOR)
+                .map(buildPlugin -> {
+                    if (buildPlugin.getVersion() == null) {
+                        return new CoreGradlePlugin(buildPlugin.getId());
+                    }
+                    return new CommunityGradlePlugin(buildPlugin.getId(), buildPlugin.getVersion(), buildPlugin.getExtension());
+                }).collect(Collectors.toList());
+        return new GradleBuild(gradleDsl, resolveDependencies(generatorContext), gradlePlugins);
     }
 
     @NonNull

@@ -17,12 +17,15 @@ package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
+import io.micronaut.starter.feature.asciidoctor.template.asciidocMavenPlugin;
 import io.micronaut.starter.feature.asciidoctor.template.indexAdoc;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
 import javax.inject.Singleton;
 
@@ -46,16 +49,25 @@ public class Asciidoctor implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
+
+            generatorContext.addBuildPlugin(BuildPlugin.builder()
+                    .tool(BuildTool.GRADLE)
+                    .id("org.asciidoctor.jvm.convert")
+                    .lookupArtifactId("asciidoctor-gradle-jvm")
+                    .build());
+
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
             generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
             generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
             generatorContext.getBuildProperties().put("jruby.version", "9.2.11.1");
+            generatorContext.addBuildPlugin(BuildPlugin.builder()
+                    .tool(BuildTool.MAVEN)
+                    .extension(new RockerWritable(asciidocMavenPlugin.template()))
+                    .build());
         }
-
         generatorContext.addTemplate("indexAdoc", new RockerTemplate("src/docs/asciidoc/index.adoc", indexAdoc.template()));
     }
 

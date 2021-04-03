@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Coordinate;
@@ -23,6 +24,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Source;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
@@ -83,10 +85,19 @@ public class MavenBuildCreator {
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
         testAnnotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
 
+        List<MavenBuildPlugin> plugins = generatorContext.getBuildPlugins()
+                .stream()
+                .filter(buildPlugin -> buildPlugin.getBuildTool() == BuildTool.MAVEN)
+                .sorted(OrderUtil.COMPARATOR)
+                .map(buildPlugin -> {
+                    return new MavenBuildPlugin(buildPlugin.getGroupId(), buildPlugin.getArtifactId(), buildPlugin.getVersion(), buildPlugin.getExtension());
+                }).collect(Collectors.toList());
+
         return new MavenBuild(annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
                 dependencies,
                 buildProperties.getProperties(),
+                plugins,
                 combineAttribute,
                 testCombineAttribute);
     }
