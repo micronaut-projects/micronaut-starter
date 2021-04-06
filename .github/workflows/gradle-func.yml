@@ -18,7 +18,7 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-test-cli-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-core-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
@@ -60,7 +60,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
@@ -81,7 +81,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
@@ -102,7 +102,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
@@ -123,7 +123,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
