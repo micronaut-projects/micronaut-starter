@@ -9,6 +9,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
+import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -27,6 +28,17 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes")
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/723")
+    void 'test readme.md with feature aws-lambda-custom-runtime and graalvm contains extra documentation'() {
+        when:
+        def output = generate(['aws-lambda-custom-runtime', 'graalvm'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("./gradlew buildNativeLambda -Pmicronaut.runtime=lambda")
     }
 
     @Unroll
