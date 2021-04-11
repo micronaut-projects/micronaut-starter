@@ -151,6 +151,9 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
+        and:
+        build.contains('runtime("lambda")')
+
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())

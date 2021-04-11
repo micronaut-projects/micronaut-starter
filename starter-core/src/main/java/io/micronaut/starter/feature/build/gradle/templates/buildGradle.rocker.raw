@@ -66,7 +66,7 @@ micronaut {
     @if (features.contains("azure-function-http")) {
     runtime("azure_function")
     }
-    @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
+    @if ((applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.FUNCTION) && features.contains("aws-lambda")) {
     runtime("lambda")
     }
     @if (features.contains("tomcat-server")) {
