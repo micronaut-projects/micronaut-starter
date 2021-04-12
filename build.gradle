@@ -129,7 +129,7 @@ starterCli.afterEvaluate {
         dependsOn(starterCli.tasks.getByName('classes'))
         group = "Documentation"
         description = "Generate AsciiDoc manpage"
-        classpath(starterCli.configurations.compile, starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
+        classpath(starterCli.configurations.getByName('implementation'), starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
         main 'picocli.codegen.docgen.manpage.ManPageGenerator'
         args starterCli.mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
     }
