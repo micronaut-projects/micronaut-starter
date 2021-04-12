@@ -29,11 +29,14 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaR
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -88,6 +91,10 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
             addBookLambdaRuntime(generatorContext, project);
         }
         addBootstrap(generatorContext, applicationType);
+
+        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
+            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
+        }
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {
