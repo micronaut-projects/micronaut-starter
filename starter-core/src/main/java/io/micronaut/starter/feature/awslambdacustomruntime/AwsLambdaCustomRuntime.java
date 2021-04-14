@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
 import com.fizzed.rocker.RockerModel;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -25,16 +25,19 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;
@@ -94,6 +97,10 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
             addBookLambdaRuntime(generatorContext, project);
         }
         addBootstrap(generatorContext, applicationType);
+
+        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
+            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
+        }
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {

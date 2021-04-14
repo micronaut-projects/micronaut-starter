@@ -30,6 +30,25 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         readme.contains("https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambdaCustomRuntimes")
     }
 
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/723")
+    void 'test readme.md with feature aws-lambda-custom-runtime and graalvm contains extra documentation. language = #language'() {
+        when:
+        def output = generate(
+            ApplicationType.DEFAULT,
+            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+            ['aws-lambda-custom-runtime', 'graalvm']
+        )
+
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("./gradlew buildNativeLambda -Pmicronaut.runtime=lambda")
+
+        where:
+        language << graalSupportedLanguages()
+    }
+
     @Unroll
     void 'verify bootstrap for a function application type with gradle and feature aws-lambda-custom-runtime for language=#language'() {
         when:
