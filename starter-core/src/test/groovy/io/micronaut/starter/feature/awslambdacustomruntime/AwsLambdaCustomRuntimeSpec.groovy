@@ -201,6 +201,41 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
       <scope>compile</scope>
     </dependency>
 """)
+        and: 'http-client dependency is in compile scope'
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+
+        where:
+        language        | applicationType
+        Language.JAVA   | ApplicationType.FUNCTION
+        Language.GROOVY | ApplicationType.FUNCTION
+        Language.KOTLIN | ApplicationType.FUNCTION
+        Language.JAVA   | ApplicationType.DEFAULT
+        Language.GROOVY | ApplicationType.DEFAULT
+        Language.KOTLIN | ApplicationType.DEFAULT
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/721")
+    void 'test maven aws-lambda-custom-runtime include http-client in compile scope: language=#language, application: #applicationType'(Language language, ApplicationType applicationType) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .language(language)
+            .features(['aws-lambda-custom-runtime'])
+            .render()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-http-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
 
         where:
         language        | applicationType
