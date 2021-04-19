@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.asciidoctor;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.asciidoctor.template.asciidocGradle;
@@ -52,8 +54,7 @@ public class Asciidoctor implements Feature {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addTemplate("asciidocGradle", new RockerTemplate("gradle/asciidoc.gradle", asciidocGradle.template()));
 
-            generatorContext.addBuildPlugin(BuildPlugin.builder()
-                    .tool(BuildTool.GRADLE)
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("org.asciidoctor.jvm.convert")
                     .lookupArtifactId("asciidoctor-gradle-jvm")
                     .build());
@@ -63,8 +64,7 @@ public class Asciidoctor implements Feature {
             generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
             generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
             generatorContext.getBuildProperties().put("jruby.version", "9.2.11.1");
-            generatorContext.addBuildPlugin(BuildPlugin.builder()
-                    .tool(BuildTool.MAVEN)
+            generatorContext.addBuildPlugin(MavenPlugin.builder()
                     .extension(new RockerWritable(asciidocMavenPlugin.template()))
                     .build());
         }

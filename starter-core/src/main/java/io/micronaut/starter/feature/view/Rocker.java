@@ -19,6 +19,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradleBuild;
+import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
@@ -60,23 +63,17 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
                 .groupId("io.micronaut.views")
                 .artifactId("micronaut-views-rocker")
                 .compile());
-        generatorContext.addBuildPlugin(BuildPlugin.builder()
-                .tool(BuildTool.GRADLE)
+        generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("com.fizzed.rocker")
                 .extension(new RockerWritable(gradlePluginRocker.template(rockerSrcDir(generatorContext))))
                 .lookupArtifactId("rocker-gradle-plugin")
                 .build());
         Coordinate coordinate = generatorContext.resolveCoordinate("rocker-maven-plugin");
-        Writable extension = new RockerWritable(mavenPluginRocker.template(coordinate.getGroupId(),
-                coordinate.getArtifactId(),
-                coordinate.getVersion(),
-                rockerSrcDir(generatorContext)));
-        generatorContext.addBuildPlugin(BuildPlugin.builder()
-                .tool(BuildTool.MAVEN)
-                .extension(extension)
-                .groupId(coordinate.getGroupId())
-                .artifactId(coordinate.getArtifactId())
-                .version(coordinate.getVersion())
+        generatorContext.addBuildPlugin(MavenPlugin.builder()
+                .extension(new RockerWritable(mavenPluginRocker.template(coordinate.getGroupId(),
+                        coordinate.getArtifactId(),
+                        coordinate.getVersion(),
+                        rockerSrcDir(generatorContext))))
                 .build());
     }
 

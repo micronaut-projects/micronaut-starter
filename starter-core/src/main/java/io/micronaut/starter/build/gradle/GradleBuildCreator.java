@@ -31,16 +31,12 @@ public class GradleBuildCreator {
                 .getBuildTool()
                 .getGradleDsl()
                 .orElseThrow(() -> new IllegalArgumentException("GradleBuildCreator can only create Gradle builds"));
-        List<? extends GradlePlugin> gradlePlugins = generatorContext.getBuildPlugins()
+        List<GradlePlugin> gradlePlugins = generatorContext.getBuildPlugins()
                 .stream()
-                .filter(buildPlugin -> buildPlugin.getBuildTool().isGradle() && buildPlugin.getId() != null)
+                .filter(GradlePlugin.class::isInstance)
+                .map(GradlePlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
-                .map(buildPlugin -> {
-                    if (buildPlugin.getVersion() == null) {
-                        return new CoreGradlePlugin(buildPlugin.getId());
-                    }
-                    return new CommunityGradlePlugin(buildPlugin.getId(), buildPlugin.getVersion(), buildPlugin.getExtension());
-                }).collect(Collectors.toList());
+                .collect(Collectors.toList());
         return new GradleBuild(gradleDsl, resolveDependencies(generatorContext), gradlePlugins);
     }
 

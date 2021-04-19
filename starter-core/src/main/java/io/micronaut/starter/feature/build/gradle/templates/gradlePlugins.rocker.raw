@@ -5,8 +5,6 @@
 @import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.CoreGradlePlugin
-@import io.micronaut.starter.build.gradle.CommunityGradlePlugin
 @import io.micronaut.starter.build.gradle.GradlePlugin
 @args (
 ApplicationType applicationType,
@@ -49,10 +47,7 @@ plugins {
 @if (features.contains("jib")) {
     id("com.google.cloud.tools.jib") version "2.6.0"
 }
-@for (CoreGradlePlugin gradlePlugin : gradleBuild.getCorePlugins()) {
-    id("@gradlePlugin.getId()")
-}
-@for (CommunityGradlePlugin gradlePlugin : gradleBuild.getCommunityPlugins()) {
-    id("@gradlePlugin.getId()") version "@(((CommunityGradlePlugin)gradlePlugin).getVersion())"
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
 }
 }

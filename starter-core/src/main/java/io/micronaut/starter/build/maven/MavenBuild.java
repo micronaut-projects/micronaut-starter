@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import io.micronaut.starter.template.RockerWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class MavenBuild {
 
     private final List<MavenDependency> dependencies;
 
-    private final List<MavenBuildPlugin> plugins;
+    private final List<MavenPlugin> plugins;
 
     private final List<Property> properties;
 
@@ -60,7 +61,7 @@ public class MavenBuild {
                       @NonNull List<Coordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
-                      @NonNull List<MavenBuildPlugin> plugins,
+                      @NonNull List<MavenPlugin> plugins,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute) {
         this.annotationProcessors = annotationProcessors;
@@ -75,23 +76,15 @@ public class MavenBuild {
     @NonNull
     public String renderPlugins(int indentationSpaces) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        plugins.stream()
-                .map(mavenBuildPlugin -> {
-                    if (mavenBuildPlugin.getExtension() != null) {
-                        return mavenBuildPlugin.getExtension();
-                    }
-                    RockerModel model = mavenPlugin.template(mavenBuildPlugin.getGroupId(), mavenBuildPlugin.getArtifactId(), mavenBuildPlugin.getVersion());
-                    return new RockerWritable(model);
-                })
-                .forEach(writable -> {
-                    try {
-                        writable.write(outputStream);
-                    } catch (IOException e) {
-                        if (LOG.isErrorEnabled()) {
-                            LOG.error("IO Exception rendering Gradle Plugin extension");
-                        }
-                    }
-                });
+        for (MavenPlugin plugin: plugins) {
+            try {
+                plugin.getExtension().write(outputStream);
+            } catch (IOException e) {
+                if (LOG.isErrorEnabled()) {
+                    LOG.error("IO Exception rendering Gradle Plugin extension");
+                }
+            }
+        }
         String str = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
         if (indentationSpaces == 0) {
             return str;

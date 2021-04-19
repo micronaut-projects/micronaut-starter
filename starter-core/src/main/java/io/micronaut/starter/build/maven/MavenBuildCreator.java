@@ -24,7 +24,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Source;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
@@ -85,13 +84,12 @@ public class MavenBuildCreator {
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
         testAnnotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
 
-        List<MavenBuildPlugin> plugins = generatorContext.getBuildPlugins()
+        List<MavenPlugin> plugins = generatorContext.getBuildPlugins()
                 .stream()
-                .filter(buildPlugin -> buildPlugin.getBuildTool() == BuildTool.MAVEN)
+                .filter(MavenPlugin.class::isInstance)
+                .map(MavenPlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
-                .map(buildPlugin -> {
-                    return new MavenBuildPlugin(buildPlugin.getGroupId(), buildPlugin.getArtifactId(), buildPlugin.getVersion(), buildPlugin.getExtension());
-                }).collect(Collectors.toList());
+                .collect(Collectors.toList());
 
         return new MavenBuild(annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,

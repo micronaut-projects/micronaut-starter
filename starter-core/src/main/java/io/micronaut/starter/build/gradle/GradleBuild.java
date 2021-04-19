@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
@@ -37,7 +38,7 @@ public class GradleBuild {
     private final List<GradleDependency> dependencies;
 
     @NonNull
-    private final List<? extends GradlePlugin> plugins;
+    private final List<GradlePlugin> plugins;
 
     public GradleBuild() {
         this(GradleDsl.GROOVY, Collections.emptyList());
@@ -50,7 +51,7 @@ public class GradleBuild {
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies,
-                       @NonNull List<? extends GradlePlugin> plugins) {
+                       @NonNull List<GradlePlugin> plugins) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
         this.plugins = plugins;
@@ -67,29 +68,15 @@ public class GradleBuild {
     }
 
     @NonNull
-    public List<CoreGradlePlugin> getCorePlugins() {
-        return plugins
-                .stream()
-                .filter(gradlePlugin -> gradlePlugin instanceof CoreGradlePlugin)
-                .map(gradlePlugin -> ((CoreGradlePlugin) gradlePlugin))
-                .collect(Collectors.toList());
-    }
-
-    @NonNull
-    public List<CommunityGradlePlugin> getCommunityPlugins() {
-        return plugins
-                .stream()
-                .filter(gradlePlugin -> gradlePlugin instanceof CommunityGradlePlugin)
-                .map(gradlePlugin -> ((CommunityGradlePlugin) gradlePlugin))
-                .collect(Collectors.toList());
+    public List<GradlePlugin> getPlugins() {
+        return plugins;
     }
 
     @NonNull
     public String renderExtensions() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         plugins.stream()
-                .filter(gradlePlugin -> gradlePlugin instanceof CommunityGradlePlugin)
-                .map(gradlePlugin -> ((CommunityGradlePlugin) gradlePlugin).getExtension())
+                .map(GradlePlugin::getExtension)
                 .filter(Objects::nonNull)
                 .forEach(writable -> {
                     try {

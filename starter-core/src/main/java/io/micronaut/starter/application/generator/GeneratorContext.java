@@ -333,9 +333,7 @@ public class GeneratorContext implements DependencyContext {
 
     public void addBuildPlugin(BuildPlugin buildPlugin) {
         if (buildPlugin.requiresLookup()) {
-            Coordinate coordinate = coordinateResolver.resolve(buildPlugin.getArtifactId())
-                    .orElseThrow(() -> new LookupFailedException(buildPlugin.getArtifactId()));
-            this.buildPlugins.add(buildPlugin.resolved(coordinate));
+            this.buildPlugins.add(buildPlugin.resolved(coordinateResolver));
         } else {
             this.buildPlugins.add(buildPlugin);
         }
