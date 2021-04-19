@@ -13,63 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.awsparameterstore;
 
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import javax.inject.Singleton;
+import java.util.Map;
 
 @Singleton
-public class MongoSync extends MongoFeature {
-
-    public MongoSync(TestContainers testContainers) {
-        super(testContainers);
+public class AwsParameterStore implements DistributedConfigFeature {
+    @Override
+    public String getTitle() {
+        return "aws-parameter-store";
     }
 
     @Override
     public String getName() {
-        return "mongo-sync";
-    }
-
-    @Override
-    public String getTitle() {
-        return "Mongo Synchronous Driver";
+        return "aws-parameter-store";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Mongo Synchronous Driver";
+        return "Adds support for Distributed Configuration with AWS System Manager Parameter Store";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.mongodb")
-                .artifactId("micronaut-mongo-sync")
+                .groupId("io.micronaut.aws")
+                .artifactId("micronaut-aws-parameter-store")
                 .compile());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.DATABASE;
+        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
+        config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
+        config.put("micronaut.config-client.enabled", true);
+        config.put("aws.client.system-manager.parameterstore.enabled", true);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html";
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#parametersStore";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://docs.mongodb.com";
+        return "https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html";
     }
 }

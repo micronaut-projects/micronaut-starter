@@ -17,11 +17,11 @@ plugins {
 }
 
 @if (features.language().isKotlin() || features.testFramework().isKotlinTestFramework()) {
-    id("org.jetbrains.kotlin.jvm") version "1.4.10"
-    id("org.jetbrains.kotlin.kapt") version "1.4.10"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.10"
+    id("org.jetbrains.kotlin.jvm") version "1.4.30"
+    id("org.jetbrains.kotlin.kapt") version "1.4.30"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.30"
     @if (features.isFeaturePresent(JpaFeature.class)) {
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.10"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.30"
     }
 }
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
@@ -39,9 +39,9 @@ plugins {
 
 @if (features.mainClass().isPresent() || features.contains("oracle-function")
     || applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    id("io.micronaut.application") version "1.4.2"
+    id("io.micronaut.application") version "1.4.5"
 } else {
-    id("io.micronaut.library") version "1.4.2"
+    id("io.micronaut.library") version "1.4.5"
 }
 @if (features.contains("grpc")) {
     id("com.google.protobuf") version "0.8.13"

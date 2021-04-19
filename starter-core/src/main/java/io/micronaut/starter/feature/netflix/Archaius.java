@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.netflix;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 
 import javax.inject.Singleton;
@@ -37,4 +39,11 @@ public class Archaius implements DistributedConfigFeature {
         return "Adds support for Netflix Archaius";
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.netflix")
+                .artifactId("micronaut-netflix-archaius")
+                .compile());
+    }
 }

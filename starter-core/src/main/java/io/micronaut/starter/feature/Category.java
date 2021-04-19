@@ -23,6 +23,7 @@ package io.micronaut.starter.feature;
  */
 public class Category {
     public static final String API                  = "API";
+    public static final String BPM                  = "BPM";
     public static final String IOT                  = "Internet of Things";
     public static final String CACHE                = "Cache";
     public static final String CLOUD                = "Cloud";

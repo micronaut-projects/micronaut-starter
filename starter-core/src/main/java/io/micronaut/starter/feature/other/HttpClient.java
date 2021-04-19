@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.Options;
@@ -62,5 +64,13 @@ public class HttpClient implements DefaultFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://docs.micronaut.io/latest/guide/index.html#httpClient";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-http-client")
+                .compile());
     }
 }

@@ -13,71 +13,82 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.security;
+package io.micronaut.starter.feature.camunda;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.server.MicronautServerDependent;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.test.AssertJ;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class SecurityLdap implements Feature, MicronautServerDependent {
+public class Camunda implements Feature {
 
-    private final SecurityAnnotations securityAnnotations;
+    private final AssertJ assertJ;
+    private final DatabaseDriverFeature defaultDbFeature;
 
-    public SecurityLdap(SecurityAnnotations securityAnnotations) {
-        this.securityAnnotations = securityAnnotations;
+    public Camunda(DatabaseDriverFeature defaultDbFeature, AssertJ assertJ) {
+        this.defaultDbFeature = defaultDbFeature;
+        this.assertJ = assertJ;
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "security-ldap";
+        return "camunda";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Security LDAP";
+        return "Camunda (Workflow Engine)";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for authentication with LDAP servers";
+        return "Allows to integrate Camunda (Workflow Engine) in your Micronaut applications.";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(SecurityAnnotations.class)) {
-            featureContext.addFeature(securityAnnotations);
+        if (!featureContext.isPresent(DatabaseDriverFeature.class)) {
+            featureContext.addFeature(defaultDbFeature);
+        }
+        if (!featureContext.isPresent(AssertJ.class)) {
+            featureContext.addFeature(assertJ);
         }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.security")
-                .artifactId("micronaut-security-ldap")
+                .lookupArtifactId("micronaut-camunda-bpm-feature")
                 .compile());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+        generatorContext.addDependency(Dependency.builder()
+                .lookupArtifactId("camunda-bpm-assert")
+                .test());
     }
 
     @Override
     public String getCategory() {
-        return Category.SECURITY;
+        return Category.BPM;
     }
 
     @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#ldap";
+    @Nullable
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/NovatecConsulting/micronaut-camunda-bpm";
     }
+
 }

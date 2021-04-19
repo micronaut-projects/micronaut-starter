@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.feature.migration;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -43,6 +46,14 @@ public class Flyway implements MigrationFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.flyway")
+                .artifactId("micronaut-flyway")
+                .compile());
     }
 }
 

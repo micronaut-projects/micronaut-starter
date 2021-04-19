@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -43,6 +44,10 @@ public class Neo4jBolt implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("neo4j.uri", "bolt://${NEO4J_HOST:localhost}");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.neo4j")
+                .artifactId("micronaut-neo4j-bolt")
+                .compile());
     }
 
     @Override
