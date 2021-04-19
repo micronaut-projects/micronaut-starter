@@ -67,7 +67,7 @@ public class MavenPlugin implements BuildPlugin {
         return extension;
     }
 
-    public static class Builder {
+    public static final class Builder {
 
         private Writable extension;
         private int order = 0;

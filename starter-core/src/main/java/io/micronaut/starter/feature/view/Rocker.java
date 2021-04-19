@@ -16,16 +16,12 @@
 package io.micronaut.starter.feature.view;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
-import io.micronaut.starter.template.Writable;
 
 import javax.inject.Singleton;
 

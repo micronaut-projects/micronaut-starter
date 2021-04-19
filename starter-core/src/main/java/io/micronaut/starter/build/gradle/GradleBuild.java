@@ -15,29 +15,22 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class GradleBuild {
     private static final Logger LOG = LoggerFactory.getLogger(GradleBuild.class);
 
-    @NonNull
     private final GradleDsl dsl;
-
-    @NonNull
     private final List<GradleDependency> dependencies;
-
-    @NonNull
     private final List<GradlePlugin> plugins;
 
     public GradleBuild() {

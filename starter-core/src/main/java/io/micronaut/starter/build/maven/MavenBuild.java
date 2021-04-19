@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.build.maven;
 
-import com.fizzed.rocker.RockerModel;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.Property;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import io.micronaut.starter.template.RockerWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

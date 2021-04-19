@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;

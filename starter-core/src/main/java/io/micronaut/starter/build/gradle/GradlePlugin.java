@@ -104,7 +104,7 @@ public class GradlePlugin implements BuildPlugin {
         return new Builder();
     }
 
-    public static class Builder {
+    public static final class Builder {
 
         private String id;
         private String artifactId;
