@@ -82,11 +82,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         readme
         funcYaml
         build.contains('<micronaut.runtime>oracle_function</micronaut.runtime>')
-        build.contains('''
-    <repository>
-      <id>fnproject</id>
-      <url>https://dl.bintray.com/fnproject/fnproject</url>
-    </repository>''')
 
         build.contains('''
     <dependency>
