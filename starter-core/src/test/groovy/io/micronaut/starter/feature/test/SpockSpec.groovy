@@ -31,18 +31,18 @@ class SpockSpec extends ApplicationContextSpec {
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
-    void 'it is possible to create a #language application with #testFramework and JDK15'(Language language, TestFramework testFramework) {
+    void 'it is possible to create a #language application with #testFramework and JDK_16'(Language language, TestFramework testFramework) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_15)
+                .jdkVersion(JdkVersion.JDK_16)
                 .render()
 
         then:
         template.contains('''
 java {
-    sourceCompatibility = JavaVersion.toVersion("15")
-    targetCompatibility = JavaVersion.toVersion("15")
+    sourceCompatibility = JavaVersion.toVersion("16")
+    targetCompatibility = JavaVersion.toVersion("16")
 }
 ''')
 
@@ -55,15 +55,15 @@ java {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_15)
+                .jdkVersion(JdkVersion.JDK_16)
                 .testFramework(testFramework)
                 .render()
 
         then:
-        template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")
+        template.contains("sourceCompatibility = JavaVersion.toVersion(\"16\")")
         template.contains('''
         kotlinOptions {
-            jvmTarget = "14"
+            jvmTarget = "16"
         }
 ''')
 
