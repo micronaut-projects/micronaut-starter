@@ -221,15 +221,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
 }
 }
-@if (features.contains("spring-data-jpa")) {
-@dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
-@dependency.template("io.micronaut.data", "micronaut-data-spring-jpa", "compile", null)
-@dependency.template("org.springframework", "spring-orm", "compile", null)
-}
-@if (features.contains("spring-data-jdbc")) {
-@dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
-@dependency.template("org.springframework", "spring-jdbc", "compile", null)
-}
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
 }

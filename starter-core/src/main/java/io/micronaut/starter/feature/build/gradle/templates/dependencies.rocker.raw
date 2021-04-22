@@ -108,15 +108,6 @@ dependencies {
     }
     @dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
 }
-@if (features.contains("spring-data-jpa")) {
-    @dependency.template("io.micronaut.data", "micronaut-data-spring", "implementation", null)
-    @dependency.template("io.micronaut.data", "micronaut-data-spring-jpa", "implementation", null)
-    @dependency.template("org.springframework", "spring-orm", "implementation", null)
-}
-@if (features.contains("spring-data-jdbc")) {
-    @dependency.template("io.micronaut.data", "micronaut-data-spring", "implementation", null)
-    @dependency.template("org.springframework", "spring-jdbc", "implementation", null)
-}
 @if (features.contains("logback")) {
     @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
 }
