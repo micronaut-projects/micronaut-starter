@@ -72,11 +72,10 @@ public class Gradle implements BuildFeature {
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
         }
-        generatorContext.addBuildPlugin(GradlePlugin.builder().id(
-                (generatorContext.getFeatures().mainClass().isPresent() ||
-                        generatorContext.getFeatures().contains("oracle-function") ||
-                        generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda")) ?
-                "io.micronaut.application" : "io.micronaut.library").lookupArtifactId("micronaut-gradle-plugin").build());
+        generatorContext.addBuildPlugin(GradlePlugin.builder()
+                .id(shouldApplyMicronautApplicationGradlePlugin(generatorContext) ? "io.micronaut.application" : "io.micronaut.library")
+                .lookupArtifactId("micronaut-gradle-plugin")
+                .build());
 
         BuildTool buildTool = generatorContext.getBuildTool();
         GradleBuild build = dependencyResolver.create(generatorContext);
@@ -91,6 +90,12 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject())));
+    }
+
+    private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
+        return generatorContext.getFeatures().mainClass().isPresent() ||
+                generatorContext.getFeatures().contains("oracle-function") ||
+                generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
     }
 
     @Override
