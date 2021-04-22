@@ -15,17 +15,23 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class GradleBuild {
+    private static final Logger LOG = LoggerFactory.getLogger(GradleBuild.class);
 
-    @NonNull
     private final GradleDsl dsl;
-
-    @NonNull
     private final List<GradleDependency> dependencies;
+    private final List<GradlePlugin> plugins;
 
     public GradleBuild() {
         this(GradleDsl.GROOVY, Collections.emptyList());
@@ -33,8 +39,15 @@ public class GradleBuild {
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies) {
+        this(gradleDsl, dependencies, Collections.emptyList());
+    }
+
+    public GradleBuild(@NonNull GradleDsl gradleDsl,
+                       @NonNull List<GradleDependency> dependencies,
+                       @NonNull List<GradlePlugin> plugins) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
+        this.plugins = plugins;
     }
 
     @NonNull
@@ -47,4 +60,26 @@ public class GradleBuild {
         return dependencies;
     }
 
+    @NonNull
+    public List<GradlePlugin> getPlugins() {
+        return plugins;
+    }
+
+    @NonNull
+    public String renderExtensions() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        plugins.stream()
+                .map(GradlePlugin::getExtension)
+                .filter(Objects::nonNull)
+                .forEach(writable -> {
+                    try {
+                        writable.write(outputStream);
+                    } catch (IOException e) {
+                        if (LOG.isErrorEnabled()) {
+                            LOG.error("IO Exception rendering Gradle Plugin extension");
+                        }
+                    }
+                });
+        return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
+    }
 }
