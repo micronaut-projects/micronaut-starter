@@ -66,7 +66,7 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
                 .build());
         Coordinate coordinate = generatorContext.resolveCoordinate("rocker-maven-plugin");
         generatorContext.addBuildPlugin(MavenPlugin.builder()
-                .extension(new RockerWritable(mavenPluginRocker.template(coordinate.getGroupId(),
+                .extension(new RockerWritable(mvnPluginRocker.template(coordinate.getGroupId(),
                         coordinate.getArtifactId(),
                         coordinate.getVersion(),
                         rockerSrcDir(generatorContext))))
