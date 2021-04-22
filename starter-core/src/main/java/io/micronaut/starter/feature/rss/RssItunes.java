@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.rss;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -52,5 +54,13 @@ public class RssItunes implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-rss/latest/guide/index.html#itunespodcast";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.rss")
+                .artifactId("micronaut-itunespodcast")
+                .compile());
     }
 }

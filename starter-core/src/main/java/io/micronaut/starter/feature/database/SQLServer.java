@@ -16,7 +16,10 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
 import javax.inject.Singleton;
 
@@ -76,5 +79,19 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     public boolean embedded() {
         return false;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("com.microsoft.sqlserver")
+                .artifactId("mssql-jdbc")
+                .runtime());
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.r2dbc")
+                    .artifactId("r2dbc-mssql")
+                    .runtime());
+        }
     }
 }

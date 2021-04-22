@@ -51,6 +51,10 @@ public class JaxRs implements Feature, MicronautServerDependent {
 
         generatorContext.addDependency(jaxrs.annotationProcessor());
         generatorContext.addDependency(jaxrs.testAnnotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.jaxrs")
+                .artifactId("micronaut-jaxrs-server")
+                .compile());
     }
 
     @Override

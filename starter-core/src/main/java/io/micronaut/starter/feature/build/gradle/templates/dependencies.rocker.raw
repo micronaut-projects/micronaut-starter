@@ -82,9 +82,6 @@ dependencies {
 @if (features.contains("vertx-mysql-client")) {
     @dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "implementation", null)
 }
-@if (features.contains("cache-infinispan")) {
-    @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "implementation", null)
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
 }
@@ -96,48 +93,6 @@ dependencies {
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "implementation", null)
-}
-@if (features.contains("views-thymeleaf")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-thymeleaf", "implementation", null)
-}
-@if (features.contains("views-handlebars")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-handlebars", "implementation", null)
-}
-@if (features.contains("views-velocity")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-velocity", "implementation", null)
-}
-@if (features.contains("views-freemarker")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-freemarker", "implementation", null)
-}
-@if (features.contains("views-rocker")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-rocker", "implementation", null)
-}
-@if (features.contains("views-soy")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-soy", "implementation", null)
-}
-@if (features.contains("views-pebble")) {
-    @dependency.template("io.micronaut.views", "micronaut-views-pebble", "implementation", null)
-}
-@if (features.contains("rss")) {
-    @dependency.template("io.micronaut.rss", "micronaut-rss", "implementation", null)
-}
-@if (features.contains("rss-itunes-podcast")) {
-    @dependency.template("io.micronaut.rss", "micronaut-itunespodcast", "implementation", null)
-}
-@if (features.contains("jackson-xml")) {
-    @dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "implementation", null)
-}
-@if (features.contains("jax-rs")) {
-    @dependency.template("io.micronaut.jaxrs", "micronaut-jaxrs-server", "implementation", null)
-}
-@if (features.contains("jmx")) {
-    @dependency.template("io.micronaut.jmx", "micronaut-jmx", "implementation", null)
-}
-@if (features.contains("r2dbc")) {
-    @dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "implementation", null)
-}
-@if (features.contains("data-r2dbc")) {
-    @dependency.template("io.micronaut.r2dbc", "micronaut-data-r2dbc", "implementation", null)
 }
 @if (features.contains("spring")) {
     @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
@@ -170,39 +125,6 @@ dependencies {
 }
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null)
-}
-@if (features.contains("h2")) {
-    @dependency.template("com.h2database", "h2", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-h2", "runtimeOnly", null)
-    }
-}
-@if (features.contains("postgres")) {
-    @dependency.template("org.postgresql", "postgresql", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-postgresql", "runtimeOnly", null)
-    }
-}
-@if (features.contains("mysql")) {
-    @dependency.template("mysql", "mysql-connector-java", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("dev.miku", "r2dbc-mysql", "runtimeOnly", null)
-    }
-}
-@if (features.contains("mariadb")) {
-    @dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("org.mariadb", "r2dbc-mariadb", "runtimeOnly", null)
-    }
-}
-@if (features.contains("oracle")) {
-    @dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtimeOnly", null)
-}
-@if (features.contains("sqlserver")) {
-    @dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtimeOnly", null)
-    @if (features.contains("r2dbc")) {
-    @dependency.template("io.r2dbc", "r2dbc-mssql", "runtimeOnly", null)
-    }
 }
 @if (features.contains("hibernate-gorm")) {
     @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)

@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 
 import javax.inject.Singleton;
@@ -45,5 +47,13 @@ public class Soy implements ViewFeature, MicronautServerDependent {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#soy";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.views")
+                .artifactId("micronaut-views-soy")
+                .compile());
     }
 }
