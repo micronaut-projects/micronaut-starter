@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.grpc;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -43,6 +44,12 @@ public class Grpc implements DefaultFeature {
                 .groupId("io.micronaut.grpc")
                 .artifactId("micronaut-grpc-runtime")
                 .compile());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.google.protobuf")
+                    .lookupArtifactId("protobuf-gradle-plugin")
+                    .build());
+        }
     }
 
     @Override

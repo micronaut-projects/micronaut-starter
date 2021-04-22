@@ -55,7 +55,7 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBuildProperties().put("kotlinVersion", "1.4.30");
+        generatorContext.getBuildProperties().put("kotlinVersion", "1.4.32");
         Dependency.Builder kotlin = Dependency.builder()
                 .groupId("org.jetbrains.kotlin")
                 .compile()

@@ -19,12 +19,14 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
+import io.micronaut.starter.feature.database.JpaFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
@@ -59,6 +61,22 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
         generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
 
+        if (generatorContext.getFeatures().language().isKotlin() || generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.jvm").lookupArtifactId("kotlin-gradle-plugin").build());
+            generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.kapt").lookupArtifactId("kotlin-gradle-plugin").build());
+            generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.allopen").lookupArtifactId("kotlin-allopen").build());
+            if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
+                generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.jpa").lookupArtifactId("kotlin-noarg").build());
+            }
+        }
+        if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
+        }
+        generatorContext.addBuildPlugin(GradlePlugin.builder().id(
+                (generatorContext.getFeatures().mainClass().isPresent() ||
+                        generatorContext.getFeatures().contains("oracle-function") ||
+                        generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda")) ?
+                "io.micronaut.application" : "io.micronaut.library").lookupArtifactId("micronaut-gradle-plugin").build());
 
         BuildTool buildTool = generatorContext.getBuildTool();
         GradleBuild build = dependencyResolver.create(generatorContext);
