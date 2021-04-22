@@ -15,7 +15,10 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -46,5 +49,15 @@ public class Netty implements ServerFeature, DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut")
+                    .artifactId("micronaut-http-server-netty")
+                    .compile());
+        }
     }
 }

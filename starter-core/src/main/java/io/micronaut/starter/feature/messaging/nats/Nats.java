@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import java.util.Collections;
@@ -46,6 +47,10 @@ public class Nats implements MessagingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("nats.addresses", Collections.singletonList("nats://localhost:4222"));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.nats")
+                .artifactId("micronaut-nats")
+                .compile());
     }
 
     @Override

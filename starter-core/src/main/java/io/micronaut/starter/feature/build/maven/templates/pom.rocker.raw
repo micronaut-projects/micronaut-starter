@@ -140,18 +140,6 @@ MavenBuild mavenBuild
 }
 }
 
-@if (features.contains("netty-server")) {
-@dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
-}
-@if (features.contains("jetty-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-jetty", "compile", null)
-}
-@if (features.contains("undertow-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-undertow", "compile", null)
-}
-@if (features.contains("tomcat-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "compile", null)
-}
 @if (features.contains("graalvm") && features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
 }
@@ -159,63 +147,6 @@ MavenBuild mavenBuild
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
-}
-@if (features.contains("tracing-jaeger")) {
-@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
-@dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
-}
-@if (features.contains("kafka")) {
-@dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
-}
-@if (features.contains("kafka-streams")) {
-@dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "compile", null)
-}
-@if (features.contains("rabbitmq")) {
-@dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "compile", null)
-}
-@if (features.contains("mqtt")) {
-@dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "compile", null)
-}
-@if (features.contains("mqttv3")) {
-@dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "compile", null)
-}
-@if (features.contains("nats")) {
-@dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
-}
-@if (features.contains("jms-activemq-artemis")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
-}
-@if (features.contains("jms-sqs")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
-}
-@if (features.contains("cassandra")) {
-@dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
-}
-@if (features.contains("elasticsearch")) {
-@dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "compile", null)
-  @if (features.contains("graalvm")) {
-@dependency.template("org.slf4j", "log4j-over-slf4j", "runtime", "1.7.30")
-@dependency.template("org.apache.logging.log4j", "log4j-api", "compile", "2.13.3")
-@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.13.3")
-  }
-}
-@if (features.contains("graphql")) {
-@dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
-}
-@if (features.contains("acme")) {
-@dependency.template("io.micronaut.acme", "micronaut-acme", "compile", null)
-}
-@if (features.contains("cache-caffeine")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
-}
-@if (features.contains("cache-ehcache")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "compile", null)
-}
-@if (features.contains("cache-hazelcast")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "compile", null)
 }
 @if (features.contains("cache-infinispan")) {
 @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)

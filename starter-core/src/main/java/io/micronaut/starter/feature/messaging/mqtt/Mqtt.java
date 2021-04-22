@@ -15,6 +15,9 @@
  */
 package io.micronaut.starter.feature.messaging.mqtt;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -32,4 +35,12 @@ public class Mqtt extends AbstractMqttFeature {
         return "MQTT v5 Messaging";
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.mqtt")
+                .artifactId("micronaut-mqttv5")
+                .compile());
+    }
 }

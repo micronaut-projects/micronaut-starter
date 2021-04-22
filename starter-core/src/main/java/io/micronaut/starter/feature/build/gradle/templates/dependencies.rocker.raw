@@ -49,27 +49,6 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
     }
 }
-@if (features.contains("tracing-jaeger")) {
-    @dependency.template("io.micronaut", "micronaut-tracing", "implementation", null)
-    @dependency.template("io.jaegertracing", "jaeger-thrift", "runtimeOnly", null)
-}
-@if (features.contains("cassandra")) {
-    @dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "implementation", null)
-}
-@if (features.contains("elasticsearch")) {
-    @dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "implementation", null)
-  @if (features.contains("graalvm")) {
-    @dependency.template("org.slf4j", "log4j-over-slf4j", "runtimeOnly", "1.7.30")
-    @dependency.template("org.apache.logging.log4j", "log4j-api", "implementation", "2.13.3")
-    @dependency.template("org.apache.logging.log4j", "log4j-core", "implementation", "2.13.3")
-  }
-}
-@if (features.contains("graphql")) {
-    @dependency.template("io.micronaut.graphql", "micronaut-graphql", "implementation", null)
-}
-@if (features.contains("acme")) {
-    implementation "io.micronaut.acme:micronaut-acme"
-}
 @if (features.contains("postgres-reactive")) {
     @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "implementation", null)
 }
@@ -103,44 +82,8 @@ dependencies {
 @if (features.contains("vertx-mysql-client")) {
     @dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "implementation", null)
 }
-@if (features.contains("cache-caffeine")) {
-    @dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "implementation", null)
-}
-@if (features.contains("cache-ehcache")) {
-    @dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "implementation", null)
-}
-@if (features.contains("cache-hazelcast")) {
-    @dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "implementation", null)
-}
 @if (features.contains("cache-infinispan")) {
     @dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "implementation", null)
-}
-@if (features.contains("kafka")) {
-    @dependency.template("io.micronaut.kafka", "micronaut-kafka", "implementation", null)
-}
-@if (features.contains("kafka-streams")) {
-    @dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "implementation", null)
-}
-@if (features.contains("rabbitmq")) {
-    @dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "implementation", null)
-}
-@if (features.contains("nats")) {
-    @dependency.template("io.micronaut.nats", "micronaut-nats", "implementation", null)
-}
-@if (features.contains("mqtt")) {
-    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "implementation", null)
-}
-@if (features.contains("mqttv3")) {
-    @dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "implementation", null)
-}
-@if (features.contains("jms-activemq-artemis")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "implementation", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "implementation", null)
-}
-@if (features.contains("jms-sqs")) {
-    @dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "implementation", null)
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
