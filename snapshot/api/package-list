@@ -62,14 +62,12 @@ io.micronaut.starter.feature.awsalexa
 io.micronaut.starter.feature.awsalexa.templates
 io.micronaut.starter.feature.awslambdacustomruntime
 io.micronaut.starter.feature.awslambdacustomruntime.templates
-io.micronaut.starter.feature.awsparameterstore
 io.micronaut.starter.feature.build
 io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.gradle.templates
 io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
 io.micronaut.starter.feature.cache
-io.micronaut.starter.feature.camunda
 io.micronaut.starter.feature.coherence
 io.micronaut.starter.feature.config
 io.micronaut.starter.feature.consul
