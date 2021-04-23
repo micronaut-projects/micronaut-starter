@@ -95,9 +95,8 @@ dockerBuildNative {
         where:
         jdkVersion | graalVersion
         JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_9  | JdkVersion.JDK_11
-        JdkVersion.JDK_10 | JdkVersion.JDK_11
         JdkVersion.JDK_11 | JdkVersion.JDK_11
+        JdkVersion.JDK_16 | JdkVersion.JDK_16
     }
 
     @Unroll

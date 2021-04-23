@@ -119,23 +119,6 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'it is not possible to use graalvm with JDK versions different than JDK8 through JDK11'(JdkVersion jdkVersion) {
-        when:
-        generate(
-                ApplicationType.DEFAULT,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                ['graalvm']
-        )
-
-        then:
-        IllegalArgumentException e = thrown()
-        e.message == 'GraalVM only supports up to JDK 11'
-
-        where:
-        jdkVersion << JdkVersion.values() - [JdkVersion.JDK_8, JdkVersion.JDK_9, JdkVersion.JDK_10, JdkVersion.JDK_11]
-    }
-
-    @Unroll
     void 'Application file is generated for a default application type with gradle and features graalvm & aws-lambda for language: #language'(Language language, String extension) {
         when:
         def output = generate(

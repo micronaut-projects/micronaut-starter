@@ -27,13 +27,8 @@ import java.util.stream.Collectors;
  */
 public enum JdkVersion {
     JDK_8(8),
-    JDK_9(9),
-    JDK_10(10),
     JDK_11(11),
-    JDK_12(12),
-    JDK_13(13),
-    JDK_14(14),
-    JDK_15(15);
+    JDK_16(16);
 
     public static final JdkVersion DEFAULT_OPTION = JDK_11;
 

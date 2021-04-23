@@ -42,7 +42,7 @@ public class GraalVMFeatureValidator implements FeatureValidator {
             }
 
             if (options.getJavaVersion().majorVersion() > JdkVersion.JDK_11.majorVersion()) {
-                throw new IllegalArgumentException("GraalVM only supports up to JDK 11");
+                throw new IllegalArgumentException("GraalVM with native image only supports up to JDK 11");
             }
         }
     }

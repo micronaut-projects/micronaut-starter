@@ -40,9 +40,8 @@ public class WorkflowsUtils {
      * @return graal vm version
      */
     public static String graalVersion(JdkVersion javaVersion) {
-        JdkVersion graalJdkVersion = javaVersion == JdkVersion.JDK_8 ? JdkVersion.JDK_8 : JdkVersion.JDK_11;
         return String.format("%s.java%s", VersionInfo.getDependencyVersion("graal").getValue(),
-                graalJdkVersion.majorVersion());
+                javaVersion.majorVersion());
     }
 
     public static RockerTemplate createExampleController(Project project, Language language) {
