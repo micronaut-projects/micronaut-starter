@@ -34,6 +34,11 @@ public class ProblemJson implements Feature {
     }
 
     @Override
+    public boolean isPreview() {
+        return true;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.problem")
