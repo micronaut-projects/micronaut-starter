@@ -35,7 +35,7 @@ public class Feature {
     @Id
     @GeneratedValue
     private Long id;
-    @Relation(value = Relation.Kind.MANY_TO_ONE, mappedBy = "features")
+    @Relation(value = Relation.Kind.MANY_TO_ONE)
     private final Application application;
     private final String name;
 
