@@ -60,10 +60,10 @@ java {
                 .render()
 
         then:
-        template.contains("sourceCompatibility = JavaVersion.toVersion(\"16\")")
+        template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")
         template.contains('''
         kotlinOptions {
-            jvmTarget = "16"
+            jvmTarget = "14"
         }
 ''')
 

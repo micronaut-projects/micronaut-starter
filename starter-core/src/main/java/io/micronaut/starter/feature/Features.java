@@ -99,7 +99,11 @@ public class Features extends ArrayList<String> {
     }
 
     public String getTargetJdk() {
-        return VersionInfo.toJdkVersion(javaVersion.majorVersion());
+        if (language().isKotlin() || testFramework().isKoTest()) {
+            return VersionInfo.toJdkVersion(Math.min(javaVersion.majorVersion(), 14));
+        } else {
+            return VersionInfo.toJdkVersion(javaVersion.majorVersion());
+        }
     }
 
     public boolean isFeaturePresent(Class<? extends Feature> feature) {

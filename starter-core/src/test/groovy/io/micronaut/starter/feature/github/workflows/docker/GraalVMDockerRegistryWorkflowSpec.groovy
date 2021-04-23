@@ -91,6 +91,5 @@ dockerBuildNative {
         jdkVersion        | graalVersion
         JdkVersion.JDK_8  | JdkVersion.JDK_8
         JdkVersion.JDK_11 | JdkVersion.JDK_11
-        JdkVersion.JDK_16 | JdkVersion.JDK_16
     }
 }
