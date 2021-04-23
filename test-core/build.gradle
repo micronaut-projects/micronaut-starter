@@ -15,7 +15,7 @@ dependencies {
     testImplementation project(":starter-core")
     testImplementation project(":micronaut-cli")
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
-    testImplementation "com.oracle.oci.sdk:oci-java-sdk-full:1.32.2"
+    testImplementation "com.oracle.oci.sdk:oci-java-sdk-full:1.35.0"
     testImplementation 'com.google.apis:google-api-services-run:v1-rev20201113-1.31.0'
     testImplementation 'com.google.auth:google-auth-library-oauth2-http:0.22.2'
     testImplementation 'com.azure:azure-identity:1.2.3'
