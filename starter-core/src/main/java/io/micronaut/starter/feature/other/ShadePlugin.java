@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.other;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -69,5 +71,15 @@ public class ShadePlugin implements DefaultFeature {
     @Override
     public String getCategory() {
         return Category.PACKAGING;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.github.johnrengelman.shadow")
+                    .lookupArtifactId("shadow")
+                    .build());
+        }
     }
 }

@@ -19,7 +19,11 @@ GradleBuild gradleBuild
 import com.google.protobuf.gradle.*
 }
 
-@gradlePlugins.template(applicationType, project, features, gradleBuild)
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
 
 version = "0.1"
 group = "@project.getPackageName()"

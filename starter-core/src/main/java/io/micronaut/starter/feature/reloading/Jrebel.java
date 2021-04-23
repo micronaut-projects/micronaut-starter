@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 
 import javax.inject.Singleton;
 
@@ -42,6 +43,10 @@ public class Jrebel implements ReloadingFeature {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
             generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("org.zeroturnaround.gradle.jrebel")
+                    .lookupArtifactId("gradle-jrebel-plugin")
+                    .build());
         }
     }
 

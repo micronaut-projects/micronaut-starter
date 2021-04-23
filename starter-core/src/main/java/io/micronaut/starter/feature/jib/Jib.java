@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.jib;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -49,4 +51,13 @@ public class Jib implements Feature {
         return Category.PACKAGING;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.google.cloud.tools.jib")
+                    .lookupArtifactId("jib-gradle-plugin")
+                    .build());
+        }
+    }
 }

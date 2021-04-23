@@ -90,6 +90,6 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
                 .render()
 
         then:
-        template.contains('id("org.jetbrains.kotlin.jvm") version "1.4.30"')
+        template.contains('id("org.jetbrains.kotlin.jvm") version "1.4.32"')
     }
 }
