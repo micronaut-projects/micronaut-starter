@@ -15,7 +15,7 @@ dependencies {
     implementation "io.micronaut:micronaut-inject"
 
     implementation("io.micronaut.servlet:micronaut-servlet-engine:1.0.0.M3")
-    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
+    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty:2.2.0-SNAPSHOT"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testImplementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
