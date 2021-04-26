@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.cache;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -41,6 +42,10 @@ public class Infinispan implements CacheFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("infinispan.client.hotrod.server.host", "infinispan.example.com");
         generatorContext.getConfiguration().put("infinispan.client.hotrod.server.port", 10222);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.cache")
+                .artifactId("micronaut-cache-infinispan")
+                .compile());
     }
 
     @Override

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.messaging.kafka;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryGroovy;
@@ -81,5 +82,10 @@ public class KafkaStreams implements MessagingFeature {
             exampleFactoryJava.template(project),
             exampleFactoryKotlin.template(project),
             exampleFactoryGroovy.template(project));
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.kafka")
+                .artifactId("micronaut-kafka-streams")
+                .compile());
     }
 }

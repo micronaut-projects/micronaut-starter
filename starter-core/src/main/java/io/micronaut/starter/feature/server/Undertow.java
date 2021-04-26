@@ -15,6 +15,10 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.options.BuildTool;
+
 import javax.inject.Singleton;
 
 @Singleton
@@ -38,5 +42,15 @@ public class Undertow implements ServerFeature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-servlet/1.0.x/guide/index.html#undertow";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.servlet")
+                    .artifactId("micronaut-http-server-undertow")
+                    .compile());
+        }
     }
 }

@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.graphql;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -43,7 +45,7 @@ public class GraphQL implements Feature {
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
-    
+
     @Override
     public String getCategory() {
         return Category.API;
@@ -52,5 +54,13 @@ public class GraphQL implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-graphql/latest/guide/index.html";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.graphql")
+                .artifactId("micronaut-graphql")
+                .compile());
     }
 }

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.cache;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -40,6 +41,10 @@ public class EHCache implements CacheFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.caches.my-cache.maximumSize", 20);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.cache")
+                .artifactId("micronaut-cache-ehcache")
+                .compile());
     }
 
     @Override

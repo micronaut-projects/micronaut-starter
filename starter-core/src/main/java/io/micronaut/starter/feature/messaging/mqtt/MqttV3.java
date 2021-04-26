@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.messaging.mqtt;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -36,7 +37,10 @@ public class MqttV3 extends AbstractMqttFeature implements MqttFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put ("mqtt.client.server-uri", "tcp://localhost:1883");
-        generatorContext.getConfiguration().put ("mqtt.client.client-id", "${random.uuid}");
+        super.apply(generatorContext);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.mqtt")
+                .artifactId("micronaut-mqttv3")
+                .compile());
     }
 }

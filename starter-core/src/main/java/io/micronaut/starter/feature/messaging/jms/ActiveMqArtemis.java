@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.messaging.jms;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -45,5 +46,9 @@ public class ActiveMqArtemis extends AbstractJmsFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.jms.activemq.artemis.enabled", true);
         generatorContext.getConfiguration().put("micronaut.jms.activemq.artemis.connection-string", "tcp://localhost:61616");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.jms")
+                .artifactId("micronaut-jms-activemq-artemis")
+                .compile());
     }
 }

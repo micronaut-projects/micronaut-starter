@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
@@ -100,6 +101,10 @@ public class R2dbc implements R2dbcFeature {
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
             generatorContext.getConfiguration().putAll(rdbcConfig);
         });
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.r2dbc")
+                .artifactId("micronaut-r2dbc-core")
+                .compile());
     }
 
     public String getUrlKey() {

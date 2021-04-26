@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.spring;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DataJpa;
 
@@ -57,5 +59,21 @@ public class SpringDataJpa extends SpringFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-spring")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-spring-jpa")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.springframework")
+                .artifactId("spring-orm")
+                .compile());
     }
 }
