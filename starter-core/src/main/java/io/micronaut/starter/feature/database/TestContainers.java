@@ -99,7 +99,6 @@ public class TestContainers implements Feature {
                     dependencyArtifactId = "mssqlserver";
                 } else if (driverFeature instanceof Oracle) {
                     url = "jdbc:tc:oracle:thin:@/xe";
-                    generatorContext.addTemplate("testContainersProperties", new PropertiesTemplate("src/test/resources/testcontainers.properties", Collections.singletonMap("oracle.container.image", "wnameless/oracle-xe-11g-r2")));
                     dependencyArtifactId = "oracle-xe";
                 }
 
