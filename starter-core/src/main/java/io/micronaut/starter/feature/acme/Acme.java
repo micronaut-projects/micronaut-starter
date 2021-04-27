@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.acme;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -45,6 +46,10 @@ public class Acme implements Feature {
         generatorContext.getConfiguration().put("micronaut.server.ssl.enabled", "true");
         generatorContext.getConfiguration().put("acme.enabled", "true");
         generatorContext.getConfiguration().put("acme.tos-agree", "true");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.acme")
+                .artifactId("micronaut-acme")
+                .compile());
     }
 
     @Override

@@ -37,7 +37,7 @@ public abstract class AbstractMqttFeature implements MqttFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put ("mqtt.client.server-uri", "tcp://localhost:1883");
-        generatorContext.getConfiguration().put ("mqtt.client.client-id", "${random.uuid}");
+        generatorContext.getConfiguration().put("mqtt.client.server-uri", "tcp://localhost:1883");
+        generatorContext.getConfiguration().put("mqtt.client.client-id", "${random.uuid}");
     }
 }

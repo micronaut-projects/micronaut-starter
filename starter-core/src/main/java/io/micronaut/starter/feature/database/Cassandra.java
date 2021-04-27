@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -47,6 +48,10 @@ public class Cassandra implements Feature {
         generatorContext.getConfiguration().put("cassandra.default.port", 9042);
         generatorContext.getConfiguration().put("cassandra.default.maxSchemaAgreementWaitSeconds", 20);
         generatorContext.getConfiguration().put("cassandra.default.ssl", true);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.cassandra")
+                .artifactId("micronaut-cassandra")
+                .compile());
     }
 
     @Override

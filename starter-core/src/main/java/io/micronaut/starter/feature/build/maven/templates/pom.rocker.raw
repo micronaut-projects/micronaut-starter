@@ -94,12 +94,6 @@ MavenBuild mavenBuild
       </releases>
     </repository>
     }
-    @if (features.contains("oracle-function")) {
-    <repository>
-      <id>fnproject</id>
-      <url>https://dl.bintray.com/fnproject/fnproject</url>
-    </repository>
-    }
   </repositories>
 
   <dependencies>
@@ -146,18 +140,6 @@ MavenBuild mavenBuild
 }
 }
 
-@if (features.contains("netty-server")) {
-@dependency.template("io.micronaut", "micronaut-http-server-netty", "compile", null)
-}
-@if (features.contains("jetty-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-jetty", "compile", null)
-}
-@if (features.contains("undertow-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-undertow", "compile", null)
-}
-@if (features.contains("tomcat-server")) {
-@dependency.template("io.micronaut.servlet", "micronaut-http-server-tomcat", "compile", null)
-}
 @if (features.contains("graalvm") && features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-graal", "provided", null)
 }
@@ -165,66 +147,6 @@ MavenBuild mavenBuild
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
-}
-@if (features.contains("tracing-jaeger")) {
-@dependency.template("io.micronaut", "micronaut-tracing", "compile", null)
-@dependency.template("io.jaegertracing", "jaeger-thrift", "runtime", null)
-}
-@if (features.contains("kafka")) {
-@dependency.template("io.micronaut.kafka", "micronaut-kafka", "compile", null)
-}
-@if (features.contains("kafka-streams")) {
-@dependency.template("io.micronaut.kafka", "micronaut-kafka-streams", "compile", null)
-}
-@if (features.contains("rabbitmq")) {
-@dependency.template("io.micronaut.rabbitmq", "micronaut-rabbitmq", "compile", null)
-}
-@if (features.contains("mqtt")) {
-@dependency.template("io.micronaut.mqtt", "micronaut-mqttv5", "compile", null)
-}
-@if (features.contains("mqttv3")) {
-@dependency.template("io.micronaut.mqtt", "micronaut-mqttv3", "compile", null)
-}
-@if (features.contains("nats")) {
-@dependency.template("io.micronaut.nats", "micronaut-nats", "compile", null)
-}
-@if (features.contains("jms-activemq-artemis")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-artemis", "compile", null)
-}
-@if (features.contains("jms-activemq-classic")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-activemq-classic", "compile", null)
-}
-@if (features.contains("jms-sqs")) {
-@dependency.template("io.micronaut.jms", "micronaut-jms-sqs", "compile", null)
-}
-@if (features.contains("cassandra")) {
-@dependency.template("io.micronaut.cassandra", "micronaut-cassandra", "compile", null)
-}
-@if (features.contains("elasticsearch")) {
-@dependency.template("io.micronaut.elasticsearch", "micronaut-elasticsearch", "compile", null)
-  @if (features.contains("graalvm")) {
-@dependency.template("org.slf4j", "log4j-over-slf4j", "runtime", "1.7.30")
-@dependency.template("org.apache.logging.log4j", "log4j-api", "compile", "2.13.3")
-@dependency.template("org.apache.logging.log4j", "log4j-core", "compile", "2.13.3")
-  }
-}
-@if (features.contains("graphql")) {
-@dependency.template("io.micronaut.graphql", "micronaut-graphql", "compile", null)
-}
-@if (features.contains("acme")) {
-@dependency.template("io.micronaut.acme", "micronaut-acme", "compile", null)
-}
-@if (features.contains("cache-caffeine")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-caffeine", "compile", null)
-}
-@if (features.contains("cache-ehcache")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-ehcache", "compile", null)
-}
-@if (features.contains("cache-hazelcast")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-hazelcast", "compile", null)
-}
-@if (features.contains("cache-infinispan")) {
-@dependency.template("io.micronaut.cache", "micronaut-cache-infinispan", "compile", null)
 }
 @if (features.contains("postgres-reactive")) {
 @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "compile", null)
@@ -281,39 +203,6 @@ MavenBuild mavenBuild
 @if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null)
 }
-@if (features.contains("views-thymeleaf")) {
-@dependency.template("io.micronaut.views", "micronaut-views-thymeleaf", "compile", null)
-}
-@if (features.contains("views-handlebars")) {
-@dependency.template("io.micronaut.views", "micronaut-views-handlebars", "compile", null)
-}
-@if (features.contains("views-velocity")) {
-@dependency.template("io.micronaut.views", "micronaut-views-velocity", "compile", null)
-}
-@if (features.contains("views-freemarker")) {
-@dependency.template("io.micronaut.views", "micronaut-views-freemarker", "compile", null)
-}
-@if (features.contains("views-soy")) {
-@dependency.template("io.micronaut.views", "micronaut-views-soy", "compile", null)
-}
-@if (features.contains("views-pebble")) {
-@dependency.template("io.micronaut.views", "micronaut-views-pebble", "compile", null)
-}
-@if (features.contains("rss")) {
-@dependency.template("io.micronaut.rss", "micronaut-rss", "compile", null)
-}
-@if (features.contains("rss-itunes-podcast")) {
-@dependency.template("io.micronaut.rss", "micronaut-itunespodcast", "compile", null)
-}
-@if (features.contains("jackson-xml")) {
-@dependency.template("io.micronaut.xml", "micronaut-jackson-xml", "compile", null)
-}
-@if (features.contains("jax-rs")) {
-@dependency.template("io.micronaut.jaxrs", "micronaut-jaxrs-server", "compile", null)
-}
-@if (features.contains("jmx")) {
-@dependency.template("io.micronaut.jmx", "micronaut-jmx", "compile", null)
-}
 @if (features.contains("spring")) {
 @dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
 }
@@ -332,59 +221,11 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
 }
 }
-@if (features.contains("spring-data-jpa")) {
-@dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
-@dependency.template("io.micronaut.data", "micronaut-data-spring-jpa", "compile", null)
-@dependency.template("org.springframework", "spring-orm", "compile", null)
-}
-@if (features.contains("spring-data-jdbc")) {
-@dependency.template("io.micronaut.data", "micronaut-data-spring", "compile", null)
-@dependency.template("org.springframework", "spring-jdbc", "compile", null)
-}
 @if (features.contains("logback")) {
 @dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
 }
 @if (features.contains("slf4j-simple")) {
 @dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
-}
-@if (features.contains("r2dbc")) {
-@dependency.template("io.micronaut.r2dbc", "micronaut-r2dbc-core", "compile", null)
-}
-@if (features.contains("data-r2dbc")) {
-@dependency.template("io.micronaut.data", "micronaut-data-r2dbc", "compile", null)
-}
-@if (features.contains("h2")) {
-@dependency.template("com.h2database", "h2", "runtime", null)
-    @if (features.contains("r2dbc")) {
-@dependency.template("io.r2dbc", "r2dbc-h2", "runtime", null)
-    }
-}
-@if (features.contains("postgres")) {
-@dependency.template("org.postgresql", "postgresql", "runtime", null)
-    @if (features.contains("r2dbc")) {
-@dependency.template("io.r2dbc", "r2dbc-postgresql", "runtime", null)
-    }
-}
-@if (features.contains("mysql")) {
-@dependency.template("mysql", "mysql-connector-java", "runtime", null)
-    @if (features.contains("r2dbc")) {
-@dependency.template("dev.miku", "r2dbc-mysql", "runtime", null)
-    }
-}
-@if (features.contains("mariadb")) {
-@dependency.template("org.mariadb.jdbc", "mariadb-java-client", "runtime", null)
-    @if (features.contains("r2dbc")) {
-@dependency.template("org.mariadb", "r2dbc-mariadb", "runtime", null)
-    }
-}
-@if (features.contains("oracle")) {
-@dependency.template("com.oracle.database.jdbc", "ojdbc8", "runtime", null)
-}
-@if (features.contains("sqlserver")) {
-@dependency.template("com.microsoft.sqlserver", "mssql-jdbc", "runtime", null)
-    @if (features.contains("r2dbc")) {
-@dependency.template("io.r2dbc", "r2dbc-mssql", "runtime", null)
-    }
 }
 @if (features.contains("hibernate-gorm")) {
 @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
@@ -829,17 +670,6 @@ MavenBuild mavenBuild
 
 @if (features.language().isGroovy() || features.testFramework().isSpock()) {
   <pluginRepositories>
-    <pluginRepository>
-      <id>bintray</id>
-      <name>Groovy Bintray</name>
-      <url>https://dl.bintray.com/groovy/maven</url>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </pluginRepository>
     @if (VersionInfo.isStarterSnapshot()) {
     <pluginRepository>
        <id>central</id>

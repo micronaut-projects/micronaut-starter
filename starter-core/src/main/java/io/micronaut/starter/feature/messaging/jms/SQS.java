@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.messaging.jms;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
 import javax.inject.Singleton;
 
@@ -44,5 +45,9 @@ public class SQS extends AbstractJmsFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.jms.sqs.enabled", true);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.jms")
+                .artifactId("micronaut-jms-sqs")
+                .compile());
     }
 }

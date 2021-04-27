@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.messaging.kafka;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
@@ -48,6 +49,10 @@ public class Kafka implements DefaultFeature, MessagingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.kafka")
+                .artifactId("micronaut-kafka")
+                .compile());
     }
 
     @Override

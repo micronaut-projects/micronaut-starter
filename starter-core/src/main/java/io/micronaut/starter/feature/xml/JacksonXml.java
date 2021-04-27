@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.xml;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -59,4 +61,11 @@ public class JacksonXml implements Feature {
         return "https://github.com/FasterXML/jackson-dataformat-xml";
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.xml")
+                .artifactId("micronaut-jackson-xml")
+                .compile());
+    }
 }

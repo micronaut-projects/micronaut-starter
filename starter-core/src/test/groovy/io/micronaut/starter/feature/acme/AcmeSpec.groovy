@@ -30,7 +30,7 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains('implementation "io.micronaut.acme:micronaut-acme')
+        template.contains('implementation("io.micronaut.acme:micronaut-acme")')
 
         where:
         language << Language.values().toList()

@@ -49,15 +49,6 @@ repositories {
     maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
     }
-    @if (features.contains("oracle-function")) {
-        @if (!features.contains("oracle-function-http")) {
-    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-    maven("https://dl.bintray.com/fnproject/fnproject")
-    } else {
-    maven { url "https://dl.bintray.com/fnproject/fnproject" }
-    }
-        }
-    }
 }
 
 micronaut {
