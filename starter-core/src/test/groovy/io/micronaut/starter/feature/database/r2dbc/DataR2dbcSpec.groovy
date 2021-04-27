@@ -48,7 +48,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         jdbcFeature.name == 'jdbc-hikari'
         template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
-        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
+        template.contains('implementation("io.micronaut.r2dbc:micronaut-data-r2dbc")')
         template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
         template.contains("runtimeOnly(\"io.r2dbc:r2dbc-h2\")")
         !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
@@ -73,7 +73,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         template.contains('''
     <dependency>
-      <groupId>io.micronaut.data</groupId>
+      <groupId>io.micronaut.r2dbc</groupId>
       <artifactId>micronaut-data-r2dbc</artifactId>
       <scope>compile</scope>
     </dependency>
