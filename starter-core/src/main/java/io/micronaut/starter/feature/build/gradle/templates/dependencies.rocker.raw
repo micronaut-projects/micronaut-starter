@@ -22,12 +22,6 @@ dependencies {
     @dependency.template("org.graalvm.nativeimage", "svm", "compileOnly", null)
 }
     @dependency.template("io.micronaut", "micronaut-validation", "implementation", null)
-@if (features.contains("oracle-cloud-sdk")) {
-    @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "implementation", null)
-}
-@if (features.contains("aws-v2-sdk")) {
-    @dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "implementation", null)
-}
 @if (features.contains("oracle-function")) {
     @if (!features.contains("oracle-function-http")) {
     @dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-function", "implementation", null)
@@ -49,76 +43,14 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null)
     }
 }
-@if (features.contains("postgres-reactive")) {
-    @dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "implementation", null)
-}
-@if (features.contains("redis-lettuce")) {
-    @dependency.template("io.micronaut.redis", "micronaut-redis-lettuce", "implementation", null)
-}
-@if (features.contains("gcp-cloud-trace")) {
-    @dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "implementation", null)
-}
-@if (features.contains("gcp-pubsub")) {
-    @dependency.template("io.micronaut.gcp", "micronaut-gcp-pubsub", "implementation", null)
-}
-@if (features.contains("kotlin-extension-functions")) {
-    @dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "implementation", null)
-}
-@if (features.contains("reactor")) {
-    @dependency.template("io.micronaut.reactor", "micronaut-reactor", "implementation", null)
-}
-@if (features.contains("rxjava1")) {
-    @dependency.template("io.micronaut.rxjava1", "micronaut-rxjava1", "implementation", null)
-}
-@if (features.contains("rxjava3")) {
-    @dependency.template("io.micronaut.rxjava3", "micronaut-rxjava3", "implementation", null)
-}
-@if (features.contains("sql-jdbi")) {
-    @dependency.template("io.micronaut.sql", "micronaut-jdbi", "implementation", null)
-}
-@if (features.contains("vertx-pg-client")) {
-    @dependency.template("io.micronaut.sql", "micronaut-vertx-pg-client", "implementation", null)
-}
-@if (features.contains("vertx-mysql-client")) {
-    @dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "implementation", null)
-}
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
-    @dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "implementation", null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-alexa")) {
-    @dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "implementation", null)
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws", "implementation", null)
 }
 @if (features.contains("aws-lambda-custom-runtime")) {
     @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "implementation", null)
 }
-@if (features.contains("spring")) {
-    @dependency.template("org.springframework.boot", "spring-boot-starter", "implementation", null)
-}
-@if (features.contains("spring-web")) {
-    @dependency.template("org.springframework.boot", "spring-boot-starter-web", "implementation", null)
-    @dependency.template("io.micronaut", "micronaut-http-server", "implementation", null)
-    @dependency.template("io.micronaut.spring", "micronaut-spring-web", "runtime", null)
-}
-@if (features.contains("spring-boot")) {
-    @if (!features.contains("spring-web")) {
-    @dependency.template("org.springframework.boot", "spring-boot-starter-web", "implementation", null)
-    }
-    @dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
-}
-@if (features.contains("logback")) {
-    @dependency.template("ch.qos.logback", "logback-classic", "runtimeOnly", null)
-}
-@if (features.contains("slf4j-simple")) {
-    @dependency.template("org.slf4j", "slf4j-simple", "runtimeOnly", null)
-}
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null)
-}
-@if (features.contains("hibernate-gorm")) {
-    @dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtimeOnly", null)
 }
 @if (features.testFramework().isSpock()) {
     @if (features.contains("aws-lambda") || features.contains("aws-lambda-custom-runtime")) {

@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.vertx;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -48,6 +49,11 @@ public class VertxMySql implements Feature {
         generatorContext.getConfiguration().put("vertx.mysql.client.database.user", "user");
         generatorContext.getConfiguration().put("vertx.mysql.client.database.password", "password");
         generatorContext.getConfiguration().put("vertx.mysql.client.database.maxSize", 5);
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.sql")
+                .artifactId("micronaut-vertx-mysql-client")
+                .compile());
     }
 
     @Override

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.awsalexa;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJava;
@@ -125,6 +126,19 @@ public class AwsAlexa implements Feature, CloudFeature {
 
         stopIntentHandler(generatorContext, project);
         stopIntentHandlerTest(generatorContext, project);
+
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.aws")
+                    .artifactId("micronaut-function-aws-alexa")
+                    .compile());
+        }
+        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.aws")
+                    .artifactId("micronaut-aws-alexa-httpserver")
+                    .compile());
+        }
     }
 
     private void cancelIntentHandler(GeneratorContext generatorContext, Project project) {

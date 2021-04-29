@@ -98,6 +98,10 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
                 .groupId("io.micronaut.groovy")
                 .artifactId("micronaut-hibernate-gorm")
                 .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.apache.tomcat")
+                .artifactId("tomcat-jdbc")
+                .runtime());
     }
 
     @Override

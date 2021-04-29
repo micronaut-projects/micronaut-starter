@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -59,5 +61,13 @@ public class OracleCloudSdk implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.oraclecloud")
+                .artifactId("micronaut-oraclecloud-sdk")
+                .compile());
     }
 }

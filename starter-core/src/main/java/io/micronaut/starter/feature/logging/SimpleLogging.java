@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.logging.template.slf4jSimple;
 import io.micronaut.starter.template.RockerTemplate;
@@ -33,6 +34,10 @@ public class SimpleLogging implements LoggingFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/simplelogger.properties", slf4jSimple.template()));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.slf4j")
+                .artifactId("slf4j-simple")
+                .runtime());
     }
 
     @Override

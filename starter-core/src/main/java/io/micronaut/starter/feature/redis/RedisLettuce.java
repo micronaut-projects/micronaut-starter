@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.redis;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -43,6 +44,10 @@ public class RedisLettuce implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("redis.uri", "redis://localhost");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.redis")
+                .artifactId("micronaut-redis-lettuce")
+                .compile());
     }
 
     @Override

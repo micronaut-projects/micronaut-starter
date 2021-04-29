@@ -50,6 +50,10 @@ public class Spring implements Feature {
 
         generatorContext.addDependency(springAnnotation.annotationProcessor());
         generatorContext.addDependency(springAnnotation.testAnnotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.springframework.boot")
+                .artifactId("spring-boot-starter")
+                .compile());
     }
 
     @Override

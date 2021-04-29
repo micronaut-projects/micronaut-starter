@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
@@ -59,5 +61,13 @@ public class AwsV2Sdk implements Feature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.aws")
+                .artifactId("micronaut-aws-sdk-v2")
+                .compile());
     }
 }

@@ -59,6 +59,18 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
 
         generatorContext.addDependency(springWebAnnotation.annotationProcessor());
         generatorContext.addDependency(springWebAnnotation.testAnnotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.springframework.boot")
+                .artifactId("spring-boot-starter-web")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-http-server")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-web")
+                .runtime());
     }
 }
 

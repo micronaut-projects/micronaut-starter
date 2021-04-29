@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 
 import javax.inject.Singleton;
 
@@ -58,6 +60,18 @@ public class SpringBoot extends SpringFeature {
 
         generatorContext.addDependency(springBoot.annotationProcessor());
         generatorContext.addDependency(springBoot.testAnnotationProcessor());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.springframework.boot")
+                .artifactId("spring-boot-starter-web")
+                .compile());
+        Dependency.Builder micronautSpringBoot = Dependency.builder()
+                .groupId("io.micronaut.spring")
+                .artifactId("micronaut-spring-boot")
+                .runtime();
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.GROOVY) {
+            micronautSpringBoot = micronautSpringBoot.compile();
+        }
+        generatorContext.addDependency(micronautSpringBoot);
     }
 }
 

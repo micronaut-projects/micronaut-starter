@@ -148,51 +148,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null)
 }
 }
-@if (features.contains("postgres-reactive")) {
-@dependency.template("io.micronaut.sql", "micronaut-postgres-reactive", "compile", null)
-}
-@if (features.contains("redis-lettuce")) {
-@dependency.template("io.micronaut.redis", "micronaut-redis-lettuce", "compile", null)
-}
-@if (features.contains("kotlin-extension-functions")) {
-@dependency.template("io.micronaut.kotlin", "micronaut-kotlin-extension-functions", "compile", null)
-}
-@if (features.contains("oracle-cloud-sdk")) {
-@dependency.template("io.micronaut.oraclecloud", "micronaut-oraclecloud-sdk", "compile", null)
-}
-@if (features.contains("aws-v2-sdk")) {
-@dependency.template("io.micronaut.aws", "micronaut-aws-sdk-v2", "compile", null)
-}
-@if (features.contains("gcp-cloud-trace")) {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-tracing", "compile", null)
-}
-@if (features.contains("gcp-pubsub")) {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-pubsub", "compile", null)
-}
-@if (features.contains("reactor")) {
-@dependency.template("io.micronaut.reactor", "micronaut-reactor", "compile", null)
-}
-@if (features.contains("rxjava3")) {
-@dependency.template("io.micronaut.rxjava3", "micronaut-rxjava3", "compile", null)
-}
-@if (features.contains("rxjava1")) {
-@dependency.template("io.micronaut.rxjava1", "micronaut-rxjava1", "compile", null)
-}
-@if (features.contains("sql-jdbi")) {
-@dependency.template("io.micronaut.sql", "micronaut-jdbi", "compile", null)
-}
-@if (features.contains("vertx-pg-client")) {
-@dependency.template("io.micronaut.sql", "micronaut-vertx-pg-client", "compile", null)
-}
-@if (features.contains("vertx-mysql-client")) {
-@dependency.template("io.micronaut.sql", "micronaut-vertx-mysql-client", "compile", null)
-}
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-alexa")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-alexa", "compile", null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-alexa")) {
-@dependency.template("io.micronaut.aws", "micronaut-aws-alexa-httpserver", "compile", null)
-}
 @if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null)
 }
@@ -202,33 +157,6 @@ MavenBuild mavenBuild
 }
 @if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
 @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null)
-}
-@if (features.contains("spring")) {
-@dependency.template("org.springframework.boot", "spring-boot-starter", "compile", null)
-}
-@if (features.contains("spring-web")) {
-@dependency.template("org.springframework.boot", "spring-boot-starter-web", "compile", null)
-@dependency.template("io.micronaut", "micronaut-http-server", "compile", null)
-@dependency.template("io.micronaut.spring", "micronaut-spring-web", "runtime", null)
-}
-@if (features.contains("spring-boot")) {
-@if (!features.contains("spring-web")) {
-@dependency.template("org.springframework.boot", "spring-boot-starter-web", "compile", null)
-}
-@if (features.language().isGroovy()) {
-@dependency.template("io.micronaut.spring", "micronaut-spring-boot", "compile", null)
-} else {
-@dependency.template("io.micronaut.spring", "micronaut-spring-boot", "runtime", null)
-}
-}
-@if (features.contains("logback")) {
-@dependency.template("ch.qos.logback", "logback-classic", "runtime", null)
-}
-@if (features.contains("slf4j-simple")) {
-@dependency.template("org.slf4j", "slf4j-simple", "runtime", null)
-}
-@if (features.contains("hibernate-gorm")) {
-@dependency.template("org.apache.tomcat", "tomcat-jdbc", "runtime", null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null)

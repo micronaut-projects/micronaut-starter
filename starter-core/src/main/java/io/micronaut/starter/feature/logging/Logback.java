@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.logging;
 
 import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
@@ -58,6 +59,10 @@ public class Logback implements LoggingFeature, DefaultFeature {
             jansi = true;
         }
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("ch.qos.logback")
+                .artifactId("logback-classic")
+                .runtime());
     }
 
     @Override

@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.messaging.pubsub;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
 import javax.inject.Singleton;
@@ -52,5 +54,13 @@ public class PubSub implements MessagingFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.gcp")
+                .artifactId("micronaut-gcp-pubsub")
+                .compile());
     }
 }
