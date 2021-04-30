@@ -56,7 +56,6 @@ public class VertxPg implements Feature {
                 .compile());
     }
 
-
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
