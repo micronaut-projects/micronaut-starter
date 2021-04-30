@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.maven;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.Property;
 import java.io.ByteArrayOutputStream;

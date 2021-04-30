@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.build.gradle;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Scope;

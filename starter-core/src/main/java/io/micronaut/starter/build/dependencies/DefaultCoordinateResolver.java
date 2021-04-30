@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.core.annotation.NonNull;
 
 import javax.inject.Singleton;
 import java.util.Arrays;
