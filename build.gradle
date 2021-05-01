@@ -88,10 +88,10 @@ subprojects { Project subproject ->
         if (project.name.startsWith("test-")) {
             implementation gradleTestKit()
         } else {
-            annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-            implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+            implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
             annotationProcessor "io.micronaut:micronaut-inject-java"
-            testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
             testAnnotationProcessor "io.micronaut:micronaut-inject-java"
         }
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
