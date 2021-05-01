@@ -70,7 +70,6 @@ public final class DeactivateAccount extends CodeGenCommand {
         return config.getFeatures().contains("acme");
     }
 
-
     /**
      * Uses arguments passed to do all account deactivation.
      *

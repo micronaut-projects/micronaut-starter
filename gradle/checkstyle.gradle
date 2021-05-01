@@ -1,5 +1,5 @@
 checkstyle {
-    toolVersion = 8.16
+    toolVersion = 8.42
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 
     // Per submodule

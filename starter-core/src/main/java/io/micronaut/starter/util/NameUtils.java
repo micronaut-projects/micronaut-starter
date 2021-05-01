@@ -697,7 +697,6 @@ public final class NameUtils {
         return null;
     }
 
-
     /**
      * Returns true if the name of the method specified and the number of arguments make it a javabean property getter.
      * The name is assumed to be a valid Java method name, that is not verified.
