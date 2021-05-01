@@ -58,7 +58,7 @@ import java.util.stream.Collectors
  * as GitHub Secrets, see {@link OracleFunctionsWorkflowSpec#envVariables()}
  */
 @Requires({
-    envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
+    OracleFunctionsWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
       jvm.isJava11()
 })
 @Slf4j
