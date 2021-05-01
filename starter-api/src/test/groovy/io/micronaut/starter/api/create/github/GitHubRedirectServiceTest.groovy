@@ -13,7 +13,7 @@ import javax.inject.Inject
 @Property(name = "micronaut.starter.github.clientId", value =  "clientId")
 @Property(name = "micronaut.starter.github.tokenPermissions", value =  "user,repo,workflow")
 @MicronautTest
-@IgnoreIf({ jvm.java16 }) // fails on java 16 due to spock bug
+@spock.lang.IgnoreIf({ jvm.java16 }) // fails on java 16 due to spock bug
 class GitHubRedirectServiceTest extends Specification{
 
     @Inject GitHubRedirectService gitHubRedirectService
