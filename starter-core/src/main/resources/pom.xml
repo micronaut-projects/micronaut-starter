@@ -73,7 +73,7 @@
             <version>1.3.0</version>
         </dependency>
         <dependency>
-            <groupId>com.github.jengelman.gradle.plugins</groupId>
+            <groupId>gradle.plugin.com.github.jengelman.gradle.plugins</groupId>
             <artifactId>shadow</artifactId>
             <version>7.0.0</version>
         </dependency>
