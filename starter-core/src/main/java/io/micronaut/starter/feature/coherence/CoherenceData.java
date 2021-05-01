@@ -78,15 +78,6 @@ public class CoherenceData implements Feature {
                 .groupId("io.micronaut.coherence")
                 .artifactId("micronaut-coherence-data")
                 .template();
-        Dependency.Builder builder = Dependency.builder()
-                .annotationProcessor()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-processor")
-                .version(VersionInfo.getBomVersion("micronaut.coherence"))
-                .template();
-
-        generatorContext.addDependency(builder.annotationProcessor());
-        generatorContext.addDependency(builder.testAnnotationProcessor());
         generatorContext.addDependency(coherenceMicronaut.compile());
     }
 
