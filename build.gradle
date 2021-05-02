@@ -1,21 +1,13 @@
 buildscript {
     repositories {
-        maven { url "https://repo.grails.org/grails/core" }
+        gradlePluginPortal()
+        mavenCentral()
+        mavenLocal()
     }
     dependencies {
-        classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
-        classpath "io.spring.nohttp:nohttp-gradle:0.0.7"
         classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
-        classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
-        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
-        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
-        classpath "com.adarshr:gradle-test-logger-plugin:3.0.0"
+        classpath 'io.micronaut.build.internal:micronaut-gradle-plugins:4.0.0.RC1'
     }
-}
-
-plugins {
-    id "com.diffplug.gradle.spotless" version "5.12.4" apply false
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 repositories {
@@ -27,10 +19,8 @@ version project.projectVersion
 subprojects { Project subproject ->
     repositories {
         mavenCentral()
+        jcenter()
         maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-
-        //TODO remove when https://github.com/micronaut-projects/micronaut-docs/issues/24 is implemented
-        maven { url "https://repo.grails.org/grails/core" }
     }
 
     version project.projectVersion
@@ -39,15 +29,11 @@ subprojects { Project subproject ->
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
 
-    apply plugin:"groovy"
-    apply plugin: 'idea'
-    apply plugin: 'checkstyle'
-    apply from: rootProject.file('gradle/license.gradle')
-    apply plugin: "com.adarshr.test-logger"
+    apply plugin: "io.micronaut.build.internal.common"
 
     if (subproject.hasProperty("publish") && subproject.publish) {
-        apply plugin:"java-library"
-        apply from: rootProject.file("gradle/publishing.gradle")
+
+        apply plugin: "io.micronaut.build.internal.publishing"
 
         jar {
             manifest {
@@ -66,10 +52,10 @@ subprojects { Project subproject ->
             eachDependency { DependencyResolveDetails details ->
                 if (project.name.startsWith("test-")) {
                     if (details.requested.group == "org.codehaus.groovy") {
-                        details.useVersion("3.0.7")
+                        details.useVersion(groovyVersion)
                     }
                     if (details.requested.name == "spock-core") {
-                        details.useVersion("2.0-M5-groovy-3.0")
+                        details.useVersion(spockVersion)
                     }
                 } else {
                     //multiple actions can be specified
@@ -123,7 +109,7 @@ subprojects { Project subproject ->
 
 }
 
-apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
+apply plugin: "io.micronaut.build.internal.docs"
 
 Project starterCli = project('micronaut-cli')
 
