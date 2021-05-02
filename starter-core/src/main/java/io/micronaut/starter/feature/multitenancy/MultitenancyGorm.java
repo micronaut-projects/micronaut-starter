@@ -95,7 +95,7 @@ public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "http://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy";
+        return "https://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy";
     }
 
     @Override

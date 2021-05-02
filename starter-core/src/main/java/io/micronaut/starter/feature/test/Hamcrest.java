@@ -51,6 +51,6 @@ public class Hamcrest  implements Feature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "http://hamcrest.org/JavaHamcrest/";
+        return "https://hamcrest.org/JavaHamcrest/";
     }
 }
