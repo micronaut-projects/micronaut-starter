@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-gradle-plugin</artifactId>
-            <version>1.4.32</version>
+            <version>1.5.0</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
