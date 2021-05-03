@@ -1,11 +1,11 @@
 /*
- * Copyright 2021 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,6 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
 
@@ -78,15 +77,6 @@ public class CoherenceData implements Feature {
                 .groupId("io.micronaut.coherence")
                 .artifactId("micronaut-coherence-data")
                 .template();
-        Dependency.Builder builder = Dependency.builder()
-                .annotationProcessor()
-                .groupId("io.micronaut.coherence")
-                .artifactId("micronaut-coherence-processor")
-                .version(VersionInfo.getBomVersion("micronaut.coherence"))
-                .template();
-
-        generatorContext.addDependency(builder.annotationProcessor());
-        generatorContext.addDependency(builder.testAnnotationProcessor());
         generatorContext.addDependency(coherenceMicronaut.compile());
     }
 

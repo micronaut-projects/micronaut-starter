@@ -31,7 +31,7 @@ import java.util.stream.Collectors
  * see {@link AzureContainerInstanceWorkflowSpec#envVariables()}
  */
 @Requires({
-    envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
+    AzureContainerInstanceWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } &&  \
     jvm.isJava11()
 })
 
