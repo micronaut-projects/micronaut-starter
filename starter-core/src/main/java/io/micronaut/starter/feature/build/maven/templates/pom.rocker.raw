@@ -208,7 +208,7 @@ MavenBuild mavenBuild
 
   <build>
     <plugins>
-@if (features.application() != null || features.contains("oracle-function")) {
+@if (features.application() != null || features.contains("oracle-function") || features.contains("aws-lambda")) {
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
