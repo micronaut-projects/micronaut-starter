@@ -23,8 +23,8 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
-
 import javax.inject.Singleton;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 /**
@@ -76,10 +76,17 @@ public class ShadePlugin implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
+            GradlePlugin.Builder builder = GradlePlugin.builder()
                     .id("com.github.johnrengelman.shadow")
-                    .lookupArtifactId("shadow")
-                    .build());
+                    .lookupArtifactId("shadow");
+            if (generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
+                builder.extension(outputStream -> {
+                    String str = "assemble.dependsOn(\"shadowJar\")";
+                    outputStream.write(str.getBytes(StandardCharsets.UTF_8));
+                });
+            }
+            generatorContext.addBuildPlugin(builder.build());
+
         }
     }
 }
