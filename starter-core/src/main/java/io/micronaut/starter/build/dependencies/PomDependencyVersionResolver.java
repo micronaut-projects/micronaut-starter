@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 public class PomDependencyVersionResolver implements CoordinateResolver {
 
     private static final String NODE_NAME_TEXT = "#text";
-    private Map<String, Coordinate> coordinates;
+    private final Map<String, Coordinate> coordinates;
 
     public PomDependencyVersionResolver(ResourceResolver resourceResolver) {
         Map<String, Coordinate> coordinates = new HashMap<>();
@@ -110,4 +110,8 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
         return Optional.empty();
     }
 
+    @NonNull
+    public Map<String, Coordinate> getCoordinates() {
+        return coordinates;
+    }
 }
