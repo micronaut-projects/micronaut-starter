@@ -108,6 +108,13 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
       <scope>compile</scope>
     </dependency>
 """)
+        and:
+        template.contains('''\
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+''')
 
         where:
         language << Language.values()
