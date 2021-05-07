@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
 import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -81,7 +82,11 @@ public class ShadePlugin implements DefaultFeature {
                     .lookupArtifactId("shadow");
             if (generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
                 builder.extension(outputStream -> {
-                    String str = "assemble.dependsOn(\"shadowJar\")";
+                    String str = String.join("\n", Arrays.asList(
+                            "tasks.named(\"assemble\") {",
+                            "    dependsOn(\":shadowJar\")",
+                            "}"
+                    ));
                     outputStream.write(str.getBytes(StandardCharsets.UTF_8));
                 });
             }
