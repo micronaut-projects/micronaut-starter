@@ -89,7 +89,7 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
-        generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject())));
+        generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject(), build)));
     }
 
     private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
