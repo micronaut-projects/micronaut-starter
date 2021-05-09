@@ -87,7 +87,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
             featureContext.addFeature(shadePlugin);
         }
 
-        if (featureContext.getBuildTool() == BuildTool.MAVEN && featureContext.isPresent(GraalVM.class)) {
+        if (featureContext.isPresent(GraalVM.class)) {
             featureContext.addFeature(customRuntime);
         }
     }

@@ -227,7 +227,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
+    void 'Application file is not generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -236,7 +236,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         )
 
         then:
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         where:
         language << graalSupportedLanguages()
@@ -316,7 +316,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         build.contains('runtime("lambda")')
-        !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
