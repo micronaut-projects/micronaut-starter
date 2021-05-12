@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.lang.kotlin;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.github.workflows.docker.GraalVMDockerRegistryWorkflow;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
