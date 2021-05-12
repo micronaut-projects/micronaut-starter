@@ -16,12 +16,10 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
-
-import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public interface AvailableFeatures extends Collection<String> {
+public interface AvailableFeatures extends Iterable<String> {
 
     Optional<Feature> findFeature(@NonNull String name);
 
