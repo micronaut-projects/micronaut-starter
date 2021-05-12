@@ -24,7 +24,7 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         readme
-        readme.contains("http://hamcrest.org/JavaHamcrest/")
+        readme.contains("https://hamcrest.org/JavaHamcrest/")
     }
 
     void "test hamcrest belongs to Dev Tools category"() {

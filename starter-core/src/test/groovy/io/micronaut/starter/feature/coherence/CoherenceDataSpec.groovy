@@ -49,7 +49,6 @@ micronaut:
 
         then:
         template.contains('implementation("io.micronaut.coherence:micronaut-coherence-data")')
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.coherence:micronaut-coherence-processor:${VersionInfo.getBomVersion("micronaut.coherence")}\"")
         template.contains('implementation("com.oracle.coherence.ce:coherence:${coherenceVersion}")')
 
         where:
@@ -87,23 +86,7 @@ micronaut:
       <scope>compile</scope>
     </dependency>
 """)
-        if (language.equals(Language.KOTLIN)) {
-            assert template.contains("""
-               <annotationProcessorPath>
-                 <groupId>io.micronaut.coherence</groupId>
-                 <artifactId>micronaut-coherence-processor</artifactId>
-                 <version>${VersionInfo.getBomVersion("micronaut.coherence")}</version>
-               </annotationProcessorPath>
-""")
-        } else if (language.equals(Language.JAVA)) {
-            assert template.contains("""
-            <path>
-              <groupId>io.micronaut.coherence</groupId>
-              <artifactId>micronaut-coherence-processor</artifactId>
-              <version>${VersionInfo.getBomVersion("micronaut.coherence")}</version>
-            </path>
-""")
-        }
+
 
         where:
         language << Language.values()

@@ -24,7 +24,7 @@ import java.util.stream.Collectors
  * </ul>
  */
 @Requires({
-    envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } \
+    DockerRegistryWorkflowSpec.envVariables().stream().allMatch { envVar -> System.getenv().containsKey(envVar) } \
     && jvm.isJava11()})
 class DockerRegistryWorkflowSpec extends WorkflowSpec {
 
