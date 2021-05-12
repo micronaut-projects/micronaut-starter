@@ -5,11 +5,13 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -91,5 +93,31 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
 
         then:
         template.contains('id("org.jetbrains.kotlin.jvm") version "1.4.32"')
+    }
+
+    @Unroll
+    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/774')
+    void 'Do not allow create Kotlin applications with Java 16. buildTool=#buildTool'() {
+        when:
+        generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, buildTool, JdkVersion.JDK_16))
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'Kotlin is not supported with Java 16'
+
+        when:
+        generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11))
+
+        then:
+        noExceptionThrown()
+
+        when:
+        generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_16))
+
+        then:
+        noExceptionThrown()
+
+        where:
+        buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
     }
 }
