@@ -3,13 +3,11 @@ package io.micronaut.starter.feature.lang.kotlin
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.awsalexa.AwsAlexa
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -36,8 +34,6 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def pom = output['pom.xml']
 
         then:
-
-
         if (buildTool.isGradle()) {
             assert buildGradle
             assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')

@@ -22,8 +22,8 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.knative.template.knativeYaml;
 import io.micronaut.starter.feature.jib.Jib;
+import io.micronaut.starter.feature.knative.template.knativeYaml;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
 

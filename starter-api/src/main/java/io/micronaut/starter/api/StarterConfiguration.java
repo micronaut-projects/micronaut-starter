@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.env.Environment;
+import io.micronaut.core.annotation.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URI;

@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.template;
 
-import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.io.OutputHandler;
 
 import java.io.Closeable;
 import java.io.IOException;

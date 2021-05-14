@@ -84,7 +84,6 @@ class GoogleCloudRunWorkflowSpec extends WorkflowSpec {
         buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
     }
 
-
     @Unroll
     void "test google cloud run #buildTool workflow"(BuildTool buildTool) {
         given:

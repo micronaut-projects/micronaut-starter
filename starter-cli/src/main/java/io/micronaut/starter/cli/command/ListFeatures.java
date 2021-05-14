@@ -26,9 +26,13 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.Options;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
-
 
 public class ListFeatures {
 

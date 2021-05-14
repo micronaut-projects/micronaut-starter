@@ -167,6 +167,7 @@ public final class Dependency {
             return scope(new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)));
         }
 
+        @SuppressWarnings("unused")
         public Builder testCompileOnly() {
             return scope(new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION)));
         }
@@ -188,6 +189,7 @@ public final class Dependency {
             return scope(new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING)));
         }
 
+        @SuppressWarnings("unused")
         public Builder testAnnotationProcessor(boolean requiresPriority) {
             this.annotationProcessorPriority = requiresPriority;
             return testAnnotationProcessor();

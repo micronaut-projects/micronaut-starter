@@ -17,7 +17,8 @@ package io.micronaut.starter.feature.github.workflows.docker;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.github.workflows.docker.templates.*;
+import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflow;
+import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;

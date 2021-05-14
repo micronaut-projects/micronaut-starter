@@ -1,17 +1,14 @@
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.database.DatabaseDriverFeature
-@import io.micronaut.starter.feature.database.MongoFeature
-@import java.util.List
-@import io.micronaut.starter.util.VersionInfo
-@import io.micronaut.starter.feature.build.maven.templates.dependency
-@import io.micronaut.starter.feature.database.JpaFeature
-@import io.micronaut.starter.build.Property
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.options.JdkVersion
-@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency
+@import io.micronaut.starter.build.Property
+@import io.micronaut.starter.feature.build.maven.templates.dependency
+@import io.micronaut.starter.feature.database.JpaFeature
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.util.VersionInfo
 
 @args (
 ApplicationType applicationType,

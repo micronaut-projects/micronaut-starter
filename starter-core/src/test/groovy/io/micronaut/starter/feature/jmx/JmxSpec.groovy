@@ -20,7 +20,6 @@ class JmxSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-jmx/latest/guide/index.html")
     }
 
-
     @Unroll
     void 'test gradle jmx feature for language=#language'() {
         when:

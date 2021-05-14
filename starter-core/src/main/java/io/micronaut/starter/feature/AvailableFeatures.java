@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+
 import java.util.Optional;
 import java.util.stream.Stream;
 

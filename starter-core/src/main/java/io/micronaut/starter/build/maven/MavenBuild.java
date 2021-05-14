@@ -16,8 +16,11 @@
 package io.micronaut.starter.build.maven;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.Property;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,9 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MavenBuild {
     private static final Logger LOG = LoggerFactory.getLogger(MavenBuild.class);
