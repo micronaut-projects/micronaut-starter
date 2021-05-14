@@ -8,8 +8,10 @@ import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
 import spock.lang.Unroll
 
@@ -62,6 +64,34 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         buildGradle
         buildGradle.contains("tasks")
+    }
+
+    @Unroll
+    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/774')
+    void 'Workaround for Kotlin projects with Gradle and JDK16'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_16))
+        def properties = output["gradle.properties"]
+
+        then:
+        properties
+        properties.contains("org.gradle.jvmargs=--illegal-access=permit")
+
+        when:
+        output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11))
+        properties = output["gradle.properties"]
+
+        then:
+        properties
+        !properties.contains("org.gradle.jvmargs=--illegal-access=permit")
+
+        when:
+        output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_16))
+        properties = output["gradle.properties"]
+
+        then:
+        properties
+        !properties.contains("org.gradle.jvmargs=--illegal-access=permit")
     }
 
 }
