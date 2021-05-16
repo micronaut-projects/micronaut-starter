@@ -18,8 +18,6 @@ package io.micronaut.starter.build.dependencies;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 public final class Dependency {
@@ -152,32 +150,32 @@ public final class Dependency {
         }
 
         public Builder compile() {
-            return scope(new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)));
+            return scope(Scope.COMPILE);
         }
 
         public Builder compileOnly() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION)));
+            return scope(Scope.COMPILE_ONLY);
         }
 
         public Builder runtime() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME)));
+            return scope(Scope.RUNTIME);
         }
 
         public Builder test() {
-            return scope(new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)));
+            return scope(Scope.TEST);
         }
 
         @SuppressWarnings("unused")
         public Builder testCompileOnly() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION)));
+            return scope(Scope.TEST_COMPILE_ONLY);
         }
 
         public Builder testRuntime() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME)));
+            return scope(Scope.TEST_RUNTIME);
         }
 
         public Builder annotationProcessor() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)));
+            return scope(Scope.ANNOTATION_PROCESSOR);
         }
 
         public Builder annotationProcessor(boolean requiresPriority) {
@@ -186,7 +184,7 @@ public final class Dependency {
         }
 
         public Builder testAnnotationProcessor() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING)));
+            return scope(Scope.TEST_ANNOTATION_PROCESSOR);
         }
 
         @SuppressWarnings("unused")
