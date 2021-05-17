@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.application.generator;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.context.annotation.DefaultImplementation;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;

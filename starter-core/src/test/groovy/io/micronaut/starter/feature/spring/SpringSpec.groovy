@@ -28,7 +28,6 @@ class SpringSpec extends ApplicationContextSpec  implements CommandOutputFixture
         readme.contains("https://micronaut-projects.github.io/micronaut-spring/latest/guide/index.html")
     }
 
-
     void 'spring belongs to Spring category'() {
         expect:
         Category.SPRING == spring.category

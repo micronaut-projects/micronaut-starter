@@ -132,7 +132,6 @@ class PicocliSpec extends ApplicationContextSpec {
         !parsePropertySemanticVersion(template, "picocli.version").isPresent()
     }
 
-
     void "test the test features are applied"() {
         when:
         Options options = new Options(Language.JAVA, null, BuildTool.GRADLE)

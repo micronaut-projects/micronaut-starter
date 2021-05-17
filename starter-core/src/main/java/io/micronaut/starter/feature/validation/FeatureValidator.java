@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.options.Options;
 
 import java.util.Set;
 

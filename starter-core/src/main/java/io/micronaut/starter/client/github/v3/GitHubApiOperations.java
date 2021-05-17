@@ -16,7 +16,13 @@
 package io.micronaut.starter.client.github.v3;
 
 import io.micronaut.http.HttpHeaders;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Header;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 
 /**
  * GitHub Oauth operations.

@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.feature.logging;
 
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.OperatingSystem;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.logging.template.logback;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
 import javax.inject.Singleton;

@@ -24,7 +24,6 @@ import spock.lang.Unroll
 
 class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-
     void 'test readme.md with feature camunda contains links to micronaut docs'() {
         when:
         def output = generate(['camunda'])
