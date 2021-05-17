@@ -32,8 +32,17 @@ public final class Dependency {
     private final boolean requiresLookup;
     private final int order;
     private final boolean annotationProcessorPriority;
+    private final boolean pom;
 
-    private Dependency(Scope scope, String groupId, String artifactId, String version, String versionProperty, boolean requiresLookup, boolean annotationProcessorPriority, int order) {
+    private Dependency(Scope scope,
+                       String groupId,
+                       String artifactId,
+                       String version,
+                       String versionProperty,
+                       boolean requiresLookup,
+                       boolean annotationProcessorPriority,
+                       int order,
+                       boolean pom) {
         this.scope = scope;
         this.groupId = groupId;
         this.artifactId = artifactId;
@@ -42,6 +51,7 @@ public final class Dependency {
         this.requiresLookup = requiresLookup;
         this.annotationProcessorPriority = annotationProcessorPriority;
         this.order = order;
+        this.pom = pom;
     }
 
     public Scope getScope() {
@@ -70,6 +80,10 @@ public final class Dependency {
         return order;
     }
 
+    public boolean isPom() {
+        return pom;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -79,7 +93,16 @@ public final class Dependency {
     }
 
     public Dependency resolved(Coordinate coordinate) {
-        return new Dependency(scope, coordinate.getGroupId(), artifactId, coordinate.getVersion(), null, false, annotationProcessorPriority, order);
+        return new Dependency(
+                scope,
+                coordinate.getGroupId(),
+                artifactId,
+                coordinate.getVersion(),
+                null,
+                false,
+                annotationProcessorPriority,
+                order,
+                coordinate.isPom());
     }
 
     public boolean isAnnotationProcessorPriority() {
@@ -117,6 +140,7 @@ public final class Dependency {
         private int order = 0;
         private boolean template = false;
         private boolean annotationProcessorPriority = false;
+        private boolean pom = false;
 
         public Builder scope(@NonNull Scope scope) {
             if (template) {
@@ -229,6 +253,11 @@ public final class Dependency {
             return this;
         }
 
+        public Builder pom(boolean pom) {
+            this.pom = pom;
+            return this;
+        }
+
         public Dependency build() {
             Objects.requireNonNull(scope, "The dependency scope must be set");
             Objects.requireNonNull(artifactId, "The artifact id must be set");
@@ -247,7 +276,16 @@ public final class Dependency {
         }
 
         private Dependency buildInternal() {
-            return new Dependency(scope, groupId, artifactId, version, versionProperty, requiresLookup, annotationProcessorPriority, order);
+            return new Dependency(
+                    scope,
+                    groupId,
+                    artifactId,
+                    version,
+                    versionProperty,
+                    requiresLookup,
+                    annotationProcessorPriority,
+                    order,
+                    pom);
         }
 
         private Builder copy() {
@@ -262,7 +300,7 @@ public final class Dependency {
                     builder.version(version);
                 }
             }
-            return builder.order(order);
+            return builder.order(order).pom(pom);
         }
     }
 }

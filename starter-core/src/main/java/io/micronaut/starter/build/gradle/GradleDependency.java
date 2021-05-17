@@ -39,11 +39,16 @@ public class GradleDependency extends DependencyCoordinate {
     };
 
     @NonNull
-    private GradleConfiguration gradleConfiguration;
+    private final GradleConfiguration gradleConfiguration;
 
-    public GradleDependency(@NonNull Dependency dependency, @NonNull GeneratorContext generatorContext) {
+    public GradleDependency(@NonNull Dependency dependency,
+                            @NonNull GeneratorContext generatorContext) {
         super(dependency);
-        this.gradleConfiguration = GradleConfiguration.of(dependency.getScope(), generatorContext.getLanguage(), generatorContext.getTestFramework()).orElseThrow(() ->
+        gradleConfiguration = GradleConfiguration.of(
+                dependency.getScope(),
+                generatorContext.getLanguage(),
+                generatorContext.getTestFramework()
+        ).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
     }
 
@@ -77,7 +82,12 @@ public class GradleDependency extends DependencyCoordinate {
 
     @NonNull
     public String toSnippet() {
-        return gradleConfiguration.getConfigurationName() + "(\"" + getGroupId() + ":" + getArtifactId() +
-                (getVersion() != null ? (":" + getVersion()) : "") + "\")";
+        String snippet = gradleConfiguration.getConfigurationName();
+        if (isPom()) {
+            snippet += " platform";
+        }
+        snippet += "(\"" + getGroupId() + ':' + getArtifactId() +
+                (getVersion() != null ? (':' + getVersion()) : "") + "\")";
+        return snippet;
     }
 }

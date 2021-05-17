@@ -58,7 +58,7 @@ class FeatureSpec extends BeanContextSpec {
                 options,
                 OperatingSystem.LINUX,
                 getFeatures(features, options).getFeatures(),
-                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0))
+                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false))
         )
         commandCtx.applyFeatures()
 
