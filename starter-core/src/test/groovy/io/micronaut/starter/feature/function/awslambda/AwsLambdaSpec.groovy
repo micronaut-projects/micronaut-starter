@@ -227,7 +227,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'Application file is not generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
+    void 'Application file is generated for a default application type with gradle and features aws-lambda and graalvm for language: #language'(Language language, String extension) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -236,7 +236,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         )
 
         then:
-        !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         where:
         language << graalSupportedLanguages()
@@ -305,10 +305,13 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'(
+            ApplicationType applicationType,
+            Language language
+    ) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
+                applicationType,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['aws-lambda', 'graalvm']
         )
@@ -316,15 +319,17 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         build.contains('runtime("lambda")')
-        build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        if (applicationType == ApplicationType.DEFAULT) {
+            assert !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        } else if (applicationType == ApplicationType.FUNCTION) {
+            assert build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        }
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
         where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
         language << graalSupportedLanguages()
-        extension << graalSupportedLanguages()*.extension
-        srcDir << graalSupportedLanguages()*.srcDir
-        testSrcDir << graalSupportedLanguages()*.testSrcDir
     }
 
     private List<Language> graalSupportedLanguages() {
