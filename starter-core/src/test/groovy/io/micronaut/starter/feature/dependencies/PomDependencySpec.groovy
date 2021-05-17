@@ -5,9 +5,7 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.Dependency
-import io.micronaut.starter.build.dependencies.Phase
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.build.dependencies.Source
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Feature
 
@@ -67,8 +65,7 @@ class PomDependencySpec extends ApplicationContextSpec {
                     .groupId('gr.oup.id')
                     .artifactId('ar.ifact.id')
                     .version('ver.sion')
-//                    .scope(Scope.COMPILE)
-                    .scope(new Scope(Source.MAIN, [Phase.COMPILATION, Phase.RUNTIME]))
+                    .scope(Scope.COMPILE)
                     .pom(true)
                     .build())
         }
