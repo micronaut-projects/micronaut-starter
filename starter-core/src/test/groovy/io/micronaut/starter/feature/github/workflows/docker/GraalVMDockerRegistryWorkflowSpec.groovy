@@ -3,15 +3,19 @@ package io.micronaut.starter.feature.github.workflows.docker
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Requires
 import spock.lang.Unroll
 
 @Requires({ jvm.isJava8() || jvm.isJava11() })
-class GraalVMDockerRegistryWorkflowSpec extends BeanContextSpec implements CommandOutputFixture{
+class GraalVMDockerRegistryWorkflowSpec extends BeanContextSpec implements CommandOutputFixture {
 
-    void 'test github workflow readme'(){
+    void 'test github workflow readme'() {
         when:
         def output = generate([GraalVMDockerRegistryWorkflow.NAME])
         def readme = output['README.md']
@@ -72,9 +76,9 @@ dockerBuildNative {
 
     @Unroll
     void 'test github gradle graal #graalVersion workflow for #jdkVersion'(JdkVersion jdkVersion,
-                                                                           JdkVersion graalVersion){
+                                                                           JdkVersion graalVersion) {
         given:
-        def graalvmVersion = "${VersionInfo.getDependencyVersion( 'graal').getValue()}" +
+        def graalvmVersion = "${VersionInfo.getDependencyVersion('graal').getValue()}" +
                 ".java${graalVersion.majorVersion()}"
 
         when:
@@ -88,10 +92,8 @@ dockerBuildNative {
         workflow.contains("graalvm-version: ${graalvmVersion}")
 
         where:
-        jdkVersion | graalVersion
+        jdkVersion        | graalVersion
         JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_9  | JdkVersion.JDK_11
-        JdkVersion.JDK_10 | JdkVersion.JDK_11
         JdkVersion.JDK_11 | JdkVersion.JDK_11
     }
 }

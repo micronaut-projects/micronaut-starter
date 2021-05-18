@@ -1,6 +1,5 @@
 package io.micronaut.starter.template
 
-import io.micronaut.core.beans.BeanIntrospection
 import spock.lang.Specification
 
 class YamlTemplateSpec extends Specification {

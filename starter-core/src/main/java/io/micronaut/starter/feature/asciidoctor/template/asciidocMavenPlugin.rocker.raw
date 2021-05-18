@@ -21,7 +21,7 @@
     </requires>
     <!-- Attributes common to all output formats -->
     <attributes>
-      <endpoint-url>http://example.org</endpoint-url>
+      <endpoint-url>https://example.org</endpoint-url>
       <sourcedir>${project.build.sourceDirectory}</sourcedir>
       <project-version>${project.version}</project-version>
     </attributes>

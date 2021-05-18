@@ -52,7 +52,4 @@ class TestFrameworkSpec extends Specification {
         [Language.GROOVY]                                 | TestFramework.SPOCK
         [Language.KOTLIN]                                 | TestFramework.KOTEST
     }
-
-
-
 }

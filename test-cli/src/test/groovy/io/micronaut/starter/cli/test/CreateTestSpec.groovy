@@ -3,12 +3,12 @@ package io.micronaut.starter.cli.test
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.command.project.test.CreateTestCommand
-import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildTestFrameworkCombinations
 import spock.lang.Unroll
 
 class CreateTestSpec extends CommandSpec {

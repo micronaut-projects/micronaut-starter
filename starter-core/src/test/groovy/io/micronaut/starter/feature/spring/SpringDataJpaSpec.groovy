@@ -84,11 +84,15 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-spring-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
@@ -118,11 +122,15 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-spring-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
@@ -152,11 +160,15 @@ class SpringDataJpaSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-spring-jpa</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>

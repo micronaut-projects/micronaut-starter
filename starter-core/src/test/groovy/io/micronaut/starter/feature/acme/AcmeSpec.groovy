@@ -6,7 +6,6 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -30,7 +29,7 @@ class AcmeSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains('implementation "io.micronaut.acme:micronaut-acme')
+        template.contains('implementation("io.micronaut.acme:micronaut-acme")')
 
         where:
         language << Language.values().toList()

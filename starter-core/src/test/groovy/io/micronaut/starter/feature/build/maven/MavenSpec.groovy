@@ -8,15 +8,17 @@ import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenCombineAttribute
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
+import spock.lang.Issue
 import spock.lang.Unroll
 
-class MavenSpec extends BeanContextSpec {
+class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void 'test use defaults from parent pom'() {
         given:
@@ -136,6 +138,32 @@ class MavenSpec extends BeanContextSpec {
         ApplicationType.DEFAULT     | "jetty-server"                | "jetty"
         ApplicationType.DEFAULT     | "netty-server"                | "netty"
         ApplicationType.DEFAULT     | "undertow-server"             | "undertow"
+    }
+
+    @Unroll
+    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/774')
+    void 'Workaround for Kotlin projects with Maven and JDK16'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_16))
+        def jvmConfig = output[".mvn/jvm.config"]
+
+        then:
+        jvmConfig
+        jvmConfig.contains("--illegal-access=permit")
+
+        when:
+        output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11))
+        jvmConfig = output[".mvn/jvm.config"]
+
+        then:
+        !jvmConfig
+
+        when:
+        output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_16))
+        jvmConfig = output[".mvn/jvm.config"]
+
+        then:
+        !jvmConfig
     }
 
 }

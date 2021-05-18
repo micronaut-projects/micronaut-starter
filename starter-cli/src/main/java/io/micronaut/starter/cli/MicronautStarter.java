@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,9 +20,21 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.starter.cli.command.BaseCommand;
+import io.micronaut.starter.cli.command.BuildToolCandidates;
+import io.micronaut.starter.cli.command.BuildToolConverter;
+import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.command.CreateAppCommand;
+import io.micronaut.starter.cli.command.CreateCliCommand;
+import io.micronaut.starter.cli.command.CreateFunctionCommand;
+import io.micronaut.starter.cli.command.CreateGrpcCommand;
+import io.micronaut.starter.cli.command.CreateMessagingCommand;
+import io.micronaut.starter.cli.command.LanguageCandidates;
+import io.micronaut.starter.cli.command.LanguageConverter;
+import io.micronaut.starter.cli.command.TestFrameworkCandidates;
+import io.micronaut.starter.cli.command.TestFrameworkConverter;
 import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;

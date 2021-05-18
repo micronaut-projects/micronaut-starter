@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,11 +15,14 @@
  */
 package io.micronaut.starter.feature.server;
 
-import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.options.Options;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
 import java.util.Set;
@@ -46,5 +49,15 @@ public class Netty implements ServerFeature, DefaultFeature {
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut")
+                    .artifactId("micronaut-http-server-netty")
+                    .compile());
+        }
     }
 }

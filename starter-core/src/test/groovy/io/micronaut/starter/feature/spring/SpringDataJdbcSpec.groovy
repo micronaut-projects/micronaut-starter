@@ -83,6 +83,8 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
@@ -112,6 +114,8 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
@@ -141,6 +145,8 @@ class SpringDataJdbcSpec extends ApplicationContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
