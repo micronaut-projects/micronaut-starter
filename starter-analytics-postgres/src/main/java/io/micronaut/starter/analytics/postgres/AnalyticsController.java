@@ -68,7 +68,6 @@ public class AnalyticsController {
         return featureRepository.topTestFrameworks();
     }
 
-
     /**
      * Report analytics.
      * @param generated The generated data

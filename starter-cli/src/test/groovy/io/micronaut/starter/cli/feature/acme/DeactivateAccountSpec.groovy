@@ -16,7 +16,6 @@
 
 package io.micronaut.starter.cli.feature.acme
 
-
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.io.ConsoleOutput
 import org.shredzone.acme4j.Account
@@ -54,7 +53,6 @@ class DeactivateAccountSpec extends CliBaseSpec {
         and:
         1 * consoleOutput.err({ it.contains("ACCOUNT KEY IS REQUIRED AND WAS NOT FOUND") })
     }
-
 
     void "deactivate account when using keypair with no matching account"(){
         given:
@@ -105,7 +103,6 @@ class DeactivateAccountSpec extends CliBaseSpec {
         def option = new AcmeServerOption()
         option.serverUrl = acmeServerUrl
         command.acmeServerOption = option
-
 
         when:
         Integer exitCode = command.call()

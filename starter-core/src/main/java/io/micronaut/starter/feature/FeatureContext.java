@@ -16,15 +16,25 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.options.*;
-import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toSet;
 
 public class FeatureContext {
 

@@ -4,7 +4,11 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -91,7 +95,6 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         language << Language.values()
     }
 
-
     @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
@@ -108,6 +111,13 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
       <scope>compile</scope>
     </dependency>
 """)
+        and:
+        template.contains('''\
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+''')
 
         where:
         language << Language.values()

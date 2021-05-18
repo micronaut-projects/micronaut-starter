@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>appengine-gradle-plugin</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.5.6</version>

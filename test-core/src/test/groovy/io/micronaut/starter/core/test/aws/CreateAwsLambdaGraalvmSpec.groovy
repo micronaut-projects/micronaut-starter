@@ -34,7 +34,6 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
 
     }
 
-
     @Override
     String getTempDirectoryPrefix() {
         "test-awslambdagraalvm"

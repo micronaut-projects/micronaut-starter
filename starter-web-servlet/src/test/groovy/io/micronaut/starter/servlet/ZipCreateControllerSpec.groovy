@@ -67,7 +67,6 @@ class ZipCreateControllerSpec extends Specification {
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
 
-
     @Client('/create')
     static interface CreateClient {
         @Get(uri = "/default/{name}{?features,build,test,lang}", consumes = "application/zip")
