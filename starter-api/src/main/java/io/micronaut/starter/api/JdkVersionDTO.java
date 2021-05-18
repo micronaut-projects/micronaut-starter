@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.options.JdkVersion;

@@ -1,7 +1,6 @@
 package io.micronaut.starter.cli.command
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.BeanContext
 import io.micronaut.starter.cli.CodeGenConfig
 import spock.lang.AutoCleanup
 import spock.lang.Shared

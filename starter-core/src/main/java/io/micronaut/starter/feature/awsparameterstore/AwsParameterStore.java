@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.awsparameterstore;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+
 import javax.inject.Singleton;
 import java.util.Map;
 

@@ -6,10 +6,9 @@ import io.micronaut.starter.feature.acme.Acme
 import io.micronaut.starter.feature.kotlin.Ktor
 import io.micronaut.starter.feature.server.Netty
 import io.micronaut.starter.feature.server.ServerFeature
-import io.micronaut.starter.feature.server.Tomcat
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.feature.validation.FeatureValidator
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
 class FeatureValidatorSpec extends BeanContextSpec {

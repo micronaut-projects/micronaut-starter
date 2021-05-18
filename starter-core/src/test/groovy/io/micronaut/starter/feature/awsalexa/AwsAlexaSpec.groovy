@@ -92,7 +92,6 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
         language << Language.values().toList()
     }
 
-
     @Unroll
     void 'default app with gradle aws-alexa feature for language=#language'(Language language) {
         when:

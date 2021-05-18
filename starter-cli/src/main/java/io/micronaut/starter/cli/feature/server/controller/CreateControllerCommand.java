@@ -24,7 +24,14 @@ import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.server.ServerFeature;
-import io.micronaut.starter.feature.server.template.*;
+import io.micronaut.starter.feature.server.template.groovyController;
+import io.micronaut.starter.feature.server.template.groovyJunit;
+import io.micronaut.starter.feature.server.template.javaController;
+import io.micronaut.starter.feature.server.template.javaJunit;
+import io.micronaut.starter.feature.server.template.koTest;
+import io.micronaut.starter.feature.server.template.kotlinController;
+import io.micronaut.starter.feature.server.template.kotlinJunit;
+import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
@@ -37,7 +44,7 @@ import picocli.CommandLine;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 @CommandLine.Command(name = "create-controller", description = "Creates a controller and associated test")
 public class CreateControllerCommand extends CodeGenCommand {

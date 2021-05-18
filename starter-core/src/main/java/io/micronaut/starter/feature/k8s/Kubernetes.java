@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.feature.k8s;
 
-import javax.inject.Singleton;
-
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
@@ -28,6 +26,8 @@ import io.micronaut.starter.feature.distributedconfig.template.k8sYaml;
 import io.micronaut.starter.feature.jib.Jib;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
+
+import javax.inject.Singleton;
 
 /**
  * Adds Kubernetes configuration to an application.

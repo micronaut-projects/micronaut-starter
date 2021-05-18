@@ -37,16 +37,20 @@ public class MavenDependency extends DependencyCoordinate {
     };
 
     @NonNull
-    private MavenScope mavenScope;
+    private final MavenScope mavenScope;
 
     public MavenDependency(@NonNull Dependency dependency) {
         super(dependency);
-        this.mavenScope = MavenScope.of(dependency.getScope()).orElseThrow(() ->
-                new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));
+        if (isPom()) {
+            mavenScope = MavenScope.IMPORT;
+        } else {
+            mavenScope = MavenScope.of(dependency.getScope()).orElseThrow(() ->
+                    new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));
+        }
     }
 
     public MavenScope getMavenScope() {
-        return this.mavenScope;
+        return mavenScope;
     }
 
     @Override

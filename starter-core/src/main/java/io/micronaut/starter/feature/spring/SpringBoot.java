@@ -74,6 +74,3 @@ public class SpringBoot extends SpringFeature {
         generatorContext.addDependency(micronautSpringBoot);
     }
 }
-
-
-
