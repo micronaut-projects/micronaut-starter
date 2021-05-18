@@ -2,8 +2,6 @@ package io.micronaut.starter.feature
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

@@ -16,7 +16,7 @@
 package io.micronaut.starter.client.github.v3;
 
 import io.micronaut.context.annotation.Requires;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Header;
 import io.micronaut.http.client.annotation.Client;
 
 /**
