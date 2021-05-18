@@ -21,7 +21,9 @@ import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Set;
 
 public enum Language implements IncludesDefaults<LanguageDefaults> {
     JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE)),

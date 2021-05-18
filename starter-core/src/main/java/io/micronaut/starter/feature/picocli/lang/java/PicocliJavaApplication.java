@@ -16,9 +16,9 @@
 package io.micronaut.starter.feature.picocli.lang.java;
 
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.lang.java.JavaApplicationFeature;
 import io.micronaut.starter.template.RockerTemplate;
 

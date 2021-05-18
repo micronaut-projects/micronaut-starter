@@ -5,7 +5,12 @@ import com.fizzed.rocker.model.JavaVersion;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
-import org.gradle.api.tasks.*;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Nested;
+import org.gradle.api.tasks.OutputDirectory;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
 import java.io.FileOutputStream;

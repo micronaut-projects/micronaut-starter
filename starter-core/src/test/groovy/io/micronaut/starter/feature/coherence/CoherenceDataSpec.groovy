@@ -5,7 +5,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.PendingFeature
 import spock.lang.Unroll
 
@@ -86,7 +85,6 @@ micronaut:
       <scope>compile</scope>
     </dependency>
 """)
-
 
         where:
         language << Language.values()

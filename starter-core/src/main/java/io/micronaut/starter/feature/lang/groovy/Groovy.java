@@ -15,17 +15,17 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.ApplicationFeature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.Spock;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.VersionInfo;
 
 import javax.inject.Singleton;
