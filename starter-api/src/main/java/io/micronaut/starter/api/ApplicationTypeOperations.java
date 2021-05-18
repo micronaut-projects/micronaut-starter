@@ -19,15 +19,14 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.Parameter;
 
-
 /**
  * Operations on application types.
  *
  * @author graemerocher
  * @since 1.0.0
- *
  */
 public interface ApplicationTypeOperations {
+
     /**
      * List the application types.
      * @param serverURL The server URL

@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.feature.other;
 
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
 import java.util.Set;

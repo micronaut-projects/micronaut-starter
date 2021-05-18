@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.template.Writable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class GradleBuild {
     private static final Logger LOG = LoggerFactory.getLogger(GradleBuild.class);
@@ -67,9 +69,18 @@ public class GradleBuild {
 
     @NonNull
     public String renderExtensions() {
+        return renderWritableExtensions(plugins.stream().map(GradlePlugin::getExtension));
+    }
+
+    @NonNull
+    public String renderSettingsExtensions() {
+        return renderWritableExtensions(plugins.stream().map(GradlePlugin::getSettingsExtension));
+    }
+
+    @NonNull
+    private String renderWritableExtensions(Stream<Writable> extensions) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        plugins.stream()
-                .map(GradlePlugin::getExtension)
+        extensions
                 .filter(Objects::nonNull)
                 .forEach(writable -> {
                     try {

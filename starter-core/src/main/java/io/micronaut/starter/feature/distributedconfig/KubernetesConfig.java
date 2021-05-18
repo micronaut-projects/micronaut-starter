@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.feature.distributedconfig;
 
-import javax.inject.Singleton;
-
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.Kubernetes;
+
+import javax.inject.Singleton;
 
 /**
  * Adds support for Kubernetes config maps configuration.

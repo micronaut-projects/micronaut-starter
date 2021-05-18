@@ -68,5 +68,3 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
         generatorContext.addDependency(jaeger.compile());
     }
 }
-
-

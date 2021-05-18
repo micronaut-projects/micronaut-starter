@@ -23,7 +23,6 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 /**
  * DTO objects for {@link BuildTool}.
  *
@@ -32,7 +31,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "BuildToolInfo")
 public class BuildToolDTO implements Selectable<BuildTool> {
+
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".buildTools.";
+
     BuildTool value;
     String label;
     String description;

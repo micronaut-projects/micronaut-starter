@@ -2,17 +2,9 @@ package io.micronaut.starter.feature.dependencies
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.gradle.GradleBuild
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 

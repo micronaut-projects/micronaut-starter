@@ -84,7 +84,6 @@ class DockerRegistryWorkflowSpec extends WorkflowSpec {
         cleanupGitHubRepository(project)
     }
 
-
     void "test graalvm gradle workflow"() {
         given:
         def project = NameUtils.parse("com.example.gradle-graalvm-starter-test")

@@ -87,8 +87,6 @@ public class CreateRepositoryCommand extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
-
-
         String dialect = jdbcRepository ? config.getFeatures().stream()
                 .map(name -> {
                     for (DatabaseDriverFeature feature: driverFeatures) {
