@@ -82,7 +82,6 @@ class KubernetesConfigSpec extends ApplicationContextSpec  implements CommandOut
         commandContext.templates.get('k8sYaml')
     }
 
-
     void 'test kubernetes no distributed config'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['kubernetes'])

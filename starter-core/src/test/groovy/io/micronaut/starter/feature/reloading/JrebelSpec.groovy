@@ -2,7 +2,6 @@ package io.micronaut.starter.feature.reloading
 
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool

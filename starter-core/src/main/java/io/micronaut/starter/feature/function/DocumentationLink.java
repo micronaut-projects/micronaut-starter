@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.feature.function;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * Encapsulates a link to Website.

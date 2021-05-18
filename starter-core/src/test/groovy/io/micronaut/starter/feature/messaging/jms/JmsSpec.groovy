@@ -1,18 +1,12 @@
 package io.micronaut.starter.feature.messaging.jms
 
-import io.micronaut.context.ApplicationContext
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
 import java.util.stream.Collectors
-
-import static io.micronaut.starter.application.ApplicationType.DEFAULT
 
 class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
 

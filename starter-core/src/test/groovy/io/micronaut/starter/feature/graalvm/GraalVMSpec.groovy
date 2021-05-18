@@ -135,9 +135,7 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
         extension << supportedLanguages()*.extension
     }
 
-
     private List<Language> supportedLanguages() {
         Language.values().toList() - Language.GROOVY
     }
-
 }

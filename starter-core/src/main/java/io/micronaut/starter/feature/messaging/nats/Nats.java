@@ -15,13 +15,12 @@
  */
 package io.micronaut.starter.feature.messaging.nats;
 
-import javax.inject.Singleton;
-
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 
+import javax.inject.Singleton;
 import java.util.Collections;
 
 @Singleton

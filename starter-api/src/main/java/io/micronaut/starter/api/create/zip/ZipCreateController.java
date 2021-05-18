@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.api.create.zip;
 
+import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.core.bind.annotation.Bindable;
 import io.micronaut.core.io.Writable;
 import io.micronaut.http.HttpHeaders;
@@ -28,6 +28,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Header;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
+import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -37,7 +38,6 @@ import io.micronaut.starter.io.ZipOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
-import io.micronaut.starter.api.TestFramework;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;

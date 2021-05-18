@@ -34,6 +34,7 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.environment.OperatingSystem
+
 import java.nio.file.Files
 import java.time.Duration
 
@@ -141,9 +142,7 @@ abstract class CommandSpec extends Specification {
         )
     }
 
-
     ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
         return { -> new FileSystemOutputHandler(dir, consoleOutput)}
     }
-
 }
