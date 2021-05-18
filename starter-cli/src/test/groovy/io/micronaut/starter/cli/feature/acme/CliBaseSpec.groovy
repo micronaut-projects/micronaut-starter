@@ -29,7 +29,6 @@ import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy
 import org.testcontainers.containers.wait.strategy.WaitAllStrategy
 import org.testcontainers.utility.MountableFile
 import spock.lang.AutoCleanup
-import spock.lang.Ignore
 import spock.lang.Shared
 
 import java.time.Duration

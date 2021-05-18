@@ -2,9 +2,12 @@ package io.micronaut.starter.feature.github.workflows.azure
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunGraalWorkflow
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
@@ -89,8 +92,7 @@ dockerBuildNative {
         where:
         jdkVersion | graalVersion
         JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_9  | JdkVersion.JDK_11
-        JdkVersion.JDK_10 | JdkVersion.JDK_11
         JdkVersion.JDK_11 | JdkVersion.JDK_11
+        JdkVersion.JDK_16 | JdkVersion.JDK_16
     }
 }

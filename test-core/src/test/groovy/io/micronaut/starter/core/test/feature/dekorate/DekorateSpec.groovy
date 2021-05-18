@@ -1,14 +1,11 @@
 package io.micronaut.starter.core.test.feature.dekorate
 
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature
-import io.micronaut.starter.feature.dekorate.AbstractDekorateServiceFeature
 import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+import io.micronaut.starter.feature.dekorate.AbstractDekorateServiceFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
-import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 import java.nio.file.Files
