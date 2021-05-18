@@ -15,22 +15,22 @@
  */
 package io.micronaut.starter.api.create.github;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.ApplicationEventPublisher;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.starter.api.StarterConfiguration;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.api.create.AbstractCreateController;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.client.github.oauth.AccessToken;
 import io.micronaut.starter.client.github.oauth.GitHubOAuthClient;
 import io.micronaut.starter.client.github.v3.GitHubApiClient;
 import io.micronaut.starter.client.github.v3.GitHubRepository;
 import io.micronaut.starter.client.github.v3.GitHubUser;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;

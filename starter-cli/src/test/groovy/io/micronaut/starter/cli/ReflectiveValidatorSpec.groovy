@@ -3,8 +3,6 @@ package io.micronaut.starter.cli
 import io.micronaut.core.annotation.ReflectiveAccess
 import org.reflections.Reflections
 import org.reflections.scanners.FieldAnnotationsScanner
-import org.reflections.scanners.SubTypesScanner
-import org.reflections.scanners.TypeAnnotationsScanner
 import org.spockframework.util.Assert
 import picocli.CommandLine
 import spock.lang.Specification

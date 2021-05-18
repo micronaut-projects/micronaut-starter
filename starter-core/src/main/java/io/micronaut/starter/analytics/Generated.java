@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.analytics;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;

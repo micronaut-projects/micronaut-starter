@@ -20,7 +20,6 @@ class SecuritySessionSpec extends ApplicationContextSpec implements CommandOutpu
         readme.contains("https://micronaut-projects.github.io/micronaut-security/latest/guide/index.html#session")
     }
 
-
     @Unroll
     void 'test gradle security-session feature for language=#language'() {
         when:

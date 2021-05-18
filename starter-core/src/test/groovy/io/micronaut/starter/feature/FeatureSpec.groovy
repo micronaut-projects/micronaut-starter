@@ -4,7 +4,6 @@ import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.dependencies.Coordinate
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.options.BuildTool
@@ -58,7 +57,7 @@ class FeatureSpec extends BeanContextSpec {
                 options,
                 OperatingSystem.LINUX,
                 getFeatures(features, options).getFeatures(),
-                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0))
+                (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false))
         )
         commandCtx.applyFeatures()
 

@@ -174,34 +174,26 @@ jobs:
           asset_content_type: application/zip
   windows:
     name: Release Windows Native CLI
-    runs-on: windows-2016
+    runs-on: windows-latest
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Download GraalVM
-        run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.0.0.2/graalvm-ce-java11-windows-amd64-21.0.0.2.zip -OutFile 'graal.zip'
-      - name: Install GraalVM
-        run: Expand-Archive -path 'graal.zip' -destinationpath '.'
-      - name: Install Native Image
-        run: graalvm-ce-java11-21.0.0.2\bin\gu.cmd install native-image
-      - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
-        run: |
-          choco install visualstudio2017-workload-vctools
+          token: ${{ secrets.GH_TOKEN }}    
+      - uses: ilammy/msvc-dev-cmd@v1.5.0
+      - uses: microsoft/setup-msbuild@v1
+      - uses: ayltai/setup-graalvm@v1
+        with:
+          java-version: 8
+          graalvm-version: 21.0.0.2
+          native-image: true
       - name: Build JAR File
-        shell: cmd
-        env:
-          JAVA_HOME: ./graalvm-ce-java11-21.0.0.2
+        shell: powershell
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
-        shell: cmd
-        env:
-          JAVA_HOME: ./graalvm-ce-java11-21.0.0.2
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./graalvm-ce-java11-21.0.0.2/bin/native-image --no-fallback -cp build/libs/cli.jar
+        shell: powershell
+        run: native-image --no-fallback -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)

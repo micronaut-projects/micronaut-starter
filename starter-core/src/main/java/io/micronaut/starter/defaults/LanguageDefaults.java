@@ -17,8 +17,8 @@ package io.micronaut.starter.defaults;
 
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.TestFramework;
 
 /**
  * Default values to be applied when a given

@@ -18,8 +18,8 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.cli.CommonOptionsMixin;
+import io.micronaut.starter.io.ConsoleOutput;
 import picocli.CommandLine;
 
 public class BaseCommand implements ConsoleOutput {

@@ -23,7 +23,6 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 /**
  * Represents an application feature.
  *
@@ -33,7 +32,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "Feature")
 public class FeatureDTO extends Linkable implements Named, Described {
+
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".features.";
+
     private final String name;
     private final String title;
     private final String description;
