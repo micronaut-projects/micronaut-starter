@@ -1,3 +1,3 @@
-@args(String groupId, String artifactId, String scope, String version)
+@args(String groupId, String artifactId, String scope, String version, boolean pom)
 
-@(scope)("@groupId:@artifactId@(version != null ? ":" + version : "")")
+@(pom ? scope + " platform" : scope)("@groupId:@artifactId@(version != null ? ":" + version : "")")

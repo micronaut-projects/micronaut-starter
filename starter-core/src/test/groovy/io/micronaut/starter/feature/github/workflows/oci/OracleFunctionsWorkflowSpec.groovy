@@ -73,7 +73,6 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         buildTool << BuildTool.values()
     }
 
-
     @Unroll
     void 'test http function pom.xml configuration for #feature'(String feature) {
         when:
@@ -164,8 +163,6 @@ dockerBuildNative {
         where:
         jdkVersion        | graalVersion
         JdkVersion.JDK_8  | JdkVersion.JDK_8
-        JdkVersion.JDK_9  | JdkVersion.JDK_11
-        JdkVersion.JDK_10 | JdkVersion.JDK_11
         JdkVersion.JDK_11 | JdkVersion.JDK_11
     }
 }

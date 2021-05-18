@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.grpc;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -43,6 +44,12 @@ public class Grpc implements DefaultFeature {
                 .groupId("io.micronaut.grpc")
                 .artifactId("micronaut-grpc-runtime")
                 .compile());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.google.protobuf")
+                    .lookupArtifactId("protobuf-gradle-plugin")
+                    .build());
+        }
     }
 
     @Override

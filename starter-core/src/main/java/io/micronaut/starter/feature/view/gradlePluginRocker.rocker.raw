@@ -1,0 +1,8 @@
+@args(String path)
+sourceSets {
+    main {
+        rocker {
+            srcDir("@path")
+        }
+    }
+}

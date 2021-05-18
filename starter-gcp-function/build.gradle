@@ -40,13 +40,3 @@ shadowJar {
 }
 
 run.classpath += configurations.developmentOnly
-task('runFunction', type: JavaExec, dependsOn: classes, group: 'application') {
-    main = 'com.google.cloud.functions.invoker.runner.Invoker'
-    classpath(configurations.invoker)
-    args(
-            '--target', 'io.micronaut.gcp.function.http.HttpFunction',
-            '--classpath', (configurations.runtimeClasspath + sourceSets.main.output).asPath,
-            '--port', 8081
-
-    )
-}

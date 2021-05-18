@@ -1,36 +1,21 @@
-import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
-
 plugins {
-    id "com.github.johnrengelman.shadow"
-    id "application"
+    id("io.micronaut.application") version "1.5.0"    
+}
+
+
+micronaut {
+    version micronautVersion
+    runtime "lambda"
 }
 
 dependencies {
     implementation project(":starter-api")
-    implementation "io.micronaut:micronaut-inject"
-
-    implementation("io.micronaut.aws:micronaut-function-aws-api-proxy") {
-        exclude group: 'com.fasterxml.jackson.module', module:'jackson-module-afterburner'
-    }
-
-    implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime") {
-        exclude group: "org.slf4j"
-    }
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
-}
-
-test {
-    useJUnitPlatform()
 }
 
 mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
 
-shadowJar {
-    mergeServiceFiles()
-    manifest {
-        attributes 'Main-Class': 'io.micronaut.function.aws.runtime.MicronautLambdaRuntime'
-    }
-    transform(Log4j2PluginsCacheFileTransformer)
+nativeImage {
+    imageName = "application"
 }

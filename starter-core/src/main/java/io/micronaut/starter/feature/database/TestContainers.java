@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,11 +26,9 @@ import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.StringTemplate;
 
 import javax.inject.Singleton;
-import java.util.Collections;
 
 @Singleton
 public class TestContainers implements Feature {
@@ -99,7 +97,6 @@ public class TestContainers implements Feature {
                     dependencyArtifactId = "mssqlserver";
                 } else if (driverFeature instanceof Oracle) {
                     url = "jdbc:tc:oracle:thin:@/xe";
-                    generatorContext.addTemplate("testContainersProperties", new PropertiesTemplate("src/test/resources/testcontainers.properties", Collections.singletonMap("oracle.container.image", "wnameless/oracle-xe-11g-r2")));
                     dependencyArtifactId = "oracle-xe";
                 }
 

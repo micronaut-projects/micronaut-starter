@@ -28,7 +28,7 @@ class MultitenancyGormSpec extends ApplicationContextSpec  implements CommandOut
         then:
         readme
         readme.contains("https://docs.micronaut.io/latest/guide/index.html#multitenancyGorm")
-        readme.contains("http://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy")
+        readme.contains("https://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy")
     }
 
     void "multi-tenancy-gorm belongs to Database category"() {

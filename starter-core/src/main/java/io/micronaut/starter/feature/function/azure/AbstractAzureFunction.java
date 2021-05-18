@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
@@ -68,6 +69,12 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));
         generatorContext.addTemplate("local.settings.json", new URLTemplate("local.settings.json", classLoader.getResource("functions/azure/local.settings.json")));
         BuildTool buildTool = generatorContext.getBuildTool();
+        if (buildTool.isGradle()) {
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.microsoft.azure.azurefunctions")
+                    .lookupArtifactId("azure-functions-gradle-plugin")
+                    .build());
+        }
         Project project = generatorContext.getProject();
         if (buildTool == BuildTool.MAVEN) {
             BuildProperties props = generatorContext.getBuildProperties();
