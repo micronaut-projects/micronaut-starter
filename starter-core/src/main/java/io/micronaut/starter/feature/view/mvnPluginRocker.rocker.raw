@@ -1,0 +1,18 @@
+@args(String groupId, String artifactId, String version, String templateDirectory)
+<plugin>
+  <groupId>@groupId</groupId>
+  <artifactId>@artifactId</artifactId>
+  <version>@version</version>
+  <executions>
+    <execution>
+      <id>generate-rocker-templates</id>
+      <phase>generate-sources</phase>
+      <goals>
+        <goal>generate</goal>
+      </goals>
+      <configuration>
+        <templateDirectory>@templateDirectory</templateDirectory>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>

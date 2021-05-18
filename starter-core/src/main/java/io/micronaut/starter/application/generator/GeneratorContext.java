@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
@@ -77,6 +78,8 @@ public class GeneratorContext implements DependencyContext {
     private final Features features;
     private final Options options;
     private final Set<Dependency> dependencies = new HashSet<>();
+
+    private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
                             ApplicationType type,
@@ -326,5 +329,22 @@ public class GeneratorContext implements DependencyContext {
     @Override
     public Set<Dependency> getDependencies() {
         return dependencies;
+    }
+
+    public void addBuildPlugin(BuildPlugin buildPlugin) {
+        if (buildPlugin.requiresLookup()) {
+            this.buildPlugins.add(buildPlugin.resolved(coordinateResolver));
+        } else {
+            this.buildPlugins.add(buildPlugin);
+        }
+    }
+
+    public Coordinate resolveCoordinate(String artifactId) {
+        return coordinateResolver.resolve(artifactId)
+                    .orElseThrow(() -> new LookupFailedException(artifactId));
+    }
+
+    public Set<BuildPlugin> getBuildPlugins() {
+        return buildPlugins;
     }
 }

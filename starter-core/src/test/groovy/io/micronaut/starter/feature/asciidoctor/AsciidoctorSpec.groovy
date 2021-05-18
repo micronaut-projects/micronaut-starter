@@ -47,23 +47,23 @@ class AsciidoctorSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains("""
+        template.contains('''\
         <groupId>org.asciidoctor</groupId>
         <artifactId>asciidoctor-maven-plugin</artifactId>
-        <version>\${asciidoctor.maven.plugin.version}</version>
+        <version>${asciidoctor.maven.plugin.version}</version>
         <dependencies>
           <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>\${asciidoctorj.version}</version>
+            <version>${asciidoctorj.version}</version>
           </dependency>
           <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj-diagram</artifactId>
-            <version>\${asciidoctorj.diagram.version}</version>
+            <version>${asciidoctorj.diagram.version}</version>
           </dependency>
         </dependencies>
-""")
+''')
 
         where:
         language << Language.values().toList()

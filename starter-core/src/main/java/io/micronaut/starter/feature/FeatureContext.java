@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,15 +16,25 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.OperatingSystem;
-import io.micronaut.starter.options.*;
-import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.feature.test.TestFeature;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toSet;
 
 public class FeatureContext {
 
