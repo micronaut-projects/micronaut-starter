@@ -48,6 +48,4 @@ class CreateControllerSpec extends CommandSpec {
     String getTempDirectoryPrefix() {
         "test-createcontroller-createcontrollergroovygradlejunitspec"
     }
-
-
 }

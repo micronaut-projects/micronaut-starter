@@ -18,6 +18,7 @@ package io.micronaut.starter.build.gradle;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
+
 import javax.inject.Singleton;
 import java.util.List;
 import java.util.stream.Collectors;

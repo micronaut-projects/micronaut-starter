@@ -29,7 +29,6 @@ class FunctionSpec extends Specification {
 
     @Shared Context lambdaContext = new MockLambdaContext()
 
-
     void "test list features"() {
         when:
         AwsProxyRequest request = new AwsProxyRequestBuilder('/application-types/default/features', HttpMethod.GET.toString())
