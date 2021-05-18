@@ -1,7 +1,6 @@
 package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.build.gradle.GradleConfiguration
 import io.micronaut.starter.build.gradle.GradleDependency
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework

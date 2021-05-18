@@ -48,7 +48,6 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
-
     @Unroll
     @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging for #lang'(Language lang) {
@@ -59,7 +58,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/graalvm-ce:java11-21.0.0")
+        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/graalvm-ce:java11")
 
         where:
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]

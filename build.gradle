@@ -1,21 +1,12 @@
 buildscript {
     repositories {
-        maven { url "https://repo.grails.org/grails/core" }
+        gradlePluginPortal()
+        mavenCentral()
     }
     dependencies {
-        classpath group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
-        classpath "io.spring.nohttp:nohttp-gradle:0.0.5.RELEASE"
-        classpath "com.github.jengelman.gradle.plugins:shadow:5.1.0"
-        classpath 'io.github.groovylang.groovydoc:groovydoc-gradle-plugin:1.0.1'
-        classpath "io.micronaut.docs:micronaut-docs-asciidoc-extensions:$micronautDocsVersion"
-        classpath "io.micronaut.docs:micronaut-docs-gradle-plugins:$micronautDocsVersion"
-        classpath "com.adarshr:gradle-test-logger-plugin:2.1.0"
+        classpath "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
+        classpath 'io.micronaut.build.internal:micronaut-gradle-plugins:4.0.0.RC4'
     }
-}
-
-plugins {
-    id "com.diffplug.gradle.spotless" version "5.8.2" apply false
-    id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
 }
 
 repositories {
@@ -28,9 +19,6 @@ subprojects { Project subproject ->
     repositories {
         mavenCentral()
         maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-
-        //TODO remove when https://github.com/micronaut-projects/micronaut-docs/issues/24 is implemented
-        maven { url "https://repo.grails.org/grails/core" }
     }
 
     version project.projectVersion
@@ -39,38 +27,27 @@ subprojects { Project subproject ->
         isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
     }
 
-    apply plugin:"groovy"
-    apply plugin: 'idea'
-    apply plugin: 'checkstyle'
-    apply from: rootProject.file('gradle/license.gradle')
-    apply plugin: "com.adarshr.test-logger"
+    apply plugin: "io.micronaut.build.internal.common"
 
-    if (subproject.hasProperty("publish") && subproject.publish) {
-        apply plugin:"java-library"
-        apply from: rootProject.file("gradle/publishing.gradle")
-
-        jar {
-            manifest {
-                attributes('Automatic-Module-Name': "${subproject.group}.${subproject.name}".replaceAll('[^\\w\\.\\$_]', "_"))
-                attributes('Implementation-Version': projectVersion)
-                attributes('Implementation-Title': title)
-            }
-        }
+    spotless {
+      java {
+        target 'src/main/java/**/*.java'
+      }
     }
 
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
+    if (subproject.hasProperty("publish") && subproject.publish) {
+        apply plugin: "io.micronaut.build.internal.publishing"
+    }
 
     configurations.all {
         resolutionStrategy {
             eachDependency { DependencyResolveDetails details ->
                 if (project.name.startsWith("test-")) {
-                    // Gradle TestKit needs Groovy 2.5
                     if (details.requested.group == "org.codehaus.groovy") {
-                        details.useVersion("2.5.11")
+                        details.useVersion(groovyVersion)
                     }
                     if (details.requested.name == "spock-core") {
-                        details.useVersion("1.3-groovy-2.5")
+                        details.useVersion(spockVersion)
                     }
                 } else {
                     //multiple actions can be specified
@@ -89,10 +66,10 @@ subprojects { Project subproject ->
         if (project.name.startsWith("test-")) {
             implementation gradleTestKit()
         } else {
-            annotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
-            implementation enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+            implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
             annotationProcessor "io.micronaut:micronaut-inject-java"
-            testAnnotationProcessor enforcedPlatform("io.micronaut:micronaut-bom:$micronautVersion")
+            testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
             testAnnotationProcessor "io.micronaut:micronaut-inject-java"
         }
         testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
@@ -101,26 +78,20 @@ subprojects { Project subproject ->
         }
     }
 
-    idea {
-        module {
-            outputDir file('build/classes/java/main')
-            testOutputDir file('build/classes/groovy/test')
-        }
-    }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-        options.compilerArgs.add('-parameters')
-    }
-
-    apply from: "${rootProject.projectDir}/gradle/checkstyle.gradle"
     if (!project.name.startsWith("test-")) {
-        apply from: "${rootProject.projectDir}/gradle/test.gradle"
+        tasks.withType(Test) {
+            testLogging {
+                exceptionFormat = 'full'
+            }
+            forkEvery = 100
+            maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+            maxHeapSize = "2G"
+        }
     }
 
 }
 
-apply from:"https://raw.githubusercontent.com/micronaut-projects/micronaut-docs/v${micronautDocsVersion}/gradle/docs.gradle"
+apply plugin: "io.micronaut.build.internal.docs"
 
 Project starterCli = project('micronaut-cli')
 
@@ -129,7 +100,7 @@ starterCli.afterEvaluate {
         dependsOn(starterCli.tasks.getByName('classes'))
         group = "Documentation"
         description = "Generate AsciiDoc manpage"
-        classpath(starterCli.configurations.compile, starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
+        classpath(starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
         main 'picocli.codegen.docgen.manpage.ManPageGenerator'
         args starterCli.mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
     }

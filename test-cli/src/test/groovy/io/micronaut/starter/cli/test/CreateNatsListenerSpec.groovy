@@ -1,7 +1,5 @@
 package io.micronaut.starter.cli.test
 
-import io.micronaut.context.BeanContext
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.feature.messaging.nats.CreateNatsListener
 import io.micronaut.starter.io.ConsoleOutput

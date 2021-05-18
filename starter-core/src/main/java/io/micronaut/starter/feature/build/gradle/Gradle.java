@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -28,6 +29,7 @@ import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
 import io.micronaut.starter.feature.database.JpaFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
@@ -68,6 +70,9 @@ public class Gradle implements BuildFeature {
             if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
                 generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.jpa").lookupArtifactId("kotlin-noarg").build());
             }
+            if (generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
+                generatorContext.getBuildProperties().put("org.gradle.jvmargs", "--illegal-access=permit");
+            }
         }
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
@@ -89,7 +94,7 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
-        generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject())));
+        generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject(), build)));
     }
 
     private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {

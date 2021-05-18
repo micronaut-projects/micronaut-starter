@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,7 +21,9 @@ import io.micronaut.starter.defaults.LanguageDefaults;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Set;
 
 public enum Language implements IncludesDefaults<LanguageDefaults> {
     JAVA("java", new LanguageDefaults(TestFramework.JUNIT, BuildTool.GRADLE)),

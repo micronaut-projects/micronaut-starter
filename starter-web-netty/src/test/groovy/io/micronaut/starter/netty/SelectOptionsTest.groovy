@@ -6,7 +6,6 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.api.SelectOptionsDTO
 import io.micronaut.starter.api.TestFrameworkDTO
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.test.Junit
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
@@ -14,6 +13,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Issue
 import spock.lang.Specification
+
 import javax.inject.Inject
 
 @MicronautTest
@@ -50,7 +50,6 @@ class SelectOptionsTest extends Specification {
             then: "We can find the ${lang.name()} language"
             languageOpts.find {so -> lang == so.value} != null
         }
-
 
         then: "We get all the jdk version options"
         def jdkVersionOpts = selectOptions.jdkVersion.options

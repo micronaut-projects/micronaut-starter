@@ -1,13 +1,13 @@
-@import io.micronaut.starter.options.TestFramework
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.util.VersionInfo
 @import io.micronaut.starter.application.ApplicationType
-@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.application.Project
 @import io.micronaut.starter.build.gradle.GradleBuild
-@import io.micronaut.starter.build.gradle.GradlePlugin
 @import io.micronaut.starter.build.gradle.GradleDsl
-@import io.micronaut.starter.build.gradle.GradleDependency
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.util.VersionInfo
+
 @args (
 ApplicationType applicationType,
 Project project,
@@ -48,15 +48,6 @@ repositories {
     } else {
     maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
-    }
-    @if (features.contains("oracle-function")) {
-        @if (!features.contains("oracle-function-http")) {
-    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-    maven("https://dl.bintray.com/fnproject/fnproject")
-    } else {
-    maven { url "https://dl.bintray.com/fnproject/fnproject" }
-    }
-        }
     }
 }
 
