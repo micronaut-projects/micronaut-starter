@@ -2,14 +2,16 @@ package io.micronaut.starter.feature.github.workflows.gcloud
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.github.workflows.oci.OracleFunctionsJavaWorkflow
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutputFixture {
-
 
     void 'test github workflow readme'() {
         when:
@@ -47,7 +49,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         println(output)
         def workflow = output[".github/workflows/google-cloud-run.yml"]
 
-
         then:
         workflow
         workflow.contains("export DOCKER_IMAGE=`echo \"\${GCLOUD_GCR}/\${GCLOUD_PROJECT_ID}/\${GCLOUD_IMAGE_REPOSITORY}/foo\" | sed -e 's#//#/#' -e 's#^/##'`")
@@ -55,7 +56,6 @@ class GoogleCloudRunWorkflowSpec extends BeanContextSpec implements CommandOutpu
         where:
         buildTool << BuildTool.values()
     }
-
 
     void 'test docker image is configured in build.gradle'() {
         when:

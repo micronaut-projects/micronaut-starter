@@ -17,6 +17,9 @@ package io.micronaut.starter.io;
 
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.template.Template;
+import org.apache.commons.compress.archivers.zip.UnixStat;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,10 +27,6 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.apache.commons.compress.archivers.zip.UnixStat;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 public class ZipOutputHandler implements OutputHandler {
 

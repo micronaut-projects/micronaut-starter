@@ -19,6 +19,4 @@ class LanguageSpec extends Specification {
         Language.KOTLIN || "src/main/kotlin/{packagePath}/{className}.kt"
         path = '/{packagePath}/{className}'
     }
-
-
 }

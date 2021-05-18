@@ -1,5 +1,8 @@
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleBuild
 
-@args (Project project)
+@args (Project project, GradleBuild gradleBuild)
+
+@gradleBuild.renderSettingsExtensions()
 
 rootProject.name="@project.getName()"

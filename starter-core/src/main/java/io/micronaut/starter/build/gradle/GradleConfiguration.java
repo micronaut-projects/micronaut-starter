@@ -60,7 +60,9 @@ public enum GradleConfiguration implements Ordered {
     }
 
     @NonNull
-    public static Optional<GradleConfiguration> of(@NonNull Scope scope, @NonNull Language language, @NonNull TestFramework testFramework) {
+    public static Optional<GradleConfiguration> of(@NonNull Scope scope,
+                                                   @NonNull Language language,
+                                                   @NonNull TestFramework testFramework) {
         switch (scope.getSource()) {
             case MAIN:
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {

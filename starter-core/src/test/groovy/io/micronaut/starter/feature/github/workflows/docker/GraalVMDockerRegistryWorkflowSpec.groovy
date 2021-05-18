@@ -3,7 +3,11 @@ package io.micronaut.starter.feature.github.workflows.docker
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Requires
 import spock.lang.Unroll

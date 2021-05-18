@@ -29,7 +29,10 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
 import javax.inject.Singleton;
-import java.util.*;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class ContextFactory {

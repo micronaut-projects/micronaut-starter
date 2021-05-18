@@ -17,7 +17,6 @@ package io.micronaut.starter.test
 
 import groovy.transform.AutoFinal
 import groovy.transform.Memoized
-import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 
 @AutoFinal

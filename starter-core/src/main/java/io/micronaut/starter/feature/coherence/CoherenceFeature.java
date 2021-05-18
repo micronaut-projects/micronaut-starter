@@ -81,7 +81,6 @@ public class CoherenceFeature implements Feature {
         generatorContext.getBuildProperties().put(
                 getCoherenceVersionPropertyName(generatorContext.getBuildTool()), COHERENCE_VERSION);
 
-
         Dependency.Builder coherenceMicronaut = Dependency.builder()
                 .groupId("io.micronaut.coherence")
                 .artifactId("micronaut-coherence")

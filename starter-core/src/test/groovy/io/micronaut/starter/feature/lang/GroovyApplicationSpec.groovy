@@ -7,7 +7,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class GroovyApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
