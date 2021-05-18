@@ -74,7 +74,7 @@ class SpringWebSpec extends ApplicationContextSpec {
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
         template.contains('implementation("io.micronaut:micronaut-http-server")')
-        template.contains('runtime("io.micronaut.spring:micronaut-spring-web")')
+        template.contains('runtimeOnly("io.micronaut.spring:micronaut-spring-web")')
 
         where:
         language        | scope
@@ -96,11 +96,15 @@ class SpringWebSpec extends ApplicationContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
@@ -141,11 +145,15 @@ class SpringWebSpec extends ApplicationContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
@@ -180,11 +188,15 @@ class SpringWebSpec extends ApplicationContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
@@ -197,6 +209,8 @@ class SpringWebSpec extends ApplicationContextSpec {
       <artifactId>micronaut-spring-annotation</artifactId>
       <scope>provided</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web-annotation</artifactId>

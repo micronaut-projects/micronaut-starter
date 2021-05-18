@@ -1,11 +1,11 @@
 /*
- * Copyright 2021 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
-import io.micronaut.starter.options.BuildTool;
 
 import javax.inject.Singleton;
 import java.util.Map;
@@ -89,13 +88,12 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
                 .artifactId("micronaut-coherence-distributed-configuration")
                 .template();
         generatorContext.addDependency(distributedConfiguration.compile());
-        if (generatorContext.getBuildTool().equals(BuildTool.GRADLE) && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
-            Dependency.Builder coherenceJava = Dependency.builder()
+        if (generatorContext.getBuildTool().isGradle() && !generatorContext.isFeaturePresent(CoherenceGrpcClient.class)) {
+            generatorContext.addDependency(Dependency.builder()
                     .groupId("com.oracle.coherence.ce")
                     .artifactId("coherence-java-client")
                     .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
-                    .template();
-            generatorContext.addDependency(coherenceJava.compile());
+                    .compile());
         }
     }
 

@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.api.preview;
 
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.context.event.ApplicationEventPublisher;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
@@ -25,10 +25,10 @@ import io.micronaut.http.exceptions.HttpStatusException;
 import io.micronaut.starter.api.Relationship;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.TestFramework;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
@@ -95,8 +95,8 @@ public class PreviewController extends AbstractCreateController implements Previ
                     new Options(
                             lang,
                             test != null ? test.toTestFramework() : null,
-                            build == null ? BuildTool.GRADLE : build,
-                            javaVersion == null ? JdkVersion.JDK_8 : javaVersion),
+                            build == null ? BuildTool.DEFAULT_OPTION : build,
+                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
                     getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,

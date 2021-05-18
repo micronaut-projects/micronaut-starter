@@ -1,7 +1,6 @@
 package io.micronaut.starter.feature.kotlin
 
 import io.micronaut.starter.ApplicationContextSpec
-import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
@@ -16,7 +15,6 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 class KtorSpec extends ApplicationContextSpec implements CommandOutputFixture {
-
 
     @Subject
     @Shared

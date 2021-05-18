@@ -4,13 +4,16 @@ import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.api.SelectOptionsDTO
+import io.micronaut.starter.api.TestFrameworkDTO
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Issue
 import spock.lang.Specification
+
 import javax.inject.Inject
 
 @MicronautTest
@@ -47,7 +50,6 @@ class SelectOptionsTest extends Specification {
             then: "We can find the ${lang.name()} language"
             languageOpts.find {so -> lang == so.value} != null
         }
-
 
         then: "We get all the jdk version options"
         def jdkVersionOpts = selectOptions.jdkVersion.options
@@ -100,6 +102,17 @@ class SelectOptionsTest extends Specification {
             then: "We get valid correlative test tool"
             selectOptions.test.options.find{ it.value == langDefault.test} != null
         }
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter-ui/issues/42")
+    void 'SelectOption label of JUNIT is JUnit, not Junit'() {
+        when: "We ask for the options"
+        SelectOptionsDTO selectOptions = client.selectOptions().body()
+
+        then:
+        TestFrameworkDTO junit = selectOptions.test.options.find {it.value == TestFramework.JUNIT}
+        junit.label == 'JUnit'
+        junit.description == 'JUnit'
     }
 
     @Client('/select-options')

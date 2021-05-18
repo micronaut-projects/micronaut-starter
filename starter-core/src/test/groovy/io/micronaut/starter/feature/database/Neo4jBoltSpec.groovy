@@ -6,7 +6,6 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
 
 class Neo4jBoltSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 

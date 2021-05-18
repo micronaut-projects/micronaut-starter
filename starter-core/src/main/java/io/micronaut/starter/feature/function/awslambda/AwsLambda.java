@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,30 +27,30 @@ import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntim
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
-import io.micronaut.starter.feature.function.HandlerClassFeature;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerJavaJunit;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlin;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinJunit;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerKoTest;
-import io.micronaut.starter.feature.function.awslambda.template.bookControllerSpock;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerGroovyJunit;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJava;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlin;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerJavaJunit;
-import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerKotlinJunit;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookRequestHandlerSpock;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedGroovy;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedJava;
 import io.micronaut.starter.feature.function.awslambda.template.awsLambdaBookSavedKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerJava;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.bookControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -62,7 +62,8 @@ import io.micronaut.starter.template.RockerWritable;
 import javax.inject.Singleton;
 import java.util.Set;
 
-import static io.micronaut.starter.application.ApplicationType.*;
+import static io.micronaut.starter.application.ApplicationType.DEFAULT;
+import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
 public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature {

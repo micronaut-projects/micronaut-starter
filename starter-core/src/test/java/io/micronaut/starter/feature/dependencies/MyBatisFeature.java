@@ -5,6 +5,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
+
 import javax.inject.Singleton;
 
 @Requires(property = "spec.name", value = "DependenciesFeatureSpec")

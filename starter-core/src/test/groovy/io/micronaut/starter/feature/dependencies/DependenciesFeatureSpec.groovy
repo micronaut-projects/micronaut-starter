@@ -2,21 +2,16 @@ package io.micronaut.starter.feature.dependencies
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
-import io.micronaut.starter.build.gradle.GradleBuild
-import io.micronaut.starter.build.maven.MavenBuild
-import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
+import java.util.regex.Pattern
+
 class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
     @Override
     Map<String, Object> getConfiguration() {
         ['spec.name': 'DependenciesFeatureSpec']
@@ -50,9 +45,9 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
                 .render()
 
         then:
-        template.contains('testImplementation("org.gebish:geb-junit5:4.0")')
-        template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-firefox-driver:3.141.59")')
-        template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:3.141.59")')
+        template.contains('testImplementation("org.gebish:geb-junit5:')
+        template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-firefox-driver:')
+        template.contains('testRuntimeOnly("org.seleniumhq.selenium:selenium-support:')
 
         where:
         language << Language.values().toList()
@@ -67,7 +62,7 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
                 .render()
 
         then:
-        template.contains('implementation("org.mybatis:mybatis:3.4.6")')
+        template.contains('implementation("org.mybatis:mybatis:')
 
         where:
         language << Language.values().toList()
@@ -82,14 +77,14 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
                 .render()
 
         then:
-        template.contains("""
+        Pattern.compile("""
     <dependency>
-      <groupId>org.mybatis</groupId>
+      <groupId>org\\.mybatis</groupId>
       <artifactId>mybatis</artifactId>
-      <version>3.4.6</version>
+      <version>.*?</version>
       <scope>compile</scope>
     </dependency>
-""")
+""").matcher(template).find()
 
         where:
         language << Language.values().toList()
@@ -105,43 +100,43 @@ class DependenciesFeatureSpec extends ApplicationContextSpec implements CommandO
 
         then:
         if (language == Language.GROOVY) {
-            assert template.contains("""
+            assert Pattern.compile("""
     <dependency>
-      <groupId>org.gebish</groupId>
+      <groupId>org\\.gebish</groupId>
       <artifactId>geb-spock</artifactId>
-      <version>4.0</version>
+      <version>.*?</version>
       <scope>test</scope>
     </dependency>
-""")
+""").matcher(template).find()
         } else {
-            assert template.contains("""
+            assert Pattern.compile("""
     <dependency>
-      <groupId>org.gebish</groupId>
+      <groupId>org\\.gebish</groupId>
       <artifactId>geb-junit5</artifactId>
-      <version>4.0</version>
+      <version>.*?</version>
       <scope>test</scope>
     </dependency>
-""")
+""").matcher(template).find()
         }
 
         and:
-        template.contains("""
+        Pattern.compile("""
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
+      <groupId>org\\.seleniumhq\\.selenium</groupId>
       <artifactId>selenium-firefox-driver</artifactId>
-      <version>3.141.59</version>
+      <version>.*?</version>
       <scope>test</scope>
     </dependency>
-""")
+""").matcher(template).find()
         and:
-        template.contains("""
+        Pattern.compile("""
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
+      <groupId>org\\.seleniumhq\\.selenium</groupId>
       <artifactId>selenium-support</artifactId>
-      <version>3.141.59</version>
+      <version>.*?</version>
       <scope>test</scope>
     </dependency>
-""")
+""").matcher(template).find()
 
         where:
         language << Language.values().toList()

@@ -147,7 +147,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         e.message == 'Google Cloud Function needs at least JDK 11'
 
         where:
-        jdkVersion << [JdkVersion.JDK_8, JdkVersion.JDK_9, JdkVersion.JDK_10]
+        jdkVersion << [JdkVersion.JDK_8]
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {

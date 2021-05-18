@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,12 +24,17 @@ import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 
 import javax.inject.Singleton;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 @Singleton
@@ -67,6 +72,20 @@ public class Maven implements BuildFeature {
                 mavenBuild
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
+
+        if (generatorContext.getFeatures().language().isKotlin() && generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
+            generatorContext.addTemplate("mvnJvmConfig", new Template() {
+                @Override
+                public String getPath() {
+                    return ".mvn/jvm.config";
+                }
+
+                @Override
+                public void write(OutputStream outputStream) throws IOException {
+                    outputStream.write("--illegal-access=permit\n".getBytes(StandardCharsets.UTF_8));
+                }
+            });
+        }
     }
 
     @Override

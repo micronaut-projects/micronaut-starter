@@ -24,7 +24,7 @@ Run `curl https://launch.micronaut.io` for more information on how to use the AP
 
 If you prefer a browser based user interface you can visit [Micronaut Launch](https://micronaut.io/launch).
 
-The user interface is [written in React](https://github.com/micronaut-projects/static-website/tree/master/main/src/main/js/launch) and is a static single page application that simply interacts with the https://launch.micronaut.io API.
+The user interface is [written in React](https://github.com/micronaut-projects/micronaut-starter-ui/tree/master/main/src/main/js/launch) and is a static single page application that simply interacts with the https://launch.micronaut.io API.
 
 ## API
 
