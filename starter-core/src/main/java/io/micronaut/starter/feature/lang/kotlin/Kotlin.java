@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -55,7 +56,8 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBuildProperties().put("kotlinVersion", "1.4.32");
+        Coordinate coordinate = generatorContext.resolveCoordinate("kotlin-bom");
+        generatorContext.getBuildProperties().put("kotlinVersion", coordinate.getVersion());
         Dependency.Builder kotlin = Dependency.builder()
                 .groupId("org.jetbrains.kotlin")
                 .compile()
