@@ -19,10 +19,10 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.cli.CodeGenConfig;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.cli.CodeGenConfig;
+import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.feature.picocli.lang.groovy.PicocliGroovyApplication;
 import io.micronaut.starter.feature.picocli.lang.java.PicocliJavaApplication;
 import io.micronaut.starter.feature.picocli.lang.kotlin.PicocliKotlinApplication;
@@ -37,6 +37,7 @@ import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+
 import static io.micronaut.starter.feature.picocli.test.PicocliTestFeature.PATH;
 
 @CommandLine.Command(name = "create-command", description = "Creates a CLI command")

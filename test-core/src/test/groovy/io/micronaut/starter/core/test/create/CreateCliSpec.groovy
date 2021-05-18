@@ -1,10 +1,10 @@
 package io.micronaut.starter.core.test.create
 
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.test.CommandSpec
-import io.micronaut.starter.test.LanguageBuildCombinations
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.test.CommandSpec
+import io.micronaut.starter.test.LanguageBuildCombinations
 import spock.lang.Retry
 import spock.lang.Unroll
 
