@@ -31,7 +31,7 @@ class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture 
 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
-        template.contains("""
+        template.contains('''\
 sourceSets {
     main {
         rocker {
@@ -39,7 +39,7 @@ sourceSets {
         }
     }
 }
-""")
+''')
 
         when:
         String pluginId = 'com.fizzed.rocker'

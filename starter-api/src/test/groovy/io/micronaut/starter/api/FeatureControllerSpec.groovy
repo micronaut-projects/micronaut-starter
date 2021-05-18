@@ -1,6 +1,5 @@
 package io.micronaut.starter.api
 
-
 import io.micronaut.context.i18n.ResourceBundleMessageSource
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.annotation.Get
@@ -15,6 +14,7 @@ import javax.inject.Singleton
 
 @MicronautTest
 class FeatureControllerSpec extends Specification {
+
     @Inject
     ApplicationTypeClient client
 

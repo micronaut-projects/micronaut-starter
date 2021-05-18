@@ -4,6 +4,8 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
 
+import java.util.regex.Pattern
+
 class Log4j2Spec extends ApplicationContextSpec {
 
     void "org.apache.logging.log4j dependencies are present for log4j2 feature and build gradle"() {
@@ -13,9 +15,9 @@ class Log4j2Spec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.13.2")')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-api:2.13.2")')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.13.2")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-core')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-api')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl')
     }
 
     void "org.apache.logging.log4j dependencies are present for log4j2 feature and build maven"() {
@@ -25,29 +27,29 @@ class Log4j2Spec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains("""
+        Pattern.compile("""
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
+      <groupId>org\\.apache\\.logging\\.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.2</version>
+      <version>.*?</version>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+""").matcher(template).find()
+        Pattern.compile("""
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
+      <groupId>org\\.apache\\.logging\\.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.13.2</version>
+      <version>.*?</version>
       <scope>runtime</scope>
     </dependency>
-""")
-        template.contains("""
+""").matcher(template).find()
+        Pattern.compile("""
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
+      <groupId>org\\.apache\\.logging\\.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.13.2</version>
+      <version>.*?</version>
       <scope>runtime</scope>
     </dependency>
-""")
+""").matcher(template).find()
     }
 }

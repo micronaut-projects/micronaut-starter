@@ -7,7 +7,6 @@ import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import spock.lang.IgnoreIf
 import spock.lang.Unroll
 
 class DekorateSpec extends ApplicationContextSpec implements CommandOutputFixture {
