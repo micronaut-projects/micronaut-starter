@@ -147,6 +147,7 @@ io.micronaut.starter.feature.picocli.test
 io.micronaut.starter.feature.picocli.test.junit
 io.micronaut.starter.feature.picocli.test.kotest
 io.micronaut.starter.feature.picocli.test.spock
+io.micronaut.starter.feature.problemjson
 io.micronaut.starter.feature.reactor
 io.micronaut.starter.feature.redis
 io.micronaut.starter.feature.reloading
