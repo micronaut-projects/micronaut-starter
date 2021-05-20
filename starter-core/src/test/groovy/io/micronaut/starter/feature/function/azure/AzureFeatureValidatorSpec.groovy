@@ -1,6 +1,8 @@
 package io.micronaut.starter.feature.function.azure
 
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -29,6 +31,9 @@ class AzureFeatureValidatorSpec extends Specification {
         noExceptionThrown()
 
         where:
-        [javaVersion, feature] << [JdkVersion.values(), [new AzureHttpFunction(), new AzureRawFunction()]].combinations()
+        [javaVersion, feature] << [
+                JdkVersion.values(),
+                [new AzureHttpFunction(new DefaultCoordinateResolver()), new AzureRawFunction(new DefaultCoordinateResolver(), new AzureHttpFunction(new DefaultCoordinateResolver()))]
+        ].combinations()
     }
 }
