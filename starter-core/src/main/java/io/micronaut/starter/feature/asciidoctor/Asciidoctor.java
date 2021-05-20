@@ -72,7 +72,6 @@ public class Asciidoctor implements Feature {
             coordinateResolver.resolve(mavenPluginArtifactId)
                     .ifPresent(coordinate -> props.put("azure.functions.maven.plugin.version", coordinate.getVersion()));
 
-            props.put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
             props.put("asciidoctorj.version", "2.2.0");
             props.put("asciidoctorj.diagram.version", "2.0.1");
             props.put("jruby.version", "9.2.11.1");
