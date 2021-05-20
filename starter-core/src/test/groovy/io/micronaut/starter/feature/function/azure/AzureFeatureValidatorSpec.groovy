@@ -29,6 +29,10 @@ class AzureFeatureValidatorSpec extends Specification {
         noExceptionThrown()
 
         where:
-        [javaVersion, feature] << [JdkVersion.values(), [new AzureHttpFunction(), new AzureRawFunction()]].combinations()
+        [javaVersion, feature] << [supportedVersionsByAzureFunction(), [new AzureHttpFunction(), new AzureRawFunction()]].combinations()
+    }
+
+    static List<JdkVersion> supportedVersionsByAzureFunction() {
+        [JdkVersion.JDK_8, JdkVersion.JDK_11]
     }
 }

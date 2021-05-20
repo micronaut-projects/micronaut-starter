@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;

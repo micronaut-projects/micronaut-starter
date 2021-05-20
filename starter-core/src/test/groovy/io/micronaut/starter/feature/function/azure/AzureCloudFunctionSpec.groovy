@@ -13,8 +13,27 @@ import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Unroll
-    void "#jdkVersion supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    @Unroll("#jdkVersion not supported for #feature")
+    void "verify for not supported JDK Versions by azure-function an IllegalArgumentException is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+        when:
+        generate(
+                applicationType,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                [feature],
+        )
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        [applicationType, jdkVersion, feature] << [
+                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
+                ((JdkVersion.values() as List<JdkVersion>) - AzureFeatureValidatorSpec.supportedVersionsByAzureFunction()) as List<JdkVersion>,
+                ['azure-function']
+        ].combinations()
+    }
+
+    @Unroll("#jdkVersion supported for #feature")
+    void "verify for supported JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
         generate(
                 applicationType,
@@ -27,7 +46,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                ((JdkVersion.values() as List<JdkVersion>) - [JdkVersion.JDK_8]) as List<JdkVersion>,
+                AzureFeatureValidatorSpec.supportedVersionsByAzureFunction(),
                 ['azure-function']
         ].combinations()
     }
