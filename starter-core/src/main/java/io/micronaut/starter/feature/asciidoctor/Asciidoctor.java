@@ -71,10 +71,12 @@ public class Asciidoctor implements Feature {
             BuildProperties props = generatorContext.getBuildProperties();
             coordinateResolver.resolve(mavenPluginArtifactId)
                     .ifPresent(coordinate -> props.put("azure.functions.maven.plugin.version", coordinate.getVersion()));
-
-            props.put("asciidoctorj.version", "2.2.0");
-            props.put("asciidoctorj.diagram.version", "2.0.1");
-            props.put("jruby.version", "9.2.11.1");
+            coordinateResolver.resolve("asciidoctorj")
+                    .ifPresent(coordinate -> props.put("asciidoctorj.version", coordinate.getVersion()));
+            coordinateResolver.resolve("asciidoctorj-diagram")
+                    .ifPresent(coordinate -> props.put("asciidoctorj.diagram.version", coordinate.getVersion()));
+            coordinateResolver.resolve("jruby")
+                    .ifPresent(coordinate -> props.put("jruby.version", coordinate.getVersion()));
 
             generatorContext.addBuildPlugin(MavenPlugin.builder()
                     .artifactId(mavenPluginArtifactId)
