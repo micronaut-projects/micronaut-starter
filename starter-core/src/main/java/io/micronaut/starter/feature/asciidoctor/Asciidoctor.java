@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
@@ -32,6 +34,12 @@ import javax.inject.Singleton;
 
 @Singleton
 public class Asciidoctor implements Feature {
+
+    private final CoordinateResolver coordinateResolver;
+
+    public Asciidoctor(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @Override
     public String getName() {
@@ -59,11 +67,18 @@ public class Asciidoctor implements Feature {
                     .build());
 
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
-            generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
-            generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
-            generatorContext.getBuildProperties().put("jruby.version", "9.2.11.1");
+            String mavenPluginArtifactId = "asciidoctor-maven-plugin";
+            BuildProperties props = generatorContext.getBuildProperties();
+            coordinateResolver.resolve(mavenPluginArtifactId)
+                    .ifPresent(coordinate -> props.put("azure.functions.maven.plugin.version", coordinate.getVersion()));
+
+            props.put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
+            props.put("asciidoctorj.version", "2.2.0");
+            props.put("asciidoctorj.diagram.version", "2.0.1");
+            props.put("jruby.version", "9.2.11.1");
+
             generatorContext.addBuildPlugin(MavenPlugin.builder()
+                    .artifactId(mavenPluginArtifactId)
                     .extension(new RockerWritable(asciidocMavenPlugin.template()))
                     .build());
         }

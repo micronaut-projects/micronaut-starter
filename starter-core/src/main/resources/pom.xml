@@ -54,6 +54,11 @@
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
+            <artifactId>asciidoctor-maven-plugin</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctor-gradle-jvm</artifactId>
             <version>3.3.2</version>
         </dependency>
