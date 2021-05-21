@@ -70,7 +70,7 @@ public class Asciidoctor implements Feature {
             String mavenPluginArtifactId = "asciidoctor-maven-plugin";
             BuildProperties props = generatorContext.getBuildProperties();
             coordinateResolver.resolve(mavenPluginArtifactId)
-                    .ifPresent(coordinate -> props.put("azure.functions.maven.plugin.version", coordinate.getVersion()));
+                    .ifPresent(coordinate -> props.put("asciidoctor.maven.plugin.version", coordinate.getVersion()));
             coordinateResolver.resolve("asciidoctorj")
                     .ifPresent(coordinate -> props.put("asciidoctorj.version", coordinate.getVersion()));
             coordinateResolver.resolve("asciidoctorj-diagram")
