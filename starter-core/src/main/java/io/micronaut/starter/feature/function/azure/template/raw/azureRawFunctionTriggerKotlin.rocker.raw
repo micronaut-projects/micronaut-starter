@@ -21,7 +21,7 @@ import java.util.Optional
 
 class Function : AzureFunction() {
     @@FunctionName("HttpTrigger")
-    fun echo(
+    fun hello(
         @@HttpTrigger(
             name = "req",
             methods = [HttpMethod.GET],

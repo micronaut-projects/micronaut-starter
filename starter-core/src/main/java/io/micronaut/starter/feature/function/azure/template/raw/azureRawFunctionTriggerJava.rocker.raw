@@ -21,7 +21,7 @@ import java.util.Optional;
 
 public class Function extends AzureFunction {
     @@FunctionName("HttpTrigger")
-    public HttpResponseMessage echo(
+    public HttpResponseMessage hello(
             @@HttpTrigger(
                     name = "req",
                     methods = {HttpMethod.GET},
