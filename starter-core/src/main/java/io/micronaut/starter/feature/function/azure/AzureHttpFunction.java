@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
@@ -34,6 +35,10 @@ import javax.inject.Singleton;
 
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
+
+    public AzureHttpFunction(CoordinateResolver coordinateResolver) {
+        super(coordinateResolver);
+    }
 
     @NonNull
     @Override

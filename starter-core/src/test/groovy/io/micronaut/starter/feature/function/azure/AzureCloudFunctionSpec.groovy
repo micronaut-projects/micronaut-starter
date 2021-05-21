@@ -147,7 +147,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     @Unroll
-    void 'test gradle azure function feature for language=#language - maven'() {
+    void 'test azure function feature for language=#language - maven'() {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -158,7 +158,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         def readme = output["README.md"]
 
         then:
-        build.contains('<artifactId>azure-functions-maven-plugin</artifactId>')
+        build.count('<artifactId>azure-functions-maven-plugin</artifactId>') == 1
         build.contains('<artifactId>azure-functions-java-library</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
         !build.contains("<artifactId>maven-shade-plugin</artifactId>")
