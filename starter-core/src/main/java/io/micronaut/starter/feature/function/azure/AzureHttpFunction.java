@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionJavaJunit;
@@ -34,6 +35,10 @@ import javax.inject.Singleton;
 
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
+
+    public AzureHttpFunction(CoordinateResolver coordinateResolver) {
+        super(coordinateResolver);
+    }
 
     @NonNull
     @Override

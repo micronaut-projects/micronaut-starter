@@ -48,7 +48,6 @@ class MavenPackageSpec extends CommandSpec {
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
     }
 
-
     @Unroll
     @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     void 'test maven Docker Native packaging for #lang'(Language lang) {

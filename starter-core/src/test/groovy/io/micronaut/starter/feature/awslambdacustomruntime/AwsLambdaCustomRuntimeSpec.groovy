@@ -141,7 +141,6 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         description = applicationType.name
     }
 
-
     void "aws-lambda-custom-runtime supports #description application type"() {
         expect:
         awsLambdaCustomRuntime.supports(applicationType)

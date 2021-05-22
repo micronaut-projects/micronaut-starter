@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.asciidoctor;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.Category;
@@ -32,6 +34,12 @@ import javax.inject.Singleton;
 
 @Singleton
 public class Asciidoctor implements Feature {
+
+    private final CoordinateResolver coordinateResolver;
+
+    public Asciidoctor(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @Override
     public String getName() {
@@ -59,11 +67,19 @@ public class Asciidoctor implements Feature {
                     .build());
 
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put("asciidoctor.maven.plugin.version", "2.0.0-RC.1");
-            generatorContext.getBuildProperties().put("asciidoctorj.version", "2.2.0");
-            generatorContext.getBuildProperties().put("asciidoctorj.diagram.version", "2.0.1");
-            generatorContext.getBuildProperties().put("jruby.version", "9.2.11.1");
+            String mavenPluginArtifactId = "asciidoctor-maven-plugin";
+            BuildProperties props = generatorContext.getBuildProperties();
+            coordinateResolver.resolve(mavenPluginArtifactId)
+                    .ifPresent(coordinate -> props.put("asciidoctor.maven.plugin.version", coordinate.getVersion()));
+            coordinateResolver.resolve("asciidoctorj")
+                    .ifPresent(coordinate -> props.put("asciidoctorj.version", coordinate.getVersion()));
+            coordinateResolver.resolve("asciidoctorj-diagram")
+                    .ifPresent(coordinate -> props.put("asciidoctorj.diagram.version", coordinate.getVersion()));
+            coordinateResolver.resolve("jruby")
+                    .ifPresent(coordinate -> props.put("jruby.version", coordinate.getVersion()));
+
             generatorContext.addBuildPlugin(MavenPlugin.builder()
+                    .artifactId(mavenPluginArtifactId)
                     .extension(new RockerWritable(asciidocMavenPlugin.template()))
                     .build());
         }

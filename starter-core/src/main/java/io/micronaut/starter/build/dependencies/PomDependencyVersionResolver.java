@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 public class PomDependencyVersionResolver implements CoordinateResolver {
 
     private static final String NODE_NAME_TEXT = "#text";
-    private Map<String, Coordinate> coordinates;
+    private final Map<String, Coordinate> coordinates;
 
     public PomDependencyVersionResolver(ResourceResolver resourceResolver) {
         Map<String, Coordinate> coordinates = new HashMap<>();
@@ -55,6 +55,7 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
                     String groupId = null;
                     String artifactId = null;
                     String version = null;
+                    boolean pom = false;
                     for (int x = 0; x < childNodes.getLength(); x++) {
                         Node child = childNodes.item(x);
                         if (child.getNodeName().equals("version")) {
@@ -72,9 +73,20 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
                                 artifactId = valueOfNode(child).get();
                             }
                         }
+                        if (child.getNodeName().equals("type")) {
+                            if (valueOfNode(child).isPresent()) {
+                                pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
+                            }
+                        }
                     }
+
                     if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
-                        DependencyCoordinate dependencyCoordinate = Dependency.builder().groupId(groupId).artifactId(artifactId).version(version).buildCoordinate();
+                        DependencyCoordinate dependencyCoordinate = Dependency.builder()
+                                .groupId(groupId)
+                                .artifactId(artifactId)
+                                .version(version)
+                                .pom(pom)
+                                .buildCoordinate();
                         coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
                     }
                 }
@@ -110,4 +122,8 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
         return Optional.empty();
     }
 
+    @NonNull
+    public Map<String, Coordinate> getCoordinates() {
+        return coordinates;
+    }
 }

@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,6 +32,7 @@ public class GradlePlugin implements BuildPlugin {
     private final String version;
     private final String artifactId;
     private final Writable extension;
+    private final Writable settingsExtension;
     private final boolean requiresLookup;
     private final int order;
 
@@ -39,12 +40,14 @@ public class GradlePlugin implements BuildPlugin {
                         @Nullable String version,
                         @Nullable String artifactId,
                         @Nullable Writable extension,
+                        @Nullable Writable settingsExtension,
                         boolean requiresLookup,
                         int order) {
         this.id = id;
         this.version = version;
         this.artifactId = artifactId;
         this.extension = extension;
+        this.settingsExtension = settingsExtension;
         this.requiresLookup = requiresLookup;
         this.order = order;
     }
@@ -71,6 +74,11 @@ public class GradlePlugin implements BuildPlugin {
         return extension;
     }
 
+    @Nullable
+    public Writable getSettingsExtension() {
+        return this.settingsExtension;
+    }
+
     @Override
     public boolean requiresLookup() {
         return requiresLookup;
@@ -80,7 +88,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(id, coordinate.getVersion(), null, extension, false, order);
+        return new GradlePlugin(id, coordinate.getVersion(), null, extension, settingsExtension, false, order);
     }
 
     @Override
@@ -110,6 +118,7 @@ public class GradlePlugin implements BuildPlugin {
         private String artifactId;
         private String version;
         private Writable extension;
+        private Writable settingsExtension;
         private boolean requiresLookup;
         private int order = 0;
 
@@ -141,13 +150,19 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         @NonNull
+        public GradlePlugin.Builder settingsExtension(@Nullable Writable settingsExtension) {
+            this.settingsExtension = settingsExtension;
+            return this;
+        }
+
+        @NonNull
         public GradlePlugin.Builder order(int order) {
             this.order = order;
             return this;
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(id, version, artifactId, extension, requiresLookup, order);
+            return new GradlePlugin(id, version, artifactId, extension, settingsExtension, requiresLookup, order);
         }
     }
 

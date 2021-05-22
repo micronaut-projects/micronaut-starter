@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,14 +26,31 @@ import java.util.Objects;
 
 public class MavenPlugin implements BuildPlugin {
 
+    private String artifactId;
     private final Writable extension;
     private final int order;
 
-    public MavenPlugin(Writable extension,
-                       int order) {
-
+    public MavenPlugin(String artifactId, Writable extension, int order) {
+        this.artifactId = artifactId;
         this.extension = extension;
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MavenPlugin that = (MavenPlugin) o;
+        return artifactId.equals(that.artifactId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artifactId);
     }
 
     @Override
@@ -67,8 +84,14 @@ public class MavenPlugin implements BuildPlugin {
         return extension;
     }
 
+    @Nullable
+    public String getArtifactId() {
+        return artifactId;
+    }
+
     public static final class Builder {
 
+        private String artifactId;
         private Writable extension;
         private int order = 0;
 
@@ -88,9 +111,16 @@ public class MavenPlugin implements BuildPlugin {
         }
 
         @NonNull
+        public MavenPlugin.Builder artifactId(String artifactId) {
+            this.artifactId = artifactId;
+            return this;
+        }
+
+        @NonNull
         public MavenPlugin build() {
+            Objects.requireNonNull(artifactId, "The artifact id must be set");
             Objects.requireNonNull(extension, "Maven plugins require an extension");
-            return new MavenPlugin(extension, order);
+            return new MavenPlugin(artifactId, extension, order);
         }
     }
 }

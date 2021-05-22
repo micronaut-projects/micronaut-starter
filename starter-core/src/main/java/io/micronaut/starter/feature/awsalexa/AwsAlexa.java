@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,60 +21,54 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJava;
-import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlin;
-import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJava;
-import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlin;
-import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlin;
-import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerJava;
-import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlin;
-import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerJava;
-import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlin;
-import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerJava;
-import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovy;
-import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlin;
-
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKoTest;
-
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKoTest;
-
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.fallbackIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKoTest;
-
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.helpIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKoTest;
-
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.launchRequestIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKoTest;
-
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.sessionEndedRequestIntentHandlerKotlinJunit;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerGroovySpock;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJava;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJunit;
-import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKoTest;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlin;
+import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;

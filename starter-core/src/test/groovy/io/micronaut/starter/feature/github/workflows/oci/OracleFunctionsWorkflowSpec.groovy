@@ -73,7 +73,6 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         buildTool << BuildTool.values()
     }
 
-
     @Unroll
     void 'test http function pom.xml configuration for #feature'(String feature) {
         when:

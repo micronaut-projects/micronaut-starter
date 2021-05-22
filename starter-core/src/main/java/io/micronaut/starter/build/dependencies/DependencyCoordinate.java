@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,27 +30,34 @@ public class DependencyCoordinate implements Coordinate, Ordered {
     @Nullable
     private final String version;
     private final int order;
+    private final boolean pom;
 
     public DependencyCoordinate(Dependency dependency) {
         this(dependency, false);
     }
 
     public DependencyCoordinate(Dependency dependency, boolean showVersionProperty) {
-        this.groupId = dependency.getGroupId();
-        this.artifactId = dependency.getArtifactId();
+        groupId = dependency.getGroupId();
+        artifactId = dependency.getArtifactId();
         if (showVersionProperty && dependency.getVersionProperty() != null) {
-            this.version = "${" + dependency.getVersionProperty() + "}";
+            version = "${" + dependency.getVersionProperty() + "}";
         } else {
-            this.version = dependency.getVersion();
+            version = dependency.getVersion();
         }
-        this.order = dependency.getOrder();
+        order = dependency.getOrder();
+        pom = dependency.isPom();
     }
 
-    public DependencyCoordinate(String groupId, String artifactId, @Nullable String version, int order) {
+    public DependencyCoordinate(String groupId,
+                                String artifactId,
+                                @Nullable String version,
+                                int order,
+                                boolean pom) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
         this.order = order;
+        this.pom = pom;
     }
 
     @Override
@@ -77,6 +84,11 @@ public class DependencyCoordinate implements Coordinate, Ordered {
     }
 
     @Override
+    public boolean isPom() {
+        return pom;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -87,13 +99,12 @@ public class DependencyCoordinate implements Coordinate, Ordered {
         DependencyCoordinate that = (DependencyCoordinate) o;
 
         return Objects.equals(getGroupId(), that.getGroupId()) &&
-                Objects.equals(getArtifactId(), that.getArtifactId());
+                Objects.equals(getArtifactId(), that.getArtifactId()) &&
+                isPom() == that.isPom();
     }
 
     @Override
     public int hashCode() {
-        int result = getGroupId().hashCode();
-        result = 31 * result + getArtifactId().hashCode();
-        return result;
+        return Objects.hash(getGroupId(), getArtifactId(), isPom());
     }
 }

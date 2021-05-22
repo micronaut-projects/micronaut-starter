@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,10 +17,21 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Scope {
+
+    public static final Scope ANNOTATION_PROCESSOR = new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
+    public static final Scope COMPILE = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
+    public static final Scope COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION));
+    public static final Scope RUNTIME = new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME));
+    public static final Scope TEST = new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
+    public static final Scope TEST_ANNOTATION_PROCESSOR = new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
+    public static final Scope TEST_COMPILE_ONLY = new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION));
+    public static final Scope TEST_RUNTIME = new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME));
 
     @NonNull
     private Source source;
@@ -28,7 +39,8 @@ public class Scope {
     @NonNull
     private List<Phase> phases;
 
-    public Scope(@NonNull Source source, @NonNull List<Phase> phases) {
+    public Scope(@NonNull Source source,
+                 @NonNull List<Phase> phases) {
         this.source = source;
         this.phases = phases;
     }

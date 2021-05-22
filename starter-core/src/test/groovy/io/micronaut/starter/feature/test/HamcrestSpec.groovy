@@ -2,7 +2,6 @@ package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -24,7 +23,7 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         readme
-        readme.contains("http://hamcrest.org/JavaHamcrest/")
+        readme.contains("https://hamcrest.org/JavaHamcrest/")
     }
 
     void "test hamcrest belongs to Dev Tools category"() {

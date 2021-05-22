@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -39,11 +40,16 @@ public class GradleDependency extends DependencyCoordinate {
     };
 
     @NonNull
-    private GradleConfiguration gradleConfiguration;
+    private final GradleConfiguration gradleConfiguration;
 
-    public GradleDependency(@NonNull Dependency dependency, @NonNull GeneratorContext generatorContext) {
+    public GradleDependency(@NonNull Dependency dependency,
+                            @NonNull GeneratorContext generatorContext) {
         super(dependency);
-        this.gradleConfiguration = GradleConfiguration.of(dependency.getScope(), generatorContext.getLanguage(), generatorContext.getTestFramework()).orElseThrow(() ->
+        gradleConfiguration = GradleConfiguration.of(
+                dependency.getScope(),
+                generatorContext.getLanguage(),
+                generatorContext.getTestFramework()
+        ).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
     }
 
@@ -77,7 +83,12 @@ public class GradleDependency extends DependencyCoordinate {
 
     @NonNull
     public String toSnippet() {
-        return gradleConfiguration.getConfigurationName() + "(\"" + getGroupId() + ":" + getArtifactId() +
-                (getVersion() != null ? (":" + getVersion()) : "") + "\")";
+        String snippet = gradleConfiguration.getConfigurationName();
+        if (isPom()) {
+            snippet += " platform";
+        }
+        snippet += "(\"" + getGroupId() + ':' + getArtifactId() +
+                (getVersion() != null ? (':' + getVersion()) : "") + "\")";
+        return snippet;
     }
 }
