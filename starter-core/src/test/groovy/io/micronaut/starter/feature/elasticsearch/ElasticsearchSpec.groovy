@@ -76,8 +76,8 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
 
         then:
         template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:1.7.30")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-api:2.13.3")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.13.3")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-api:2.14.1")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.14.1")')
 
         where:
         language << Language.values().toList() - Language.GROOVY
