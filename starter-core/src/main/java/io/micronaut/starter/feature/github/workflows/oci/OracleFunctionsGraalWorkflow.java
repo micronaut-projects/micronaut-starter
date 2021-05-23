@@ -30,7 +30,7 @@ import javax.inject.Singleton;
 @Singleton
 public class OracleFunctionsGraalWorkflow extends AbstractOracleFunctionsWorkflow {
 
-    public static final String NAME = "github-workflow-oracle-oci-functions-graalvm";
+    public static final String NAME = "github-workflow-oracle-cloud-functions-graalvm";
 
     public OracleFunctionsGraalWorkflow(OracleRawFunction oracleRawFunction) {
         super(oracleRawFunction, true);
@@ -54,6 +54,6 @@ public class OracleFunctionsGraalWorkflow extends AbstractOracleFunctionsWorkflo
 
     @Override
     public String getWorkflowFileName(GeneratorContext generatorContext) {
-        return "oci-functions-graalvm.yml";
+        return "oracle-cloud-functions-graalvm.yml";
     }
 }
