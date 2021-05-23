@@ -105,7 +105,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.13.3</version>
+      <version>2.14.1</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -113,7 +113,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.3</version>
+      <version>2.14.1</version>
       <scope>compile</scope>
     </dependency>
 """)
