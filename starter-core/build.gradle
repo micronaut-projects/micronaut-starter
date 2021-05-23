@@ -16,7 +16,7 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
-    api "io.github.java-diff-utils:java-diff-utils:4.9"
+    api "io.github.java-diff-utils:java-diff-utils:4.10"
     api "org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r"
     implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.1'

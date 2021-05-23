@@ -15,12 +15,11 @@
  */
 package io.micronaut.starter.build.maven;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.build.Property;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
