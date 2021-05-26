@@ -1,20 +1,19 @@
 package io.micronaut.starter.feature.lang.kotlin
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.awsalexa.AwsAlexa
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.util.VersionInfo
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixture {
+class KotlinApplicationSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
     KotlinApplication kotlinApplication = beanContext.getBean(KotlinApplication)
@@ -36,8 +35,6 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         def pom = output['pom.xml']
 
         then:
-
-
         if (buildTool.isGradle()) {
             assert buildGradle
             assert buildGradle.contains('mainClass.set("example.micronaut.ApplicationKt")')
@@ -83,13 +80,32 @@ class KotlinApplicationSpec extends BeanContextSpec implements CommandOutputFixt
         description = applicationType.name
     }
 
+    void "test kotlin app with maven defines kotlinVersion build property"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .render()
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, 'kotlinVersion')
+
+        then:
+        semanticVersionOptional.isPresent()
+    }
+
     void "test kotlin app gradle build plugins"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(Language.KOTLIN)
                 .render()
+        String pluginId = 'org.jetbrains.kotlin.jvm'
+        String applyPlugin = 'id("' + pluginId + '") version "'
 
         then:
-        template.contains('id("org.jetbrains.kotlin.jvm") version "1.4.32"')
+        template.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, template).map(SemanticVersion::new)
+
+        then:
+        semanticVersionOptional.isPresent()
     }
 }

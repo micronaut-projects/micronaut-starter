@@ -19,6 +19,7 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
 import io.micronaut.starter.feature.other.ShadePlugin;
@@ -33,7 +34,8 @@ import java.util.Optional;
 public class AzureRawFunction extends AbstractAzureFunction {
     private final AzureHttpFunction httpFunction;
 
-    public AzureRawFunction(AzureHttpFunction httpFunction) {
+    public AzureRawFunction(CoordinateResolver coordinateResolver, AzureHttpFunction httpFunction) {
+        super(coordinateResolver);
         this.httpFunction = httpFunction;
     }
 

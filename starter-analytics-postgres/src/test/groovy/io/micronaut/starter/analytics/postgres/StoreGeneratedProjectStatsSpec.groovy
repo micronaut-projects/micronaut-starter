@@ -1,7 +1,7 @@
 package io.micronaut.starter.analytics.postgres
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.env.Environment
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.data.model.Pageable
 import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.data.runtime.config.SchemaGenerate
@@ -31,23 +31,21 @@ import java.util.concurrent.CompletableFuture
         transactional = false,
         environments = Environment.GOOGLE_COMPUTE)
 class StoreGeneratedProjectStatsSpec extends Specification implements TestPropertyProvider {
+
     @Shared @AutoCleanup PostgreSQLContainer postgres = new PostgreSQLContainer<>("postgres:10")
             .withDatabaseName("test-database")
             .withUsername("test")
             .withPassword("test")
 
-
     @Override
     Map<String, String> getProperties() {
         postgres.start()
 
-        return [
-                "datasources.default.url":postgres.getJdbcUrl(),
-                "datasources.default.username":postgres.getUsername(),
-                "datasources.default.password":postgres.getPassword(),
-                "datasources.default.schema-generate": SchemaGenerate.CREATE.name(),
-                "datasources.default.dialect": Dialect.POSTGRES.name()
-        ]
+        ["datasources.default.url":postgres.getJdbcUrl(),
+         "datasources.default.username":postgres.getUsername(),
+         "datasources.default.password":postgres.getPassword(),
+         "datasources.default.schema-generate": SchemaGenerate.CREATE.name(),
+         "datasources.default.dialect": Dialect.POSTGRES.name()]
     }
 
     @Inject AnalyticsClient client
@@ -66,10 +64,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         generated.setSelectedFeatures([new SelectedFeature("google-cloud-function")])
 
         when:
-        HttpStatus status = client.applicationGenerated(
-                generated
-        ).get()
-
+        HttpStatus status = client.applicationGenerated(generated).get()
 
         then:
         status == HttpStatus.ACCEPTED

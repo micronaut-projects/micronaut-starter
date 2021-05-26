@@ -18,15 +18,15 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.Property;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.stream.Collectors;
 
 public class MavenBuild {
     private static final Logger LOG = LoggerFactory.getLogger(MavenBuild.class);
@@ -112,6 +112,18 @@ public class MavenBuild {
     @NonNull
     public List<MavenDependency> getDependencies() {
         return dependencies;
+    }
+
+    @NonNull
+    public List<MavenDependency> getDependencies(boolean pom) {
+        return dependencies
+                .stream()
+                .filter(it -> it.isPom() == pom)
+                .collect(Collectors.toList());
+    }
+
+    public boolean hasPomDependency() {
+        return dependencies.stream().anyMatch(Coordinate::isPom);
     }
 
     @NonNull

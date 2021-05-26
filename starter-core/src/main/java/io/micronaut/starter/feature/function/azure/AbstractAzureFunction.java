@@ -21,10 +21,13 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKoTest;
@@ -34,7 +37,10 @@ import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunction
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionTriggerKotlin;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.URLTemplate;
+
+import java.util.Optional;
 
 /**
  * Function impl for Azure.
@@ -45,6 +51,12 @@ import io.micronaut.starter.template.URLTemplate;
 public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements CloudFeature {
 
     public static final String NAME = "azure-function";
+
+    private final CoordinateResolver coordinateResolver;
+
+    public AbstractAzureFunction(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @NonNull
     @Override
@@ -68,36 +80,43 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         ApplicationType type = generatorContext.getApplicationType();
         generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));
         generatorContext.addTemplate("local.settings.json", new URLTemplate("local.settings.json", classLoader.getResource("functions/azure/local.settings.json")));
+        Project project = generatorContext.getProject();
         BuildTool buildTool = generatorContext.getBuildTool();
         if (buildTool.isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.microsoft.azure.azurefunctions")
                     .lookupArtifactId("azure-functions-gradle-plugin")
                     .build());
-        }
-        Project project = generatorContext.getProject();
-        if (buildTool == BuildTool.MAVEN) {
+        } else if (buildTool == BuildTool.MAVEN) {
+            String mavenPluginArtifactId = "azure-functions-maven-plugin";
+            generatorContext.addBuildPlugin(MavenPlugin.builder()
+                    .artifactId(mavenPluginArtifactId)
+                    .extension(new RockerWritable(azureFunctionMavenPlugin.template()))
+                    .build());
             BuildProperties props = generatorContext.getBuildProperties();
-            props.put(
-                    "functionAppName",
-                    project.getName()
-            );
-            props.put(
-                    "functionAppRegion",
-                    "westus"
-            );
-            props.put(
-                    "functionResourceGroup",
-                    "java-functions-group"
-            );
-            props.put(
-                    "stagingDirectory",
-                    "${project.build.directory}/azure-functions/${functionAppName}"
-            );
+            coordinateResolver.resolve(mavenPluginArtifactId)
+                    .ifPresent(coordinate -> props.put("azure.functions.maven.plugin.version", coordinate.getVersion()));
+            props.put("functionAppName", project.getName());
+            props.put("functionResourceGroup", "java-functions-group");
+            props.put("functionAppRegion", "westus");
+            props.put("functionRuntimeOs", "windows");
+            javaVersionValue(generatorContext).ifPresent(value -> props.put("functionRuntimeJavaVersion", value));
+            props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
-
         addFunctionTemplate(generatorContext, project);
         applyFunction(generatorContext, type);
+    }
+
+    @NonNull
+    private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
+        switch (generatorContext.getJdkVersion()) {
+            case JDK_8:
+                return Optional.of("8");
+            case JDK_11:
+                return Optional.of("11");
+            default:
+                return Optional.empty();
+        }
     }
 
     protected void addFunctionTemplate(GeneratorContext generatorContext, Project project) {

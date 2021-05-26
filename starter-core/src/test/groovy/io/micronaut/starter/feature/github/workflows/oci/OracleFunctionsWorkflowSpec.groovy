@@ -39,7 +39,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, jdkVersion),
                 [OracleFunctionsJavaWorkflow.NAME])
-        def workflow = output[".github/workflows/oci-functions.yml"]
+        def workflow = output[".github/workflows/oracle-cloud-functions.yml"]
 
         then:
         workflow
@@ -62,7 +62,7 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_11),
                 [OracleFunctionsGraalWorkflow.NAME])
-        def workflow = output[".github/workflows/oci-functions-graalvm.yml"]
+        def workflow = output[".github/workflows/oracle-cloud-functions-graalvm.yml"]
 
         then:
         workflow
@@ -72,7 +72,6 @@ class OracleFunctionsWorkflowSpec extends BeanContextSpec implements CommandOutp
         where:
         buildTool << BuildTool.values()
     }
-
 
     @Unroll
     void 'test http function pom.xml configuration for #feature'(String feature) {
@@ -155,7 +154,7 @@ dockerBuildNative {
         def output = generate(ApplicationType.DEFAULT,
                 new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
                 [OracleFunctionsGraalWorkflow.NAME])
-        def workflow = output['.github/workflows/oci-functions-graalvm.yml']
+        def workflow = output['.github/workflows/oracle-cloud-functions-graalvm.yml']
 
         then:
         workflow

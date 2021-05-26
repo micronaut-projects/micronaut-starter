@@ -18,8 +18,6 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
 public final class Dependency {
@@ -32,8 +30,17 @@ public final class Dependency {
     private final boolean requiresLookup;
     private final int order;
     private final boolean annotationProcessorPriority;
+    private final boolean pom;
 
-    private Dependency(Scope scope, String groupId, String artifactId, String version, String versionProperty, boolean requiresLookup, boolean annotationProcessorPriority, int order) {
+    private Dependency(Scope scope,
+                       String groupId,
+                       String artifactId,
+                       String version,
+                       String versionProperty,
+                       boolean requiresLookup,
+                       boolean annotationProcessorPriority,
+                       int order,
+                       boolean pom) {
         this.scope = scope;
         this.groupId = groupId;
         this.artifactId = artifactId;
@@ -42,6 +49,7 @@ public final class Dependency {
         this.requiresLookup = requiresLookup;
         this.annotationProcessorPriority = annotationProcessorPriority;
         this.order = order;
+        this.pom = pom;
     }
 
     public Scope getScope() {
@@ -70,6 +78,10 @@ public final class Dependency {
         return order;
     }
 
+    public boolean isPom() {
+        return pom;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -79,7 +91,16 @@ public final class Dependency {
     }
 
     public Dependency resolved(Coordinate coordinate) {
-        return new Dependency(scope, coordinate.getGroupId(), artifactId, coordinate.getVersion(), null, false, annotationProcessorPriority, order);
+        return new Dependency(
+                scope,
+                coordinate.getGroupId(),
+                artifactId,
+                coordinate.getVersion(),
+                null,
+                false,
+                annotationProcessorPriority,
+                order,
+                coordinate.isPom());
     }
 
     public boolean isAnnotationProcessorPriority() {
@@ -117,6 +138,7 @@ public final class Dependency {
         private int order = 0;
         private boolean template = false;
         private boolean annotationProcessorPriority = false;
+        private boolean pom = false;
 
         public Builder scope(@NonNull Scope scope) {
             if (template) {
@@ -128,31 +150,32 @@ public final class Dependency {
         }
 
         public Builder compile() {
-            return scope(new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)));
+            return scope(Scope.COMPILE);
         }
 
         public Builder compileOnly() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION)));
+            return scope(Scope.COMPILE_ONLY);
         }
 
         public Builder runtime() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME)));
+            return scope(Scope.RUNTIME);
         }
 
         public Builder test() {
-            return scope(new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME)));
+            return scope(Scope.TEST);
         }
 
+        @SuppressWarnings("unused")
         public Builder testCompileOnly() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION)));
+            return scope(Scope.TEST_COMPILE_ONLY);
         }
 
         public Builder testRuntime() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME)));
+            return scope(Scope.TEST_RUNTIME);
         }
 
         public Builder annotationProcessor() {
-            return scope(new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING)));
+            return scope(Scope.ANNOTATION_PROCESSOR);
         }
 
         public Builder annotationProcessor(boolean requiresPriority) {
@@ -161,9 +184,10 @@ public final class Dependency {
         }
 
         public Builder testAnnotationProcessor() {
-            return scope(new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING)));
+            return scope(Scope.TEST_ANNOTATION_PROCESSOR);
         }
 
+        @SuppressWarnings("unused")
         public Builder testAnnotationProcessor(boolean requiresPriority) {
             this.annotationProcessorPriority = requiresPriority;
             return testAnnotationProcessor();
@@ -229,6 +253,11 @@ public final class Dependency {
             return this;
         }
 
+        public Builder pom(boolean pom) {
+            this.pom = pom;
+            return this;
+        }
+
         public Dependency build() {
             Objects.requireNonNull(scope, "The dependency scope must be set");
             Objects.requireNonNull(artifactId, "The artifact id must be set");
@@ -247,7 +276,16 @@ public final class Dependency {
         }
 
         private Dependency buildInternal() {
-            return new Dependency(scope, groupId, artifactId, version, versionProperty, requiresLookup, annotationProcessorPriority, order);
+            return new Dependency(
+                    scope,
+                    groupId,
+                    artifactId,
+                    version,
+                    versionProperty,
+                    requiresLookup,
+                    annotationProcessorPriority,
+                    order,
+                    pom);
         }
 
         private Builder copy() {
@@ -262,7 +300,7 @@ public final class Dependency {
                     builder.version(version);
                 }
             }
-            return builder.order(order);
+            return builder.order(order).pom(pom);
         }
     }
 }

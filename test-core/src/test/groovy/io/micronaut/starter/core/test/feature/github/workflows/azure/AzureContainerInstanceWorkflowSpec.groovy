@@ -52,7 +52,6 @@ class AzureContainerInstanceWorkflowSpec extends WorkflowSpec {
     @Shared
     private List<Secret> secrets
 
-
     @Shared
     private BlockingHttpClient httpClient
 
@@ -89,7 +88,6 @@ class AzureContainerInstanceWorkflowSpec extends WorkflowSpec {
         where:
         buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
     }
-
 
     @Unroll
     void "test azure container instance #buildTool workflow"(BuildTool buildTool) {

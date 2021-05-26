@@ -15,13 +15,13 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.CliAvailableFeatures;
 import io.micronaut.starter.application.ContextFactory;
+import io.micronaut.starter.application.generator.ProjectGenerator;
 import picocli.CommandLine;
 
 import java.util.ArrayList;

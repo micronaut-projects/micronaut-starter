@@ -44,7 +44,7 @@ public interface Coordinate {
     String getArtifactId();
 
     @Nullable
-    default String getVersion() {
-        return null;
-    }
+    String getVersion();
+
+    boolean isPom();
 }

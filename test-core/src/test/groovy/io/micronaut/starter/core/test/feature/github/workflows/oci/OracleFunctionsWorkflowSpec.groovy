@@ -17,15 +17,6 @@ import com.oracle.bmc.apigateway.responses.DeleteDeploymentResponse
 import com.oracle.bmc.apigateway.responses.GetDeploymentResponse
 import com.oracle.bmc.apigateway.responses.ListDeploymentsResponse
 import com.oracle.bmc.auth.AuthenticationDetailsProvider
-import io.micronaut.http.HttpResponse
-import io.micronaut.http.client.BlockingHttpClient
-import io.micronaut.http.client.DefaultHttpClientConfiguration
-import io.micronaut.http.client.RxHttpClient
-import io.micronaut.starter.application.Project
-
-import java.time.Duration
-
-import static com.oracle.bmc.auth.SimpleAuthenticationDetailsProvider.SimpleAuthenticationDetailsProviderBuilder
 import com.oracle.bmc.functions.FunctionsInvokeClient
 import com.oracle.bmc.functions.FunctionsManagementClient
 import com.oracle.bmc.functions.model.FunctionSummary
@@ -35,7 +26,12 @@ import com.oracle.bmc.functions.responses.InvokeFunctionResponse
 import com.oracle.bmc.functions.responses.ListFunctionsResponse
 import com.oracle.bmc.util.StreamUtils
 import groovy.util.logging.Slf4j
+import io.micronaut.http.HttpResponse
+import io.micronaut.http.client.BlockingHttpClient
+import io.micronaut.http.client.DefaultHttpClientConfiguration
+import io.micronaut.http.client.RxHttpClient
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow
 import io.micronaut.starter.feature.github.workflows.oci.OracleFunctionsGraalWorkflow
@@ -50,7 +46,10 @@ import spock.lang.Shared
 import spock.lang.Unroll
 
 import java.nio.charset.StandardCharsets
+import java.time.Duration
 import java.util.stream.Collectors
+
+import static com.oracle.bmc.auth.SimpleAuthenticationDetailsProvider.SimpleAuthenticationDetailsProviderBuilder
 
 /**
  * This integration spec contains tests for {@link OracleFunctionsJavaWorkflow} and {@link OracleFunctionsGraalWorkflow}
@@ -165,7 +164,6 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
     }
 
-
     @Unroll
     void "test #buildTool.name java oracle http function workflow"(BuildTool buildTool) {
         given:
@@ -186,7 +184,6 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         where:
         buildTool << [BuildTool.MAVEN, BuildTool.GRADLE]
     }
-
 
     @Unroll
     void "test #buildTool graalvm oracle http function workflow"(BuildTool buildTool) {
@@ -356,10 +353,10 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
 
         if (listFunctionsResponse.getItems().size() != 1) {
             throw new Exception(
-                    "Could not find function with name "
-                            + functionDisplayName
-                            + " in application "
-                            + applicationId)
+                    "Could not find function with name " +
+                            functionDisplayName +
+                            " in application " +
+                            applicationId)
         }
 
         return listFunctionsResponse.getItems().get(0)
