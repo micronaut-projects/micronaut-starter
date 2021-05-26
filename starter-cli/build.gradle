@@ -36,7 +36,7 @@ dependencies {
     implementation "org.yaml:snakeyaml:1.28"
 
     implementation 'org.shredzone.acme4j:acme4j-client:2.11'
-    implementation 'org.shredzone.acme4j:acme4j-utils:2.10'
+    implementation 'org.shredzone.acme4j:acme4j-utils:2.11'
 
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 
