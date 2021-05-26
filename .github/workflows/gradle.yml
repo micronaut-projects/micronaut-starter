@@ -20,6 +20,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
         run: ./gradlew check --refresh-dependencies --continue -x test-core:test -x test-cli:test

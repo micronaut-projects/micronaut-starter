@@ -20,6 +20,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
         run: ./gradlew test-cli:test --refresh-dependencies --parallel --continue
@@ -41,6 +42,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
@@ -62,6 +64,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
@@ -83,6 +86,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.*"
@@ -104,6 +108,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.cloud.*"
@@ -125,6 +130,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
+          distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.buildTool.*"

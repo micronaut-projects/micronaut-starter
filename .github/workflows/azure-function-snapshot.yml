@@ -12,7 +12,8 @@ jobs:
       - name: Setup Java 1.8.x
         uses: actions/setup-java@v2
         with:
-          java-version: '1.8.x'
+          distribution: 'adopt'
+          java-version: '8'
       - name: 'Package Function'
         run: |
           ./gradlew starter-azure-function:azureFunctionsPackage
