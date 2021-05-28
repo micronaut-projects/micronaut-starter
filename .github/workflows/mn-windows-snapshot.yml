@@ -10,8 +10,8 @@ jobs:
       - uses: microsoft/setup-msbuild@v1
       - uses: ayltai/setup-graalvm@v1
         with:
-          java-version: 8
-          graalvm-version: 21.0.0.2
+          java-version: 11
+          graalvm-version: 21.1.0
           native-image: true
       - name: Build JAR File
         shell: powershell
