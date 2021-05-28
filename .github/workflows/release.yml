@@ -3,84 +3,84 @@ on:
   release:
     types: [published]
 jobs:
-  build:
-    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - uses: gradle/wrapper-validation-action@v1
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Set the current release version
-        id: release_version
-        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-      - name: Run pre-release
-        uses: micronaut-projects/github-actions/pre-release@master
-        env:
-          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build All
-        run: ./gradlew micronaut-cli:assemble
-      - name: Publish to Maven Central
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-          GPG_FILE: ${{ secrets.GPG_FILE }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
-      - name: Upload CLI Zip
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_content_type: application/zip
-      - name: Publish to Github Pages
-        if: success()
-        uses: micronaut-projects/github-pages-deploy-action@master
-        env:
-          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          BASE_BRANCH: master
-          BRANCH: gh-pages
-          FOLDER: build/docs
-          VERSION: ${{ steps.release_version.outputs.release_version }}
-      - name: Run post-release
-        if: success()
-        id: post_release
-        continue-on-error: true
-        uses: micronaut-projects/github-actions/post-release@master
-        env:
-          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Back to Micronaut snapshot
-        continue-on-error: true
-        run: |
-          echo "Setting new Micronaut snapshot version"
-          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
-        continue-on-error: true
-        with:
-          commit_message: Back Micronaut version to snapshot
-          commit_user_name: micronaut-build
-          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+#  build:
+#    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - uses: gradle/wrapper-validation-action@v1
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'adopt'
+#          java-version: '8'
+#      - name: Set the current release version
+#        id: release_version
+#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+#      - name: Run pre-release
+#        uses: micronaut-projects/github-actions/pre-release@master
+#        env:
+#          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Build All
+#        run: ./gradlew micronaut-cli:assemble
+#      - name: Publish to Maven Central
+#        env:
+#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+#          GPG_FILE: ${{ secrets.GPG_FILE }}
+#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+#      - name: Upload CLI Zip
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_content_type: application/zip
+#      - name: Publish to Github Pages
+#        if: success()
+#        uses: micronaut-projects/github-pages-deploy-action@master
+#        env:
+#          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#          BASE_BRANCH: master
+#          BRANCH: gh-pages
+#          FOLDER: build/docs
+#          VERSION: ${{ steps.release_version.outputs.release_version }}
+#      - name: Run post-release
+#        if: success()
+#        id: post_release
+#        continue-on-error: true
+#        uses: micronaut-projects/github-actions/post-release@master
+#        env:
+#          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Back to Micronaut snapshot
+#        continue-on-error: true
+#        run: |
+#          echo "Setting new Micronaut snapshot version"
+#          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
+#      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+#        continue-on-error: true
+#        with:
+#          commit_message: Back Micronaut version to snapshot
+#          commit_user_name: micronaut-build
+#          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
-    needs: [build]
+#    needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
@@ -128,7 +128,7 @@ jobs:
   macos:
     name: Release OS X Native CLI
     runs-on: macOS-latest
-    needs: [build]
+#    needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
@@ -176,12 +176,12 @@ jobs:
   windows:
     name: Release Windows Native CLI
     runs-on: windows-latest
-    needs: [build]
+#    needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GH_TOKEN }}    
+          token: ${{ secrets.GH_TOKEN }}
       - uses: ilammy/msvc-dev-cmd@v1.5.0
       - uses: microsoft/setup-msbuild@v1
       - uses: ayltai/setup-graalvm@v1
