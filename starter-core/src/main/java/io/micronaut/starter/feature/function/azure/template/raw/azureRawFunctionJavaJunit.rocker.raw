@@ -17,7 +17,7 @@ public class FunctionTest {
     @@Test
     public void testFunction() throws Exception {
         try (Function function = new Function()) {
-            assertEquals("test", function.echo("test", null));
+            assertEquals("Hello World", function.hello(HttpRequest.builder().build(), null).getBody());
         }
     }
 }

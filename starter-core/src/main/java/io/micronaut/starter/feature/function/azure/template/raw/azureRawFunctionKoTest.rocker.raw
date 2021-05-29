@@ -15,8 +15,8 @@ class FunctionTest : StringSpec({
 
     "test function" {
        Function().use { function ->
-           val response = function.echo("test", null)
-           response shouldBe "test"
+           val response = function.hello(HttpRequest.builder().build(), null).body
+           response shouldBe "Hello World"
         }
     }
 })
