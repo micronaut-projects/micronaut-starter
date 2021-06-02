@@ -1,5 +1,11 @@
 name: Linux Native CLI
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '[1-9]+.[0-9]+.x'
+  pull_request:
+    branches:
+      - '[1-9]+.[0-9]+.x'
 jobs:
   build:
     name: Builds Linux Native CLI
@@ -31,7 +37,7 @@ jobs:
           mkdir -p mn-linux-amd64-snapshot/bin
           mv ./mn mn-linux-amd64-snapshot/bin
           cp ./LICENSE mn-linux-amd64-snapshot/
-          zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot 
+          zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/2.2.x'
         uses: actions/upload-artifact@v2.2.3
