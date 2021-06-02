@@ -22,7 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;

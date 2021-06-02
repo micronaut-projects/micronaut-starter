@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.options.TestFramework;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Junit implements TestFeature {

@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Deploy dockerized application to Oracle Functions from Oracle Container Registry.

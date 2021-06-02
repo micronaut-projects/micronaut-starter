@@ -28,7 +28,7 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class FeatureDiffCommand extends CodeGenCommand {
     @ReflectiveAccess
     @CommandLine.Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
     List<String> features = new ArrayList<>();
-    
+
     private final ProjectGenerator projectGenerator;
     private final FeatureDiffer featureDiffer;
 

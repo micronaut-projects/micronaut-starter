@@ -22,7 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.micrometer.Prometheus;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Adds Dekorate Prometheus support that generates ServiceMonitor resource.

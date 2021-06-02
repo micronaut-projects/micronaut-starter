@@ -25,8 +25,8 @@ import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.options.Language;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

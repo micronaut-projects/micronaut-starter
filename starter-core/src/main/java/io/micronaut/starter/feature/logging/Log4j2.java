@@ -21,7 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.logging.template.log4j2;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Log4j2 implements LoggingFeature {

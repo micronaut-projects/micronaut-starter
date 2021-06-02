@@ -9,7 +9,7 @@ package @project.getPackageName();
 }
 
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @@Singleton
 public class @project.getClassName() extends @project.getClassName()Grpc.@project.getClassName()ImplBase {

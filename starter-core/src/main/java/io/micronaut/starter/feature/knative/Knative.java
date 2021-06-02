@@ -27,7 +27,7 @@ import io.micronaut.starter.feature.knative.template.knativeYaml;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Adds Knative configuration to an application.

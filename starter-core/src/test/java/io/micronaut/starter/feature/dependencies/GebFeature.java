@@ -8,7 +8,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.TestFramework;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Requires(property = "spec.name", value = "DependenciesFeatureSpec")
 @Singleton

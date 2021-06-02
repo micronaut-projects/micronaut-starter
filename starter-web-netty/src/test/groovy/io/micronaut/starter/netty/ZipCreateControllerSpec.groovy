@@ -13,10 +13,9 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import spock.lang.Issue
 import spock.lang.Specification
-
-import javax.inject.Inject
 
 @MicronautTest
 class ZipCreateControllerSpec extends Specification {

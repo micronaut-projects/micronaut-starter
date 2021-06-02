@@ -25,8 +25,8 @@ import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.Config4kTemplate;
 import io.micronaut.starter.template.Template;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Optional;
 import java.util.function.Function;
 

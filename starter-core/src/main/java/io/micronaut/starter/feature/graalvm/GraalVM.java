@@ -23,7 +23,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class GraalVM implements Feature {

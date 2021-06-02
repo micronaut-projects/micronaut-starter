@@ -18,7 +18,7 @@ package io.micronaut.starter.cli.util;
 import io.micronaut.starter.util.VersionInfo;
 import picocli.CommandLine.IVersionProvider;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Generates version information. Example usage:

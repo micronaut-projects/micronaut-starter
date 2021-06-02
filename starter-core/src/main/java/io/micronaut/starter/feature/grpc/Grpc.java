@@ -26,7 +26,7 @@ import io.micronaut.starter.feature.grpc.template.proto;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton

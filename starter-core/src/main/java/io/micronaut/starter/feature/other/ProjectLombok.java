@@ -22,8 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class ProjectLombok implements LanguageSpecificFeature {

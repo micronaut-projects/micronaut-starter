@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.template.BinaryTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton

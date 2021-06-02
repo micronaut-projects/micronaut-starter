@@ -25,7 +25,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

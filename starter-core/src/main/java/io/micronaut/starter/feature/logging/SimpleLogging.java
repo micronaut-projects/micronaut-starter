@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.logging.template.slf4jSimple;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class SimpleLogging implements LoggingFeature {

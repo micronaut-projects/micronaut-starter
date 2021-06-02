@@ -23,8 +23,8 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Set;

@@ -17,8 +17,7 @@ package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Jrebel implements ReloadingFeature {

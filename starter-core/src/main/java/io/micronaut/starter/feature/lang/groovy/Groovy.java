@@ -27,8 +27,8 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.VersionInfo;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.List;
 import java.util.Set;
 

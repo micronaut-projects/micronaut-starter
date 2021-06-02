@@ -17,8 +17,8 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.NonNull;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Arrays;
 import java.util.Optional;
 

@@ -18,7 +18,7 @@ import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 import javax.validation.constraints.NotNull
 
 class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {

@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.PropertiesTemplate;
 import io.micronaut.starter.template.Template;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.function.Function;
 
 @Singleton

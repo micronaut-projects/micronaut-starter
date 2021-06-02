@@ -22,8 +22,8 @@ import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton

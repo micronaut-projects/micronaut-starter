@@ -27,8 +27,8 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;

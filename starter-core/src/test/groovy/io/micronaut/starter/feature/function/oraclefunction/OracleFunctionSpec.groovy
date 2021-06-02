@@ -3,11 +3,7 @@ package io.micronaut.starter.feature.function.oraclefunction
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {

@@ -27,7 +27,7 @@ import io.micronaut.starter.feature.jib.Jib;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Adds Kubernetes configuration to an application.

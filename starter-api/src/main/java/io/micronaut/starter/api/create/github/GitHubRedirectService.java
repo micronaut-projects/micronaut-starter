@@ -25,7 +25,7 @@ import io.micronaut.starter.client.github.v3.GitHubRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.UUID;

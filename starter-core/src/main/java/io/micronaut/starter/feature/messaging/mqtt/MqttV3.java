@@ -17,8 +17,7 @@ package io.micronaut.starter.feature.messaging.mqtt;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class MqttV3 extends AbstractMqttFeature implements MqttFeature {

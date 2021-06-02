@@ -9,11 +9,7 @@ import io.micronaut.starter.build.maven.MavenCombineAttribute
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Issue
 import spock.lang.Unroll

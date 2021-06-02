@@ -15,10 +15,16 @@
  */
 package io.micronaut.starter.azure;
 
-import java.util.*;
-import com.microsoft.azure.functions.annotation.*;
-import com.microsoft.azure.functions.*;
+import com.microsoft.azure.functions.ExecutionContext;
+import com.microsoft.azure.functions.HttpMethod;
+import com.microsoft.azure.functions.HttpRequestMessage;
+import com.microsoft.azure.functions.HttpResponseMessage;
+import com.microsoft.azure.functions.annotation.AuthorizationLevel;
+import com.microsoft.azure.functions.annotation.FunctionName;
+import com.microsoft.azure.functions.annotation.HttpTrigger;
 import io.micronaut.azure.function.http.AzureHttpFunction;
+
+import java.util.Optional;
 
 /**
  * Azure Functions with HTTP Trigger.

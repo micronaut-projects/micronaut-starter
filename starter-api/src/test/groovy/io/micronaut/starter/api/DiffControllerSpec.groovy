@@ -15,7 +15,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 

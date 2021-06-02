@@ -37,7 +37,7 @@ import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 @Primary

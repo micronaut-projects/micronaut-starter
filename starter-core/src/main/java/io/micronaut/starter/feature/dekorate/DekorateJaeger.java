@@ -20,7 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Adds Dekorate Jaeger support.

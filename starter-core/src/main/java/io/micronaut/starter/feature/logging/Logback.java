@@ -24,8 +24,8 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton

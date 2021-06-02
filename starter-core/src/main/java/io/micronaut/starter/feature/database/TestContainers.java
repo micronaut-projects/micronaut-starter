@@ -28,7 +28,7 @@ import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class TestContainers implements Feature {

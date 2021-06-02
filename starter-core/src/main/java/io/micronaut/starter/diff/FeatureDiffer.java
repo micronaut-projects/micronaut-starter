@@ -27,8 +27,8 @@ import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

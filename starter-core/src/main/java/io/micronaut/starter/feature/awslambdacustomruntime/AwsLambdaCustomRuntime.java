@@ -39,8 +39,8 @@ import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {

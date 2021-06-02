@@ -27,7 +27,7 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class JavaApplication implements JavaApplicationFeature {

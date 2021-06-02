@@ -22,8 +22,7 @@ import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegi
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Push to docker registry github workflow feature.

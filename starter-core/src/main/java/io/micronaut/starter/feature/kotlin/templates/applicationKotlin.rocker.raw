@@ -11,7 +11,7 @@ package @project.getPackageName()
 import io.ktor.server.netty.NettyApplicationEngine
 import io.micronaut.ktor.KtorApplication
 import io.micronaut.ktor.runApplication
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @@Singleton
 class KtorApp : KtorApplication<NettyApplicationEngine.Configuration>({

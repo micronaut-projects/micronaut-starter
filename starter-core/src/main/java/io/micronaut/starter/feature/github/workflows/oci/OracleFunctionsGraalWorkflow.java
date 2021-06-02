@@ -18,8 +18,7 @@ package io.micronaut.starter.feature.github.workflows.oci;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Deploy GraalVM dockerized application to Oracle Functions from Oracle Container Registry.

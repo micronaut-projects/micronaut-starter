@@ -27,8 +27,7 @@ import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryKotl
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerGroovy;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerJava;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerKotlin;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class KafkaStreams implements MessagingFeature {

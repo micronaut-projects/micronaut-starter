@@ -31,7 +31,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 
 @CommandLine.Command(name = "create-job", description = "Creates a job with scheduled method")

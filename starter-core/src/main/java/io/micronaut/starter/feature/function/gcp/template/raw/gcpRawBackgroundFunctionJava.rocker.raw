@@ -11,7 +11,7 @@ package @project.getPackageName();
 import com.google.cloud.functions.*;
 import io.micronaut.gcp.function.GoogleFunctionInitializer;
 
-import javax.inject.*;
+import jakarta.inject.*;
 import java.util.*;
 
 public class Function extends GoogleFunctionInitializer

@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.server.Netty;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.Options;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton

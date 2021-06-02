@@ -21,8 +21,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton

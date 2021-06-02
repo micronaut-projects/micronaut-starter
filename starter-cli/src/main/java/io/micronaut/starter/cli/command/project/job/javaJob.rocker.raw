@@ -9,7 +9,7 @@ package @project.getPackageName();
 }
 
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import io.micronaut.scheduling.annotation.Scheduled;
 
 @@Singleton

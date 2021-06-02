@@ -22,8 +22,8 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Map;
 import java.util.Set;
 

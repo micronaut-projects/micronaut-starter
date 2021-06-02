@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton

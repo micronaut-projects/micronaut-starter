@@ -22,8 +22,8 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Set;
 import java.util.function.Function;
 

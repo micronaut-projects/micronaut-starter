@@ -18,8 +18,8 @@ package io.micronaut.starter.application;
 import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
 import java.util.List;
 
 @Named("cli")

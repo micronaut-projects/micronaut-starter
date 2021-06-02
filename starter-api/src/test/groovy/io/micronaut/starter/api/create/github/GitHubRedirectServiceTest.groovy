@@ -7,7 +7,7 @@ import io.micronaut.starter.client.github.v3.GitHubRepository
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 @Property(name = "micronaut.http.services.github-oauth.url", value =  "https://api.github.com")
 @Property(name = "micronaut.starter.github.clientId", value =  "clientId")

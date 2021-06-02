@@ -6,11 +6,7 @@ import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
 import java.util.stream.Collectors

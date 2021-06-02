@@ -12,9 +12,8 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import spock.lang.Specification
-
-import javax.inject.Inject
 
 @MicronautTest
 class PreviewControllerSpec extends Specification {

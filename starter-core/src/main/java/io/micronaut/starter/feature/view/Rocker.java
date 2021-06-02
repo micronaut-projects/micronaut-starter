@@ -22,8 +22,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.template.RockerWritable;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Rocker implements ViewFeature, MicronautServerDependent {

@@ -4,11 +4,7 @@ import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -42,7 +38,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         )
         then:
         noExceptionThrown()
-       
+
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],

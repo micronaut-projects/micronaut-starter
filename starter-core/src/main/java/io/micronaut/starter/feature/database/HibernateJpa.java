@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class HibernateJpa implements JpaFeature {

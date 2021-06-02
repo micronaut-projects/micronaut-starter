@@ -7,10 +7,9 @@ import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import spock.lang.Specification
-
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @MicronautTest
 class FeatureControllerSpec extends Specification {

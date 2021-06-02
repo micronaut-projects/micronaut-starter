@@ -21,8 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.BuildTool;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Base coherence feature.

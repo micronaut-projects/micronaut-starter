@@ -31,7 +31,7 @@ import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * A feature for supporting Google Cloud Function.

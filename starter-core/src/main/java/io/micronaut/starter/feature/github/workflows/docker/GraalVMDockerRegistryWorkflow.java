@@ -21,8 +21,7 @@ import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegi
 import io.micronaut.starter.feature.github.workflows.docker.templates.dockerRegistryWorkflowReadme;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Push GraalVM native image to docker registry github workflow feature.

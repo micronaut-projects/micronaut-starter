@@ -22,7 +22,7 @@ import spock.lang.Issue
 import spock.lang.Shared
 import spock.lang.Unroll
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 

@@ -9,7 +9,7 @@
 }
 
 import javax.validation.constraints.NotBlank
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @@Singleton
 open class UppercaseTransformer : NameTransformer {

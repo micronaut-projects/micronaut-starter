@@ -23,8 +23,8 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.redis.RedisLettuce;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Map;
 
 @Singleton

@@ -32,8 +32,7 @@ import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleR
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class OracleRawFunction extends OracleFunction {

@@ -30,7 +30,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Asciidoctor implements Feature {

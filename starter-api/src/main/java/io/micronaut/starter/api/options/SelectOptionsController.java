@@ -23,8 +23,8 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.SelectOptionsDTO;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 /**
  * Gets Information about select options for the starter.

@@ -31,7 +31,7 @@ import io.micronaut.starter.feature.function.azure.template.azureFunctionTrigger
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerJava;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionTriggerKotlin;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class AzureHttpFunction extends AbstractAzureFunction implements Feature {
