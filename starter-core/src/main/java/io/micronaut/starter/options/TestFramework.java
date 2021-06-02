@@ -42,16 +42,27 @@ public enum TestFramework {
     public String getSourcePath(String path, Language language) {
         switch (this) {
             case SPOCK:
-                return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
+                return Language.GROOVY.getTestSrcDir() + path + getTestFrameworkSuffix() + Language.GROOVY.getExtension();
             case KOTEST:
-                return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
+                return Language.KOTLIN.getTestSrcDir() + path + getTestFrameworkSuffix() + Language.KOTLIN.getExtension();
             case JUNIT:
             default:
                 if (language != null) {
-                    return language.getTestSrcDir() + path + "Test."  + language.getExtension();
+                    return language.getTestSrcDir() + path + getTestFrameworkSuffix()  + language.getExtension();
                 } else {
-                    return Language.JAVA.getTestSrcDir() + "Test." + path + Language.JAVA.getExtension();
+                    return Language.JAVA.getTestSrcDir() + getTestFrameworkSuffix() + path + Language.JAVA.getExtension();
                 }
+        }
+    }
+
+    public String getTestFrameworkSuffix() {
+        switch (this) {
+            case SPOCK:
+                return "Spec.";
+            case JUNIT:
+            case KOTEST:
+            default:
+                return "Test.";
         }
     }
 

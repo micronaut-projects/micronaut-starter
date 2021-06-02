@@ -22,11 +22,14 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionReadme;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionHttpRequestJava;
+import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionResponseBuilderJava;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
-
+import io.micronaut.starter.template.RockerTemplate;
 import javax.inject.Singleton;
 import java.util.Optional;
 
@@ -43,9 +46,7 @@ public class AzureRawFunction extends AbstractAzureFunction {
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.exclude(feature -> feature instanceof ShadePlugin);
         if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
-            featureContext.addFeature(
-                    httpFunction
-            );
+            featureContext.addFeature(httpFunction);
         }
     }
 
@@ -60,11 +61,20 @@ public class AzureRawFunction extends AbstractAzureFunction {
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         super.applyFunction(generatorContext, type);
 
-        if (type == ApplicationType.FUNCTION) {
+        if (type == ApplicationType.FUNCTION && !(generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getLanguage() == Language.KOTLIN)) {
             Project project = generatorContext.getProject();
 
-            String testSource =  generatorContext.getTestSourcePath("/{packagePath}/Function");
+            generateJavaTestClass(generatorContext,
+                    "HttpRequestTemplate",
+                    "HttpRequest",
+                    azureRawFunctionHttpRequestJava.template(project));
 
+            generateJavaTestClass(generatorContext,
+                    "ResponseBuilderTemplate",
+                    "ResponseBuilder",
+                    azureRawFunctionResponseBuilderJava.template(project));
+
+            String testSource = generatorContext.getTestSourcePath("/{packagePath}/Function");
             TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
                     javaJUnitTemplate(project),
                     groovyJUnitTemplate(project),
@@ -74,14 +84,22 @@ public class AzureRawFunction extends AbstractAzureFunction {
         }
     }
 
+    private void generateJavaTestClass(GeneratorContext generatorContext,
+                                       String templateName,
+                                       String name,
+                                       RockerModel javaModel) {
+        String  testSource = Language.JAVA.getTestSrcDir() + "/{packagePath}/" + name + "." + Language.JAVA.getExtension();
+        generatorContext.addTemplate(templateName, new RockerTemplate(testSource, javaModel));
+    }
+
     @Override
     protected Optional<RockerModel> readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
         return Optional.of(
-            azureFunctionReadme.template(
-                project,
-                generatorContext.getFeatures(),
-                getRunCommand(buildTool),
-                getBuildCommand(buildTool))
+                azureFunctionReadme.template(
+                        project,
+                        generatorContext.getFeatures(),
+                        getRunCommand(buildTool),
+                        getBuildCommand(buildTool))
         );
     }
 

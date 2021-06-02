@@ -82,9 +82,12 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.get("$srcDir/example/micronaut/Function.$extension".toString())
                 .contains(" AzureFunction")
+        output.containsKey(Language.JAVA.testSrcDir + "/example/micronaut/HttpRequest.$Language.JAVA.extension".toString())
+        output.containsKey(Language.JAVA.testSrcDir + "/example/micronaut/ResponseBuilder.$Language.JAVA.extension".toString())
+
         output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
-                .contains("function.echo")
+                .contains("function.hello")
 
         where:
         language << Language.values().toList()
@@ -102,7 +105,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
                 ['azure-function']
         )
         String build = output['build.gradle']
-        def readme = output["README.md"]
 
         then:
         build.contains('runtime("azure_function")')
@@ -112,18 +114,6 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         !build.contains('"com.github.johnrengelman.shadow"')
         !build.contains('shadowJar')
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
-
-        readme?.contains("Micronaut and Azure Function")
-        output.containsKey("host.json")
-        output.containsKey("local.settings.json")
-        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
-        output.get("$srcDir/example/micronaut/Function.$extension".toString())
-                .contains(" AzureHttpFunction")
-        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-                .contains("HttpRequestMessageBuilder")
 
         when:
         String pluginId = 'com.microsoft.azure.azurefunctions'
@@ -138,6 +128,40 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         then:
         noExceptionThrown()
         semanticVersionOptional.isPresent()
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'test sources generated for azure function feature gradle and language=#language'(Language language,
+                                                                                           String extension,
+                                                                                           String srcDir,
+                                                                                           String testSrcDir) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                ['azure-function']
+        )
+        def readme = output["README.md"]
+
+        then:
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+
+        readme?.contains("Micronaut and Azure Function")
+        output.containsKey("host.json")
+        output.containsKey("local.settings.json")
+        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
+        output.get("$srcDir/example/micronaut/Function.$extension".toString())
+                .contains(" AzureHttpFunction")
+        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
+        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+                .contains("HttpRequestMessageBuilder")
 
         where:
         language << Language.values().toList()

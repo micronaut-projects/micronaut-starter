@@ -17,6 +17,6 @@ class FunctionSpec extends Specification {
 
     void "test function"() {
         expect:"The response is correct"
-        function.echo("test", null) == 'test'
+        function.hello(HttpRequest.builder().build(), null).body == 'Hello World'
     }
 }

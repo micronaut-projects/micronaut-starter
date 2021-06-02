@@ -2,7 +2,7 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - 2.5.x
+      - 3.0.x
 jobs:
   deploy:
     name: Deploy Job
