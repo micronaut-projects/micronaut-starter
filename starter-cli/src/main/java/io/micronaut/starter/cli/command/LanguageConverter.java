@@ -20,18 +20,17 @@ import picocli.CommandLine;
 
 public class LanguageConverter implements CommandLine.ITypeConverter<Language> {
 
-    public static final Language DEFAULT_LANGUAGE = Language.JAVA;
-
     @Override
     public Language convert(String value) throws Exception {
         if (value == null) {
-            return DEFAULT_LANGUAGE;
-        }
-        for (Language bt : Language.values()) {
-            if (value.equalsIgnoreCase(bt.toString())) {
-                return bt;
+            return Language.DEFAULT_OPTION;
+        } else {
+            for (Language bt : Language.values()) {
+                if (value.equalsIgnoreCase(bt.toString())) {
+                    return bt;
+                }
             }
         }
-        return DEFAULT_LANGUAGE;
+        throw new CommandLine.TypeConversionException("Invalid language selection: " + value);
     }
 }
