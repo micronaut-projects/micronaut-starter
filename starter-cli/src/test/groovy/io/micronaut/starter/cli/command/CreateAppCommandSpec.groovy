@@ -50,7 +50,6 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
     @Unroll
     void "test creating project with defaults for language=#language"(Language language) {
-
         when:
         createProject(language)
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
@@ -68,6 +67,32 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
 
         where:
         language << Language.values()
+    }
+
+    void "test creating a project with an invalid build tool"() {
+        given:
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        System.setErr(new PrintStream(baos))
+
+        when:
+        PicocliRunner.run(CreateAppCommand, ctx, "temp",  "--build", "xyz")
+
+        then:
+        noExceptionThrown()
+        baos.toString().contains("Invalid build tool selection: xyz")
+    }
+
+    void "test creating a project with an invalid language"() {
+        given:
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        System.setErr(new PrintStream(baos))
+
+        when:
+        PicocliRunner.run(CreateAppCommand, ctx, "temp",  "--lang", "xyz")
+
+        then:
+        noExceptionThrown()
+        baos.toString().contains("Invalid language selection: xyz")
     }
 
     void createProject(Language lang) {
