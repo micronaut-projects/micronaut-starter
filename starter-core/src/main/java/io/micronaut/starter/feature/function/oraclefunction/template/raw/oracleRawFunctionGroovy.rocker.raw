@@ -23,6 +23,7 @@ class Function extends OciFunction {
 
     @@ReflectiveAccess
     String handleRequest() {
-        return "Example response"
+        String tenancyId = tenantIdProvider.tenancyId
+        return "Your tenancy is: $tenancyId"
     }
 }
