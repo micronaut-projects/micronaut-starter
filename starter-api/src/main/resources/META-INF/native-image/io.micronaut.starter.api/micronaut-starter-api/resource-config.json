@@ -3,7 +3,9 @@
     {"pattern":"\\QMETA-INF/swagger\\E"},
     {"pattern":".*/swagger/micronaut-launch-.*yml"},
     {"pattern":"\\QMETA-INF/swagger/views/rapidoc/index.html\\E"},
-    {"pattern":"\\QMETA-INF/swagger/views/swagger-ui/index.html\\E"},
-    {"pattern":"\\Qselect_options.properties\\E"}
+    {"pattern":"\\QMETA-INF/swagger/views/swagger-ui/index.html\\E"}
+  ],
+  "bundles": [
+    {"name":"select_options"}
   ]
 }
