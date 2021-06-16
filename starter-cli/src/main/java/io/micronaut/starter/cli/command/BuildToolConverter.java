@@ -24,13 +24,15 @@ public class BuildToolConverter implements CommandLine.ITypeConverter<BuildTool>
 
     @Override
     public BuildTool convert(String value) throws Exception {
-        if (value != null) {
+        if (value == null) {
+            return BuildTool.DEFAULT_OPTION;
+        } else {
             for (BuildTool bt : BuildTool.values()) {
                 if (value.equalsIgnoreCase(bt.toString())) {
                     return bt;
                 }
             }
         }
-        return BuildTool.DEFAULT_OPTION;
+        throw new CommandLine.TypeConversionException("Invalid build tool selection: " + value);
     }
 }

@@ -46,12 +46,12 @@ public class BaseCommand implements ConsoleOutput {
 
     @Override
     public void green(String message) {
-        spec.commandLine().getErr().println(CommandLine.Help.Ansi.AUTO.string("@|bold,green " + message + "|@"));
+        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,green " + message + "|@"));
     }
 
     @Override
     public void red(String message) {
-        spec.commandLine().getErr().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red " + message + "|@"));
+        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red " + message + "|@"));
     }
 
     public boolean showStacktrace() {
