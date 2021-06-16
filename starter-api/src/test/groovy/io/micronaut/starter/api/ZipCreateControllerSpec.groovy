@@ -15,6 +15,7 @@ import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import spock.lang.Specification
 
 @MicronautTest
