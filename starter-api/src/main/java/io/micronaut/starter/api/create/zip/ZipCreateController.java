@@ -151,9 +151,10 @@ public class ZipCreateController extends AbstractCreateController implements Zip
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {
                 try {
+                    final Project project = generatorContext.getProject();
                     projectGenerator.generate(type,
-                            generatorContext.getProject(),
-                            new ZipOutputHandler(outputStream),
+                            project,
+                            new ZipOutputHandler(project.getName(), outputStream),
                             generatorContext);
 
                     outputStream.flush();

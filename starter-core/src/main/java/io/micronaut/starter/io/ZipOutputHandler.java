@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.io;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.template.Template;
 import org.apache.commons.compress.archivers.zip.UnixStat;
@@ -32,6 +33,7 @@ public class ZipOutputHandler implements OutputHandler {
 
     private final ZipArchiveOutputStream zipOutputStream;
     private final File zip;
+    private final String directory;
 
     public ZipOutputHandler(Project project) throws IOException {
         File baseDirectory = new File(".").getCanonicalFile();
@@ -42,11 +44,19 @@ public class ZipOutputHandler implements OutputHandler {
         }
         zip.createNewFile();
         zipOutputStream = new ZipArchiveOutputStream(Files.newOutputStream(zip.toPath()));
+        directory = project.getName();
     }
 
     public ZipOutputHandler(OutputStream outputStream) {
         zip = null;
         zipOutputStream = new ZipArchiveOutputStream(outputStream);
+        directory = null;
+    }
+
+    public ZipOutputHandler(String projectName, OutputStream outputStream) {
+        zip = null;
+        zipOutputStream = new ZipArchiveOutputStream(outputStream);
+        directory = projectName;
     }
 
     @Override
@@ -65,7 +75,7 @@ public class ZipOutputHandler implements OutputHandler {
 
     @Override
     public void write(String path, Template contents) throws IOException {
-        ZipArchiveEntry zipEntry = new ZipArchiveEntry(path);
+        ZipArchiveEntry zipEntry = new ZipArchiveEntry(directory != null ? StringUtils.prependUri(directory, path) : path);
         if (contents.isExecutable()) {
             zipEntry.setUnixMode(UnixStat.FILE_FLAG | 0755);
         }
