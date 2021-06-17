@@ -162,7 +162,8 @@ public class DiffController implements DiffOperations {
             Options options = new Options(
                     language,
                     test != null ? test : language.getDefaults().getTest(),
-                    build != null ? build : language.getDefaults().getBuild()
+                    build != null ? build : language.getDefaults().getBuild(),
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
