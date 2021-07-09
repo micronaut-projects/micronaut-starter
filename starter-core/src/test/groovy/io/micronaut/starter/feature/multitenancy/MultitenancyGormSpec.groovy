@@ -70,7 +70,7 @@ class MultitenancyGormSpec extends ApplicationContextSpec  implements CommandOut
         and:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.multitenancy</groupId>
       <artifactId>micronaut-multitenancy</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -87,6 +87,6 @@ class MultitenancyGormSpec extends ApplicationContextSpec  implements CommandOut
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-multitenancy-gorm")')
         and:
-        template.contains('implementation("io.micronaut:micronaut-multitenancy")')
+        template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
     }
 }

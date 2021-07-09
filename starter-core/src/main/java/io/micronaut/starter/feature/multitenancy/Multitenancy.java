@@ -63,7 +63,7 @@ public class Multitenancy implements Feature, MicronautServerDependent {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
+                .groupId("io.micronaut.multitenancy")
                 .artifactId("micronaut-multitenancy")
                 .compile());
     }
