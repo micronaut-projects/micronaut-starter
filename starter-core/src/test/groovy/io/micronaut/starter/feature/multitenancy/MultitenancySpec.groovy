@@ -59,7 +59,7 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.multitenancy</groupId>
       <artifactId>micronaut-multitenancy</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -77,7 +77,7 @@ class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputF
                 .render()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-multitenancy")')
+        template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
 
         where:
         language << Language.values()
