@@ -1,5 +1,5 @@
 plugins {
-    id("io.micronaut.application") version "1.5.0"    
+    id("io.micronaut.application") version "2.0.2"    
 }
 
 
