@@ -62,7 +62,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
         GeneratorContext commandContext = buildGeneratorContext(['elasticsearch'])
 
         then:
-        commandContext.configuration.get('elasticsearch.httpHosts'.toString()) == '"http://localhost:9200,http://127.0.0.2:9200"'
+        commandContext.configuration.get('elasticsearch.httpHosts'.toString()) == 'http://localhost:9200,http://127.0.0.2:9200'
     }
 
     @Unroll

@@ -44,7 +44,7 @@ public class Elasticsearch implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("elasticsearch.httpHosts", "\"http://localhost:9200,http://127.0.0.2:9200\"");
+        generatorContext.getConfiguration().put("elasticsearch.httpHosts", "http://localhost:9200,http://127.0.0.2:9200");
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.elasticsearch")
                 .artifactId("micronaut-elasticsearch")
