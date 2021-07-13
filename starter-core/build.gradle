@@ -73,3 +73,7 @@ rocker {
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
     markAsGenerated null
 }
+
+nohttp {
+    source.exclude "**/pom.rocker.raw"
+}
