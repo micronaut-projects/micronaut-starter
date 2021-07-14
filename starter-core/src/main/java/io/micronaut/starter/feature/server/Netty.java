@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class Netty implements ServerFeature, DefaultFeature {
+public class Netty extends AbstractMicronautServerFeature implements DefaultFeature {
 
     @Override
     public String getName() {
@@ -52,7 +52,7 @@ public class Netty implements ServerFeature, DefaultFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut")
