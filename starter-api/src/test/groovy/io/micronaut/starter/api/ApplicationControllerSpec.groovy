@@ -4,7 +4,7 @@ import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
@@ -15,14 +15,14 @@ class ApplicationControllerSpec extends Specification {
 
     @Inject
     @Client("/")
-    RxHttpClient client
+    HttpClient client
 
     @Inject
     ApplicationTypeClient applicationTypeClient
 
     void "test versions"() {
         given:
-        def response = client.retrieve(HttpRequest.GET('/versions'), Map).blockingFirst()
+        def response = client.toBlocking().retrieve(HttpRequest.GET('/versions'), Map)
 
         expect:
         response.containsKey("versions")

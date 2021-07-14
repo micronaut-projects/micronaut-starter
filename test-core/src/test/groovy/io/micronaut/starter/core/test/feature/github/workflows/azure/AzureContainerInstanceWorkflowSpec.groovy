@@ -9,7 +9,7 @@ import com.azure.resourcemanager.containerinstance.models.ContainerGroup
 import groovy.json.JsonSlurper
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.azure.AbstractAzureContainerInstanceWorkflow
@@ -65,7 +65,7 @@ class AzureContainerInstanceWorkflowSpec extends WorkflowSpec {
                 .map { envVar -> secretFromEnvVariable(envVar) }
                 .collect(Collectors.toList())
 
-        httpClient = beanContext.createBean(RxHttpClient.class).toBlocking()
+        httpClient = beanContext.createBean(HttpClient.class).toBlocking()
     }
 
     @Unroll
