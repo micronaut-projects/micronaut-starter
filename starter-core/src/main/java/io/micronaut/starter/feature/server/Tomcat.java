@@ -22,7 +22,7 @@ import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Tomcat implements ServerFeature {
+public class Tomcat extends AbstractMicronautServerFeature {
 
     @Override
     public String getName() {
@@ -45,7 +45,7 @@ public class Tomcat implements ServerFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.servlet")
