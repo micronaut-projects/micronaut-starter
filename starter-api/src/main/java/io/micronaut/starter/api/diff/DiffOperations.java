@@ -23,8 +23,8 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
-import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.reactivestreams.Publisher;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,7 +49,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Flowable<String> diffFeature(
+    Publisher<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,
@@ -70,7 +70,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Flowable<String> diffApp(
+    Publisher<String> diffApp(
             ApplicationType type,
             String name,
             @Nullable List<String> features,
