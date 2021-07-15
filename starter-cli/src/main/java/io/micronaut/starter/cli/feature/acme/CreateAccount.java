@@ -41,6 +41,10 @@ import java.security.KeyPair;
 @Prototype
 public final class CreateAccount extends CreateKeyPair {
     @ReflectiveAccess
+    @CommandLine.Option(names = {"-n", "--key-name"}, required = true, description = "Name of the key to be used or created")
+    String keyName;
+
+    @ReflectiveAccess
     @CommandLine.Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
     String email;
 
