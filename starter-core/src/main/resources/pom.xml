@@ -23,6 +23,11 @@
             <version>0.23.0</version>
         </dependency>
         <dependency>
+            <groupId>info.novatec</groupId>
+            <artifactId>micronaut-camunda-external-client-feature</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-bom</artifactId>
             <version>1.4.32</version>
