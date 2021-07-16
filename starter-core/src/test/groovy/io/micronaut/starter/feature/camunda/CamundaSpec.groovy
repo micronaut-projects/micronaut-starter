@@ -32,7 +32,7 @@ class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture
         then:
         readme
         readme.contains("https://assertj.github.io/doc/")
-        readme.contains("https://github.com/NovatecConsulting/micronaut-camunda-bpm")
+        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-bpm")
     }
 
     @Unroll
