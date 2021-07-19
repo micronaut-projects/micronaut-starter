@@ -69,5 +69,6 @@ public class OracleCloudSdk implements Feature {
                 .groupId("io.micronaut.oraclecloud")
                 .artifactId("micronaut-oraclecloud-sdk")
                 .compile());
+        generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
     }
 }
