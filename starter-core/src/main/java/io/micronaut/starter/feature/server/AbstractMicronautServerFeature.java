@@ -10,6 +10,7 @@ public abstract class AbstractMicronautServerFeature implements ServerFeature {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut")
                 .artifactId("micronaut-http-validation")
+                .versionProperty("micronaut.version")
                 .annotationProcessor());
         doApply(generatorContext);
     }
