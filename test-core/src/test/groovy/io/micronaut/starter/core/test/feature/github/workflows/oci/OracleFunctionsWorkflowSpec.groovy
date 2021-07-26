@@ -24,7 +24,7 @@ import groovy.util.logging.Slf4j
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
 import io.micronaut.http.client.DefaultHttpClientConfiguration
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.feature.github.workflows.Secret
@@ -112,7 +112,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         DefaultHttpClientConfiguration configuration = beanContext.getBean(DefaultHttpClientConfiguration.class)
         configuration.setReadTimeout(Duration.ofSeconds(AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS.toInteger()))
 
-        httpClient = beanContext.createBean(RxHttpClient.class).toBlocking()
+        httpClient = beanContext.createBean(HttpClient.class).toBlocking()
     }
 
     @Unroll

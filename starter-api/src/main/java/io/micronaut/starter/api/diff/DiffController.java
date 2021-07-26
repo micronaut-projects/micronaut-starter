@@ -36,11 +36,11 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -92,7 +92,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Flowable<String> diffFeature(
+    public Publisher<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NonNull @NotBlank String feature,
@@ -145,7 +145,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Flowable<String> diffApp(
+    public Publisher<String> diffApp(
             ApplicationType type,
             @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
@@ -181,19 +181,19 @@ public class DiffController implements DiffOperations {
         return diffFlowable(projectGenerator, generatorContext);
     }
 
-    private Flowable<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
-        return Flowable.create(emitter -> {
+    private Publisher<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
+        return Flux.create(emitter -> {
             try {
                 // empty string so there is at least some content
                 // if there is no difference
-                emitter.onNext("");
+                emitter.next("");
                 featureDiffer.produceDiff(
                         projectGenerator,
                         generatorContext,
                         new ConsoleOutput() {
                             @Override
                             public void out(String message) {
-                                emitter.onNext(message + LINE_SEPARATOR);
+                                emitter.next(message + LINE_SEPARATOR);
                             }
 
                             @Override
@@ -217,10 +217,10 @@ public class DiffController implements DiffOperations {
                             }
                         }
                 );
-                emitter.onComplete();
+                emitter.complete();
             } catch (Exception e) {
-                emitter.onError(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
+                emitter.error(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
             }
-        }, BackpressureStrategy.BUFFER);
+        });
     }
 }

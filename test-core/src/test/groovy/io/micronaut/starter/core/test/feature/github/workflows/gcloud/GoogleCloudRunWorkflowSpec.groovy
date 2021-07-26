@@ -10,7 +10,7 @@ import com.google.auth.http.HttpCredentialsAdapter
 import com.google.auth.oauth2.GoogleCredentials
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.client.BlockingHttpClient
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.feature.github.workflows.Secret
 import io.micronaut.starter.feature.github.workflows.gcloud.GoogleCloudRunGraalWorkflow
@@ -60,7 +60,7 @@ class GoogleCloudRunWorkflowSpec extends WorkflowSpec {
                 .map { envVar -> secretFromEnvVariable(envVar) }
                 .collect(Collectors.toList())
 
-        httpClient = beanContext.createBean(RxHttpClient.class).toBlocking()
+        httpClient = beanContext.createBean(HttpClient.class).toBlocking()
     }
 
     @Unroll

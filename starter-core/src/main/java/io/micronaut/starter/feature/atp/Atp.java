@@ -26,8 +26,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Atp implements Feature {
