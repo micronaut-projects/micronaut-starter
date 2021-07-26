@@ -3,248 +3,248 @@ on:
   release:
     types: [published]
 jobs:
-  build:
-    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - uses: gradle/wrapper-validation-action@v1
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '8'
-      - name: Set the current release version
-        id: release_version
-        run: echo ::set-output name=release_version::${GITHUB_REF:11}
-      - name: Run pre-release
-        uses: micronaut-projects/github-actions/pre-release@master
-        env:
-          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build All
-        run: ./gradlew micronaut-cli:assemble
-      - name: Publish to Maven Central
-        env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-          GPG_FILE: ${{ secrets.GPG_FILE }}
-        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
-      - name: Upload CLI Zip
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-          asset_content_type: application/zip
-      - name: Publish to Github Pages
-        if: success()
-        uses: micronaut-projects/github-pages-deploy-action@master
-        env:
-          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          BASE_BRANCH: master
-          BRANCH: gh-pages
-          FOLDER: build/docs
-          VERSION: ${{ steps.release_version.outputs.release_version }}
-      - name: Run post-release
-        if: success()
-        id: post_release
-        continue-on-error: true
-        uses: micronaut-projects/github-actions/post-release@master
-        env:
-          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Back to Micronaut snapshot
-        continue-on-error: true
-        run: |
-          echo "Setting new Micronaut snapshot version"
-          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
-        continue-on-error: true
-        with:
-          commit_message: Back Micronaut version to snapshot
-          commit_user_name: micronaut-build
-          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
-  linux:
-    name: Release Linux Native CLI
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
-      - name: Install GraalVM
-        env:
-          GRAAL_VERSION: 21.0.0.2
-          GRAAL_OS: linux-amd64
-        run: ./install-graal.sh
-      - name: Install Native Image
-        run: ./graalvm/bin/gu install native-image
-      - name: Build the JAR
-        env:
-          JAVA_HOME: ./graalvm
-        run: ./gradlew micronaut-cli:shadowJar --no-daemon
-      - name: Build Native Image
-        run: ./graalvm/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
-      - name: Verify Build
-        run: ./mn --version
-      - name: Package Build
-        env:
-          VERSION: ${{ github.event.release.tag_name }}
-        run: |
-          mkdir -p "mn-linux-amd64-${VERSION}/bin"
-          mv ./mn "mn-linux-amd64-${VERSION}/bin"
-          cp ./LICENSE "mn-linux-amd64-${VERSION}/"
-          zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
-  macos:
-    name: Release OS X Native CLI
-    runs-on: macOS-latest
-    needs: [build]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
-      - name: Install GraalVM
-        env:
-          GRAAL_VERSION: 21.0.0.2
-          GRAAL_OS: darwin-amd64
-        run: ./install-graal.sh
-      - name: Install Native Image
-        run: ./graalvm/Contents/Home/bin/gu install native-image
-      - name: Build the JAR
-        env:
-          JAVA_HOME: ./graalvm/Contents/Home
-        run: ./gradlew micronaut-cli:shadowJar --no-daemon
-      - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
-      - name: Verify Build
-        run: ./mn --version
-      - name: Package Build
-        env:
-          VERSION: ${{ github.event.release.tag_name }}
-        run: |
-          mkdir -p "mn-darwin-amd64-${VERSION}/bin"
-          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
-          cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
-          zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
-  windows:
-    name: Release Windows Native CLI
-    runs-on: windows-latest
-    needs: [build]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - uses: ilammy/msvc-dev-cmd@v1.5.0
-      - uses: microsoft/setup-msbuild@v1
-      - uses: ayltai/setup-graalvm@v1
-        with:
-          java-version: 8
-          graalvm-version: 21.0.0.2
-          native-image: true
-      - name: Build JAR File
-        shell: powershell
-        run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
-      - name: Build Native Image
-        shell: powershell
-        run: native-image --no-fallback -cp build/libs/cli.jar
-      - name: Verify Build (Powershell)
-        run: ./mn.exe --version
-      - name: Verify Create App (Powershell)
-        run: ./mn.exe create-app test
-      - name: Verify Build (CMD)
-        shell: cmd
-        run: mn --version
-      - name: Verify Create App (CMD)
-        shell: cmd
-        run: mn create-app test2
-      - name: ZIP Archive
-        run: |
-          New-Item ./mn-win-amd64-${{ github.event.release.tag_name }}/bin -ItemType Directory -ea 0
-          Move-Item -Path ./mn.exe -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}/bin
-          Copy-Item ./LICENSE -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}
-          Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
-      - name: Upload Release Asset
-        id: upload-release-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
-          asset_content_type: application/zip
-  sdkman:
-    name: Release to SDKMAN!
-    runs-on: ubuntu-latest
-    needs: [linux, macos, windows]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Set the current release version
-        id: release_version
-        run: |
-          release_version=${GITHUB_REF:11}
-          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
-      - name: SDKMAN release
-        env:
-          GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
-          GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
-        run: ./gradlew sdkMajorRelease --no-daemon
+#  build:
+#    name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - uses: gradle/wrapper-validation-action@v1
+#      - name: Set up JDK
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'adopt'
+#          java-version: '8'
+#      - name: Set the current release version
+#        id: release_version
+#        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+#      - name: Run pre-release
+#        uses: micronaut-projects/github-actions/pre-release@master
+#        env:
+#          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Build All
+#        run: ./gradlew micronaut-cli:assemble
+#      - name: Publish to Maven Central
+#        env:
+#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+#          GPG_FILE: ${{ secrets.GPG_FILE }}
+#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+#      - name: Upload CLI Zip
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+#          asset_content_type: application/zip
+#      - name: Publish to Github Pages
+#        if: success()
+#        uses: micronaut-projects/github-pages-deploy-action@master
+#        env:
+#          BETA: ${{ contains(steps.release_version.outputs.release_version, 'M') || contains(steps.release_version.outputs.release_version, 'RC') }}
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#          BASE_BRANCH: master
+#          BRANCH: gh-pages
+#          FOLDER: build/docs
+#          VERSION: ${{ steps.release_version.outputs.release_version }}
+#      - name: Run post-release
+#        if: success()
+#        id: post_release
+#        continue-on-error: true
+#        uses: micronaut-projects/github-actions/post-release@master
+#        env:
+#          MICRONAUT_BUILD_EMAIL: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Back to Micronaut snapshot
+#        continue-on-error: true
+#        run: |
+#          echo "Setting new Micronaut snapshot version"
+#          sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
+#      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+#        continue-on-error: true
+#        with:
+#          commit_message: Back Micronaut version to snapshot
+#          commit_user_name: micronaut-build
+#          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+#  linux:
+#    name: Release Linux Native CLI
+#    runs-on: ubuntu-latest
+#    needs: [build]
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - name: Set the current release version
+#        id: release_version
+#        run: |
+#          release_version=${GITHUB_REF:11}
+#          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+#          echo ::set-output name=release_version::${release_version}
+#      - name: Install GraalVM
+#        env:
+#          GRAAL_VERSION: 21.0.0.2
+#          GRAAL_OS: linux-amd64
+#        run: ./install-graal.sh
+#      - name: Install Native Image
+#        run: ./graalvm/bin/gu install native-image
+#      - name: Build the JAR
+#        env:
+#          JAVA_HOME: ./graalvm
+#        run: ./gradlew micronaut-cli:shadowJar --no-daemon
+#      - name: Build Native Image
+#        run: ./graalvm/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+#      - name: Verify Build
+#        run: ./mn --version
+#      - name: Package Build
+#        env:
+#          VERSION: ${{ github.event.release.tag_name }}
+#        run: |
+#          mkdir -p "mn-linux-amd64-${VERSION}/bin"
+#          mv ./mn "mn-linux-amd64-${VERSION}/bin"
+#          cp ./LICENSE "mn-linux-amd64-${VERSION}/"
+#          zip -r "mn-linux-amd64-${VERSION}.zip" "mn-linux-amd64-${VERSION}/"
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: ./mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_name: mn-linux-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_content_type: application/zip
+#  macos:
+#    name: Release OS X Native CLI
+#    runs-on: macOS-latest
+#    needs: [build]
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - name: Set the current release version
+#        id: release_version
+#        run: |
+#          release_version=${GITHUB_REF:11}
+#          sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+#          echo ::set-output name=release_version::${release_version}
+#      - name: Install GraalVM
+#        env:
+#          GRAAL_VERSION: 21.0.0.2
+#          GRAAL_OS: darwin-amd64
+#        run: ./install-graal.sh
+#      - name: Install Native Image
+#        run: ./graalvm/Contents/Home/bin/gu install native-image
+#      - name: Build the JAR
+#        env:
+#          JAVA_HOME: ./graalvm/Contents/Home
+#        run: ./gradlew micronaut-cli:shadowJar --no-daemon
+#      - name: Build Native Image
+#        run: ./graalvm/Contents/Home/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+#      - name: Verify Build
+#        run: ./mn --version
+#      - name: Package Build
+#        env:
+#          VERSION: ${{ github.event.release.tag_name }}
+#        run: |
+#          mkdir -p "mn-darwin-amd64-${VERSION}/bin"
+#          mv ./mn "mn-darwin-amd64-${VERSION}/bin"
+#          cp ./LICENSE "mn-darwin-amd64-${VERSION}/"
+#          zip -r "mn-darwin-amd64-${VERSION}.zip" "mn-darwin-amd64-${VERSION}/" -x '*.DS_Store*' -x '__MAC_OSX'
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: ./mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_name: mn-darwin-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_content_type: application/zip
+#  windows:
+#    name: Release Windows Native CLI
+#    runs-on: windows-latest
+#    needs: [build]
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - uses: ilammy/msvc-dev-cmd@v1.5.0
+#      - uses: microsoft/setup-msbuild@v1
+#      - uses: ayltai/setup-graalvm@v1
+#        with:
+#          java-version: 8
+#          graalvm-version: 21.0.0.2
+#          native-image: true
+#      - name: Build JAR File
+#        shell: powershell
+#        run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
+#      - name: Build Native Image
+#        shell: powershell
+#        run: native-image --no-fallback -cp build/libs/cli.jar
+#      - name: Verify Build (Powershell)
+#        run: ./mn.exe --version
+#      - name: Verify Create App (Powershell)
+#        run: ./mn.exe create-app test
+#      - name: Verify Build (CMD)
+#        shell: cmd
+#        run: mn --version
+#      - name: Verify Create App (CMD)
+#        shell: cmd
+#        run: mn create-app test2
+#      - name: ZIP Archive
+#        run: |
+#          New-Item ./mn-win-amd64-${{ github.event.release.tag_name }}/bin -ItemType Directory -ea 0
+#          Move-Item -Path ./mn.exe -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}/bin
+#          Copy-Item ./LICENSE -Destination ./mn-win-amd64-${{ github.event.release.tag_name }}
+#          Compress-Archive -Path ./mn-win-amd64-${{ github.event.release.tag_name }} -Update -DestinationPath ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
+#      - name: Upload Release Asset
+#        id: upload-release-asset
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ github.event.release.upload_url }}
+#          asset_path: ./mn-win-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_name: mn-win-amd64-${{ github.event.release.tag_name }}.zip
+#          asset_content_type: application/zip
+#  sdkman:
+#    name: Release to SDKMAN!
+#    runs-on: ubuntu-latest
+#    needs: [linux, macos, windows]
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#      - name: Set the current release version
+#        id: release_version
+#        run: |
+#          release_version=${GITHUB_REF:11}
+#          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+#          echo ::set-output name=release_version::${release_version}
+#      - name: SDKMAN release
+#        env:
+#          GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
+#          GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
+#        run: ./gradlew sdkMajorRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
-    needs: [build]
+#    needs: [build]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2.3.4
@@ -310,96 +310,95 @@ jobs:
           gcloud components install beta --quiet
           gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
 
-  homebrew:
-    name: Update Homebrew cask
-    needs: [macos]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-          repository: micronaut-projects/homebrew-tap
-      - name: Download ZIP
-        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
-      - name: Calculate SHA256
-        id: sha
-        run: |
-          s=$(sha256sum mn.zip | awk  '{ print $1 }')
-          echo "SHA256 is: $s"
-          echo ::set-output name=sha::${s}
-      - name: Update Cask file
-        env:
-          SHA: ${{ steps.sha.outputs.sha }}
-        run: |
-          sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
-          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
-          cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
-        with:
-          commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
-          commit_user_name: micronaut-build
-          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
-
-  chocolatey:
-    name: Bump Chocolatey package
-    runs-on: windows-latest
-    needs: [windows]
-    steps:
-      - name: Determine default branch
-        uses: octokit/request-action@v2.x
-        id: get_default_branch
-        with:
-          route: GET /repos/{owner}/{repo}
-          owner: micronaut-projects
-          repo: micronaut-starter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v2.3.4
-        with:
-          ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
-          token: ${{ secrets.GH_TOKEN }}
-      - name: Download ZIP, update versions and checksum
-        id: choco
-        working-directory: chocolatey
-        run: |
-          Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -OutFile 'mn.zip'
-
-          $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
-          echo $SHA
-
-          $Version = "${{ github.event.release.tag_name }}".substring(1)
-          echo $Version
-
-          #Fix semver
-          $NugetVersion = $Version
-          $Parts = $Version.Split(".")
-          if ($Parts.Count -eq 4) {
-            $NugetVersion = $Parts[0] + "." + $Parts[1] + "." + $Parts[2] + "-" + $Parts[3]
-          }
-          echo $NugetVersion
-
-          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>$NugetVersion</version>" | Set-Content ./micronaut.nuspec
-          Get-Content ./micronaut.nuspec
-
-          (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
-          (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
-          Get-Content ./tools/chocolateyinstall.ps1
-          echo "::set-output name=nuget_version::$NugetVersion"
-      - name: Create package
-        working-directory: chocolatey
-        run: choco pack
-      - name: Push package
-        working-directory: chocolatey
-        env:
-          API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
-        run: |
-          choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
-          choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
-        with:
-          commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
-          commit_user_name: micronaut-build
-          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
-          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+#  homebrew:
+#    name: Update Homebrew cask
+#    needs: [macos]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout https://github.com/micronaut-projects/homebrew-tap
+#        uses: actions/checkout@v2.3.4
+#        with:
+#          token: ${{ secrets.GH_TOKEN }}
+#          repository: micronaut-projects/homebrew-tap
+#      - name: Download ZIP
+#        run: wget -q https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-darwin-amd64-${{ github.event.release.tag_name }}.zip -O mn.zip
+#      - name: Calculate SHA256
+#        id: sha
+#        run: |
+#          s=$(sha256sum mn.zip | awk  '{ print $1 }')
+#          echo "SHA256 is: $s"
+#          echo ::set-output name=sha::${s}
+#      - name: Update Cask file
+#        env:
+#          SHA: ${{ steps.sha.outputs.sha }}
+#        run: |
+#          sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
+#          sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
+#          cat Casks/micronaut.rb
+#      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+#        with:
+#          commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
+#          commit_user_name: micronaut-build
+#          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+#  chocolatey:
+#    name: Bump Chocolatey package
+#    runs-on: windows-latest
+#    needs: [windows]
+#    steps:
+#      - name: Determine default branch
+#        uses: octokit/request-action@v2.x
+#        id: get_default_branch
+#        with:
+#          route: GET /repos/{owner}/{repo}
+#          owner: micronaut-projects
+#          repo: micronaut-starter
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - uses: actions/checkout@v2.3.4
+#        with:
+#          ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
+#          token: ${{ secrets.GH_TOKEN }}
+#      - name: Download ZIP, update versions and checksum
+#        id: choco
+#        working-directory: chocolatey
+#        run: |
+#          Invoke-RestMethod -Uri https://github.com/micronaut-projects/micronaut-starter/releases/download/${{ github.event.release.tag_name }}/mn-win-amd64-${{ github.event.release.tag_name }}.zip -OutFile 'mn.zip'
+#
+#          $SHA = (Get-FileHash ./mn.zip -Algorithm SHA256).Hash
+#          echo $SHA
+#
+#          $Version = "${{ github.event.release.tag_name }}".substring(1)
+#          echo $Version
+#
+#          #Fix semver
+#          $NugetVersion = $Version
+#          $Parts = $Version.Split(".")
+#          if ($Parts.Count -eq 4) {
+#            $NugetVersion = $Parts[0] + "." + $Parts[1] + "." + $Parts[2] + "-" + $Parts[3]
+#          }
+#          echo $NugetVersion
+#
+#          (Get-Content ./micronaut.nuspec) -replace '<version>.*</version>', "<version>$NugetVersion</version>" | Set-Content ./micronaut.nuspec
+#          Get-Content ./micronaut.nuspec
+#
+#          (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
+#          (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
+#          Get-Content ./tools/chocolateyinstall.ps1
+#          echo "::set-output name=nuget_version::$NugetVersion"
+#      - name: Create package
+#        working-directory: chocolatey
+#        run: choco pack
+#      - name: Push package
+#        working-directory: chocolatey
+#        env:
+#          API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}
+#        run: |
+#          choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
+#          choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
+#      - uses: stefanzweifel/git-auto-commit-action@v4.11.0
+#        with:
+#          commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
+#          commit_user_name: micronaut-build
+#          commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
+#          commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
