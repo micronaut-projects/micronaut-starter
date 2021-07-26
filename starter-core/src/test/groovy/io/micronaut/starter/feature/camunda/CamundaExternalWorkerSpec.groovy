@@ -17,74 +17,62 @@ package io.micronaut.starter.feature.camunda
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class CamundaExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature camunda contains links to micronaut docs'() {
+    void 'test readme.md with feature camunda-external-worker contains links to micronaut docs'() {
         when:
-        def output = generate(['camunda'])
+        def output = generate(['camunda-external-worker'])
         def readme = output["README.md"]
 
         then:
         readme
-        readme.contains("https://assertj.github.io/doc/")
-        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-bpm")
+        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-external-client")
     }
 
     @Unroll
-    void 'test gradle camunda feature for language=#language'() {
+    void 'test gradle camunda-external-worker feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['camunda'])
+                .features(['camunda-external-worker'])
                 .render()
 
         then:
-        template.count('implementation("info.novatec:micronaut-camunda-bpm-feature:') == 1
-        template.count('testImplementation("org.assertj:assertj-core")') == 1
-        template.count('testImplementation("org.camunda.bpm.assert:camunda-bpm-assert') == 1
-        template.count('runtimeOnly("com.h2database:h2")') == 1
+        template.count('implementation("info.novatec:micronaut-camunda-external-client-feature:') == 1
 
         where:
         language << Language.values().toList()
     }
 
     @Unroll
-    void 'test maven camunda feature for language=#language'() {
+    void 'test maven camunda-external-worker feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['camunda'])
+                .features(['camunda-external-worker'])
                 .render()
 
         then:
         template.count('''\
     <dependency>
       <groupId>info.novatec</groupId>
-      <artifactId>micronaut-camunda-bpm-feature</artifactId>
+      <artifactId>micronaut-camunda-external-client-feature</artifactId>
  ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>org.camunda.bpm.assert</groupId>
-      <artifactId>camunda-bpm-assert</artifactId>
- ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>info.novatec</groupId>
-      <artifactId>micronaut-camunda-bpm-feature</artifactId>
- ''') == 1
-        template.count('''\
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''') == 1
         where:
         language << Language.values().toList()
+    }
+
+    void 'test camunda-external-worker configuration'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(['camunda-external-worker'])
+
+        then:
+        commandContext.configuration.get('camunda.external-client.base-url'.toString()) == "http://localhost:8080/engine-rest"
     }
 }

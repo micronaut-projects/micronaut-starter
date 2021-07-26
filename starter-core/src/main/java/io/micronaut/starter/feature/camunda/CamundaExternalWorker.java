@@ -13,62 +13,58 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.oraclecloud;
+package io.micronaut.starter.feature.camunda;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloudSdk implements Feature {
+public class CamundaExternalWorker implements Feature {
+
+    @NonNull
     @Override
     public String getName() {
-        return "oracle-cloud-sdk";
+        return "camunda-external-worker";
     }
 
     @Override
     public String getTitle() {
-        return "Oracle Cloud SDK";
+        return "External Worker for Camunda (Workflow Engine)";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the Oracle Cloud SDK";
-    }
-
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/javasdk.htm";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLOUD;
+        return "Allows to implement External Workers (for Camunda Workflow Engine) in your Micronaut applications.";
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
-        return true;
+        return applicationType == ApplicationType.DEFAULT;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.getConfiguration().put("camunda.external-client.base-url", "http://localhost:8080/engine-rest");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
-                .artifactId("micronaut-oraclecloud-sdk")
+                .lookupArtifactId("micronaut-camunda-external-client-feature")
                 .compile());
-        generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
     }
+
+    @Override
+    public String getCategory() {
+        return Category.BPM;
+    }
+
+    @Override
+    @Nullable
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/camunda-community-hub/micronaut-camunda-external-client";
+    }
+
 }

@@ -88,7 +88,7 @@ public class Camunda implements Feature {
     @Override
     @Nullable
     public String getThirdPartyDocumentation() {
-        return "https://github.com/NovatecConsulting/micronaut-camunda-bpm";
+        return "https://github.com/camunda-community-hub/micronaut-camunda-bpm";
     }
 
 }
