@@ -72,5 +72,10 @@ public class HttpClient implements DefaultFeature {
                 .groupId("io.micronaut")
                 .artifactId("micronaut-http-client")
                 .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-http-validation")
+                .versionProperty("micronaut.version")
+                .annotationProcessor());
     }
 }

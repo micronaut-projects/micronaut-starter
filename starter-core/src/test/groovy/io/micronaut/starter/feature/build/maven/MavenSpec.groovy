@@ -67,7 +67,6 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('''
           <annotationProcessorPaths combine.children="append">
-          </annotationProcessorPaths>
 ''')
 
         when:
