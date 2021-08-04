@@ -18,5 +18,6 @@ package io.micronaut.starter.build.dependencies;
 public enum Phase {
     ANNOTATION_PROCESSING,
     COMPILATION,
-    RUNTIME
+    RUNTIME,
+    OPENREWRITE
 }

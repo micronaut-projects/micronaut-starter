@@ -1,0 +1,19 @@
+<plugin>
+  <groupId>org.openrewrite.maven</groupId>
+  <artifactId>rewrite-maven-plugin</artifactId>
+  <version>${openrewrite.maven.plugin.version}</version>
+  <configuration>
+    <activeRecipes>
+      <recipe>org.openrewrite.java.micronaut.Micronaut2to3Migration</recipe>
+    </activeRecipes>
+    <activeStyles>
+    </activeStyles>
+  </configuration>
+  <dependencies>
+    <dependency>
+      <groupId>org.openrewrite.recipe</groupId>
+      <artifactId>rewrite-micronaut</artifactId>
+      <version>${rewrite-micronaut.version}</version>
+    </dependency>
+  </dependencies>
+</plugin>
