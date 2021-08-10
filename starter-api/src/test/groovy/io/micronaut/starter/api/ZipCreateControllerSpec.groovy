@@ -43,7 +43,7 @@ class ZipCreateControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message.contains("name: must match")
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message.contains("name: must match")
     }
 
     void "test default create app - missing feature"() {
@@ -53,7 +53,7 @@ class ZipCreateControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message.contains("The requested feature does not exist: junkkkk")
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message.contains("The requested feature does not exist: junkkkk")
     }
 
     void "test default create app file name"() {

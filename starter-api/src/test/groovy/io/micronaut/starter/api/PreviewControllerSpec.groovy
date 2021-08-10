@@ -36,7 +36,7 @@ class PreviewControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message == 'The requested feature does not exist: juikkkk'
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message == 'The requested feature does not exist: juikkkk'
     }
 
     @Client('/preview')
