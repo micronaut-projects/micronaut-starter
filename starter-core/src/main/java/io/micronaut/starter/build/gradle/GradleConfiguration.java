@@ -35,7 +35,8 @@ public enum GradleConfiguration implements Ordered {
     TEST_KAPT("kaptTest", 7),
     TEST_IMPLEMENTATION("testImplementation", 8),
     TEST_COMPILE_ONLY("testCompileOnly", 9),
-    TEST_RUNTIME_ONLY("testRuntimeOnly", 10);
+    TEST_RUNTIME_ONLY("testRuntimeOnly", 10),
+    OPENREWRITE("rewrite", 11);
 
     private final String configurationName;
     private final int order;
@@ -87,6 +88,9 @@ public enum GradleConfiguration implements Ordered {
                 }
                 if (scope.getPhases().contains(Phase.COMPILATION)) {
                     return Optional.of(GradleConfiguration.COMPILE_ONLY);
+                }
+                if (scope.getPhases().contains(Phase.OPENREWRITE)) {
+                    return Optional.of(GradleConfiguration.OPENREWRITE);
                 }
                 break;
 
