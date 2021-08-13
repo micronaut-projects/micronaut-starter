@@ -57,6 +57,14 @@ class RxJavaThreeSpec extends ApplicationContextSpec implements CommandOutputFix
       <scope>compile</scope>
     </dependency>
 """)
+        and:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.rxjava3</groupId>
+      <artifactId>micronaut-rxjava3-http-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
         where:
         language << Language.values().toList()
     }
@@ -71,6 +79,7 @@ class RxJavaThreeSpec extends ApplicationContextSpec implements CommandOutputFix
 
         then:
         template.contains('implementation("io.micronaut.rxjava3:micronaut-rxjava3")')
+        template.contains('implementation("io.micronaut.rxjava3:micronaut-rxjava3-http-client")')
 
         where:
         language << Language.values()

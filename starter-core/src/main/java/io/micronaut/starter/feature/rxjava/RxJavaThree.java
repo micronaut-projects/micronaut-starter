@@ -26,6 +26,8 @@ import javax.inject.Singleton;
 
 @Singleton
 public class RxJavaThree implements Feature {
+    public static final String MICRONAUT_RXJAVA3_GROUP_ID = "io.micronaut.rxjava3";
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -60,7 +62,7 @@ public class RxJavaThree implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.rxjava3")
+                .groupId(MICRONAUT_RXJAVA3_GROUP_ID)
                 .artifactId("micronaut-rxjava3")
                 .compile());
     }
