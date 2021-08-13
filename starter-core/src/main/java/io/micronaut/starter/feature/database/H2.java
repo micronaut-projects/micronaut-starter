@@ -43,7 +43,7 @@ public class H2 extends DatabaseDriverFeature {
 
     @Override
     public String getJdbcUrl() {
-        return "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE";
+        return "jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE";
     }
 
     @Override
