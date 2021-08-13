@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.reactor;
+package io.micronaut.starter.feature.rxjava;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
@@ -21,12 +21,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Reactor implements Feature {
-
-    public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
+public class RxJavaTwo implements Feature {
+    public static final String MICRONAUT_RXJAVA2_GROUP_ID = "io.micronaut.rxjava2";
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -36,17 +36,17 @@ public class Reactor implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "reactor";
+        return "rxjava2";
     }
 
     @Override
     public String getTitle() {
-        return "Reactor";
+        return "RxJava 2";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
+        return "Adds support for RxJava 2 to a Micronaut application; Converters and Instrumentation for RxJava 2 types, RxJava 2 compatible HTTP Client";
     }
 
     @Override
@@ -56,14 +56,15 @@ public class Reactor implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html";
+        return "https://micronaut-projects.github.io/micronaut-rxjava2/snapshot/guide/index.html";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_REACTOR_GROUP_ID)
-                .artifactId("micronaut-reactor")
+                .groupId(MICRONAUT_RXJAVA2_GROUP_ID)
+                .artifactId("micronaut-rxjava2")
                 .compile());
     }
+
 }

@@ -21,7 +21,14 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.reactor.Reactor;
+import io.micronaut.starter.feature.reactor.ReactorHttpClient;
+import io.micronaut.starter.feature.rxjava.RxJavaThree;
+import io.micronaut.starter.feature.rxjava.RxJavaThreeHttpClient;
+import io.micronaut.starter.feature.rxjava.RxJavaTwo;
+import io.micronaut.starter.feature.rxjava.RxJavaTwoHttpClient;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -30,10 +37,35 @@ import java.util.Set;
 @Singleton
 public class HttpClient implements DefaultFeature {
 
+    private final RxJavaTwoHttpClient rxJavaTwoHttpClient;
+    private final RxJavaThreeHttpClient rxJavaThreeHttpClient;
+    private final ReactorHttpClient reactorHttpClient;
+
+    public HttpClient(RxJavaTwoHttpClient rxJavaTwoHttpClient,
+                      RxJavaThreeHttpClient rxJavaThreeHttpClient,
+                      ReactorHttpClient reactorHttpClient) {
+        this.rxJavaTwoHttpClient = rxJavaTwoHttpClient;
+        this.rxJavaThreeHttpClient = rxJavaThreeHttpClient;
+        this.reactorHttpClient = reactorHttpClient;
+    }
+
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(feature -> feature instanceof FunctionFeature);
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(RxJavaTwo.class)) {
+            featureContext.addFeature(rxJavaTwoHttpClient);
+        }
+        if (featureContext.isPresent(RxJavaThree.class)) {
+            featureContext.addFeature(rxJavaThreeHttpClient);
+        }
+        if (featureContext.isPresent(Reactor.class)) {
+            featureContext.addFeature(reactorHttpClient);
+        }
     }
 
     @Override
