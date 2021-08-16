@@ -28,15 +28,15 @@ import io.micronaut.starter.feature.server.Netty;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class RxJavaTwo implements Feature {
+public class RxJava2 implements Feature {
     public static final String MICRONAUT_RXJAVA2_GROUP_ID = "io.micronaut.rxjava2";
 
-    private final RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty;
-    private final RxJavaTwoHttpClient rxJavaTwoHttpClient;
+    private final RxJava2HttpServerNetty rxJava2HttpServerNetty;
+    private final RxJava2HttpClient rxJava2HttpClient;
 
-    public RxJavaTwo(RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty, RxJavaTwoHttpClient rxJavaTwoHttpClient) {
-        this.rxJavaTwoHttpServerNetty = rxJavaTwoHttpServerNetty;
-        this.rxJavaTwoHttpClient = rxJavaTwoHttpClient;
+    public RxJava2(RxJava2HttpServerNetty rxJava2HttpServerNetty, RxJava2HttpClient rxJava2HttpClient) {
+        this.rxJava2HttpServerNetty = rxJava2HttpServerNetty;
+        this.rxJava2HttpClient = rxJava2HttpClient;
     }
 
     @Override
@@ -73,10 +73,10 @@ public class RxJavaTwo implements Feature {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (featureContext.isPresent(Netty.class)) {
-            featureContext.addFeature(rxJavaTwoHttpServerNetty);
+            featureContext.addFeature(rxJava2HttpServerNetty);
         }
         if (featureContext.isPresent(HttpClient.class)) {
-            featureContext.addFeature(rxJavaTwoHttpClient);
+            featureContext.addFeature(rxJava2HttpClient);
         }
     }
 

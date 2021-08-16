@@ -21,11 +21,11 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+
 import jakarta.inject.Singleton;
 
 @Singleton
-public class RxJavaTwoHttpServerNetty implements Feature {
-
+public class RxJava2HttpClient implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -34,7 +34,7 @@ public class RxJavaTwoHttpServerNetty implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "rxjava2-http-server-netty";
+        return "rxjava2-http-client";
     }
 
     @Override
@@ -50,8 +50,9 @@ public class RxJavaTwoHttpServerNetty implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(RxJavaTwo.MICRONAUT_RXJAVA2_GROUP_ID)
-                .artifactId("micronaut-rxjava2-http-server-netty")
-                .runtime());
+                .groupId(RxJava2.MICRONAUT_RXJAVA2_GROUP_ID)
+                .artifactId("micronaut-rxjava2-http-client")
+                .compile());
     }
+
 }

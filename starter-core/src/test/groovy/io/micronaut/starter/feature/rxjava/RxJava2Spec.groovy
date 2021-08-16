@@ -11,7 +11,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class RxJavaTwoSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class RxJava2Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature rxjava2 contains links to micronaut docs'() {
         when:

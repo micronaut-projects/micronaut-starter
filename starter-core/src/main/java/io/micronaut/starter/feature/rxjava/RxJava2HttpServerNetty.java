@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class RxJavaThreeHttpClient implements Feature {
+public class RxJava2HttpServerNetty implements Feature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -34,7 +34,7 @@ public class RxJavaThreeHttpClient implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "rxjava3-http-client";
+        return "rxjava2-http-server-netty";
     }
 
     @Override
@@ -50,9 +50,8 @@ public class RxJavaThreeHttpClient implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(RxJava3.MICRONAUT_RXJAVA3_GROUP_ID)
-                .artifactId("micronaut-rxjava3-http-client")
-                .compile());
+                .groupId(RxJava2.MICRONAUT_RXJAVA2_GROUP_ID)
+                .artifactId("micronaut-rxjava2-http-server-netty")
+                .runtime());
     }
-
 }

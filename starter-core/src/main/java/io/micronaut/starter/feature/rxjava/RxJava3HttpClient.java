@@ -25,6 +25,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJava3HttpClient implements Feature {
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
