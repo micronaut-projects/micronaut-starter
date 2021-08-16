@@ -17,22 +17,26 @@ package io.micronaut.starter.feature.reactive;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.OneOfFeature;
 
 /**
- * Marker class for reactive library (RxJava, Project Reactor) features.
+ * Marker for reactive library (RxJava, Project Reactor) features.
  * @author Sergio del Amo
  * @since 2.5.13
  */
-public abstract class ReactiveFeature implements Feature {
+public interface ReactiveFeature extends OneOfFeature {
+    @Override
+    default Class<?> getFeatureClass() {
+        return ReactiveFeature.class;
+    }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
+    default boolean supports(ApplicationType applicationType) {
         return true;
     }
 
     @Override
-    public String getCategory() {
+    default String getCategory() {
         return Category.REACTIVE;
     }
 }
