@@ -19,23 +19,13 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.other.HttpClient;
-import io.micronaut.starter.feature.reactive.ReactiveFeature;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class RxJava3 implements ReactiveFeature {
-
-    public static final String MICRONAUT_RXJAVA3_GROUP_ID = "io.micronaut.rxjava3";
-
-    private final RxJava3HttpClient rxJava3HttpClient;
-
-    public RxJava3(RxJava3HttpClient rxJava3HttpClient) {
-        this.rxJava3HttpClient = rxJava3HttpClient;
-    }
-
+public class RxJava3HttpClient implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -44,36 +34,25 @@ public class RxJava3 implements ReactiveFeature {
     @NonNull
     @Override
     public String getName() {
-        return "rxjava3";
+        return "rxjava3-http-client";
     }
 
     @Override
-    public String getTitle() {
-        return "RxJava 3";
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
-    public String getDescription() {
-        return "Adds support for RxJava 3 to a Micronaut application; Converters and Instrumentation for RxJava 3 types, RxJava 3 compatible HTTP Client";
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-rxjava3/snapshot/guide/index.html";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.isPresent(HttpClient.class)) {
-            featureContext.addFeature(rxJava3HttpClient);
-        }
+    public String getCategory() {
+        return Category.CLIENT;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_RXJAVA3_GROUP_ID)
-                .artifactId("micronaut-rxjava3")
+                .groupId(RxJava3.MICRONAUT_RXJAVA3_GROUP_ID)
+                .artifactId("micronaut-rxjava3-http-client")
                 .compile());
     }
+
 }

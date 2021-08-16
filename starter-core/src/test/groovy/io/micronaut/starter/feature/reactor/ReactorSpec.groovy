@@ -64,6 +64,15 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.reactor</groupId>
+      <artifactId>micronaut-reactor-http-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
         where:
         language << Language.values().toList()
     }
@@ -78,6 +87,7 @@ class ReactorSpec extends ApplicationContextSpec  implements CommandOutputFixtur
 
         then:
         template.contains('implementation("io.micronaut.reactor:micronaut-reactor")')
+        template.contains('implementation("io.micronaut.reactor:micronaut-reactor-http-client")')
 
         where:
         language << Language.values()
