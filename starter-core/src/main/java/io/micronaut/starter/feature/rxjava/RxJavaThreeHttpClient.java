@@ -21,11 +21,11 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJavaThreeHttpClient implements Feature {
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -50,7 +50,7 @@ public class RxJavaThreeHttpClient implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(RxJavaThree.MICRONAUT_RXJAVA3_GROUP_ID)
+                .groupId(RxJava3.MICRONAUT_RXJAVA3_GROUP_ID)
                 .artifactId("micronaut-rxjava3-http-client")
                 .compile());
     }
