@@ -21,20 +21,10 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Reactor implements Feature {
-
-    public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
-
-    private final ReactorHttpClient reactorHttpClient;
-
-    public Reactor(ReactorHttpClient reactorHttpClient) {
-        this.reactorHttpClient = reactorHttpClient;
-    }
+public class ReactorHttpClient implements Feature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -44,41 +34,25 @@ public class Reactor implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "reactor";
+        return "reactor-http-client";
     }
 
     @Override
-    public String getTitle() {
-        return "Reactor";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public String getCategory() {
-        return Category.REACTIVE;
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.isPresent(HttpClient.class)) {
-            featureContext.addFeature(reactorHttpClient);
-        }
+        return Category.CLIENT;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_REACTOR_GROUP_ID)
-                .artifactId("micronaut-reactor")
+                .groupId(Reactor.MICRONAUT_REACTOR_GROUP_ID)
+                .artifactId("micronaut-reactor-http-client")
                 .compile());
     }
+
 }

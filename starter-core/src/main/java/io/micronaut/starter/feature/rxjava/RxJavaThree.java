@@ -22,10 +22,21 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJavaThree implements Feature {
+
+    public static final String MICRONAUT_RXJAVA3_GROUP_ID = "io.micronaut.rxjava3";
+
+    private final RxJavaThreeHttpClient rxJavaThreeHttpClient;
+
+    public RxJavaThree(RxJavaThreeHttpClient rxJavaThreeHttpClient) {
+        this.rxJavaThreeHttpClient = rxJavaThreeHttpClient;
+    }
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -58,9 +69,16 @@ public class RxJavaThree implements Feature {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(rxJavaThreeHttpClient);
+        }
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.rxjava3")
+                .groupId(MICRONAUT_RXJAVA3_GROUP_ID)
                 .artifactId("micronaut-rxjava3")
                 .compile());
     }
