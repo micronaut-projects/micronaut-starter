@@ -25,8 +25,7 @@ import io.micronaut.starter.feature.Feature;
 import javax.inject.Singleton;
 
 @Singleton
-public class RxJavaOne implements Feature {
-
+public class RxJava3 implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -35,17 +34,17 @@ public class RxJavaOne implements Feature {
     @NonNull
     @Override
     public String getName() {
-        return "rxjava1";
+        return "rxjava3";
     }
 
     @Override
     public String getTitle() {
-        return "RxJava 1";
+        return "RxJava 3";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for RxJava 1 to a Micronaut application; Converters and Instrumentation for RxJava 1 types";
+        return "Adds support for RxJava 3 to a Micronaut application; Converters and Instrumentation for RxJava 3 types, RxJava 3 compatible HTTP Client";
     }
 
     @Override
@@ -55,14 +54,14 @@ public class RxJavaOne implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-rxjava1/latest/guide/index.html";
+        return "https://micronaut-projects.github.io/micronaut-rxjava3/snapshot/guide/index.html";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.rxjava1")
-                .artifactId("micronaut-rxjava1")
+                .groupId("io.micronaut.rxjava3")
+                .artifactId("micronaut-rxjava3")
                 .compile());
     }
 }
