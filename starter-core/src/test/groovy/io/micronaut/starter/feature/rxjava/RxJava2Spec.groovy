@@ -25,7 +25,7 @@ class RxJava2Spec extends ApplicationContextSpec implements CommandOutputFixture
 
     @Subject
     @Shared
-    RxJavaThree rxJavaThree = beanContext.getBean(RxJavaThree)
+    RxJava3 rxJavaThree = beanContext.getBean(RxJava3)
 
     void "rxjava2 belongs to Reactive category"() {
         expect:
