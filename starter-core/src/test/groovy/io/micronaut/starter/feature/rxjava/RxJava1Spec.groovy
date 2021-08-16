@@ -11,7 +11,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class RxJavaOneSpec extends ApplicationContextSpec  implements CommandOutputFixture {
+class RxJava1Spec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature rxjava1 contains links to micronaut docs'() {
         when:
@@ -25,7 +25,7 @@ class RxJavaOneSpec extends ApplicationContextSpec  implements CommandOutputFixt
 
     @Subject
     @Shared
-    RxJavaOne rxJavaOne = beanContext.getBean(RxJavaOne)
+    RxJava1 rxJavaOne = beanContext.getBean(RxJava1)
 
     void "rxjava1 belongs to Reactive category"() {
         expect:
