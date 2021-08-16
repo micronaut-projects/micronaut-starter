@@ -20,10 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.FunctionFeature;
-import io.micronaut.starter.feature.rxjava.RxJavaTwo;
-import io.micronaut.starter.feature.rxjava.RxJavaTwoHttpServerNetty;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 
@@ -32,12 +29,6 @@ import java.util.Set;
 
 @Singleton
 public class Netty extends AbstractMicronautServerFeature implements DefaultFeature {
-
-    private final RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty;
-
-    public Netty(RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty) {
-        this.rxJavaTwoHttpServerNetty = rxJavaTwoHttpServerNetty;
-    }
 
     @Override
     public String getName() {
@@ -58,13 +49,6 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == ApplicationType.DEFAULT &&
                 selectedFeatures.stream().noneMatch(f -> f instanceof ServerFeature || f instanceof FunctionFeature);
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.isPresent(RxJavaTwo.class)) {
-            featureContext.addFeature(rxJavaTwoHttpServerNetty);
-        }
     }
 
     @Override

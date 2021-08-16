@@ -22,11 +22,20 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJavaThree implements Feature {
+
     public static final String MICRONAUT_RXJAVA3_GROUP_ID = "io.micronaut.rxjava3";
+
+    private final RxJavaThreeHttpClient rxJavaThreeHttpClient;
+
+    public RxJavaThree(RxJavaThreeHttpClient rxJavaThreeHttpClient) {
+        this.rxJavaThreeHttpClient = rxJavaThreeHttpClient;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -57,6 +66,13 @@ public class RxJavaThree implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-rxjava3/snapshot/guide/index.html";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(rxJavaThreeHttpClient);
+        }
     }
 
     @Override

@@ -21,12 +21,20 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpClient;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Reactor implements Feature {
 
     public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
+
+    private final ReactorHttpClient reactorHttpClient;
+
+    public Reactor(ReactorHttpClient reactorHttpClient) {
+        this.reactorHttpClient = reactorHttpClient;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -57,6 +65,13 @@ public class Reactor implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(reactorHttpClient);
+        }
     }
 
     @Override

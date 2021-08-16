@@ -25,6 +25,7 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJavaTwoHttpServerNetty implements Feature {
+
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -51,6 +52,6 @@ public class RxJavaTwoHttpServerNetty implements Feature {
         generatorContext.addDependency(Dependency.builder()
                 .groupId(RxJavaTwo.MICRONAUT_RXJAVA2_GROUP_ID)
                 .artifactId("micronaut-rxjava2-http-server-netty")
-                .compile());
+                .runtime());
     }
 }

@@ -70,7 +70,7 @@ class RxJavaTwoSpec extends ApplicationContextSpec implements CommandOutputFixtu
     <dependency>
       <groupId>io.micronaut.rxjava2</groupId>
       <artifactId>micronaut-rxjava2-http-server-netty</artifactId>
-      <scope>compile</scope>
+      <scope>runtime</scope>
     </dependency>
 """)
         where:
@@ -88,7 +88,7 @@ class RxJavaTwoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         then:
         template.contains('implementation("io.micronaut.rxjava2:micronaut-rxjava2")')
         template.contains('implementation("io.micronaut.rxjava2:micronaut-rxjava2-http-client")')
-        template.contains('implementation("io.micronaut.rxjava2:micronaut-rxjava2-http-server-netty")')
+        template.contains('runtimeOnly("io.micronaut.rxjava2:micronaut-rxjava2-http-server-netty")')
 
         where:
         language << Language.values()

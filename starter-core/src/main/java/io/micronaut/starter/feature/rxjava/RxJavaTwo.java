@@ -22,11 +22,22 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpClient;
+import io.micronaut.starter.feature.server.Netty;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class RxJavaTwo implements Feature {
     public static final String MICRONAUT_RXJAVA2_GROUP_ID = "io.micronaut.rxjava2";
+
+    private final RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty;
+    private final RxJavaTwoHttpClient rxJavaTwoHttpClient;
+
+    public RxJavaTwo(RxJavaTwoHttpServerNetty rxJavaTwoHttpServerNetty, RxJavaTwoHttpClient rxJavaTwoHttpClient) {
+        this.rxJavaTwoHttpServerNetty = rxJavaTwoHttpServerNetty;
+        this.rxJavaTwoHttpClient = rxJavaTwoHttpClient;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -57,6 +68,16 @@ public class RxJavaTwo implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-rxjava2/snapshot/guide/index.html";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(Netty.class)) {
+            featureContext.addFeature(rxJavaTwoHttpServerNetty);
+        }
+        if (featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(rxJavaTwoHttpClient);
+        }
     }
 
     @Override
