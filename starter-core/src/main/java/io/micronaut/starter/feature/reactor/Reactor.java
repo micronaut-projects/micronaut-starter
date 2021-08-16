@@ -16,22 +16,14 @@
 package io.micronaut.starter.feature.reactor;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
 import javax.inject.Singleton;
+import io.micronaut.starter.feature.reactive.ReactiveFeature;
 
 @Singleton
-public class Reactor implements Feature {
+public class Reactor implements ReactiveFeature {
     public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
 
     @NonNull
     @Override
@@ -47,11 +39,6 @@ public class Reactor implements Feature {
     @Override
     public String getDescription() {
         return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.REACTIVE;
     }
 
     @Override
