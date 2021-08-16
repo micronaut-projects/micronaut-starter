@@ -22,7 +22,7 @@ import javax.inject.Singleton;
 import io.micronaut.starter.feature.reactive.ReactiveFeature;
 
 @Singleton
-public class RxJavaOne implements ReactiveFeature {
+public class RxJava1 implements ReactiveFeature {
     @NonNull
     @Override
     public String getName() {
