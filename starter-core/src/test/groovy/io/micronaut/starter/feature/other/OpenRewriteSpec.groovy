@@ -18,7 +18,7 @@ class OpenRewriteSpec extends ApplicationContextSpec implements CommandOutputFix
         String pluginId = 'org.openrewrite.rewrite'
 
         then:
-        template.contains 'rewrite("org.openrewrite.recipe:rewrite-micronaut:0.2.0")'
+        template.contains 'rewrite("org.openrewrite.recipe:rewrite-micronaut:'
 
         template.contains '''
 rewrite {
