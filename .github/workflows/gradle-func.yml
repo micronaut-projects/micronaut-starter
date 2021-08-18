@@ -14,7 +14,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-#      - uses: actions/cache@v2.1.5
+#      - uses: actions/cache@v2.1.6
 #        with:
 #          path: |
 #            ~/.gradle/caches
@@ -37,7 +37,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: |
             ~/.gradle/caches
@@ -59,7 +59,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: |
             ~/.gradle/caches
@@ -81,7 +81,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: |
             ~/.gradle/caches
@@ -103,7 +103,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: |
             ~/.gradle/caches
@@ -125,7 +125,7 @@ jobs:
         java: ['8', '11']
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.5
+      - uses: actions/cache@v2.1.6
         with:
           path: |
             ~/.gradle/caches
