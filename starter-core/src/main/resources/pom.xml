@@ -140,17 +140,17 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>0.2.0</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>4.8.0</version>
+            <version>4.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>
             <artifactId>plugin</artifactId>
-            <version>5.6.0</version>
+            <version>5.7.0</version>
         </dependency>
     </dependencies>
 </project>
