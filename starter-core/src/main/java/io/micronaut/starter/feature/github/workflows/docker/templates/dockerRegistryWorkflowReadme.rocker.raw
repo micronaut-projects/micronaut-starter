@@ -42,7 +42,7 @@ documentation.
 - `DOCKER_REPOSITORY_PATH` - DockerHub organization or the username in case of personal registry
 - `DOCKER_REGISTRY_URL` - No need to configure for DockerHub
 
-> See [docker/login-action for GCR](https://github.com/docker/login-action#dockerhub)
+> See [docker/login-action for DockerHub](https://github.com/docker/login-action#dockerhub)
 
 #### Google Container Registry (GCR)
 Create service account with permission to edit GCR or use predefined Storage Admin role.
