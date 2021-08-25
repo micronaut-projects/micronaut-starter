@@ -234,7 +234,7 @@ MavenBuild mavenBuild
 }
 @if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
             <nativeImageBuildArgs>
-              <arg>--static</arg>
+              <arg>-H:+StaticExecutableWithDynamicLibC</arg>
               <arg>-Dfn.handler=${exec.mainClass}::handleRequest</arg>
               <arg>--initialize-at-build-time=com.example</arg>
             </nativeImageBuildArgs>

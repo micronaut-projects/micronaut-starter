@@ -169,7 +169,7 @@ nativeImage {
 }
 } else {
 nativeImage {
-    args("--static",
+    args("-H:+StaticExecutableWithDynamicLibC",
          "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
          "--initialize-at-build-time=@project.getPackageName()")
 }
