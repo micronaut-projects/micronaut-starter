@@ -98,9 +98,4 @@ public class CoherenceFeature implements Feature {
     public String getCategory() {
         return Category.DATABASE;
     }
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
 }
