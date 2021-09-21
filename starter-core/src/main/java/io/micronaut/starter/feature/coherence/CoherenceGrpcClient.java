@@ -63,7 +63,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#grpc";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#grpc";
     }
 
     @Override
