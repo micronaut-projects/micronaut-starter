@@ -70,9 +70,4 @@ public class Coherence implements CacheFeature {
                 .template();
         generatorContext.addDependency(coherenceMicronaut.compile());
     }
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
 }

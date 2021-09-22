@@ -96,9 +96,4 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
                     .compile());
         }
     }
-
-    @Override
-    public boolean isPreview() {
-        return true;
-    }
 }
