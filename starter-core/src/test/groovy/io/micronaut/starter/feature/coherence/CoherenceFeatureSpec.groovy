@@ -61,14 +61,14 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
+        template.contains('''
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
+      <version>${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
-""")
+''')
         where:
         language << Language.values().toList()
     }

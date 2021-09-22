@@ -24,7 +24,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Coherence implements CacheFeature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public Coherence(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;

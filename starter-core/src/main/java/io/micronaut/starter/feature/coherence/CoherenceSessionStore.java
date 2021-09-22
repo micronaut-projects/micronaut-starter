@@ -26,7 +26,7 @@ import jakarta.inject.Singleton;
 import java.util.Map;
 
 /**
- * Coherence used to store HTTP sessions feture.
+ * Coherence used to store HTTP sessions feature.
  *
  * @author Pavol Gressa
  * @since 2.4
@@ -34,7 +34,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceSessionStore implements Feature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public CoherenceSessionStore(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;

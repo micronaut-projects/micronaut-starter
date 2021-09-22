@@ -35,7 +35,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceGrpcClient implements Feature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public CoherenceGrpcClient(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;
@@ -53,7 +53,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for to use Coherence by gRPC client.";
+        return "Adds support for using Coherence as a gRPC client.";
     }
 
     @Override
