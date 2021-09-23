@@ -16,7 +16,7 @@ class CoherenceGrpcClientSpec extends BeanContextSpec implements CommandOutputFi
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#grpc")
+        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#grpc")
         readme.contains("https://coherence.java.net/")
     }
 

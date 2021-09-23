@@ -26,7 +26,7 @@ import jakarta.inject.Singleton;
 import java.util.Map;
 
 /**
- * Coherence used to store HTTP sessions feture.
+ * Coherence used to store HTTP sessions feature.
  *
  * @author Pavol Gressa
  * @since 2.4
@@ -34,7 +34,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceSessionStore implements Feature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public CoherenceSessionStore(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;
@@ -62,7 +62,7 @@ public class CoherenceSessionStore implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#coherenceHttpSessions";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#coherenceHttpSessions";
     }
 
     @Override
@@ -92,10 +92,5 @@ public class CoherenceSessionStore implements Feature {
     @Override
     public String getCategory() {
         return Category.CLIENT;
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }

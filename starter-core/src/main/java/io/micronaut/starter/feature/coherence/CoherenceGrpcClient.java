@@ -35,7 +35,7 @@ import java.util.Map;
 @Singleton
 public class CoherenceGrpcClient implements Feature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public CoherenceGrpcClient(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;
@@ -53,7 +53,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for to use Coherence by gRPC client.";
+        return "Adds support for using Coherence as a gRPC client.";
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#grpc";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#grpc";
     }
 
     @Override
@@ -105,10 +105,5 @@ public class CoherenceGrpcClient implements Feature {
     @Override
     public String getCategory() {
         return Category.DATABASE;
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }

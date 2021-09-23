@@ -16,7 +16,7 @@ class CoherenceSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#cache")
+        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#cache")
         readme.contains("https://coherence.java.net/")
     }
 
