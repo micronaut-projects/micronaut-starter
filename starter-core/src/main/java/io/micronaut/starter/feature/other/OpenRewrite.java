@@ -73,6 +73,7 @@ public class OpenRewrite implements LanguageSpecificFeature {
     }
 
     private void addGradlePlugin(GeneratorContext generatorContext) {
+        generatorContext.addHelpLink("Rewrite Gradle Plugin", "https://plugins.gradle.org/plugin/org.openrewrite.rewrite");
         generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("org.openrewrite.rewrite")
                 .lookupArtifactId("plugin")

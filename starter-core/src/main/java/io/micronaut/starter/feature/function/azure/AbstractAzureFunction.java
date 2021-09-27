@@ -83,6 +83,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         Project project = generatorContext.getProject();
         BuildTool buildTool = generatorContext.getBuildTool();
         if (buildTool.isGradle()) {
+            generatorContext.addHelpLink("Azure Functions Plugin for Gradle", "https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions");
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.microsoft.azure.azurefunctions")
                     .lookupArtifactId("azure-functions-gradle-plugin")
