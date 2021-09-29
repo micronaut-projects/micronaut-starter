@@ -32,17 +32,18 @@ class RockerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         then:
         template.contains('implementation("io.micronaut.views:micronaut-views-rocker")')
         template.contains('''\
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/resources")
+rocker {
+    configurations {
+        main {
+            templateDir = file("src/main/resources")
+            outputDir = file("src/generated/rocker")
         }
     }
 }
 ''')
 
         when:
-        String pluginId = 'com.fizzed.rocker'
+        String pluginId = 'nu.studer.rocker'
         String applyPlugin = 'id("' + pluginId + '") version "'
 
         then:
