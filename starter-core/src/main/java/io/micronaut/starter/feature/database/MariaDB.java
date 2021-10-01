@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -83,15 +84,19 @@ public class MariaDB extends DatabaseDriverFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.mariadb.jdbc")
-                .artifactId("mariadb-java-client")
-                .runtime());
         if (generatorContext.isFeaturePresent(R2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("org.mariadb")
                     .artifactId("r2dbc-mariadb")
                     .runtime());
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return;
+            }
         }
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.mariadb.jdbc")
+                .artifactId("mariadb-java-client")
+                .runtime());
     }
 }

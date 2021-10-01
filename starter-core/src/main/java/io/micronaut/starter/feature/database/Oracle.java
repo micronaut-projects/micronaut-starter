@@ -20,6 +20,8 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -52,7 +54,7 @@ public class Oracle extends DatabaseDriverFeature {
 
     @Override
     public String getR2dbcUrl() {
-        throw new UnsupportedOperationException("R2DBC is not yet supported by Oracle");
+        return "r2dbc:oracle://localhost:1521/xe";
     }
 
     @Override
@@ -82,9 +84,20 @@ public class Oracle extends DatabaseDriverFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("com.oracle.database")
+                    .artifactId("oracle-r2dbc")
+                    .runtime());
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return;
+            }
+        }
+
         generatorContext.addDependency(Dependency.builder()
                 .groupId("com.oracle.database.jdbc")
                 .artifactId("ojdbc8")
                 .runtime());
     }
+
 }
