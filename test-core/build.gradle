@@ -19,7 +19,7 @@ dependencies {
     testImplementation 'com.google.apis:google-api-services-run:v1-rev20201113-1.31.0'
     testImplementation 'com.google.auth:google-auth-library-oauth2-http:1.1.0'
     testImplementation 'com.azure:azure-identity:1.2.3'
-    testImplementation 'com.azure:azure-core-http-netty:1.7.0'
+    testImplementation 'com.azure:azure-core-http-netty:1.11.1'
     testImplementation 'com.azure.resourcemanager:azure-resourcemanager-containerinstance:2.4.0'
 }
 
