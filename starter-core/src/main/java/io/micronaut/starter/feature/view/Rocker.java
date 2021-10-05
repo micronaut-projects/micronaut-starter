@@ -59,9 +59,9 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
                 .artifactId("micronaut-views-rocker")
                 .compile());
         generatorContext.addBuildPlugin(GradlePlugin.builder()
-                .id("com.fizzed.rocker")
+                .id("nu.studer.rocker")
                 .extension(new RockerWritable(gradlePluginRocker.template(rockerSrcDir(generatorContext))))
-                .lookupArtifactId("rocker-gradle-plugin")
+                .lookupArtifactId("gradle-rocker-plugin")
                 .build());
         String mavenPluginArtifactId = "rocker-maven-plugin";
         Coordinate coordinate = generatorContext.resolveCoordinate(mavenPluginArtifactId);
