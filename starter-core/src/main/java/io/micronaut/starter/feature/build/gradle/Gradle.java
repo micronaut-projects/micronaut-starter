@@ -69,9 +69,6 @@ public class Gradle implements BuildFeature {
             if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
                 generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.jpa").lookupArtifactId("kotlin-noarg").build());
             }
-            if (generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
-                generatorContext.getBuildProperties().put("org.gradle.jvmargs", "--illegal-access=permit");
-            }
         }
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());

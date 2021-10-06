@@ -72,20 +72,6 @@ public class Maven implements BuildFeature {
                 mavenBuild
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
-
-        if (generatorContext.getFeatures().language().isKotlin() && generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
-            generatorContext.addTemplate("mvnJvmConfig", new Template() {
-                @Override
-                public String getPath() {
-                    return ".mvn/jvm.config";
-                }
-
-                @Override
-                public void write(OutputStream outputStream) throws IOException {
-                    outputStream.write("--illegal-access=permit\n".getBytes(StandardCharsets.UTF_8));
-                }
-            });
-        }
     }
 
     @Override

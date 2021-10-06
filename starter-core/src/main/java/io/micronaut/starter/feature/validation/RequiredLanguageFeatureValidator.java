@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.validation;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
@@ -33,6 +34,9 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        if (options.getLanguage() == Language.KOTLIN && options.getJavaVersion() == JdkVersion.JDK_17) {
+            throw new IllegalArgumentException("JDK 17 is currently not compatible with Kotlin applications rely on Kapt, which is currently incompatible with JDK 17. See https://youtrack.jetbrains.com/issue/KT-45545 to track updates to this issue.");
+        }
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
             if (feature instanceof LanguageSpecificFeature) {
