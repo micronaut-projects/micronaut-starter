@@ -159,6 +159,15 @@ azurefunctions {
 }
 }
 
+@if (features.contains("aws-lambda")) {
+dockerfileNative {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0", 
+        "-Dio.netty.noPreferDirect=true"        
+    )
+}    
+}
 @if (features.contains("oracle-function")) {
 @if (features.contains("oracle-function-http")) {
 dockerfileNative {
