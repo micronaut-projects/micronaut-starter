@@ -63,10 +63,14 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
+        if (language == Language.KOTLIN && javaVersion == JdkVersion.JDK_17) {
+            this.javaVersion = JdkVersion.JDK_11;
+        } else {
+            this.javaVersion = javaVersion;
+        }
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
-        this.javaVersion = javaVersion;
         this.additionalOptions = new ConvertibleValuesMap<>(additionalOptions);
     }
 
@@ -110,6 +114,10 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options withBuildTool(BuildTool buildTool) {
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+    }
+
+    public Options withJavaVersion(JdkVersion javaVersion) {
         return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
     }
 }

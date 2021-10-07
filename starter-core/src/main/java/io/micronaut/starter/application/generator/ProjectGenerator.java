@@ -30,12 +30,12 @@ import java.util.List;
 public interface ProjectGenerator {
 
     void generate(ApplicationType applicationType,
-                         Project project,
-                         Options options,
-                         @Nullable OperatingSystem operatingSystem,
-                         List<String> selectedFeatures,
-                         OutputHandler outputHandler,
-                         ConsoleOutput consoleOutput) throws Exception;
+                  Project project,
+                  Options options,
+                  @Nullable OperatingSystem operatingSystem,
+                  List<String> selectedFeatures,
+                  OutputHandler outputHandler,
+                  ConsoleOutput consoleOutput) throws Exception;
 
     void generate(
             ApplicationType applicationType,

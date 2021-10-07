@@ -12,6 +12,7 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import io.micronaut.starter.util.VersionInfo
 import spock.lang.Issue
+import spock.lang.PendingFeature
 import spock.lang.Unroll
 
 class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -135,11 +136,12 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | "undertow-server"             | "undertow"
     }
 
+    @PendingFeature(reason = "Kotlin JDK17 Compatibility")
     @Unroll
     @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/774')
     void 'Workaround for Kotlin projects with Maven and JDK16'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_16))
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_17))
         def jvmConfig = output[".mvn/jvm.config"]
 
         then:
@@ -154,7 +156,7 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         !jvmConfig
 
         when:
-        output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_16))
+        output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_17))
         jvmConfig = output[".mvn/jvm.config"]
 
         then:
