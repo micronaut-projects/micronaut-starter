@@ -7,6 +7,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
+import spock.lang.PendingFeature
 
 class SpockSpec extends ApplicationContextSpec {
 
@@ -37,14 +38,14 @@ class SpockSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_16)
+                .jdkVersion(JdkVersion.JDK_17)
                 .render()
 
         then:
         template.contains('''
 java {
-    sourceCompatibility = JavaVersion.toVersion("16")
-    targetCompatibility = JavaVersion.toVersion("16")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
 ''')
 
@@ -52,12 +53,13 @@ java {
         [language, testFramework] << [(Language.values() - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST)].combinations()
     }
 
+    @PendingFeature(reason = "Kotlin JDK17 Compatibility")
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
     void 'With Kotlin or KoTest and JDK15 the sourceCompatibility is JDK14'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .jdkVersion(JdkVersion.JDK_16)
+                .jdkVersion(JdkVersion.JDK_17)
                 .testFramework(testFramework)
                 .render()
 
