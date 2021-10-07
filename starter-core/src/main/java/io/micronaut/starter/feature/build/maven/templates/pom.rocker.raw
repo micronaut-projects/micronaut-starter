@@ -438,7 +438,7 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>org.codehaus.gmavenplus</groupId>
         <artifactId>gmavenplus-plugin</artifactId>
-        <version>1.9.0</version>
+        <version>1.13.0</version>
         <executions>
           <execution>
             <goals>
@@ -453,6 +453,14 @@ MavenBuild mavenBuild
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${groovyVersion}</version>
+            <scope>runtime</scope>
+          </dependency>
+        </dependencies>
       </plugin>
 }
 @if (features.language().isGroovy()) {
