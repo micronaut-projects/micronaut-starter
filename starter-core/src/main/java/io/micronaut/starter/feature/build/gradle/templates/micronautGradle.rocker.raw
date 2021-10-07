@@ -1,0 +1,49 @@
+@import java.util.List
+@import io.micronaut.starter.feature.build.gradle.Dockerfile
+@args(Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages)
+@if(dockerfile != null) {
+dockerfile {
+@if(dockerfile.getBaseImage() != null) {
+    baseImage("@(dockerfile.getBaseImage())")
+}
+@if (dockerfile.getArgs() != null) {
+    args(
+    @for (int i = 0; i < dockerfile.getArgs().size(); i++) {
+        "@(dockerfile.getArgs().get(i))"@if (i < (dockerfile.getArgs().size() -1)) {,}
+    }
+    )
+}
+}
+}
+@if(dockerfileNative != null) {
+dockerfileNative {
+@if(dockerfileNative.getBaseImage() != null) {
+    baseImage("@(dockerfileNative.getBaseImage())")
+}
+@if (dockerfileNative.getArgs() != null) {
+    args(
+    @for (int i = 0; i < dockerfileNative.getArgs().size(); i++) {
+        "@(dockerfileNative.getArgs().get(i))"@if (i < (dockerfileNative.getArgs().size() -1)) {,}
+    }
+    )
+}
+}
+}
+@if(dockerBuilderNativeImages != null) {
+dockerBuildNative {
+    images = [
+    @for (int i = 0; i < dockerBuilderNativeImages.size(); i++) {
+        "@(dockerBuilderNativeImages.get(i))"@if (i < (dockerBuilderNativeImages.size() -1)) {,}
+    }
+    ]
+}
+}
+@if(dockerBuilderImages != null) {
+dockerBuild {
+    images = [
+    @for (int i = 0; i < dockerBuilderImages.size(); i++) {
+        "@(dockerBuilderImages.get(i))"@if (i < (dockerBuilderImages.size() -1)) {,}
+    }
+    ]
+}
+}

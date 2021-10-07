@@ -220,6 +220,14 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildGradle.contains('mainClass.set')
         buildGradle.contains('id("io.micronaut.application")')
 
+        buildGradle.contains('''\
+dockerfileNative {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
         where:
         language << Language.values().toList()
         extension << Language.extensions()

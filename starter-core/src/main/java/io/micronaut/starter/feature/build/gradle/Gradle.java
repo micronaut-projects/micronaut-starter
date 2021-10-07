@@ -21,7 +21,9 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.build.BuildFeature;
+import io.micronaut.starter.feature.build.MicronautBuildPlugin;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle;
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
@@ -32,8 +34,8 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
-
 import jakarta.inject.Singleton;
+
 import java.util.Set;
 
 @Singleton
@@ -42,14 +44,22 @@ public class Gradle implements BuildFeature {
     private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
 
     private final GradleBuildCreator dependencyResolver;
+    private final MicronautBuildPlugin micronautBuildPlugin;
 
-    public Gradle(GradleBuildCreator dependencyResolver) {
+    public Gradle(GradleBuildCreator dependencyResolver,
+                  MicronautBuildPlugin micronautBuildPlugin) {
         this.dependencyResolver = dependencyResolver;
+        this.micronautBuildPlugin = micronautBuildPlugin;
     }
 
     @Override
     public String getName() {
         return "gradle";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        featureContext.addFeature(micronautBuildPlugin);
     }
 
     @Override
@@ -72,10 +82,6 @@ public class Gradle implements BuildFeature {
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
         }
-        generatorContext.addBuildPlugin(GradlePlugin.builder()
-                .id(shouldApplyMicronautApplicationGradlePlugin(generatorContext) ? "io.micronaut.application" : "io.micronaut.library")
-                .lookupArtifactId("micronaut-gradle-plugin")
-                .build());
 
         BuildTool buildTool = generatorContext.getBuildTool();
         GradleBuild build = dependencyResolver.create(generatorContext);
@@ -90,12 +96,6 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject(), build)));
-    }
-
-    private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
-        return generatorContext.getFeatures().mainClass().isPresent() ||
-                generatorContext.getFeatures().contains("oracle-function") ||
-                generatorContext.getApplicationType() == ApplicationType.DEFAULT && generatorContext.getFeatures().contains("aws-lambda");
     }
 
     @Override
