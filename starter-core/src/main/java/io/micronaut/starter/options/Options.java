@@ -63,7 +63,9 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
-        if (language == Language.KOTLIN && javaVersion == JdkVersion.JDK_17) {
+        if (Boolean.parseBoolean(System.getProperty("override.kotlin.jdk")) &&
+                language == Language.KOTLIN &&
+                javaVersion == JdkVersion.JDK_17) {
             this.javaVersion = JdkVersion.JDK_11;
         } else {
             this.javaVersion = javaVersion;
