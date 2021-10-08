@@ -35,7 +35,7 @@ public class RequiredLanguageFeatureValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (options.getLanguage() == Language.KOTLIN && options.getJavaVersion() == JdkVersion.JDK_17) {
-            throw new IllegalArgumentException("JDK 17 is currently not compatible with Kotlin applications rely on Kapt, which is currently incompatible with JDK 17. See https://youtrack.jetbrains.com/issue/KT-45545 to track updates to this issue.");
+            throw new IllegalArgumentException("JDK 17 is currently not compatible with Kotlin applications because they rely on Kapt, which is currently incompatible with JDK 17. See https://youtrack.jetbrains.com/issue/KT-45545 to track updates to this issue.");
         }
         Map<Language, Set<String>> requiredLanguages = new HashMap<>();
         for (Feature feature: features) {
