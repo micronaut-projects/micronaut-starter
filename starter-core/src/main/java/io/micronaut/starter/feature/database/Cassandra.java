@@ -38,7 +38,7 @@ public class Cassandra implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Cassandra in the application";
+        return "Adds support for Cassandra persistence";
     }
 
     @Override

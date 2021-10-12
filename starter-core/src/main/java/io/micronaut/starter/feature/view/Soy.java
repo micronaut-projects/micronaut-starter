@@ -31,12 +31,12 @@ public class Soy implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Soy views";
+        return "Soy Yiews";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Soy (Closure Templates) as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Soy (Closure Templates)";
     }
 
     @Override

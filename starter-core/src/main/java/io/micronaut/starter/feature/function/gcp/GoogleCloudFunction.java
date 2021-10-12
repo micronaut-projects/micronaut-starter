@@ -65,12 +65,12 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
 
     @Override
     public String getTitle() {
-        return "Google Cloud Function Support";
+        return "Google Cloud Function";
     }
 
     @Override
     public String getDescription() {
-        return "Adds Support for Google Cloud Function (https://cloud.google.com/functions)";
+        return "Adds support for writing functions to deploy to Google Cloud Function";
     }
 
     @Override

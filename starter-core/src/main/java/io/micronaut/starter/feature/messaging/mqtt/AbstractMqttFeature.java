@@ -22,7 +22,7 @@ public abstract class AbstractMqttFeature implements MqttFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for MQTT in the application";
+        return "Adds support for MQTT messaging";
     }
 
     @Override

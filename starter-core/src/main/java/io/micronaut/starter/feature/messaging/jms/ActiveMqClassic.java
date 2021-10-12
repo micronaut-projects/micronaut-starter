@@ -39,7 +39,7 @@ public class ActiveMqClassic extends AbstractJmsFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for ActiveMQ Classic JMS in the application";
+        return "Adds support for ActiveMQ Classic JMS messaging";
     }
 
     @Override

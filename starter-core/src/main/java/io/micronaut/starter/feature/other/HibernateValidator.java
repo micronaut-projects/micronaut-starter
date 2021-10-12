@@ -37,7 +37,7 @@ public class HibernateValidator implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for the Hibernate validator";
+        return "Adds support for the Hibernate Validator";
     }
 
     @Override

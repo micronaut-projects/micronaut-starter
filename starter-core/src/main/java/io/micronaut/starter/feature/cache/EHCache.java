@@ -35,7 +35,7 @@ public class EHCache implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using EHCache";
+        return "Adds support for caching using EHCache";
     }
 
     @Override

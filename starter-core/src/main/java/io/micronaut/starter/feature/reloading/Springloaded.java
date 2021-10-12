@@ -41,7 +41,7 @@ public class Springloaded implements ReloadingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for class reloading with Spring-Loaded";
+        return "Adds support for class reloading with Spring Loaded";
     }
 
     @Override

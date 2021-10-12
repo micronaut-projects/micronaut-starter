@@ -46,7 +46,7 @@ public class TestContainers implements Feature {
 
     @Override
     public String getDescription() {
-        return "Testcontainers adds support for running real databases in a docker container for the test environment";
+        return "Use Testcontainers to run a database or other software in a Docker container for tests";
     }
 
     @Override

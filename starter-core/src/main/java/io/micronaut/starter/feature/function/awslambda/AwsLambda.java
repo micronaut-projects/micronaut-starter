@@ -88,7 +88,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
 
     @Override
     public String getDescription() {
-        return "Adds support for writing functions to be deployed to AWS Lambda";
+        return "Adds support for writing functions to deploy to AWS Lambda";
     }
 
     @Override

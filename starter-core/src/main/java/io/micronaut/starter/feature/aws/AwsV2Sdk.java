@@ -33,12 +33,12 @@ public class AwsV2Sdk implements Feature {
 
     @Override
     public String getTitle() {
-        return "AWS v2 SDK";
+        return "AWS SDK 2.x";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the AWS v2 SDK";
+        return "Provides integration with the AWS SDK 2.x";
     }
 
     @Override

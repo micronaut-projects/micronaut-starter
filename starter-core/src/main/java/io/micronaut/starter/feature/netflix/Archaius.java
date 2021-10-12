@@ -31,12 +31,12 @@ public class Archaius implements DistributedConfigFeature {
 
     @Override
     public String getTitle() {
-        return "Netflix Archaius Configuration";
+        return "Netflix Archaius Distributed Configuration";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Netflix Archaius";
+        return "Adds support for Distributed Configuration with Netflix Archaius";
     }
 
     @Override

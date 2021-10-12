@@ -38,7 +38,7 @@ public class Ribbon implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Netflix Ribbon";
+        return "Adds support for client side load balancing using Netflix Ribbon";
     }
 
     @Override

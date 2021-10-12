@@ -42,7 +42,7 @@ public class OracleFunctionsGraalWorkflow extends AbstractOracleFunctionsWorkflo
 
     @Override
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow that deploys a GraalVM native image to Oracle Functions from Oracle Cloud Infrastructure Registry.";
+        return "Adds a GitHub Actions Workflow to deploy a GraalVM native image to Oracle Functions from Oracle Cloud Infrastructure Registry";
     }
 
     @NonNull

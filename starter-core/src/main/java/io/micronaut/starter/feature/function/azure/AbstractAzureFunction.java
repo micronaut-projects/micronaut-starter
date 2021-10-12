@@ -71,7 +71,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @Override
     public String getDescription() {
-        return "Adds support for writing functions deployable to Microsoft Azure";
+        return "Adds support for writing functions to deploy to Microsoft Azure";
     }
 
     @Override

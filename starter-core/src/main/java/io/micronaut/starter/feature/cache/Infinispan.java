@@ -34,7 +34,7 @@ public class Infinispan implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Infinispan";
+        return "Adds support for caching using Infinispan";
     }
 
     @Override

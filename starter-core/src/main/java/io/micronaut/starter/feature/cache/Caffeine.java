@@ -37,7 +37,7 @@ public class Caffeine implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Caffeine";
+        return "Adds support for caching using Caffeine";
     }
 
     @Override

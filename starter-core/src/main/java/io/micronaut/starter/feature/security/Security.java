@@ -46,7 +46,7 @@ public class Security implements Feature, MicronautServerDependent {
 
     @Override
     public String getDescription() {
-        return "Adds a a fully featured and customizable security solution for your applications.";
+        return "Adds a full featured and customizable security solution";
     }
 
     @Override

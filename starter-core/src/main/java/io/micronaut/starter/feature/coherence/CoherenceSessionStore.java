@@ -52,7 +52,7 @@ public class CoherenceSessionStore implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support to store HTTPS session in Coherence.";
+        return "Adds support for storing HTTP sessions in Coherence";
     }
 
     @Override

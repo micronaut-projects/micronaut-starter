@@ -37,7 +37,7 @@ public class RxJava1 implements ReactiveFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for RxJava 1 to a Micronaut application; Converters and Instrumentation for RxJava 1 types";
+        return "Adds Reactive support using RxJava 1";
     }
 
     @Override

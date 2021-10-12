@@ -34,12 +34,12 @@ public class Rocker implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Rocker views";
+        return "Rocker Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Rocker as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Rocker";
     }
 
     @Override

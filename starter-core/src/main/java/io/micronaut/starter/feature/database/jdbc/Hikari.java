@@ -42,7 +42,7 @@ public class Hikari extends JdbcFeature {
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Hikari Connection Pool";
+        return "Configures SQL DataSources using Hikari Connection Pool";
     }
 
     @Override

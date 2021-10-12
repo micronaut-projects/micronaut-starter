@@ -39,7 +39,7 @@ public class Elasticsearch implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Elasticsearch in the application";
+        return "Adds support for Elasticsearch";
     }
 
     @Override

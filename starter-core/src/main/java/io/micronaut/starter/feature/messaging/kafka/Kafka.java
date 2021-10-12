@@ -43,7 +43,7 @@ public class Kafka implements DefaultFeature, MessagingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Kafka";
+        return "Adds support for Kafka messaging";
     }
 
     @Override

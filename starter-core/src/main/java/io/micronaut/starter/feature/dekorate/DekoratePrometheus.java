@@ -53,7 +53,7 @@ public class DekoratePrometheus extends AbstractDekorateServiceFeature {
 
     @Override
     public String getDescription() {
-        return "Extends Decorate's generated kubernetes deployment manifests with Prometheus ServiceMonitor resource " +
+        return "Extends Decorate's generated Kubernetes deployment manifests with Prometheus ServiceMonitor resource " +
                 "using Dekorate Prometheus Support.";
     }
 

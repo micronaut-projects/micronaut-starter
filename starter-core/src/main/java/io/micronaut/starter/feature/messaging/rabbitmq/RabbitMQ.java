@@ -38,7 +38,7 @@ public class RabbitMQ implements MessagingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for RabbitMQ in the application";
+        return "Adds support for RabbitMQ messaging";
     }
 
     @Override

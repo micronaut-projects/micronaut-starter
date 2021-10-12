@@ -53,7 +53,7 @@ public class Asciidoctor implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds Asciidoctor documentation";
+        return "Adds support for creating Asciidoctor documentation";
     }
 
     @Override

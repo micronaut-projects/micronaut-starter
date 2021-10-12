@@ -31,12 +31,12 @@ public class Freemarker implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Freemarker views";
+        return "Freemarker Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Apache Freemarker as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Apache Freemarker";
     }
 
     @Override

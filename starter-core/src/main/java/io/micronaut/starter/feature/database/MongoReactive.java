@@ -35,12 +35,12 @@ public class MongoReactive extends MongoFeature {
 
     @Override
     public String getTitle() {
-        return "Mongo Reactive Driver";
+        return "MongoDB Reactive Driver";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for the Mongo Reactive Streams Driver";
+        return "Adds support for the MongoDB Reactive Streams Driver";
     }
 
     @Override

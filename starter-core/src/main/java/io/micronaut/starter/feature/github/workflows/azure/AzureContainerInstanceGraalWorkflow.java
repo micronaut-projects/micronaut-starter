@@ -49,7 +49,7 @@ public class AzureContainerInstanceGraalWorkflow extends AbstractAzureContainerI
 
     @Override
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow that deploys a GraalVM native image to Azure Container Instance.";
+        return "Adds a GitHub Actions Workflow to deploy a GraalVM native image to Azure Container Instance";
     }
 
     @Override

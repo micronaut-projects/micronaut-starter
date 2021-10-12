@@ -34,7 +34,7 @@ public class Hazelcast implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Hazelcast";
+        return "Adds support for caching using Hazelcast";
     }
 
     @Override

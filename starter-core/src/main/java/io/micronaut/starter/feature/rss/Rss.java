@@ -38,7 +38,7 @@ public class Rss implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for generating RSS feeds (https://cyber.harvard.edu/rss/rss.html)";
+        return "Adds support for generating RSS feeds";
     }
 
     @Override

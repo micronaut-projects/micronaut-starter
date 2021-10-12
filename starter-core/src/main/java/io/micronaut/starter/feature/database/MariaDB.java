@@ -38,12 +38,12 @@ public class MariaDB extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "MariaDB Server: The open source relational database";
+        return "MariaDB Server";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the MariaDB driver and default config.";
+        return "Adds the MariaDB driver and default config";
     }
 
     @Override

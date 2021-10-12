@@ -43,7 +43,7 @@ public class GoogleCloudRunGraalWorkflow extends AbstractCloudRunWorkflow {
 
     @Override
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow that deploys a GraalVM native image to Google Cloud Run from Google Container Registry.";
+        return "Adds a GitHub Actions Workflow to deploy a GraalVM native image to Google Cloud Run from Google Container Registry";
     }
 
     @NonNull
