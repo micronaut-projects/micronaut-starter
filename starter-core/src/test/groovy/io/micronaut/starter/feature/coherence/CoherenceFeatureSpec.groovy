@@ -16,7 +16,7 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html")
+        readme.contains("https://micronaut-projects.github.io/micronaut-coherence/latest/guide/")
         readme.contains("https://coherence.java.net/")
     }
 
@@ -61,14 +61,14 @@ class CoherenceFeatureSpec extends BeanContextSpec implements CommandOutputFixtu
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
+        template.contains('''
     <dependency>
       <groupId>com.oracle.coherence.ce</groupId>
       <artifactId>coherence</artifactId>
-      <version>\${coherence.version}</version>
+      <version>${coherence.version}</version>
       <scope>compile</scope>
     </dependency>
-""")
+''')
         where:
         language << Language.values().toList()
     }

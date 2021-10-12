@@ -71,14 +71,21 @@ public class MavenBuildCreator {
                 .artifactId("micronaut-validation")
                 .versionProperty("micronaut.version")
                 .buildCoordinate(true);
+        Coordinate mnGraal = Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-graal")
+                .versionProperty("micronaut.version")
+                .buildCoordinate(true);
 
         if (combineAttribute == MavenCombineAttribute.OVERRIDE) {
             annotationProcessorsCoordinates.add(injectJava);
             annotationProcessorsCoordinates.add(validation);
+            annotationProcessorsCoordinates.add(mnGraal);
         }
         if (testCombineAttribute == MavenCombineAttribute.OVERRIDE) {
             testAnnotationProcessorsCoordinates.add(injectJava);
             testAnnotationProcessorsCoordinates.add(validation);
+            annotationProcessorsCoordinates.add(mnGraal);
         }
 
         annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);

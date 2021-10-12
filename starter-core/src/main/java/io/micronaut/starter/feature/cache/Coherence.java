@@ -24,7 +24,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Coherence implements CacheFeature {
 
-    private CoherenceFeature coherenceFeature;
+    private final CoherenceFeature coherenceFeature;
 
     public Coherence(CoherenceFeature coherenceFeature) {
         this.coherenceFeature = coherenceFeature;
@@ -52,7 +52,7 @@ public class Coherence implements CacheFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#cache";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#cache";
     }
 
     @Override
@@ -69,10 +69,5 @@ public class Coherence implements CacheFeature {
                 .artifactId("micronaut-coherence-cache")
                 .template();
         generatorContext.addDependency(coherenceMicronaut.compile());
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }

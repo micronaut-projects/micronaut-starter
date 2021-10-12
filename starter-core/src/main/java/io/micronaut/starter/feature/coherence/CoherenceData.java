@@ -60,7 +60,7 @@ public class CoherenceData implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/index.html#repository";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#repository";
     }
 
     @Override
@@ -87,10 +87,5 @@ public class CoherenceData implements Feature {
     @Override
     public String getCategory() {
         return Category.DATABASE;
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }

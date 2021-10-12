@@ -87,4 +87,20 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
     </dependency>
 """)
     }
+
+    void 'micronaut-graal dependency is added because it is in the parent pom'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .features(['lombok'])
+            .render()
+
+        then:
+        template.contains('''
+            <path>
+              <groupId>io.micronaut</groupId>
+              <artifactId>micronaut-graal</artifactId>
+              <version>${micronaut.version}</version>
+            </path>
+''')
+    }
 }

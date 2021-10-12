@@ -24,17 +24,12 @@ import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
 import io.micronaut.starter.feature.build.maven.templates.pom;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 @Singleton
@@ -62,7 +57,7 @@ public class Maven implements BuildFeature {
         generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
         generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
         generatorContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
-        generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), true));
+        generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), false));
 
         MavenBuild mavenBuild = dependencyResolver.create(generatorContext);
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
@@ -72,20 +67,6 @@ public class Maven implements BuildFeature {
                 mavenBuild
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
-
-        if (generatorContext.getFeatures().language().isKotlin() && generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
-            generatorContext.addTemplate("mvnJvmConfig", new Template() {
-                @Override
-                public String getPath() {
-                    return ".mvn/jvm.config";
-                }
-
-                @Override
-                public void write(OutputStream outputStream) throws IOException {
-                    outputStream.write("--illegal-access=permit\n".getBytes(StandardCharsets.UTF_8));
-                }
-            });
-        }
     }
 
     @Override

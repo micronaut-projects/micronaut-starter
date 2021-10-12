@@ -78,8 +78,10 @@ subprojects { Project subproject ->
         }
     }
 
-    if (!project.name.startsWith("test-")) {
-        tasks.withType(Test) {
+
+    tasks.withType(Test) {
+        systemProperty("override.kotlin.jdk", "true")
+        if (!project.name.startsWith("test-")) {
             testLogging {
                 exceptionFormat = 'full'
             }

@@ -28,7 +28,6 @@ import io.micronaut.starter.feature.build.gradle.templates.gradleProperties;
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle;
 import io.micronaut.starter.feature.database.JpaFeature;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
@@ -60,7 +59,7 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
         generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
         generatorContext.addTemplate("gradleWrapper", new URLTemplate("gradlew", classLoader.getResource("gradle/gradlew"), true));
-        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), true));
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate("gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
 
         if (generatorContext.getFeatures().language().isKotlin() || generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.jvm").lookupArtifactId("kotlin-gradle-plugin").build());
@@ -68,9 +67,6 @@ public class Gradle implements BuildFeature {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.allopen").lookupArtifactId("kotlin-allopen").build());
             if (generatorContext.getFeatures().isFeaturePresent(JpaFeature.class)) {
                 generatorContext.addBuildPlugin(GradlePlugin.builder().id("org.jetbrains.kotlin.plugin.jpa").lookupArtifactId("kotlin-noarg").build());
-            }
-            if (generatorContext.getJdkVersion().equals(JdkVersion.JDK_16)) {
-                generatorContext.getBuildProperties().put("org.gradle.jvmargs", "--illegal-access=permit");
             }
         }
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {

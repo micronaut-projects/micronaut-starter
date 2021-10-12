@@ -60,7 +60,7 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-coherence/1.0.x/guide/#distributedConfiguration";
+        return "https://micronaut-projects.github.io/micronaut-coherence/latest/guide/#distributedConfiguration";
     }
 
     @Override
@@ -95,10 +95,5 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
                     .version(CoherenceFeature.getCoherenceVersionProperty(generatorContext.getBuildTool()))
                     .compile());
         }
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }
