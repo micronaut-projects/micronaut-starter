@@ -53,7 +53,7 @@ public class RxJava3 implements ReactiveFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for RxJava 3 to a Micronaut application; Converters and Instrumentation for RxJava 3 types, RxJava 3 compatible HTTP Client";
+        return "Adds Reactive support using RxJava 3";
     }
 
     @Override

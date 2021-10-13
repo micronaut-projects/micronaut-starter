@@ -48,8 +48,8 @@ public class DekorateHalkyon extends AbstractDekorateServiceFeature {
 
     @Override
     public String getDescription() {
-        return "Extends Decorate's generated kubernetes deployment manifests with Halkyon resources " +
-                "using Dekorate Halkyon Support.";
+        return "Extends Decorate's generated Kubernetes deployment manifests with Halkyon resources " +
+                "using Dekorate Halkyon Support";
     }
 
     @Nullable

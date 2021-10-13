@@ -39,7 +39,7 @@ public class ActiveMqArtemis extends AbstractJmsFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for ActiveMQ Artemis JMS in the application";
+        return "Adds support for ActiveMQ Artemis JMS messaging";
     }
 
     @Override

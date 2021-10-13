@@ -38,12 +38,12 @@ public class HttpSession implements Feature  {
 
     @Override
     public String getTitle() {
-        return "Micronaut HTTP Sessions";
+        return "HTTP Sessions";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Micronaut HTTP Sessions";
+        return "Adds support for HTTP Sessions";
     }
 
     @Override

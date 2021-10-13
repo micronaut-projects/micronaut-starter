@@ -57,7 +57,7 @@ public class RxJava2 implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for RxJava 2 to a Micronaut application; Converters and Instrumentation for RxJava 2 types, RxJava 2 compatible HTTP Client";
+        return "Adds Reactive support using RxJava 2";
     }
 
     @Override

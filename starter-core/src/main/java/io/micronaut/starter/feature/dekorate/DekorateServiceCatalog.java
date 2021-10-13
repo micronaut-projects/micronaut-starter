@@ -48,8 +48,8 @@ public class DekorateServiceCatalog extends AbstractDekorateServiceFeature {
 
     @Override
     public String getDescription() {
-        return "Extends Decorate's generated kubernetes deployment manifests with Service Catalog resources " +
-                "using Dekorate Service Catalog Support.";
+        return "Extends Decorate's generated Kubernetes deployment manifests with Service Catalog resources " +
+                "using Dekorate Service Catalog Support";
     }
 
     @Nullable

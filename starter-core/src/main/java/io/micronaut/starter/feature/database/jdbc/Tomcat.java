@@ -39,7 +39,7 @@ public class Tomcat extends JdbcFeature {
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Tomcat Connection Pool";
+        return "Configures SQL DataSources using Tomcat Connection Pool";
     }
 
     @Override

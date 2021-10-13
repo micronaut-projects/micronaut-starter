@@ -32,12 +32,12 @@ public class VertxMySql implements Feature {
 
     @Override
     public String getTitle() {
-        return "Vertx Reactive MySql Client";
+        return "Vertx Reactive MySQL Client";
     }
 
     @Override
     public String getDescription() {
-        return "Add support for the Reactive MySQL Client in the application";
+        return "Add support for the Vertx Reactive MySQL Client";
     }
 
     @Override

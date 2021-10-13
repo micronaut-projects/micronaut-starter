@@ -37,12 +37,12 @@ public class Oracle extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "Oracle Database Server.";
+        return "Oracle Database Server";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the Oracle driver and default config.";
+        return "Adds the Oracle driver and default config";
     }
 
     @Override

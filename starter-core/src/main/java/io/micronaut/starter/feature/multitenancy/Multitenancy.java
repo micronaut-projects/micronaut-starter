@@ -36,13 +36,13 @@ public class Multitenancy implements Feature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Multi-tenancy";
+        return "Multitenancy";
     }
 
     @NonNull
     @Override
     public String getDescription() {
-        return "Adds multi-tenancy capabilities to your app. Tenant resolution, tenant propagation";
+        return "Adds multitenancy (tenant resolution, tenant propagation) capabilities";
     }
 
     @Override

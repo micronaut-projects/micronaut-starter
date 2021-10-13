@@ -30,12 +30,12 @@ public class Thymeleaf implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Thymeleaf views";
+        return "Thymeleaf Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Thymeleaf as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Thymeleaf";
     }
 
     @Override

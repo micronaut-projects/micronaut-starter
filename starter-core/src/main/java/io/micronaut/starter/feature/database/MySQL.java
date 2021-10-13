@@ -38,12 +38,12 @@ public class MySQL extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "MySQL open source database system.";
+        return "MySQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the MySQL driver and default config.";
+        return "Adds the MySQL driver and default config";
     }
 
     @Override

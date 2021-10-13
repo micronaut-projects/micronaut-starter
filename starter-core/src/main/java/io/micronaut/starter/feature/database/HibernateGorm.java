@@ -61,7 +61,7 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
 
     @Override
     public String getDescription() {
-        return "Adds support for GORM persistence framework";
+        return "Adds support for Hibernate using GORM";
     }
 
     @Override

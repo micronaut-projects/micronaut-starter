@@ -38,12 +38,12 @@ public class SQLServer extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "Microsoft SQL Server.";
+        return "Microsoft SQL Server";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the SQL Server driver and default config.";
+        return "Adds the SQL Server driver and default config";
     }
 
     @Override

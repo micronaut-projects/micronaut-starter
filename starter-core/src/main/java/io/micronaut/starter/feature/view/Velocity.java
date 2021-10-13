@@ -30,12 +30,12 @@ public class Velocity implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Velocity views";
+        return "Velocity Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Apache Velocity as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Apache Velocity";
     }
 
     @Override

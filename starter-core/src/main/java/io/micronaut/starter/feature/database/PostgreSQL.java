@@ -38,12 +38,12 @@ public class PostgreSQL extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "PostgresSQL open source object-relational database system.";
+        return "PostgresSQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the PostgresSQL driver and default config.";
+        return "Adds the PostgresSQL driver and default config";
     }
 
     @Override

@@ -53,7 +53,7 @@ public class Reactor implements ReactiveFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
+        return "Adds Reactive support using Project Reactor";
     }
 
     @Override

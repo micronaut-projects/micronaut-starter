@@ -48,7 +48,7 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
 
     @Override
     public String getDescription() {
-        return "Adds to Decorate deployment manifests Jaeger sidecar container.";
+        return "Adds to Decorate deployment manifests Jaeger sidecar container";
     }
 
     @Nullable

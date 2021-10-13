@@ -32,12 +32,12 @@ public class GraphQL implements Feature {
 
     @Override
     public String getTitle() {
-        return "Micronaut GraphQL";
+        return "GraphQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for GraphQL in the application";
+        return "Adds support for GraphQL";
     }
 
     @Override

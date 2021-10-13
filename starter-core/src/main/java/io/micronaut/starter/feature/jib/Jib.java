@@ -38,7 +38,7 @@ public class Jib implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Jib builds";
+        return "Build Docker containers using Jib";
     }
 
     @Override

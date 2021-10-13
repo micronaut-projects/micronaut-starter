@@ -33,12 +33,12 @@ public class Log4j2 implements LoggingFeature {
 
     @Override
     public String getTitle() {
-        return "Log4j2 Logging";
+        return "Log4j 2 Logging";
     }
 
     @Override
     public String getDescription() {
-        return "Adds Log4j2 Logging";
+        return "Adds Log4j 2 Logging";
     }
 
     @Override

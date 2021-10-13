@@ -26,7 +26,7 @@ import java.util.Map;
 public class AwsParameterStore implements DistributedConfigFeature {
     @Override
     public String getTitle() {
-        return "aws-parameter-store";
+        return "AWS Parameter Store Distributed Configuration";
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Flyway implements MigrationFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Flyway database migrations (https://flywaydb.org/)";
+        return "Adds support for Flyway database migrations";
     }
 
     @Override

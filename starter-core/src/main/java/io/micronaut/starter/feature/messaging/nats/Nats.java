@@ -40,7 +40,7 @@ public class Nats implements MessagingFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Nats.io in the application";
+        return "Adds support for Nats.io messaging";
     }
 
     @Override

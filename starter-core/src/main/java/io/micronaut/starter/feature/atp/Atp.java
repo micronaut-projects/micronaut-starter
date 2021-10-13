@@ -44,7 +44,7 @@ public class Atp implements Feature {
 
     @Override
     public String getTitle() {
-        return "Oracle Cloud ATP";
+        return "Oracle Cloud Autonomous Transaction Processing (ATP)";
     }
 
     @Override

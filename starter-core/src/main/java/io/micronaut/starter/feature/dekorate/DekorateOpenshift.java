@@ -49,7 +49,7 @@ public class DekorateOpenshift extends AbstractDekoratePlatformFeature {
 
     @Override
     public String getDescription() {
-        return "Generates OpenShift deployment manifest using Dekorate OpenShift Support.";
+        return "Generates OpenShift deployment manifest using Dekorate OpenShift Support";
     }
 
     @Nullable

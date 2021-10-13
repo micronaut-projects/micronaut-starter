@@ -35,7 +35,12 @@ public class Jmx extends MicrometerFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Jmx reporter)";
+        return "Adds support for Micrometer metrics (w/ JMX reporter)";
+    }
+
+    @Override
+    public String getTitle() {
+        return "Micrometer JMX";
     }
 
     @Override

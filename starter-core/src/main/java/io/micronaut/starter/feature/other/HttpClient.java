@@ -43,7 +43,7 @@ public class HttpClient implements DefaultFeature {
 
     @Override
     public String getTitle() {
-        return "Micronaut HTTP Client";
+        return "HTTP Client";
     }
 
     @Override

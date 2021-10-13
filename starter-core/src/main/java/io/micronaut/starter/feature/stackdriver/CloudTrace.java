@@ -39,12 +39,12 @@ public class CloudTrace implements Feature {
 
     @Override
     public String getTitle() {
-        return "Cloud Trace - Google Cloud Operations";
+        return "Google Cloud Trace";
     }
 
     @Override
     public String getDescription() {
-        return "Integrates Micronaut with Cloud Trace from Google Cloud Operations (formerly Stackdriver)";
+        return "Adds support for distributed tracing Google Cloud Trace";
     }
 
     @Override

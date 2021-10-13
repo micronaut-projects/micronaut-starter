@@ -34,12 +34,12 @@ public class JAsyncSQLFeature implements Feature {
 
     @Override
     public String getTitle() {
-        return "Micronaut JAsync SQL";
+        return "jasync-sql Asynchronous Database Drivers";
     }
 
     @Override
     public String getDescription() {
-        return "Adds asynchronous access to PostgreSQL and MySQL using jasync-sql";
+        return "Adds support for JAsync asynchronous PostgreSQL and MySQL database drivers";
     }
 
     @Override

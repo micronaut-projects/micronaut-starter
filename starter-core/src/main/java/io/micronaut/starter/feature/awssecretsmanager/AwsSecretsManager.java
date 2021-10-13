@@ -30,7 +30,7 @@ import java.util.Map;
 public class AwsSecretsManager implements DistributedConfigFeature {
     @Override
     public String getTitle() {
-        return "aws-secrets-manager";
+        return "AWS Secrets Manager";
     }
 
     @Override

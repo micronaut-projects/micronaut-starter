@@ -33,12 +33,12 @@ public class H2 extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "H2 open source database system.";
+        return "H2 Database";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the H2 driver and default config.";
+        return "Adds the H2 driver and default config";
     }
 
     @Override

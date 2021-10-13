@@ -67,7 +67,7 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
     @NonNull
     @Override
     public String getDescription() {
-        return "Support to define configuration with config4k a type safe configuration format for Kotlin based on HOCON (Human-Optimized Config Object Notation).";
+        return "Define configuration with config4k, a typesafe configuration format for Kotlin based on HOCON";
     }
 
     @Override

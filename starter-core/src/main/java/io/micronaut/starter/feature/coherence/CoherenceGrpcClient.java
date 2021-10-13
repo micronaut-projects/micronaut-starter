@@ -53,7 +53,7 @@ public class CoherenceGrpcClient implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for using Coherence as a gRPC client.";
+        return "Adds support for using Coherence as a gRPC client";
     }
 
     @Override

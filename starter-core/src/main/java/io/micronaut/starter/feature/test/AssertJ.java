@@ -38,7 +38,7 @@ public class AssertJ implements Feature {
 
     @Override
     public String getDescription() {
-        return "AssertJ fluent assertions framework for Java";
+        return "AssertJ fluent assertions framework";
     }
 
     @Override
