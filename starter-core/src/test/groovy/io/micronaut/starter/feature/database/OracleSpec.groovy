@@ -48,18 +48,4 @@ class OracleSpec extends ApplicationContextSpec implements CommandOutputFixture 
         language << Language.values().toList()
     }
 
-    @Unroll
-    void "test exception for oracle and #r2dbcFeature features"() {
-        when:
-        generate(['oracle',r2dbcFeature])
-
-        then:
-        def e = thrown(IllegalArgumentException)
-        e.message.startsWith("R2DBC is not yet supported by Oracle")
-
-        where:
-        r2dbcFeature << beanContext.streamOfType(R2dbcFeature)
-                .map { f -> f.name }
-                .collect(Collectors.toList())
-    }
 }
