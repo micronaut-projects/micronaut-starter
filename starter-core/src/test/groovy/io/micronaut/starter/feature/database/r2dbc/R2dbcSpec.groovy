@@ -20,10 +20,10 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains("implementation(\"io.micronaut.r2dbc:micronaut-r2dbc-core\")")
-        template.contains(":r2dbc-$driver")
+        template.contains(":$driver")
 
         where:
-        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name - "oracle"
+        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name
     }
 
     @Unroll
@@ -51,19 +51,22 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("<artifactId>r2dbc-$driver</artifactId>")
+        template.contains("<artifactId>$driver</artifactId>")
 
         where:
-        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name - "oracle"
+        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name
     }
 
     def getDriverName(name) {
         if (name == 'sqlserver') {
-            return "mssql"
+            return "r2dbc-mssql"
         }
         if (name == 'postgres') {
-            return "postgresql"
+            return "r2dbc-postgresql"
         }
-        return name
+        if (name == 'oracle') {
+            return "oracle-r2dbc"
+        }
+        return "r2dbc-$name"
     }
 }
