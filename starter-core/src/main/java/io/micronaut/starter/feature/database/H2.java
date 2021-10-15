@@ -20,6 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -78,15 +79,19 @@ public class H2 extends DatabaseDriverFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.h2database")
-                .artifactId("h2")
-                .runtime());
         if (generatorContext.isFeaturePresent(R2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.r2dbc")
                     .artifactId("r2dbc-h2")
                     .runtime());
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return;
+            }
         }
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("com.h2database")
+                .artifactId("h2")
+                .runtime());
     }
 }
