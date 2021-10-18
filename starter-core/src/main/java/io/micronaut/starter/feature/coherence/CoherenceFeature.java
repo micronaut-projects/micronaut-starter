@@ -32,7 +32,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class CoherenceFeature implements Feature {
 
-    public static final String COHERENCE_VERSION = "21.06.1";
+    public static final String COHERENCE_VERSION = "21.06.2";
 
     @Override
     public String getName() {
