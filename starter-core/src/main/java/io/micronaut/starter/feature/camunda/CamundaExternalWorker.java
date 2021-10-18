@@ -35,12 +35,12 @@ public class CamundaExternalWorker implements Feature {
 
     @Override
     public String getTitle() {
-        return "External Worker for Camunda (Workflow Engine)";
+        return "Camunda Workflow Engine External Worker";
     }
 
     @Override
     public String getDescription() {
-        return "Allows to implement External Workers (for Camunda Workflow Engine) in your Micronaut applications.";
+        return "Implement Camunda External Workers";
     }
 
     @Override

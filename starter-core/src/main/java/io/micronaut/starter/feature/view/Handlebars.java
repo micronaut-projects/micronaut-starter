@@ -31,12 +31,12 @@ public class Handlebars implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Handlebars views";
+        return "Handlebars Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Handlebars as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Handlebars";
     }
 
     @Override

@@ -38,7 +38,7 @@ public class SQS extends AbstractJmsFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for AWS SQS JMS in the application";
+        return "Adds support for AWS SQS JMS messaging";
     }
 
     @Override

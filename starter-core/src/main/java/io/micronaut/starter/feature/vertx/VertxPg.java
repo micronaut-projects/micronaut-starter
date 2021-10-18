@@ -32,12 +32,12 @@ public class VertxPg implements Feature {
 
     @Override
     public String getTitle() {
-        return "Vertx Reactive Postgres Client";
+        return "Vertx Reactive PostgreSQL Client";
     }
 
     @Override
     public String getDescription() {
-        return "Add support for the Reactive Postgres Client in the application";
+        return "Add support for the Vertx Reactive PostgreSQL Client";
     }
 
     @Override

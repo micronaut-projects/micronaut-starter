@@ -40,7 +40,7 @@ public class Ucp extends JdbcFeature {
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Oracle UCP";
+        return "Configures SQL DataSources using Oracle UCP";
     }
 
     @Override

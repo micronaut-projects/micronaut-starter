@@ -44,7 +44,7 @@ public class AwsAlexa implements Feature, CloudFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for building Alexa Skills with Micronaut.";
+        return "Build Alexa Skills with Micronaut";
     }
 
     @Override

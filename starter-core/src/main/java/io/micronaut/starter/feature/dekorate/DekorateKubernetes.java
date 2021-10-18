@@ -49,7 +49,7 @@ public class DekorateKubernetes extends AbstractDekoratePlatformFeature {
 
     @Override
     public String getDescription() {
-        return "Generates Kubernetes deployment manifest using Dekorate Kubernetes Support.";
+        return "Generates Kubernetes deployment manifest using Dekorate Kubernetes Support";
     }
 
     @Nullable

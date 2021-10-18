@@ -80,12 +80,12 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
 
     @Override
     public String getTitle() {
-        return "Oracle Function Support";
+        return "Oracle Function";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Oracle Functions.";
+        return "Adds support for writing functions to deploy to Oracle Cloud Function";
     }
 
     @Override

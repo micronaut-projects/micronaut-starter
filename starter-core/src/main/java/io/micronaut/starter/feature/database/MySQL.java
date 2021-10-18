@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -38,12 +39,12 @@ public class MySQL extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "MySQL open source database system.";
+        return "MySQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the MySQL driver and default config.";
+        return "Adds the MySQL driver and default config";
     }
 
     @Override
@@ -83,15 +84,19 @@ public class MySQL extends DatabaseDriverFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("mysql")
-                .artifactId("mysql-connector-java")
-                .runtime());
         if (generatorContext.isFeaturePresent(R2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("dev.miku")
                     .artifactId("r2dbc-mysql")
                     .runtime());
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return;
+            }
         }
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("mysql")
+                .artifactId("mysql-connector-java")
+                .runtime());
     }
 }

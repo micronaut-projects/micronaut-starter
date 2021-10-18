@@ -49,11 +49,6 @@ public class R2dbc implements R2dbcFeature {
     }
 
     @Override
-    public boolean isPreview() {
-        return true;
-    }
-
-    @Override
     public String getTitle() {
         return "R2DBC";
     }
@@ -101,10 +96,12 @@ public class R2dbc implements R2dbcFeature {
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
             generatorContext.getConfiguration().putAll(rdbcConfig);
         });
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.r2dbc")
-                .artifactId("micronaut-r2dbc-core")
-                .compile());
+        if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.micronaut.r2dbc")
+                    .artifactId("micronaut-r2dbc-core")
+                    .compile());
+        }
     }
 
     public String getUrlKey() {

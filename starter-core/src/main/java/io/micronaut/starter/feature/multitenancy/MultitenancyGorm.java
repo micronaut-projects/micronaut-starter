@@ -80,12 +80,12 @@ public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
 
     @Override
     public String getTitle() {
-        return "Multi-tenancy GORM";
+        return "Multitenancy GORM";
     }
 
     @Override
     public String getDescription() {
-        return "Integrates Micronaut's multi-tenancy capabilities with GORM multi-tenancy features";
+        return "Integrates Micronaut multitenancy capabilities with GORM multitenancy features";
     }
 
     @Override

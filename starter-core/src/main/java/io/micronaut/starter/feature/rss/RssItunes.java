@@ -37,7 +37,7 @@ public class RssItunes implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for generating iTunes Podcast RSS feeds (https://itunespartner.apple.com/podcasts)";
+        return "Adds support for generating iTunes Podcast RSS feeds";
     }
 
     @Override

@@ -30,12 +30,12 @@ public class Pebble implements ViewFeature, MicronautServerDependent {
 
     @Override
     public String getTitle() {
-        return "Pebble views";
+        return "Pebble Views";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Pebble as a Server Side View Rendering";
+        return "Adds support for Server-Side View Rendering using Pebble";
     }
 
     @Override

@@ -75,7 +75,7 @@ public class KotlinExtensionFunctions implements Feature, LanguageSpecificFeatur
 
     @Override
     public String getDescription() {
-        return "Variety of convenience functions to make using micronaut with kotlin more user-friendly";
+        return "Convenience functions to make using Micronaut with Kotlin more user-friendly";
     }
 
     public String getCategory() {

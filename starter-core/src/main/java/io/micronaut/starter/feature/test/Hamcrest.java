@@ -31,7 +31,7 @@ public class Hamcrest  implements Feature {
 
     @Override
     public String getTitle() {
-        return "Java Hamcrest";
+        return "Hamcrest";
     }
 
     @Override

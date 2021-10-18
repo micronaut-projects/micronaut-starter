@@ -98,7 +98,7 @@ public class DataR2dbc implements R2dbcFeature {
     @Nullable
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-r2dbc/latest/guide/";
+        return "https://micronaut-projects.github.io/micronaut-data/latest/guide/#dbc";
     }
 
     @Nullable

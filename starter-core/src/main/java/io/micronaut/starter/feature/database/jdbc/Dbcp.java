@@ -40,7 +40,7 @@ public class Dbcp extends JdbcFeature {
 
     @Override
     public String getDescription() {
-        return "Configures SQL DataSource instances using Commons DBCP";
+        return "Configures SQL DataSources using Commons DBCP";
     }
 
     @Override

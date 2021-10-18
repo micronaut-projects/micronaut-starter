@@ -42,7 +42,7 @@ public class Coherence implements CacheFeature {
 
     @Override
     public String getDescription() {
-        return "Adds support for cache using Coherence";
+        return "Adds support for caching using Coherence";
     }
 
     @Override

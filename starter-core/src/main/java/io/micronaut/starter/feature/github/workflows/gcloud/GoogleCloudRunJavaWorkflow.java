@@ -43,7 +43,7 @@ public class GoogleCloudRunJavaWorkflow extends AbstractCloudRunWorkflow {
 
     @Override
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow that deploys an application to Google Cloud Run from Google Container Registry.";
+        return "Adds a GitHub Actions Workflow to deploy to Google Cloud Run from Google Container Registry";
     }
 
     @NonNull

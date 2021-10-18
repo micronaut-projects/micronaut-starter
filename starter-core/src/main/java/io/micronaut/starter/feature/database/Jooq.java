@@ -41,12 +41,12 @@ public class Jooq implements Feature {
 
     @Override
     public String getTitle() {
-        return "jOOQ fluent API for typesafe SQL query construction and execution";
+        return "jOOQ";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for jOOQ in the application";
+        return "Use the jOOQ fluent API for typesafe SQL query construction and execution";
     }
 
     @Override

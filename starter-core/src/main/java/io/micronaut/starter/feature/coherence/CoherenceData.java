@@ -50,7 +50,7 @@ public class CoherenceData implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support to use Micronaut Data with Coherence.";
+        return "Adds support for using Micronaut Data with Coherence";
     }
 
     @Override

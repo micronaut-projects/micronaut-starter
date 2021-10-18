@@ -59,7 +59,7 @@ public class Knative implements Feature {
 
     @Override
     public String getDescription() {
-        return "Generates a knative deployment descriptor for deployment to Kubernetes";
+        return "Generates a Knative deployment descriptor for deployment to Kubernetes";
     }
 
     @Override

@@ -50,7 +50,7 @@ public class CoherenceDistributedConfiguration implements DistributedConfigFeatu
 
     @Override
     public String getDescription() {
-        return "Adds support for distributed configuration using Coherence";
+        return "Adds support for Distributed Configuration using Coherence";
     }
 
     @Override

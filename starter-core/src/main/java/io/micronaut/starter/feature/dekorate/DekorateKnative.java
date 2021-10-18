@@ -49,7 +49,7 @@ public class DekorateKnative extends AbstractDekoratePlatformFeature {
 
     @Override
     public String getDescription() {
-        return "Generates Knative kubernetes deployment manifest using Dekorate Knative Support.";
+        return "Generates Knative Kubernetes deployment manifest using Dekorate Knative Support";
     }
 
     @Nullable

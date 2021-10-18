@@ -42,7 +42,7 @@ public class DockerRegistryWorkflow extends AbstractDockerRegistryWorkflow {
 
     @Override
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow that builds and pushes a Docker image to any Docker registry.";
+        return "Adds a GitHub Actions Workflow to build and push a Docker image to any Docker registry";
     }
 
     @Override

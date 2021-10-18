@@ -53,7 +53,7 @@ public class JdbiFeature implements Feature {
 
     @Override
     public String getDescription() {
-        return "Jdbi provides convenient, idiomatic access to relational data in Java. Micronaut's jdbi feature supports automatically configuring Jdbi library";
+        return "Adds support for persistence with Jdbi";
     }
 
     @Override

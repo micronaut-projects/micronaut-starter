@@ -40,7 +40,7 @@ public class ProblemJson implements Feature {
 
     @Override
     public String getDescription() {
-        return "Produce application/problem+json responses from a Micronaut application";
+        return "Produce REST API error responses in application/problem+json format";
     }
 
     @Override
