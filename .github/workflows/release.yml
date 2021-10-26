@@ -28,6 +28,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build All
         run: ./gradlew micronaut-cli:assemble
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Publish to Maven Central
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
@@ -35,6 +37,7 @@ jobs:
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_FILE: ${{ secrets.GPG_FILE }}
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
       - name: Upload CLI Zip
         id: upload-release-asset
@@ -102,6 +105,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
@@ -150,6 +154,7 @@ jobs:
       - name: Build the JAR
         env:
           JAVA_HOME: ./graalvm/Contents/Home
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: ./graalvm/Contents/Home/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
@@ -192,6 +197,8 @@ jobs:
       - name: Build JAR File
         shell: powershell
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Build Native Image
         shell: powershell
         run: native-image --no-fallback -cp build/libs/cli.jar
@@ -240,6 +247,7 @@ jobs:
         env:
           GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
           GVM_SDKVENDOR_TOKEN: ${{ secrets.GVM_SDKVENDOR_TOKEN }}
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew sdkMajorRelease --no-daemon
   gcr:
     name: Deploy to Cloud Run
@@ -258,6 +266,8 @@ jobs:
           echo ::set-output name=release_version::${release_version}
       - name: Run Tests
         run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Build Docker image
         run: |
           docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} -f DockerfileCloudRun
@@ -302,9 +312,13 @@ jobs:
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
         run: ./gradlew starter-analytics-postgres:test
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Build Docker image
         run:
           ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Deploy to Cloud Run
         run: |
           gcloud components install beta --quiet

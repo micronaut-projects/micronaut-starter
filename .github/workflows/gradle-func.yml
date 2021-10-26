@@ -30,6 +30,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run cli create-controller Functional Tests
         run: ./gradlew test-cli:test --refresh-dependencies --parallel --continue
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
   test-core:
     runs-on: ubuntu-latest
     strategy:
@@ -52,6 +54,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
   test-aws:
     runs-on: ubuntu-latest
     strategy:
@@ -74,6 +78,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
   test-features:
     runs-on: ubuntu-latest
     strategy:
@@ -96,6 +102,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.*"
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
   test-cloud:
     runs-on: ubuntu-latest
     strategy:
@@ -118,6 +126,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.cloud.*"
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
   test-buildTool:
     runs-on: ubuntu-latest
     strategy:
@@ -140,3 +150,5 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.buildTool.*"
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}

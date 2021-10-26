@@ -19,9 +19,13 @@ jobs:
         run: "gcloud auth configure-docker --quiet"
       - name: Run Tests
         run: ./gradlew starter-analytics-postgres:test
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Build Docker image
         run:
           ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:snapshot
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Deploy to Cloud Run
         run: |
           gcloud components install beta --quiet
