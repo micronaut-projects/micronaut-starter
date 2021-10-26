@@ -30,6 +30,8 @@ jobs:
           java-version: ${{ matrix.java }}
       - name: Build with Gradle
         run: ./gradlew check --refresh-dependencies --continue -x test-core:test -x test-cli:test
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Verify CLI
         run: |
           ./gradlew micronaut-cli:assemble
@@ -37,11 +39,14 @@ jobs:
           unzip cli -d tmp
           mv tmp/micronaut-cli-* tmp/cli
           ./tmp/cli/bin/mn --version
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Publish to Sonatype OSSRH
         if: success() && github.event_name == 'push' && matrix.java == '8'
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew publishToSonatype docs --no-daemon
       - name: Publish to Github Pages
         if: success() && github.event_name == 'push' && matrix.java == '8'
