@@ -60,11 +60,11 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
         return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
     }
 
-    public String getDependencyName(){
+    public String getDependencyName() {
         return "micronaut-micrometer-registry-" + getName().replace("micrometer-", "");
     }
 
-    public String getDependencyGroupName(){
+    public String getDependencyGroupName() {
         return "io.micronaut.micrometer";
     }
 
