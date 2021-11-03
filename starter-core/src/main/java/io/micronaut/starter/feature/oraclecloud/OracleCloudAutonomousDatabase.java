@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
@@ -25,7 +25,6 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -107,6 +106,7 @@ public class OracleCloudAutonomousDatabase implements Feature {
             cfg.remove(jdbc.getUrlKey());
             cfg.remove(jdbc.getUsernameKey());
             cfg.remove(jdbc.getPasswordKey());
+            System.out.println("hovno " + cfg);
             removeDatasourceDefaultConfig("dialect", "H2", cfg);
             removeDatasourceDefaultConfig("schema-generate", "CREATE_DROP", cfg);
         });
