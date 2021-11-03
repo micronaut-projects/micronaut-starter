@@ -71,7 +71,7 @@ public class KubernetesReactorClient implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if(featureContext.isPresent(KubernetesClient.class)){
+        if (featureContext.isPresent(KubernetesClient.class)) {
             featureContext.exclude(feature -> feature instanceof KubernetesClient);
         }
     }
