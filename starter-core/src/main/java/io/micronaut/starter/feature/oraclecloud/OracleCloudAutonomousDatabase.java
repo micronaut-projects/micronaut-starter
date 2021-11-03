@@ -106,7 +106,6 @@ public class OracleCloudAutonomousDatabase implements Feature {
             cfg.remove(jdbc.getUrlKey());
             cfg.remove(jdbc.getUsernameKey());
             cfg.remove(jdbc.getPasswordKey());
-            System.out.println("hovno " + cfg);
             removeDatasourceDefaultConfig("dialect", "H2", cfg);
             removeDatasourceDefaultConfig("schema-generate", "CREATE_DROP", cfg);
         });

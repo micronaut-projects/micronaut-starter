@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
