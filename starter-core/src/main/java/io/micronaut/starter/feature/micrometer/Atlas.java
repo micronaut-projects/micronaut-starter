@@ -43,8 +43,8 @@ public class Atlas extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.uri", "http://localhost:7101/api/v1/publish");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-atlas")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

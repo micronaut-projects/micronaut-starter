@@ -43,8 +43,8 @@ public class Signalfx extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.accessToken", "${SIGNALFX_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-signalfx")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

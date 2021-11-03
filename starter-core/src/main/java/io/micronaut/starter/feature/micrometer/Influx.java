@@ -43,8 +43,8 @@ public class Influx extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-influx")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

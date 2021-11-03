@@ -44,8 +44,8 @@ public class AppOptics extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.apiToken", "${APPOPTICS_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-appoptics")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

@@ -43,8 +43,8 @@ public class Elastic extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-elastic")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

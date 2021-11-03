@@ -44,8 +44,8 @@ public class Ganglia extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".ganglia.protocolVersion", 3.1);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".ganglia.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-ganglia")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

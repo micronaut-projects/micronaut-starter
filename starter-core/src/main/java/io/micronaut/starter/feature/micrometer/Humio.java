@@ -42,8 +42,8 @@ public class Humio extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-humio")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

@@ -44,8 +44,8 @@ public class Stackdriver extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.projectId", "${STACKDRIVER_PROJECT_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-stackdriver")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

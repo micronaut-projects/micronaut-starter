@@ -44,8 +44,8 @@ public class NewRelic extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-new-relic")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

@@ -43,8 +43,8 @@ public class Prometheus extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.descriptions", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-prometheus")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

@@ -46,8 +46,8 @@ public class Dynatrace extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.deviceId", "${DYNATRACE_DEVICE_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-dynatrace")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

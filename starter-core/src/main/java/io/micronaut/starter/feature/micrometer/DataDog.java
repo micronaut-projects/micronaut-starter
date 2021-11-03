@@ -44,8 +44,8 @@ public class DataDog extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.apiKey", "${DATADOG_APIKEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-datadog")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

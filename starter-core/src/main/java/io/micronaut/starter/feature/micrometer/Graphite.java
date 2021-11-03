@@ -45,8 +45,8 @@ public class Graphite extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-graphite")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

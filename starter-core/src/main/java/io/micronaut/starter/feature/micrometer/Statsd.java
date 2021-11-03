@@ -46,8 +46,8 @@ public class Statsd extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.port", 8125);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-statsd")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

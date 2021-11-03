@@ -44,8 +44,8 @@ public class Wavefront extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.apiToken", "${WAVEFRONT_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-wavefront")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

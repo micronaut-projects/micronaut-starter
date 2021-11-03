@@ -43,8 +43,8 @@ public class Kairos extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-kairos")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }

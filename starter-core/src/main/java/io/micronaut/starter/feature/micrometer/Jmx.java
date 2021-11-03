@@ -48,8 +48,8 @@ public class Jmx extends MicrometerFeature {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".jmx.step", "PT1M");
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-jmx")
+                .groupId(getDependencyGroupName())
+                .artifactId(getDependencyName())
                 .compile());
     }
 }
