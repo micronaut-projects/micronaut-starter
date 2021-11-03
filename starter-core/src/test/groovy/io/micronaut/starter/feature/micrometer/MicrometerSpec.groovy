@@ -10,9 +10,10 @@ import spock.lang.Unroll
 class MicrometerSpec extends ApplicationContextSpec {
 
     @Unroll
-    void 'test gradle micrometer feature #micrometerFeature.name'() {
+    void 'test gradle micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
         given:
-        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
+        String dependency = micrometerFeature.getDependencyName()
+        String group = micrometerFeature.getDependencyGroupName()
 
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -20,7 +21,7 @@ class MicrometerSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains("implementation(\"io.micronaut.micrometer:${dependency}\")")
+        template.contains("implementation(\"${group}:${dependency}\")")
 
         where:
         micrometerFeature << beanContext.getBeansOfType(MicrometerFeature).iterator()
@@ -42,9 +43,10 @@ class MicrometerSpec extends ApplicationContextSpec {
     }
 
     @Unroll
-    void 'test maven micrometer feature #micrometerFeature.name'() {
+    void 'test maven micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
         given:
-        String dependency = "micronaut-micrometer-registry-${micrometerFeature.name - 'micrometer-'}"
+        String dependency = micrometerFeature.getDependencyName()
+        String group = micrometerFeature.getDependencyGroupName()
 
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
@@ -54,7 +56,7 @@ class MicrometerSpec extends ApplicationContextSpec {
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut.micrometer</groupId>
+      <groupId>$group</groupId>
       <artifactId>$dependency</artifactId>
       <scope>compile</scope>
     </dependency>
