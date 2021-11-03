@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.atp;
+package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
@@ -29,10 +29,10 @@ import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Atp implements Feature {
+public class OracleCloudAutonomousDatabase implements Feature {
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public Atp(OracleCloudSdk oracleCloudSdkFeature) {
+    public OracleCloudAutonomousDatabase(OracleCloudSdk oracleCloudSdkFeature) {
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
 
@@ -85,6 +85,13 @@ public class Atp implements Feature {
         }
     }
 
+    private void removeDatasourceDefaultConfig(String key, String value, ApplicationConfiguration cfg) {
+        String path = "datasources.default." + key;
+        if (cfg.containsKey(path) && cfg.get(path) == value) {
+            cfg.remove(path);
+        }
+    }
+
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
@@ -100,6 +107,8 @@ public class Atp implements Feature {
             cfg.remove(jdbc.getUrlKey());
             cfg.remove(jdbc.getUsernameKey());
             cfg.remove(jdbc.getPasswordKey());
+            removeDatasourceDefaultConfig("dialect", "H2", cfg);
+            removeDatasourceDefaultConfig("schema-generate", "CREATE_DROP", cfg);
         });
 
         cfg.put("datasources.default.ocid", "");
