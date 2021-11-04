@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.rxjava.RxJava2;
 import jakarta.inject.Singleton;
 
 /**
@@ -78,10 +79,12 @@ public class KubernetesRxJava2Client implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.reactivex.rxjava2")
-                .artifactId("rxjava")
-                .compile());
+        if (!generatorContext.isFeaturePresent(RxJava2.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("io.reactivex.rxjava2")
+                    .artifactId("rxjava")
+                    .compile());
+        }
         generatorContext.addDependency(Dependency.builder()
                 .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-client-rxjava2")

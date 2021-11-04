@@ -93,4 +93,15 @@ class KubernetesRxJava2ClientSpec extends ApplicationContextSpec  implements Com
         where:
         language << Language.values()
     }
+
+    void 'rxjava2 core dependency is not present if rxjava2 feature is present'(){
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['kubernetes-rxjava2-client', 'rxjava2'])
+                .render()
+
+        then:
+        template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-client-rxjava2")')
+        !template.contains('implementation("io.reactivex.rxjava2:rxjava")')
+    }
 }

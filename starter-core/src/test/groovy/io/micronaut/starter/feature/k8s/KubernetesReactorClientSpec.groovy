@@ -93,4 +93,15 @@ class KubernetesReactorClientSpec extends ApplicationContextSpec  implements Com
         where:
         language << Language.values()
     }
+
+    void 'reactor core dependency is not present if reactor feature is present'(){
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['kubernetes-reactor-client', 'reactor'])
+                .render()
+
+        then:
+        template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-client-reactor")')
+        !template.contains('implementation("io.projectreactor:reactor-core")')
+    }
 }
