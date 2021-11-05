@@ -24,7 +24,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 @Retry
-class GitHubCreateControllerSpec extends Specification{
+class GitHubCreateControllerSpec extends Specification {
 
     static Map<String, Object> getConfiguration(MapEntry ...entries) {
         Map<String, Object> m = [:]
