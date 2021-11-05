@@ -2,7 +2,7 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - 3.1.x
+      - 3.2.x
 jobs:
   deploy:
     name: Deploy Job
@@ -16,6 +16,8 @@ jobs:
         run: |
           ./gradlew starter-aws-lambda:buildNativeLambda
           cp starter-aws-lambda/build/libs/*-lambda.zip build/function.zip
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: AWS Lambda Deploy
         uses: appleboy/lambda-action@v0.1.5
         with:

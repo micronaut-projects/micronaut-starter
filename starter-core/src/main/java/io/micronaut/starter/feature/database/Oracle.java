@@ -86,7 +86,7 @@ public class Oracle extends DatabaseDriverFeature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.isFeaturePresent(R2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
-                    .groupId("com.oracle.database")
+                    .groupId("com.oracle.database.r2dbc")
                     .artifactId("oracle-r2dbc")
                     .runtime());
             if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {

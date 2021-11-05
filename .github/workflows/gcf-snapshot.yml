@@ -2,7 +2,7 @@ name: Snapshot to GCF
 on:
   push:
     branches:
-      - 3.1.x
+      - 3.2.x
 jobs:
   deploy:
     name: Deploy job
@@ -12,6 +12,8 @@ jobs:
         uses: actions/checkout@v2.3.4
       - name: Build the JAR
         run: ./gradlew starter-api:test starter-gcp-function:test starter-gcp-function:shadowJar
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:

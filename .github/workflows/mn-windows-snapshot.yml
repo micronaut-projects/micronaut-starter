@@ -21,6 +21,8 @@ jobs:
           native-image: true
       - name: Build JAR File
         shell: powershell
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: powershell
@@ -47,4 +49,3 @@ jobs:
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip
-
