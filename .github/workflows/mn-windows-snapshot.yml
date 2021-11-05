@@ -17,7 +17,7 @@ jobs:
       - uses: ayltai/setup-graalvm@v1
         with:
           java-version: 11
-          graalvm-version: 21.1.0
+          graalvm-version: 21.3.0
           native-image: true
       - name: Build JAR File
         shell: powershell
