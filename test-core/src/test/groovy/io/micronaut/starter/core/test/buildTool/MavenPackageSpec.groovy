@@ -58,7 +58,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=docker-native -Pgraalvm", 30)
 
         then:
-        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/graalvm-ce:java11")
+        output.contains("Using BASE_IMAGE: ghcr.io/graalvm/native-image:java11")
 
         where:
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
@@ -89,7 +89,7 @@ class MavenPackageSpec extends CommandSpec {
         String output = executeMaven( "package -Dpackaging=native-image")
 
         then:
-        output.contains("org.graalvm.nativeimage:native-image-maven-plugin")
+        output.contains("org.graalvm.buildtools:native-maven-plugin")
 
         where:
         lang << [Language.JAVA, Language.KOTLIN, Language.GROOVY]
