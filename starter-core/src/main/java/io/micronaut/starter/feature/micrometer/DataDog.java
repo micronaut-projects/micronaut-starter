@@ -29,23 +29,19 @@ public class DataDog extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-datadog";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Datadog reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.apiKey", "${DATADOG_APIKEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".datadog.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "datadog";
     }
 }

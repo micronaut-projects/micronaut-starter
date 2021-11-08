@@ -28,23 +28,20 @@ public class Atlas extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-atlas";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Atlas reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.uri", "http://localhost:7101/api/v1/publish");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".atlas.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
     }
+
+    @Override
+    protected String getImplementationName() {
+        return "atlas";
+    }
+
 }

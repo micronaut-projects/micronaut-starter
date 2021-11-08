@@ -29,22 +29,18 @@ public class Elastic extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-elastic";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Elastic reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".elastic.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "elastic";
     }
 }

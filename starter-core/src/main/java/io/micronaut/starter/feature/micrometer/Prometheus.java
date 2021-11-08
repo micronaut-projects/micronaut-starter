@@ -28,23 +28,19 @@ public class Prometheus extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-prometheus";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Prometheus reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.descriptions", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".prometheus.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "prometheus";
     }
 }

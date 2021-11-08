@@ -28,11 +28,6 @@ public class OracleCloud extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-oracle-cloud";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Oracle Cloud reporter)";
     }
@@ -43,13 +38,9 @@ public class OracleCloud extends MicrometerFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.namespace", "change-me");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
-                .artifactId("micronaut-oraclecloud-micrometer")
-                .compile());
         generatorContext.addDependency(Dependency.builder()
                 .groupId("com.oracle.oci.sdk")
                 .artifactId("oci-java-sdk-monitoring")
@@ -57,12 +48,17 @@ public class OracleCloud extends MicrometerFeature {
     }
 
     @Override
-    public String getDependencyGroupName() {
+    public String getGroupId() {
         return "io.micronaut.oraclecloud";
     }
 
     @Override
-    public String getDependencyName() {
+    public String getArtifactId() {
         return "micronaut-oraclecloud-micrometer";
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "oracle-cloud";
     }
 }

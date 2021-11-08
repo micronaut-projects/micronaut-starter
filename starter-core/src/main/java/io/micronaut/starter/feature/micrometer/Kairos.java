@@ -29,22 +29,18 @@ public class Kairos extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-kairos";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Kairos reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".kairos.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "kairos";
     }
 }

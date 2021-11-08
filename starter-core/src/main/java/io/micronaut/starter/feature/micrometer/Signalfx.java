@@ -28,23 +28,19 @@ public class Signalfx extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-signalfx";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ SignalFx reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.accessToken", "${SIGNALFX_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    public String getImplementationName() {
+        return "signalfx";
     }
 }

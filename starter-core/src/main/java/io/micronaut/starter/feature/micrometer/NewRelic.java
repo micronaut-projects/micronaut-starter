@@ -28,24 +28,20 @@ public class NewRelic extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-new-relic";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ New Relic reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.apiKey", "${NEWRELIC_API_KEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.accountId", "${NEWRELIC_ACCOUNT_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".newrelic.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "new-relic";
     }
 }

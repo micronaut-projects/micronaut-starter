@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -36,6 +38,11 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
     }
 
     @Override
+    public String getName() {
+        return "micrometer-" + getImplementationName();
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(Core.class)) {
             featureContext.addFeature(core);
@@ -51,6 +58,15 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
     }
 
     @Override
+    public void apply(GeneratorContext generatorContext) {
+        doApply(generatorContext);
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(getGroupId())
+                .artifactId(getArtifactId())
+                .compile());
+    }
+
+    @Override
     public String getCategory() {
         return Category.MANAGEMENT;
     }
@@ -60,12 +76,16 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
         return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
     }
 
-    public String getDependencyName() {
-        return "micronaut-micrometer-registry-" + getName().replace("micrometer-", "");
-    }
-
-    public String getDependencyGroupName() {
+    public String getGroupId() {
         return "io.micronaut.micrometer";
     }
+
+    protected String getArtifactId() {
+        return "micronaut-micrometer-registry-" + getImplementationName();
+    }
+
+    protected abstract String getImplementationName();
+
+    protected abstract void doApply(GeneratorContext generatorContext);
 
 }

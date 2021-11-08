@@ -12,8 +12,8 @@ class MicrometerSpec extends ApplicationContextSpec {
     @Unroll
     void 'test gradle micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
         given:
-        String dependency = micrometerFeature.getDependencyName()
-        String group = micrometerFeature.getDependencyGroupName()
+        String dependency = micrometerFeature.getArtifactId()
+        String group = micrometerFeature.getGroupId()
 
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -45,8 +45,8 @@ class MicrometerSpec extends ApplicationContextSpec {
     @Unroll
     void 'test maven micrometer feature #micrometerFeature.name'(MicrometerFeature micrometerFeature) {
         given:
-        String dependency = micrometerFeature.getDependencyName()
-        String group = micrometerFeature.getDependencyGroupName()
+        String dependency = micrometerFeature.getArtifactId()
+        String group = micrometerFeature.getGroupId()
 
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

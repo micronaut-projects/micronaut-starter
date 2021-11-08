@@ -29,24 +29,19 @@ public class AzureMonitor extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-azure-monitor";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Azure Monitor reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.instrumentationKey", "${AZUREMONITOR_INSTRUMENTATION_KEY}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".azuremonitor.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
     }
 
+    @Override
+    protected String getImplementationName() {
+        return "azure-monitor";
+    }
 }

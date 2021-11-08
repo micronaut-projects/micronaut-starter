@@ -29,23 +29,19 @@ public class Stackdriver extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-stackdriver";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Stackdriver reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.projectId", "${STACKDRIVER_PROJECT_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".stackdriver.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "stackdriver";
     }
 }

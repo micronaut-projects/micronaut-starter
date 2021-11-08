@@ -28,21 +28,17 @@ public class CloudWatch extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-cloudwatch";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ AWS Cloudwatch reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".cloudwatch.enabled", true);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "cloudwatch";
     }
 }

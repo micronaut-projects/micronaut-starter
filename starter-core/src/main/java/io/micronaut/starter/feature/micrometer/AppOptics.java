@@ -29,23 +29,19 @@ public class AppOptics extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-appoptics";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ AppOptics reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.apiToken", "${APPOPTICS_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".appoptics.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "appoptics";
     }
 }

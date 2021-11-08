@@ -28,22 +28,18 @@ public class Humio extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-humio";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Humio reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".humio.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "humio";
     }
 }

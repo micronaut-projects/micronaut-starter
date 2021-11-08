@@ -29,25 +29,21 @@ public class Dynatrace extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-dynatrace";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Dynatrace reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.apiToken", "${DYNATRACE_DEVICE_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.uri", "${DYNATRACE_DEVICE_URI}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.deviceId", "${DYNATRACE_DEVICE_ID}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".dynatrace.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(getDependencyGroupName())
-                .artifactId(getDependencyName())
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "dynatrace";
     }
 }
