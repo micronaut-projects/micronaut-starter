@@ -76,7 +76,7 @@ public abstract class MicrometerFeature implements Feature, MicronautServerDepen
         return NameUtils.getNaturalName(io.micronaut.core.naming.NameUtils.dehyphenate(getName()));
     }
 
-    public String getGroupId() {
+    protected String getGroupId() {
         return "io.micronaut.micrometer";
     }
 
