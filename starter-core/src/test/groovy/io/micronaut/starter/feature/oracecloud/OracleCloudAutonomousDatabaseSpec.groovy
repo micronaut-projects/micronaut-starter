@@ -58,14 +58,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         def config = output["src/main/resources/application.yml"]
 
         then:
-        config.contains("""
-datasources:
-  default:
-    ocid: ''
-    walletPassword: ''
-    username: ''
-    password: ''
-""")
+        !config.contains("datasources")
     }
 
     void 'test ATP config file no jdbc config'() {
@@ -88,9 +81,31 @@ datasources:
         def config = output["src/main/resources/application.yml"]
 
         then:
-        !config.contains('dialect')
-        !config.contains('schema-generate')
+        !config.contains('dialect: H2')
     }
+
+    void 'test config with a driver config feature'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.SPOCK, BuildTool.MAVEN, JdkVersion.JDK_11),
+                ['oracle-cloud-atp', "data-jdbc"])
+        def config = output["src/main/resources/application.yml"]
+
+        then:
+        config.contains("""
+    ocid: ''
+    walletPassword: ''
+""")
+        config.contains("""
+    username: ''
+    password: ''
+""")
+        config.contains("""
+    schema-generate: CREATE_DROP
+    dialect: ORACLE
+""")
+    }
+
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/942")
     void 'test oracle-cloud-atp requires java 11 or higher'() {
