@@ -58,7 +58,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
         def config = output["src/main/resources/application.yml"]
 
         then:
-        !config.contains("datasources")
+        config.contains("datasources") //default jdbc is added
     }
 
     void 'test ATP config file no jdbc config'() {

@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.database.DatabaseDriverConfigurationFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import jakarta.inject.Singleton;
 
@@ -37,7 +38,8 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public OracleCloudAutonomousDatabase(OracleCloudSdk oracleCloudSdkFeature) {
+    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature, TestContainers testContainers, OracleCloudSdk oracleCloudSdkFeature) {
+        super(jdbcFeature, testContainers);
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
 
@@ -120,6 +122,7 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         if (!featureContext.isPresent(OracleCloudSdk.class)) {
             featureContext.addFeature(oracleCloudSdkFeature);
         }
