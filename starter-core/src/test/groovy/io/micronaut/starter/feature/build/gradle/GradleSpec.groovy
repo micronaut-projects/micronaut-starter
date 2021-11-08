@@ -92,4 +92,19 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         !properties.contains("org.gradle.jvmargs=--illegal-access=permit")
     }
 
+    void 'disable Gradle Toolchain by default (language=#language)'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.GRADLE))
+        def gradleProperties = output["gradle.properties"]
+
+        then:
+        gradleProperties
+        gradleProperties.contains("org.gradle.java.installations.auto-download=false")
+        gradleProperties.contains("org.gradle.java.installations.auto-detect=false")
+        gradleProperties.contains("org.gradle.java.installations.fromEnv=JAVA_HOME")
+
+        where:
+        language << Language.values()
+    }
+
 }
