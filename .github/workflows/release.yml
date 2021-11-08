@@ -97,7 +97,7 @@ jobs:
           echo ::set-output name=release_version::${release_version}
       - name: Install GraalVM
         env:
-          GRAAL_VERSION: 21.0.0.2
+          GRAAL_VERSION: 21.3.0
           GRAAL_OS: linux-amd64
         run: ./install-graal.sh
       - name: Install Native Image
@@ -146,7 +146,7 @@ jobs:
           echo ::set-output name=release_version::${release_version}
       - name: Install GraalVM
         env:
-          GRAAL_VERSION: 21.0.0.2
+          GRAAL_VERSION: 21.3.0
           GRAAL_OS: darwin-amd64
         run: ./install-graal.sh
       - name: Install Native Image
@@ -191,8 +191,8 @@ jobs:
       - uses: microsoft/setup-msbuild@v1
       - uses: ayltai/setup-graalvm@v1
         with:
-          java-version: 8
-          graalvm-version: 21.0.0.2
+          java-version: 11
+          graalvm-version: 21.3.0
           native-image: true
       - name: Build JAR File
         shell: powershell
