@@ -61,7 +61,6 @@ public class OracleCloudVault implements DistributedConfigFeature {
                 .artifactId("micronaut-oraclecloud-vault")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
-        generatorContext.getBootstrapConfiguration().put("micronaut.application.name", generatorContext.getProject().getPropertyName());
         generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
         generatorContext.getBootstrapConfiguration().put("oci.vault.config.enabled", true);
         Map<String, String> map = new HashMap<>();
