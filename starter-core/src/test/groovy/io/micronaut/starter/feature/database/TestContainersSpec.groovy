@@ -413,6 +413,7 @@ class TestContainersSpec extends ApplicationContextSpec {
 
         where:
         driverFeature <<  beanContext.streamOfType(DatabaseDriverFeature)
+                .filter(f -> f.name != "oracle-cloud-atp")
                 .filter({ f ->  !f.embedded() })
                 .collect(Collectors.toList())
     }

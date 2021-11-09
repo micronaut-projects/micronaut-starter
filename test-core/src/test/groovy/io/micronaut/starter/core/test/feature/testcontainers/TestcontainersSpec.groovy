@@ -1,6 +1,6 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
-import io.micronaut.core.version.VersionUtils
+
 import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
@@ -13,9 +13,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.util.VersionInfo
-import org.junit.Assume
-import org.junit.AssumptionViolatedException
-import spock.lang.IgnoreIf
 import spock.lang.Retry
 import spock.lang.Unroll
 
