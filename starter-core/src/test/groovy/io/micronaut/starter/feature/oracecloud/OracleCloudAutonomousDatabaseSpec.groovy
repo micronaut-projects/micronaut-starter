@@ -59,6 +59,14 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 
         then:
         config.contains("datasources") //default jdbc is added
+        config.contains("""
+    ocid: ''
+    walletPassword: ''
+""")
+        config.contains("""
+    username: ''
+    password: ''
+""")
     }
 
     void 'test ATP config file no jdbc config'() {
