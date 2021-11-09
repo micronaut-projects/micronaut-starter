@@ -10,9 +10,7 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.VersionInfo
-import org.graalvm.compiler.serviceprovider.JavaVersionUtil
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Unroll
