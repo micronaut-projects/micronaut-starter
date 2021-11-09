@@ -137,7 +137,7 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .compile()
-                .groupId("io.micronaut.oraclecloud")
+                .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
                 .artifactId("micronaut-oraclecloud-atp")
                 .build());
     }

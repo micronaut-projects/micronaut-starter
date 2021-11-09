@@ -26,6 +26,9 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class OracleCloudSdk implements Feature {
+
+    public static final String ORACLE_CLOUD_GROUP = "io.micronaut.oraclecloud";
+
     @Override
     public String getName() {
         return "oracle-cloud-sdk";
@@ -66,7 +69,7 @@ public class OracleCloudSdk implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.oraclecloud")
+                .groupId(ORACLE_CLOUD_GROUP)
                 .artifactId("micronaut-oraclecloud-sdk")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
