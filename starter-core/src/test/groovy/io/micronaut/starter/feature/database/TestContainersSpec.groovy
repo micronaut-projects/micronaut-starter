@@ -4,6 +4,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
@@ -384,10 +385,12 @@ class TestContainersSpec extends ApplicationContextSpec {
     void "test there is a dependency for every non embedded driver feature"() {
         when:
         String mavenTemplate = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .jdkVersion(JdkVersion.JDK_11)
                 .features(['testcontainers', driverFeature.getName()])
                 .render()
 
         String gradleTemplate = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .jdkVersion(JdkVersion.JDK_11)
                 .features(['testcontainers', driverFeature.getName()])
                 .render()
 
@@ -410,6 +413,7 @@ class TestContainersSpec extends ApplicationContextSpec {
 
         where:
         driverFeature <<  beanContext.streamOfType(DatabaseDriverFeature)
+                .filter(f -> f.name != "oracle-cloud-atp")
                 .filter({ f ->  !f.embedded() })
                 .collect(Collectors.toList())
     }
