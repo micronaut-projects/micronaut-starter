@@ -28,7 +28,7 @@ class KubernetesInformerSpec extends ApplicationContextSpec  implements CommandO
     @Shared
     KubernetesInformer informer = beanContext.getBean(KubernetesInformer)
 
-    void "kubernetes-informer belongs to Client category"() {
+    void "kubernetes-informer belongs to Cloud category"() {
         expect:
         Category.CLOUD == informer.category
     }
@@ -50,7 +50,7 @@ class KubernetesInformerSpec extends ApplicationContextSpec  implements CommandO
     }
 
     @Unroll
-    void 'dependency is included with maven and feature kubernetes-informer for language=#language'(Language language) {
+    void 'dependency is included with maven for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['kubernetes-informer'])
@@ -70,7 +70,7 @@ class KubernetesInformerSpec extends ApplicationContextSpec  implements CommandO
     }
 
     @Unroll
-    void 'dependency is included with gradle and kubernetes-informer reactor for language=#language'(Language language) {
+    void 'dependency is included with gradle for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
