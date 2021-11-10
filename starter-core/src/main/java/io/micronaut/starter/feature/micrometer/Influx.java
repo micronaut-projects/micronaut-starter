@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import jakarta.inject.Singleton;
@@ -29,22 +28,18 @@ public class Influx extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-influx";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Influx reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".influx.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-influx")
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "influx";
     }
 }

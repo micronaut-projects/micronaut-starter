@@ -16,32 +16,49 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Graphite extends MicrometerFeature {
+public class OracleCloud extends MicrometerFeature {
 
-    public Graphite(Core core, Management management) {
+    public OracleCloud(Core core, Management management) {
         super(core, management);
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Micrometer metrics (w/ Graphite reporter)";
+        return "Adds support for Micrometer metrics (w/ Oracle Cloud reporter)";
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#micrometer";
     }
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
-        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.enabled", true);
+        generatorContext.getConfiguration().put(EXPORT_PREFIX + ".oraclecloud.namespace", "change-me");
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("com.oracle.oci.sdk")
+                .artifactId("oci-java-sdk-monitoring")
+                .compile());
+    }
+
+    @Override
+    public String getGroupId() {
+        return "io.micronaut.oraclecloud";
+    }
+
+    @Override
+    public String getArtifactId() {
+        return "micronaut-oraclecloud-micrometer";
     }
 
     @Override
     protected String getImplementationName() {
-        return "graphite";
+        return "oracle-cloud";
     }
 }

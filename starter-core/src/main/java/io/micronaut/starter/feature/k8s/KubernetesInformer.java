@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,47 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.oraclecloud;
+package io.micronaut.starter.feature.k8s;
 
-import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloudSdk implements Feature {
-
-    public static final String ORACLE_CLOUD_GROUP = "io.micronaut.oraclecloud";
+public class KubernetesInformer implements Feature {
 
     @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @NonNull
+    @Override
     public String getName() {
-        return "oracle-cloud-sdk";
+        return "kubernetes-informer";
     }
 
     @Override
     public String getTitle() {
-        return "Oracle Cloud SDK";
+        return "Kubernetes Informer Support";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the Oracle Cloud SDK";
-    }
-
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/javasdk.htm";
+        return "Adds Micronaut Kubernetes Informer support";
     }
 
     @Override
@@ -62,16 +53,20 @@ public class OracleCloudSdk implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#kubernetes-informer";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://github.com/kubernetes-client/java/wiki";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(ORACLE_CLOUD_GROUP)
-                .artifactId("micronaut-oraclecloud-sdk")
+                .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
+                .artifactId("micronaut-kubernetes-informer")
                 .compile());
-        generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
     }
 }

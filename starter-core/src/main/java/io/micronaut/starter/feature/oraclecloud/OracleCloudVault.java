@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2021 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,62 +16,56 @@
 package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
-@Singleton
-public class OracleCloudSdk implements Feature {
+import java.util.HashMap;
+import java.util.Map;
 
-    public static final String ORACLE_CLOUD_GROUP = "io.micronaut.oraclecloud";
+@Singleton
+public class OracleCloudVault implements DistributedConfigFeature {
 
     @Override
     public String getName() {
-        return "oracle-cloud-sdk";
+        return "oracle-cloud-vault";
     }
 
     @Override
     public String getTitle() {
-        return "Oracle Cloud SDK";
+        return "Oracle Cloud Vault Distributed Configuration";
     }
 
     @Override
     public String getDescription() {
-        return "Provides integration with the Oracle Cloud SDK";
+        return "Adds support for Distributed Configuration with Oracle Cloud Vault";
     }
 
     @Nullable
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/";
+        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#vault";
     }
 
     @Nullable
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/javasdk.htm";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLOUD;
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+        return "https://docs.oracle.com/en-us/iaas/Content/KeyManagement/home.htm";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(ORACLE_CLOUD_GROUP)
-                .artifactId("micronaut-oraclecloud-sdk")
+                .groupId("io.micronaut.oraclecloud")
+                .artifactId("micronaut-oraclecloud-vault")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
+        generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
+        generatorContext.getBootstrapConfiguration().put("oci.vault.config.enabled", true);
+        Map<String, String> map = new HashMap<>();
+        map.put("ocid", "");
+        map.put("compartment-ocid", "");
+        generatorContext.getBootstrapConfiguration().put("oci.vault.config.vaults", map);
     }
 }

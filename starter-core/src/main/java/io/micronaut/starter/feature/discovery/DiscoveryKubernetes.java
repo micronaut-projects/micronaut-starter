@@ -13,62 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.distributedconfig;
+package io.micronaut.starter.feature.discovery;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.k8s.Kubernetes;
-
 import io.micronaut.starter.feature.k8s.KubernetesClient;
 import jakarta.inject.Singleton;
 
-/**
- * Adds support for Kubernetes config maps configuration.
- *
- * @author alvaro
- * @since 2.0.0
- */
 @Singleton
-public class KubernetesConfig implements DistributedConfigFeature {
+public class DiscoveryKubernetes implements DiscoveryFeature {
 
-    private final Kubernetes kubernetes;
-
-    public KubernetesConfig(Kubernetes kubernetes) {
-        this.kubernetes = kubernetes;
-    }
-
+    @NonNull
     @Override
     public String getName() {
-        return "config-kubernetes";
+        return "discovery-kubernetes";
     }
 
     @Override
     public String getTitle() {
-        return "Kubernetes Distributed Configuration";
+        return "Kubernetes Service Discovery";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Distributed Configuration with Kubernetes ConfigMap";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(Kubernetes.class)) {
-            featureContext.addFeature(kubernetes);
-        }
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI && applicationType != ApplicationType.FUNCTION;
+        return "Adds support for Service Discovery with Kubernetes";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
+        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
+        generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
         generatorContext.addDependency(Dependency.builder()
                 .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-discovery-client")
@@ -77,6 +52,6 @@ public class KubernetesConfig implements DistributedConfigFeature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#config-client";
+        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#service-discovery";
     }
 }

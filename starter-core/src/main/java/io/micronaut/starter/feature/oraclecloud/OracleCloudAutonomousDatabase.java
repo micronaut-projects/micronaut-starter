@@ -13,26 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.atp;
+package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
 import jakarta.inject.Singleton;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Singleton
-public class Atp implements Feature {
+public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
+
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public Atp(OracleCloudSdk oracleCloudSdkFeature) {
+    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature, TestContainers testContainers, OracleCloudSdk oracleCloudSdkFeature) {
+        super(jdbcFeature, testContainers);
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
 
@@ -79,32 +83,62 @@ public class Atp implements Feature {
     }
 
     @Override
+    public boolean embedded() {
+        return false;
+    }
+
+    @Override
+    public String getJdbcUrl() {
+        return null;
+    }
+
+    @Override
+    public String getR2dbcUrl() {
+        return null;
+    }
+
+    @Override
+    public String getDriverClass() {
+        return null;
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
+    }
+
+    @Override
+    public String getDataDialect() {
+        return "ORACLE";
+    }
+
+    @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         if (!featureContext.isPresent(OracleCloudSdk.class)) {
             featureContext.addFeature(oracleCloudSdkFeature);
         }
     }
 
     @Override
+    public Map<String, Object> getAdditionalConfig() {
+        Map<String, Object> config = new LinkedHashMap<>(2);
+        config.put("datasources.default.ocid", "");
+        config.put("datasources.default.walletPassword", "");
+        return config;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .compile()
-                .groupId("io.micronaut.oraclecloud").artifactId("micronaut-oraclecloud-atp")
+                .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
+                .artifactId("micronaut-oraclecloud-atp")
                 .build());
-
-        ApplicationConfiguration cfg = generatorContext.getConfiguration();
-
-        // remove old jdbc config
-        generatorContext.getFeature(JdbcFeature.class).ifPresent(jdbc -> {
-            cfg.remove(jdbc.getDriverKey());
-            cfg.remove(jdbc.getUrlKey());
-            cfg.remove(jdbc.getUsernameKey());
-            cfg.remove(jdbc.getPasswordKey());
-        });
-
-        cfg.put("datasources.default.ocid", "");
-        cfg.put("datasources.default.walletPassword", "");
-        cfg.put("datasources.default.username", "");
-        cfg.put("datasources.default.password", "");
     }
 }
