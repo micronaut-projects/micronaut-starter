@@ -25,6 +25,8 @@ import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugi
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
+
 @Singleton
 public class MicronautBuildPlugin implements Feature {
 
@@ -43,8 +45,11 @@ public class MicronautBuildPlugin implements Feature {
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
-        MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder();
-        if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA)) {
+        MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder()
+                .buildTool(generatorContext.getBuildTool());
+        if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
+                (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
+                (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
             builder = builder.dockerNative(Dockerfile.builder().arg("-XX:MaximumHeapSizePercent=80")
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")

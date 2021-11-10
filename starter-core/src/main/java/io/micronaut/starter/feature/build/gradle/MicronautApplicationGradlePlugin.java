@@ -17,9 +17,9 @@ package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +39,12 @@ public class MicronautApplicationGradlePlugin {
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
         private List<String> dockerBuildNativeImages;
+        private BuildTool buildTool;
+
+        public Builder buildTool(BuildTool buildTool) {
+            this.buildTool = buildTool;
+            return this;
+        }
 
         public Builder dockerNative(Dockerfile dockerfileNative) {
             this.dockerfileNative = dockerfileNative;
@@ -70,7 +76,7 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(ID)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages)))
+                    .extension(new RockerWritable(micronautGradle.template(buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages)))
                     .build();
         }
     }
