@@ -80,6 +80,11 @@ public class GradlePlugin implements BuildPlugin {
     }
 
     @Override
+    public int getOrder() {
+        return this.order;
+    }
+
+    @Override
     public boolean requiresLookup() {
         return requiresLookup;
     }

@@ -234,6 +234,21 @@ tasks.named("dockerfileNative") {
         extension << Language.extensions()
     }
 
+    void "kotlin.kapt plugin is applied before micronaut library plugin"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.FUNCTION,
+                new Options(Language.KOTLIN, BuildTool.GRADLE_KOTLIN),
+                ['aws-lambda']
+        )
+        String buildGradle = output['build.gradle.kts']
+
+        then:
+        buildGradle.contains('org.jetbrains.kotlin.kapt')
+        buildGradle.contains('io.micronaut.library')
+        buildGradle.indexOf('org.jetbrains.kotlin.kapt') < buildGradle.indexOf('io.micronaut.library')
+    }
+
     @Unroll
     void 'Application file is generated for a default application type with gradle Kotlin DSL and features aws-lambda for language: #language'(Language language, String extension) {
         when:
