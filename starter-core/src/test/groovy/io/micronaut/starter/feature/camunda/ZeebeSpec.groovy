@@ -31,7 +31,7 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         readme
-        readme.contains("https://github.com/camunda-community-hub/micronaut-camunda-bpm")
+        readme.contains("https://github.com/camunda-community-hub/micronaut-zeebe-client")
     }
 
     @Unroll
