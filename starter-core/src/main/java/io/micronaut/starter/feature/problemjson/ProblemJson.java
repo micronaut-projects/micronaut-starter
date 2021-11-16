@@ -48,7 +48,6 @@ public class ProblemJson implements Feature {
         return "https://micronaut-projects.github.io/micronaut-problem-json/latest/guide/index.html";
     }
 
-
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
