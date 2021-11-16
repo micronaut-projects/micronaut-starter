@@ -1,12 +1,12 @@
 package io.micronaut.starter.feature.dependencies;
 
 import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.TestFramework;
-import org.jetbrains.annotations.NotNull;
 
 import jakarta.inject.Singleton;
 
@@ -17,7 +17,7 @@ public class GebFeature implements Feature {
     public GebFeature() {
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return "geb";

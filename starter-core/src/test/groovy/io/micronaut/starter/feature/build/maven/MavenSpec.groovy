@@ -136,31 +136,4 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         ApplicationType.DEFAULT     | "undertow-server"             | "undertow"
     }
 
-    @PendingFeature(reason = "Kotlin JDK17 Compatibility")
-    @Unroll
-    @Issue('https://github.com/micronaut-projects/micronaut-starter/issues/774')
-    void 'Workaround for Kotlin projects with Maven and JDK16'() {
-        when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_17))
-        def jvmConfig = output[".mvn/jvm.config"]
-
-        then:
-        jvmConfig
-        jvmConfig.contains("--illegal-access=permit")
-
-        when:
-        output = generate(ApplicationType.DEFAULT, new Options(Language.KOTLIN, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11))
-        jvmConfig = output[".mvn/jvm.config"]
-
-        then:
-        !jvmConfig
-
-        when:
-        output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_17))
-        jvmConfig = output[".mvn/jvm.config"]
-
-        then:
-        !jvmConfig
-    }
-
 }
