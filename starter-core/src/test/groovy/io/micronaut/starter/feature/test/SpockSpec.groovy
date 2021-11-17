@@ -53,9 +53,8 @@ java {
         [language, testFramework] << [(Language.values() - Language.KOTLIN), (TestFramework.values() - TestFramework.KOTEST)].combinations()
     }
 
-    @PendingFeature(reason = "Kotlin JDK17 Compatibility")
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/514")
-    void 'With Kotlin or KoTest and JDK15 the sourceCompatibility is JDK14'() {
+    void 'With Kotlin or KoTest and JDK17 the sourceCompatibility is JDK17'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
@@ -64,10 +63,10 @@ java {
                 .render()
 
         then:
-        template.contains("sourceCompatibility = JavaVersion.toVersion(\"14\")")
+        template.contains("sourceCompatibility = JavaVersion.toVersion(\"17\")")
         template.contains('''
         kotlinOptions {
-            jvmTarget = "14"
+            jvmTarget = "17"
         }
 ''')
 

@@ -30,22 +30,22 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-bom</artifactId>
-            <version>1.5.21</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-noarg</artifactId>
-            <version>1.5.21</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-allopen</artifactId>
-            <version>1.5.21</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-gradle-plugin</artifactId>
-            <version>1.5.21</version>
+            <version>1.6.0</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>

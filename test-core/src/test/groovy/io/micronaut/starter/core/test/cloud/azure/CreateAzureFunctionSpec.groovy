@@ -6,10 +6,13 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
+import spock.lang.Requires
 import spock.lang.Retry
 import spock.lang.Unroll
+import spock.util.environment.Jvm
 
 @Retry // can fail on CI due to port binding race condition, so retry
+@Requires({ Jvm.current.java8 || Jvm.current.java11 })
 class CreateAzureFunctionSpec extends CommandSpec {
 
     @Override
