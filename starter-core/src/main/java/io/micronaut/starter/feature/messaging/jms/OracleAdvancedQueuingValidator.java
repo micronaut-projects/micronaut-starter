@@ -31,11 +31,13 @@ public class OracleAdvancedQueuingValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        Optional<Feature> first = features.stream().filter(f -> f instanceof DatabaseDriverFeature).findFirst();
-        if (first.isPresent()) {
-            DatabaseDriverFeature databaseDriverFeature = (DatabaseDriverFeature) first.get();
-            if (!(databaseDriverFeature instanceof Oracle)) {
-                throw new IllegalArgumentException("Only '" + Oracle.NAME + "' database feature is compatible with Oracle Advanced Queuing");
+        if (features.stream().anyMatch(f -> f instanceof OracleAdvancedQueuing)) {
+            Optional<Feature> first = features.stream().filter(f -> f instanceof DatabaseDriverFeature).findFirst();
+            if (first.isPresent()) {
+                DatabaseDriverFeature databaseDriverFeature = (DatabaseDriverFeature) first.get();
+                if (!(databaseDriverFeature instanceof Oracle)) {
+                    throw new IllegalArgumentException("Only '" + Oracle.NAME + "' database feature is compatible with Oracle Advanced Queuing");
+                }
             }
         }
     }
