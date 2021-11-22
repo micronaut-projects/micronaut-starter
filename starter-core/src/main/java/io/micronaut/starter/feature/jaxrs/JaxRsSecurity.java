@@ -20,57 +20,38 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class JaxRs implements Feature, MicronautServerDependent {
-
-    public static final String MICRONAUT_JAX_RS_GROUP = "io.micronaut.jaxrs";
-
-    private final JaxRsSecurity jaxRsSecurity;
-
-    public JaxRs(JaxRsSecurity jaxRsSecurity) {
-        this.jaxRsSecurity = jaxRsSecurity;
-    }
+public class JaxRsSecurity implements Feature, MicronautServerDependent {
 
     @Override
     public String getName() {
-        return "jax-rs";
+        return "jax-rs-security";
     }
 
     @Override
     public String getTitle() {
-        return "JAX-RS support";
+        return "JAX-RS Micronaut Security support";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for using JAX-RS annotations";
+        return "Integrates Micronaut Security with JAX-RS";
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.isPresent(SecurityFeature.class)) {
-            featureContext.addFeature(jaxRsSecurity);
-        }
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Dependency.Builder jaxrs = Dependency.builder()
-                .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId("micronaut-jaxrs-processor")
-                .versionProperty("micronaut.jaxrs.version")
-                .template();
-
-        generatorContext.addDependency(jaxrs.annotationProcessor());
-        generatorContext.addDependency(jaxrs.testAnnotationProcessor());
         generatorContext.addDependency(Dependency.builder()
-                .groupId(MICRONAUT_JAX_RS_GROUP)
-                .artifactId("micronaut-jaxrs-server")
+                .groupId(JaxRs.MICRONAUT_JAX_RS_GROUP)
+                .artifactId("micronaut-jaxrs-server-security")
+                .versionProperty("micronaut.jaxrs.version")
                 .compile());
     }
 

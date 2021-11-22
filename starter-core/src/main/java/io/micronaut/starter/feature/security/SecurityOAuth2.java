@@ -16,23 +16,17 @@
 package io.micronaut.starter.feature.security;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SecurityOAuth2 implements Feature, MicronautServerDependent {
+public class SecurityOAuth2 extends SecurityFeature {
 
     public static final int ORDER = SecurityJWT.ORDER + 10;
-    private final SecurityAnnotations securityAnnotations;
 
     public SecurityOAuth2(SecurityAnnotations securityAnnotations) {
-        this.securityAnnotations = securityAnnotations;
+        super(securityAnnotations);
     }
 
     @NonNull
@@ -52,13 +46,6 @@ public class SecurityOAuth2 implements Feature, MicronautServerDependent {
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(SecurityAnnotations.class)) {
-            featureContext.addFeature(securityAnnotations);
-        }
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.security.authentication", "cookie");
         generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.client-id", "${OAUTH_CLIENT_ID}");
@@ -70,16 +57,6 @@ public class SecurityOAuth2 implements Feature, MicronautServerDependent {
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-oauth2")
                 .compile());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.SECURITY;
     }
 
     @Override
