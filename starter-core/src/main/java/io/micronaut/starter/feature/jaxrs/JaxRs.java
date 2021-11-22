@@ -20,11 +20,22 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.security.Security;
+import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class JaxRs implements Feature, MicronautServerDependent {
+
+    public static final String MICRONAUT_JAX_RS_GROUP = "io.micronaut.jaxrs";
+
+    private final JaxRsSecurity jaxRsSecurity;
+
+    public JaxRs(JaxRsSecurity jaxRsSecurity) {
+        this.jaxRsSecurity = jaxRsSecurity;
+    }
 
     @Override
     public String getName() {
@@ -42,9 +53,16 @@ public class JaxRs implements Feature, MicronautServerDependent {
     }
 
     @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(SecurityFeature.class)) {
+            featureContext.addFeature(jaxRsSecurity);
+        }
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder jaxrs = Dependency.builder()
-                .groupId("io.micronaut.jaxrs")
+                .groupId(MICRONAUT_JAX_RS_GROUP)
                 .artifactId("micronaut-jaxrs-processor")
                 .versionProperty("micronaut.jaxrs.version")
                 .template();
@@ -52,7 +70,7 @@ public class JaxRs implements Feature, MicronautServerDependent {
         generatorContext.addDependency(jaxrs.annotationProcessor());
         generatorContext.addDependency(jaxrs.testAnnotationProcessor());
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.jaxrs")
+                .groupId(MICRONAUT_JAX_RS_GROUP)
                 .artifactId("micronaut-jaxrs-server")
                 .compile());
     }

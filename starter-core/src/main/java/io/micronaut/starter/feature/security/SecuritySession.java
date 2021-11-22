@@ -18,21 +18,18 @@ package io.micronaut.starter.feature.security;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpSession;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SecuritySession implements Feature, MicronautServerDependent {
+public class SecuritySession extends SecurityFeature {
 
     public static final int ORDER = SecurityOAuth2.ORDER + 10;
-    private final SecurityAnnotations securityAnnotations;
 
     public SecuritySession(SecurityAnnotations securityAnnotations) {
-        this.securityAnnotations = securityAnnotations;
+        super(securityAnnotations);
     }
 
     @Override
@@ -52,9 +49,7 @@ public class SecuritySession implements Feature, MicronautServerDependent {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(SecurityAnnotations.class)) {
-            featureContext.addFeature(securityAnnotations);
-        }
+        super.processSelectedFeatures(featureContext);
         featureContext.exclude(feature -> feature instanceof HttpSession);
     }
 
@@ -65,16 +60,6 @@ public class SecuritySession implements Feature, MicronautServerDependent {
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-session")
                 .compile());
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.SECURITY;
     }
 
     @Override
