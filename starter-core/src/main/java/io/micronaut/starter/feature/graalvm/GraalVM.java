@@ -28,9 +28,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class GraalVM implements Feature {
 
+    public static final String FEATURE_NAME_GRAALVM = "graalvm";
+
     @Override
     public String getName() {
-        return "graalvm";
+        return FEATURE_NAME_GRAALVM;
     }
 
     @Override

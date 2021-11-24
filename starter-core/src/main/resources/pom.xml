@@ -28,6 +28,11 @@
             <version>2.1.0</version>
         </dependency>
         <dependency>
+            <groupId>info.novatec</groupId>
+            <artifactId>micronaut-zeebe-client-feature</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-bom</artifactId>
             <version>1.6.0</version>

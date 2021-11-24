@@ -17,6 +17,8 @@ package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
 
@@ -28,6 +30,7 @@ import io.micronaut.core.annotation.Nullable;
  * @since 2.2
  */
 @Introspected
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GitHubRepository {
     private final String name;
     private final String description;

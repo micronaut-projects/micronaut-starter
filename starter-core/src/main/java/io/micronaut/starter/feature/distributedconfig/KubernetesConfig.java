@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.k8s.Kubernetes;
 
+import io.micronaut.starter.feature.k8s.KubernetesClient;
 import jakarta.inject.Singleton;
 
 /**
@@ -69,13 +70,13 @@ public class KubernetesConfig implements DistributedConfigFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.kubernetes")
+                .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-discovery-client")
                 .compile());
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/index.html";
+        return "https://micronaut-projects.github.io/micronaut-kubernetes/latest/guide/#config-client";
     }
 }
