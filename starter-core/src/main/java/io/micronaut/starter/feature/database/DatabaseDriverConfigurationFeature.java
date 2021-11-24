@@ -17,6 +17,9 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.feature.Feature;
 
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * A feature that configures a datasource with a driver
  */
@@ -29,4 +32,15 @@ public interface DatabaseDriverConfigurationFeature extends Feature {
     String getUsernameKey();
 
     String getPasswordKey();
+
+    default void applyDefaultConfig(DatabaseDriverFeature dbFeature, Map<String, Object> config) {
+        Optional.ofNullable(dbFeature.getJdbcUrl()).ifPresent(url -> config.put(getUrlKey(), url));
+        Optional.ofNullable(dbFeature.getDriverClass()).ifPresent(driver -> config.put(getDriverKey(), driver));
+        Optional.ofNullable(dbFeature.getDefaultUser()).ifPresent(user -> config.put(getUsernameKey(), user));
+        Optional.ofNullable(dbFeature.getDefaultPassword()).ifPresent(pass -> config.put(getPasswordKey(), pass));
+        final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig();
+        if (!additionalConfig.isEmpty()) {
+            config.putAll(additionalConfig);
+        }
+    }
 }

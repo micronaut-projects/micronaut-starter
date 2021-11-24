@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import jakarta.inject.Singleton;
@@ -29,24 +28,20 @@ public class Graphite extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-graphite";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Graphite reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.host", "localhost");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.port", 2004);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".graphite.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-graphite")
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "graphite";
     }
 }

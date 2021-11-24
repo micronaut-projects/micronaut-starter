@@ -23,7 +23,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains(":$driver")
 
         where:
-        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name
+        driver << (beanContext.getBeansOfType(DatabaseDriverFeature)*.name) - "oracle-cloud-atp"
     }
 
     @Unroll
@@ -54,7 +54,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains("<artifactId>$driver</artifactId>")
 
         where:
-        driver << beanContext.getBeansOfType(DatabaseDriverFeature)*.name
+        driver << (beanContext.getBeansOfType(DatabaseDriverFeature)*.name) - "oracle-cloud-atp"
     }
 
     def getDriverName(name) {

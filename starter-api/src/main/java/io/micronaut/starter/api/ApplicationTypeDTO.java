@@ -36,6 +36,7 @@ import java.util.List;
 @Schema(name = "ApplicationTypeInfo")
 @Introspected
 public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<ApplicationType> {
+
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
     private final String name;
     private final List<FeatureDTO> features;
@@ -61,7 +62,11 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
      */
     @Creator
     @Internal
-    ApplicationTypeDTO(ApplicationType value, String name, String title, String description, List<FeatureDTO> features) {
+    ApplicationTypeDTO(ApplicationType value,
+                       String name,
+                       String title,
+                       String description,
+                       List<FeatureDTO> features) {
         this.value = value;
         this.name = name;
         this.features = features;
