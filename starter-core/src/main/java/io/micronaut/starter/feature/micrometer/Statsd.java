@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import jakarta.inject.Singleton;
@@ -29,25 +28,21 @@ public class Statsd extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-statsd";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Statsd reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.flavor", "datadog");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.host", "localhost");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.port", 8125);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".statsd.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-statsd")
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "statsd";
     }
 }

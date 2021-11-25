@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 import jakarta.inject.Singleton;
 
@@ -28,23 +27,19 @@ public class Signalfx extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-signalfx";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ SignalFx reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.accessToken", "${SIGNALFX_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".signalfx.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-signalfx")
-                .compile());
+    }
+
+    @Override
+    public String getImplementationName() {
+        return "signalfx";
     }
 }

@@ -29,6 +29,14 @@ public enum TestFramework {
 
     public static final TestFramework DEFAULT_OPTION = JUNIT;
 
+    public static boolean isKotlinTestFramework(TestFramework testFramework) {
+        return testFramework == KOTEST;
+    }
+
+    public boolean isKotlinTestFramework() {
+        return isKotlinTestFramework(this);
+    }
+
     @Override
     public String toString() {
         return this.name().toLowerCase();
