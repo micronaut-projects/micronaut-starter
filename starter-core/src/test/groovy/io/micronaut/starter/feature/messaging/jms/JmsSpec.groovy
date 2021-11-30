@@ -36,7 +36,7 @@ class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains """implementation("io.micronaut.jms:micronaut-jms-$name")"""
 
         where:
-        name << ['activemq-artemis', 'activemq-classic', 'sqs']
+        name << ['activemq-artemis', 'activemq-classic', 'sqs', 'core']
     }
 
     void 'test dependencies are present for Maven'() {
@@ -54,7 +54,7 @@ class JmsSpec extends ApplicationContextSpec implements CommandOutputFixture {
     </dependency>
 """)
         where:
-        name << ['activemq-artemis', 'activemq-classic', 'sqs']
+        name << ['activemq-artemis', 'activemq-classic', 'sqs', 'core']
     }
 
     void 'test ActiveMQ "Classic" config'() {
