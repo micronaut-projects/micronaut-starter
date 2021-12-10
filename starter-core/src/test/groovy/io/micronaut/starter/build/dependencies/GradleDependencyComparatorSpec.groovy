@@ -18,7 +18,7 @@ class GradleDependencyComparatorSpec extends Specification {
                 dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-validation").compile(), ctx),
                 dep(Dependency.builder().groupId("io.swagger.core.v3").artifactId("swagger-annotations").compile(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-runtime").compile(), ctx),
-                dep(Dependency.builder().groupId("javax.annotation").artifactId("javax.annotation-api").compile(), ctx),
+                dep(Dependency.builder().groupId("jakarta.annotation").artifactId("jakarta.annotation-api").compile(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-http-client").compile(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut.openapi").artifactId("micronaut-openapi").annotationProcessor(), ctx),
                 dep(Dependency.builder().groupId("io.micronaut.sql").artifactId("micronaut-jdbc-hikari").compile(), ctx),
@@ -39,7 +39,7 @@ class GradleDependencyComparatorSpec extends Specification {
         "${str(dependencies[3])}" == 'implementation("io.micronaut:micronaut-validation")'
         "${str(dependencies[4])}" == 'implementation("io.micronaut.sql:micronaut-jdbc-hikari")'
         "${str(dependencies[5])}" == 'implementation("io.swagger.core.v3:swagger-annotations")'
-        "${str(dependencies[6])}" == 'implementation("javax.annotation:javax.annotation-api")'
+        "${str(dependencies[6])}" == 'implementation("jakarta.annotation:jakarta.annotation-api")'
         "${str(dependencies[7])}" == 'runtimeOnly("ch.qos.logback:logback-classic")'
         "${str(dependencies[8])}" == 'runtimeOnly("mysql:mysql-connector-java")'
         "${str(dependencies[9])}" == 'testImplementation("org.testcontainers:junit-jupiter")'
