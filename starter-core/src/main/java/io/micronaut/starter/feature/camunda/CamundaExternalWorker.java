@@ -40,7 +40,7 @@ public class CamundaExternalWorker implements Feature {
 
     @Override
     public String getDescription() {
-        return "Implement Camunda External Workers";
+        return "We're bringing process automation to Micronaut: Implement Camunda External Workers for the Camunda Platform.";
     }
 
     @Override
