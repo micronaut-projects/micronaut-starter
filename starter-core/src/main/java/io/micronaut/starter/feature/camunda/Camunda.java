@@ -52,7 +52,7 @@ public class Camunda implements Feature {
 
     @Override
     public String getDescription() {
-        return "Integrate Camunda Workflow Engine";
+        return "We're bringing process automation to Micronaut: Embed the Camunda Workflow Engine into your Micronaut application.";
     }
 
     @Override
