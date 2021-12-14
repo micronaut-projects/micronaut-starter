@@ -80,6 +80,7 @@ jobs:
           commit_user_name: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
           commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+          file_pattern: gradle.properties
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
