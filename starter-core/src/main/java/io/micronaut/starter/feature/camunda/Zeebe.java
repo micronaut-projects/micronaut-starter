@@ -40,7 +40,7 @@ public class Zeebe implements Feature {
 
     @Override
     public String getDescription() {
-        return "We're bringing cloud native process automation to Micronaut: Implement Zeebe Workers for Camunda Cloud or a local broker.";
+        return "Bringing cloud native process automation to Micronaut: Implement Zeebe Workers for Camunda Cloud or a local broker";
     }
 
     @Override
