@@ -7,9 +7,10 @@ import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.feature.build.gradle.templates.gradleProperties
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Issue
-import spock.lang.PendingFeature
 import spock.lang.Unroll
 
 class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
@@ -63,19 +64,36 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         buildGradle.contains("tasks")
     }
 
-    void 'disable Gradle Toolchain by default (language=#language)'() {
+    void 'disable Gradle Toolchain by default (dsl = #dsl)'() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.GRADLE))
-        def gradleProperties = output["gradle.properties"]
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, dsl))
+        def buildGradle = output[fileName]
 
         then:
-        gradleProperties
-        gradleProperties.contains("org.gradle.java.installations.auto-download=false")
-        gradleProperties.contains("org.gradle.java.installations.auto-detect=false")
-        gradleProperties.contains("org.gradle.java.installations.fromEnv=JAVA_HOME")
+        buildGradle
+        buildGradle.contains(configuration)
 
         where:
-        language << Language.values()
+        dsl                     | fileName           | configuration
+        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+
+    }
+
+    void 'disable Gradle Toolchain by default for Oracle function (dsl = #dsl)'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, dsl), ['oracle-function'])
+        def buildGradle = output[fileName]
+
+        then:
+        buildGradle
+        buildGradle.contains(configuration)
+
+        where:
+        dsl                     | fileName           | configuration
+        BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
+        BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
+
     }
 
 }

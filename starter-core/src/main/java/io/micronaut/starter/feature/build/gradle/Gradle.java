@@ -90,11 +90,6 @@ public class Gradle implements BuildFeature {
                 build
         )));
 
-        // Disable Gradle Toolchain by default until users can set a specific GraalVM version
-        generatorContext.getBuildProperties().put("org.gradle.java.installations.auto-download", "false");
-        generatorContext.getBuildProperties().put("org.gradle.java.installations.auto-detect", "false");
-        generatorContext.getBuildProperties().put("org.gradle.java.installations.fromEnv", "JAVA_HOME");
-
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
