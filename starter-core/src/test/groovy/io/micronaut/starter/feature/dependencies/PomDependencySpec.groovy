@@ -12,6 +12,7 @@ import io.micronaut.starter.feature.Feature
 import jakarta.inject.Singleton
 
 import static io.micronaut.starter.options.BuildTool.GRADLE
+import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
 import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class PomDependencySpec extends ApplicationContextSpec {
@@ -30,6 +31,17 @@ class PomDependencySpec extends ApplicationContextSpec {
         then:
         template.contains 'implementation platform("gr.oup.id:ar.ifact.id:ver.sion")'
     }
+
+    void 'test adding pom to Gradle Kotlin DSL build'() {
+        when:
+        String template = new BuildBuilder(beanContext, GRADLE_KOTLIN)
+                .features([PomFeature.NAME])
+                .render()
+
+        then:
+        template.contains 'implementation(platform("gr.oup.id:ar.ifact.id:ver.sion"))'
+    }
+
 
     void 'test adding pom to Maven build'() {
         when:
