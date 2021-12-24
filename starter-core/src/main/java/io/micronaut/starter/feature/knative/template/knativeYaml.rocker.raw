@@ -16,18 +16,6 @@ spec:
         name: "@project.getName()"
         ports:
         - containerPort: 8080
-          name: http
+          name: http1
           protocol: TCP
-        readinessProbe:
-          httpGet:
-            path: /health/readiness
-            port: http
-          initialDelaySeconds: 5
-          timeoutSeconds: 3
-        livenessProbe:
-          httpGet:
-            path: /health/liveness
-            port: http
-          initialDelaySeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 10
+
