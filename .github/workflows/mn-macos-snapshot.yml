@@ -41,7 +41,7 @@ jobs:
           zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/2.2.x'
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: mn-darwin-amd64-snapshot
           path: mn-darwin-amd64-snapshot.zip
