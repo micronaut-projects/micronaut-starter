@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
