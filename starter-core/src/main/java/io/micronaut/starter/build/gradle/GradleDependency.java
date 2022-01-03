@@ -39,6 +39,8 @@ public class GradleDependency extends DependencyCoordinate {
         return Coordinate.COMPARATOR.compare(o1, o2);
     };
 
+    private final Boolean isKotlinDSL;
+
     @NonNull
     private final GradleConfiguration gradleConfiguration;
 
@@ -51,6 +53,7 @@ public class GradleDependency extends DependencyCoordinate {
                 generatorContext.getTestFramework()
         ).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
+        isKotlinDSL = generatorContext.getBuildTool().getGradleDsl().filter(f -> f == GradleDsl.KOTLIN).isPresent();
     }
 
     @NonNull
@@ -85,10 +88,17 @@ public class GradleDependency extends DependencyCoordinate {
     public String toSnippet() {
         String snippet = gradleConfiguration.getConfigurationName();
         if (isPom()) {
-            snippet += " platform";
+            String platformPrefix = " ";
+            if (isKotlinDSL) {
+                platformPrefix = "(";
+            }
+            snippet += platformPrefix + "platform";
         }
         snippet += "(\"" + getGroupId() + ':' + getArtifactId() +
                 (getVersion() != null ? (':' + getVersion()) : "") + "\")";
+        if (isPom() && isKotlinDSL) {
+            snippet += ")";
+        }
         return snippet;
     }
 }
