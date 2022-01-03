@@ -11,7 +11,7 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.4.0
       - uses: ilammy/msvc-dev-cmd@v1.9.0
       - uses: microsoft/setup-msbuild@v1
       - uses: ayltai/setup-graalvm@v1
