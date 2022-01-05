@@ -28,6 +28,7 @@ jobs:
         shell: powershell
         run: native-image.cmd --no-fallback -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
+        shell: powershell
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
         run: ./mn.exe create-app test
