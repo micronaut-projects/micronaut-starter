@@ -102,6 +102,7 @@ jobs:
           version: '21.3.0'
           java-version: '11'
           components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -149,6 +150,7 @@ jobs:
           version: '21.3.0'
           java-version: '11'
           components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
@@ -190,6 +192,7 @@ jobs:
           version: '21.3.0'
           java-version: '11'
           components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
         shell: powershell
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
