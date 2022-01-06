@@ -17,4 +17,6 @@ tasks.withType(Test).configureEach {
     forkEvery = 100
     maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
     maxHeapSize = "2G"
+    systemProperty("ge.cache.username", System.getenv("GRADLE_ENTERPRISE_CACHE_USERNAME"))
+    systemProperty("ge.cache.password", System.getenv("GRADLE_ENTERPRISE_CACHE_PASSWORD"))
 }

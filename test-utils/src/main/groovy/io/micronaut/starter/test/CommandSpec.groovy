@@ -44,13 +44,18 @@ abstract class CommandSpec extends Specification {
     @AutoCleanup
     ApplicationContext beanContext
 
-    @Shared GradleRunner gradleRunner = GradleRunner.create()
+    @Shared
+    GradleRunner gradleRunner = GradleRunner.create()
+
+    boolean optimizeWithBuildCache = true
+
+    private boolean gradleBuildCacheConfigurationAdded = false
 
     abstract String getTempDirectoryPrefix()
 
     File dir
 
-    void setupSpec(){
+    void setupSpec() {
         beanContext = ApplicationContext.run(getConfiguration())
     }
 
@@ -62,7 +67,7 @@ abstract class CommandSpec extends Specification {
         dir.delete()
     }
 
-    Map<String, Object> getConfiguration(){
+    Map<String, Object> getConfiguration() {
         return Collections.EMPTY_MAP
     }
 
@@ -77,16 +82,18 @@ abstract class CommandSpec extends Specification {
     }
 
     BuildResult executeGradle(String command) {
+        command = maybeAddGradleBuildCacheConfiguration(command)
         BuildResult result =
                 gradleRunner.withProjectDir(dir)
                         .withArguments(command.split(' '))
+                        .forwardOutput()
                         .build()
         return result
     }
 
     String executeMaven(String command, int timeoutSeconds = 180) {
         if (OperatingSystem.current.isWindows()) {
-            command = dir.getAbsolutePath()+"\\"+"mvnw.bat " + command
+            command = dir.getAbsolutePath() + "\\" + "mvnw.bat " + command
         } else {
             command = "./mvnw " + command
         }
@@ -143,6 +150,62 @@ abstract class CommandSpec extends Specification {
     }
 
     ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
-        return { -> new FileSystemOutputHandler(dir, consoleOutput)}
+        return { -> new FileSystemOutputHandler(dir, consoleOutput) }
+    }
+
+    private String maybeAddGradleBuildCacheConfiguration(String command) {
+        if (!optimizeWithBuildCache) {
+            return command
+        }
+        if (!gradleBuildCacheConfigurationAdded) {
+            gradleBuildCacheConfigurationAdded = true
+            String cacheUsername = System.getProperty("ge.cache.username")
+            String cachePassword = System.getProperty("ge.cache.password")
+            def settingsFile = new File(dir, "settings.gradle")
+            if (settingsFile.exists()) {
+                String push = cacheUsername && cachePassword ? """
+                            push = true
+                            credentials {
+                                username = '$cacheUsername'
+                                password = '$cachePassword'
+                            }
+
+                    """ : ""
+                settingsFile.text += """
+                    buildCache {
+                        remote(HttpBuildCache) {
+                            url = "https://ge.micronaut.io/cache/"
+                            $push
+                        }
+                    }
+                    rootProject.name = "micronaut-starter-tests-\${rootProject.name}"
+                """
+            } else {
+                settingsFile = new File(dir, "settings.gradle.kts")
+                if (settingsFile.exists()) {
+                    String push = cacheUsername && cachePassword ? """
+                                isPush = true
+                                credentials {
+                                    username = "$cacheUsername"
+                                    password = "$cachePassword"
+                                }
+                    """ : ""
+                    settingsFile.text += """
+                        buildCache {
+                            remote<HttpBuildCache> {
+                                url = uri("https://ge.micronaut.io/cache/")
+                                $push
+                            }
+                        }
+                        rootProject.name = "micronaut-starter-tests-\${rootProject.name}"
+                        """
+                }
+            }
+        }
+        if (command) {
+            "$command --build-cache"
+        } else {
+            "--build-cache"
+        }
     }
 }
