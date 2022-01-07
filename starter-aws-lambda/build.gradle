@@ -1,5 +1,5 @@
 plugins {
-    id("io.micronaut.application") version "2.0.3"    
+    id("io.micronaut.application")
 }
 
 
@@ -16,6 +16,10 @@ dependencies {
 
 mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
 
-nativeImage {
-    imageName = "application"
+graalvmNative {
+    binaries {
+        main {
+            imageName = 'application'
+        }
+    }
 }
