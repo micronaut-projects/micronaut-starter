@@ -23,27 +23,12 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
-processResources.dependsOn('micronautVersionInfo')
-task micronautVersionInfo(type: WriteProperties) {
-    outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
-    property 'micronaut.version', micronautVersion
-    WriteProperties wp = delegate
-
-    ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
-            .forModule("io.micronaut", "micronaut-bom", "${micronautVersion}")
-            .withArtifacts(MavenModule, MavenPomArtifact)
-            .execute()
-
-    for (component in result.resolvedComponents) {
-        component.getArtifacts(MavenPomArtifact).each {
-            def pom = new XmlSlurper().parse(it.file)
-
-            pom.properties.children().each {
-                wp.property it.name(), it.text()
-            }
-        }
-    }
+def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
+    version = micronautVersion
+    outputDirectory = layout.buildDirectory.dir("version-info")
 }
+
+sourceSets.main.resources.srcDir(micronautVersionInfo)
 
 rocker {
     // (All settings are shown with their defaults)
