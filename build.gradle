@@ -93,35 +93,3 @@ subprojects { Project subproject ->
 }
 
 apply plugin: "io.micronaut.build.internal.docs"
-
-Project starterCli = project('micronaut-cli')
-
-starterCli.afterEvaluate {
-    task generateManpageAsciiDoc(type: JavaExec) {
-        dependsOn(starterCli.tasks.getByName('classes'))
-        group = "Documentation"
-        description = "Generate AsciiDoc manpage"
-        classpath(starterCli.configurations.getByName('generateConfig'), starterCli.sourceSets.main.runtimeClasspath)
-        main 'picocli.codegen.docgen.manpage.ManPageGenerator'
-        args starterCli.mainClassName, "--outdir=${project.buildDir}/generated-picocli-docs", "-v", "--factory=io.micronaut.starter.cli.MicronautFactory" //, "--template-dir=src/docs/mantemplates"
-    }
-
-    task copyManPages(type: Copy) {
-        dependsOn(generateManpageAsciiDoc)
-        group = "Documentation"
-        from file("${project.buildDir}/generated-picocli-docs")
-        include "**/*.adoc"
-        into file("${rootProject.buildDir.absolutePath}/generated/")
-        filter { String line ->
-            if (line == ':doctype: manpage' || line.startsWith('= ')) {
-                return ""
-            } else if (line.startsWith('==')) {
-                return '=' + line
-            } else {
-                return line
-            }
-        }
-    }
-
-    publishGuide.dependsOn(copyManPages)
-}

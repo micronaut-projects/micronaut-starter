@@ -1,9 +1,5 @@
 plugins {
-    id "application"
-    id "com.github.johnrengelman.shadow"
-    id "io.micronaut.starter.rocker"
-    id 'org.asciidoctor.convert' version '2.4.0' apply false
-    id "io.sdkman.vendors" version "2.0.0"
+    id 'io.micronaut.internal.build.starter-cli-module'
 }
 
 ext {
@@ -48,14 +44,8 @@ dependencies {
     testImplementation 'org.reflections:reflections:0.9.12'
 }
 
-mainClassName = "io.micronaut.starter.cli.MicronautStarter"
-
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/java")
-        }
-    }
+application {
+    mainClass = "io.micronaut.starter.cli.MicronautStarter"
 }
 
 rocker {
@@ -87,38 +77,8 @@ rocker {
     markAsGenerated null
 }
 
-File outDir = new File(project.buildDir, 'bin')
-
-task buildCompletion(type: JavaExec) {
-    doFirst {
-        outDir.mkdir()
-    }
-    main = "picocli.AutoComplete"
-    jvmArgs = ["-Dpicocli.autocomplete.systemExitOnError"]
-    args = [mainClassName, "--completionScript=${outDir}/mn_completion", "--force", "--factory=io.micronaut.starter.cli.MicronautFactory"]
-    classpath = sourceSets.main.runtimeClasspath
-}
-assemble.dependsOn(['buildCompletion'])
-
-distributions {
-    main {
-        contents {
-            from(outDir) {
-                into 'bin'
-            }
-            from("${project.rootProject.projectDir}/LICENSE") {
-                into ''
-            }
-        }
-    }
-}
-
 startScripts {
     applicationName = 'mn'
-}
-
-shadowJar {
-    mergeServiceFiles()
 }
 
 sdkman {
@@ -134,31 +94,3 @@ sdkman {
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
     ]
 }
-
-shadowDistZip.enabled = false
-shadowDistTar.enabled = false
-
-task copyShadowJar(type: Copy) {
-    from shadowJar.outputs
-    into "${project.rootProject.buildDir}/libs"
-    rename { String fileName -> "cli.jar" }
-}
-
-task exploded(type: Copy, dependsOn: ['distZip']) {
-    from zipTree(distZip.outputs.files.singleFile)
-    into "${project.buildDir}/exploded"
-    eachFile { FileCopyDetails fcd ->
-        fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
-    }
-    onlyIf {
-        distZip.outputs.files.singleFile.exists()
-    }
-}
-
-task cleanup(type: Delete) {
-    delete "${project.rootProject.buildDir}/libs/cli.jar"
-    delete "${project.buildDir}/dist"
-}
-clean.dependsOn(['cleanup'])
-
-assemble.dependsOn('exploded')

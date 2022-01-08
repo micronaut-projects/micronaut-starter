@@ -14,7 +14,9 @@ dependencies {
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
 }
 
-mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+application {
+    mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+}
 
 graalvmNative {
     binaries {
