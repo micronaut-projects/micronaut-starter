@@ -1,5 +1,6 @@
 plugins {
-   id "com.microsoft.azure.azurefunctions"
+    id "io.micronaut.internal.starter.convention"
+    id "com.microsoft.azure.azurefunctions"
 }
 
 dependencies {

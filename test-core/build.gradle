@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.test-module"
     id "io.micronaut.starter.rocker"
 }
 
@@ -23,7 +24,7 @@ dependencies {
     testImplementation 'com.azure.resourcemanager:azure-resourcemanager-containerinstance:2.4.0'
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     forkEvery = 10
 }
 

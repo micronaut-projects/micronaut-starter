@@ -1,5 +1,9 @@
 import groovy.transform.CompileStatic
 
+plugins {
+    id "io.micronaut.internal.starter.convention"
+}
+
 def openApiOutputFile = layout.buildDirectory.file('generated/openapi/openapi.properties')
 
 def openApiProperties = tasks.register("openApiProperties", WriteProperties) {
