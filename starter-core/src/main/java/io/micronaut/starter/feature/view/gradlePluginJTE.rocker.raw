@@ -1,0 +1,6 @@
+@args(String path)
+
+jte {
+    sourceDirectory = file("@path").toPath()
+    generate()
+}
