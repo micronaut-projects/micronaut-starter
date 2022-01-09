@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
       - name: Install GraalVM
         env:
           GRAAL_VERSION: 21.3.0
@@ -41,7 +41,7 @@ jobs:
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
         if: success() && github.event_name == 'push' && github.ref == 'refs/heads/2.2.x'
-        uses: actions/upload-artifact@v2.2.4
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: mn-linux-amd64-snapshot
           path: mn-linux-amd64-snapshot.zip

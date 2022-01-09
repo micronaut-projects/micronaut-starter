@@ -13,8 +13,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-#      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+#      - uses: actions/cache@v2.1.7
 #        with:
 #          path: |
 #            ~/.gradle/caches
@@ -38,8 +38,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.gradle/caches
@@ -62,8 +62,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.gradle/caches
@@ -86,8 +86,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.gradle/caches
@@ -110,8 +110,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.gradle/caches
@@ -134,8 +134,8 @@ jobs:
       matrix:
         java: ['8', '11', '17']
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/cache@v2.1.6
+      - uses: actions/checkout@v2.4.0
+      - uses: actions/cache@v2.1.7
         with:
           path: |
             ~/.gradle/caches
