@@ -20,11 +20,11 @@ def generateManpageAsciiDoc = tasks.register("generateManpageAsciiDoc", io.micro
     outputDirectory.set(layout.buildDirectory.dir("generated-picocli-docs"))
 }
 
-def copyManPages = tasks.register("copyManPages", Sync) {
+def processManPages = tasks.register("processManPages", Sync) {
     group = "Documentation"
     from generateManpageAsciiDoc
     include "**/*.adoc"
-    into file("${rootProject.buildDir.absolutePath}/generated/")
+    into layout.buildDirectory.dir("processed-manpages")
     filter { String line ->
         if (line == ':doctype: manpage' || line.startsWith('= ')) {
             return ""
@@ -36,9 +36,13 @@ def copyManPages = tasks.register("copyManPages", Sync) {
     }
 }
 
-tasks.configureEach {
-    if (name == "publishGuide") {
-        dependsOn(copyManPages)
+configurations {
+    asciidocPages {
+        canBeConsumed = true
+        canBeResolved = false
+        outgoing.artifact(processManPages.map {
+            layout.buildDirectory.dir("processed-manpages").get().asFile
+        })
     }
 }
 
