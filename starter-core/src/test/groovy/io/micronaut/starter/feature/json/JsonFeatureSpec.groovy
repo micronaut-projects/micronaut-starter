@@ -8,7 +8,7 @@ import io.micronaut.starter.options.BuildTool
 class JsonFeatureSpec extends ApplicationContextSpec {
 
     @Unroll
-    void "test selected JSON feature: #impl"() {
+    void "test selected JSON feature for Gradle: #impl"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([impl])
@@ -16,6 +16,7 @@ class JsonFeatureSpec extends ApplicationContextSpec {
 
         then:
         template.contains("implementation(\"$module")
+        impl == 'jackson-databind' || template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
 
         where:
         module                                       | impl
@@ -25,5 +26,24 @@ class JsonFeatureSpec extends ApplicationContextSpec {
         'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'
         
         
+    }
+
+    @Unroll
+    void "test selected JSON feature for Maven: #impl"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([impl])
+                .render()
+
+        then:
+        template.contains("<artifactId>$module</artifactId>")
+        impl == 'jackson-databind' || template.contains('<artifactId>micronaut-serde-processor</artifactId>')
+
+        where:
+        module                                 | impl
+        'micronaut-jackson-databind'           | 'jackson-databind'
+        'micronaut-serde-jackson'              | 'serialization-jackson'
+        'micronaut-serde-jsonb'                | 'serialization-jsonb'
+        'micronaut-serde-bson'                 | 'serialization-bson'
     }
 }

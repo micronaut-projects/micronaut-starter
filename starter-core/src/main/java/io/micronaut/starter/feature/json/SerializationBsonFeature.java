@@ -15,8 +15,6 @@
  */
 package io.micronaut.starter.feature.json;
 
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -32,17 +30,12 @@ public class SerializationBsonFeature implements SerializationFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-            .compile()
-            .groupId("io.micronaut.serde")
-            .artifactId("micronaut-serde-bson")
-            .build()
-        );        
-    }    
-
-    @Override
     public String getTitle() {
         return "Micronaut Serialization BSON";
+    }
+
+    @Override
+    public String getModule() {
+        return "bson";
     }
 }

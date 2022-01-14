@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.json;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 
 public interface SerializationFeature extends JsonFeature {
@@ -40,4 +42,22 @@ public interface SerializationFeature extends JsonFeature {
         return true;
     }
 
+    @Override
+    default void apply(GeneratorContext generatorContext) {
+       generatorContext.addDependency(Dependency.builder()
+            .annotationProcessor()
+            .groupId("io.micronaut.serde")
+            .artifactId("micronaut-serde-processor")
+            .versionProperty("micronaut.serialization.version")
+            .build()
+        );   
+         generatorContext.addDependency(Dependency.builder()
+            .compile()
+            .groupId("io.micronaut.serde")
+            .artifactId("micronaut-serde-" + getModule())
+            .build()
+        );  
+    }
+
+    public String getModule();
 }
