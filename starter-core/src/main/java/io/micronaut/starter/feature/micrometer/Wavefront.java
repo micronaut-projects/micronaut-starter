@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.micrometer;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.other.Management;
 
 import jakarta.inject.Singleton;
@@ -29,23 +28,19 @@ public class Wavefront extends MicrometerFeature {
     }
 
     @Override
-    public String getName() {
-        return "micrometer-wavefront";
-    }
-
-    @Override
     public String getDescription() {
         return "Adds support for Micrometer metrics (w/ Wavefront reporter)";
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
+    public void doApply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.enabled", true);
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.apiToken", "${WAVEFRONT_API_TOKEN}");
         generatorContext.getConfiguration().put(EXPORT_PREFIX + ".wavefront.step", "PT1M");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.micrometer")
-                .artifactId("micronaut-micrometer-registry-wavefront")
-                .compile());
+    }
+
+    @Override
+    protected String getImplementationName() {
+        return "wavefront";
     }
 }

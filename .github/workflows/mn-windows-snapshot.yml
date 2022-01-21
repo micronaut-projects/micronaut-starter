@@ -11,14 +11,14 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ilammy/msvc-dev-cmd@v1.9.0
-      - uses: microsoft/setup-msbuild@v1
-      - uses: ayltai/setup-graalvm@v1
+      - uses: actions/checkout@v2.4.0
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
         with:
-          java-version: 11
-          graalvm-version: 21.3.0
-          native-image: true
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
         shell: powershell
         env:
@@ -26,8 +26,9 @@ jobs:
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: powershell
-        run: native-image --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
+        shell: powershell
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
         run: ./mn.exe create-app test
@@ -44,8 +45,8 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/2.2.x'
-        uses: actions/upload-artifact@v2.2.4
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.2.x'
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip

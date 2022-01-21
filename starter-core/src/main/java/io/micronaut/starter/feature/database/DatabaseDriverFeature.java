@@ -22,6 +22,9 @@ import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
 
+import java.util.Collections;
+import java.util.Map;
+
 public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     private final JdbcFeature jdbcFeature;
@@ -76,5 +79,9 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
     public abstract String getDefaultPassword();
 
     public abstract String getDataDialect();
+
+    public Map<String, Object> getAdditionalConfig() {
+        return Collections.emptyMap();
+    }
 
 }

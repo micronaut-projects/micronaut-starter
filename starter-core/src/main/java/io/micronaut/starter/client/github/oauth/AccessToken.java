@@ -17,6 +17,8 @@ package io.micronaut.starter.client.github.oauth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.NotNull;
@@ -26,7 +28,9 @@ import javax.validation.constraints.NotNull;
  * @since 2.2
  */
 @Introspected
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AccessToken {
+
     private final String tokenType;
     private final String scope;
     private final String accessToken;

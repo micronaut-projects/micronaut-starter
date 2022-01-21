@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.function.awslambda
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Shared
@@ -220,6 +221,62 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         buildGradle.contains('mainClass.set')
         buildGradle.contains('id("io.micronaut.application")')
 
+        buildGradle.contains('''\
+tasks.named("dockerfileNative") {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+    }
+
+    void "kotlin.kapt plugin is applied before micronaut library plugin"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.FUNCTION,
+                new Options(Language.KOTLIN, BuildTool.GRADLE_KOTLIN),
+                ['aws-lambda']
+        )
+        String buildGradle = output['build.gradle.kts']
+
+        then:
+        buildGradle.contains('org.jetbrains.kotlin.kapt')
+        buildGradle.contains('io.micronaut.library')
+        buildGradle.indexOf('org.jetbrains.kotlin.kapt') < buildGradle.indexOf('io.micronaut.library')
+    }
+
+    @Unroll
+    void 'Application file is generated for a default application type with gradle Kotlin DSL and features aws-lambda for language: #language'(Language language, String extension) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, BuildTool.GRADLE_KOTLIN),
+                ['aws-lambda']
+        )
+
+        then:
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+
+        when:
+        String buildGradle = output['build.gradle.kts']
+
+        then:
+        !buildGradle.contains('id "application"')
+        buildGradle.contains('mainClass.set')
+        buildGradle.contains('id("io.micronaut.application")')
+
+        buildGradle.contains('''\
+tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
         where:
         language << Language.values().toList()
         extension << Language.extensions()

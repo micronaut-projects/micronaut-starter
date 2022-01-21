@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
@@ -80,13 +80,14 @@ jobs:
           commit_user_name: micronaut-build
           commit_user_email: ${{ secrets.MICRONAUT_BUILD_EMAIL }}
           commit_author: micronaut-build <${{ secrets.MICRONAUT_BUILD_EMAIL }}>
+          file_pattern: gradle.properties
   linux:
     name: Release Linux Native CLI
     runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -95,20 +96,19 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo ::set-output name=release_version::${release_version}
-      - name: Install GraalVM
-        env:
-          GRAAL_VERSION: 21.3.0
-          GRAAL_OS: linux-amd64
-        run: ./install-graal.sh
-      - name: Install Native Image
-        run: ./graalvm/bin/gu install native-image
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
         env:
-          JAVA_HOME: ./graalvm
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -131,11 +131,11 @@ jobs:
           asset_content_type: application/zip
   macos:
     name: Release OS X Native CLI
-    runs-on: macOS-latest
+    runs-on: macos-latest
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -144,20 +144,19 @@ jobs:
           release_version=${GITHUB_REF:11}
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
           echo ::set-output name=release_version::${release_version}
-      - name: Install GraalVM
-        env:
-          GRAAL_VERSION: 21.3.0
-          GRAAL_OS: darwin-amd64
-        run: ./install-graal.sh
-      - name: Install Native Image
-        run: ./graalvm/Contents/Home/bin/gu install native-image
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
         env:
-          JAVA_HOME: ./graalvm/Contents/Home
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -184,16 +183,16 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
-      - uses: ilammy/msvc-dev-cmd@v1.9.0
-      - uses: microsoft/setup-msbuild@v1
-      - uses: ayltai/setup-graalvm@v1
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
         with:
-          java-version: 11
-          graalvm-version: 21.3.0
-          native-image: true
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
         shell: powershell
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
@@ -201,7 +200,7 @@ jobs:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
       - name: Build Native Image
         shell: powershell
-        run: native-image --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
@@ -234,7 +233,7 @@ jobs:
     needs: [linux, macos, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -255,7 +254,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -294,7 +293,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -330,7 +329,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.4.0
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -369,7 +368,7 @@ jobs:
           repo: micronaut-starter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.4.0
         with:
           ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
           token: ${{ secrets.GH_TOKEN }}
