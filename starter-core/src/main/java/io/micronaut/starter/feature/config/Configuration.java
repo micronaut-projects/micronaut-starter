@@ -16,8 +16,11 @@
 package io.micronaut.starter.feature.config;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -42,6 +45,110 @@ public class Configuration extends LinkedHashMap<String, Object> {
         this.path = "src/" + sourceSet + "/resources/";
         this.fileName = fileName;
         this.templateKey = templateKey;
+    }
+
+    @Override
+    public boolean containsKey(Object key) {
+        if (key != null) {
+            return super.containsKey(key) || containsNested(key.toString());
+        }
+        return false;
+    }
+
+    @Override
+    public Object get(Object key) {
+        if (key != null && containsKey(key)) {
+            final Object o = super.get(key);
+            if (o != null) {
+                return o;
+            } else {
+                return getNested(key.toString());
+            }
+        }
+        return null;
+    }
+
+    private Object getNested(String key) {
+        if (key.indexOf('.') == -1) {
+            return null;
+        }
+        final String[] tokens = key.split("\\.");
+        Map<String, Object> map = this;
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (!map.containsKey(token)) {
+                return null;
+            } else {
+                final Object o = map.get(token);
+                if (i == tokens.length - 1) {
+                    return o;
+                } else if (o instanceof Map) {
+                    map = (Map<String, Object>) o;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
+    private boolean containsNested(String key) {
+        if (key.indexOf('.') == -1) {
+            return false;
+        }
+        final String[] tokens = key.split("\\.");
+        Map<String, Object> map = this;
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (!map.containsKey(token)) {
+                return false;
+            } else {
+                final Object o = map.get(token);
+                if (i == tokens.length - 1) {
+                    return true;
+                } else if (o instanceof Map) {
+                    map = (Map<String, Object>) o;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Add a nested value for the given path
+     * @param path The path
+     * @param value The value
+     * @return this configuration
+     */
+    public Configuration addNested(String path, Object value) {
+        if (StringUtils.isNotEmpty(path)) {
+            final String[] tokens = path.split("\\.");
+            LinkedHashMap<String, Object> map = this;
+            for (int i = 0; i < tokens.length; i++) {
+                String token = tokens[i];
+                if (i == tokens.length - 1) {
+                    map.put(token, value);
+                } else {
+                    //noinspection unchecked
+                    map = (LinkedHashMap<String, Object>) map.computeIfAbsent(token, (key) -> new LinkedHashMap<>(5));
+                }
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Add nested values for the given path
+     * @param values A map of path to value entries
+     * @return this configuration
+     */
+    public Configuration addNested(Map<String, Object> values) {
+        if (CollectionUtils.isNotEmpty(values)) {
+            values.forEach(this::addNested);
+        }
+        return this;
     }
 
     @NonNull

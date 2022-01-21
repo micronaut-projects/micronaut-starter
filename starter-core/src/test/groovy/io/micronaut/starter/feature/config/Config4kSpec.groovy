@@ -53,7 +53,7 @@ class Config4kSpec extends BeanContextSpec implements CommandOutputFixture {
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
-        output["src/main/resources/application.conf"] == '''\
+        output["src/main/resources/application.conf"].contains '''\
 micronaut {
     application {
         name=foo
