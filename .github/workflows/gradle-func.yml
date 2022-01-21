@@ -32,6 +32,8 @@ jobs:
         run: ./gradlew test-cli:test --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
   test-core:
     runs-on: ubuntu-latest
     strategy:
@@ -56,6 +58,8 @@ jobs:
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
   test-aws:
     runs-on: ubuntu-latest
     strategy:
@@ -80,6 +84,8 @@ jobs:
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
   test-features:
     runs-on: ubuntu-latest
     strategy:
@@ -104,6 +110,8 @@ jobs:
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.*"
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
   test-cloud:
     runs-on: ubuntu-latest
     strategy:
@@ -128,6 +136,8 @@ jobs:
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.cloud.*"
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
   test-buildTool:
     runs-on: ubuntu-latest
     strategy:
@@ -152,3 +162,5 @@ jobs:
         run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.buildTool.*"
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}

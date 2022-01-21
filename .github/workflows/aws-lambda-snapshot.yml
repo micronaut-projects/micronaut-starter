@@ -18,6 +18,8 @@ jobs:
           cp starter-aws-lambda/build/libs/*-lambda.zip build/function.zip
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: AWS Lambda Deploy
         uses: appleboy/lambda-action@v0.1.5
         with:

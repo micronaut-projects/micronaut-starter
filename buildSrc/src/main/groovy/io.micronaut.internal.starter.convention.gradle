@@ -1,0 +1,20 @@
+plugins {
+    id 'io.micronaut.internal.starter.base-module'
+}
+
+dependencies {
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+}
+
+tasks.withType(Test).configureEach {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    forkEvery = 100
+    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    maxHeapSize = "2G"
+}

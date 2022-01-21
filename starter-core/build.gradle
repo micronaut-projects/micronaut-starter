@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
 }
 
@@ -23,55 +24,16 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
-processResources.dependsOn('micronautVersionInfo')
-task micronautVersionInfo(type: WriteProperties) {
-    outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
-    property 'micronaut.version', micronautVersion
-    WriteProperties wp = delegate
-
-    ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
-            .forModule("io.micronaut", "micronaut-bom", "${micronautVersion}")
-            .withArtifacts(MavenModule, MavenPomArtifact)
-            .execute()
-
-    for (component in result.resolvedComponents) {
-        component.getArtifacts(MavenPomArtifact).each {
-            def pom = new XmlSlurper().parse(it.file)
-
-            pom.properties.children().each {
-                wp.property it.name(), it.text()
-            }
-        }
-    }
+def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
+    version = micronautVersion
+    outputDirectory = layout.buildDirectory.dir("version-info")
 }
 
+sourceSets.main.resources.srcDir(micronautVersionInfo)
+
 rocker {
-    // (All settings are shown with their defaults)
-    //
-    // Skips building templates all together
-    skip false
-    // Base directory for generated java sources, actual target is sub directory
-    // with the name of the source set. The value is passed through project.file().
-    outputBaseDirectory = "$buildDir/generated-src/rocker"
-    // Base directory for the directory where the hot reload feature
-    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
-    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
-    // The actual target is a sub directory with the name of the source set.
-    // The value is passed through project.file().
-    classBaseDirectory = "$buildDir/classes"
-    failOnError true
-    skipTouch true
-    // must not be empty when skipTouch is equal to false
-    touchFile ""
-    javaVersion '1.8'
-    extendsClass null
-    extendsModelClass null
-    optimize true
-    discardLogicWhitespace = true
-    targetCharset null
-    suffixRegex null
+    javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-    markAsGenerated null
 }
 
 nohttp {

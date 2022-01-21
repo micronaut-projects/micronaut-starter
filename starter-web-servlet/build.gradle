@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id "application"
     id "war"
 }
@@ -23,13 +24,16 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut:micronaut-http-client"
 }
-test.classpath += configurations.developmentOnly
 
-mainClassName = "io.micronaut.starter.servlet.Application"
-// use JUnit 5 platform
-test {
+tasks.named("test", Test) {
     useJUnitPlatform()
+    classpath += configurations.developmentOnly
 }
 
-run.classpath += configurations.developmentOnly
-//run.jvmArgs("-agentlib:native-image-agent=config-output-dir=tmp")
+application {
+    mainClass = "io.micronaut.starter.servlet.Application"
+}
+
+tasks.named("run") {
+    classpath += configurations.developmentOnly
+}
