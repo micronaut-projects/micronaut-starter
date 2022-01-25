@@ -9,6 +9,22 @@ import io.micronaut.starter.options.BuildTool
 
 class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    void "test add data-mongodb feature"() {
+        when:
+        def output = generate(['data-mongodb'])
+        def readme = output["README.md"]
+        def build = output['build.gradle']
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://micronaut-projects.github.io/micronaut-data/3.3.x/guide/#mongo")
+        readme.contains("https://docs.mongodb.com")
+        build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
+        build.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor')
+
+    }
+
     void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
         when:
         def output = generate(['mongo-sync'])
@@ -119,6 +135,6 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         GeneratorContext ctx = buildGeneratorContext(['mongo-reactive'])
 
         then:
-        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"
+        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}/mydb"
     }
 }
