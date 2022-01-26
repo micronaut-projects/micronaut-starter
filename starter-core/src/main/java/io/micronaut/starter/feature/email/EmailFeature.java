@@ -26,9 +26,9 @@ import io.micronaut.starter.feature.view.ViewFeature;
 
 abstract class EmailFeature implements Feature {
 
-    private final TemplateEmailFeature templateEmailFeature;
+    static final String MICRONAUT_EMAIL_GROUP_ID = "io.micronaut.email";
 
-    static String MICRONAUT_EMAIL_GROUP_ID = "io.micronaut.email";
+    private final TemplateEmailFeature templateEmailFeature;
 
     EmailFeature(TemplateEmailFeature templateEmailFeature) {
         this.templateEmailFeature = templateEmailFeature;
