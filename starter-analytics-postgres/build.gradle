@@ -1,7 +1,9 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id 'com.google.cloud.tools.jib' version '3.0.0'
     id "application"
 }
+
 dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     annotationProcessor "io.micronaut:micronaut-graal"

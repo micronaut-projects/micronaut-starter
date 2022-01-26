@@ -9,24 +9,25 @@ on:
 jobs:
   build:
     name: Builds OS X Native CLI
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
-      - name: Install GraalVM
-        env:
-          GRAAL_VERSION: 21.3.0
-          GRAAL_OS: darwin-amd64
-        run: ./install-graal.sh
-      - name: Install Native Image
-        run: ./graalvm/Contents/Home/bin/gu install native-image
+        uses: actions/checkout@v2.4.0
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build the JAR
         env:
-          JAVA_HOME: ./graalvm/Contents/Home
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: ./graalvm/Contents/Home/bin/native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Verify Create App
@@ -40,8 +41,8 @@ jobs:
           cp ./LICENSE mn-darwin-amd64-snapshot/
           zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/2.2.x'
-        uses: actions/upload-artifact@v2.2.4
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.2.x'
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: mn-darwin-amd64-snapshot
           path: mn-darwin-amd64-snapshot.zip

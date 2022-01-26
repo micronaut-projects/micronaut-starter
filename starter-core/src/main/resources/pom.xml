@@ -20,37 +20,42 @@
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-bpm-feature</artifactId>
-            <version>2.2.0</version>
+            <version>2.3.2</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-external-client-feature</artifactId>
-            <version>2.1.0</version>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>info.novatec</groupId>
+            <artifactId>micronaut-zeebe-client-feature</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-bom</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.10</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-noarg</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.10</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-allopen</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.10</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-gradle-plugin</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.10</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.1</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
@@ -110,7 +115,7 @@
         <dependency>
             <groupId>gradle.plugin.com.github.johnrengelman</groupId>
             <artifactId>shadow</artifactId>
-            <version>7.1.0</version>
+            <version>7.1.1</version>
         </dependency>
         <dependency>
             <groupId>gradle.plugin.org.zeroturnaround</groupId>
@@ -120,17 +125,17 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.14.1</version>
+            <version>2.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.14.1</version>
+            <version>2.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.14.1</version>
+            <version>2.17.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -145,7 +150,7 @@
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>4.13.0</version>
+            <version>4.17.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>

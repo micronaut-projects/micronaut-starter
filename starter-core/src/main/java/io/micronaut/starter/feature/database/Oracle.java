@@ -27,6 +27,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Oracle extends DatabaseDriverFeature {
 
+    public static final String NAME = "oracle";
+
     public Oracle(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
     }
@@ -34,7 +36,7 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "oracle";
+        return NAME;
     }
 
     @Override
