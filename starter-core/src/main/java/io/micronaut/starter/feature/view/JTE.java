@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 
 @Singleton
 public class JTE implements ViewFeature, MicronautServerDependent {
+    private final static String JTE_SRC_DIR = "src/main/jte";
 
     @Override
     public String getName() {
@@ -59,12 +60,11 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.views")
-                .lookupArtifactId("micronaut-views-jte")
+                .artifactId("micronaut-views-jte")
                 .compile());
-        String jteSrcDir = jteSrcDir(generatorContext);
         generatorContext.addBuildPlugin(GradlePlugin.builder()
                 .id("gg.jte.gradle")
-                .extension(new RockerWritable(gradlePluginJTE.template(jteSrcDir)))
+                .extension(new RockerWritable(gradlePluginJTE.template(JTE_SRC_DIR)))
                 .lookupArtifactId("jte-gradle-plugin")
                 .build());
         String mavenPluginArtifactId = "jte-maven-plugin";
@@ -74,17 +74,8 @@ public class JTE implements ViewFeature, MicronautServerDependent {
                 .extension(new RockerWritable(mvnPluginJTE.template(coordinate.getGroupId(),
                         coordinate.getArtifactId(),
                         coordinate.getVersion(),
-                        jteSrcDir)))
+                        JTE_SRC_DIR)))
                 .build());
-        generatorContext.addTemplate("exampleJte", new RockerTemplate(jteSrcDir + "/example.jte", exampleJTE.template()));
-    }
-
-    private String jteSrcDir(GeneratorContext generatorContext) {
-        String path = generatorContext.getConfiguration().getPath();
-        if (path.endsWith("resources/")) {
-            path = path.substring(0, path.lastIndexOf("resources/"));
-        }
-        path = path + "jte";
-        return path;
+        generatorContext.addTemplate("exampleJte", new RockerTemplate(JTE_SRC_DIR + "/example.jte", exampleJTE.template()));
     }
 }

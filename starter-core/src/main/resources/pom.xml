@@ -158,12 +158,6 @@
             <version>5.12.0</version>
         </dependency>
         <dependency>
-            <!-- FIXME: this can be removed once the micronaut-bom references version 3.1.2 or higher -->
-            <groupId>io.micronaut.views</groupId>
-            <artifactId>micronaut-views-jte</artifactId>
-            <version>3.1.2</version>
-        </dependency>
-        <dependency>
             <groupId>gg.jte</groupId>
             <artifactId>jte-gradle-plugin</artifactId>
             <version>1.12.1</version>
