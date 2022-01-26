@@ -1,6 +1,7 @@
 import groovy.transform.CompileStatic
 
 plugins {
+    id "io.micronaut.internal.starter.published-module"
     id "io.micronaut.internal.starter.convention"
 }
 
