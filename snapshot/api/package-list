@@ -82,6 +82,7 @@ io.micronaut.starter.feature.discovery
 io.micronaut.starter.feature.distributedconfig
 io.micronaut.starter.feature.distributedconfig.template
 io.micronaut.starter.feature.elasticsearch
+io.micronaut.starter.feature.email
 io.micronaut.starter.feature.function
 io.micronaut.starter.feature.function.awslambda
 io.micronaut.starter.feature.function.awslambda.template
