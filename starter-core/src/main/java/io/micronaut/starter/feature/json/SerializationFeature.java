@@ -59,5 +59,5 @@ public interface SerializationFeature extends JsonFeature {
         );  
     }
 
-    public String getModule();
+    String getModule();
 }
