@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
@@ -36,6 +37,7 @@ public class MicronautApplicationGradlePlugin {
         private static final String ARTIFACT_ID = "micronaut-gradle-plugin";
 
         String id = APPLICATION;
+        private GradleDsl dsl = GradleDsl.GROOVY;
         private String runtime;
         private String testRuntime;
         private String aotVersion;
@@ -112,8 +114,13 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName)))
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName)))
                     .build();
+        }
+
+        public Builder dsl(GradleDsl gradleDsl) {
+            this.dsl = gradleDsl;
+            return this;
         }
     }
 

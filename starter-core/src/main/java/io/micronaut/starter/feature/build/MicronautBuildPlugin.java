@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.build;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
 
@@ -80,6 +81,10 @@ public class MicronautBuildPlugin implements Feature {
                 .buildTool(generatorContext.getBuildTool())
                 .incremental(true)
                 .packageName(generatorContext.getProject().getPackageName());
+        Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
+        if (gradleDsl.isPresent()) {
+            builder = builder.dsl(gradleDsl.get());
+        }
 
         Optional<String> runtimeOptional = resolveRuntime(generatorContext);
         if (runtimeOptional.isPresent()) {

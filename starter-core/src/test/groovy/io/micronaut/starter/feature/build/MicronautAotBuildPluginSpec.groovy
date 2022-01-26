@@ -20,6 +20,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
                 .render()
 
         then:
+        build.contains('id("io.micronaut.aot") version "3.2.0"')
         build.contains('aot {')
         build.contains('optimizeServiceLoading = true')
         build.contains('convertYamlToJava = true')
@@ -28,6 +29,30 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         build.contains('optimizeClassLoading = true')
         build.contains('deduceEnvironment = true')
         build.contains('version = \'1.0.0-M6\'')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'function with gradle and feature micronaut-aot for language=#language and Kotlin DSL'() {
+        when:
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE_KOTLIN)
+                .language(language)
+                .applicationType(ApplicationType.DEFAULT)
+                .features(['micronaut-aot'])
+                .render()
+
+        then:
+        build.contains('id("io.micronaut.aot") version "3.2.0"')
+        build.contains('aot {')
+        build.contains('optimizeServiceLoading.set(true)')
+        build.contains('convertYamlToJava.set(true)')
+        build.contains('precomputeOperations.set(true)')
+        build.contains('cacheEnvironment.set(true)')
+        build.contains('optimizeClassLoading.set(true)')
+        build.contains('deduceEnvironment.set(true)')
+        build.contains('version.set(\'1.0.0-M6\')')
 
         where:
         language << Language.values().toList()

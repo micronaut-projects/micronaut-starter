@@ -1,7 +1,8 @@
 @import java.util.List
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
-@args(BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages, String runtime, String testRuntime, String aotVersion, boolean incremental, String packageName)
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args(GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages, String runtime, String testRuntime, String aotVersion, boolean incremental, String packageName)
 micronaut {
 @if(runtime != null) {
     runtime("@(runtime)")
@@ -17,6 +18,16 @@ micronaut {
 }
 @if(aotVersion != null) {
     aot {
+@if (dsl == GradleDsl.KOTLIN) {
+        version.set('@(aotVersion)')
+        optimizeServiceLoading.set(true)
+        convertYamlToJava.set(true)
+        precomputeOperations.set(true)
+        cacheEnvironment.set(true)
+        optimizeClassLoading.set(true)
+        deduceEnvironment.set(true)
+}
+@if (dsl == GradleDsl.GROOVY) {
         version = '@(aotVersion)'
         optimizeServiceLoading = true
         convertYamlToJava = true
@@ -24,6 +35,7 @@ micronaut {
         cacheEnvironment = true
         optimizeClassLoading = true
         deduceEnvironment = true
+}
     }
 }
 }
