@@ -57,7 +57,6 @@ io.micronaut.starter.feature
 io.micronaut.starter.feature.acme
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
-io.micronaut.starter.feature.atp
 io.micronaut.starter.feature.aws
 io.micronaut.starter.feature.awsalexa
 io.micronaut.starter.feature.awsalexa.templates
@@ -115,6 +114,7 @@ io.micronaut.starter.feature.jaxrs
 io.micronaut.starter.feature.jdbi
 io.micronaut.starter.feature.jib
 io.micronaut.starter.feature.jmx
+io.micronaut.starter.feature.json
 io.micronaut.starter.feature.k8s
 io.micronaut.starter.feature.knative
 io.micronaut.starter.feature.knative.template
