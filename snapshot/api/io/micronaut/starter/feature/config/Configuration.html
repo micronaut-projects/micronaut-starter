@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,26 +195,47 @@ extends java.util.LinkedHashMap&lt;java.lang.String,java.lang.Object&gt;</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#addNested-java.util.Map-">addNested</a></span>(java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;values)</code>
+<div class="block">Add nested values for the given path.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#addNested-java.lang.String-java.lang.Object-">addNested</a></span>(java.lang.String&nbsp;path,
+         java.lang.Object&nbsp;value)</code>
+<div class="block">Add a nested value for the given path.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#containsKey-java.lang.Object-">containsKey</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#equals-java.lang.Object-">equals</a></span>(java.lang.Object&nbsp;o)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.Object</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#get-java.lang.Object-">get</a></span>(java.lang.Object&nbsp;key)</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#getFileName--">getFileName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#getFullPath-java.lang.String-">getFullPath</a></span>(java.lang.String&nbsp;extension)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#getTemplateKey--">getTemplateKey</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/config/Configuration.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
@@ -224,14 +245,14 @@ extends java.util.LinkedHashMap&lt;java.lang.String,java.lang.Object&gt;</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.LinkedHashMap</h3>
-<code>clear, containsValue, entrySet, forEach, get, getOrDefault, keySet, removeEldestEntry, replaceAll, values</code></li>
+<code>clear, containsValue, entrySet, forEach, getOrDefault, keySet, removeEldestEntry, replaceAll, values</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.HashMap">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.util.HashMap</h3>
-<code>clone, compute, computeIfAbsent, computeIfPresent, containsKey, isEmpty, merge, put, putAll, putIfAbsent, remove, remove, replace, replace, size</code></li>
+<code>clone, compute, computeIfAbsent, computeIfPresent, isEmpty, merge, put, putAll, putIfAbsent, remove, remove, replace, replace, size</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.util.AbstractMap">
@@ -252,7 +273,7 @@ extends java.util.LinkedHashMap&lt;java.lang.String,java.lang.Object&gt;</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;java.util.Map</h3>
-<code>compute, computeIfAbsent, computeIfPresent, containsKey, isEmpty, merge, put, putAll, putIfAbsent, remove, remove, replace, replace, size</code></li>
+<code>compute, computeIfAbsent, computeIfPresent, isEmpty, merge, put, putAll, putIfAbsent, remove, remove, replace, replace, size</code></li>
 </ul>
 </li>
 </ul>
@@ -295,6 +316,70 @@ extends java.util.LinkedHashMap&lt;java.lang.String,java.lang.Object&gt;</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="containsKey-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>containsKey</h4>
+<pre>public&nbsp;boolean&nbsp;containsKey(java.lang.Object&nbsp;key)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>containsKey</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>containsKey</code>&nbsp;in class&nbsp;<code>java.util.HashMap&lt;java.lang.String,java.lang.Object&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="get-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get</h4>
+<pre>public&nbsp;java.lang.Object&nbsp;get(java.lang.Object&nbsp;key)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>get</code>&nbsp;in interface&nbsp;<code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code>get</code>&nbsp;in class&nbsp;<code>java.util.LinkedHashMap&lt;java.lang.String,java.lang.Object&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="addNested-java.lang.String-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addNested</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/feature/config/Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a>&nbsp;addNested(java.lang.String&nbsp;path,
+                               java.lang.Object&nbsp;value)</pre>
+<div class="block">Add a nested value for the given path.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>path</code> - The path</dd>
+<dd><code>value</code> - The value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this configuration</dd>
+</dl>
+</li>
+</ul>
+<a name="addNested-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addNested</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/feature/config/Configuration.html" title="class in io.micronaut.starter.feature.config">Configuration</a>&nbsp;addNested(java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;values)</pre>
+<div class="block">Add nested values for the given path.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>values</code> - A map of path to value entries</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this configuration</dd>
+</dl>
+</li>
+</ul>
 <a name="getPath--">
 <!--   -->
 </a>
