@@ -85,6 +85,7 @@ public class GradleBuild {
                 .forEach(writable -> {
                     try {
                         writable.write(outputStream);
+                        outputStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
                     } catch (IOException e) {
                         if (LOG.isErrorEnabled()) {
                             LOG.error("IO Exception rendering Gradle Plugin extension");

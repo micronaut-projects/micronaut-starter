@@ -11,16 +11,18 @@ import spock.lang.Unroll
 
 @Retry // can fail on CI due to port binding race condition, so retry
 class CreateAwsLambdaCustomRuntimeSpec extends CommandSpec {
+
     @Override
     String getTempDirectoryPrefix() {
         "test-awslambdacustomruntime"
     }
 
     @Unroll
-    void 'create-#applicationType with features aws-lambda, aws-lambda-custom-runtime #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
-                                                                                                                                           Language lang,
-                                                                                                                                           BuildTool build,
-                                                                                                                                           TestFramework testFramework) {
+    void 'create-#applicationType with features aws-lambda, aws-lambda-custom-runtime #lang and #build and test framework: #testFramework'(
+            ApplicationType applicationType,
+            Language lang,
+            BuildTool build,
+            TestFramework testFramework) {
         given:
         List<String> features = ['aws-lambda', 'aws-lambda-custom-runtime']
         generateProject(lang, build, features, applicationType, testFramework)
