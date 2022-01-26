@@ -19,7 +19,7 @@ micronaut {
 @if(aotVersion != null) {
     aot {
 @if (dsl == GradleDsl.KOTLIN) {
-        version.set('@(aotVersion)')
+        version.set("@(aotVersion)")
         optimizeServiceLoading.set(true)
         convertYamlToJava.set(true)
         precomputeOperations.set(true)

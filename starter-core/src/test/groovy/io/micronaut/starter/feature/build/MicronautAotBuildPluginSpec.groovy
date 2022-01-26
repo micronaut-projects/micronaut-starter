@@ -52,7 +52,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         build.contains('cacheEnvironment.set(true)')
         build.contains('optimizeClassLoading.set(true)')
         build.contains('deduceEnvironment.set(true)')
-        build.contains('version.set(\'1.0.0-M6\')')
+        build.contains('version.set("1.0.0-M6")')
 
         where:
         language << Language.values().toList()
