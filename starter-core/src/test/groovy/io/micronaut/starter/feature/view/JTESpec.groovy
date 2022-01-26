@@ -30,7 +30,7 @@ class JTESpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
 
         then:
-        template.contains('implementation("io.micronaut.views:micronaut-views-jte:3.1.2")')
+        template.contains('implementation("io.micronaut.views:micronaut-views-jte")')
         template.contains('''\
 jte {
     sourceDirectory = file("src/main/jte").toPath()
@@ -68,7 +68,6 @@ jte {
     <dependency>
       <groupId>io.micronaut.views</groupId>
       <artifactId>micronaut-views-jte</artifactId>
-      <version>3.1.2</version>
       <scope>compile</scope>
     </dependency>
 """)
