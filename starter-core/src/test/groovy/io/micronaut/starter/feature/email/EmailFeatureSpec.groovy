@@ -13,12 +13,10 @@ class EmailFeatureSpec extends ApplicationContextSpec {
     @Shared
     List<Feature> emailFeatures = beanContext.getBeansOfType(EmailFeature)
 
-    static final List<String> EMAIL_PROVIDER_FEATURES = ['email-sendgrid', 'email-ses', 'email-postmark', 'email-mailjet', 'email-javamail']
-
     @NonNull
     Optional<Feature> findFeatureByName(@NonNull String featureName) {
-        emailFeatures.stream()
-        .filter(it -> it.getName() == featureName)
+        beanContext.streamOfType(Feature)
+                .filter(it -> it.getName() == featureName)
                 .findFirst()
     }
 
@@ -32,7 +30,7 @@ class EmailFeatureSpec extends ApplicationContextSpec {
         featureOptional.get().getCategory() == "Messaging"
 
         where:
-        feature << EMAIL_PROVIDER_FEATURES + ['email-template']
+        feature << emailFeatures*.name + ['email-template']
     }
 
     @Unroll("#feature overrides Feature->getThirdPartyDocumentation")
@@ -45,7 +43,7 @@ class EmailFeatureSpec extends ApplicationContextSpec {
         featureOptional.get().getThirdPartyDocumentation()
 
         where:
-        feature << EMAIL_PROVIDER_FEATURES
+        feature << emailFeatures*.name
     }
 
     @Unroll("#feature overrides Feature->getMicronautDocumentation")
@@ -58,7 +56,7 @@ class EmailFeatureSpec extends ApplicationContextSpec {
         featureOptional.get().getMicronautDocumentation()
 
         where:
-        feature << EMAIL_PROVIDER_FEATURES
+        feature << emailFeatures*.name
     }
 
     @Unroll("#buildTool with feature #features adds #coordinate dependency")

@@ -20,18 +20,10 @@ import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MailjetEmailFeature implements EmailProviderFeature {
-
-    private final TemplateEmailFeature templateEmailFeature;
+public class MailjetEmailFeature extends EmailFeature {
 
     public MailjetEmailFeature(TemplateEmailFeature templateEmailFeature) {
-        this.templateEmailFeature = templateEmailFeature;
-    }
-
-    @Override
-    @NonNull
-    public TemplateEmailFeature getTemplateFeature() {
-        return this.templateEmailFeature;
+        super(templateEmailFeature);
     }
 
     @Override

@@ -20,18 +20,10 @@ import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SendGridEmailFeature implements EmailProviderFeature {
-
-    private final TemplateEmailFeature templateEmailFeature;
+public class SendGridEmailFeature extends EmailFeature {
 
     public SendGridEmailFeature(TemplateEmailFeature templateEmailFeature) {
-        this.templateEmailFeature = templateEmailFeature;
-    }
-
-    @Override
-    @NonNull
-    public TemplateEmailFeature getTemplateFeature() {
-        return this.templateEmailFeature;
+        super(templateEmailFeature);
     }
 
     @Override

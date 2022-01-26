@@ -15,42 +15,57 @@
  */
 package io.micronaut.starter.feature.email;
 
-import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.view.ViewFeature;
 
-public interface EmailFeature extends Feature {
+abstract class EmailFeature implements Feature {
 
-    String MICRONAUT_EMAIL_GROUP_ID = "io.micronaut.email";
+    private final TemplateEmailFeature templateEmailFeature;
+
+    static String MICRONAUT_EMAIL_GROUP_ID = "io.micronaut.email";
+
+    EmailFeature(TemplateEmailFeature templateEmailFeature) {
+        this.templateEmailFeature = templateEmailFeature;
+    }
 
     @Override
-    default String getCategory() {
+    public String getCategory() {
         return Category.MESSAGING;
     }
 
     @Override
-    default boolean supports(ApplicationType applicationType) {
+    public boolean supports(ApplicationType applicationType) {
         return true;
     }
 
-    String getModule();
+    abstract String getModule();
 
     @Override
-    @Nullable
-    default String getName() {
+    @NonNull
+    public String getName() {
         return "email-" + getModule();
     }
 
     @Override
-    default void apply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .compile()
                 .groupId(MICRONAUT_EMAIL_GROUP_ID)
                 .artifactId("micronaut-email-" + getModule())
                 .build()
         );
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(ViewFeature.class)) {
+            featureContext.addFeature(templateEmailFeature);
+        }
     }
 }

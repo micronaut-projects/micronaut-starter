@@ -20,17 +20,10 @@ import io.micronaut.core.annotation.Nullable;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonSesEmailFeature implements EmailProviderFeature {
-    private final TemplateEmailFeature templateEmailFeature;
+public class AmazonSesEmailFeature extends EmailFeature {
 
     public AmazonSesEmailFeature(TemplateEmailFeature templateEmailFeature) {
-        this.templateEmailFeature = templateEmailFeature;
-    }
-
-    @Override
-    @NonNull
-    public TemplateEmailFeature getTemplateFeature() {
-        return this.templateEmailFeature;
+        super(templateEmailFeature);
     }
 
     @Override

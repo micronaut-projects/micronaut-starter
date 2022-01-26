@@ -16,10 +16,15 @@
 package io.micronaut.starter.feature.email;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class TemplateEmailFeature implements EmailFeature {
+public class TemplateEmailFeature implements Feature {
 
     @Override
     @NonNull
@@ -33,7 +38,28 @@ public class TemplateEmailFeature implements EmailFeature {
     }
 
     @Override
-    public String getModule() {
-        return "template";
+    public String getCategory() {
+        return Category.MESSAGING;
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    @NonNull
+    public String getName() {
+        return "email-template";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .compile()
+                .groupId(EmailFeature.MICRONAUT_EMAIL_GROUP_ID)
+                .artifactId("micronaut-email-template")
+                .build()
+        );
     }
 }
