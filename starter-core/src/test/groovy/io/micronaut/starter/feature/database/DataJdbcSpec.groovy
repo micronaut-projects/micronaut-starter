@@ -143,8 +143,6 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         then:
         config
         config.contains('''\
-datasources:
-  default:
     schema-generate: CREATE_DROP
     dialect: H2''')
     }
