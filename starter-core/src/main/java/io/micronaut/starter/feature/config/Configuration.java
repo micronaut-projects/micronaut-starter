@@ -68,56 +68,9 @@ public class Configuration extends LinkedHashMap<String, Object> {
         return null;
     }
 
-    private Object getNested(String key) {
-        if (key.indexOf('.') == -1) {
-            return null;
-        }
-        final String[] tokens = key.split("\\.");
-        Map<String, Object> map = this;
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i];
-            if (!map.containsKey(token)) {
-                return null;
-            } else {
-                final Object o = map.get(token);
-                if (i == tokens.length - 1) {
-                    return o;
-                } else if (o instanceof Map) {
-                    map = (Map<String, Object>) o;
-                } else {
-                    return null;
-                }
-            }
-        }
-        return null;
-    }
-
-    private boolean containsNested(String key) {
-        if (key.indexOf('.') == -1) {
-            return false;
-        }
-        final String[] tokens = key.split("\\.");
-        Map<String, Object> map = this;
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i];
-            if (!map.containsKey(token)) {
-                return false;
-            } else {
-                final Object o = map.get(token);
-                if (i == tokens.length - 1) {
-                    return true;
-                } else if (o instanceof Map) {
-                    map = (Map<String, Object>) o;
-                } else {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     /**
-     * Add a nested value for the given path
+     * Add a nested value for the given path.
+     *
      * @param path The path
      * @param value The value
      * @return this configuration
@@ -140,7 +93,8 @@ public class Configuration extends LinkedHashMap<String, Object> {
     }
 
     /**
-     * Add nested values for the given path
+     * Add nested values for the given path.
+     *
      * @param values A map of path to value entries
      * @return this configuration
      */
@@ -186,6 +140,54 @@ public class Configuration extends LinkedHashMap<String, Object> {
     @Override
     public int hashCode() {
         return Objects.hash(templateKey);
+    }
+
+    private boolean containsNested(String key) {
+        if (key.indexOf('.') == -1) {
+            return false;
+        }
+        final String[] tokens = key.split("\\.");
+        Map<String, Object> map = this;
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (!map.containsKey(token)) {
+                return false;
+            } else {
+                final Object o = map.get(token);
+                if (i == tokens.length - 1) {
+                    return true;
+                } else if (o instanceof Map) {
+                    map = (Map<String, Object>) o;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private Object getNested(String key) {
+        if (key.indexOf('.') == -1) {
+            return null;
+        }
+        final String[] tokens = key.split("\\.");
+        Map<String, Object> map = this;
+        for (int i = 0; i < tokens.length; i++) {
+            String token = tokens[i];
+            if (!map.containsKey(token)) {
+                return null;
+            } else {
+                final Object o = map.get(token);
+                if (i == tokens.length - 1) {
+                    return o;
+                } else if (o instanceof Map) {
+                    map = (Map<String, Object>) o;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 
 }
