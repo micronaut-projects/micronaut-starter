@@ -1,7 +1,33 @@
 @import java.util.List
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
-@args(BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages)
+@args(BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages, String runtime, String testRuntime, String aotVersion, boolean incremental, String packageName)
+micronaut {
+@if(runtime != null) {
+    runtime("@(runtime)")
+}
+@if(testRuntime != null) {
+    testRuntime("@(testRuntime)")
+}
+@if(incremental) {
+    processing {
+        incremental(true)
+        annotations("@(packageName).*")
+    }
+}
+@if(aotVersion != null) {
+    aot {
+        version = '@(aotVersion)'
+        optimizeServiceLoading = true
+        convertYamlToJava = true
+        precomputeOperations = true
+        cacheEnvironment = true
+        optimizeClassLoading = true
+        deduceEnvironment = true
+    }
+}
+}
+
 @if(dockerfile != null) {
 dockerfile {
 @if(dockerfile.getBaseImage() != null) {
