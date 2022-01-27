@@ -34,5 +34,8 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
             !readme.contains("## Feature azure-function documentation")
             !readme.contains("## Feature azure-function-http documentation")
         }
+
+        and: 'Readme contains a link to the Gradle Plugin'
+        readme.contains("[Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions)")
     }
 }

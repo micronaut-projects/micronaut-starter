@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id "com.github.johnrengelman.shadow"
     id "application"
 }
@@ -24,19 +25,23 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.2'
 }
-test.classpath += configurations.developmentOnly
 
-mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
-// use JUnit 5 platform
-test {
+tasks.named("test", Test) {
     useJUnitPlatform()
+    classpath += configurations.developmentOnly
 }
 
-shadowJar {
+application {
+    mainClass = "io.micronaut.gcp.function.http.HttpFunction"
+}
+
+tasks.named("shadowJar") {
     mergeServiceFiles()
     manifest {
         attributes 'Main-Class': 'io.micronaut.gcp.function.http.HttpFunction'
     }
 }
 
-run.classpath += configurations.developmentOnly
+tasks.named("run") {
+    classpath += configurations.developmentOnly
+}

@@ -46,6 +46,7 @@ public class Jrebel implements ReloadingFeature {
                     .id("org.zeroturnaround.gradle.jrebel")
                     .lookupArtifactId("gradle-jrebel-plugin")
                     .build());
+            generatorContext.addHelpLink("JRebel Gradle Plugin", "https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel");
         }
     }
 

@@ -3,10 +3,14 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
+    plugins {
+        id 'io.micronaut.application' version '3.1.1'
+        id 'com.microsoft.azure.azurefunctions' version '1.4.0'
+    }
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '4.1.4'
+    id 'io.micronaut.build.shared.settings' version '5.1.1'
 }
 
 rootProject.name = 'micronaut-starter'

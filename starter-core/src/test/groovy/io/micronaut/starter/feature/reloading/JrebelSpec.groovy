@@ -12,12 +12,13 @@ class JrebelSpec extends ApplicationContextSpec  implements CommandOutputFixture
 
     void 'test readme.md with feature jrebel contains links to micronaut docs'() {
         when:
-        def output = generate(['jrebel'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['jrebel'])
+        String readme = output["README.md"]
 
         then:
         readme
         readme.contains("https://docs.micronaut.io/latest/guide/index.html#jrebel")
+        readme.contains("[JRebel Gradle Plugin](https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel)")
     }
 
     @Unroll

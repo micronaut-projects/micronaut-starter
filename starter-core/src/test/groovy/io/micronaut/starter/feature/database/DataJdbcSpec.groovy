@@ -135,6 +135,18 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
     }
 
+    void "test render config"() {
+        when:
+        def output = generate(['data-jdbc'])
+        def config = output["src/main/resources/application.yml"]
+
+        then:
+        config
+        config.contains('''\
+    schema-generate: CREATE_DROP
+    dialect: H2''')
+    }
+
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
     void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
         when:

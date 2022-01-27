@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.build;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
 
@@ -24,6 +26,8 @@ import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
 
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
@@ -44,9 +48,60 @@ public class MicronautBuildPlugin implements Feature {
         }
     }
 
-    protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
+    Optional<String> resolveRuntime(GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().contains("google-cloud-function-http")) {
+            return Optional.of("google_function");
+        }
+        if (generatorContext.getFeatures().contains("oracle-function-http")) {
+            return Optional.of("oracle_function");
+        }
+        if (generatorContext.getFeatures().contains("azure-function-http")) {
+            return Optional.of("azure_function");
+        }
+        if ((generatorContext.getApplicationType() == ApplicationType.DEFAULT || generatorContext.getApplicationType() == ApplicationType.FUNCTION) && generatorContext.getFeatures().contains("aws-lambda")) {
+            return Optional.of("lambda");
+        }
+        if (generatorContext.getFeatures().contains("tomcat-server")) {
+            return Optional.of("tomcat");
+        }
+        if (generatorContext.getFeatures().contains("jetty-server")) {
+            return Optional.of("jetty");
+        }
+        if (generatorContext.getFeatures().contains("netty-server")) {
+            return Optional.of("netty");
+        }
+        if (generatorContext.getFeatures().contains("undertow-server")) {
+            return Optional.of("undertow");
+        }
+        return Optional.empty();
+    }
+
+    protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext, String id) {
         MicronautApplicationGradlePlugin.Builder builder = MicronautApplicationGradlePlugin.builder()
-                .buildTool(generatorContext.getBuildTool());
+                .buildTool(generatorContext.getBuildTool())
+                .incremental(true)
+                .packageName(generatorContext.getProject().getPackageName());
+        Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
+        if (gradleDsl.isPresent()) {
+            builder = builder.dsl(gradleDsl.get());
+        }
+
+        Optional<String> runtimeOptional = resolveRuntime(generatorContext);
+        if (runtimeOptional.isPresent()) {
+            builder = builder.runtime(runtimeOptional.get());
+        }
+        Optional<String> testRuntimeOptional = resolveTestRuntime(generatorContext);
+        if (testRuntimeOptional.isPresent()) {
+            builder = builder.testRuntime(testRuntimeOptional.get());
+        }
+        if (generatorContext.getFeatures().contains(MicronautAotBuildPlugin.FEATURE_NAME_AOT)) {
+            Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
+            builder.aot(coordinate.getVersion());
+        }
+        return builder.id(id);
+    }
+    protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
+        MicronautApplicationGradlePlugin.Builder builder = micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.APPLICATION);
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
                 (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
@@ -58,11 +113,20 @@ public class MicronautBuildPlugin implements Feature {
         return builder;
     }
 
+    private Optional<String> resolveTestRuntime(GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().testFramework().isJunit()) {
+            return Optional.of("junit5");
+        } else if (generatorContext.getFeatures().testFramework().isKotlinTestFramework()) {
+            return Optional.of("kotest");
+        } else if (generatorContext.getFeatures().testFramework().isSpock()) {
+            return Optional.of("spock2");
+        }
+
+        return Optional.empty();
+    }
+
     protected GradlePlugin micronautLibraryGradlePlugin(GeneratorContext generatorContext) {
-        return GradlePlugin.builder()
-                .id("io.micronaut.library")
-                .lookupArtifactId("micronaut-gradle-plugin")
-                .build();
+        return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).build();
     }
 
     private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {

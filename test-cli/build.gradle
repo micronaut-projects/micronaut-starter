@@ -1,8 +1,12 @@
+plugins {
+    id "io.micronaut.internal.starter.test-module"
+}
+
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":micronaut-cli")
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     forkEvery = 10
 }

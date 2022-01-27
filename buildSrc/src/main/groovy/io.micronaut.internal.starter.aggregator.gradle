@@ -1,0 +1,24 @@
+plugins {
+    id "io.micronaut.build.internal.docs"
+}
+
+repositories {
+    // Needed for Javadoc generation
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+configurations {
+    asciidocs {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    asciidocs project(path: ':micronaut-cli', configuration: 'asciidocPages')
+}
+
+tasks.named('publishGuide') {
+    inputs.files(configurations.asciidocs)
+    properties.put('includedir', providers.provider { configurations.asciidocs.incoming.files.singleFile })
+}

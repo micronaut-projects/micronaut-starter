@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
@@ -31,18 +32,55 @@ public class MicronautApplicationGradlePlugin {
     }
 
     public static final class Builder {
-
-        private static final String ID = "io.micronaut.application";
+        public static final String LIBRARY = "io.micronaut.library";
+        public static final String APPLICATION = "io.micronaut.application";
         private static final String ARTIFACT_ID = "micronaut-gradle-plugin";
 
+        String id = APPLICATION;
+        private GradleDsl dsl = GradleDsl.GROOVY;
+        private String runtime;
+        private String testRuntime;
+        private String aotVersion;
         private Dockerfile dockerfileNative;
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
         private List<String> dockerBuildNativeImages;
         private BuildTool buildTool;
+        private boolean incremental;
+        private  String packageName;
 
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
+            return this;
+        }
+
+        public Builder incremental(boolean incremental) {
+            this.incremental = incremental;
+            return this;
+        }
+
+        public Builder packageName(String packageName) {
+            this.packageName = packageName;
+            return this;
+        }
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder runtime(String runtime) {
+            this.runtime = runtime;
+            return this;
+        }
+
+        public Builder testRuntime(String testRuntime) {
+            this.testRuntime = testRuntime;
+            return this;
+        }
+
+        public Builder aot(String aotVersion) {
+            this.aotVersion = aotVersion;
             return this;
         }
 
@@ -74,10 +112,15 @@ public class MicronautApplicationGradlePlugin {
 
         public GradlePlugin build() {
             return GradlePlugin.builder()
-                    .id(ID)
+                    .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages)))
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName)))
                     .build();
+        }
+
+        public Builder dsl(GradleDsl gradleDsl) {
+            this.dsl = gradleDsl;
+            return this;
         }
     }
 

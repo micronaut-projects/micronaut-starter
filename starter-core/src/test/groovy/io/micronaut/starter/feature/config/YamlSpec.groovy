@@ -41,7 +41,7 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
-        output["src/main/resources/application.yml"] == '''\
+        output["src/main/resources/application.yml"].contains '''\
 micronaut:
   application:
     name: foo
