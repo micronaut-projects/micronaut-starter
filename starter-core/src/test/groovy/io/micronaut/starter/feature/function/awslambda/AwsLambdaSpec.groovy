@@ -145,13 +145,11 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void 'function with gradle and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, BuildTool.GRADLE),
-                ['aws-lambda']
-        )
-        String build = output['build.gradle']
-        def readme = output["README.md"]
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['aws-lambda'])
+                .render()
 
         then:
         build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -161,6 +159,20 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         and:
         build.contains('runtime("lambda")')
 
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'files with gradle and feature aws-lambda for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language, BuildTool.GRADLE),
+                ['aws-lambda']
+        )
+
+        then:
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())

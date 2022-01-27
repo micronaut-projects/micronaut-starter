@@ -51,44 +51,6 @@ repositories {
     }
 }
 
-micronaut {
-    @if (features.contains("google-cloud-function-http")) {
-    runtime("google_function")
-    }
-    @if (features.contains("oracle-function-http")) {
-    runtime("oracle_function")
-    }
-    @if (features.contains("azure-function-http")) {
-    runtime("azure_function")
-    }
-    @if ((applicationType == ApplicationType.DEFAULT || applicationType == ApplicationType.FUNCTION) && features.contains("aws-lambda")) {
-    runtime("lambda")
-    }
-    @if (features.contains("tomcat-server")) {
-    runtime("tomcat")
-    }
-    @if (features.contains("jetty-server")) {
-    runtime("jetty")
-    }
-    @if (features.contains("netty-server")) {
-    runtime("netty")
-    }
-    @if (features.contains("undertow-server")) {
-    runtime("undertow")
-    }
-    @if (features.testFramework().isJunit()) {
-    testRuntime("junit5")
-    } else if (features.testFramework().isKotlinTestFramework()) {
-    testRuntime("kotest")
-    } else if (features.testFramework().isSpock()) {
-    testRuntime("spock2")
-    }
-    processing {
-        incremental(true)
-        annotations("@project.getPackageName().*")
-    }
-}
-
 @dependencies.template(applicationType, project, features, gradleBuild)
 
 

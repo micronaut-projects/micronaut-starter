@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.aot</groupId>
+            <artifactId>micronaut-aot-core</artifactId>
+            <version>1.0.0-M6</version>
+        </dependency>
+        <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
             <version>13.0.0</version>
