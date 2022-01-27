@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.tracing;
 
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
+
+import static io.micronaut.starter.application.ApplicationType.CLI;
+import static io.micronaut.starter.feature.Category.TRACING;
 
 public interface TracingFeature extends OneOfFeature {
 
@@ -28,11 +30,11 @@ public interface TracingFeature extends OneOfFeature {
 
     @Override
     default boolean supports(ApplicationType applicationType) {
-        return applicationType != ApplicationType.CLI;
+        return applicationType != CLI;
     }
 
     @Override
     default String getCategory() {
-        return Category.TRACING;
+        return TRACING;
     }
 }
