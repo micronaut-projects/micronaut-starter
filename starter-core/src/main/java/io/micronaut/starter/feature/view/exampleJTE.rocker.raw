@@ -1,0 +1,14 @@
+@@param String message
+@@param boolean showTime
+
+<html>
+    <head>
+        <title>JTE Example</title>
+    </head>
+    <body>
+        <h1>Hello, ${message}!</h1>
+        @@if(showTime)
+            <p>It is ${System.currentTimeMillis()}</p>
+        @@endif
+    </body>
+</html>
