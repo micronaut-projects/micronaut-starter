@@ -45,6 +45,7 @@ public class Grpc implements DefaultFeature {
                 .artifactId("micronaut-grpc-runtime")
                 .compile());
         if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.google.protobuf")
                     .lookupArtifactId("protobuf-gradle-plugin")

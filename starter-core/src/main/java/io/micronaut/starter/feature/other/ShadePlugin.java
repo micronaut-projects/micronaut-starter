@@ -78,9 +78,11 @@ public class ShadePlugin implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Shadow Gradle Plugin", "https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow");
             GradlePlugin.Builder builder = GradlePlugin.builder()
                     .id("com.github.johnrengelman.shadow")
                     .lookupArtifactId("shadow");
+
             if (generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
                 builder.extension(outputStream -> {
                     String str = String.join("\n", Arrays.asList(

@@ -33,6 +33,7 @@ import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.starter.feature.other.template.markdownLink;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -40,6 +41,7 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
@@ -125,6 +127,15 @@ public class GeneratorContext implements DependencyContext {
      */
     public void addHelpTemplate(Writable writable) {
         helpTemplates.add(writable);
+    }
+
+    /**
+     * Ads a Link to a single help file
+     * @param label Link's label
+     * @param href Link's uri
+     */
+    public void addHelpLink(String label, String href) {
+        addHelpTemplate(new RockerWritable(markdownLink.template(label, href)));
     }
 
     /**
