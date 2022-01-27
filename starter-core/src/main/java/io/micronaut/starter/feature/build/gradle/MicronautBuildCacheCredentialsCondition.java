@@ -15,16 +15,17 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
+import io.micronaut.context.condition.Condition;
+import io.micronaut.context.condition.ConditionContext;
 
-public interface BuildRemoteCacheConfiguration {
+public class MicronautBuildCacheCredentialsCondition implements Condition {
 
-    @NonNull
-    String getUrl();
+    public static final String SYS_PROPERTY_USERNAME = "ge.cache.username";
+    public static final String SYS_PROPERTY_PASSWORD = "ge.cache.password";
 
-    @Nullable
-    Credentials getCredentials();
-
-    boolean push();
+    @Override
+    public boolean matches(ConditionContext context) {
+        return System.getProperty(SYS_PROPERTY_USERNAME) != null &&
+                System.getProperty(SYS_PROPERTY_PASSWORD) != null;
+    }
 }

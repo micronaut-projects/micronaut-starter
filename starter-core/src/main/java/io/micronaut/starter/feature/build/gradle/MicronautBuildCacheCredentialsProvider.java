@@ -15,16 +15,21 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import io.micronaut.context.annotation.Requires;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
-
-public interface BuildRemoteCacheConfiguration {
-
+import jakarta.inject.Singleton;
+@Requires(condition = MicronautBuildCacheCredentialsCondition.class)
+@Singleton
+public class MicronautBuildCacheCredentialsProvider extends SystemPropertyBuildCacheCredentialsProvider {
+    @Override
     @NonNull
-    String getUrl();
+    public String getUsernameSystemProperty() {
+        return MicronautBuildCacheCredentialsCondition.SYS_PROPERTY_USERNAME;
+    }
 
-    @Nullable
-    Credentials getCredentials();
-
-    boolean push();
+    @Override
+    @NonNull
+    public String getPasswordSystemProperty() {
+        return MicronautBuildCacheCredentialsCondition.SYS_PROPERTY_PASSWORD;
+    }
 }

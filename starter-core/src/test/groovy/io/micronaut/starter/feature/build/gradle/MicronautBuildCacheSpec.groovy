@@ -34,17 +34,15 @@ class MicronautBuildCacheSpec extends ApplicationContextSpec implements CommandO
             assert settings.contains('remote<HttpBuildCache> {')
             assert settings.contains('url = uri("https://ge.micronaut.io/cache/")')
             assert settings.contains('isPush = true')
-            assert settings.contains('credentials {')
-            assert settings.contains('username = "sherlock"')
-            assert settings.contains('password = "elementary"')
+
         } else if (buildTool == BuildTool.GRADLE) {
             assert settings.contains('remote(HttpBuildCache) {')
             assert settings.contains('url = "https://ge.micronaut.io/cache/"')
             assert settings.contains('push = true')
-            assert settings.contains('credentials {')
-            assert settings.contains('username = "sherlock"')
-            assert settings.contains('password = "elementary"')
         }
+        settings.contains('credentials {')
+        settings.contains('username = System.getProperty("ge.cache.username")')
+        settings.contains('password = System.getProperty("ge.cache.password")')
 
         where:
         buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]

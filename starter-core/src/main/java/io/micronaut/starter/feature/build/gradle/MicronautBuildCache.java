@@ -14,6 +14,12 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class MicronautBuildCache implements Feature, BuildRemoteCacheConfiguration {
+
+    private final BuildCacheCredentialsProvider buildCacheCredentialsProvider;
+    public MicronautBuildCache(@Nullable BuildCacheCredentialsProvider buildCacheCredentialsProvider) {
+        this.buildCacheCredentialsProvider = buildCacheCredentialsProvider;
+    }
+
     @Override
     @NonNull
     public String getName() {
@@ -69,24 +75,7 @@ public class MicronautBuildCache implements Feature, BuildRemoteCacheConfigurati
     @Override
     @Nullable
     public Credentials getCredentials() {
-        String cacheUsername = System.getProperty("ge.cache.username");
-        String cachePassword = System.getProperty("ge.cache.password");
-        if (cachePassword != null && cacheUsername != null) {
-            return new Credentials() {
-                @Override
-                @NonNull
-                public String getUsername() {
-                    return cacheUsername;
-                }
-
-                @Override
-                @NonNull
-                public String getPassword() {
-                    return cachePassword;
-                }
-            };
-        }
-        return null;
+        return buildCacheCredentialsProvider != null ? buildCacheCredentialsProvider.provideCredentails() : null;
     }
 
     @Override
