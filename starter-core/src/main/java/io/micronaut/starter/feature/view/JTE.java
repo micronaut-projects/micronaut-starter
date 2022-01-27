@@ -34,7 +34,7 @@ import jakarta.inject.Singleton;
 public class JTE implements ViewFeature, MicronautServerDependent {
     private static final String MAVEN_PLUGIN_ARTIFACT_ID = "jte-maven-plugin";
 
-    private final static String JTE_SRC_DIR = "src/main/jte";
+    private static final String JTE_SRC_DIR = "src/main/jte";
 
     @Override
     @NonNull
