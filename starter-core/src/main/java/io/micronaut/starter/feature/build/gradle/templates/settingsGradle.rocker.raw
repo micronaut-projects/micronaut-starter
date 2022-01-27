@@ -1,7 +1,20 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.build.gradle.GradleBuild
-
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.build.gradle.GradleDsl
 @args (Project project, GradleBuild gradleBuild)
+
+@if(!gradleBuild.getSettingsPlugins().isEmpty()) {
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getSettingsPlugins()) {
+if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version(\"" + gradlePlugin.getVersion() + "\")" : "")
+} else {
+    id "@gradlePlugin.getId()" @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
+}
+}
 
 @gradleBuild.renderSettingsExtensions()
 

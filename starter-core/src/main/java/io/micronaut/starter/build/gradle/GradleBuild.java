@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GradleBuild {
@@ -64,7 +65,12 @@ public class GradleBuild {
 
     @NonNull
     public List<GradlePlugin> getPlugins() {
-        return plugins;
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.BUILD).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public List<GradlePlugin> getSettingsPlugins() {
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).collect(Collectors.toList());
     }
 
     @NonNull
