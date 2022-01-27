@@ -7,7 +7,7 @@
 @if(!gradleBuild.getSettingsPlugins().isEmpty()) {
 plugins {
 @for (GradlePlugin gradlePlugin : gradleBuild.getSettingsPlugins()) {
-if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+@if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
     id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version(\"" + gradlePlugin.getVersion() + "\")" : "")
 } else {
     id "@gradlePlugin.getId()" @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
@@ -15,6 +15,7 @@ if (gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 }
 }
 }
+
 
 @gradleBuild.renderSettingsExtensions()
 
