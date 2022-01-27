@@ -157,24 +157,48 @@ extends com.fizzed.rocker.runtime.DefaultRockerTemplate</pre>
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#aotVersion">aotVersion</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../../io/micronaut/starter/options/BuildTool.html" title="enum in io.micronaut.starter.options">BuildTool</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#build">build</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected java.util.List&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#dockerBuilderImages">dockerBuilderImages</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected java.util.List&lt;java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#dockerBuilderNativeImages">dockerBuilderNativeImages</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../../io/micronaut/starter/feature/build/gradle/Dockerfile.html" title="class in io.micronaut.starter.feature.build.gradle">Dockerfile</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#dockerfile">dockerfile</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../../../io/micronaut/starter/feature/build/gradle/Dockerfile.html" title="class in io.micronaut.starter.feature.build.gradle">Dockerfile</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#dockerfileNative">dockerfileNative</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../../../io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle">GradleDsl</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#dsl">dsl</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#incremental">incremental</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#packageName">packageName</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#runtime">runtime</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../io/micronaut/starter/feature/build/gradle/templates/micronautGradle.Template.html#testRuntime">testRuntime</a></span></code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -255,6 +279,15 @@ extends com.fizzed.rocker.runtime.DefaultRockerTemplate</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="dsl">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dsl</h4>
+<pre>protected final&nbsp;<a href="../../../../../../../io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle">GradleDsl</a> dsl</pre>
+</li>
+</ul>
 <a name="build">
 <!--   -->
 </a>
@@ -294,10 +327,55 @@ extends com.fizzed.rocker.runtime.DefaultRockerTemplate</pre>
 <a name="dockerBuilderNativeImages">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>dockerBuilderNativeImages</h4>
 <pre>protected final&nbsp;java.util.List&lt;java.lang.String&gt; dockerBuilderNativeImages</pre>
+</li>
+</ul>
+<a name="runtime">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>runtime</h4>
+<pre>protected final&nbsp;java.lang.String runtime</pre>
+</li>
+</ul>
+<a name="testRuntime">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>testRuntime</h4>
+<pre>protected final&nbsp;java.lang.String testRuntime</pre>
+</li>
+</ul>
+<a name="aotVersion">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>aotVersion</h4>
+<pre>protected final&nbsp;java.lang.String aotVersion</pre>
+</li>
+</ul>
+<a name="incremental">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>incremental</h4>
+<pre>protected final&nbsp;boolean incremental</pre>
+</li>
+</ul>
+<a name="packageName">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>packageName</h4>
+<pre>protected final&nbsp;java.lang.String packageName</pre>
 </li>
 </ul>
 </li>
