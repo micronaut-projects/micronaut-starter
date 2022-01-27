@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.tracing;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -24,6 +25,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Jaeger implements TracingFeature, MicronautServerDependent {
 
+    @NonNull
     @Override
     public String getName() {
         return "tracing-jaeger";
@@ -34,6 +36,7 @@ public class Jaeger implements TracingFeature, MicronautServerDependent {
         return "Jaeger Tracing";
     }
 
+    @NonNull
     @Override
     public String getDescription() {
         return "Adds support for distributed tracing with Jaeger";
@@ -43,23 +46,20 @@ public class Jaeger implements TracingFeature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("tracing.jaeger.enabled", true);
         generatorContext.getConfiguration().put("tracing.jaeger.sampler.probability", 0.1);
+
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
-                .artifactId("micronaut-tracing")
+                .groupId("io.micronaut.tracing")
+                .artifactId("tracing-jaeger")
                 .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.jaegertracing")
-                .artifactId("jaeger-thrift")
-                .runtime());
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#jaeger";
+        return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#jaeger";
     }
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://www.jaegertracing.io";
+        return "https://www.jaegertracing.io/";
     }
 }
