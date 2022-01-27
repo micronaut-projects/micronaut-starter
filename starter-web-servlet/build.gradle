@@ -15,11 +15,11 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation("io.micronaut.servlet:micronaut-servlet-engine:1.0.0.M3")
-    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
+    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-    testImplementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
+
+    testImplementation "io.micronaut.servlet:micronaut-http-server-jetty"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut:micronaut-http-client"
