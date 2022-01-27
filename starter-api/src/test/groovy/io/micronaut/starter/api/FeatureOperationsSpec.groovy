@@ -10,13 +10,12 @@ class FeatureOperationsSpec extends Specification {
     @Inject
     FeatureOperations featureOperations
 
-    void "only visble features are exposed"() {
+    void "only visible features are exposed"() {
         when:
         List<FeatureDTO> features = featureOperations.getAllFeatures(Locale.ENGLISH)
 
         then:
         features
-        features.any {it.name == 'gradle-enterprise' }
-        features.stream().noneMatch(feature -> feature.name == 'micronaut-gradle-enterprise' )
+        features.stream().noneMatch(feature -> feature.name == 'micronaut-build-cache' )
     }
 }
