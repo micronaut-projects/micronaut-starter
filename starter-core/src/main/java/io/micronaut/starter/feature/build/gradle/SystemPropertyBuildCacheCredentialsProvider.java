@@ -30,13 +30,15 @@ public abstract class SystemPropertyBuildCacheCredentialsProvider implements Bui
     public Credentials provideCredentails() {
         return new Credentials() {
             @Override
+            @NonNull
             public String getUsername() {
-                return "System.getProperty(\"" + getUsernameSystemProperty() +"\")";
+                return "System.getProperty(\"" + getUsernameSystemProperty() + "\")";
             }
 
             @Override
+            @NonNull
             public String getPassword() {
-                return "System.getProperty(\"" + getPasswordSystemProperty() +"\")";
+                return "System.getProperty(\"" + getPasswordSystemProperty() + "\")";
             }
         };
     }
