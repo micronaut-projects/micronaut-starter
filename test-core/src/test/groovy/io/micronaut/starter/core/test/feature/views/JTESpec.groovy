@@ -27,15 +27,16 @@ class JTESpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle views-jte with #language"(Language language) {
+    void "test gradle views-jte with #language and #dsl"(Language language, BuildTool buildTool, String dsl) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["views-jte"])
+        generateProject(language, buildTool, ["views-jte"])
         BuildResult result = executeGradle("compileJava")
 
         then:
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        language << Language.values()
+        [language, buildTool] << [Language.values(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        dsl = buildTool == BuildTool.GRADLE ? "Groovy DSL" : "Kotlin DSL"
     }
 }

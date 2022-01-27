@@ -1,6 +1,12 @@
-@args(String path)
+@import io.micronaut.starter.build.gradle.GradleDsl
+@args(GradleDsl dsl, String path)
 
 jte {
+@if(dsl == GradleDsl.KOTLIN) {
+    sourceDirectory.set(file("src/main/jte").toPath())
+}
+@if(dsl == GradleDsl.GROOVY) {
     sourceDirectory = file("@path").toPath()
+}
     generate()
 }

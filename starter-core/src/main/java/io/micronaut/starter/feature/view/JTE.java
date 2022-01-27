@@ -15,10 +15,13 @@
  */
 package io.micronaut.starter.feature.view;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.gradle.GradleDsl;
+import java.util.Optional;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.options.BuildTool;
@@ -27,8 +30,6 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
-import java.nio.charset.StandardCharsets;
-
 @Singleton
 public class JTE implements ViewFeature, MicronautServerDependent {
     private static final String MAVEN_PLUGIN_ARTIFACT_ID = "jte-maven-plugin";
@@ -36,6 +37,7 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     private final static String JTE_SRC_DIR = "src/main/jte";
 
     @Override
+    @NonNull
     public String getName() {
         return "views-jte";
     }
@@ -46,6 +48,7 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for Server-Side View Rendering using JTE";
     }
@@ -64,7 +67,7 @@ public class JTE implements ViewFeature, MicronautServerDependent {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(dependencyBuilder());
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(gradlePlugin());
+            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addBuildPlugin(mavenPlugin(generatorContext));
         }
@@ -78,12 +81,13 @@ public class JTE implements ViewFeature, MicronautServerDependent {
                 .compile();
     }
 
-    private BuildPlugin gradlePlugin() {
-        return GradlePlugin.builder()
+    private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
+        Optional<GradleDsl> gradleDsl = generatorContext.getBuildTool().getGradleDsl();
+        GradlePlugin.Builder builder = GradlePlugin.builder()
                 .id("gg.jte.gradle")
-                .extension(new RockerWritable(gradlePluginJTE.template(JTE_SRC_DIR)))
-                .lookupArtifactId("jte-gradle-plugin")
-                .build();
+                .extension(new RockerWritable(gradlePluginJTE.template(gradleDsl.orElse(GradleDsl.KOTLIN), JTE_SRC_DIR)))
+                .lookupArtifactId("jte-gradle-plugin");
+        return builder.build();
     }
 
     private BuildPlugin mavenPlugin(GeneratorContext generatorContext) {
