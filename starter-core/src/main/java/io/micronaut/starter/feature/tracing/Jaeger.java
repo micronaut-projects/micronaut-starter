@@ -49,7 +49,7 @@ public class Jaeger implements TracingFeature, MicronautServerDependent {
 
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.tracing")
-                .artifactId("tracing-jaeger")
+                .artifactId("micronaut-tracing-jaeger")
                 .compile());
     }
 

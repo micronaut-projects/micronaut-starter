@@ -32,7 +32,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
                 .render()
 
         then:
-        template.contains 'implementation("io.micronaut.tracing:tracing-jaeger")'
+        template.contains 'implementation("io.micronaut.tracing:micronaut-tracing-jaeger")'
 
         where:
         language << Language.values().toList()
@@ -50,7 +50,7 @@ class JaegerSpec extends ApplicationContextSpec implements CommandOutputFixture 
         template.contains '''
     <dependency>
       <groupId>io.micronaut.tracing</groupId>
-      <artifactId>tracing-jaeger</artifactId>
+      <artifactId>micronaut-tracing-jaeger</artifactId>
       <scope>compile</scope>
     </dependency>
 '''
