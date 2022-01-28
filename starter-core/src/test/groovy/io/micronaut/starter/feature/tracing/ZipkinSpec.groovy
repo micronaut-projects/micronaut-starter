@@ -32,7 +32,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
                 .render()
 
         then:
-        template.contains 'implementation("io.micronaut.tracing:tracing-zipkin")'
+        template.contains 'implementation("io.micronaut.tracing:micronaut-tracing-zipkin")'
 
         where:
         language << Language.values().toList()
@@ -50,7 +50,7 @@ class ZipkinSpec extends ApplicationContextSpec implements CommandOutputFixture 
         template.contains '''
     <dependency>
       <groupId>io.micronaut.tracing</groupId>
-      <artifactId>tracing-zipkin</artifactId>
+      <artifactId>micronaut-tracing-zipkin</artifactId>
       <scope>compile</scope>
     </dependency>
 '''

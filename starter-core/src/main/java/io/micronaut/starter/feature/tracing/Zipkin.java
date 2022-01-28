@@ -47,7 +47,7 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
 
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.tracing")
-                .artifactId("tracing-zipkin")
+                .artifactId("micronaut-tracing-zipkin")
                 .compile());
 
         generatorContext.getConfiguration().put("tracing.zipkin.enabled", true);
