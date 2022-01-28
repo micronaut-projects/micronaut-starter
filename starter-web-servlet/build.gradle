@@ -15,7 +15,7 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
+    implementation "io.micronaut.servlet:micronaut-http-server-jetty"
 
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
 
