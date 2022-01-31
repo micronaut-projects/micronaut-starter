@@ -6,6 +6,7 @@ Feature feature
 
 @if (feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null) {
 
+
 ## Feature @feature.getName() documentation
 
     @if (feature.getMicronautDocumentation() != null) {
