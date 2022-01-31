@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,10 +166,14 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradleBuild.html#getPlugins--">getPlugins</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradleBuild.html#getPluginsImports--">getPluginsImports</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradleBuild.html#renderExtensions--">renderExtensions</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradleBuild.html#renderSettingsExtensions--">renderSettingsExtensions</a></span>()</code>&nbsp;</td>
 </tr>
@@ -281,11 +285,21 @@ public&nbsp;java.lang.String&nbsp;renderExtensions()</pre>
 <a name="renderSettingsExtensions--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>renderSettingsExtensions</h4>
 <pre>@NonNull
 public&nbsp;java.lang.String&nbsp;renderSettingsExtensions()</pre>
+</li>
+</ul>
+<a name="getPluginsImports--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getPluginsImports</h4>
+<pre>@NonNull
+public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getPluginsImports()</pre>
 </li>
 </ul>
 </li>
