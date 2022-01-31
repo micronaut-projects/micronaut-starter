@@ -127,15 +127,15 @@ class TomlStringOutputUtil {
             case '\b':
                 return "\\b";
             case '\t':
-                return("\\t");
+                return "\\t";
             case '\n':
-                return("\\n");
+                return "\\n";
             case '\f':
-                return("\\f");
+                return "\\f";
             case '"':
-                return("\\\"");
+                return "\\\"";
             case '\\':
-                return("\\\\");
+                return "\\\\";
             default:
                 if (c < 0x10) {
                     return "\\u000" + Integer.toHexString(c);
