@@ -20,10 +20,16 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.github.workflows.WorkflowsUtils;
 import io.micronaut.starter.feature.other.template.openApiProperties;
+import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.template.RockerTemplate;
+
 import jakarta.inject.Singleton;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 public class SwaggerUI implements Feature, MicronautServerDependent {
@@ -61,6 +67,25 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger.mapping", "/swagger/**");
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.paths", "classpath:META-INF/swagger/views/swagger-ui");
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
+
+        Map<String, String> swaggerAccess = new HashMap<String, String>() {{
+            put("pattern", "/swagger/**");
+            put("access", "isAnonymous()");
+        }};
+
+        Map<String, String> swaggerUiAccess = new HashMap<String, String>() {{
+            put("pattern", "/swagger-ui/**");
+            put("access", "isAnonymous()");
+        }};
+
+        if (generatorContext.isFeaturePresent(Security.class)) {
+                generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess)
+            );
+        }
+
+        generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController (
+                generatorContext.getProject(), generatorContext.getLanguage()));
+
     }
 
     @Override
