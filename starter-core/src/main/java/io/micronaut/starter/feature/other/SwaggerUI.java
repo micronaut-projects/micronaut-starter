@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,22 +69,21 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.paths", "classpath:META-INF/swagger/views/swagger-ui");
         generatorContext.getConfiguration().put("micronaut.router.static-resources.swagger-ui.mapping", "/swagger-ui/**");
 
-        Map<String, String> swaggerAccess = new HashMap<String, String>() {{
-            put("pattern", "/swagger/**");
-            put("access", "isAnonymous()");
-        }};
-
-        Map<String, String> swaggerUiAccess = new HashMap<String, String>() {{
-            put("pattern", "/swagger-ui/**");
-            put("access", "isAnonymous()");
-        }};
-
         if (generatorContext.isFeaturePresent(Security.class)) {
-                generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess)
-            );
+            Map<String, String> swaggerAccess = new HashMap<String, String>() {{
+                put("pattern", "/swagger/**");
+                put("access", "isAnonymous()");
+            }};
+
+            Map<String, String> swaggerUiAccess = new HashMap<String, String>() {{
+                put("pattern", "/swagger-ui/**");
+                put("access", "isAnonymous()");
+            }};
+
+            generatorContext.getConfiguration().put("micronaut.security.intercept-url-map", Arrays.asList(swaggerAccess, swaggerUiAccess));
         }
 
-        generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController (
+        generatorContext.addTemplate("exampleController", WorkflowsUtils.createExampleController(
                 generatorContext.getProject(), generatorContext.getLanguage()));
 
     }
@@ -92,7 +92,7 @@ public class SwaggerUI implements Feature, MicronautServerDependent {
     public void processSelectedFeatures(FeatureContext featureContext) {
         if (!featureContext.isPresent(OpenApi.class)) {
             featureContext.addFeature(
-                openApiFeature
+                    openApiFeature
             );
         }
     }
