@@ -93,7 +93,6 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
         dsl                     | fileName           | configuration
         BuildTool.GRADLE        | 'build.gradle'     | 'graalvmNative.toolchainDetection = false'
         BuildTool.GRADLE_KOTLIN | 'build.gradle.kts' | 'graalvmNative.toolchainDetection.set(false)'
-
     }
 
 }

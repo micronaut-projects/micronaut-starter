@@ -1,44 +1,28 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
-    id "com.github.johnrengelman.shadow"
-    id "application"
+    id("io.micronaut.application")
 }
 
-configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
+
+micronaut {
+    version micronautVersion
+    runtime "lambda"
 }
 
 dependencies {
-    developmentOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation project(":starter-api")
-    implementation "io.micronaut:micronaut-inject"
-    implementation "io.micronaut.aws:micronaut-function-aws-api-proxy"
-    implementation "io.micronaut.aws:micronaut-function-aws-custom-runtime"
-    developmentOnly "io.micronaut.aws:micronaut-function-aws-api-proxy-test"
-
     runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
-    testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "io.micronaut:micronaut-http-client"
 }
 
 application {
     mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
 }
 
-tasks.named("test", Test) {
-    useJUnitPlatform()
-    classpath += configurations.developmentOnly
-}
-
-tasks.named("shadowJar") {
-    mergeServiceFiles()
-    manifest {
-        attributes 'Main-Class': 'io.micronaut.starter.netty.Application'
+graalvmNative {
+    binaries {
+        main {
+            imageName = 'application'
+        }
     }
-}
-
-tasks.named("run") {
-    classpath += configurations.developmentOnly
 }

@@ -15,10 +15,9 @@ Features features,
 GradleBuild gradleBuild
 )
 
-@if (features.contains("grpc") && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-import com.google.protobuf.gradle.*
+@for (String importLine : gradleBuild.getPluginsImports()) {
+@(importLine)
 }
-
 plugins {
 @for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
     id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
