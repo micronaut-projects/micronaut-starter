@@ -20,10 +20,8 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Models application environment configuration to specify where the configuration is rooted
@@ -36,8 +34,6 @@ public class Configuration extends LinkedHashMap<String, Object> {
     private final String path;
     private final String fileName;
     private final String templateKey;
-
-    private final Set<String> tables = new LinkedHashSet<>();
 
     /**
      * A configuration rooted at path, with the given map of configurations
@@ -127,17 +123,6 @@ public class Configuration extends LinkedHashMap<String, Object> {
     @NonNull
     public String getTemplateKey() {
         return templateKey;
-    }
-
-    @NonNull
-    public Set<String> getTables() {
-        return tables;
-    }
-
-    public void registerTable(String table) {
-        if (!tables.contains(table)) {
-            tables.add(table);
-        }
     }
 
     @Override

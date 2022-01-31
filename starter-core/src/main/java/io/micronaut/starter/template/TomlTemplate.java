@@ -11,13 +11,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.SortedMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class TomlTemplate implements Template {
     private final String path;
@@ -33,9 +39,7 @@ public class TomlTemplate implements Template {
         // collect table keys we want
         List<DottedKey> tableKeys = new ArrayList<>();
         tableKeys.add(DottedKey.EMPTY);
-        for (String table : config.getTables()) {
-            tableKeys.add(new DottedKey(Arrays.asList(table.split("\\."))));
-        }
+        tableKeys.addAll(suggestTables(normalized.keySet()));
 
         // avoid empty keys
         tableKeys.removeAll(normalized.keySet());
@@ -94,6 +98,59 @@ public class TomlTemplate implements Template {
         } else {
             target.put(prefix, here);
         }
+    }
+
+    private static Collection<DottedKey> suggestTables(Collection<DottedKey> keys) {
+        // we suggest any tables that will have at least two child keys.
+
+        Set<DottedKey> tables = new HashSet<>();
+        SortedSet<DottedKey> remainingKeys = new TreeSet<>(keys);
+        for (int prefixLength = keys.stream().mapToInt(k -> k.parts.size()).max().orElse(0); prefixLength > 0; ) {
+            boolean createdTable = false;
+            for (DottedKey key : remainingKeys) {
+                if (key.parts.size() <= prefixLength) {
+                    continue;
+                }
+                // proposed table key
+                DottedKey proposed = new DottedKey(key.parts.subList(0, prefixLength));
+                // find first key that won't be part of this table
+                DottedKey end = null;
+                for (DottedKey following : remainingKeys.tailSet(proposed)) {
+                    if (!following.startsWith(proposed)) {
+                        end = following;
+                        break;
+                    }
+                }
+                SortedSet<DottedKey> tableSet = end == null ? remainingKeys.tailSet(proposed) : remainingKeys.subSet(proposed, end);
+                // is the table eligible?
+                if (tableSet.size() < 2 || tableSet.first().equals(proposed)) {
+                    continue;
+                }
+
+                createdTable = true;
+                tables.add(proposed);
+                // remove keys in this table from further consideration
+                tableSet.clear();
+                // try again, but with a new iterator (we changed the remainingKeys set)
+                break;
+            }
+            if (!createdTable) {
+                prefixLength--;
+            }
+        }
+        // we've decided which tables to use, now get them back into the order they came in.
+        Set<DottedKey> tablesInOrder = new LinkedHashSet<>();
+        for (DottedKey key : keys) {
+            // find the closest ancestor
+            while (!key.equals(DottedKey.EMPTY)) {
+                key = key.parent();
+                if (tables.contains(key)) {
+                    tablesInOrder.add(key);
+                    break;
+                }
+            }
+        }
+        return tablesInOrder;
     }
 
     private static void sortIntoTables(SortedMap<DottedKey, Map<DottedKey, Object>> tables, DottedKey key, Object value) {
@@ -223,6 +280,15 @@ public class TomlTemplate implements Template {
 
         DottedKey removePrefix(int length) {
             return new DottedKey(this.parts.subList(length, this.parts.size()));
+        }
+
+        DottedKey parent() {
+            return new DottedKey(this.parts.subList(0, this.parts.size() - 1));
+        }
+
+        boolean startsWith(DottedKey ancestor) {
+            return ancestor.parts.size() <= this.parts.size() &&
+                    ancestor.parts.equals(this.parts.subList(0, ancestor.parts.size()));
         }
 
         @Override
