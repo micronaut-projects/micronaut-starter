@@ -152,6 +152,9 @@ class SwaggerUISpec extends CommandSpec {
         boolean result = true
         result &= Files.exists(applicationYAMLPath)
         result &= """
+        |micronaut:
+        |  application:
+        |    name: foo
         |  router:
         |    static-resources:
         |      swagger:
@@ -160,12 +163,7 @@ class SwaggerUISpec extends CommandSpec {
         |      swagger-ui:
         |        paths: classpath:META-INF/swagger/views/swagger-ui
         |        mapping: /swagger-ui/**
-        """.stripMargin().split(System.lineSeparator()).toList().stream().filter(
-                line -> line.strip() != "").allMatch(
-                expectedLine -> Files.readAllLines(applicationYAMLPath).stream().anyMatch(
-                        line -> expectedLine == line
-                )
-        )
+        |""".stripMargin().split(System.lineSeparator()).toList().stream().skip(1).collect() == Files.readAllLines(applicationYAMLPath)
         return result
     }
 
@@ -173,6 +171,9 @@ class SwaggerUISpec extends CommandSpec {
         boolean result = true
         result &= Files.exists(applicationYAMLPath)
         result &= """
+        |micronaut:
+        |  application:
+        |    name: foo
         |  router:
         |    static-resources:
         |      swagger:
@@ -187,12 +188,7 @@ class SwaggerUISpec extends CommandSpec {
         |      pattern: /swagger/**
         |    - access: isAnonymous()
         |      pattern: /swagger-ui/**
-        """.stripMargin().split(System.lineSeparator()).toList().stream().filter(
-                line -> line.strip() != "").allMatch(
-                expectedLine -> Files.readAllLines(applicationYAMLPath).stream().anyMatch(
-                        line -> expectedLine == line
-                )
-        )
+        |""".stripMargin().split(System.lineSeparator()).toList().stream().skip(1).collect() == Files.readAllLines(applicationYAMLPath)
         return result
     }
 }
