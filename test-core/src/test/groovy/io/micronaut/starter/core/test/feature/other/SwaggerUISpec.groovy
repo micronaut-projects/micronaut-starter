@@ -17,11 +17,15 @@ class SwaggerUISpec extends CommandSpec {
     Path applicationYAMLPath
     Path openAPIPropertiesPath
     Path fooControllerPathJava
+    Path fooControllerTestPathKotlin
+    Path fooControllerTestPathJava
     Path fooControllerPathKotlin
 
     void setup() {
         fooControllerPathKotlin = Paths.get(dir.getPath(), "/src/main/kotlin/example/micronaut/", "FooController.kt")
         fooControllerPathJava = Paths.get(dir.getPath(), "/src/main/java/example/micronaut/", "FooController.java")
+        fooControllerTestPathKotlin = Paths.get(dir.getPath(), "/src/test/kotlin/example/micronaut/", "FooTest.kt")
+        fooControllerTestPathJava = Paths.get(dir.getPath(), "/src/test/java/example/micronaut/", "FooTest.java")
         openAPIPropertiesPath = Paths.get(dir.getPath(), "openapi.properties")
         applicationYAMLPath = Paths.get(dir.getPath(), "/src/main/resources/", "application.yml")
     }
@@ -120,75 +124,69 @@ class SwaggerUISpec extends CommandSpec {
         ].combinations()
     }
 
-    boolean checkOpenApiPropertiesFile() {
-        boolean result = true
-
-        result &= Files.exists(openAPIPropertiesPath)
+    void checkOpenApiPropertiesFile() {
+        assert Files.exists(openAPIPropertiesPath)
 
         InputStream openAPIPropertiesInputStream = Files.newInputStream(openAPIPropertiesPath)
         Properties openAPIProperties = new Properties();
         openAPIProperties.load(openAPIPropertiesInputStream);
 
-        result &= openAPIProperties.get("swagger-ui.enabled") == "true"
-        result &= openAPIProperties.get("redoc.enabled") == "false"
-        result &= openAPIProperties.get("rapidoc.enabled") == "false"
-        result &= openAPIProperties.get("rapidoc.bg-color") == "#14191f"
-        result &= openAPIProperties.get("rapidoc.text-color") == "#aec2e0"
-        result &= openAPIProperties.get("rapidoc.sort-endpoints-by") == "method"
+        assert openAPIProperties.get("swagger-ui.enabled") == "true"
+        assert openAPIProperties.get("redoc.enabled") == "false"
+        assert openAPIProperties.get("rapidoc.enabled") == "false"
+        assert openAPIProperties.get("rapidoc.bg-color") == "#14191f"
+        assert openAPIProperties.get("rapidoc.text-color") == "#aec2e0"
+        assert openAPIProperties.get("rapidoc.sort-endpoints-by") == "method"
 
         openAPIPropertiesInputStream.close()
 
-        return result
     }
 
-    boolean checkControllerFile(Language language) {
+    void checkControllerFile(Language language) {
         if (language == Language.KOTLIN) {
-            return Files.exists(fooControllerPathKotlin)
+            assert Files.exists(fooControllerPathKotlin)
+            assert Files.exists(fooControllerTestPathKotlin)
+            return
         }
-        return Files.exists(fooControllerPathJava)
+        assert Files.exists(fooControllerPathJava)
+        assert Files.exists(fooControllerTestPathJava)
     }
 
-    boolean checkYAMLConfigFileWithoutSecurityFeature() {
-        boolean result = true
-        result &= Files.exists(applicationYAMLPath)
-        result &= """
-        |micronaut:
-        |  application:
-        |    name: foo
-        |  router:
-        |    static-resources:
-        |      swagger:
-        |        paths: classpath:META-INF/swagger
-        |        mapping: /swagger/**
-        |      swagger-ui:
-        |        paths: classpath:META-INF/swagger/views/swagger-ui
-        |        mapping: /swagger-ui/**
-        |""".stripMargin().split(System.lineSeparator()).toList().stream().skip(1).collect() == Files.readAllLines(applicationYAMLPath)
-        return result
+    void checkYAMLConfigFileWithoutSecurityFeature() {
+        assert Files.exists(applicationYAMLPath)
+        assert """micronaut:
+                 |  application:
+                 |    name: foo
+                 |  router:
+                 |    static-resources:
+                 |      swagger:
+                 |        paths: classpath:META-INF/swagger
+                 |        mapping: /swagger/**
+                 |      swagger-ui:
+                 |        paths: classpath:META-INF/swagger/views/swagger-ui
+                 |        mapping: /swagger-ui/**""".stripMargin()
+                .split(System.lineSeparator()).toList() == Files.readAllLines(applicationYAMLPath)
     }
 
-    boolean checkYAMLConfigFileWithSecurityFeature() {
-        boolean result = true
-        result &= Files.exists(applicationYAMLPath)
-        result &= """
-        |micronaut:
-        |  application:
-        |    name: foo
-        |  router:
-        |    static-resources:
-        |      swagger:
-        |        paths: classpath:META-INF/swagger
-        |        mapping: /swagger/**
-        |      swagger-ui:
-        |        paths: classpath:META-INF/swagger/views/swagger-ui
-        |        mapping: /swagger-ui/**
-        |  security:
-        |    intercept-url-map:
-        |    - access: isAnonymous()
-        |      pattern: /swagger/**
-        |    - access: isAnonymous()
-        |      pattern: /swagger-ui/**
-        |""".stripMargin().split(System.lineSeparator()).toList().stream().skip(1).collect() == Files.readAllLines(applicationYAMLPath)
-        return result
+    void checkYAMLConfigFileWithSecurityFeature() {
+        assert Files.exists(applicationYAMLPath)
+        assert """micronaut:
+                 |  application:
+                 |    name: foo
+                 |  router:
+                 |    static-resources:
+                 |      swagger:
+                 |        paths: classpath:META-INF/swagger
+                 |        mapping: /swagger/**
+                 |      swagger-ui:
+                 |        paths: classpath:META-INF/swagger/views/swagger-ui
+                 |        mapping: /swagger-ui/**
+                 |  security:
+                 |    intercept-url-map:
+                 |    - access: isAnonymous()
+                 |      pattern: /swagger/**
+                 |    - access: isAnonymous()
+                 |      pattern: /swagger-ui/**""".stripMargin()
+                .split(System.lineSeparator()).toList() == Files.readAllLines(applicationYAMLPath)
     }
 }
