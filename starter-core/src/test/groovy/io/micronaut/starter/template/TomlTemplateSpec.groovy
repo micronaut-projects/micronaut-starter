@@ -20,7 +20,8 @@ class TomlTemplateSpec extends Specification {
         config.put('foo.baz', ['foo': 123, 'bar': [1, 2, ['name': 'fox']]])
 
         expect:
-        toml(config) == '''foo.bar = 4
+        toml(config) == '''\
+foo.bar = 4
 
 [foo.baz]
 foo = 123

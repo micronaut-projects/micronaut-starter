@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.config;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TomlTemplate;
@@ -31,12 +33,28 @@ public class Toml implements ConfigurationFeature {
     private static final String EXTENSION = "toml";
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        ConfigurationFeature.super.apply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.toml")
-                .artifactId("micronaut-toml")
-                .compile());
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        // as a config feature, we're processed last, after the build tools. We need to add the dependency to
+        // micronaut-toml before that.
+        featureContext.addFeature(new Feature() {
+            @Override
+            public String getName() {
+                return "toml-build";
+            }
+
+            @Override
+            public boolean supports(ApplicationType applicationType) {
+                return true;
+            }
+
+            @Override
+            public void apply(GeneratorContext generatorContext) {
+                generatorContext.addDependency(Dependency.builder()
+                        .groupId("io.micronaut.toml")
+                        .artifactId("micronaut-toml")
+                        .compile());
+            }
+        });
     }
 
     @Override
