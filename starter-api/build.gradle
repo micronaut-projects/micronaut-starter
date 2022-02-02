@@ -5,6 +5,7 @@ plugins {
 dependencies {
     annotationProcessor "io.micronaut.openapi:micronaut-openapi"
     annotationProcessor "com.google.code.findbugs:jsr305"
+    annotationProcessor "io.micronaut.serde:micronaut-serde-processor"
 
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
@@ -26,4 +27,11 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.0-M6"))
+    }
 }

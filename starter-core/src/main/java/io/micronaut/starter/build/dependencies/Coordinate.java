@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
+import io.micronaut.serde.annotation.Serdeable;
 
 import java.util.Comparator;
 
-@Introspected
+@Serdeable
 public interface Coordinate {
 
     Comparator<Coordinate> COMPARATOR = (o1, o2) -> {

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.options;
 
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.BuildToolDTO;
 import io.micronaut.starter.api.SelectOptionDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "BuildToolSelectOptions")
+@Serdeable
 public class BuildToolSelectOptions extends SelectOptionDTO<BuildToolDTO> {
     public BuildToolSelectOptions(List<BuildToolDTO> options, BuildToolDTO defaultOption) {
         super(options, defaultOption);

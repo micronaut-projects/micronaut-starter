@@ -18,10 +18,11 @@ package io.micronaut.starter.api;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -34,7 +35,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(name = "ApplicationTypeInfo")
-@Introspected
+@Serdeable
 public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<ApplicationType> {
 
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
@@ -66,7 +67,7 @@ public class ApplicationTypeDTO extends Linkable implements Named, Described, Se
                        String name,
                        String title,
                        String description,
-                       List<FeatureDTO> features) {
+                       @Nullable List<FeatureDTO> features) {
         this.value = value;
         this.name = name;
         this.features = features;

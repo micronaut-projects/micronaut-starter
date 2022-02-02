@@ -19,6 +19,7 @@ configurations.all {
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-graal")
+    annotationProcessor "io.micronaut.serde:micronaut-serde-processor"
     api project(":starter-core")
     api "info.picocli:picocli:${picocliVersion}"
     api "info.picocli:picocli-shell-jline3:${picocliVersion}"
@@ -71,4 +72,11 @@ sdkman {
             "WINDOWS_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-win-amd64-v${project.version}.zip",
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
     ]
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.0-M6"))
+    }
 }

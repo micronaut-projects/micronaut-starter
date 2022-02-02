@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.util.VersionInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -27,7 +27,7 @@ import java.util.Map;
  * @author graemerocher
  * @since 1.0.0
  */
-@Introspected
+@Serdeable
 @Schema(name = "Version")
 public class VersionDTO extends Linkable {
 

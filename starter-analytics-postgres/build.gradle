@@ -7,6 +7,7 @@ plugins {
 dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     annotationProcessor "io.micronaut:micronaut-graal"
+    annotationProcessor "io.micronaut.serde:micronaut-serde-processor"
 
     implementation project(":starter-core")
     implementation "io.micronaut:micronaut-http-server-netty"
@@ -21,6 +22,13 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "org.testcontainers:postgresql"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.0-M6"))
+    }
 }
 
 mainClassName = 'io.micronaut.starter.analytics.postgres.Main'

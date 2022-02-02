@@ -17,7 +17,7 @@ package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 
 /**
  * GitHub workflow run.
@@ -25,7 +25,7 @@ import io.micronaut.core.annotation.Introspected;
  * @author Pavol Gressa
  * @since 2.2
  */
-@Introspected
+@Serdeable
 public class GitHubWorkflowRun {
 
     private final Long id;

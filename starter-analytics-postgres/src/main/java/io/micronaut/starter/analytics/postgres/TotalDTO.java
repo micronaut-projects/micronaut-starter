@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.analytics.postgres;
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 
-@Introspected
+@Serdeable
 public class TotalDTO {
     private final String name;
     private final long total;

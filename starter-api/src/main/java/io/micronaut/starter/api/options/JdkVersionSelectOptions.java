@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.options;
 
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.JdkVersionDTO;
 import io.micronaut.starter.api.SelectOptionDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "JdkVersionSelectOptions")
+@Serdeable
 public class JdkVersionSelectOptions extends SelectOptionDTO<JdkVersionDTO> {
     public JdkVersionSelectOptions(List<JdkVersionDTO> options, JdkVersionDTO defaultOption) {
         super(options, defaultOption);

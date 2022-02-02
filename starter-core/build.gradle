@@ -13,6 +13,7 @@ sourceSets {
 }
 
 dependencies {
+    annotationProcessor "io.micronaut.serde:micronaut-serde-processor"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
@@ -39,4 +40,11 @@ rocker {
 
 nohttp {
     source.exclude "**/pom.rocker.raw"
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.0-M6"))
+    }
 }

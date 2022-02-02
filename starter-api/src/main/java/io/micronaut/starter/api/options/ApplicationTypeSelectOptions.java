@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.options;
 
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.ApplicationTypeDTO;
 import io.micronaut.starter.api.SelectOptionDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "ApplicationTypeSelectOptions")
+@Serdeable
 public class ApplicationTypeSelectOptions extends SelectOptionDTO<ApplicationTypeDTO> {
     public ApplicationTypeSelectOptions(List<ApplicationTypeDTO> options, ApplicationTypeDTO defaultOption) {
         super(options, defaultOption);

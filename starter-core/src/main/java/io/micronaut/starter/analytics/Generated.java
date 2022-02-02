@@ -16,8 +16,8 @@
 package io.micronaut.starter.analytics;
 
 import io.micronaut.core.annotation.Creator;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
-@Introspected
+@Serdeable
 public class Generated {
     private final ApplicationType type;
     private final Language language;

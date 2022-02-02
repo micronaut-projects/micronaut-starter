@@ -17,8 +17,8 @@ package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.serde.annotation.Serdeable;
 
 /**
  * GitHub repository.
@@ -27,7 +27,7 @@ import io.micronaut.core.annotation.Nullable;
  * @see <a href="https://docs.github.com/en/rest/reference/repos">Api reference repositories</a>
  * @since 2.2
  */
-@Introspected
+@Serdeable
 public class GitHubRepository {
     private final String name;
     private final String description;

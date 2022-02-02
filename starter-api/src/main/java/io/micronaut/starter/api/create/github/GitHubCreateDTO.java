@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api.create.github;
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author Pavol Gressa
  * @since 2.2
  */
-@Introspected
+@Serdeable
 @Schema(name = "GitHubCreate", description = "Details of created GitHub repository with Micronaut application.")
 public class GitHubCreateDTO {
     private final String url;

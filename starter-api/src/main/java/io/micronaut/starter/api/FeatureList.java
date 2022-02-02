@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.api;
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Schema(description = "A list of features")
-@Introspected
+@Serdeable
 public class FeatureList extends Linkable {
     private List<FeatureDTO> features;
 

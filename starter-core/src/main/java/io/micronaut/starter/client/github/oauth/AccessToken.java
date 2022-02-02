@@ -17,7 +17,7 @@ package io.micronaut.starter.client.github.oauth;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 
 import javax.validation.constraints.NotNull;
 
@@ -25,7 +25,7 @@ import javax.validation.constraints.NotNull;
  * @author Pavol Gressa
  * @since 2.2
  */
-@Introspected
+@Serdeable
 public class AccessToken {
 
     private final String tokenType;

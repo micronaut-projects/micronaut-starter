@@ -16,7 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Creator;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -26,7 +26,7 @@ import java.util.List;
  * Supported Option
  * @param <T> The underlying option type
  */
-@Introspected
+@Serdeable
 public abstract class SelectOptionDTO<T extends Selectable<?>> {
 
     /**
