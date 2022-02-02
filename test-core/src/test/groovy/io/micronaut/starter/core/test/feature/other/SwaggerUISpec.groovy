@@ -154,39 +154,41 @@ class SwaggerUISpec extends CommandSpec {
 
     void checkYAMLConfigFileWithoutSecurityFeature() {
         assert Files.exists(applicationYAMLPath)
-        assert """micronaut:
-                 |  application:
-                 |    name: foo
-                 |  router:
-                 |    static-resources:
-                 |      swagger:
-                 |        paths: classpath:META-INF/swagger
-                 |        mapping: /swagger/**
-                 |      swagger-ui:
-                 |        paths: classpath:META-INF/swagger/views/swagger-ui
-                 |        mapping: /swagger-ui/**""".stripMargin()
-                .split(System.lineSeparator()).toList() == Files.readAllLines(applicationYAMLPath)
+        assert Collections.indexOfSubList(Files.readAllLines(applicationYAMLPath),
+                """micronaut:
+                  |  application:
+                  |    name: foo
+                  |  router:
+                  |    static-resources:
+                  |      swagger:
+                  |        paths: classpath:META-INF/swagger
+                  |        mapping: /swagger/**
+                  |      swagger-ui:
+                  |        paths: classpath:META-INF/swagger/views/swagger-ui
+                  |        mapping: /swagger-ui/**""".stripMargin()
+                .split(System.lineSeparator()).toList()) == 0
     }
 
     void checkYAMLConfigFileWithSecurityFeature() {
         assert Files.exists(applicationYAMLPath)
-        assert """micronaut:
-                 |  application:
-                 |    name: foo
-                 |  router:
-                 |    static-resources:
-                 |      swagger:
-                 |        paths: classpath:META-INF/swagger
-                 |        mapping: /swagger/**
-                 |      swagger-ui:
-                 |        paths: classpath:META-INF/swagger/views/swagger-ui
-                 |        mapping: /swagger-ui/**
-                 |  security:
-                 |    intercept-url-map:
-                 |    - access: isAnonymous()
-                 |      pattern: /swagger/**
-                 |    - access: isAnonymous()
-                 |      pattern: /swagger-ui/**""".stripMargin()
-                .split(System.lineSeparator()).toList() == Files.readAllLines(applicationYAMLPath)
+        assert Collections.indexOfSubList(Files.readAllLines(applicationYAMLPath),
+                """micronaut:
+                  |  application:
+                  |    name: foo
+                  |  router:
+                  |    static-resources:
+                  |      swagger:
+                  |        paths: classpath:META-INF/swagger
+                  |        mapping: /swagger/**
+                  |      swagger-ui:
+                  |        paths: classpath:META-INF/swagger/views/swagger-ui
+                  |        mapping: /swagger-ui/**
+                  |  security:
+                  |    intercept-url-map:
+                  |    - access: isAnonymous()
+                  |      pattern: /swagger/**
+                  |    - access: isAnonymous()
+                  |      pattern: /swagger-ui/**""".stripMargin()
+                .split(System.lineSeparator()).toList()) == 0
     }
 }
