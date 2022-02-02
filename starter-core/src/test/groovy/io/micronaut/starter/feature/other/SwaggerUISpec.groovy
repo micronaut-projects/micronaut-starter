@@ -49,7 +49,6 @@ class SwaggerUISpec extends ApplicationContextSpec  implements CommandOutputFixt
         ctx.configuration.get('micronaut.router.static-resources.swagger.mapping') == "/swagger/**"
         ctx.configuration.get('micronaut.router.static-resources.swagger-ui.paths') == "classpath:META-INF/swagger/views/swagger-ui"
         ctx.configuration.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
-        ctx.configuration.get('micronaut.router.static-resources.swagger-ui.mapping') == "/swagger-ui/**"
 
         List<Map<String, String>> swaggerSec = ctx.configuration.get('micronaut.security.intercept-url-map') as List<Map<String, String>>
 

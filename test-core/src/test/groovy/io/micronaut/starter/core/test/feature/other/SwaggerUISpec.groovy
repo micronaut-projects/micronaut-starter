@@ -17,15 +17,22 @@ class SwaggerUISpec extends CommandSpec {
     Path applicationYAMLPath
     Path openAPIPropertiesPath
     Path fooControllerPathJava
-    Path fooControllerTestPathKotlin
     Path fooControllerTestPathJava
     Path fooControllerPathKotlin
+    Path fooControllerTestPathKotlin
+    Path fooControllerPathGroovy
+    Path fooControllerTestPathGroovy
 
     void setup() {
-        fooControllerPathKotlin = Paths.get(dir.getPath(), "/src/main/kotlin/example/micronaut/", "FooController.kt")
         fooControllerPathJava = Paths.get(dir.getPath(), "/src/main/java/example/micronaut/", "FooController.java")
-        fooControllerTestPathKotlin = Paths.get(dir.getPath(), "/src/test/kotlin/example/micronaut/", "FooTest.kt")
         fooControllerTestPathJava = Paths.get(dir.getPath(), "/src/test/java/example/micronaut/", "FooTest.java")
+
+        fooControllerPathKotlin = Paths.get(dir.getPath(), "/src/main/kotlin/example/micronaut/", "FooController.kt")
+        fooControllerTestPathKotlin = Paths.get(dir.getPath(), "/src/test/kotlin/example/micronaut/", "FooTest.kt")
+
+        fooControllerPathGroovy = Paths.get(dir.getPath(), "/src/main/groovy/example/micronaut/", "FooController.groovy")
+        fooControllerTestPathGroovy = Paths.get(dir.getPath(), "/src/test/groovy/example/micronaut/", "FooSpec.groovy")
+
         openAPIPropertiesPath = Paths.get(dir.getPath(), "openapi.properties")
         applicationYAMLPath = Paths.get(dir.getPath(), "/src/main/resources/", "application.yml")
     }
@@ -53,7 +60,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN]].combinations()
+                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
     }
 
     @Unroll
@@ -74,7 +81,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN]].combinations()
+                [Language.JAVA, Language.KOTLIN, Language.GROOVY]].combinations()
     }
 
 
@@ -96,7 +103,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN],
+                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }
@@ -119,7 +126,7 @@ class SwaggerUISpec extends CommandSpec {
         where:
         [feature, language, securityFeature] << [
                 beanContext.getBeansOfType(SwaggerUI),
-                [Language.JAVA, Language.KOTLIN],
+                [Language.JAVA, Language.KOTLIN, Language.GROOVY],
                 beanContext.getBeansOfType(Security)
         ].combinations()
     }
@@ -146,6 +153,11 @@ class SwaggerUISpec extends CommandSpec {
         if (language == Language.KOTLIN) {
             assert Files.exists(fooControllerPathKotlin)
             assert Files.exists(fooControllerTestPathKotlin)
+            return
+        }
+        if (language == Language.GROOVY) {
+            assert Files.exists(fooControllerPathGroovy)
+            assert Files.exists(fooControllerTestPathGroovy)
             return
         }
         assert Files.exists(fooControllerPathJava)
