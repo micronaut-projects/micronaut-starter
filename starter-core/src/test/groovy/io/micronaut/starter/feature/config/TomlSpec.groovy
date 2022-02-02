@@ -30,7 +30,7 @@ class TomlSpec extends BeanContextSpec implements CommandOutputFixture {
         def output = generate(ApplicationType.DEFAULT, generatorContext)
 
         then:
-        output["src/main/resources/application.toml"] == "micronaut.application.name = 'foo'\n"
+        output["src/main/resources/application.toml"].contains("micronaut.application.name = 'foo'\n")
         output["src/main/resources/bootstrap.toml"] == "abc = 123\n"
         output["src/test/resources/application-test.toml"] == "abc = 456\n"
         output["src/main/resources/application-prod.toml"] == "abc = 789\n"
