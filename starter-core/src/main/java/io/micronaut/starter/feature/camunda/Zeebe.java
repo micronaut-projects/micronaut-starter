@@ -39,6 +39,11 @@ public class Zeebe implements Feature {
     }
 
     @Override
+    public boolean isCommunity() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Bringing cloud native process automation to Micronaut: Implement Zeebe Workers for Camunda Cloud or a local broker";
     }
