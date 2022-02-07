@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,9 @@ package io.micronaut.starter.api;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.Maintainer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -42,7 +40,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String description;
     private final String category;
     private final boolean preview;
-    private final Maintainer maintainer;
+    private final boolean community;
 
     /**
      * Default constructor.
@@ -56,7 +54,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
         this.preview = feature.isPreview();
-        this.maintainer = feature.getMaintainer();
+        this.community = feature.isCommunity();
     }
 
     /**
@@ -73,7 +71,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = description;
         this.category = category;
         this.preview = false;
-        this.maintainer = Maintainer.FOUNDATION;
+        this.community = false;
     }
 
     /**
@@ -117,11 +115,10 @@ public class FeatureDTO extends Linkable implements Named, Described {
     }
 
     /**
-     * @return The maintainer of the Feature.
+     * @return Is the feature a community contributed feature.
      */
-    @NonNull
-    @Schema(description = "Indicates whether this is maintained by the Micronaut Foundation, or the community", allowableValues = { "FOUNDATION", "COMMUNITY" })
-    public String getMaintainer() {
-        return maintainer.name();
+    @Schema(description = "Indicates whether the feature is a community contributed feature")
+    public boolean isCommunity() {
+        return community;
     }
 }

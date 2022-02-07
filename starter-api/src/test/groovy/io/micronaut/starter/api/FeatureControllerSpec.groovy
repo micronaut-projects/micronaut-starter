@@ -6,7 +6,6 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Maintainer
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -28,9 +27,7 @@ class FeatureControllerSpec extends Specification {
 
     void "test community features"() {
         when:
-        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL)
-                .features
-                .findAll { it.maintainer == Maintainer.COMMUNITY.name() }
+        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
 
         then:
         communityFeatures.name == ['camunda', 'camunda-external-worker', 'zeebe']
@@ -44,7 +41,7 @@ class FeatureControllerSpec extends Specification {
         then:
         graal.description == 'crear aplicaciones nativas'
         !graal.isPreview()
-        graal.maintainer == Maintainer.FOUNDATION.name()
+        !graal.isCommunity()
     }
 
     void "test list features for application type"() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,10 +51,10 @@ public interface Feature extends Named, Ordered, Described {
     }
 
     /**
-     * @return Indicates the feature maintainer.
+     * @return Indicates the feature is a community contribution.
      */
-    default Maintainer getMaintainer() {
-        return Maintainer.FOUNDATION;
+    default boolean isCommunity() {
+        return false;
     }
 
     /**
