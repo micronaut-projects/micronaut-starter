@@ -12,6 +12,7 @@ import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import io.micronaut.core.type.Argument
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.lang.reflect.Type
 
@@ -21,6 +22,7 @@ class SerdeSpec extends Specification {
     @Inject
     SerdeIntrospections serdeIntrospections
 
+    @Unroll
     void "#type is annotated with @Serdeable.Deserializable"(Type type) {
         when:
         serdeIntrospections.getDeserializableIntrospection(Argument.of(type))

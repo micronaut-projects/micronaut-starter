@@ -19,12 +19,13 @@ import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import org.reflections.scanners.TypeAnnotationsScanner
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import java.lang.reflect.Type
 
 class SerdeSpec extends Specification {
 
-
+    @Unroll
     void "#type is annotated with @Serdeable.Deserializable"(Type type) {
         expect:
         Reflections ref = new Reflections("io.micronaut.starter",
