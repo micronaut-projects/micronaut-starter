@@ -30,7 +30,7 @@ class FeatureControllerSpec extends Specification {
         when:
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL)
                 .features
-                .findAll { it.maintainer == Maintainer.COMMUNITY }
+                .findAll { it.maintainer == Maintainer.COMMUNITY.name() }
 
         then:
         communityFeatures.name == ['camunda', 'camunda-external-worker', 'zeebe']
@@ -44,7 +44,7 @@ class FeatureControllerSpec extends Specification {
         then:
         graal.description == 'crear aplicaciones nativas'
         !graal.isPreview()
-        graal.maintainer == Maintainer.FOUNDATION
+        graal.maintainer == Maintainer.FOUNDATION.name()
     }
 
     void "test list features for application type"() {

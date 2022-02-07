@@ -15,6 +15,11 @@
  */
 package io.micronaut.starter.feature;
 
+/**
+ * Feature maintainers.
+ *
+ * @since 3.3.1
+ */
 public enum Maintainer {
     FOUNDATION,
     COMMUNITY

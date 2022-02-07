@@ -18,6 +18,7 @@ package io.micronaut.starter.api;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
@@ -118,8 +119,9 @@ public class FeatureDTO extends Linkable implements Named, Described {
     /**
      * @return The maintainer of the Feature.
      */
-    @Schema(description = "Indicates the maintainer of the feature")
-    public Maintainer getMaintainer() {
-        return maintainer;
+    @NonNull
+    @Schema(description = "Indicates whether this is maintained by the Micronaut Foundation, or the community", allowableValues = { "FOUNDATION", "COMMUNITY" })
+    public String getMaintainer() {
+        return maintainer.name();
     }
 }
