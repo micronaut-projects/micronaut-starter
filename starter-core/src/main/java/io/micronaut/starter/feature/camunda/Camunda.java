@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.Maintainer;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.test.AssertJ;
 
@@ -51,8 +52,8 @@ public class Camunda implements Feature {
     }
 
     @Override
-    public boolean isCommunity() {
-        return true;
+    public Maintainer getMaintainer() {
+        return Maintainer.COMMUNITY;
     }
 
     @Override

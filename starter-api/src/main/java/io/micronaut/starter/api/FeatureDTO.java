@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.Maintainer;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -40,7 +41,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String description;
     private final String category;
     private final boolean preview;
-    private final boolean community;
+    private final Maintainer maintainer;
 
     /**
      * Default constructor.
@@ -54,7 +55,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
         this.preview = feature.isPreview();
-        this.community = feature.isCommunity();
+        this.maintainer = feature.getMaintainer();
     }
 
     /**
@@ -71,7 +72,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = description;
         this.category = category;
         this.preview = false;
-        this.community = false;
+        this.maintainer = Maintainer.FOUNDATION;
     }
 
     /**
@@ -115,10 +116,10 @@ public class FeatureDTO extends Linkable implements Named, Described {
     }
 
     /**
-     * @return Is the feature a community contributed feature.
+     * @return The maintainer of the Feature.
      */
-    @Schema(description = "Indicates whether the feature is a community contributed feature")
-    public boolean isCommunity() {
-        return community;
+    @Schema(description = "Indicates the maintainer of the feature")
+    public Maintainer getMaintainer() {
+        return maintainer;
     }
 }
