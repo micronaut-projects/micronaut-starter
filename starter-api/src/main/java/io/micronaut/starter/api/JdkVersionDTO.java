@@ -19,7 +19,6 @@ import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.serde.annotation.Serdeable;
@@ -57,7 +56,7 @@ public class JdkVersionDTO extends Linkable implements Named, Described, Selecta
      */
     @Creator
     @Internal
-    JdkVersionDTO(String name, String description, @Nullable Integer majorVersion, JdkVersion value) {
+    JdkVersionDTO(String name, String description, Integer majorVersion, JdkVersion value) {
         this.value = value;
         this.name = name;
         this.description = description;

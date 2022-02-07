@@ -22,12 +22,13 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "org.testcontainers:postgresql"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation 'org.reflections:reflections:0.9.12'
 }
 
 configurations.all {
     resolutionStrategy.dependencySubstitution {
         substitute(module("io.micronaut:micronaut-jackson-databind"))
-                .using(module("io.micronaut.serde:micronaut-serde-jackson:1.0.0-M6"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:$micronautSerdeVersion"))
     }
 }
 
