@@ -39,7 +39,7 @@ public class AmazonSesEmailFeature extends EmailFeature {
 
     @Override
     public String getModule() {
-        return "ses";
+        return "amazon-ses";
     }
 
     @Override
