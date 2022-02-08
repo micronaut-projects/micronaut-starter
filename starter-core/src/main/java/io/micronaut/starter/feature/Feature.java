@@ -51,6 +51,13 @@ public interface Feature extends Named, Ordered, Described {
     }
 
     /**
+     * @return Indicates the feature is a community contribution.
+     */
+    default boolean isCommunity() {
+        return false;
+    }
+
+    /**
      * @return The title of the feature
      */
     default String getTitle() {

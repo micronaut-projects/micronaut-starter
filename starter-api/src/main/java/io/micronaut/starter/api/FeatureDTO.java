@@ -40,6 +40,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String description;
     private final String category;
     private final boolean preview;
+    private final boolean community;
 
     /**
      * Default constructor.
@@ -53,6 +54,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
         this.preview = feature.isPreview();
+        this.community = feature.isCommunity();
     }
 
     /**
@@ -69,6 +71,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = description;
         this.category = category;
         this.preview = false;
+        this.community = false;
     }
 
     /**
@@ -109,5 +112,13 @@ public class FeatureDTO extends Linkable implements Named, Described {
     @Schema(description = "Indicates whether the feature is a preview feature and subject to change")
     public boolean isPreview() {
         return preview;
+    }
+
+    /**
+     * @return Is the feature a community contributed feature.
+     */
+    @Schema(description = "Indicates whether the feature is a community contributed feature")
+    public boolean isCommunity() {
+        return community;
     }
 }

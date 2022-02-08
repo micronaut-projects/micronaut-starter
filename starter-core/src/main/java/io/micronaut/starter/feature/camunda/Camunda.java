@@ -51,6 +51,11 @@ public class Camunda implements Feature {
     }
 
     @Override
+    public boolean isCommunity() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Bringing process automation to Micronaut: Embed the Camunda Platform Workflow Engine";
     }
