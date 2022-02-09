@@ -15,7 +15,7 @@ jobs:
       - name: Build AWS Lambda
         run: |
           ./gradlew starter-aws-lambda:buildNativeLambda
-          cp starter-aws-lambda/build/libs/*-lambda.zip build/function.zip
+          cp starter-aws-lambda/build/libs/*-lambda.zip starter-aws-lambda/build/libs/function.zip
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -27,4 +27,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: micronaut-starter-snapshot
-          zip_file: build/function.zip
+          zip_file: starter-aws-lambda/build/libs/function.zip
