@@ -31,6 +31,8 @@ import jakarta.inject.Singleton;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,13 +67,16 @@ public class Readme implements DefaultFeature {
                     Writable mainDocsWritable = new RockerWritable(maindocs.template());
                     mainDocsWritable.write(outputStream);
 
+                    byte[] lineSeparator = System.lineSeparator().getBytes(Charset.defaultCharset());
                     for (Writable writable : generatorContext.getHelpTemplates()) {
                         writable.write(outputStream);
+                        outputStream.write(lineSeparator);
                     }
 
                     for (Feature feature : featuresWithDocumentationLinks) {
                         Writable writable = new RockerWritable(readme.template(feature));
                         writable.write(outputStream);
+                        outputStream.write(lineSeparator);
                     }
                 }
             });
