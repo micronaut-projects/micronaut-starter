@@ -20,7 +20,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
                 .render()
 
         then:
-        build.contains('id("io.micronaut.aot") version "3.2.0"')
+        build.contains('id("io.micronaut.aot") version "3.2.1"')
         build.contains('aot {')
         build.contains('optimizeServiceLoading = true')
         build.contains('convertYamlToJava = true')
@@ -28,7 +28,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         build.contains('cacheEnvironment = true')
         build.contains('optimizeClassLoading = true')
         build.contains('deduceEnvironment = true')
-        build.contains('version = \'1.0.0-M6\'')
+        build.contains('version = \'1.0.0-M7\'')
 
         where:
         language << Language.values().toList()
@@ -44,7 +44,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
                 .render()
 
         then:
-        build.contains('id("io.micronaut.aot") version "3.2.0"')
+        build.contains('id("io.micronaut.aot") version "3.2.1"')
         build.contains('aot {')
         build.contains('optimizeServiceLoading.set(true)')
         build.contains('convertYamlToJava.set(true)')
@@ -52,7 +52,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         build.contains('cacheEnvironment.set(true)')
         build.contains('optimizeClassLoading.set(true)')
         build.contains('deduceEnvironment.set(true)')
-        build.contains('version.set("1.0.0-M6")')
+        build.contains('version.set("1.0.0-M7")')
 
         where:
         language << Language.values().toList()
