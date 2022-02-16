@@ -20,7 +20,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
                 .render()
 
         then:
-        build.contains('id("io.micronaut.aot") version "3.2.1"')
+        build.contains('id("io.micronaut.aot") version "3.2.2"')
         build.contains('aot {')
         build.contains('optimizeServiceLoading = true')
         build.contains('convertYamlToJava = true')
@@ -44,7 +44,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
                 .render()
 
         then:
-        build.contains('id("io.micronaut.aot") version "3.2.1"')
+        build.contains('id("io.micronaut.aot") version "3.2.2"')
         build.contains('aot {')
         build.contains('optimizeServiceLoading.set(true)')
         build.contains('convertYamlToJava.set(true)')
