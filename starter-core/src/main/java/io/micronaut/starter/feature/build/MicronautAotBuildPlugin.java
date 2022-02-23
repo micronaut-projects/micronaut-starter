@@ -22,11 +22,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class MicronautAotBuildPlugin implements Feature {
-    
+
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
     private static final String ID = "io.micronaut.aot";
     private static final String ARTIFACT_ID = "micronaut-gradle-plugin";
@@ -57,6 +58,11 @@ public class MicronautAotBuildPlugin implements Feature {
     @Override
     public String getTitle() {
         return "Micronaut AOT";
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOWEST.getOrder();
     }
 
     @Override
