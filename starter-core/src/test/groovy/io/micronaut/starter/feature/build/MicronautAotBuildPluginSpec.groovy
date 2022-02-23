@@ -57,6 +57,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         language << Language.values().toList()
     }
 
+    @Unroll
     void 'order is correct in application with gradle and feature micronaut-aot for language=#language'() {
         when:
         String output = build(GRADLE, language)
