@@ -2,7 +2,7 @@
 # See the starter-web-netty subproject for the implementation
 
 # Stage 1: Build the JAR
-FROM gradle:7.3.1 as gradle
+FROM gradle:7.4.1 as gradle
 COPY --chown=gradle . /home/app
 WORKDIR /home/app
 RUN gradle starter-web-netty:shadowJar --no-daemon
