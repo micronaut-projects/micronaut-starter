@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.dekorate;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Adds Dekorate Jaeger support.
@@ -46,12 +48,23 @@ public class DekorateJaeger extends AbstractDekorateServiceFeature {
 
     @Override
     public String getDescription() {
-        return "Adds to Decorate deployment manifests Jaeger sidecar container.";
+        return "Adds to Decorate deployment manifests Jaeger sidecar container";
     }
 
     @Nullable
     @Override
     public String getThirdPartyDocumentation() {
         return "https://github.com/dekorateio/dekorate#jaeger-annotations";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        Dependency.Builder jaeger = Dependency.builder()
+                .groupId("io.dekorate")
+                .artifactId("jaeger-annotations")
+                .template();
+
+        generatorContext.addDependency(jaeger.versionProperty("dekorate.version").annotationProcessor());
+        generatorContext.addDependency(jaeger.compile());
     }
 }

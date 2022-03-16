@@ -1,20 +1,19 @@
 package io.micronaut.starter.api
 
-
 import io.micronaut.context.i18n.ResourceBundleMessageSource
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import spock.lang.Specification
-
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @MicronautTest
 class FeatureControllerSpec extends Specification {
+
     @Inject
     ApplicationTypeClient client
 
@@ -26,6 +25,14 @@ class FeatureControllerSpec extends Specification {
         !features.isEmpty()
     }
 
+    void "test community features"() {
+        when:
+        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
+
+        then:
+        communityFeatures.name == ['camunda', 'camunda-external-worker', 'zeebe']
+    }
+
     void "test list features - spanish"() {
         when:
         List<FeatureDTO> features = client.spanishFeatures(ApplicationType.DEFAULT).features
@@ -34,6 +41,7 @@ class FeatureControllerSpec extends Specification {
         then:
         graal.description == 'crear aplicaciones nativas'
         !graal.isPreview()
+        !graal.isCommunity()
     }
 
     void "test list features for application type"() {

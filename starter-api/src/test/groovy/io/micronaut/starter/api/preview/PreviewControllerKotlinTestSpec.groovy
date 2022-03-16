@@ -16,7 +16,7 @@ import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import org.jetbrains.annotations.Nullable
 
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 class PreviewControllerKotlinTestSpec extends EmbeddedServerSpecification {
 
@@ -88,7 +88,8 @@ class PreviewControllerKotlinTestSpec extends EmbeddedServerSpecification {
                     applicationType,
                     options,
                     operatingSystem,
-                    [] as Set<Feature>)
+                    [] as Set<Feature>,
+                    () -> Optional.empty())
         }
     }
 

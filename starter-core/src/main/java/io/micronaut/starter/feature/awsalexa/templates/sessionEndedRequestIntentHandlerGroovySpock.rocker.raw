@@ -13,7 +13,7 @@ import com.amazon.ask.model.RequestEnvelope
 import com.amazon.ask.model.Response
 import com.amazon.ask.model.SessionEndedRequest
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import javax.inject.Inject
+import jakarta.inject.Inject
 import spock.lang.Specification
 
 @@MicronautTest

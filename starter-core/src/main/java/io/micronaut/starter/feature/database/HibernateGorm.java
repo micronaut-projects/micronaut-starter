@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,13 +17,14 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.options.Language;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Map;
 
 @Singleton
@@ -60,7 +61,7 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
 
     @Override
     public String getDescription() {
-        return "Adds support for GORM persistence framework";
+        return "Adds support for Hibernate using GORM";
     }
 
     @Override
@@ -82,16 +83,22 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config = generatorContext.getConfiguration();
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        config.put(getUrlKey(), dbFeature.getJdbcUrl());
-        config.put(getDriverKey(), dbFeature.getDriverClass());
-        config.put(getUsernameKey(), dbFeature.getDefaultUser());
-        config.put(getPasswordKey(), dbFeature.getDefaultPassword());
+        applyDefaultConfig(dbFeature, config);
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
         config.put("hibernate.hbm2ddl.auto", "update");
         config.put("hibernate.cache.queries", false);
         config.put("hibernate.cache.use_second_level_cache", false);
         config.put("hibernate.cache.use_query_cache", false);
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.groovy")
+                .artifactId("micronaut-hibernate-gorm")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.apache.tomcat")
+                .artifactId("tomcat-jdbc")
+                .runtime());
     }
 
     @Override

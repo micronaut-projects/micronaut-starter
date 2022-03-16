@@ -1,9 +1,10 @@
 package io.micronaut.starter.api.create.zip
 
-import edu.umd.cs.findbugs.annotations.NonNull
 import io.micronaut.context.annotation.Primary
 import io.micronaut.context.annotation.Requires
 import io.micronaut.context.event.ApplicationEventPublisher
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
 import io.micronaut.starter.application.ApplicationType
@@ -16,9 +17,9 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import org.jetbrains.annotations.NotNull
-import org.jetbrains.annotations.Nullable
-import javax.inject.Singleton
+
+import jakarta.inject.Singleton
+import javax.validation.constraints.NotNull
 
 class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {
 
@@ -94,7 +95,8 @@ class ZipCreateControllerKotlinTestSpec extends EmbeddedServerSpecification {
                                  applicationType,
                                  options,
                                  operatingSystem,
-                                 [] as Set<Feature>)
+                                 [] as Set<Feature>,
+                    () -> Optional.empty())
         }
     }
 

@@ -1,7 +1,6 @@
 package io.micronaut.starter.feature.test
 
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -21,11 +20,6 @@ class TestFeatureSpec extends Specification {
             @Override
             TestFramework getTestFramework() {
                 return testFramework
-            }
-
-            @Override
-            List<Language> getDefaultLanguages() {
-                return null
             }
 
             @Override

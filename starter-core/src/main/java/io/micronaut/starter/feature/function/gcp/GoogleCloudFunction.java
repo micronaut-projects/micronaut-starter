@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,19 +16,22 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import com.fizzed.rocker.RockerModel;
-import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
-import io.micronaut.starter.feature.function.gcp.template.*;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * A feature for supporting Google Cloud Function.
@@ -62,12 +65,12 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
 
     @Override
     public String getTitle() {
-        return "Google Cloud Function Support";
+        return "Google Cloud Function";
     }
 
     @Override
     public String getDescription() {
-        return "Adds Support for Google Cloud Function (https://cloud.google.com/functions)";
+        return "Adds support for writing functions to deploy to Google Cloud Function";
     }
 
     @Override
@@ -78,19 +81,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
     @Override
     public void apply(GeneratorContext generatorContext) {
         applyFunction(generatorContext, generatorContext.getApplicationType());
-    }
-
-    @Override
-    protected RockerModel readmeTemplate(
-            GeneratorContext generatorContext,
-            Project project,
-            BuildTool buildTool) {
-        return gcpFunctionReadme.template(project,
-                generatorContext.getFeatures(),
-                getRunCommand(buildTool),
-                getBuildCommand(buildTool),
-                generatorContext.getApplicationType() == ApplicationType.FUNCTION
-        );
     }
 
     @Override
@@ -143,6 +133,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudFunction";
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions";
     }
 }

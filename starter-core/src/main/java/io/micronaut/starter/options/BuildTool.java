@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,17 +15,20 @@
  */
 package io.micronaut.starter.options;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
+import io.micronaut.starter.build.gradle.GradleDsl;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 public enum BuildTool {
-
     GRADLE("build/libs", "build.gradle", "-*-all.jar"),
     GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar"),
     MAVEN("target", "pom.xml", "-*.jar");
+
+    public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE;
 
     private final String jarDirectory;
     private final String fileName;
@@ -62,5 +65,16 @@ public enum BuildTool {
 
     public boolean isGradle() {
         return this == GRADLE || this == GRADLE_KOTLIN;
+    }
+
+    public Optional<GradleDsl> getGradleDsl() {
+        if (isGradle()) {
+            if (this == BuildTool.GRADLE_KOTLIN) {
+                return Optional.of(GradleDsl.KOTLIN);
+            } else if (this == BuildTool.GRADLE) {
+                return Optional.of(GradleDsl.GROOVY);
+            }
+        }
+        return Optional.empty();
     }
 }

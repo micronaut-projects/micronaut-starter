@@ -14,7 +14,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respondText
 import io.ktor.routing.post
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 import io.micronaut.ktor.KtorRoutingBuilder
 import javax.validation.ConstraintViolationException
 

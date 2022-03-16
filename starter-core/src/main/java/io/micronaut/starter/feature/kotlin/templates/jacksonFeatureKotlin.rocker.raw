@@ -13,7 +13,7 @@ import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.jackson.jackson
 import io.micronaut.ktor.KtorApplicationBuilder
-import javax.inject.Singleton
+import jakarta.inject.Singleton
 
 @@Singleton
 class JacksonFeature : KtorApplicationBuilder({

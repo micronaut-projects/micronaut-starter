@@ -16,7 +16,7 @@ import com.amazon.ask.model.Response
 import com.amazon.ask.model.ui.SimpleCard
 import com.amazon.ask.model.ui.SsmlOutputSpeech
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
-import javax.inject.Inject
+import jakarta.inject.Inject
 import spock.lang.Specification
 
 @@MicronautTest

@@ -1,18 +1,19 @@
 package io.micronaut.starter.feature.server
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class ServerSpec extends BeanContextSpec {
+class ServerSpec extends ApplicationContextSpec {
 
     @Unroll
     void 'test gradle server feature #serverFeature'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features( [serverFeature])
+                .render()
 
         then:
         template.contains(dependency)
@@ -28,7 +29,9 @@ class ServerSpec extends BeanContextSpec {
     @Unroll
     void 'test maven server feature #serverFeature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([serverFeature])
+                .render()
 
         then:
         template.contains("""
@@ -40,7 +43,10 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.KOTLIN)
+                .features([serverFeature])
+                .render()
 
         then:
         template.contains("""
@@ -52,7 +58,10 @@ class ServerSpec extends BeanContextSpec {
 """)
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([serverFeature], Language.GROOVY), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(Language.GROOVY)
+                .features([serverFeature])
+                .render()
 
         then:
         template.contains("""

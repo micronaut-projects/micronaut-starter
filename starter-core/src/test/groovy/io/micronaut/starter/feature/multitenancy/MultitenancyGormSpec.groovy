@@ -1,11 +1,11 @@
 package io.micronaut.starter.feature.multitenancy
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
@@ -13,7 +13,7 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixture {
+class MultitenancyGormSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     @Subject
     @Shared
@@ -28,7 +28,7 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
         then:
         readme
         readme.contains("https://docs.micronaut.io/latest/guide/index.html#multitenancyGorm")
-        readme.contains("http://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy")
+        readme.contains("https://gorm.grails.org/latest/hibernate/manual/index.html#multiTenancy")
     }
 
     void "multi-tenancy-gorm belongs to Database category"() {
@@ -54,7 +54,10 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
 
     void 'dependency is included with maven and feature multi-tenancy-gorm for groovy'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['multi-tenancy-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
@@ -67,7 +70,7 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
         and:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.multitenancy</groupId>
       <artifactId>micronaut-multitenancy</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -76,11 +79,14 @@ class MultitenancyGormSpec extends BeanContextSpec  implements CommandOutputFixt
 
     void 'dependency is included with gradle and feature multi-tenancy-gorm for groovy'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy-gorm'], Language.GROOVY), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['multi-tenancy-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-multitenancy-gorm")')
         and:
-        template.contains('implementation("io.micronaut:micronaut-multitenancy")')
+        template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
     }
 }

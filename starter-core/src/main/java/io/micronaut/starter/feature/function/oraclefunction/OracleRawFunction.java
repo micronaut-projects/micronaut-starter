@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,19 +16,27 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.*;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJava;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJavaJunit;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlin;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
+import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class OracleRawFunction extends OracleFunction {
+    public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
     private final OracleFunction httpFunction;
 
     public OracleRawFunction(SimpleLogging simpleLogging, OracleFunction httpFunction) {
@@ -38,7 +46,7 @@ public class OracleRawFunction extends OracleFunction {
 
     @Override
     public String getName() {
-        return "oracle-function";
+        return FEATURE_NAME_ORACLE_RAW_FUNCTION;
     }
 
     @Override
@@ -109,5 +117,17 @@ public class OracleRawFunction extends OracleFunction {
     @Override
     public boolean isVisible() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions";
+    }
+
+    @Nullable
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.cloud.oracle.com/iaas/Content/Functions/Concepts/functionsoverview.htm";
     }
 }

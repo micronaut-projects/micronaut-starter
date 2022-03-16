@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,6 +23,12 @@ import java.util.Map;
 public class BuildProperties {
 
     private final Map<String, Property> propertyMap = new LinkedHashMap<>();
+
+    public void putAll(Map<String, String> map) {
+        for (String k : map.keySet()) {
+            put(k, map.get(k));
+        }
+    }
 
     public void put(String key, String value) {
         propertyMap.put(key, new Property() {

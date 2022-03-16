@@ -1,14 +1,29 @@
 package io.micronaut.starter.feature.database
 
-
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
-class MongoGormSpec extends BeanContextSpec {
+class MongoGormSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
+        when:
+        Options options = new Options(Language.GROOVY, BuildTool.DEFAULT_OPTION)
+        def output = generate(ApplicationType.DEFAULT,options, ['mongo-gorm'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://gorm.grails.org/latest/mongodb/manual/")
+        readme.contains("https://docs.mongodb.com")
+    }
 
     void "test mongo gorm features"() {
         when:
@@ -22,17 +37,37 @@ class MongoGormSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-gorm"])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
-        template.contains("testImplementation(\"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\")")
+    }
+
+    void "test testcontainers dependencies are present for gradle"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-gorm", "testcontainers"])
+                .language(Language.GROOVY)
+                .render()
+
+        then:
+        template.contains('implementation("io.micronaut.groovy:micronaut-mongo-gorm")')
+        template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
+        template.contains('testImplementation("org.testcontainers:mongodb")')
+        template.contains('testImplementation("org.testcontainers:spock")')
+
     }
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-gorm"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-gorm'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
@@ -51,9 +86,15 @@ class MongoGormSpec extends BeanContextSpec {
 """)
         template.contains("""
     <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-      <version>2.0.1</version>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
+      <scope>test</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>spock</artifactId>
       <scope>test</scope>
     </dependency>
 """)
@@ -64,6 +105,6 @@ class MongoGormSpec extends BeanContextSpec {
         GeneratorContext ctx = buildGeneratorContext(['mongo-gorm'])
 
         then:
-        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"
+        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}/mydb"
     }
 }

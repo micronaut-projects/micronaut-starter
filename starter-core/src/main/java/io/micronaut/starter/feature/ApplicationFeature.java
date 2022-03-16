@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,12 @@
  */
 package io.micronaut.starter.feature;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.options.BuildTool;
 
 public interface ApplicationFeature extends Feature {
-
-    String DEFAULT_PACKAGING = "jar";
 
     @Nullable
     String mainClassName(GeneratorContext generatorContext);
@@ -39,7 +37,6 @@ public interface ApplicationFeature extends Feature {
             if (mainClass != null) {
                 BuildProperties buildProperties = generatorContext.getBuildProperties();
                 buildProperties.put("exec.mainClass", mainClass);
-                buildProperties.put("packaging", DEFAULT_PACKAGING);
             }
         }
     }

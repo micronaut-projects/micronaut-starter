@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,16 +15,14 @@
  */
 package io.micronaut.starter.feature.picocli;
 
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.util.VersionInfo;
+import io.micronaut.starter.options.Options;
 
-import javax.inject.Singleton;
-import java.util.Map;
+import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
@@ -57,13 +55,13 @@ public class Picocli implements DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            Map.Entry<String, String> entry = VersionInfo.getDependencyVersion("picocli");
-            generatorContext.getBuildProperties().put(
-                    entry.getKey(),
-                    entry.getValue()
-            );
-        }
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("info.picocli")
+                .artifactId("picocli-codegen")
+                .versionProperty("picocli.version")
+                .annotationProcessor());
+        generatorContext.addDependency(Dependency.builder().groupId("info.picocli").artifactId("picocli").compile());
+        generatorContext.addDependency(Dependency.builder().groupId("io.micronaut.picocli").artifactId("micronaut-picocli").compile());
     }
 
     @Override

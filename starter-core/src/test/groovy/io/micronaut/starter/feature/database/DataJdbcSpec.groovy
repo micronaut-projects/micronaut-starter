@@ -1,14 +1,16 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import spock.lang.Issue
 
-class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
+class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature data-jdbc contains links to micronaut docs'() {
         when:
@@ -33,50 +35,60 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["data-jdbc"])
+                .render()
 
         then:
-        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
+        template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
         template.contains('implementation("io.micronaut.data:micronaut-data-jdbc")')
         template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
-        template.contains("runtimeOnly(\"com.h2database:h2\")")
+        template.contains('runtimeOnly("com.h2database:h2")')
     }
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["data-jdbc"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['data-jdbc'])
+                .render()
 
         then:
         //src/main
-        template.contains("""
+        template.contains('''
             <path>
               <groupId>io.micronaut.data</groupId>
               <artifactId>micronaut-data-processor</artifactId>
-              <version>\${micronaut.data.version}</version>
+              <version>${micronaut.data.version}</version>
             </path>
-""")
-
-        template.contains("""
+''')
+        template.contains('''
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-jdbc</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
       <scope>compile</scope>
     </dependency>
-""")
-        template.contains("""
+''')
+        template.contains('''
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>runtime</scope>
     </dependency>
-""")
+''')
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
     }
 
     void "test config"() {
@@ -121,5 +133,35 @@ class DataJdbcSpec extends BeanContextSpec  implements CommandOutputFixture {
         then:
         ctx.configuration.containsKey("datasources.default.url")
         ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+    }
+
+    void "test render config"() {
+        when:
+        def output = generate(['data-jdbc'])
+        def config = output["src/main/resources/application.yml"]
+
+        then:
+        config
+        config.contains('''\
+    schema-generate: CREATE_DROP
+    dialect: H2''')
+    }
+
+    @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
+    void 'test data-processor dependency is in provided scope for Groovy and Maven'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+            .language(Language.GROOVY)
+            .features(["data-jdbc"])
+            .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-processor</artifactId>
+      <scope>provided</scope>
+    </dependency>
+''')
     }
 }

@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,16 +19,24 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+
+import java.util.Collections;
+import java.util.Map;
 
 public abstract class DatabaseDriverFeature implements OneOfFeature {
 
+    private final JdbcFeature jdbcFeature;
     private final TestContainers testContainers;
 
     public DatabaseDriverFeature() {
+        this.jdbcFeature = null;
         this.testContainers = null;
     }
 
-    public DatabaseDriverFeature(TestContainers testContainers) {
+    public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        this.jdbcFeature = jdbcFeature;
         this.testContainers = testContainers;
     }
 
@@ -44,6 +52,10 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
+            && jdbcFeature != null) {
+            featureContext.addFeature(jdbcFeature);
+        }
         if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
             featureContext.addFeature(testContainers);
         }
@@ -58,6 +70,8 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     public abstract String getJdbcUrl();
 
+    public abstract String getR2dbcUrl();
+
     public abstract String getDriverClass();
 
     public abstract String getDefaultUser();
@@ -65,5 +79,9 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
     public abstract String getDefaultPassword();
 
     public abstract String getDataDialect();
+
+    public Map<String, Object> getAdditionalConfig() {
+        return Collections.emptyMap();
+    }
 
 }

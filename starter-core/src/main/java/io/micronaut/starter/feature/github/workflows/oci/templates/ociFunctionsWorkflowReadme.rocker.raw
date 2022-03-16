@@ -1,0 +1,82 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_REGION
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_OCIR_URL
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_MEMORY_IN_MBS
+@import static io.micronaut.starter.feature.github.workflows.oci.AbstractOracleFunctionsWorkflow.WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS
+
+@args (
+AbstractDockerRegistryWorkflow feature,
+Project project,
+ApplicationType applicationType,
+String workflowFilePath
+)
+
+
+## @feature.getTitle()
+
+Workflow file: [`@workflowFilePath`](@workflowFilePath)
+
+### Workflow description
+For pushes to the `master` branch, the workflow will:
+1. Setup the build environment with respect to the selected java or GraalVM version.
+2. Login to the [Oracle Cloud Infrastructure Registry (OCIR)](https://docs.cloud.oracle.com/en-us/iaas/Content/Registry/Concepts/registryoverview.htm).
+3. Install and configure [Oracle Cloud Infrastructure CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
+4. Build, tag and push Docker image with Micronaut application to the OCIR.
+5. Create or update [Oracle Cloud Functions](https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Concepts/functionsoverview.htm) with name `@project.getName()` using built Docker container image.
+
+### Dependencies on other GitHub Actions
+- [Setup GraalVM `DeLaGuardo/setup-graalvm`](https://github.com/DeLaGuardo/setup-graalvm)
+
+### Setup
+Add the following GitHub secrets:
+
+| Name | Description |
+| ---- | ----------- |
+@for (secret : feature.getSecrets()) {
+| @secret.getName() | @secret.getDescription() |
+}
+
+
+The workflow file `.github/workflows/graalvm.yml` also contains additional configuration options that are now configured to:
+| Name | Description | Default value |
+| ---- | ----------- | ------------- |
+| OCI_REGION | Oracle Infrastructure Cloud region. See more on [Regions and Availability Domains](https://docs.cloud.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm).  | `@WORKFLOW_DEFAULT_REGION` |
+| OCI_OCIR_URL | Oracle Cloud Infrastructure Registry region endpoint. See more on [Regional availability](https://docs.cloud.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#regional-availability). | `@WORKFLOW_DEFAULT_OCIR_URL` |
+| OCI_FUNCTION_MEMORY_IN_MBS | Maximum memory threshold for a function. See more on [Changing Oracle Functions Default Behavior](https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionscustomizing.htm) | `@WORKFLOW_DEFAULT_MEMORY_IN_MBS` |
+| OCI_FUNCTION_TIMEOUT_IN_SECONDS | Timeout for executions of the function. Value in seconds. | `@WORKFLOW_DEFAULT_TIMEOUT_IN_SECONDS` |
+
+### Verification
+@if(applicationType.equals(ApplicationType.FUNCTION)) {
+
+Copy the function ID from the workflow's `Deploy Function` step.
+
+For example output below it is `ocid1.fnfunc.oc1.iad.______5ds7`:
+Action completed. Waiting until the resource has entered state: ('ACTIVE',)
+```
+{
+  "data": {
+    ....
+    "display-name": "oci-function-gradle-test",
+    "freeform-tags": {},
+    "id": "ocid1.fnfunc.oc1.iad.______5ds7",
+    "lifecycle-state": "ACTIVE",
+    "memory-in-mbs": 128,
+    "timeout-in-seconds": 30
+    ....
+    }
+}
+```
+
+Invoke the function using Oracle Cloud Infrastructure CLI:
+```
+oci fn function invoke --function-id [FUNCTION-ID]  --file "-" --body ""
+```
+
+} else {
+Follow instructions in [Micronaut Oracle Cloud documentation](https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#httpFunctions) on how to configure the [Oracle API Gateway](https://docs.cloud.oracle.com/en-us/iaas/Content/APIGateway/Concepts/apigatewayoverview.htm) and invoke the Function.
+}
+
+For more invocation options visit [Invoking Functions](https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsinvokingfunctions.htm).
+

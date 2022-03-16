@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,11 +15,13 @@
  */
 package io.micronaut.starter.api;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.naming.Described;
+import io.micronaut.core.naming.Named;
 import io.micronaut.starter.application.ApplicationType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -33,18 +35,21 @@ import java.util.List;
  */
 @Schema(name = "ApplicationTypeInfo")
 @Introspected
-public class ApplicationTypeDTO extends Linkable {
+public class ApplicationTypeDTO extends Linkable implements Named, Described, Selectable<ApplicationType> {
+
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".application-types.";
     private final String name;
     private final List<FeatureDTO> features;
     private final String title;
     private final String description;
+    private final ApplicationType value;
 
     /**
      * @param type The type
      * @param features The available features
      */
     public ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features) {
+        this.value = type;
         this.name = type.getName();
         this.features = features;
         this.title = type.getTitle();
@@ -57,7 +62,12 @@ public class ApplicationTypeDTO extends Linkable {
      */
     @Creator
     @Internal
-    ApplicationTypeDTO(String name, String title, String description, List<FeatureDTO> features) {
+    ApplicationTypeDTO(ApplicationType value,
+                       String name,
+                       String title,
+                       String description,
+                       List<FeatureDTO> features) {
+        this.value = value;
         this.name = name;
         this.features = features;
         this.title = title;
@@ -73,6 +83,7 @@ public class ApplicationTypeDTO extends Linkable {
      */
     @Internal
     ApplicationTypeDTO(ApplicationType type, List<FeatureDTO> features, MessageSource messageSource, MessageSource.MessageContext messageContext) {
+        this.value = type;
         String name = type.getName();
         this.name = name;
         this.features = features;
@@ -101,4 +112,17 @@ public class ApplicationTypeDTO extends Linkable {
         return name;
     }
 
+    @Override
+    @Schema(description = "The value of the application type for select options")
+    public ApplicationType getValue() {
+        return value;
+    }
+
+    @Override
+    @Schema(description = "The label of the application type for select options")
+    public String getLabel() {
+        return description
+                .replaceFirst("A ", "")
+                .trim();
+    }
 }

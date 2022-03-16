@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,10 +15,8 @@
  */
 package io.micronaut.starter.feature.config;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import io.micronaut.core.util.StringUtils;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
@@ -26,13 +24,16 @@ import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.Config4kTemplate;
+import io.micronaut.starter.template.Template;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
-import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Singleton
 public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
+
+    private static final String EXTENSION = "conf";
 
     @NonNull
     @Override
@@ -66,7 +67,7 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
     @NonNull
     @Override
     public String getDescription() {
-        return "Support to define configuration with config4k a type safe configuration format for Kotlin based on HOCON (Human-Optimized Config Object Notation).";
+        return "Define configuration with config4k, a typesafe configuration format for Kotlin based on HOCON";
     }
 
     @Override
@@ -85,16 +86,8 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("confConfig", new Config4kTemplate("src/main/resources/application.conf", generatorContext.getConfiguration()));
-        if (!generatorContext.getBootstrapConfig().isEmpty()) {
-            generatorContext.addTemplate("confBootstrapConfig", new Config4kTemplate("src/main/resources/bootstrap.conf", generatorContext.getBootstrapConfig()));
-        }
-        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
-        if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
-                generatorContext.addTemplate("confConfig" + StringUtils.capitalize(envConfig.getKey()), new Config4kTemplate("src/main/resources/application-" + envConfig.getKey() + ".conf", envConfig.getValue()));
-            }
-        }
+    public Function<Configuration, Template> createTemplate() {
+        return (config) -> new Config4kTemplate(config.getFullPath(EXTENSION), config);
     }
+
 }

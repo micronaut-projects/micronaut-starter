@@ -1,0 +1,10 @@
+@args(String path)
+
+rocker {
+    configurations {
+        main {
+            templateDir = file("@path")
+            outputDir = file("src/generated/rocker")
+        }
+    }
+}

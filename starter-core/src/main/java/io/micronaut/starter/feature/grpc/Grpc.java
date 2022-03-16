@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,16 +15,22 @@
  */
 package io.micronaut.starter.feature.grpc;
 
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildPlugin;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradleDsl;
+import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.grpc.template.proto;
+import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
+
+import java.util.Optional;
 import java.util.Set;
 
 @Singleton
@@ -38,6 +44,25 @@ public class Grpc implements DefaultFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("proto", new RockerTemplate("src/main/proto/{propertyName}.proto", proto.template(generatorContext.getProject())));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.grpc")
+                .artifactId("micronaut-grpc-runtime")
+                .compile());
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
+            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
+        }
+    }
+
+    private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
+        GradlePlugin.Builder builder = GradlePlugin.builder()
+                .id("com.google.protobuf")
+                .lookupArtifactId("protobuf-gradle-plugin");
+        Optional<GradleDsl> gradleDslOptional = generatorContext.getBuildTool().getGradleDsl();
+        if (gradleDslOptional.isPresent() && gradleDslOptional.get() == GradleDsl.KOTLIN) {
+            builder.buildImports("import com.google.protobuf.gradle.*");
+        }
+        return builder.build();
     }
 
     @Override

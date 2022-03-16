@@ -1,15 +1,16 @@
 package io.micronaut.starter.feature.messaging.pubsub
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.options.BuildTool
 
-class PubSubSpec extends BeanContextSpec {
+class PubSubSpec extends ApplicationContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([PubSub.NAME]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([PubSub.NAME])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-pubsub")')
@@ -17,7 +18,9 @@ class PubSubSpec extends BeanContextSpec {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([PubSub.NAME]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([PubSub.NAME])
+                .render()
 
         then:
         template.contains("""

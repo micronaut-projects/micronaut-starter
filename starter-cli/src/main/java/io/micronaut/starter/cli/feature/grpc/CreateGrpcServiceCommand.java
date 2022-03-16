@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,19 +18,25 @@ package io.micronaut.starter.cli.feature.grpc;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.cli.CodeGenConfig;
-import io.micronaut.starter.application.Project;
-import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.core.util.functional.ThrowingSupplier;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.Project;
+import io.micronaut.starter.cli.CodeGenConfig;
+import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.grpc.template.groovyService;
 import io.micronaut.starter.cli.feature.grpc.template.javaService;
 import io.micronaut.starter.cli.feature.grpc.template.kotlinService;
+import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
 import picocli.CommandLine;
+
+import java.io.IOException;
 
 @CommandLine.Command(name = "create-grpc-service", description = "Creates a gRPC service with proto file and associated test")
 @Prototype
@@ -44,6 +50,18 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
         super(config);
     }
 
+    public CreateGrpcServiceCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+        super(config, outputHandlerSupplier, consoleOutput);
+    }
+
+    /**
+     * Sets the service name to generate.
+     * @param serviceName The service name
+     */
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
     @Override
     public boolean applies() {
         return config.getApplicationType() == ApplicationType.GRPC;
@@ -52,8 +70,12 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
     @Override
     public Integer call() throws Exception {
 
-        CreateProtoServiceCommand command = getCommand(CreateProtoServiceCommand.class);
+        CreateProtoServiceCommand command = getCreateProtoServiceCommand();
+        // create a copy
         command.serviceName = serviceName;
+        if (!serviceName.endsWith("Service")) {
+            serviceName = serviceName + "Service";
+        }
         int exitCode = command.call();
         if (exitCode > 0) {
             return exitCode;
@@ -63,15 +85,17 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
-        RenderResult renderResult = null;
+        RenderResult renderResult;
         String path = "/{packagePath}/{className}";
-        path = config.getSourceLanguage().getSourcePath(path);
+        Language sourceLanguage = config.getSourceLanguage();
+
+        path = sourceLanguage.getSourcePath(path);
         RockerModel rockerModel = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (sourceLanguage == Language.JAVA) {
             rockerModel = javaService.template(project);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (sourceLanguage == Language.GROOVY) {
             rockerModel = groovyService.template(project);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (sourceLanguage == Language.KOTLIN) {
             rockerModel = kotlinService.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
@@ -87,5 +111,13 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
         }
 
         return 0;
+    }
+
+    /**
+     * Creates the {@link CreateProtoServiceCommand}.
+     * @return The {@link CreateProtoServiceCommand}.
+     */
+    protected @NonNull CreateProtoServiceCommand getCreateProtoServiceCommand() {
+        return getCommand(CreateProtoServiceCommand.class);
     }
 }

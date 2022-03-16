@@ -1,17 +1,18 @@
 package io.micronaut.starter.feature.spring
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringWebSpec extends BeanContextSpec {
+class SpringWebSpec extends ApplicationContextSpec {
 
     @Shared
     @Subject
@@ -63,13 +64,17 @@ class SpringWebSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-web with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['spring-web'])
+                .language(language)
+                .render()
 
         then:
+        template.contains("$scope(\"io.micronaut.spring:micronaut-spring-annotation\")")
         template.contains("$scope(\"io.micronaut.spring:micronaut-spring-web-annotation\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
         template.contains('implementation("io.micronaut:micronaut-http-server")')
-        template.contains('runtime("io.micronaut.spring:micronaut-spring-web")')
+        template.contains('runtimeOnly("io.micronaut.spring:micronaut-spring-web")')
 
         where:
         language        | scope
@@ -80,7 +85,9 @@ class SpringWebSpec extends BeanContextSpec {
 
     void 'test maven spring-web feature'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.JAVA), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-web'])
+                .render()
 
         then:
         template.contains("""
@@ -89,11 +96,15 @@ class SpringWebSpec extends BeanContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
@@ -107,9 +118,25 @@ class SpringWebSpec extends BeanContextSpec {
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
+        template.contains("""
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-annotation</artifactId>
+              <version>\${micronaut.spring.version}</version>
+            </path>
+""")
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        !semanticVersionOptional.isPresent()
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.KOTLIN), []).render().toString()
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-web'])
+                .language(Language.KOTLIN)
+                .render()
 
         then:
         template.contains("""
@@ -118,27 +145,41 @@ class SpringWebSpec extends BeanContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
       <scope>runtime</scope>
     </dependency>
 """)
-        template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.spring</groupId>
-                  <artifactId>micronaut-spring-web-annotation</artifactId>
-                  <version>\${micronaut.spring.version}</version>
-                </annotationProcessorPath>
-""") == 2
+        template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-web-annotation</artifactId>
+                 <version>${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+''') == 2
 
         when:
-        template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-web'], Language.GROOVY), []).render().toString()
+        semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        !semanticVersionOptional.isPresent()
+
+        when:
+        template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-web'])
+                .language(Language.GROOVY)
+                .render()
 
         then:
         template.contains("""
@@ -147,24 +188,41 @@ class SpringWebSpec extends BeanContextSpec {
       <artifactId>spring-boot-starter-web</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-http-server</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web</artifactId>
       <scope>runtime</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.spring</groupId>
+      <artifactId>micronaut-spring-annotation</artifactId>
+      <scope>provided</scope>
     </dependency>
 """)
         template.contains("""
     <dependency>
       <groupId>io.micronaut.spring</groupId>
       <artifactId>micronaut-spring-web-annotation</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 """)
 
+        when:
+        semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.spring.version")
+
+        then:
+        noExceptionThrown()
+        !semanticVersionOptional.isPresent()
     }
 }

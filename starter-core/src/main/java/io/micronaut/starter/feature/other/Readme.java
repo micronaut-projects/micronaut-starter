@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,21 +15,23 @@
  */
 package io.micronaut.starter.feature.other;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.other.template.maindocs;
 import io.micronaut.starter.feature.other.template.readme;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,13 +63,19 @@ public class Readme implements DefaultFeature {
 
                 @Override
                 public void write(OutputStream outputStream) throws IOException {
+                    Writable mainDocsWritable = new RockerWritable(maindocs.template());
+                    mainDocsWritable.write(outputStream);
+
+                    byte[] lineSeparator = System.lineSeparator().getBytes(Charset.defaultCharset());
                     for (Writable writable : generatorContext.getHelpTemplates()) {
                         writable.write(outputStream);
+                        outputStream.write(lineSeparator);
                     }
 
                     for (Feature feature : featuresWithDocumentationLinks) {
                         Writable writable = new RockerWritable(readme.template(feature));
                         writable.write(outputStream);
+                        outputStream.write(lineSeparator);
                     }
                 }
             });

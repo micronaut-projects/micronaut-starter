@@ -1,12 +1,10 @@
 package io.micronaut.starter.core.test.feature.dekorate
 
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.feature.dekorate.AbstractDekorateFeature
-import io.micronaut.starter.feature.dekorate.AbstractDekorateServiceFeature
 import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+import io.micronaut.starter.feature.dekorate.AbstractDekorateServiceFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.test.BuildToolCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Unroll
 
@@ -38,13 +36,11 @@ class DekorateSpec extends CommandSpec {
                 [Language.JAVA, Language.KOTLIN]].combinations()
     }
 
-
     @Unroll
     void "test maven dekorate service #feature.name with #language on default platform"(Feature feature, Language language) {
         when:
         generateProject(language, BuildTool.MAVEN, [feature.getName()])
         String output =  executeMaven("compile")
-        String manifestName = feature.getName().replaceFirst("dekorate-", "")
 
         then:
         output?.contains("BUILD SUCCESS")

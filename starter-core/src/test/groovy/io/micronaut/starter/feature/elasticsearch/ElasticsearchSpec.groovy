@@ -1,16 +1,15 @@
 package io.micronaut.starter.feature.elasticsearch
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
 import spock.lang.Unroll
 
-class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture {
+class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature elasticsearch contains links to micronaut docs'() {
         when:
@@ -25,7 +24,10 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test gradle elasticsearch feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['elasticsearch'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.elasticsearch:micronaut-elasticsearch")')
@@ -37,7 +39,10 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     @Unroll
     void 'test maven elasticsearch feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['elasticsearch'])
+                .render()
 
         then:
         template.contains("""
@@ -57,19 +62,22 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
         GeneratorContext commandContext = buildGeneratorContext(['elasticsearch'])
 
         then:
-        commandContext.configuration.get('elasticsearch.httpHosts'.toString()) == '"http://localhost:9200,http://127.0.0.2:9200"'
+        commandContext.configuration.get('elasticsearch.httpHosts'.toString()) == 'http://localhost:9200,http://127.0.0.2:9200'
     }
 
     @Unroll
     @Requires({ jvm.isJava8() || jvm.isJava11() })
     void 'test gradle elasticsearch and graalvm features for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch', 'graalvm'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['elasticsearch', 'graalvm'])
+                .language(language)
+                .render()
 
         then:
         template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:1.7.30")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-api:2.13.3")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.13.3")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-api:2.17.1")')
+        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.17.1")')
 
         where:
         language << Language.values().toList() - Language.GROOVY
@@ -79,7 +87,10 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     @Requires({ jvm.isJava8() || jvm.isJava11() })
     void 'test maven elasticsearch and graalvm features for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['elasticsearch', 'graalvm'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['elasticsearch', 'graalvm'])
+                .render()
 
         then:
         template.contains("""
@@ -94,7 +105,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>2.13.3</version>
+      <version>2.17.1</version>
       <scope>compile</scope>
     </dependency>
 """)
@@ -102,7 +113,7 @@ class ElasticsearchSpec extends BeanContextSpec  implements CommandOutputFixture
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.13.3</version>
+      <version>2.17.1</version>
       <scope>compile</scope>
     </dependency>
 """)

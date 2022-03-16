@@ -1,10 +1,10 @@
 package io.micronaut.starter.netty
 
-import edu.umd.cs.findbugs.annotations.NonNull
 import io.micronaut.context.annotation.Property
 import io.micronaut.context.env.Environment
 import io.micronaut.context.event.BeanCreatedEvent
 import io.micronaut.context.event.BeanCreatedEventListener
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Controller
@@ -13,14 +13,14 @@ import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.starter.analytics.Generated
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
-import javax.inject.Inject
-import javax.inject.Provider
-import javax.inject.Singleton
+import jakarta.inject.Inject
+import jakarta.inject.Provider
+import jakarta.inject.Singleton
 import java.util.concurrent.CompletableFuture
 
 @MicronautTest
@@ -62,7 +62,6 @@ class ReportAnalyticsSpec extends Specification {
             controller.generated.buildTool == BuildTool.MAVEN
         }
     }
-
 
     @Controller('/')
     @Singleton

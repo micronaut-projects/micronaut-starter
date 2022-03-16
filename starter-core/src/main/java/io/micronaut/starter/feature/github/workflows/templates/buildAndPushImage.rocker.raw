@@ -1,0 +1,21 @@
+@import io.micronaut.starter.options.BuildTool
+@import io.micronaut.starter.options.JdkVersion
+
+@args (
+BuildTool buildTool,
+boolean isGraal,
+)
+
+          @if (buildTool.equals(BuildTool.MAVEN)) {
+            @if (isGraal){
+          ./mvnw deploy -Dpackaging=docker-native -Djib.docker.image=$DOCKER_IMAGE --no-transfer-progress
+            } else {
+          ./mvnw deploy -Dpackaging=docker -Djib.docker.image=$DOCKER_IMAGE --no-transfer-progress
+            }
+          } else {
+            @if (isGraal) {
+          ./gradlew check dockerPushNative --no-daemon
+            } else {
+          ./gradlew check dockerPush --no-daemon
+            }
+          }

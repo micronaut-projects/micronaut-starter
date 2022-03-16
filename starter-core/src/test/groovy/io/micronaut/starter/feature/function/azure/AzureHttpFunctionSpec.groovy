@@ -3,11 +3,7 @@ package io.micronaut.starter.feature.function.azure
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 
 class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -25,7 +21,7 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
     }
 
-    void 'test readme.md with feature azure-function contains links to micronaut docs'() {
+    void 'test readme.md with feature azure-function contains links to docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
         def output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
@@ -33,7 +29,28 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
 
         then:
         readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-azure/snapshot/guide/index.html#azureHttpFunctions")
+        verifyAll {
+            readme.contains("# Micronaut and Azure Function")
+            readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions")
+            readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions")
+            readme.contains("https://docs.microsoft.com/azure")
+        }
+
+        when:
+        readme = readme.replaceFirst("# Micronaut and Azure Function","")
+        readme = readme.replaceFirst("## Feature azure-function documentation","")
+        readme = readme.replaceFirst("## Feature azure-function-http documentation","")
+
+        then:
+        verifyAll {
+            // make sure we didn't add anything more than once
+            !readme.contains("# Micronaut and Azure Function")
+            !readme.contains("## Feature azure-function documentation")
+            !readme.contains("## Feature azure-function-http documentation")
+        }
+
+        and: 'Readme contains a link to the Gradle Plugin'
+        readme.contains("[Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions)")
 
         and: 'contains link to Azure CLI'
         readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')

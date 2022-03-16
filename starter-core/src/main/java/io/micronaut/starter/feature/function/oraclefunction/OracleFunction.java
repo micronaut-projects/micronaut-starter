@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -28,12 +28,16 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
-import io.micronaut.starter.feature.other.template.readme;
-import io.micronaut.starter.feature.server.template.*;
+import io.micronaut.starter.feature.server.ServerFeature;
+import io.micronaut.starter.feature.server.template.groovyJunit;
+import io.micronaut.starter.feature.server.template.javaJunit;
+import io.micronaut.starter.feature.server.template.koTest;
+import io.micronaut.starter.feature.server.template.kotlinJunit;
+import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 @Primary
@@ -50,6 +54,10 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         if (!featureContext.isPresent(SimpleLogging.class)) {
             featureContext.addFeature(simpleLogging);
             featureContext.exclude(feature -> feature instanceof Logback);
+        }
+
+        if (featureContext.isPresent(ServerFeature.class)) {
+            featureContext.exclude(feature -> feature instanceof ServerFeature);
         }
     }
 
@@ -72,29 +80,17 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
 
     @Override
     public String getTitle() {
-        return "Oracle Function Support";
+        return "Oracle Function";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Oracle Functions.";
+        return "Adds support for writing functions to deploy to Oracle Cloud Function";
     }
 
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Concepts/functionsoverview.htm";
     }
 
     @Override
@@ -115,13 +111,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
         } else {
             throw new IllegalStateException("Unsupported build tool");
         }
-    }
-
-    @Override
-    protected RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
-        return readme.template(
-                this
-        );
     }
 
     @Override
@@ -160,5 +149,11 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public Cloud getCloud() {
         return Cloud.ORACLE;
+    }
+
+    @Nullable
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#httpFunctions";
     }
 }

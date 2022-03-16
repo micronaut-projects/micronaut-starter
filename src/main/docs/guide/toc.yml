@@ -6,6 +6,7 @@ installation:
   installMacports: Install with MacPorts
   installChocolatey: Install with Chocolatey
   installWindows: Install through Binary on Windows
+  installFromSource: Build & Install from Source
 releaseHistory: Release History
 commands:
   title: Available commands

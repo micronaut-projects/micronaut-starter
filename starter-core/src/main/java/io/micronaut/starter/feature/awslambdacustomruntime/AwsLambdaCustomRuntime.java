@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
 import com.fizzed.rocker.RockerModel;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -25,18 +25,22 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.feature.other.HttpClient;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
@@ -45,9 +49,11 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
 
     private final Provider<AwsLambda> awsLambda;
+    private final HttpClient httpClient;
 
-    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda) {
+    public AwsLambdaCustomRuntime(Provider<AwsLambda> awsLambda, HttpClient httpClient) {
         this.awsLambda = awsLambda;
+        this.httpClient = httpClient;
     }
 
     @Override
@@ -55,6 +61,9 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         AwsLambda awsLambda = this.awsLambda.get();
         if (awsLambda.supports(featureContext.getApplicationType()) && !featureContext.isPresent(AwsLambda.class)) {
             featureContext.addFeature(awsLambda);
+        }
+        if (!featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(httpClient);
         }
     }
 
@@ -88,6 +97,10 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
             addBookLambdaRuntime(generatorContext, project);
         }
         addBootstrap(generatorContext, applicationType);
+
+        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
+            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
+        }
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {

@@ -1,19 +1,35 @@
 package io.micronaut.starter.feature.function.azure
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
-class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Unroll
-    void "#jdkVersion supported for #feature"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    @Unroll("#jdkVersion not supported for #feature")
+    void "verify for not supported JDK Versions by azure-function an IllegalArgumentException is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+        when:
+        generate(
+                applicationType,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                [feature],
+        )
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        [applicationType, jdkVersion, feature] << [
+                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
+                ((JdkVersion.values() as List<JdkVersion>) - AzureFeatureValidatorSpec.supportedVersionsByAzureFunction()) as List<JdkVersion>,
+                ['azure-function']
+        ].combinations()
+    }
+
+    @Unroll("#jdkVersion supported for #feature")
+    void "verify for supported JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
         generate(
                 applicationType,
@@ -22,11 +38,11 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         )
         then:
         noExceptionThrown()
-       
+
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                ((JdkVersion.values() as List<JdkVersion>) - [JdkVersion.JDK_8]) as List<JdkVersion>,
+                AzureFeatureValidatorSpec.supportedVersionsByAzureFunction(),
                 ['azure-function']
         ].combinations()
     }
@@ -49,6 +65,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         build.contains('implementation("io.micronaut.azure:micronaut-azure-function")')
         build.contains('implementation("com.microsoft.azure.functions:azure-functions-java-library")')
         build.contains('azurefunctions {')
+        build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         !build.contains('"com.github.johnrengelman.shadow"')
@@ -61,9 +78,12 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.get("$srcDir/example/micronaut/Function.$extension".toString())
                 .contains(" AzureFunction")
+        output.containsKey(Language.JAVA.testSrcDir + "/example/micronaut/HttpRequest.$Language.JAVA.extension".toString())
+        output.containsKey(Language.JAVA.testSrcDir + "/example/micronaut/ResponseBuilder.$Language.JAVA.extension".toString())
+
         output.containsKey("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FunctionTest.$extension".toString())
-                .contains("function.echo")
+                .contains("function.hello")
 
         where:
         language << Language.values().toList()
@@ -81,16 +101,51 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
                 ['azure-function']
         )
         String build = output['build.gradle']
-        def readme = output["README.md"]
 
         then:
-        build.contains('id("com.microsoft.azure.azurefunctions")')
         build.contains('runtime("azure_function")')
         build.contains('azurefunctions {')
+        build.contains('os = "linux"')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
         !build.contains('"com.github.johnrengelman.shadow"')
         !build.contains('shadowJar')
+
+        when:
+        String pluginId = 'com.microsoft.azure.azurefunctions'
+        String applyPlugin = 'id("' + pluginId + '") version "'
+
+        then:
+        build.contains(applyPlugin)
+
+        when:
+        Optional<SemanticVersion> semanticVersionOptional = parseCommunityGradlePluginVersion(pluginId, build).map(SemanticVersion::new)
+
+        then:
+        noExceptionThrown()
+        semanticVersionOptional.isPresent()
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    @Unroll
+    void 'test sources generated for azure function feature gradle and language=#language'(Language language,
+                                                                                           String extension,
+                                                                                           String srcDir,
+                                                                                           String testSrcDir) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
+                ['azure-function']
+        )
+        def readme = output["README.md"]
+
+        then:
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
@@ -103,6 +158,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
         output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
                 .contains("HttpRequestMessageBuilder")
+
         where:
         language << Language.values().toList()
         extension << Language.extensions()
@@ -111,7 +167,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
     }
 
     @Unroll
-    void 'test gradle azure function feature for language=#language - maven'() {
+    void 'test azure function feature for language=#language - maven'() {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
@@ -122,7 +178,7 @@ class AzureCloudFunctionSpec extends BeanContextSpec implements CommandOutputFix
         def readme = output["README.md"]
 
         then:
-        build.contains('<artifactId>azure-functions-maven-plugin</artifactId>')
+        build.count('<artifactId>azure-functions-maven-plugin</artifactId>') == 1
         build.contains('<artifactId>azure-functions-java-library</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
         !build.contains("<artifactId>maven-shade-plugin</artifactId>")

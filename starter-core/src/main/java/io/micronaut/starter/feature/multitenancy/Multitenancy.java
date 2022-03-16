@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,18 @@
  */
 package io.micronaut.starter.feature.multitenancy;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import javax.inject.Singleton;
+import io.micronaut.starter.feature.server.MicronautServerDependent;
+
+import jakarta.inject.Singleton;
 
 @Singleton
-public class Multitenancy implements Feature {
+public class Multitenancy implements Feature, MicronautServerDependent {
 
     @NonNull
     @Override
@@ -32,13 +36,13 @@ public class Multitenancy implements Feature {
 
     @Override
     public String getTitle() {
-        return "Multi-tenancy";
+        return "Multitenancy";
     }
 
     @NonNull
     @Override
     public String getDescription() {
-        return "Adds multi-tenancy capabilities to your app. Tenant resolution, tenant propagation";
+        return "Adds multitenancy (tenant resolution, tenant propagation) capabilities";
     }
 
     @Override
@@ -54,5 +58,13 @@ public class Multitenancy implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://docs.micronaut.io/latest/guide/index.html#multitenancy";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.multitenancy")
+                .artifactId("micronaut-multitenancy")
+                .compile());
     }
 }

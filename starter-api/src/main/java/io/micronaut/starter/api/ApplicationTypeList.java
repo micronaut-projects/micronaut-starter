@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,8 +29,18 @@ import java.util.List;
 @Schema(description = "A list of application types")
 @Introspected
 public class ApplicationTypeList extends Linkable {
-    private final List<ApplicationTypeDTO> types;
+    private List<ApplicationTypeDTO> types;
 
+    /**
+     * Constructor.
+     */
+    public ApplicationTypeList() {
+    }
+
+    /**
+     *
+     * @param types The application types
+     */
     public ApplicationTypeList(List<ApplicationTypeDTO> types) {
         this.types = types;
     }
@@ -41,5 +51,13 @@ public class ApplicationTypeList extends Linkable {
     @Schema(description = "The application types")
     public List<ApplicationTypeDTO> getTypes() {
         return types;
+    }
+
+    /**
+     *
+     * @param types The application types
+     */
+    public void setTypes(List<ApplicationTypeDTO> types) {
+        this.types = types;
     }
 }

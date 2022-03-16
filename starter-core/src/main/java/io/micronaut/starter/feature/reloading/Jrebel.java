@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,8 +16,8 @@
 package io.micronaut.starter.feature.reloading;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-
-import javax.inject.Singleton;
+import io.micronaut.starter.build.gradle.GradlePlugin;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Jrebel implements ReloadingFeature {
@@ -42,6 +42,11 @@ public class Jrebel implements ReloadingFeature {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.getBuildProperties().addComment("TODO: Replace with agent path from JRebel installation; see documentation");
             generatorContext.getBuildProperties().addComment("rebelAgent=-agentpath:~/bin/jrebel/lib/jrebel6/lib/libjrebel64.dylib");
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("org.zeroturnaround.gradle.jrebel")
+                    .lookupArtifactId("gradle-jrebel-plugin")
+                    .build());
+            generatorContext.addHelpLink("JRebel Gradle Plugin", "https://plugins.gradle.org/plugin/org.zeroturnaround.gradle.jrebel");
         }
     }
 

@@ -1,17 +1,17 @@
 package io.micronaut.starter.feature.spring
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class SpringDataJdbcSpec extends BeanContextSpec {
+class SpringDataJdbcSpec extends ApplicationContextSpec {
 
     @Shared
     @Subject
@@ -55,9 +55,13 @@ class SpringDataJdbcSpec extends BeanContextSpec {
     @Unroll
     void 'test spring-data-jdbc with Gradle for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['spring-data-jdbc'])
+                .language(language)
+                .render()
 
         then:
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-annotation\")")
         template.contains('implementation("io.micronaut.data:micronaut-data-spring")')
         template.contains('implementation("org.springframework:spring-jdbc")')
 
@@ -65,10 +69,12 @@ class SpringDataJdbcSpec extends BeanContextSpec {
         language << Language.values().toList()
     }
 
-    @Unroll
-    void 'test maven spring-data-jdbc feature for language=#language'() {
+    void 'test maven spring-data-jdbc feature for java'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['spring-data-jdbc'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-data-jdbc'])
+                .language(Language.JAVA)
+                .render()
 
         then:
         template.contains("""
@@ -77,15 +83,82 @@ class SpringDataJdbcSpec extends BeanContextSpec {
       <artifactId>micronaut-data-spring</artifactId>
       <scope>compile</scope>
     </dependency>
+""")
+        template.contains("""
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
-
-        where:
-        language << Language.values().toList()
+        template.contains("""
+            <path>
+              <groupId>io.micronaut.spring</groupId>
+              <artifactId>micronaut-spring-annotation</artifactId>
+              <version>\${micronaut.spring.version}</version>
+            </path>
+""")
     }
 
+    void 'test maven spring-data-jdbc feature for groovy'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-data-jdbc'])
+                .language(Language.GROOVY)
+                .render()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-spring</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.spring</groupId>
+      <artifactId>micronaut-spring-annotation</artifactId>
+      <scope>provided</scope>
+    </dependency>
+""")
+    }
+
+    void 'test maven spring-data-jdbc feature for kotlin'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['spring-data-jdbc'])
+                .language(Language.KOTLIN)
+                .render()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-spring</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.spring</groupId>
+                 <artifactId>micronaut-spring-annotation</artifactId>
+                 <version>\${micronaut.spring.version}</version>
+               </annotationProcessorPath>
+""")
+    }
 }

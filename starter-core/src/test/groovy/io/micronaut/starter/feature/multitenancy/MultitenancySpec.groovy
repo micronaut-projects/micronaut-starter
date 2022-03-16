@@ -1,17 +1,17 @@
 package io.micronaut.starter.feature.multitenancy
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 
-class MultitenancySpec extends BeanContextSpec  implements CommandOutputFixture {
+class MultitenancySpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     @Subject
     @Shared
@@ -51,12 +51,15 @@ class MultitenancySpec extends BeanContextSpec  implements CommandOutputFixture 
     @Unroll
     void 'dependency is included with maven and feature multi-tenancy for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['multi-tenancy'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.multitenancy</groupId>
       <artifactId>micronaut-multitenancy</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -68,10 +71,13 @@ class MultitenancySpec extends BeanContextSpec  implements CommandOutputFixture 
     @Unroll
     void 'dependency is included with gradle and feature multi-tenancy for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['multi-tenancy'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['multi-tenancy'])
+                .language(language)
+                .render()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-multitenancy")')
+        template.contains('implementation("io.micronaut.multitenancy:micronaut-multitenancy")')
 
         where:
         language << Language.values()

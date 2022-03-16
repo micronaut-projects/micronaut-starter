@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,12 +16,12 @@
 package io.micronaut.starter.feature.jib;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.other.ShadePlugin;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class Jib implements Feature {
@@ -38,12 +38,7 @@ public class Jib implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Jib builds";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.exclude(feature -> feature instanceof ShadePlugin);
+        return "Build Docker containers using Jib";
     }
 
     @Override
@@ -54,5 +49,16 @@ public class Jib implements Feature {
     @Override
     public String getCategory() {
         return Category.PACKAGING;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Jib Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.cloud.tools.jib");
+            generatorContext.addBuildPlugin(GradlePlugin.builder()
+                    .id("com.google.cloud.tools.jib")
+                    .lookupArtifactId("jib-gradle-plugin")
+                    .build());
+        }
     }
 }

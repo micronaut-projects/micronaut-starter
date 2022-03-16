@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,13 +15,14 @@
  */
 package io.micronaut.starter.cli;
 
+import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
+import io.micronaut.starter.cli.command.*;
 import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.cli.command.*;
 import picocli.CommandLine;
 
 import java.util.concurrent.Callable;
@@ -87,14 +88,14 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     static CommandLine createCommandLine() {
         boolean noOpConsole = MicronautStarter.interactiveShell;
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.builder().deduceEnvironment(false).start()) {
             return createCommandLine(beanContext, noOpConsole);
         }
     }
 
     static int execute(String[] args) {
         boolean noOpConsole = args.length > 0 && args[0].startsWith("update-cli-config");
-        try (BeanContext beanContext = BeanContext.run()) {
+        try (BeanContext beanContext = ApplicationContext.builder().deduceEnvironment(false).start()) {
             return createCommandLine(beanContext, noOpConsole).execute(args);
         }
     }

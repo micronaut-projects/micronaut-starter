@@ -1,19 +1,18 @@
 package io.micronaut.starter.feature.awsalexa
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
-import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
+class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -58,7 +57,11 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-alexa feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-alexa'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['aws-alexa'])
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws-alexa")')
@@ -70,8 +73,11 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven aws-alexa feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.FUNCTION, buildProject(),
-                getFeatures(['aws-alexa'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['aws-alexa'])
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
 
         then:
         template.contains("""
@@ -86,12 +92,13 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
         language << Language.values().toList()
     }
 
-
-
     @Unroll
     void 'default app with gradle aws-alexa feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-alexa'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['aws-alexa'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-aws-alexa-httpserver")')
@@ -103,7 +110,10 @@ class AwsAlexaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'default app with maven aws-alexa feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-alexa'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['aws-alexa'])
+                .render()
 
         then:
         template.contains("""

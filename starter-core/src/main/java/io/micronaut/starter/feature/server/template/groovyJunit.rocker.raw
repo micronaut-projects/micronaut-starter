@@ -9,11 +9,11 @@ package @project.getPackageName()
 }
 
 import io.micronaut.http.HttpStatus
-import io.micronaut.http.client.RxHttpClient
+import io.micronaut.http.client.HttpClient
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Test
 import io.micronaut.http.client.annotation.*
-import javax.inject.Inject
+import jakarta.inject.Inject
 import static org.junit.jupiter.api.Assertions.*
 
 @@MicronautTest
@@ -21,7 +21,7 @@ public class @project.getClassName()ControllerTest {
 
     @@Inject
     @@Client("/")
-    RxHttpClient client
+    HttpClient client
 
     @@Test
     void testIndex() throws Exception {

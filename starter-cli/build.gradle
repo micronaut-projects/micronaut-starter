@@ -1,13 +1,9 @@
 plugins {
-    id "application"
-    id "com.github.johnrengelman.shadow"
-    id "io.micronaut.starter.rocker"
-    id 'org.asciidoctor.convert' version '2.4.0' apply false
-    id "io.sdkman.vendors" version "2.0.0"
+    id 'io.micronaut.internal.build.starter-cli-module'
 }
 
 ext {
-    picocliVersion = '4.5.2'
+    picocliVersion = '4.6.1'
 }
 
 configurations {
@@ -33,90 +29,32 @@ dependencies {
     compileOnly "org.graalvm.nativeimage:svm"
 
     implementation "org.fusesource.jansi:jansi:1.18"
-    implementation "org.yaml:snakeyaml:1.26"
+    implementation "org.yaml:snakeyaml:1.28"
 
-    implementation 'org.shredzone.acme4j:acme4j-client:2.10'
-    implementation 'org.shredzone.acme4j:acme4j-utils:2.10'
+    implementation group: 'javax.inject', name: 'javax.inject', version: '1'
+
+    implementation 'org.shredzone.acme4j:acme4j-client:2.11'
+    implementation 'org.shredzone.acme4j:acme4j-utils:2.12'
 
     generateConfig "info.picocli:picocli-codegen:${picocliVersion}"
 
     testImplementation("io.micronaut.picocli:micronaut-picocli")
 
-    testImplementation "org.testcontainers:spock:1.15.0"
+    testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.9.12'
 }
 
-mainClassName = "io.micronaut.starter.cli.MicronautStarter"
-
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/java")
-        }
-    }
+application {
+    mainClass = "io.micronaut.starter.cli.MicronautStarter"
 }
 
 rocker {
-    // (All settings are shown with their defaults)
-    //
-    // Skips building templates all together
-    skip false
-    // Base directory for generated java sources, actual target is sub directory
-    // with the name of the source set. The value is passed through project.file().
-    outputBaseDirectory = "$buildDir/generated-src/rocker"
-    // Base directory for the directory where the hot reload feature
-    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
-    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
-    // The actual target is a sub directory with the name of the source set.
-    // The value is passed through project.file().
-    classBaseDirectory = "$buildDir/classes"
-    failOnError true
-    skipTouch true
-    // must not be empty when skipTouch is equal to false
-    touchFile ""
-    javaVersion '1.8'
-    extendsClass null
-    extendsModelClass null
-    optimize true
-    discardLogicWhitespace = true
-    targetCharset null
-    suffixRegex null
+    javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-    markAsGenerated null
-}
-
-File outDir = new File(project.buildDir, 'bin')
-
-task buildCompletion(type: JavaExec) {
-    doFirst {
-        outDir.mkdir()
-    }
-    main = "picocli.AutoComplete"
-    jvmArgs = ["-Dpicocli.autocomplete.systemExitOnError"]
-    args = [mainClassName, "--completionScript=${outDir}/mn_completion", "--force", "--factory=io.micronaut.starter.cli.MicronautFactory"]
-    classpath = sourceSets.main.runtimeClasspath
-}
-assemble.dependsOn(['buildCompletion'])
-
-distributions {
-    main {
-        contents {
-            from(outDir) {
-                into 'bin'
-            }
-            from("${project.rootProject.projectDir}/LICENSE") {
-                into ''
-            }
-        }
-    }
 }
 
 startScripts {
     applicationName = 'mn'
-}
-
-shadowJar {
-    mergeServiceFiles()
 }
 
 sdkman {
@@ -127,33 +65,10 @@ sdkman {
     version = project.version
     hashtag = "#micronautfw"
     platforms = [
+            // TODO:  Once graal native-image works for arm OSX, we should switch to building and publishing a non-rosetta release (https://github.com/oracle/graal/issues/2666)
+            "MAC_ARM64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
             "MAC_OSX":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-darwin-amd64-v${project.version}.zip",
             "WINDOWS_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-win-amd64-v${project.version}.zip",
             "LINUX_64":"https://github.com/micronaut-projects/micronaut-starter/releases/download/v${project.version}/mn-linux-amd64-v${project.version}.zip"
     ]
 }
-
-task copyShadowJar(type: Copy) {
-    from shadowJar.outputs
-    into "${project.rootProject.buildDir}/libs"
-    rename { String fileName -> "cli.jar" }
-}
-
-task exploded(type: Copy, dependsOn: ['distZip']) {
-    from zipTree(distZip.outputs.files.singleFile)
-    into "${project.buildDir}/exploded"
-    eachFile { FileCopyDetails fcd ->
-        fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
-    }
-    onlyIf {
-        distZip.outputs.files.singleFile.exists()
-    }
-}
-
-task cleanup(type: Delete) {
-    delete "${project.rootProject.buildDir}/libs/cli.jar"
-    delete "${project.buildDir}/dist"
-}
-clean.dependsOn(['cleanup'])
-
-assemble.dependsOn('exploded')

@@ -16,7 +16,7 @@ class FunctionTest {
     @@Test
     void testFunction() {
         new Function().withCloseable { Function function ->
-            assert function.echo("test", null) == 'test'
+            assert function.hello(HttpRequest.builder().build(), null).body == 'Hello World'
         }
     }
 }

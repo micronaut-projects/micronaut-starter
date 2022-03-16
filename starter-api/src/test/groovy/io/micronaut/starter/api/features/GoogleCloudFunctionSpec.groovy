@@ -5,12 +5,14 @@ import io.micronaut.starter.api.preview.PreviewController
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
 import io.micronaut.starter.options.JdkVersion
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import spock.lang.Requires
 import spock.lang.Specification
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 @MicronautTest
+@Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudFunctionSpec extends Specification {
 
     @Inject PreviewController controller

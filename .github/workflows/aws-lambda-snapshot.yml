@@ -2,28 +2,29 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - master
+      - 3.3.x
 jobs:
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3
       - name: Run Tests
         run: ./gradlew starter-api:test starter-aws-lambda:test --refresh-dependencies
-      - name: Build Docker image
+      - name: Build AWS Lambda
         run: |
-          docker build . -f DockerfileLambda -t micronaut-starter
-      - name: Extract Function
-        run: |
-          mkdir build
-          docker run --rm --entrypoint cat micronaut-starter /home/application/function.zip > build/function.zip
+          ./gradlew starter-aws-lambda:buildNativeLambda
+          cp starter-aws-lambda/build/libs/*-lambda.zip starter-aws-lambda/build/function.zip
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: AWS Lambda Deploy
-        uses: appleboy/lambda-action@v0.0.8
+        uses: appleboy/lambda-action@v0.1.5
         with:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: micronaut-starter-snapshot
-          zip_file: build/function.zip
+          zip_file: starter-aws-lambda/build/function.zip

@@ -2,35 +2,43 @@ package io.micronaut.starter.fixture
 
 import io.micronaut.context.BeanContext
 import io.micronaut.inject.qualifiers.Qualifiers
-import io.micronaut.starter.application.OperatingSystem
-import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.ContextFactory
+import io.micronaut.starter.application.OperatingSystem
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.dependencies.Source
 import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
-import io.micronaut.starter.application.ContextFactory
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.validation.FeatureValidator
+import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 
 import java.util.function.Consumer
-import java.util.function.Supplier
 
 trait ContextFixture {
 
     abstract BeanContext getBeanContext()
 
-    String getGradleAnnotationProcessorScope(Language language) {
+    String getGradleAnnotationProcessorScope(Language language, Source source = Source.MAIN) {
         if (language == Language.JAVA) {
-            "annotationProcessor"
+            if (source == Source.MAIN) {
+                return "annotationProcessor"
+            } else if (source == Source.TEST) {
+                return "testAnnotationProcessor"
+            }
         } else if (language == Language.KOTLIN) {
             "kapt"
         } else if (language == Language.GROOVY) {
-            "compileOnly"
+            if (source == Source.MAIN) {
+                return "compileOnly"
+            } else if (source == Source.TEST) {
+                return "testCompileOnly"
+            }
         }
     }
 

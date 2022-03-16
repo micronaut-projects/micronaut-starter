@@ -1,15 +1,14 @@
 package io.micronaut.starter.feature.security
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture {
+class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature security-oauth2 contains links to micronaut docs'() {
         when:
@@ -24,7 +23,10 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
     @Unroll
     void 'test gradle security-oauth2 feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-oauth2'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['security-oauth2'])
+                .render()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
@@ -37,7 +39,10 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
     @Unroll
     void 'test maven security-oauth2 feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-oauth2'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['security-oauth2'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""
@@ -56,13 +61,13 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
             </path>
 """)
         } else if (language == Language.KOTLIN) {
-            assert template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </annotationProcessorPath>
-""") == 2
+            assert template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.security</groupId>
+                 <artifactId>micronaut-security-annotations</artifactId>
+                 <version>${micronaut.security.version}</version>
+               </annotationProcessorPath>
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {
@@ -73,11 +78,23 @@ class SecurityOauth2Spec extends BeanContextSpec implements CommandOutputFixture
         language << Language.values().toList()
     }
 
-    void 'security-oauth2 configuration does not contain micronaut.security.token.jwt.cookie.enabled'() {
+    void 'test security-oauth2 configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['security-oauth2', 'security-jwt'])
+        GeneratorContext commandContext = buildGeneratorContext(['security-oauth2'])
 
         then:
-        !commandContext.configuration.containsKey("micronaut.security.token.jwt.cookie.enabled")
+        commandContext.configuration.get("micronaut.security.authentication") == "cookie"
+        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-id")
+        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-secret")
+        !commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
+
+        when:
+        commandContext = buildGeneratorContext(['security-oauth2', 'security-jwt'])
+
+        then:
+        commandContext.configuration.get("micronaut.security.authentication") == "cookie"
+        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-id")
+        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-secret")
+        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
     }
 }

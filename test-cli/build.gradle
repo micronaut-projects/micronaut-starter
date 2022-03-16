@@ -1,21 +1,12 @@
-configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            //multiple actions can be specified
-            if (details.requested.group == "org.codehaus.groovy") {
-                details.useVersion("2.5.11")
-            }
-            if (details.requested.name == "spock-core") {
-                details.useVersion("1.3-groovy-2.5")
-            }
-        }
-    }
+plugins {
+    id "io.micronaut.internal.starter.test-module"
 }
+
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":micronaut-cli")
 }
 
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     forkEvery = 10
 }

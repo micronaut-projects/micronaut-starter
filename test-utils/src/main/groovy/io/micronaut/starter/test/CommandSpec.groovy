@@ -1,8 +1,24 @@
+/*
+ * Copyright 2017-2021 original authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.micronaut.starter.test
 
-import io.micronaut.context.BeanContext
+import io.micronaut.context.ApplicationContext
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
@@ -18,6 +34,7 @@ import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.util.environment.OperatingSystem
+
 import java.nio.file.Files
 import java.time.Duration
 
@@ -25,12 +42,17 @@ abstract class CommandSpec extends Specification {
 
     @Shared
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext
+
     @Shared GradleRunner gradleRunner = GradleRunner.create()
 
     abstract String getTempDirectoryPrefix()
 
     File dir
+
+    void setupSpec(){
+        beanContext = ApplicationContext.run(getConfiguration())
+    }
 
     void setup() {
         dir = Files.createTempDirectory(tempDirectoryPrefix).toFile()
@@ -38,6 +60,10 @@ abstract class CommandSpec extends Specification {
 
     void cleanup() {
         dir.delete()
+    }
+
+    Map<String, Object> getConfiguration(){
+        return Collections.EMPTY_MAP
     }
 
     String executeBuild(BuildTool buildTool, String command) {
@@ -58,7 +84,7 @@ abstract class CommandSpec extends Specification {
         return result
     }
 
-    String executeMaven(String command) {
+    String executeMaven(String command, int timeoutSeconds = 180) {
         if (OperatingSystem.current.isWindows()) {
             command = dir.getAbsolutePath()+"\\"+"mvnw.bat " + command
         } else {
@@ -74,7 +100,7 @@ abstract class CommandSpec extends Specification {
         StringBuilder output = new StringBuilder()
         def thread = process.consumeProcessOutputStream(output)
         try {
-            thread.join(Duration.ofSeconds(180).toMillis())
+            thread.join(Duration.ofSeconds(timeoutSeconds).toMillis())
         } catch (InterruptedException e) {
         }
 
@@ -86,7 +112,7 @@ abstract class CommandSpec extends Specification {
     }
 
     void generateProject(Language lang,
-                         BuildTool buildTool = BuildTool.GRADLE,
+                         BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = null) {
@@ -100,9 +126,23 @@ abstract class CommandSpec extends Specification {
         )
     }
 
+    void generateProject(Project project,
+                         Language lang,
+                         BuildTool buildTool = BuildTool.DEFAULT_OPTION,
+                         List<String> features = [],
+                         ApplicationType applicationType = ApplicationType.DEFAULT,
+                         TestFramework testFramework = null) {
+        beanContext.getBean(ProjectGenerator).generate(applicationType,
+                project,
+                new Options(lang, testFramework, buildTool),
+                io.micronaut.starter.application.OperatingSystem.LINUX,
+                features,
+                new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
+                ConsoleOutput.NOOP
+        )
+    }
 
     ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
         return { -> new FileSystemOutputHandler(dir, consoleOutput)}
     }
-
 }

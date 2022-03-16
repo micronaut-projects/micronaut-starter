@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,11 +20,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 
-import java.util.List;
 import java.util.Set;
 
 public interface TestFeature extends DefaultFeature {
@@ -48,8 +46,6 @@ public interface TestFeature extends DefaultFeature {
 
     TestFramework getTestFramework();
 
-    List<Language> getDefaultLanguages();
-
     default boolean isJunit() {
         return getTestFramework() == TestFramework.JUNIT;
     }
@@ -70,8 +66,11 @@ public interface TestFeature extends DefaultFeature {
     default boolean shouldApply(ApplicationType applicationType,
                                 Options options,
                                 Set<Feature> selectedFeatures) {
-        return supports(applicationType) && (options.getTestFramework() == getTestFramework() ||
-                (options.getTestFramework() == null && getDefaultLanguages().contains(options.getLanguage())));
+        TestFramework selectedTest = options.getTestFramework();
+        if (selectedTest == null) {
+            selectedTest = options.getLanguage().getDefaults().getTest();
+        }
+        return supports(applicationType) && selectedTest == getTestFramework();
     }
 
     @Override

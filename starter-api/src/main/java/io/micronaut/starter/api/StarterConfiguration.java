@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,9 +15,9 @@
  */
 package io.micronaut.starter.api;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import io.micronaut.context.env.Environment;
+import io.micronaut.core.annotation.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -95,6 +95,7 @@ public class StarterConfiguration {
 
         private String clientId;
         private String clientSecret;
+        private String tokenPermissions;
 
         /**
          * @return GitHub OAuth App client id
@@ -124,6 +125,21 @@ public class StarterConfiguration {
          */
         public void setClientSecret(String clientSecret) {
             this.clientSecret = clientSecret;
+        }
+
+        /**
+         * @return token permission to request from user
+         */
+        public String getTokenPermissions() {
+            return tokenPermissions;
+        }
+
+        /**
+         * Sets GitHub token permissions
+         * @param tokenPermissions token permissions
+         */
+        public void setTokenPermissions(String tokenPermissions) {
+            this.tokenPermissions = tokenPermissions;
         }
     }
 }

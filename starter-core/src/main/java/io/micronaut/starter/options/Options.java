@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,10 +20,12 @@ import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.core.convert.value.ConvertibleValuesMap;
 import io.micronaut.starter.util.VersionInfo;
 
-import javax.annotation.concurrent.Immutable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
-@Immutable
 public class Options implements ConvertibleValues<Object> {
 
     private final Language language;
@@ -41,19 +43,19 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework) {
-        this(language, testFramework, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, testFramework, language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options(Language language, BuildTool buildTool) {
-        this(language, TestFramework.JUNIT, buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options(Language language) {
-        this(language, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options() {
-        this(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, Map<String, Object> additionalOptions) {
@@ -61,10 +63,10 @@ public class Options implements ConvertibleValues<Object> {
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
+        this.javaVersion = javaVersion;
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
-        this.javaVersion = javaVersion;
         this.additionalOptions = new ConvertibleValuesMap<>(additionalOptions);
     }
 
@@ -107,4 +109,11 @@ public class Options implements ConvertibleValues<Object> {
         return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
     }
 
+    public Options withBuildTool(BuildTool buildTool) {
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+    }
+
+    public Options withJavaVersion(JdkVersion javaVersion) {
+        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+    }
 }

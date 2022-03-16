@@ -1,6 +1,6 @@
 package io.micronaut.starter.netty
 
-import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpStatus
@@ -12,11 +12,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
 import spock.lang.Issue
 import spock.lang.Specification
-
-import javax.inject.Inject
 
 @MicronautTest
 class ZipCreateControllerSpec extends Specification {
@@ -42,7 +41,7 @@ class ZipCreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
+        response.get()._embedded.errors[0].message == 'Invalid project name: \"micronaut\" is not a valid app name'
 
         when:
         httpClient.toBlocking().exchange(HttpRequest.GET('/create/default/com.example.micronaut'), Argument.of(String), Argument.of(Map))
@@ -56,7 +55,7 @@ class ZipCreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
+        response.get()._embedded.errors[0].message == 'Invalid project name: \"micronaut\" is not a valid app name'
 
         when:
         httpClient.toBlocking().exchange(HttpRequest.GET('/micronaut.zip'), Argument.of(String), Argument.of(Map))
@@ -70,7 +69,7 @@ class ZipCreateControllerSpec extends Specification {
 
         then:
         response.isPresent()
-        response.get().message == 'Invalid project name: \"micronaut\" is not a valid app name'
+        response.get()._embedded.errors[0].message == 'Invalid project name: \"micronaut\" is not a valid app name'
     }
 
     void "test default create app command"() {
@@ -121,7 +120,6 @@ class ZipCreateControllerSpec extends Specification {
         then:
         ZipUtil.containsFileWithContents(bytes, "build.gradle", "spock")
     }
-
 
     @Client('/create')
     static interface CreateClient {

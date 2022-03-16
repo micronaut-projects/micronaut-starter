@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,10 +16,11 @@
 package io.micronaut.starter.feature.graphql;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class GraphQL implements Feature {
@@ -31,19 +32,19 @@ public class GraphQL implements Feature {
 
     @Override
     public String getTitle() {
-        return "Micronaut GraphQL";
+        return "GraphQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for GraphQL in the application";
+        return "Adds support for GraphQL";
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
     }
-    
+
     @Override
     public String getCategory() {
         return Category.API;
@@ -52,5 +53,13 @@ public class GraphQL implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-graphql/latest/guide/index.html";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.graphql")
+                .artifactId("micronaut-graphql")
+                .compile());
     }
 }

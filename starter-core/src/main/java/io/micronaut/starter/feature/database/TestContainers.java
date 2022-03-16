@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,21 +15,27 @@
  */
 package io.micronaut.starter.feature.database;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.template.PropertiesTemplate;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.StringTemplate;
 
-import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.Map;
+import jakarta.inject.Singleton;
+
+import java.util.Optional;
 
 @Singleton
 public class TestContainers implements Feature {
+
+    private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
     @NonNull
     @Override
@@ -44,36 +50,111 @@ public class TestContainers implements Feature {
 
     @Override
     public String getDescription() {
-        return "Testcontainers adds support for running real databases in a docker container for the test environment";
+        return "Use Testcontainers to run a database or other software in a Docker container for tests";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(testContainerTestDependency("testcontainers"));
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(driverFeature -> {
-            generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
-                String url = null;
-                String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
-                if (driverFeature instanceof MySQL) {
-                    url = "jdbc:tc:mysql:8:///db";
-                } else if (driverFeature instanceof PostgreSQL) {
-                    url = "jdbc:tc:postgresql:12:///postgres";
-                } else if (driverFeature instanceof MariaDB) {
-                    url = "jdbc:tc:mariadb:10:///db";
-                } else if (driverFeature instanceof SQLServer) {
-                    url = "jdbc:tc:sqlserver:2019-CU4-ubuntu-16.04://databaseName=tempdb";
+            generatorContext.getFeature(R2dbc.class).ifPresent(driverConfiguration -> {
+                if (driverFeature instanceof SQLServer) {
                     generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
-                } else if (driverFeature instanceof Oracle) {
-                    url = "jdbc:tc:oracle:thin:@/xe";
-                    generatorContext.addTemplate("testContainersProperties", new PropertiesTemplate("src/test/resources/testcontainers.properties", Collections.singletonMap("oracle.container.image", "wnameless/oracle-xe-11g-r2")));
                 }
-
-                if (url != null) {
-                    Map<String, Object> testConfig = generatorContext.getEnvConfiguration("test");
+                r2dbcUrlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    testConfig.put(driverConfiguration.getUrlKey(), url);
+                });
+                generatorContext.addDependency(testContainerTestDependency("r2dbc"));
+            });
+            generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
+                String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
+                if (driverFeature instanceof SQLServer) {
+                    generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
+                }
+                urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                     testConfig.put(driverConfiguration.getDriverKey(), driver);
-                }
+                });
+                artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
+                        generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
             });
         });
+        testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
+            generatorContext.addDependency(testContainerTestDependency(testArtifactId));
+        });
+
+        if (generatorContext.isFeaturePresent(MongoFeature.class)) {
+            generatorContext.addDependency(testContainerTestDependency("mongodb"));
+        }
+    }
+
+    @NonNull
+    private static Dependency.Builder testContainerTestDependency(@NonNull String artifactId) {
+        return Dependency.builder()
+                .groupId(TESTCONTAINERS_GROUP_ID)
+                .artifactId(artifactId)
+                .test();
+    }
+
+    @NonNull
+    private static Optional<String> testContainerArtifactIdByTestFramework(TestFramework testFramework) {
+        if (testFramework == TestFramework.SPOCK) {
+            return Optional.of("spock");
+        } else if (testFramework == TestFramework.JUNIT) {
+            return Optional.of("junit-jupiter");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> artifactIdForDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("mysql");
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("postgresql");
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("mariadb");
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("mssqlserver");
+        } else if (driverFeature instanceof Oracle) {
+            return Optional.of("oracle-xe");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> r2dbcUrlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8");
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("r2dbc:tc:postgresql:///db?TC_IMAGE_TAG=12");
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("r2dbc:tc:mariadb:///db?TC_IMAGE_TAG=10");
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("r2dbc:tc:sqlserver:///db?TC_IMAGE_TAG=2019-CU4-ubuntu-16.04");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> urlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("jdbc:tc:mysql:8:///db");
+
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("jdbc:tc:postgresql:12:///postgres");
+
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("jdbc:tc:mariadb:10:///db");
+
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("jdbc:tc:sqlserver:2019-CU4-ubuntu-16.04://databaseName=tempdb");
+        } else if (driverFeature instanceof Oracle) {
+            return Optional.of("jdbc:tc:oracle:thin:@/xe");
+        }
+        return Optional.empty();
     }
 
     @Override

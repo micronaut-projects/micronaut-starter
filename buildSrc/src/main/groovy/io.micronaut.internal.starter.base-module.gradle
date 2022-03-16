@@ -1,0 +1,40 @@
+plugins {
+    id "io.micronaut.build.internal.common"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+version project.projectVersion
+group "io.micronaut.starter"
+ext {
+    isBuildSnapshot = version.toString().endsWith("-SNAPSHOT")
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == "org.codehaus.groovy") {
+                details.useVersion(groovyVersion)
+            }
+            if (details.requested.name == "spock-core") {
+                details.useVersion(spockVersion)
+            }
+        }
+    }
+}
+
+spotless {
+    java {
+        target 'src/main/java/**/*.java'
+    }
+}
+
+dependencies {
+    testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
+    testImplementation("org.spockframework:spock-core:$spockVersion") {
+        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    }
+}

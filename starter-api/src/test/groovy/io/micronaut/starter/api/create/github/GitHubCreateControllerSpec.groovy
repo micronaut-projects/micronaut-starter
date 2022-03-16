@@ -1,37 +1,30 @@
 package io.micronaut.starter.api.create.github
 
-import groovy.util.logging.Slf4j
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Requires
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Body
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.PathVariable
-import io.micronaut.http.annotation.Post
-import io.micronaut.http.annotation.QueryValue
+import io.micronaut.http.annotation.*
 import io.micronaut.http.client.HttpClient
 import io.micronaut.runtime.server.EmbeddedServer
-import io.micronaut.starter.api.create.github.client.oauth.AccessToken
-import io.micronaut.starter.api.create.github.client.oauth.GitHubOAuthOperations
-import io.micronaut.starter.api.create.github.client.v3.GitHubApiClient
-import io.micronaut.starter.api.create.github.client.v3.GitHubApiOperations
-import io.micronaut.starter.api.create.github.client.v3.GitHubRepository
-import io.micronaut.starter.api.create.github.client.v3.GitHubUser
+import io.micronaut.starter.client.github.oauth.AccessToken
+import io.micronaut.starter.client.github.oauth.GitHubOAuthOperations
+import io.micronaut.starter.client.github.v3.*
+import io.micronaut.starter.util.GitHubUtil
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.revwalk.RevCommit
 import org.eclipse.jgit.transport.URIish
+import spock.lang.Retry
 import spock.lang.Specification
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class GitHubCreateControllerSpec extends Specification{
+@Retry
+class GitHubCreateControllerSpec extends Specification {
 
     static Map<String, Object> getConfiguration(MapEntry ...entries) {
         Map<String, Object> m = [:]
@@ -101,7 +94,7 @@ class GitHubCreateControllerSpec extends Specification{
         Git bareRepo = Git.open(clonePath.toFile())
         List<RevCommit> commits = bareRepo.log().call().toList()
         commits.size() == 1
-        commits.get(0).fullMessage == GitHubCreateService.COMMIT_MESSAGE
+        commits.get(0).fullMessage == GitHubUtil.INIT_COMMIT_MESSAGE
         commits.get(0).authorIdent.name == "name"
         commits.get(0).authorIdent.emailAddress == "email"
 
@@ -135,9 +128,34 @@ class GitHubCreateControllerSpec extends Specification{
         }
 
         @Override
+        void deleteRepository(@Header(HttpHeaders.AUTHORIZATION) String oauthToken, @PathVariable String owner, @PathVariable String repo) {
+            // no-op
+        }
+
+        @Override
         @Get(value = "/user", processes = [GitHubApiClient.GITHUB_V3_TYPE, MediaType.APPLICATION_JSON])
         GitHubUser getUser(@Header(HttpHeaders.AUTHORIZATION) String oauthToken) {
             return new GitHubUser("login", "email", "name")
+        }
+
+        @Override
+        void createSecret(@Header(HttpHeaders.AUTHORIZATION) String oauthToken, @PathVariable String owner, @PathVariable String repo, @PathVariable String secretName, @Body GitHubSecret secret) {
+            // no-op
+        }
+
+        @Override
+        GitHubSecretsPublicKey getSecretPublicKey(@Header(HttpHeaders.AUTHORIZATION) String oauthToken, @PathVariable String owner, @PathVariable String repo) {
+            return null
+        }
+
+        @Override
+        GitHubWorkflowRuns listWorkflows(@Header(HttpHeaders.AUTHORIZATION) String oauthToken, @PathVariable String owner, @PathVariable String repo) {
+            return null
+        }
+
+        @Override
+        GitHubWorkflowRun getWorkflowRun(@Header(HttpHeaders.AUTHORIZATION) String oauthToken, @PathVariable String owner, @PathVariable String repo, @PathVariable Long runId) {
+            return null
         }
     }
 

@@ -1,24 +1,24 @@
 package io.micronaut.starter.feature.stackdriver
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class CloudTraceSpec extends BeanContextSpec {
+class CloudTraceSpec extends ApplicationContextSpec {
 
     @Subject
     @Shared
     CloudTrace cloudtrace = beanContext.getBean(CloudTrace)
 
-    void "cloudtrace belongs to Logging category"() {
+    void "cloudtrace belongs to Tracing category"() {
         expect:
-        Category.LOGGING == cloudtrace.category
+        Category.TRACING == cloudtrace.category
     }
 
     void "cloudtrace is visible"() {
@@ -45,7 +45,10 @@ class CloudTraceSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with maven and feature cloudtrace for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['gcp-cloud-trace'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""
@@ -62,7 +65,10 @@ class CloudTraceSpec extends BeanContextSpec {
     @Unroll
     void 'dependency is included with gradle and feature gcp-cloud-trace for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['gcp-cloud-trace'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['gcp-cloud-trace'])
+                .language(language)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.gcp:micronaut-gcp-tracing")')

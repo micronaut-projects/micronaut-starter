@@ -14,13 +14,13 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @@MicronautTest
-public class @project.getClassName()Test {
+class @project.getClassName()Test {
 
     @@Inject
-    EmbeddedApplication application;
+    EmbeddedApplication<?> application;
 
     @@Test
     void testItWorks() {

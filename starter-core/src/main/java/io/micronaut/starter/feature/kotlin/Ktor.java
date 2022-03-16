@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,22 +15,31 @@
  */
 package io.micronaut.starter.feature.kotlin;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.*;
-import io.micronaut.starter.feature.kotlin.templates.*;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.FeaturePredicate;
+import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
+import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
+import io.micronaut.starter.feature.kotlin.templates.jacksonFeatureKotlin;
+import io.micronaut.starter.feature.kotlin.templates.nameTransformerKotlin;
+import io.micronaut.starter.feature.kotlin.templates.uppercaseTransformerKotlin;
 import io.micronaut.starter.feature.lang.kotlin.KotlinApplicationFeature;
-import io.micronaut.starter.feature.server.ServerFeature;
+import io.micronaut.starter.feature.server.ThirdPartyServerFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSpecificFeature {
+public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, LanguageSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -90,15 +99,23 @@ public class Ktor implements KotlinApplicationFeature, ServerFeature, LanguageSp
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 
-            generatorContext.addTemplate("application", new RockerTemplate("src/main/kotlin/{packagePath}/Application.kt", applicationKotlin.template(generatorContext.getProject())));
-
+        generatorContext.addTemplate("application", new RockerTemplate("src/main/kotlin/{packagePath}/Application.kt", applicationKotlin.template(generatorContext.getProject())));
         generatorContext.addTemplate("homeRoute", new RockerTemplate("src/main/kotlin/{packagePath}/HomeRoute.kt", homeRouteKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("jacksonFeature", new RockerTemplate("src/main/kotlin/{packagePath}/JacksonFeature.kt", jacksonFeatureKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("nameTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/NameTransformer.kt", nameTransformerKotlin.template(generatorContext.getProject())));
-
         generatorContext.addTemplate("uppercaseTransformer", new RockerTemplate("src/main/kotlin/{packagePath}/UppercaseTransformer.kt", uppercaseTransformerKotlin.template(generatorContext.getProject())));
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.kotlin")
+                .artifactId("micronaut-ktor")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.ktor")
+                .artifactId("ktor-server-netty")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.ktor")
+                .artifactId("ktor-jackson")
+                .compile());
     }
 
     @Override

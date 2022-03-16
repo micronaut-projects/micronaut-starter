@@ -3,14 +3,34 @@ package io.micronaut.starter.feature.function.oraclefunction
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
+
+    void 'test readme.md with feature oracle-function contains links to docs'() {
+        when:
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
+        def output = generate(appType, options, ['oracle-function'])
+        String readme = output["README.md"]
+
+        then:
+        readme
+        verifyAll {
+            readme.contains("https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#functions")
+            readme.contains("https://docs.cloud.oracle.com/iaas/Content/Functions/Concepts/functionsoverview.htm")
+        }
+
+        when:
+        readme = readme.replaceFirst("## Feature oracle-function documentation","")
+
+        then:
+        // make sure we didn't add docs more than once
+        !readme.contains("## Feature oracle-function documentation")
+
+        where:
+        appType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
+    }
 
     @Unroll
     void 'test gradle oracle cloud function feature for language=#language'() {
@@ -31,7 +51,7 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
-            .contains("class FooController {")
+                .contains("class FooController {")
         output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
                 .contains("class FooControllerTest")
 
@@ -58,11 +78,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         readme
         funcYaml
         build.contains('<micronaut.runtime>oracle_function</micronaut.runtime>')
-        build.contains('''
-    <repository>
-      <id>fnproject</id>
-      <url>https://dl.bintray.com/fnproject/fnproject</url>
-    </repository>''')
 
         build.contains('''
     <dependency>

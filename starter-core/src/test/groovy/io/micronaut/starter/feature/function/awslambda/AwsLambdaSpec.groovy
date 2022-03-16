@@ -1,20 +1,16 @@
 package io.micronaut.starter.feature.function.awslambda
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.JdkVersion
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
-import io.micronaut.starter.options.TestFramework
+import io.micronaut.starter.options.*
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
+class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
@@ -68,7 +64,10 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda is the default feature for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -80,7 +79,11 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test gradle aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['aws-lambda'])
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
@@ -89,11 +92,13 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         language << Language.values()
     }
 
-
     @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures([], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .render()
 
         then:
         template.contains("""
@@ -103,6 +108,13 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+        and:
+        template.contains('''\
+      <plugin>
+        <groupId>io.micronaut.build</groupId>
+        <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+''')
 
         where:
         language << Language.values()
@@ -111,7 +123,11 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'function with maven and aws-lambda feature for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.FUNCTION, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.FUNCTION), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['aws-lambda'])
+                .render()
 
         then:
         template.contains("""
@@ -129,23 +145,38 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'function with gradle and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language),
-                ['aws-lambda']
-        )
-        String build = output['build.gradle']
-        def readme = output["README.md"]
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['aws-lambda'])
+                .render()
 
         then:
         build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
+        and:
+        build.contains('runtime("lambda")')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'files with gradle and feature aws-lambda for language=#language'() {
+        when:
+        def output = generate(
+                ApplicationType.FUNCTION,
+                new Options(language, BuildTool.GRADLE),
+                ['aws-lambda']
+        )
+
+        then:
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -159,7 +190,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -173,7 +204,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookRequestHandlerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -187,7 +218,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
+                new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']
         )
 
@@ -202,6 +233,62 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         buildGradle.contains('mainClass.set')
         buildGradle.contains('id("io.micronaut.application")')
 
+        buildGradle.contains('''\
+tasks.named("dockerfileNative") {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+    }
+
+    void "kotlin.kapt plugin is applied before micronaut library plugin"() {
+        when:
+        Map<String, String> output = generate(
+                ApplicationType.FUNCTION,
+                new Options(Language.KOTLIN, BuildTool.GRADLE_KOTLIN),
+                ['aws-lambda']
+        )
+        String buildGradle = output['build.gradle.kts']
+
+        then:
+        buildGradle.contains('org.jetbrains.kotlin.kapt')
+        buildGradle.contains('io.micronaut.library')
+        buildGradle.indexOf('org.jetbrains.kotlin.kapt') < buildGradle.indexOf('io.micronaut.library')
+    }
+
+    @Unroll
+    void 'Application file is generated for a default application type with gradle Kotlin DSL and features aws-lambda for language: #language'(Language language, String extension) {
+        when:
+        def output = generate(
+                ApplicationType.DEFAULT,
+                new Options(language, BuildTool.GRADLE_KOTLIN),
+                ['aws-lambda']
+        )
+
+        then:
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+
+        when:
+        String buildGradle = output['build.gradle.kts']
+
+        then:
+        !buildGradle.contains('id "application"')
+        buildGradle.contains('mainClass.set')
+        buildGradle.contains('id("io.micronaut.application")')
+
+        buildGradle.contains('''\
+tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
+    args(
+        "-XX:MaximumHeapSizePercent=80",
+        "-Dio.netty.allocator.numDirectArenas=0",
+        "-Dio.netty.noPreferDirect=true"
+    )
+}''')
         where:
         language << Language.values().toList()
         extension << Language.extensions()
@@ -250,7 +337,10 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'aws-lambda features includes dependency to micronaut-function-aws-api-proxy for function for gradle and language=#language'(Language language) {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['aws-lambda'])
+                .language(language)
+                .render()
 
         then:
         template.contains('runtime("lambda")')
@@ -264,7 +354,10 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void 'test maven micronaut-function-aws-api-proxy feature for language=#language'(Language language) {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['aws-lambda'], language, null, BuildTool.GRADLE, ApplicationType.DEFAULT), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['aws-lambda'])
+                .render()
 
         then:
         template.contains("""
@@ -280,10 +373,13 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'() {
+    void 'app with gradle and feature aws-lambda and graalvm applies aws-lambda-custom-runtime for language=#language'(
+            ApplicationType applicationType,
+            Language language
+    ) {
         when:
         def output = generate(
-                ApplicationType.DEFAULT,
+                applicationType,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['aws-lambda', 'graalvm']
         )
@@ -291,15 +387,17 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
 
         then:
         build.contains('runtime("lambda")')
-        !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        if (applicationType == ApplicationType.DEFAULT) {
+            assert !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        } else if (applicationType == ApplicationType.FUNCTION) {
+            assert build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
+        }
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
         where:
+        applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
         language << graalSupportedLanguages()
-        extension << graalSupportedLanguages()*.extension
-        srcDir << graalSupportedLanguages()*.srcDir
-        testSrcDir << graalSupportedLanguages()*.testSrcDir
     }
 
     private List<Language> graalSupportedLanguages() {
@@ -354,7 +452,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language),
+                new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']
         )
         String build = output['build.gradle']
@@ -367,7 +465,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
 
         where:
         language << Language.values().toList()
@@ -381,7 +479,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
+                new Options(language, BuildTool.MAVEN),
                 ['aws-lambda']
         )
         String build = output['pom.xml']
@@ -393,7 +491,7 @@ class AwsLambdaSpec extends BeanContextSpec implements CommandOutputFixture {
         output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
         output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/BookControllerTest.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
 
         where:
         language << Language.values().toList()

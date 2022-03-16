@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,8 @@
  */
 package io.micronaut.starter.api.diff;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
@@ -30,13 +30,17 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.diff.FeatureDiffer;
 import io.micronaut.starter.io.ConsoleOutput;
-import io.micronaut.starter.options.*;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.reactivestreams.Publisher;
+import reactor.core.publisher.Flux;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -88,7 +92,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Flowable<String> diffFeature(
+    public Publisher<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NonNull @NotBlank String feature,
@@ -102,10 +106,12 @@ public class DiffController implements DiffOperations {
         GeneratorContext generatorContext;
         try {
             Project project = name != null ? NameUtils.parse(name) : this.project;
+            Language language = lang != null ? lang : Language.DEFAULT_OPTION;
             Options options = new Options(
-                    lang != null ? lang : Language.JAVA,
-                    test != null ? test : TestFramework.JUNIT,
-                    build != null ? build : BuildTool.GRADLE
+                    language,
+                    test != null ? test : language.getDefaults().getTest(),
+                    build != null ? build : language.getDefaults().getBuild(),
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
@@ -139,7 +145,7 @@ public class DiffController implements DiffOperations {
     @ApiResponse(responseCode = "404", description = "If no difference is found")
     @ApiResponse(responseCode = "400", description = "If the supplied parameters are invalid")
     @ApiResponse(responseCode = "200", description = "A textual diff", content = @Content(mediaType = "text/plain"))
-    public Flowable<String> diffApp(
+    public Publisher<String> diffApp(
             ApplicationType type,
             @Pattern(regexp = "[\\w\\d-_\\.]+") String name,
             @Nullable List<String> features,
@@ -152,10 +158,12 @@ public class DiffController implements DiffOperations {
         GeneratorContext generatorContext;
         try {
             Project project = name != null ? NameUtils.parse(name) : this.project;
+            Language language = lang != null ? lang : Language.DEFAULT_OPTION;
             Options options = new Options(
-                    lang != null ? lang : Language.JAVA,
-                    test != null ? test : TestFramework.JUNIT,
-                    build != null ? build : BuildTool.GRADLE
+                    language,
+                    test != null ? test : language.getDefaults().getTest(),
+                    build != null ? build : language.getDefaults().getBuild(),
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
@@ -173,19 +181,19 @@ public class DiffController implements DiffOperations {
         return diffFlowable(projectGenerator, generatorContext);
     }
 
-    private Flowable<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
-        return Flowable.create(emitter -> {
+    private Publisher<String> diffFlowable(ProjectGenerator projectGenerator, GeneratorContext generatorContext) {
+        return Flux.create(emitter -> {
             try {
                 // empty string so there is at least some content
                 // if there is no difference
-                emitter.onNext("");
+                emitter.next("");
                 featureDiffer.produceDiff(
                         projectGenerator,
                         generatorContext,
                         new ConsoleOutput() {
                             @Override
                             public void out(String message) {
-                                emitter.onNext(message + LINE_SEPARATOR);
+                                emitter.next(message + LINE_SEPARATOR);
                             }
 
                             @Override
@@ -209,10 +217,10 @@ public class DiffController implements DiffOperations {
                             }
                         }
                 );
-                emitter.onComplete();
+                emitter.complete();
             } catch (Exception e) {
-                emitter.onError(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
+                emitter.error(new HttpStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not produce diff: " + e.getMessage()));
             }
-        }, BackpressureStrategy.BUFFER);
+        });
     }
 }

@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,7 +15,7 @@
  */
 package io.micronaut.starter.options;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,6 +26,16 @@ public enum TestFramework {
     JUNIT,
     SPOCK,
     KOTEST;
+
+    public static final TestFramework DEFAULT_OPTION = JUNIT;
+
+    public static boolean isKotlinTestFramework(TestFramework testFramework) {
+        return testFramework == KOTEST;
+    }
+
+    public boolean isKotlinTestFramework() {
+        return isKotlinTestFramework(this);
+    }
 
     @Override
     public String toString() {
@@ -40,16 +50,27 @@ public enum TestFramework {
     public String getSourcePath(String path, Language language) {
         switch (this) {
             case SPOCK:
-                return Language.GROOVY.getTestSrcDir() + path + "Spec." + Language.GROOVY.getExtension();
+                return Language.GROOVY.getTestSrcDir() + path + getTestFrameworkSuffix() + Language.GROOVY.getExtension();
             case KOTEST:
-                return Language.KOTLIN.getTestSrcDir() + path + "Test." + Language.KOTLIN.getExtension();
+                return Language.KOTLIN.getTestSrcDir() + path + getTestFrameworkSuffix() + Language.KOTLIN.getExtension();
             case JUNIT:
             default:
                 if (language != null) {
-                    return language.getTestSrcDir() + path + "Test."  + language.getExtension();
+                    return language.getTestSrcDir() + path + getTestFrameworkSuffix()  + language.getExtension();
                 } else {
-                    return Language.JAVA.getTestSrcDir() + "Test." + path + Language.JAVA.getExtension();
+                    return Language.JAVA.getTestSrcDir() + getTestFrameworkSuffix() + path + Language.JAVA.getExtension();
                 }
+        }
+    }
+
+    public String getTestFrameworkSuffix() {
+        switch (this) {
+            case SPOCK:
+                return "Spec.";
+            case JUNIT:
+            case KOTEST:
+            default:
+                return "Test.";
         }
     }
 

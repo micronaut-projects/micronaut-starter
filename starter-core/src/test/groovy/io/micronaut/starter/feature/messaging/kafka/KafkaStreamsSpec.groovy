@@ -1,14 +1,16 @@
 package io.micronaut.starter.feature.messaging.kafka
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
-class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
+class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature kafka-streams contains links to micronaut docs'() {
         when:
@@ -18,6 +20,22 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html#kafkaStream")
+    }
+
+    void 'test java project with feature kafka-streams for #language includes example listener'() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(language), ['kafka-streams'])
+        def listener = output["src/main/${language}/example/micronaut/ExampleListener.${language.extension}"]
+        def factory = output["src/main/${language}/example/micronaut/ExampleFactory.${language.extension}"]
+
+        then:
+        listener
+        listener.contains("@KafkaListener(groupId = \"ExampleListener\")")
+        factory
+        factory.contains("builder.stream(\"streams-plaintext-input\")")
+
+        where:
+        language << Language.values().toList()
     }
 
     void "test kafka-streams features"() {
@@ -31,7 +49,9 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['kafka-streams'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
@@ -40,7 +60,9 @@ class KafkaStreamsSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["kafka-streams"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(["kafka-streams"])
+                .render()
 
         then:
         template.contains("""

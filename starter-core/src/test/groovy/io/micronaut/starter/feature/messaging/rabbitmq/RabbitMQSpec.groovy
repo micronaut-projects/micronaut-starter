@@ -1,13 +1,12 @@
 package io.micronaut.starter.feature.messaging.rabbitmq
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 
-class RabbitMQSpec extends BeanContextSpec implements CommandOutputFixture {
+class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature rabbitmq contains links to micronaut docs'() {
         when:
@@ -21,7 +20,9 @@ class RabbitMQSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["rabbitmq"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["rabbitmq"])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.rabbitmq:micronaut-rabbitmq")')
@@ -29,7 +30,9 @@ class RabbitMQSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["rabbitmq"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(["rabbitmq"])
+                .render()
 
         then:
         template.contains("""

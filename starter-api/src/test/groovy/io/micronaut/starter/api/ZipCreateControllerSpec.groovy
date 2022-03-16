@@ -1,7 +1,7 @@
 package io.micronaut.starter.api
 
-import edu.umd.cs.findbugs.annotations.Nullable
 import io.micronaut.context.event.ApplicationEventListener
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
@@ -13,11 +13,10 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import io.micronaut.starter.util.ZipUtil
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
 import spock.lang.Specification
-
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @MicronautTest
 class ZipCreateControllerSpec extends Specification {
@@ -44,7 +43,7 @@ class ZipCreateControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message.contains("name: must match")
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message.contains("name: must match")
     }
 
     void "test default create app - missing feature"() {
@@ -54,7 +53,7 @@ class ZipCreateControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message.contains("The requested feature does not exist: junkkkk")
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message.contains("The requested feature does not exist: junkkkk")
     }
 
     void "test default create app file name"() {

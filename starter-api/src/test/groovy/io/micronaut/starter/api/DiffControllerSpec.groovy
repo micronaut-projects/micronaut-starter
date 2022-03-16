@@ -1,7 +1,7 @@
 package io.micronaut.starter.api
 
-import edu.umd.cs.findbugs.annotations.NonNull
-import edu.umd.cs.findbugs.annotations.Nullable
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Get
@@ -12,15 +12,16 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
-import io.micronaut.test.annotation.MicronautTest
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Specification
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
 @MicronautTest
 class DiffControllerSpec extends Specification {
+
     @Inject
     DiffClient diffClient
 
@@ -71,7 +72,7 @@ class DiffControllerSpec extends Specification {
         then:
         def e = thrown(HttpClientResponseException)
         e.status == HttpStatus.BAD_REQUEST
-        e.message == 'The requested feature does not exist: junkkkkk'
+        e.getResponse().getBody(Map).get()._embedded.errors[0].message == 'The requested feature does not exist: junkkkkk'
     }
 
     @Client('/diff')
@@ -86,7 +87,6 @@ class DiffControllerSpec extends Specification {
                 @Nullable TestFramework test,
                 @Nullable Language lang,
                 @Nullable JdkVersion javaVersion);
-
 
         @Get(uri = "/{type}/{name}{?features,lang,build,test,javaVersion}", consumes = MediaType.TEXT_PLAIN)
         String diffApp(ApplicationType type,

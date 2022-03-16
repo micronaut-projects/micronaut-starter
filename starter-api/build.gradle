@@ -1,5 +1,11 @@
+plugins {
+    id 'io.micronaut.internal.build.starter-openapi-module'
+}
+
 dependencies {
-    annotationProcessor "io.micronaut.configuration:micronaut-openapi:1.5.3"
+    annotationProcessor "io.micronaut.openapi:micronaut-openapi"
+    annotationProcessor "com.google.code.findbugs:jsr305"
+
     annotationProcessor "io.micronaut.docs:micronaut-docs-asciidoc-config-props:$micronautDocsVersion"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
 
@@ -12,7 +18,8 @@ dependencies {
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
     api "io.micronaut:micronaut-validation"
-    api 'org.eclipse.jgit:org.eclipse.jgit:5.9.0.202009080501-r'
+    api group: 'javax.inject', name: 'javax.inject', version: '1'
+    implementation "io.projectreactor:reactor-core"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut:micronaut-http-server-netty"
@@ -20,17 +27,3 @@ dependencies {
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
 }
-
-task openApiProperties(type: WriteProperties) {
-    outputFile("${project.projectDir}/openapi.properties")
-    properties(
-            'swagger-ui.enabled':true,
-            'redoc.enabled':true,
-            'rapidoc.enabled': true,
-            'rapidoc.bg-color': '#14191f',
-            'rapidoc.text-color': '#aec2e0',
-            'rapidoc.sort-endpoints-by': 'method',
-            'micronaut.openapi.expand.api.version': projectVersion
-    )
-}
-compileJava.dependsOn(['openApiProperties'])

@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,12 @@
  */
 package io.micronaut.starter.io;
 
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.template.Template;
+import org.apache.commons.compress.archivers.zip.UnixStat;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,14 +29,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.apache.commons.compress.archivers.zip.UnixStat;
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
-
 public class ZipOutputHandler implements OutputHandler {
 
     private final ZipArchiveOutputStream zipOutputStream;
     private final File zip;
+    private final String directory;
 
     public ZipOutputHandler(Project project) throws IOException {
         File baseDirectory = new File(".").getCanonicalFile();
@@ -43,11 +44,19 @@ public class ZipOutputHandler implements OutputHandler {
         }
         zip.createNewFile();
         zipOutputStream = new ZipArchiveOutputStream(Files.newOutputStream(zip.toPath()));
+        directory = project.getName();
     }
 
     public ZipOutputHandler(OutputStream outputStream) {
         zip = null;
         zipOutputStream = new ZipArchiveOutputStream(outputStream);
+        directory = null;
+    }
+
+    public ZipOutputHandler(String projectName, OutputStream outputStream) {
+        zip = null;
+        zipOutputStream = new ZipArchiveOutputStream(outputStream);
+        directory = projectName;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class ZipOutputHandler implements OutputHandler {
 
     @Override
     public void write(String path, Template contents) throws IOException {
-        ZipArchiveEntry zipEntry = new ZipArchiveEntry(path);
+        ZipArchiveEntry zipEntry = new ZipArchiveEntry(directory != null ? StringUtils.prependUri(directory, path) : path);
         if (contents.isExecutable()) {
             zipEntry.setUnixMode(UnixStat.FILE_FLAG | 0755);
         }

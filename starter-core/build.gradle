@@ -1,4 +1,6 @@
 plugins {
+    id "io.micronaut.internal.starter.published-module"
+    id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
 }
 
@@ -14,61 +16,27 @@ dependencies {
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
-    api "io.github.java-diff-utils:java-diff-utils:4.7"
-    implementation "org.yaml:snakeyaml:1.26"
-    implementation 'com.typesafe:config:1.4.0'
+    api "io.micronaut:micronaut-http"
+    api "io.micronaut:micronaut-http-client"
+    api "io.github.java-diff-utils:java-diff-utils:4.10"
+    api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
+    implementation "org.yaml:snakeyaml:1.28"
+    implementation 'com.typesafe:config:1.4.1'
     implementation 'org.apache.commons:commons-compress:1.20'
 }
 
-processResources.dependsOn('micronautVersionInfo')
-task micronautVersionInfo(type: WriteProperties) {
-    outputFile = "${buildDir}/resources/main/micronaut-versions.properties"
-    property 'micronaut.version', micronautVersion
-    WriteProperties wp = delegate
-    boolean resolved = false
-    repositories.each { ArtifactRepository repo ->
-        if (repo instanceof MavenArtifactRepository) {
-            def url = ((MavenArtifactRepository) repo).getUrl()
-            try {
-                def xml = new XmlSlurper().parse(new URL("$url/io/micronaut/micronaut-bom/$micronautVersion/micronaut-bom-${micronautVersion}.pom").openStream())
-                xml.properties.children().each {
-                    wp.property it.name(), it.text()
-                }
-                resolved = true
-            } catch (e) {
-            }
-        }
-    }
-    if (!resolved) {
-        throw new RuntimeException("Dependency versions couldn't be resolved for Micronaut version: $micronautVersion")
-    }
+def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
+    version = micronautVersion
+    outputDirectory = layout.buildDirectory.dir("version-info")
 }
 
+sourceSets.main.resources.srcDir(micronautVersionInfo)
+
 rocker {
-    // (All settings are shown with their defaults)
-    //
-    // Skips building templates all together
-    skip false
-    // Base directory for generated java sources, actual target is sub directory
-    // with the name of the source set. The value is passed through project.file().
-    outputBaseDirectory = "$buildDir/generated-src/rocker"
-    // Base directory for the directory where the hot reload feature
-    // will (re)compile classes to at runtime (and where `rocker-compiler.conf`
-    // is generated, which is used by RockerRuntime.getInstance().setReloading(true)).
-    // The actual target is a sub directory with the name of the source set.
-    // The value is passed through project.file().
-    classBaseDirectory = "$buildDir/classes"
-    failOnError true
-    skipTouch true
-    // must not be empty when skipTouch is equal to false
-    touchFile ""
-    javaVersion '1.8'
-    extendsClass null
-    extendsModelClass null
-    optimize true
-    discardLogicWhitespace = true
-    targetCharset null
-    suffixRegex null
+    javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
-    markAsGenerated null
+}
+
+nohttp {
+    source.exclude "**/pom.rocker.raw"
 }

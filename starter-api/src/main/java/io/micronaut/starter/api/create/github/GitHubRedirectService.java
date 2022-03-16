@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,12 +20,12 @@ import io.micronaut.context.annotation.Requires;
 import io.micronaut.http.uri.UriBuilder;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.StarterConfiguration;
-import io.micronaut.starter.api.create.github.client.oauth.GitHubOAuthClient;
-import io.micronaut.starter.api.create.github.client.v3.GitHubRepository;
+import io.micronaut.starter.client.github.oauth.GitHubOAuthClient;
+import io.micronaut.starter.client.github.v3.GitHubRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.UUID;
@@ -70,7 +70,7 @@ public class GitHubRedirectService {
             URI redirectUri = uriBuilder.build();
 
             return UriBuilder.of(githubOAuthUrl)
-                    .queryParam("scope", "user,repo")
+                    .queryParam("scope", gitHubConfiguration.getTokenPermissions())
                     .queryParam("client_id", gitHubConfiguration.getClientId())
                     .queryParam("redirect_uri", redirectUri.toString())
                     .queryParam("state", UUID.randomUUID().toString())

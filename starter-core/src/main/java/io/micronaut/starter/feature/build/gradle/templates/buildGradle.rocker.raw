@@ -1,98 +1,56 @@
-@import io.micronaut.starter.options.TestFramework
-@import io.micronaut.starter.application.Project
-@import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.util.VersionInfo
-@import io.micronaut.starter.feature.build.gradle.templates.dependency
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradleDsl
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.options.TestFramework
+@import io.micronaut.starter.util.VersionInfo
 
 @args (
 ApplicationType applicationType,
 Project project,
 Features features,
-boolean isKotlinDsl
+GradleBuild gradleBuild
 )
 
-@if (features.contains("grpc") && isKotlinDsl) {
-import com.google.protobuf.gradle.*
+@for (String importLine : gradleBuild.getPluginsImports()) {
+@(importLine)
 }
-
-@gradlePlugins.template(applicationType, project, features)
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
 
 version = "0.1"
 group = "@project.getPackageName()"
 
 @if (features.contains("asciidoctor")) {
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 apply(from="gradle/asciidoc.gradle")
 } else {
 apply from: "gradle/asciidoc.gradle"
 }
 }
 
-@if(features.language().isKotlin() && isKotlinDsl) {
+@if(features.language().isKotlin() && gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 val kotlinVersion=project.properties.get("kotlinVersion")
 }
 
 repositories {
     mavenCentral()
-    jcenter()
     @if (VersionInfo.isMicronautSnapshot()) {
-    @if(isKotlinDsl) {
-    maven("https://oss.jfrog.org/oss-snapshot-local")
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
     } else {
-    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
-    }
-    @if (features.contains("oracle-function")) {
-        @if (!features.contains("oracle-function-http")) {
-    @if(isKotlinDsl) {
-    maven("https://dl.bintray.com/fnproject/fnproject")
-    } else {
-    maven { url "https://dl.bintray.com/fnproject/fnproject" }
-    }
-        }
     }
 }
 
-micronaut {
-    @if (features.contains("google-cloud-function-http")) {
-    runtime("google_function")
-    }
-    @if (features.contains("oracle-function-http")) {
-    runtime("oracle_function")
-    }
-    @if (features.contains("azure-function-http")) {
-    runtime("azure_function")
-    }
-    @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    runtime("lambda")
-    }
-    @if (features.contains("tomcat-server")) {
-    runtime("tomcat")
-    }
-    @if (features.contains("jetty-server")) {
-    runtime("jetty")
-    }
-    @if (features.contains("netty-server")) {
-    runtime("netty")
-    }
-    @if (features.contains("undertow-server")) {
-    runtime("undertow")
-    }
-    @if (features.testFramework().isJunit()) {
-    testRuntime("junit5")
-    } else if (features.testFramework().isKotlinTestFramework()) {
-    testRuntime("kotest")
-    } else if (features.testFramework().isSpock()) {
-    testRuntime("spock2")
-    }
-    processing {
-        incremental(true)
-        annotations("@project.getPackageName().*")
-    }
-}
-
-@dependencies.template(applicationType, project, features)
+@dependencies.template(applicationType, project, features, gradleBuild)
 
 
 @if (features.mainClass().isPresent()) {
@@ -105,7 +63,6 @@ application {
 }
 }
 
-
 java {
     sourceCompatibility = JavaVersion.toVersion("@features.getTargetJdk()")
 @if (!features.language().isKotlin()) {
@@ -113,6 +70,14 @@ java {
 }
 }
 
+@if (features.language().isKotlin() ||
+    features.testFramework().isKotlinTestFramework() ||
+    features.contains("jrebel") ||
+    features.contains("springloaded") ||
+    features.contains("azure-function") ||
+    features.contains("oracle-function") ||
+    features.contains("jib") ||
+    features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
 tasks {
 @if (features.language().isKotlin()) {
     compileKotlin {
@@ -131,7 +96,9 @@ tasks {
 }
 
 @if (features.contains("jrebel")) {
-    run.dependsOn(generateRebel)
+    run {
+        dependsOn(generateRebel)
+    }
 }
 
 @if (features.contains("springloaded")) {
@@ -139,6 +106,7 @@ tasks {
         jvmArgs("-noverify", "-javaagent:agent/springloaded-1.2.8.RELEASE.jar")
     }
 }
+
 @if (features.contains("jrebel")) {
     run {
         if (project.hasProperty("rebelAgent")) {
@@ -147,7 +115,6 @@ tasks {
     }
 }
 
-
 @if (features.contains("azure-function")) {
     azurefunctions {
         resourceGroup = "java-functions-group"
@@ -155,10 +122,10 @@ tasks {
         pricingTier = "Consumption"
         region = "westus"
         runtime {
-          os = "windows"
+          os = "linux"
         }
         localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
-    }
+}
 }
 
 @if (features.contains("oracle-function")) {
@@ -166,52 +133,89 @@ tasks {
     dockerfileNative {
       args("-XX:MaximumHeapSizePercent=80")
     }
-    nativeImage {
-        args("--initialize-at-build-time=@project.getPackageName()")
-    }
 } else {
-    nativeImage {
-      args("--static",
-           "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
-           "--initialize-at-build-time=@project.getPackageName()")
-    }
-
     dockerfileNative {
-      args("-XX:MaximumHeapSizePercent=80")
-      buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-      defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+        args("-XX:MaximumHeapSizePercent=80")
+        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
+        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
     }
 
     dockerfile {
-      buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
-      defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
+        buildStrategy.set(io.micronaut.gradle.docker.DockerBuildStrategy.ORACLE_FUNCTION)
+        defaultCommand.set("@(project.getPackageName()).Function::handleRequest")
     }
 }
 
     dockerBuild {
-        @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
         } else {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"))
+            } else {
         images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name:$project.version"]
+            }
         }
     }
 
     dockerBuildNative {
-        @if(isKotlinDsl) {
-        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
+        @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
         } else {
+            @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+        images.set(listOf("[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"))
+            } else {
         images = ["[REGION].ocir.io/[TENANCY]/[REPO]/$project.name-native:$project.version"]
+            }
         }
+    }
+} else if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDockerRegistryWorkflow)) {
+    dockerBuild {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
+    }
+
+    dockerBuildNative {
+        images = ["${System.env.DOCKER_IMAGE ?: project.name}:$project.version"]
     }
 }
 
-    @if (features.contains("jib")) {
+@if (features.contains("jib")) {
     jib {
         to {
             image = "gcr.io/myapp/jib-image"
         }
     }
+}
+
+}
+}
+
+@if (applicationType == ApplicationType.DEFAULT || features.contains("oracle-function")) {
+    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
+graalvmNative.toolchainDetection.set(false)
+    } else {
+graalvmNative.toolchainDetection = false
     }
+}
+
+@if (features.contains("oracle-function")) {
+@if (features.contains("oracle-function-http")) {
+graalvmNative {
+    binaries.configureEach {
+        buildArgs.add("--initialize-at-build-time=@project.getPackageName()")
+    }
+}
+} else {
+graalvmNative {
+    binaries.configureEach {
+        buildArgs.addAll(
+             "-H:+StaticExecutableWithDynamicLibC",
+             "-Dfn.handler=@(project.getPackageName()).Function::handleRequest",
+             "--initialize-at-build-time=@project.getPackageName()"
+        )
+    }
+}
+}
 }
 
 @if (features.contains("grpc")) {
@@ -224,7 +228,7 @@ sourceSets {
     }
 }
 
-@if(isKotlinDsl) {
+@if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")"
@@ -255,13 +259,4 @@ protobuf {
 }
 }
 }
-
-@if (features.contains("views-rocker")) {
-sourceSets {
-    main {
-        rocker {
-            srcDir("src/main/resources")
-        }
-    }
-}
-}
+@gradleBuild.renderExtensions()

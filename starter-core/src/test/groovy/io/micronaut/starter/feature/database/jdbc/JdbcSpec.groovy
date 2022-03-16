@@ -1,23 +1,30 @@
 package io.micronaut.starter.feature.database.jdbc
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import spock.lang.Unroll
 
-class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
+class JdbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
     void "test gradle jdbc feature #jdbcFeature"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures([jdbcFeature]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([jdbcFeature])
+                .render()
 
         then:
         template.contains("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")")
         template.contains("runtimeOnly(\"com.h2database:h2\")")
+
+        when:
+        template = template.replace("implementation(\"io.micronaut.sql:micronaut-${jdbcFeature}\")", "")
+
+        then: "make sure we didn't add default JdbcFeature if some other was added"
+        !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name
@@ -26,7 +33,9 @@ class JdbcSpec extends BeanContextSpec implements CommandOutputFixture {
     @Unroll
     void "test maven jdbc feature #jdbcFeature"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures([jdbcFeature]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([jdbcFeature])
+                .render()
 
         then:
         template.contains("""

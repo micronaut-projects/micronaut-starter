@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,6 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-
 /**
  * Represents an application feature.
  *
@@ -33,12 +32,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Introspected
 @Schema(name = "Feature")
 public class FeatureDTO extends Linkable implements Named, Described {
+
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".features.";
+
     private final String name;
     private final String title;
     private final String description;
     private final String category;
     private final boolean preview;
+    private final boolean community;
 
     /**
      * Default constructor.
@@ -52,6 +54,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
         this.preview = feature.isPreview();
+        this.community = feature.isCommunity();
     }
 
     /**
@@ -68,6 +71,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.description = description;
         this.category = category;
         this.preview = false;
+        this.community = false;
     }
 
     /**
@@ -108,5 +112,13 @@ public class FeatureDTO extends Linkable implements Named, Described {
     @Schema(description = "Indicates whether the feature is a preview feature and subject to change")
     public boolean isPreview() {
         return preview;
+    }
+
+    /**
+     * @return Is the feature a community contributed feature.
+     */
+    @Schema(description = "Indicates whether the feature is a community contributed feature")
+    public boolean isCommunity() {
+        return community;
     }
 }

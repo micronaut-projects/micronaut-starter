@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,11 +17,12 @@ package io.micronaut.starter.feature.function.gcp;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
 import java.util.Set;
 
 @Singleton
@@ -29,6 +30,12 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
+        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction || f instanceof GoogleCloudRawFunction)) {
+            if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
+                throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
+                    "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
+            }
+        }
     }
 
     @Override

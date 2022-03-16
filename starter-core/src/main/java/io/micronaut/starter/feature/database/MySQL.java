@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,15 +15,20 @@
  */
 package io.micronaut.starter.feature.database;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
-import javax.inject.Singleton;
+import io.micronaut.starter.feature.migration.MigrationFeature;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class MySQL extends DatabaseDriverFeature {
 
-    public MySQL(TestContainers testContainers) {
-        super(testContainers);
+    public MySQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        super(jdbcFeature, testContainers);
     }
 
     @Override
@@ -34,17 +39,22 @@ public class MySQL extends DatabaseDriverFeature {
 
     @Override
     public String getTitle() {
-        return "MySQL open source database system.";
+        return "MySQL";
     }
 
     @Override
     public String getDescription() {
-        return "Adds the MySQL driver and default config.";
+        return "Adds the MySQL driver and default config";
     }
 
     @Override
     public String getJdbcUrl() {
         return "jdbc:mysql://localhost:3306/db";
+    }
+
+    @Override
+    public String getR2dbcUrl() {
+        return "r2dbc:mysql://localhost:3306/db";
     }
 
     @Override
@@ -70,5 +80,23 @@ public class MySQL extends DatabaseDriverFeature {
     @Override
     public boolean embedded() {
         return false;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("dev.miku")
+                    .artifactId("r2dbc-mysql")
+                    .runtime());
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return;
+            }
+        }
+
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("mysql")
+                .artifactId("mysql-connector-java")
+                .runtime());
     }
 }

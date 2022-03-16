@@ -1,33 +1,36 @@
 name: Windows Native CLI
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '[1-9]+.[0-9]+.x'
+  pull_request:
+    branches:
+      - '[1-9]+.[0-9]+.x'
 jobs:
   build:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.3.4
-      - name: Download GraalVM
-        run: Invoke-RestMethod -Uri https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.2.0/graalvm-ce-java11-windows-amd64-20.2.0.zip -OutFile 'graal.zip'
-      - name: Install GraalVM
-        run: Expand-Archive -path 'graal.zip' -destinationpath '.'
-      - name: Install Native Image
-        run: graalvm-ce-java11-20.2.0\bin\gu.cmd install native-image
-      - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
-        run: |
-          choco install visualstudio2017-workload-vctools
+      - uses: actions/checkout@v3
+      - name: Setup GraalVM CE
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: '21.3.0'
+          java-version: '11'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build JAR File
-        shell: cmd
+        shell: powershell
         env:
-          JAVA_HOME: ./graalvm-ce-java11-20.2.0
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
-        shell: cmd
-        env:
-          JAVA_HOME: ./graalvm-ce-java11-20.2.0
-        run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-          ./graalvm-ce-java11-20.2.0/bin/native-image --no-fallback -cp build/libs/cli.jar
+        shell: powershell
+        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
+        shell: powershell
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
         run: ./mn.exe create-app test
@@ -44,9 +47,8 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v2.1.4
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.3.x'
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip
-

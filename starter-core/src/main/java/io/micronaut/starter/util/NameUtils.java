@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,12 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.ProjectIdentifier;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -509,6 +514,16 @@ public final class NameUtils {
     }
 
     /**
+     * Converts an enum style name into its natural language equivalent eg ('FIRST_NAME' becomes 'First Name').
+     *
+     * @param name The string to convert
+     * @return The converted property name
+     */
+    public static String getNaturalNameOfEnum(String name) {
+        return getNaturalName(io.micronaut.core.naming.NameUtils.camelCase(name.toLowerCase()));
+    }
+
+    /**
      * <p>Determines whether a given string is <code>null</code>, empty,
      * or only contains whitespace. If it contains anything other than
      * whitespace then the string is not considered to be blank and the
@@ -686,7 +701,6 @@ public final class NameUtils {
         }
         return null;
     }
-
 
     /**
      * Returns true if the name of the method specified and the number of arguments make it a javabean property getter.

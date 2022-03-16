@@ -1,13 +1,40 @@
 package io.micronaut.starter.feature.database
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 
-class MongoSpec extends BeanContextSpec {
+class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void "test add data-mongodb feature"() {
+        when:
+        def output = generate(['data-mongodb'])
+        def readme = output["README.md"]
+        def build = output['build.gradle']
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://micronaut-projects.github.io/micronaut-data/snapshot/guide/#mongo")
+        readme.contains("https://docs.mongodb.com")
+        build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
+        build.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor')
+
+    }
+
+    void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
+        when:
+        def output = generate(['mongo-sync'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://docs.mongodb.com")
+    }
 
     void "test mongo sync features"() {
         when:
@@ -19,16 +46,20 @@ class MongoSpec extends BeanContextSpec {
 
     void "test mongo sync dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-sync"])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
-        template.contains("testImplementation(\"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\")")
+        template.contains('testImplementation("org.testcontainers:mongodb")')
     }
 
     void "test mongo sync dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-sync"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-sync'])
+                .render()
 
         then:
         template.contains("""
@@ -40,12 +71,22 @@ class MongoSpec extends BeanContextSpec {
 """)
         template.contains("""
     <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-      <version>2.0.1</version>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
       <scope>test</scope>
     </dependency>
 """)
+    }
+
+    void 'test readme with feature mongo-reactive contains links to micronaut and 3rd party docs'() {
+        when:
+        def output = generate(['mongo-reactive'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://docs.mongodb.com")
     }
 
     void "test mongo reactive features"() {
@@ -58,16 +99,19 @@ class MongoSpec extends BeanContextSpec {
 
     void "test dependencies are present for gradle"() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), false).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["mongo-reactive"])
+                .render()
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
-        template.contains("testImplementation(\"de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1\")")
+        template.contains('testImplementation("org.testcontainers:mongodb")')
     }
 
     void "test dependencies are present for maven"() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(["mongo-reactive"]), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['mongo-reactive'])
+                .render()
 
         then:
         template.contains("""
@@ -79,9 +123,8 @@ class MongoSpec extends BeanContextSpec {
 """)
         template.contains("""
     <dependency>
-      <groupId>de.flapdoodle.embed</groupId>
-      <artifactId>de.flapdoodle.embed.mongo</artifactId>
-      <version>2.0.1</version>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>mongodb</artifactId>
       <scope>test</scope>
     </dependency>
 """)
@@ -92,6 +135,6 @@ class MongoSpec extends BeanContextSpec {
         GeneratorContext ctx = buildGeneratorContext(['mongo-reactive'])
 
         then:
-        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"
+        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}/mydb"
     }
 }

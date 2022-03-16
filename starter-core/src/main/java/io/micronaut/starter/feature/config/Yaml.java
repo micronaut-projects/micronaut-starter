@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,21 +15,22 @@
  */
 package io.micronaut.starter.feature.config;
 
-import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.options.Options;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
+import jakarta.inject.Singleton;
 
-import javax.inject.Singleton;
-import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
+
+    private static final String EXTENSION = "yml";
 
     @Override
     public String getName() {
@@ -52,17 +53,8 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("yamlConfig", new YamlTemplate("src/main/resources/application.yml", generatorContext.getConfiguration()));
-        if (!generatorContext.getBootstrapConfig().isEmpty()) {
-            generatorContext.addTemplate("yamlBootstrapConfig", new YamlTemplate("src/main/resources/bootstrap.yml", generatorContext.getBootstrapConfig()));
-        }
-        Map<String, Map<String, Object>> envConfigs = generatorContext.getEnvConfigurations();
-        if (!envConfigs.isEmpty()) {
-            for (Map.Entry<String, Map<String, Object>> envConfig: envConfigs.entrySet()) {
-                generatorContext.addTemplate("yamlConfig" + StringUtils.capitalize(envConfig.getKey()), new YamlTemplate("src/main/resources/application-" + envConfig.getKey() + ".yml", envConfig.getValue()));
-            }
-        }
+    public Function<Configuration, Template> createTemplate() {
+        return (config) -> new YamlTemplate(config.getFullPath(EXTENSION), config);
     }
 
     @Override

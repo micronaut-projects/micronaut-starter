@@ -1,14 +1,13 @@
 package io.micronaut.starter.feature.rss
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class RssSpec extends BeanContextSpec  implements CommandOutputFixture {
+class RssSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature rss contains links to micronaut docs'() {
         when:
@@ -23,7 +22,10 @@ class RssSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle rss feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['rss'])
+                .render()
 
         then:
         template.contains('implementation("io.micronaut.rss:micronaut-rss")')
@@ -35,7 +37,10 @@ class RssSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven rss feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['rss'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(['rss'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""

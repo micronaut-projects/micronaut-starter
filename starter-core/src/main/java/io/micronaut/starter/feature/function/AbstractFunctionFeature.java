@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -30,6 +30,8 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
+import java.util.Optional;
+
 /**
  * Abstract function implementation.
  *
@@ -53,9 +55,8 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
         BuildTool buildTool = generatorContext.getBuildTool();
 
-
-        generatorContext.addHelpTemplate(new RockerWritable(readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)));
-
+        readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)
+            .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
 
         if (type == ApplicationType.DEFAULT) {
 
@@ -102,7 +103,9 @@ public abstract class AbstractFunctionFeature implements FunctionFeature {
         generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
-    protected abstract RockerModel readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool);
+    protected Optional<RockerModel> readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
+        return Optional.empty();
+    }
 
     protected abstract String getRunCommand(BuildTool buildTool);
 

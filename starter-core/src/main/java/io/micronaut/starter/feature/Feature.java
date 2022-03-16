@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.feature;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
 import io.micronaut.core.annotation.Indexed;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 /**
  * A feature is a class that affects the outcome of a generated
@@ -47,6 +47,13 @@ public interface Feature extends Named, Ordered, Described {
      * @return Indicates the feature is in preview status and is subject to change.
      */
     default boolean isPreview() {
+        return false;
+    }
+
+    /**
+     * @return Indicates the feature is a community contribution.
+     */
+    default boolean isCommunity() {
         return false;
     }
 
@@ -99,7 +106,7 @@ public interface Feature extends Named, Ordered, Described {
      *
      * This method can be implemented to modify the generated project. The feature can add templates
      * by executing {@link GeneratorContext#addTemplate(String, io.micronaut.starter.template.Template)}, modify configuration
-     * by modifying {@link GeneratorContext#getConfiguration()} or {@link GeneratorContext#getBootstrapConfig()}, or modify build properties through {@link GeneratorContext#getBuildProperties()}.
+     * by modifying {@link GeneratorContext#getConfiguration()} or {@link GeneratorContext#getBootstrapConfiguration()}, or modify build properties through {@link GeneratorContext#getBuildProperties()}.
      *
      * @param generatorContext THe generator context
      */

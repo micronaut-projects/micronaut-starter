@@ -1,15 +1,14 @@
 package io.micronaut.starter.feature.security
 
-import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
-import io.micronaut.starter.feature.build.gradle.templates.buildGradle
-import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
+class SecurityJWTSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
     void 'test readme.md with feature security-jwt contains links to micronaut docs'() {
         when:
@@ -24,11 +23,14 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test gradle security-jwt feature for language=#language'() {
         when:
-        String template = buildGradle.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language), false).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['security-jwt'])
+                .render()
 
         then:
         template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.security:micronaut-security-annotations\")")
-        template.contains('implementation("io.micronaut.security:micronaut-security-jwt")')
+        !template.contains(getGradleAnnotationProcessorScope(language) + '("io.micronaut.security:micronaut-security-annotations:${micronaut.security.version}")')
 
         where:
         language << Language.values().toList()
@@ -37,7 +39,10 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     @Unroll
     void 'test maven security-jwt feature for language=#language'() {
         when:
-        String template = pom.template(ApplicationType.DEFAULT, buildProject(), getFeatures(['security-jwt'], language), []).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features( ['security-jwt'])
+                .language(language)
+                .render()
 
         then:
         template.contains("""
@@ -48,21 +53,21 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
     </dependency>
 """)
         if (language == Language.JAVA) {
-            assert template.contains("""
+            assert template.count("""
             <path>
               <groupId>io.micronaut.security</groupId>
               <artifactId>micronaut-security-annotations</artifactId>
               <version>\${micronaut.security.version}</version>
             </path>
-""")
+""") == 1
         } else if (language == Language.KOTLIN) {
-            assert template.count("""
-                <annotationProcessorPath>
-                  <groupId>io.micronaut.security</groupId>
-                  <artifactId>micronaut-security-annotations</artifactId>
-                  <version>\${micronaut.security.version}</version>
-                </annotationProcessorPath>
-""") == 2
+            assert template.count('''\
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.security</groupId>
+                 <artifactId>micronaut-security-annotations</artifactId>
+                 <version>${micronaut.security.version}</version>
+               </annotationProcessorPath>
+''') == 1
         } else if (language == Language.GROOVY) {
             assert true
         } else {
@@ -73,16 +78,11 @@ class SecurityJWTSpec extends BeanContextSpec  implements CommandOutputFixture {
         language << Language.values().toList()
     }
 
-
-
     void 'test security-jwt configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['security-jwt'])
 
         then:
-        !commandContext.configuration.containsKey('micronaut.security.endpoints.login.enabled')
-        !commandContext.configuration.containsKey('micronaut.security.endpoints.logout.enabled')
-        commandContext.configuration.containsKey('micronaut.security.authentication')
         commandContext.configuration.get('micronaut.security.authentication') == 'bearer'
         commandContext.configuration.get('micronaut.security.token.jwt.signatures.secret.generator.secret'.toString()) == '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'
     }

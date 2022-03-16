@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,27 +15,35 @@
  */
 package io.micronaut.starter.application;
 
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.io.ConsoleOutput;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 
-import javax.inject.Singleton;
-import java.util.*;
+import jakarta.inject.Singleton;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class ContextFactory {
 
     private final FeatureValidator featureValidator;
+    private final DefaultCoordinateResolver coordinateResolver;
 
-    public ContextFactory(FeatureValidator featureValidator) {
+    public ContextFactory(FeatureValidator featureValidator,
+                          DefaultCoordinateResolver coordinateResolver) {
         this.featureValidator = featureValidator;
+        this.coordinateResolver = coordinateResolver;
     }
 
     public FeatureContext createFeatureContext(AvailableFeatures availableFeatures,
@@ -54,7 +62,8 @@ public class ContextFactory {
         }
 
         Language language = determineLanguage(options.getLanguage(), features);
-        Options newOptions = options.withLanguage(language);
+        Options newOptions = options.withLanguage(language)
+                .withBuildTool(determineBuildTool(language, options.getBuildTool()));
 
         availableFeatures.getAllFeatures()
                 .filter(f -> f instanceof DefaultFeature)
@@ -75,7 +84,7 @@ public class ContextFactory {
 
         featureValidator.validatePostProcessing(featureContext.getOptions(), featureContext.getApplicationType(), featureList);
 
-        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList);
+        return new GeneratorContext(project, featureContext.getApplicationType(), featureContext.getOptions(), featureContext.getOperatingSystem(), featureList, coordinateResolver);
     }
 
     Language determineLanguage(Language language, Set<Feature> features) {
@@ -83,8 +92,15 @@ public class ContextFactory {
             language = Language.infer(features);
         }
         if (language == null) {
-            language = Language.JAVA;
+            language = Language.DEFAULT_OPTION;
         }
         return language;
+    }
+
+    BuildTool determineBuildTool(Language language, BuildTool buildTool) {
+        if (buildTool == null) {
+            buildTool = language.getDefaults().getBuild();
+        }
+        return buildTool;
     }
 }

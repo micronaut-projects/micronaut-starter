@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,16 +15,16 @@
  */
 package io.micronaut.starter.api.diff;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
-import edu.umd.cs.findbugs.annotations.Nullable;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
-import io.reactivex.Flowable;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.reactivestreams.Publisher;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,7 +49,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Flowable<String> diffFeature(
+    Publisher<String> diffFeature(
             @NotNull ApplicationType type,
             @Nullable String name,
             @NotBlank @NonNull String feature,
@@ -70,7 +70,7 @@ public interface DiffOperations {
      * @param requestInfo The request info
      * @return An HTTP response that emits a writable
      */
-    Flowable<String> diffApp(
+    Publisher<String> diffApp(
             ApplicationType type,
             String name,
             @Nullable List<String> features,

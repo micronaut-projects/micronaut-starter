@@ -1,11 +1,11 @@
 package io.micronaut.starter.cli.config
 
-import io.micronaut.context.BeanContext
+import io.micronaut.context.ApplicationContext
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.cli.CommandFixture
 import io.micronaut.starter.cli.CommandSpec
 import io.micronaut.starter.io.ConsoleOutput
-import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.cli.CodeGenConfig
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -15,7 +15,7 @@ import spock.lang.AutoCleanup
 class UpdateCliConfigCommandSpec extends CommandSpec implements CommandFixture {
 
     @AutoCleanup
-    BeanContext beanContext = BeanContext.run()
+    ApplicationContext beanContext = ApplicationContext.run()
 
     void "test old cli config conversion - gradle"() {
         generateProject(Language.JAVA)

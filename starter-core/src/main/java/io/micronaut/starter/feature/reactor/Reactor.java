@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,15 +15,25 @@
  */
 package io.micronaut.starter.feature.reactor;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
-import javax.inject.Singleton;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.other.HttpClient;
+import io.micronaut.starter.feature.reactive.ReactiveFeature;
+import jakarta.inject.Singleton;
 
 @Singleton
-public class Reactor implements Feature {
+public class Reactor implements ReactiveFeature {
+
+    public static final String MICRONAUT_REACTOR_GROUP_ID = "io.micronaut.reactor";
+
+    private final ReactorHttpClient reactorHttpClient;
+
+    public Reactor(ReactorHttpClient reactorHttpClient) {
+        this.reactorHttpClient = reactorHttpClient;
+    }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -43,16 +53,26 @@ public class Reactor implements Feature {
 
     @Override
     public String getDescription() {
-        return "Adds support for Project Reactor to a Micronaut application; Reactor compatible HTTP Client, Converters and Instrumentation for Reactor types";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.REACTIVE;
+        return "Adds Reactive support using Project Reactor";
     }
 
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (featureContext.isPresent(HttpClient.class)) {
+            featureContext.addFeature(reactorHttpClient);
+        }
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(MICRONAUT_REACTOR_GROUP_ID)
+                .artifactId("micronaut-reactor")
+                .compile());
     }
 }
