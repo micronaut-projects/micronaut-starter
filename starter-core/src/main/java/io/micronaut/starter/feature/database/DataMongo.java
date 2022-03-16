@@ -52,7 +52,7 @@ public class DataMongo implements Feature {
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-data/3.3.x/guide/#mongo";
+        return "https://micronaut-projects.github.io/micronaut-data/snapshot/guide/#mongo";
     }
 
     @Override
