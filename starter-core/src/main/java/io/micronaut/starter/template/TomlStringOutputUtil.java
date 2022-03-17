@@ -24,11 +24,10 @@ class TomlStringOutputUtil {
     public static final int BASIC_STRING = 4;
     public static final int BASIC_STRING_NO_ESCAPE = 8;
     public static final int ASCII_ONLY = 16;
-
-    private static final int EMPTY_STRING_CATS = LITERAL_STRING | BASIC_STRING | BASIC_STRING_NO_ESCAPE | ASCII_ONLY;
-
     public static final int MASK_SIMPLE_KEY = -1; // Should exclude multi-line keys when/if we support them.
     public static final int MASK_STRING = ~UNQUOTED_KEY;
+
+    private static final int EMPTY_STRING_CATS = LITERAL_STRING | BASIC_STRING | BASIC_STRING_NO_ESCAPE | ASCII_ONLY;
 
     static int categorize(String s) {
         if (s.isEmpty()) {
