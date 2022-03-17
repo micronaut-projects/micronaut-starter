@@ -1,5 +1,6 @@
 package io.micronaut.starter.api
 
+import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import spock.lang.Specification
@@ -16,6 +17,6 @@ class FeatureOperationsSpec extends Specification {
 
         then:
         features
-        features.stream().noneMatch(feature -> feature.name == 'micronaut-build-cache' )
+        features.stream().noneMatch(feature -> feature.name == MicronautGradleEnterprise.NAME )
     }
 }
