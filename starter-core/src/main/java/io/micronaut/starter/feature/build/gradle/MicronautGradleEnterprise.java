@@ -35,7 +35,7 @@ public class MicronautGradleEnterprise implements Feature {
 
     @Override
     public String getTitle() {
-        return "Internal Micronaut Gradle Enterprise";
+        return "Micronaut Gradle Enterprise";
     }
 
     @Override
