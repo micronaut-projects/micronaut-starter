@@ -150,7 +150,7 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>1.3.0</version>
+            <version>1.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
