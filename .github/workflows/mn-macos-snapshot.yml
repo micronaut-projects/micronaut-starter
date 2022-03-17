@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
@@ -41,8 +41,8 @@ jobs:
           cp ./LICENSE mn-darwin-amd64-snapshot/
           zip -r mn-darwin-amd64-snapshot.zip ./mn-darwin-amd64-snapshot -x '*.DS_Store*' -x '__MAC_OSX'
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.2.x'
-        uses: actions/upload-artifact@v2.3.1
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.3.x'
+        uses: actions/upload-artifact@v3
         with:
           name: mn-darwin-amd64-snapshot
           path: mn-darwin-amd64-snapshot.zip

@@ -100,7 +100,8 @@ public class AzureRawFunction extends AbstractAzureFunction {
                         project,
                         generatorContext.getFeatures(),
                         getRunCommand(buildTool),
-                        getBuildCommand(buildTool))
+                        getBuildCommand(buildTool),
+                        buildTool)
         );
     }
 

@@ -26,10 +26,11 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class MicronautAotBuildPlugin implements Feature {
-    
+
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
     private static final String ID = "io.micronaut.aot";
     private static final String ARTIFACT_ID = "micronaut-gradle-plugin";
+    private static final int PLUGIN_ORDER = 10;
 
     @Override
     public String getCategory() {
@@ -70,6 +71,7 @@ public class MicronautAotBuildPlugin implements Feature {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id(ID)
                     .lookupArtifactId(ARTIFACT_ID)
+                    .order(PLUGIN_ORDER)
                     .build());
         }
     }

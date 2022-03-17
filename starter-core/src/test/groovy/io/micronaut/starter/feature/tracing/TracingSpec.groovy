@@ -6,11 +6,10 @@ class TracingSpec extends BeanContextSpec {
 
     void 'test there can only be one tracing feature'() {
         when:
-        getFeatures(["tracing-zipkin", "tracing-jaeger"])
+        getFeatures(['tracing-zipkin', 'tracing-jaeger'])
 
         then:
-        def ex = thrown(IllegalArgumentException)
-        ex.message.contains("There can only be one of the following features selected")
+        IllegalArgumentException e = thrown()
+        e.message.contains 'There can only be one of the following features selected'
     }
-
 }

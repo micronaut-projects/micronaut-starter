@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
@@ -91,7 +91,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -141,7 +141,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -191,7 +191,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Setup GraalVM CE
@@ -243,7 +243,7 @@ jobs:
     needs: [linux, macos, windows]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -266,7 +266,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -307,7 +307,7 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: Set the current release version
@@ -347,7 +347,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout https://github.com/micronaut-projects/homebrew-tap
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
           repository: micronaut-projects/homebrew-tap
@@ -386,7 +386,7 @@ jobs:
           repo: micronaut-starter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           ref: ${{ fromJson(steps.get_default_branch.outputs.data).default_branch }}
           token: ${{ secrets.GH_TOKEN }}

@@ -17,6 +17,9 @@ package io.micronaut.starter.feature.migration;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.database.MariaDB;
+import io.micronaut.starter.feature.database.MySQL;
+import io.micronaut.starter.feature.database.SQLServer;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -53,6 +56,18 @@ public class Flyway implements MigrationFeature {
                 .groupId("io.micronaut.flyway")
                 .artifactId("micronaut-flyway")
                 .compile());
+        if (generatorContext.isFeaturePresent(MySQL.class) || generatorContext.isFeaturePresent(MariaDB.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("org.flywaydb")
+                    .artifactId("flyway-mysql")
+                    .runtime());
+        }
+        if (generatorContext.isFeaturePresent(SQLServer.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("org.flywaydb")
+                    .artifactId("flyway-sqlserver")
+                    .runtime());
+        }
     }
 }
 

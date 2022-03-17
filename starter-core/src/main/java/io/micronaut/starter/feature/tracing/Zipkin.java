@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.tracing;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
@@ -24,6 +25,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Zipkin implements TracingFeature, MicronautServerDependent {
 
+    @NonNull
     @Override
     public String getName() {
         return "tracing-zipkin";
@@ -34,6 +36,7 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
         return "Zipkin Tracing";
     }
 
+    @NonNull
     @Override
     public String getDescription() {
         return "Adds support for distributed tracing with Zipkin";
@@ -42,10 +45,10 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
     @Override
     public void apply(GeneratorContext generatorContext) {
 
-        generatorContext.addDependency(Dependency.builder().groupId("io.micronaut").artifactId("micronaut-tracing").compile());
-        generatorContext.addDependency(Dependency.builder().groupId("io.opentracing.brave").artifactId("brave-opentracing").compile());
-        generatorContext.addDependency(Dependency.builder().groupId("io.zipkin.brave").artifactId("brave-instrumentation-http").runtime());
-        generatorContext.addDependency(Dependency.builder().groupId("io.zipkin.reporter2").artifactId("zipkin-reporter").runtime());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.tracing")
+                .artifactId("micronaut-tracing-zipkin")
+                .compile());
 
         generatorContext.getConfiguration().put("tracing.zipkin.enabled", true);
         generatorContext.getConfiguration().put("tracing.zipkin.http.url", "http://localhost:9411");
@@ -54,11 +57,11 @@ public class Zipkin implements TracingFeature, MicronautServerDependent {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://zipkin.io";
+        return "https://zipkin.io/";
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://docs.micronaut.io/latest/guide/index.html#zipkin";
+        return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#zipkin";
     }
 }

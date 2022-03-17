@@ -2,20 +2,20 @@ name: Snapshot to AWS Lambda
 on:
   push:
     branches:
-      - 3.2.x
+      - 3.3.x
 jobs:
   deploy:
     name: Deploy Job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Run Tests
         run: ./gradlew starter-api:test starter-aws-lambda:test --refresh-dependencies
       - name: Build AWS Lambda
         run: |
           ./gradlew starter-aws-lambda:buildNativeLambda
-          cp starter-aws-lambda/build/libs/*-lambda.zip build/function.zip
+          cp starter-aws-lambda/build/libs/*-lambda.zip starter-aws-lambda/build/function.zip
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -27,4 +27,4 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: micronaut-starter-snapshot
-          zip_file: build/function.zip
+          zip_file: starter-aws-lambda/build/function.zip
