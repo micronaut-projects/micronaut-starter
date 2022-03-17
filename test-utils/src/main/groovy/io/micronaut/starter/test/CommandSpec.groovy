@@ -20,6 +20,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
@@ -47,10 +48,6 @@ abstract class CommandSpec extends Specification {
     @Shared
     GradleRunner gradleRunner = GradleRunner.create()
 
-    boolean optimizeWithBuildCache = true
-
-    private boolean gradleBuildCacheConfigurationAdded = false
-
     abstract String getTempDirectoryPrefix()
 
     File dir
@@ -74,18 +71,17 @@ abstract class CommandSpec extends Specification {
     String executeBuild(BuildTool buildTool, String command) {
         String output = null
         if (buildTool.isGradle()) {
-            output = executeGradle(command).getOutput()
+            output = executeGradle(command, '--build-cache').getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven(command)
         }
         return output
     }
 
-    BuildResult executeGradle(String command) {
-        command = maybeAddGradleBuildCacheConfiguration(command)
+    BuildResult executeGradle(String... arguments) {
         BuildResult result =
                 gradleRunner.withProjectDir(dir)
-                        .withArguments(command.split(' '))
+                        .withArguments(arguments)
                         .forwardOutput()
                         .build()
         return result
@@ -122,12 +118,14 @@ abstract class CommandSpec extends Specification {
                          BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
-                         TestFramework testFramework = null) {
+                         TestFramework testFramework = null,
+                        boolean addMicronautGradleEnterpriseFeature = true
+    ) {
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
-                features,
+                (buildTool.isGradle() && addMicronautGradleEnterpriseFeature) ? ( features + [MicronautGradleEnterprise.NAME]) : features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
         )
@@ -153,59 +151,4 @@ abstract class CommandSpec extends Specification {
         return { -> new FileSystemOutputHandler(dir, consoleOutput) }
     }
 
-    private String maybeAddGradleBuildCacheConfiguration(String command) {
-        if (!optimizeWithBuildCache) {
-            return command
-        }
-        if (!gradleBuildCacheConfigurationAdded) {
-            gradleBuildCacheConfigurationAdded = true
-            String cacheUsername = System.getProperty("ge.cache.username")
-            String cachePassword = System.getProperty("ge.cache.password")
-            def settingsFile = new File(dir, "settings.gradle")
-            if (settingsFile.exists()) {
-                String push = cacheUsername && cachePassword ? """
-                            push = true
-                            credentials {
-                                username = '$cacheUsername'
-                                password = '$cachePassword'
-                            }
-
-                    """ : ""
-                settingsFile.text += """
-                    buildCache {
-                        remote(HttpBuildCache) {
-                            url = "https://ge.micronaut.io/cache/"
-                            $push
-                        }
-                    }
-                    rootProject.name = "micronaut-starter-tests-\${rootProject.name}"
-                """
-            } else {
-                settingsFile = new File(dir, "settings.gradle.kts")
-                if (settingsFile.exists()) {
-                    String push = cacheUsername && cachePassword ? """
-                                isPush = true
-                                credentials {
-                                    username = "$cacheUsername"
-                                    password = "$cachePassword"
-                                }
-                    """ : ""
-                    settingsFile.text += """
-                        buildCache {
-                            remote<HttpBuildCache> {
-                                url = uri("https://ge.micronaut.io/cache/")
-                                $push
-                            }
-                        }
-                        rootProject.name = "micronaut-starter-tests-\${rootProject.name}"
-                        """
-                }
-            }
-        }
-        if (command) {
-            "$command --build-cache"
-        } else {
-            "--build-cache"
-        }
-    }
 }

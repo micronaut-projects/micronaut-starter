@@ -24,16 +24,16 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class MicronautBuildCacheEnterpriseValidator implements FeatureValidator {
+public class MicronautGradleEnterpriseValidator implements FeatureValidator {
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
     }
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof MicronautBuildCache)) {
+        if (features.stream().anyMatch(f -> f instanceof MicronautGradleEnterprise)) {
             if (!options.getBuildTool().isGradle()) {
-                throw new IllegalArgumentException("Micronaut Build Cache feature is only supported by Gradle");
+                throw new IllegalArgumentException("Micronaut Gradle Enterprise feature is only supported by Gradle");
             }
         }
     }

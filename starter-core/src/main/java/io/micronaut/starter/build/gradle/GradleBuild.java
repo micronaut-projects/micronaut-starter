@@ -86,6 +86,17 @@ public class GradleBuild {
     }
 
     @NonNull
+    public String renderSettingsPluginsManagement() {
+        return plugins == null ? "" : plugins.stream()
+                .map(plugin -> plugin.getSettingsPluginsManagement()
+                            .map(writable -> renderWritableExtensions(Stream.of(writable))).orElse(null)
+                )
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse("");
+    }
+
+    @NonNull
     private String renderWritableExtensions(Stream<Writable> extensions) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         extensions

@@ -22,12 +22,15 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
+import io.micronaut.starter.feature.build.gradle.templates.settingsPluginManagement;
 
 public class GradlePlugin implements BuildPlugin {
 
@@ -38,6 +41,7 @@ public class GradlePlugin implements BuildPlugin {
     private final Writable extension;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
+    private final boolean requiresSettingsPluginsManagement;
     private final Set<String> buildImports;
     private final int order;
 
@@ -47,6 +51,7 @@ public class GradlePlugin implements BuildPlugin {
                         @Nullable String artifactId,
                         @Nullable Writable extension,
                         @Nullable Writable settingsExtension,
+                        boolean requiresSettingsPluginsManagement,
                         boolean requiresLookup,
                         int order,
                         Set<String> buildImports) {
@@ -56,6 +61,7 @@ public class GradlePlugin implements BuildPlugin {
         this.artifactId = artifactId;
         this.extension = extension;
         this.settingsExtension = settingsExtension;
+        this.requiresSettingsPluginsManagement = requiresSettingsPluginsManagement;
         this.requiresLookup = requiresLookup;
         this.order = order;
         this.buildImports = buildImports;
@@ -84,7 +90,7 @@ public class GradlePlugin implements BuildPlugin {
     @Override
     @NonNull
     public BuildTool getBuildTool() {
-        return null;
+        return BuildTool.GRADLE;
     }
 
     @Override
@@ -96,6 +102,14 @@ public class GradlePlugin implements BuildPlugin {
     @Nullable
     public Writable getSettingsExtension() {
         return this.settingsExtension;
+    }
+
+    @NonNull
+    public Optional<Writable> getSettingsPluginsManagement() {
+        if (this.requiresSettingsPluginsManagement) {
+            return Optional.of(new RockerWritable(settingsPluginManagement.template()));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -112,7 +126,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(this.gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, false, order, buildImports);
+        return new GradlePlugin(this.gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, this.requiresSettingsPluginsManagement, false, order, buildImports);
     }
 
     @Override
@@ -144,6 +158,7 @@ public class GradlePlugin implements BuildPlugin {
         private String version;
         private Writable extension;
         private Writable settingsExtension;
+        private boolean requiresSettingsPluginsManagement;
         private boolean requiresLookup;
         private int order = 0;
         private Set<String> buildImports = new HashSet<>();
@@ -199,8 +214,14 @@ public class GradlePlugin implements BuildPlugin {
             return this;
         }
 
+        @NonNull
+        public GradlePlugin.Builder requiresSettingsPluginsManagement() {
+            this.requiresSettingsPluginsManagement = true;
+            return this;
+        }
+
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresLookup, order, buildImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresSettingsPluginsManagement, requiresLookup, order, buildImports);
         }
     }
 
