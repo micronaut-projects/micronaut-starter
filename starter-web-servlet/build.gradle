@@ -18,7 +18,7 @@ dependencies {
     implementation("io.micronaut.servlet:micronaut-servlet-engine:3.1.0")
     developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
     testImplementation "io.micronaut.servlet:micronaut-http-server-jetty"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
