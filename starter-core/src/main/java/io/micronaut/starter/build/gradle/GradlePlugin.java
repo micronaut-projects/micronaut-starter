@@ -31,6 +31,7 @@ import java.util.Set;
 
 public class GradlePlugin implements BuildPlugin {
 
+    private final GradleFile gradleFile;
     private final String id;
     private final String version;
     private final String artifactId;
@@ -40,7 +41,8 @@ public class GradlePlugin implements BuildPlugin {
     private final Set<String> buildImports;
     private final int order;
 
-    public GradlePlugin(@NonNull String id,
+    public GradlePlugin(@NonNull GradleFile gradleFile,
+                        @NonNull String id,
                         @Nullable String version,
                         @Nullable String artifactId,
                         @Nullable Writable extension,
@@ -48,6 +50,7 @@ public class GradlePlugin implements BuildPlugin {
                         boolean requiresLookup,
                         int order,
                         Set<String> buildImports) {
+        this.gradleFile = gradleFile;
         this.id = id;
         this.version = version;
         this.artifactId = artifactId;
@@ -61,6 +64,11 @@ public class GradlePlugin implements BuildPlugin {
     @Nullable
     public Set<String> getBuildImports() {
         return buildImports;
+    }
+
+    @NonNull
+    public GradleFile getGradleFile() {
+        return gradleFile;
     }
 
     @NonNull
@@ -104,7 +112,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(id, coordinate.getVersion(), null, extension, settingsExtension, false, order, buildImports);
+        return new GradlePlugin(this.gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, false, order, buildImports);
     }
 
     @Override
@@ -130,6 +138,7 @@ public class GradlePlugin implements BuildPlugin {
 
     public static final class Builder {
 
+        private GradleFile gradleFile = GradleFile.BUILD;
         private String id;
         private String artifactId;
         private String version;
@@ -140,6 +149,12 @@ public class GradlePlugin implements BuildPlugin {
         private Set<String> buildImports = new HashSet<>();
 
         private Builder() { }
+
+        @NonNull
+        public GradlePlugin.Builder gradleFile(@NonNull GradleFile file) {
+            this.gradleFile = file;
+            return this;
+        }
 
         @NonNull
         public GradlePlugin.Builder id(@NonNull String id) {
@@ -185,7 +200,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(id, version, artifactId, extension, settingsExtension, requiresLookup, order, buildImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresLookup, order, buildImports);
         }
     }
 
