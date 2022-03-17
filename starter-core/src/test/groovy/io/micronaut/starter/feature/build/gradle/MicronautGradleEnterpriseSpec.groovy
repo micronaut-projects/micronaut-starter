@@ -25,13 +25,12 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         String settings = settingsGradle.template(project, gradleBuild).render().toString()
 
         then:
-        settings.contains('id("com.gradle.enterprise") version("3.8.1")')
         !settings.contains("allowUntrustedServer = true")
         settings.contains('gradleEnterprise {')
         settings.contains('server = "https://ge.micronaut.io"')
         settings.contains('buildScan {')
         settings.contains('termsOfServiceUrl = "https://gradle.com/terms-of-service"')
-        settings.contains('termsOfServiceAgree = "yes"')
+        !settings.contains('termsOfServiceAgree = "yes"')
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
             assert settings.contains('id("com.gradle.enterprise") version("3.8.1")')
         } else if (buildTool == BuildTool.GRADLE) {

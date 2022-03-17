@@ -39,6 +39,11 @@ public class CamundaExternalWorker implements Feature {
     }
 
     @Override
+    public boolean isCommunity() {
+        return true;
+    }
+
+    @Override
     public String getDescription() {
         return "Bringing process automation to Micronaut: Implement Camunda External Workers for the Camunda Platform";
     }

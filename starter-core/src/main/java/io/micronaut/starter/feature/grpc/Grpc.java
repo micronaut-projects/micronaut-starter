@@ -17,7 +17,9 @@ package io.micronaut.starter.feature.grpc;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -27,6 +29,8 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
 
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
 import java.util.Set;
 
 @Singleton
@@ -46,11 +50,19 @@ public class Grpc implements DefaultFeature {
                 .compile());
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addHelpLink("Protobuf Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.protobuf");
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id("com.google.protobuf")
-                    .lookupArtifactId("protobuf-gradle-plugin")
-                    .build());
+            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
         }
+    }
+
+    private BuildPlugin gradlePlugin(GeneratorContext generatorContext) {
+        GradlePlugin.Builder builder = GradlePlugin.builder()
+                .id("com.google.protobuf")
+                .lookupArtifactId("protobuf-gradle-plugin");
+        Optional<GradleDsl> gradleDslOptional = generatorContext.getBuildTool().getGradleDsl();
+        if (gradleDslOptional.isPresent() && gradleDslOptional.get() == GradleDsl.KOTLIN) {
+            builder.buildImports("import com.google.protobuf.gradle.*");
+        }
+        return builder.build();
     }
 
     @Override

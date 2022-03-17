@@ -1,26 +1,33 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.options.BuildTool
 
 @args (
 Project project,
 Features features,
 String runCommand,
-String buildCommand
+String buildCommand,
+BuildTool buildTool
 )
 
 # Micronaut and Azure Function
 
 ## Prerequisites
 
-- Gradle 5+
 - Latest [Function Core Tools](https://aka.ms/azfunc-install)
-- Azure CLI. This plugin use Azure CLI for authentication, please make sure you have Azure CLI installed and logged in.
+- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)
 
 ## Setup
 
 ```cmd
 az login
 az account set -s <your subscription id>
+
+@if(buildTool == BuildTool.GRADLE) {
+## Build Tools
+
+The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).
+}
 
 ## Running the function locally
 

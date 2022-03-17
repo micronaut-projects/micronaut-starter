@@ -6,6 +6,7 @@ import io.micronaut.context.annotation.Parameter
 import io.micronaut.context.env.Environment
 import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.DefaultAvailableFeatures
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.cli.CodeGenConfig
@@ -93,6 +94,29 @@ class CreateAppCommandSpec extends CommandSpec implements CommandFixture {
         then:
         noExceptionThrown()
         baos.toString().contains("Invalid language selection: xyz")
+    }
+
+    void "community and preview features are labelled as such"() {
+        given:
+        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+        PrintStream old = System.out
+        System.setOut(new PrintStream(baos))
+
+        and:
+        def (previewFeature, communityFeature) = beanContext.getBean(DefaultAvailableFeatures).with {
+            [allFeatures.find { it.preview }, allFeatures.find { it.community }]
+        }
+
+        when:
+        PicocliRunner.run(CreateAppCommand, ctx, "temp", "--list-features")
+
+        then:
+        noExceptionThrown()
+        baos.toString().contains("$previewFeature.name [PREVIEW]")
+        baos.toString().contains("$communityFeature.name [COMMUNITY]")
+
+        cleanup:
+        System.setOut(old)
     }
 
     void createProject(Language lang) {

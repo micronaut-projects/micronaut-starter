@@ -24,7 +24,10 @@ import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.Writable;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class GradlePlugin implements BuildPlugin {
 
@@ -35,6 +38,7 @@ public class GradlePlugin implements BuildPlugin {
     private final Writable extension;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
+    private final Set<String> buildImports;
     private final int order;
 
     public GradlePlugin(@NonNull GradleFile gradleFile,
@@ -44,7 +48,8 @@ public class GradlePlugin implements BuildPlugin {
                         @Nullable Writable extension,
                         @Nullable Writable settingsExtension,
                         boolean requiresLookup,
-                        int order) {
+                        int order,
+                        Set<String> buildImports) {
         this.gradleFile = gradleFile;
         this.id = id;
         this.version = version;
@@ -53,6 +58,12 @@ public class GradlePlugin implements BuildPlugin {
         this.settingsExtension = settingsExtension;
         this.requiresLookup = requiresLookup;
         this.order = order;
+        this.buildImports = buildImports;
+    }
+
+    @Nullable
+    public Set<String> getBuildImports() {
+        return buildImports;
     }
 
     @NonNull
@@ -101,7 +112,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(this.gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, false, order);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, false, order, buildImports);
     }
 
     @Override
@@ -135,6 +146,7 @@ public class GradlePlugin implements BuildPlugin {
         private Writable settingsExtension;
         private boolean requiresLookup;
         private int order = 0;
+        private Set<String> buildImports = new HashSet<>();
 
         private Builder() { }
 
@@ -147,6 +159,12 @@ public class GradlePlugin implements BuildPlugin {
         @NonNull
         public GradlePlugin.Builder id(@NonNull String id) {
             this.id = id;
+            return this;
+        }
+
+        @NonNull
+        public GradlePlugin.Builder buildImports(String ...imports) {
+            this.buildImports.addAll(Arrays.asList(imports));
             return this;
         }
 
@@ -182,7 +200,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresLookup, order);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresLookup, order, buildImports);
         }
     }
 
