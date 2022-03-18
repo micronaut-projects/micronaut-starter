@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.micronaut.build.internal</groupId>
+            <artifactId>micronaut-gradle-plugins</artifactId>
+            <version>5.3.0</version>
+        </dependency>        
+        <dependency>
             <groupId>io.micronaut.aot</groupId>
             <artifactId>micronaut-aot-core</artifactId>
             <version>1.0.0-M7</version>
