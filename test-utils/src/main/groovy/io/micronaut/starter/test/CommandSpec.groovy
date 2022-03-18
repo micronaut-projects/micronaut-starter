@@ -89,9 +89,9 @@ abstract class CommandSpec extends Specification {
 
     String executeMaven(String command, int timeoutSeconds = 180) {
         if (OperatingSystem.current.isWindows()) {
-            command = dir.getAbsolutePath() + "\\" + "mvnw.bat " + command
+            command = dir.getAbsolutePath() + "\\" + "mvnw.bat clean " + command
         } else {
-            command = "./mvnw " + command
+            command = "./mvnw clean " + command
         }
         String[] args = command.split(" ")
         ProcessBuilder pb = new ProcessBuilder(args)
@@ -119,13 +119,17 @@ abstract class CommandSpec extends Specification {
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
                          TestFramework testFramework = null,
-                        boolean addMicronautGradleEnterpriseFeature = true
+                         boolean addMicronautGradleEnterpriseFeature = true
     ) {
+        if (addMicronautGradleEnterpriseFeature) {
+            features += [MicronautGradleEnterprise.NAME]
+        }
+
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
-                (buildTool.isGradle() && addMicronautGradleEnterpriseFeature) ? ( features + [MicronautGradleEnterprise.NAME]) : features,
+                features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
         )
