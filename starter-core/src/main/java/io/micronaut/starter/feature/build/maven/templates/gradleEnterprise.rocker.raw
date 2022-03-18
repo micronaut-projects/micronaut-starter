@@ -1,0 +1,19 @@
+@args(String server)
+<gradleEnterprise>
+    <server>
+        <url>@server</url>
+    </server>
+    <buildScan>
+        <publish>ALWAYS</publish>
+    </buildScan>
+    <buildCache>
+        <remote>
+            <server>
+                <credentials>
+                    <username>${env.GRADLE_ENTERPRISE_CACHE_USERNAME}</username>
+                    <password>${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}</password>
+                </credentials>
+            </server>
+        </remote>
+    </buildCache>
+</gradleEnterprise>
