@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -166,11 +166,13 @@ implements <a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" 
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#GradlePlugin-java.lang.String-java.lang.String-java.lang.String-io.micronaut.starter.template.Writable-io.micronaut.starter.template.Writable-boolean-int-java.util.Set-">GradlePlugin</a></span>(java.lang.String&nbsp;id,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#GradlePlugin-io.micronaut.starter.build.gradle.GradleFile-java.lang.String-java.lang.String-java.lang.String-io.micronaut.starter.template.Writable-io.micronaut.starter.template.Writable-boolean-boolean-int-java.util.Set-">GradlePlugin</a></span>(<a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a>&nbsp;gradleFile,
+            java.lang.String&nbsp;id,
             java.lang.String&nbsp;version,
             java.lang.String&nbsp;artifactId,
             <a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;extension,
             <a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;settingsExtension,
+            boolean&nbsp;requiresSettingsPluginsManagement,
             boolean&nbsp;requiresLookup,
             int&nbsp;order,
             java.util.Set&lt;java.lang.String&gt;&nbsp;buildImports)</code>&nbsp;</td>
@@ -211,30 +213,38 @@ implements <a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" 
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getExtension--">getExtension</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getGradleFile--">getGradleFile</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getId--">getId</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getOrder--">getOrder</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getSettingsExtension--">getSettingsExtension</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getSettingsPluginsManagement--">getSettingsPluginsManagement</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#getVersion--">getVersion</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#hashCode--">hashCode</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#requiresLookup--">requiresLookup</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.html#resolved-io.micronaut.starter.build.dependencies.CoordinateResolver-">resolved</a></span>(<a href="../../../../../io/micronaut/starter/build/dependencies/CoordinateResolver.html" title="interface in io.micronaut.starter.build.dependencies">CoordinateResolver</a>&nbsp;coordinateResolver)</code>&nbsp;</td>
 </tr>
@@ -260,13 +270,15 @@ implements <a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" 
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="GradlePlugin-java.lang.String-java.lang.String-java.lang.String-io.micronaut.starter.template.Writable-io.micronaut.starter.template.Writable-boolean-int-java.util.Set-">
+<a name="GradlePlugin-io.micronaut.starter.build.gradle.GradleFile-java.lang.String-java.lang.String-java.lang.String-io.micronaut.starter.template.Writable-io.micronaut.starter.template.Writable-boolean-boolean-int-java.util.Set-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>GradlePlugin</h4>
 <pre>public&nbsp;GradlePlugin(@NonNull
+                    <a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a>&nbsp;gradleFile,
+                    @NonNull
                     java.lang.String&nbsp;id,
                     @Nullable
                     java.lang.String&nbsp;version,
@@ -276,6 +288,7 @@ implements <a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" 
                     <a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;extension,
                     @Nullable
                     <a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;settingsExtension,
+                    boolean&nbsp;requiresSettingsPluginsManagement,
                     boolean&nbsp;requiresLookup,
                     int&nbsp;order,
                     java.util.Set&lt;java.lang.String&gt;&nbsp;buildImports)</pre>
@@ -297,6 +310,16 @@ implements <a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" 
 <h4>getBuildImports</h4>
 <pre>@Nullable
 public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getBuildImports()</pre>
+</li>
+</ul>
+<a name="getGradleFile--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getGradleFile</h4>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a>&nbsp;getGradleFile()</pre>
 </li>
 </ul>
 <a name="getId--">
@@ -355,6 +378,16 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/template/Writable.html"
 <h4>getSettingsExtension</h4>
 <pre>@Nullable
 public&nbsp;<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;getSettingsExtension()</pre>
+</li>
+</ul>
+<a name="getSettingsPluginsManagement--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSettingsPluginsManagement</h4>
+<pre>@NonNull
+public&nbsp;java.util.Optional&lt;<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&gt;&nbsp;getSettingsPluginsManagement()</pre>
 </li>
 </ul>
 <a name="getOrder--">
@@ -458,7 +491,7 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/template/Writable.html"
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/starter/build/gradle/GradleDsl.html" title="enum in io.micronaut.starter.build.gradle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

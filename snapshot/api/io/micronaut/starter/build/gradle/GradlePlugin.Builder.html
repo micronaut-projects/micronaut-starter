@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -145,21 +145,29 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#id-java.lang.String-">id</a></span>(java.lang.String&nbsp;id)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#gradleFile-io.micronaut.starter.build.gradle.GradleFile-">gradleFile</a></span>(<a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a>&nbsp;file)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#lookupArtifactId-java.lang.String-">lookupArtifactId</a></span>(java.lang.String&nbsp;artifactId)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#id-java.lang.String-">id</a></span>(java.lang.String&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#order-int-">order</a></span>(int&nbsp;order)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#lookupArtifactId-java.lang.String-">lookupArtifactId</a></span>(java.lang.String&nbsp;artifactId)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#settingsExtension-io.micronaut.starter.template.Writable-">settingsExtension</a></span>(<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;settingsExtension)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#order-int-">order</a></span>(int&nbsp;order)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#requiresSettingsPluginsManagement--">requiresSettingsPluginsManagement</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#settingsExtension-io.micronaut.starter.template.Writable-">settingsExtension</a></span>(<a href="../../../../../io/micronaut/starter/template/Writable.html" title="interface in io.micronaut.starter.template">Writable</a>&nbsp;settingsExtension)</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html#version-java.lang.String-">version</a></span>(java.lang.String&nbsp;version)</code>&nbsp;</td>
 </tr>
@@ -185,6 +193,17 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="gradleFile-io.micronaut.starter.build.gradle.GradleFile-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>gradleFile</h4>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a>&nbsp;gradleFile(@NonNull
+                                                <a href="../../../../../io/micronaut/starter/build/gradle/GradleFile.html" title="enum in io.micronaut.starter.build.gradle">GradleFile</a>&nbsp;file)</pre>
+</li>
+</ul>
 <a name="id-java.lang.String-">
 <!--   -->
 </a>
@@ -258,6 +277,16 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/build/gradle/GradlePlug
 <h4>order</h4>
 <pre>@NonNull
 public&nbsp;<a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a>&nbsp;order(int&nbsp;order)</pre>
+</li>
+</ul>
+<a name="requiresSettingsPluginsManagement--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requiresSettingsPluginsManagement</h4>
+<pre>@NonNull
+public&nbsp;<a href="../../../../../io/micronaut/starter/build/gradle/GradlePlugin.Builder.html" title="class in io.micronaut.starter.build.gradle">GradlePlugin.Builder</a>&nbsp;requiresSettingsPluginsManagement()</pre>
 </li>
 </ul>
 <a name="build--">
