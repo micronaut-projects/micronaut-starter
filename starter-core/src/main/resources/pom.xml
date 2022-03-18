@@ -16,7 +16,17 @@
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
             <version>5.3.0</version>
-        </dependency>        
+        </dependency>
+        <dependency>
+            <groupId>com.gradle</groupId>
+            <artifactId>gradle-enterprise-maven-extension</artifactId>
+            <version>1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gradle</groupId>
+            <artifactId>common-custom-user-data-maven-extension</artifactId>
+            <version>1.10</version>
+        </dependency>
         <dependency>
             <groupId>io.micronaut.aot</groupId>
             <artifactId>micronaut-aot-core</artifactId>

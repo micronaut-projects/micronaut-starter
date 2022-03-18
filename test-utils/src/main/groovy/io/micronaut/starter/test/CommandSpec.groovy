@@ -21,6 +21,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
+import io.micronaut.starter.feature.build.maven.MicronautMavenGradleEnterprise
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
@@ -121,11 +122,14 @@ abstract class CommandSpec extends Specification {
                          TestFramework testFramework = null,
                         boolean addMicronautGradleEnterpriseFeature = true
     ) {
+        List<String> enterpriseFeature = buildTool.isGradle() ? [MicronautGradleEnterprise.NAME] : [MicronautMavenGradleEnterprise.NAME]
+        features += addMicronautGradleEnterpriseFeature ? enterpriseFeature : []
+
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
                 io.micronaut.starter.application.OperatingSystem.LINUX,
-                (buildTool.isGradle() && addMicronautGradleEnterpriseFeature) ? ( features + [MicronautGradleEnterprise.NAME]) : features,
+                features,
                 new FileSystemOutputHandler(dir, ConsoleOutput.NOOP),
                 ConsoleOutput.NOOP
         )
