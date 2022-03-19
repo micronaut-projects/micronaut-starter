@@ -41,7 +41,7 @@ dependencies {
     testImplementation("io.micronaut.picocli:micronaut-picocli")
 
     testImplementation "org.testcontainers:spock"
-    testImplementation 'org.reflections:reflections:0.9.12'
+    testImplementation 'org.reflections:reflections:0.10.2'
     testImplementation 'org.codehaus.groovy:groovy-xml'
 }
 
