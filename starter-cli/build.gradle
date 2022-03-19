@@ -42,6 +42,7 @@ dependencies {
 
     testImplementation "org.testcontainers:spock"
     testImplementation 'org.reflections:reflections:0.9.12'
+    testImplementation 'org.codehaus.groovy:groovy-xml'
 }
 
 application {
