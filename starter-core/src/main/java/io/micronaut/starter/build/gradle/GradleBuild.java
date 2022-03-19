@@ -67,7 +67,12 @@ public class GradleBuild {
 
     @NonNull
     public List<GradlePlugin> getPlugins() {
-        return plugins;
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.BUILD).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public List<GradlePlugin> getSettingsPlugins() {
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).collect(Collectors.toList());
     }
 
     @NonNull
@@ -78,6 +83,17 @@ public class GradleBuild {
     @NonNull
     public String renderSettingsExtensions() {
         return renderWritableExtensions(plugins.stream().map(GradlePlugin::getSettingsExtension));
+    }
+
+    @NonNull
+    public String renderSettingsPluginsManagement() {
+        return plugins == null ? "" : plugins.stream()
+                .map(plugin -> plugin.getSettingsPluginsManagement()
+                            .map(writable -> renderWritableExtensions(Stream.of(writable))).orElse(null)
+                )
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse("");
     }
 
     @NonNull

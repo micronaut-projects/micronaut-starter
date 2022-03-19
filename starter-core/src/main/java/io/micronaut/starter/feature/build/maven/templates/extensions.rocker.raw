@@ -1,0 +1,13 @@
+@args(String geExtensionVersion, String customDataExtensionVersion)
+<extensions>
+    <extension>
+        <groupId>com.gradle</groupId>
+        <artifactId>gradle-enterprise-maven-extension</artifactId>
+        <version>@geExtensionVersion</version>
+    </extension>
+    <extension>
+        <groupId>com.gradle</groupId>
+        <artifactId>common-custom-user-data-maven-extension</artifactId>
+        <version>@customDataExtensionVersion</version>
+    </extension>
+</extensions>

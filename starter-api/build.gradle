@@ -25,5 +25,5 @@ dependencies {
     testImplementation "io.micronaut:micronaut-http-server-netty"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
-    testImplementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "ch.qos.logback:logback-classic:1.2.11"
 }

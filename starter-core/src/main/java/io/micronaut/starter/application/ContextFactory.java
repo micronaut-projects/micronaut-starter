@@ -53,7 +53,7 @@ public class ContextFactory {
                                                @Nullable OperatingSystem operatingSystem) {
         final Set<Feature> features = Collections.newSetFromMap(new IdentityHashMap<>(8));
         for (String name: selectedFeatures) {
-            Feature feature = availableFeatures.findFeature(name).orElse(null);
+            Feature feature = availableFeatures.findFeature(name, true).orElse(null);
             if (feature != null) {
                 features.add(feature);
             } else {
