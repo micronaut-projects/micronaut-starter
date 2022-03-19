@@ -35,7 +35,7 @@
         <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
-            <version>13.0.0</version>
+            <version>14.0.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
