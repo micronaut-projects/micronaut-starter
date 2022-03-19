@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.options;
 
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.LanguageDTO;
 import io.micronaut.starter.api.SelectOptionDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "LanguageSelectOptions")
+@Serdeable
 public class LanguageSelectOptions extends SelectOptionDTO<LanguageDTO> {
     public LanguageSelectOptions(List<LanguageDTO> options, LanguageDTO defaultOption) {
         super(options, defaultOption);

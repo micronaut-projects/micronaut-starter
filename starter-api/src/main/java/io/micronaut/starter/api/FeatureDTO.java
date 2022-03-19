@@ -17,9 +17,9 @@ package io.micronaut.starter.api;
 
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.feature.Feature;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -29,7 +29,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author graemerocher
  * @since 1.0.0
  */
-@Introspected
+@Serdeable
 @Schema(name = "Feature")
 public class FeatureDTO extends Linkable implements Named, Described {
 

@@ -18,10 +18,10 @@ package io.micronaut.starter.api;
 import io.micronaut.context.MessageSource;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Internal;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  */
 @Schema(name = "TestFrameworkInfo")
-@Introspected
+@Serdeable
 public class TestFrameworkDTO extends Linkable implements Named, Described, Selectable<TestFramework> {
     static final String MESSAGE_PREFIX = StarterConfiguration.PREFIX + ".testFramework.";
     private final String name;

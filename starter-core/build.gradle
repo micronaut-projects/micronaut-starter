@@ -13,6 +13,7 @@ sourceSets {
 }
 
 dependencies {
+    annotationProcessor "io.micronaut.serde:micronaut-serde-processor"
     api platform("io.micronaut:micronaut-bom:$micronautVersion")
     api "com.fizzed:rocker-runtime:$rockerVersion"
     api "io.micronaut:micronaut-inject"
@@ -23,6 +24,7 @@ dependencies {
     implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.1'
     implementation 'org.apache.commons:commons-compress:1.20'
+    testImplementation 'org.reflections:reflections:0.9.12'
 }
 
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
@@ -39,4 +41,11 @@ rocker {
 
 nohttp {
     source.exclude "**/pom.rocker.raw"
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+                .using(module("io.micronaut.serde:micronaut-serde-jackson:$micronautSerdeVersion"))
+    }
 }

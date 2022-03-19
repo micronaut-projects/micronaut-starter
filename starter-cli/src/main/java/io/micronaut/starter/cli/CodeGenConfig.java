@@ -16,9 +16,9 @@
 package io.micronaut.starter.cli;
 
 import io.micronaut.context.BeanContext;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.beans.BeanIntrospection;
 import io.micronaut.inject.qualifiers.Qualifiers;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Introspected
+@Serdeable
 public class CodeGenConfig {
 
     private ApplicationType applicationType;

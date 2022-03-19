@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.cli.command;
 
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.options.BuildTool;
 import picocli.CommandLine;
 
-@Introspected
+@Serdeable
 public class BuildToolConverter implements CommandLine.ITypeConverter<BuildTool> {
 
     @Override

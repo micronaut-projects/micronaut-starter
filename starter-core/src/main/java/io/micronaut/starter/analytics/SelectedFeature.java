@@ -15,11 +15,11 @@
  */
 package io.micronaut.starter.analytics;
 
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Named;
+import io.micronaut.serde.annotation.Serdeable;
 
-@Introspected
+@Serdeable
 public class SelectedFeature implements Named {
     private final String name;
 

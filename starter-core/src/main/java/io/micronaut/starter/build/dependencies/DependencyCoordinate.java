@@ -15,14 +15,14 @@
  */
 package io.micronaut.starter.build.dependencies;
 
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.Ordered;
+import io.micronaut.serde.annotation.Serdeable;
 
 import java.util.Objects;
 
-@Introspected
+@Serdeable
 public class DependencyCoordinate implements Coordinate, Ordered {
 
     private final String groupId;

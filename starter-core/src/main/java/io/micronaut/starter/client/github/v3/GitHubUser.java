@@ -17,7 +17,7 @@ package io.micronaut.starter.client.github.v3;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 
 /**
  * GitHub User.
@@ -26,7 +26,7 @@ import io.micronaut.core.annotation.Introspected;
  * @see <a href="https://docs.github.com/en/rest/reference/users">Api reference users</a>
  * @since 2.2
  */
-@Introspected
+@Serdeable
 public class GitHubUser {
     private final String login;
     private final String email;

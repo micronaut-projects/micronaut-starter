@@ -16,7 +16,7 @@
 package io.micronaut.starter.api.preview;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.Linkable;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -28,7 +28,7 @@ import java.util.Map;
  * @author graemerocher
  * @since 1.0.0
  */
-@Introspected
+@Serdeable
 @Schema(name = "Preview", description = "Previews the contents of the generated ZIP")
 public class PreviewDTO extends Linkable  {
 

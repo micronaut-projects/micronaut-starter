@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.api.options;
 
+import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.starter.api.SelectOptionDTO;
 import io.micronaut.starter.api.TestFrameworkDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 @Schema(name = "TestFrameworkSelectOptions")
+@Serdeable
 public class TestFrameworkSelectOptions extends SelectOptionDTO<TestFrameworkDTO> {
     public TestFrameworkSelectOptions(List<TestFrameworkDTO> options, TestFrameworkDTO defaultOption) {
         super(options, defaultOption);

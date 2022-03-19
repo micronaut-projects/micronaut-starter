@@ -16,7 +16,7 @@
 package io.micronaut.starter.api;
 
 import io.micronaut.core.annotation.Creator;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.serde.annotation.Serdeable;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @author graemerocher
  * @since 1.0.0
  */
-@Introspected
+@Serdeable
 @Schema(name = "Link")
 public class LinkDTO {
 
