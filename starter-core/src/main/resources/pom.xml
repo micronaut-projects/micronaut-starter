@@ -165,7 +165,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.7.30</version>
+            <version>1.7.36</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
@@ -190,7 +190,7 @@
         <dependency>
             <groupId>gg.jte</groupId>
             <artifactId>jte-maven-plugin</artifactId>
-            <version>1.12.1</version>
+            <version>2.0.0</version>
         </dependency>
     </dependencies>
 </project>
