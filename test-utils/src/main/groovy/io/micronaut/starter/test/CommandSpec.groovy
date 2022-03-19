@@ -20,6 +20,7 @@ import io.micronaut.core.util.functional.ThrowingSupplier
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.io.OutputHandler
@@ -44,13 +45,14 @@ abstract class CommandSpec extends Specification {
     @AutoCleanup
     ApplicationContext beanContext
 
-    @Shared GradleRunner gradleRunner = GradleRunner.create()
+    @Shared
+    GradleRunner gradleRunner = GradleRunner.create()
 
     abstract String getTempDirectoryPrefix()
 
     File dir
 
-    void setupSpec(){
+    void setupSpec() {
         beanContext = ApplicationContext.run(getConfiguration())
     }
 
@@ -62,33 +64,34 @@ abstract class CommandSpec extends Specification {
         dir.delete()
     }
 
-    Map<String, Object> getConfiguration(){
+    Map<String, Object> getConfiguration() {
         return Collections.EMPTY_MAP
     }
 
     String executeBuild(BuildTool buildTool, String command) {
         String output = null
         if (buildTool.isGradle()) {
-            output = executeGradle(command).getOutput()
+            output = executeGradle(command, '--build-cache').getOutput()
         } else if (buildTool == BuildTool.MAVEN) {
             output = executeMaven(command)
         }
         return output
     }
 
-    BuildResult executeGradle(String command) {
+    BuildResult executeGradle(String... arguments) {
         BuildResult result =
                 gradleRunner.withProjectDir(dir)
-                        .withArguments(command.split(' '))
+                        .withArguments(arguments)
+                        .forwardOutput()
                         .build()
         return result
     }
 
     String executeMaven(String command, int timeoutSeconds = 180) {
         if (OperatingSystem.current.isWindows()) {
-            command = dir.getAbsolutePath()+"\\"+"mvnw.bat " + command
+            command = dir.getAbsolutePath() + "\\" + "mvnw.bat clean " + command
         } else {
-            command = "./mvnw " + command
+            command = "./mvnw clean " + command
         }
         String[] args = command.split(" ")
         ProcessBuilder pb = new ProcessBuilder(args)
@@ -115,7 +118,13 @@ abstract class CommandSpec extends Specification {
                          BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
-                         TestFramework testFramework = null) {
+                         TestFramework testFramework = null,
+                         boolean addMicronautGradleEnterpriseFeature = true
+    ) {
+        if (addMicronautGradleEnterpriseFeature) {
+            features += [MicronautGradleEnterprise.NAME]
+        }
+
         beanContext.getBean(ProjectGenerator).generate(applicationType,
                 NameUtils.parse("example.micronaut.foo"),
                 new Options(lang, testFramework, buildTool),
@@ -143,6 +152,7 @@ abstract class CommandSpec extends Specification {
     }
 
     ThrowingSupplier<OutputHandler, IOException> getOutputHandler(ConsoleOutput consoleOutput) {
-        return { -> new FileSystemOutputHandler(dir, consoleOutput)}
+        return { -> new FileSystemOutputHandler(dir, consoleOutput) }
     }
+
 }
