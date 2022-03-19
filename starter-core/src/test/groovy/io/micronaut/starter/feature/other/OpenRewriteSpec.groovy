@@ -12,6 +12,15 @@ import static io.micronaut.starter.options.Language.JAVA
 
 class OpenRewriteSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    void 'test readme.md with feature openrewrite contains a link to the Rewrite Gradle Plugin in the plugin portal'() {
+        when:
+        String readme = generate(['openrewrite'])["README.md"]
+
+        then:
+        readme
+        readme.contains("[Rewrite Gradle Plugin](https://plugins.gradle.org/plugin/org.openrewrite.rewrite)")
+    }
+
     void 'test Gradle openrewrite feature'() {
         when:
         String template = render(GRADLE)

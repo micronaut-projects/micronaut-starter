@@ -1,5 +1,6 @@
 package io.micronaut.starter.core.test.create
 
+
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -25,7 +26,7 @@ class CreateCliSpec extends CommandSpec {
         when:
         String output = null
         if (buildTool.isGradle()) {
-            output = executeGradle('run --args="-v"').output
+            output = executeGradle('run', '--args="-v"').output
         } else {
             output = executeMaven("mn:run -Dmn.appArgs=-v")
         }

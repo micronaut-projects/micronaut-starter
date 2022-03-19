@@ -59,5 +59,7 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
                     .artifactId("micronaut-http-server-netty")
                     .compile());
         }
+        generatorContext.getConfiguration()
+                .addNested("netty.default.allocator.max-order", 3);
     }
 }

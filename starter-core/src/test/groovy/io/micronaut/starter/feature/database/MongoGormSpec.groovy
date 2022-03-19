@@ -105,6 +105,6 @@ class MongoGormSpec extends ApplicationContextSpec implements CommandOutputFixtu
         GeneratorContext ctx = buildGeneratorContext(['mongo-gorm'])
 
         then:
-        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}"
+        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}/mydb"
     }
 }

@@ -25,6 +25,14 @@ class FeatureControllerSpec extends Specification {
         !features.isEmpty()
     }
 
+    void "test community features"() {
+        when:
+        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
+
+        then:
+        communityFeatures.name == ['camunda', 'camunda-external-worker', 'zeebe']
+    }
+
     void "test list features - spanish"() {
         when:
         List<FeatureDTO> features = client.spanishFeatures(ApplicationType.DEFAULT).features
@@ -33,6 +41,7 @@ class FeatureControllerSpec extends Specification {
         then:
         graal.description == 'crear aplicaciones nativas'
         !graal.isPreview()
+        !graal.isCommunity()
     }
 
     void "test list features for application type"() {

@@ -68,7 +68,7 @@ public class DataJdbc implements DataFeature {
                 .artifactId("micronaut-data-jdbc")
                 .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
+        generatorContext.getConfiguration().addNested(getDatasourceConfig(dbFeature));
     }
 
     @Override

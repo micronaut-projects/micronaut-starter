@@ -5,13 +5,23 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class GrpcSpec extends ApplicationContextSpec {
+class GrpcSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void 'test readme.md with grpc application type contains a link to the Grpc Gradle Plugin in the plugin portal'() {
+        when:
+        String readme = generate(ApplicationType.GRPC, [])["README.md"]
+
+        then:
+        readme
+        readme.contains("[Protobuf Gradle Plugin](https://plugins.gradle.org/plugin/com.google.protobuf)")
+    }
 
     @Shared
     @Subject

@@ -63,7 +63,7 @@ public abstract class JdbcFeature implements OneOfFeature, DatabaseDriverConfigu
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
             Map<String, Object> jdbcConfig = new LinkedHashMap<>();
             applyDefaultConfig(dbFeature, jdbcConfig);
-            generatorContext.getConfiguration().putAll(jdbcConfig);
+            generatorContext.getConfiguration().addNested(jdbcConfig);
         });
     }
 

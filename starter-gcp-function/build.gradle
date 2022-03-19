@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id "com.github.johnrengelman.shadow"
     id "application"
 }
@@ -13,30 +14,34 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation "io.micronaut.gcp:micronaut-gcp-function-http:3.2.1"
+    implementation "io.micronaut.gcp:micronaut-gcp-function-http"
     compileOnly 'com.google.cloud.functions:functions-framework-api:1.0.4'
     developmentOnly 'com.google.cloud.functions:functions-framework-api:1.0.1'
 
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation 'com.google.cloud.functions:functions-framework-api:1.0.1'
     testImplementation "io.micronaut.test:micronaut-test-spock"
     invoker 'com.google.cloud.functions.invoker:java-function-invoker:1.0.2'
 }
-test.classpath += configurations.developmentOnly
 
-mainClassName = "io.micronaut.gcp.function.http.HttpFunction"
-// use JUnit 5 platform
-test {
+tasks.named("test", Test) {
     useJUnitPlatform()
+    classpath += configurations.developmentOnly
 }
 
-shadowJar {
+application {
+    mainClass = "io.micronaut.gcp.function.http.HttpFunction"
+}
+
+tasks.named("shadowJar") {
     mergeServiceFiles()
     manifest {
         attributes 'Main-Class': 'io.micronaut.gcp.function.http.HttpFunction'
     }
 }
 
-run.classpath += configurations.developmentOnly
+tasks.named("run") {
+    classpath += configurations.developmentOnly
+}

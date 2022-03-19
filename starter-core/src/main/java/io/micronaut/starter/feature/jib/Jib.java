@@ -54,6 +54,7 @@ public class Jib implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
+            generatorContext.addHelpLink("Jib Gradle Plugin", "https://plugins.gradle.org/plugin/com.google.cloud.tools.jib");
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.google.cloud.tools.jib")
                     .lookupArtifactId("jib-gradle-plugin")

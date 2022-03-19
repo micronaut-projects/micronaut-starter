@@ -1,0 +1,109 @@
+plugins {
+    id "io.micronaut.internal.starter.published-module"
+    id "io.micronaut.internal.starter.convention"
+    id "application"
+    id "com.github.johnrengelman.shadow"
+    id "io.micronaut.starter.rocker"
+    id "io.sdkman.vendors"
+}
+
+sourceSets {
+    main {
+        rocker {
+            srcDir("src/main/java")
+        }
+    }
+}
+
+def generateManpageAsciiDoc = tasks.register("generateManpageAsciiDoc", io.micronaut.internal.starter.tasks.GenerateManpageAsciidoc) {
+    mainClass = application.mainClass
+    classpath.from(configurations.generateConfig, sourceSets.main.runtimeClasspath)
+    outputDirectory.set(layout.buildDirectory.dir("generated-picocli-docs"))
+}
+
+def processManPages = tasks.register("processManPages", Sync) {
+    group = "Documentation"
+    from generateManpageAsciiDoc
+    include "**/*.adoc"
+    into layout.buildDirectory.dir("processed-manpages")
+    filter { String line ->
+        if (line == ':doctype: manpage' || line.startsWith('= ')) {
+            return ""
+        } else if (line.startsWith('==')) {
+            return '=' + line
+        } else {
+            return line
+        }
+    }
+}
+
+configurations {
+    asciidocPages {
+        canBeConsumed = true
+        canBeResolved = false
+        outgoing.artifact(processManPages.map {
+            layout.buildDirectory.dir("processed-manpages").get().asFile
+        })
+    }
+}
+
+def buildCompletion = tasks.register("buildCompletion", io.micronaut.internal.starter.tasks.PicocliBuildCompletionTask) {
+    outputDirectory.set(layout.buildDirectory.dir("bin"))
+    classpath.from(sourceSets.main.runtimeClasspath)
+    mainClass.set(application.mainClass)
+}
+
+distributions {
+    main {
+        contents {
+            from(buildCompletion) {
+                into 'bin'
+            }
+            from("${project.rootProject.projectDir}/LICENSE") {
+                into ''
+            }
+        }
+    }
+}
+
+tasks.named('shadowJar') {
+    mergeServiceFiles()
+}
+
+tasks.named("shadowDistZip") {
+    enabled = false
+}
+tasks.named("shadowDistTar") {
+    enabled = false
+}
+
+tasks.register("copyShadowJar", Sync) {
+    from shadowJar.outputs
+    into "${project.rootProject.buildDir}/libs"
+    rename { String fileName -> "cli.jar" }
+}
+
+tasks.register("exploded", Sync) {
+    dependsOn 'distZip'
+    from zipTree(distZip.outputs.files.singleFile)
+    into "${project.buildDir}/exploded"
+    eachFile { FileCopyDetails fcd ->
+        fcd.relativePath = new RelativePath(true, fcd.relativePath.segments.drop(1))
+    }
+    onlyIf {
+        distZip.outputs.files.singleFile.exists()
+    }
+}
+
+tasks.register("cleanup", Delete) {
+    delete "${project.rootProject.buildDir}/libs/cli.jar"
+    delete "${project.buildDir}/dist"
+}
+
+tasks.named("clean") {
+    dependsOn 'cleanup'
+}
+
+tasks.named("assemble") {
+    dependsOn('exploded')
+}

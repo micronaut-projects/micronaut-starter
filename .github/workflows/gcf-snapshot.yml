@@ -2,18 +2,20 @@ name: Snapshot to GCF
 on:
   push:
     branches:
-      - 3.2.x
+      - 3.3.x
 jobs:
   deploy:
     name: Deploy job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Build the JAR
         run: ./gradlew starter-api:test starter-gcp-function:test starter-gcp-function:shadowJar
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
