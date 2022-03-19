@@ -101,14 +101,11 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-api</artifactId>''')
-        template.contains("""
+        template.contains('''\
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.17.1</version>
-      <scope>compile</scope>
-    </dependency>
-""")
+      <version>''')
 
         where:
         language << Language.values().toList() - Language.GROOVY
