@@ -28,6 +28,10 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration {
+
+    public static final String GRADLE_ENTERPRISE_PLUGIN_ID = "com.gradle.enterprise";
+    public static final String GRADLE_ENTERPRISE_ARTIFACT_ID = "gradle-enterprise-gradle-plugin";
+
     @Override
     @NonNull
     public String getName() {
@@ -51,8 +55,8 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .gradleFile(GradleFile.SETTINGS)
-                    .id("com.gradle.enterprise")
-                    .lookupArtifactId("gradle-enterprise-gradle-plugin")
+                    .id(GRADLE_ENTERPRISE_PLUGIN_ID)
+                    .lookupArtifactId(GRADLE_ENTERPRISE_ARTIFACT_ID)
                     .settingsExtension(new RockerWritable(gradleEnterprise.template(this)))
                     .build());
         }
