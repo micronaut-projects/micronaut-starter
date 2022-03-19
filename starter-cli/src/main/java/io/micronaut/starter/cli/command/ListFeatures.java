@@ -94,6 +94,9 @@ public class ListFeatures {
             if (feature.isPreview()) {
                 name += " [PREVIEW]";
             }
+            if (feature.isCommunity()) {
+                name += " [COMMUNITY]";
+            }
             if (defaultFeatures.contains(feature)) {
                 name += " (+)";
                 consoleOutput.out("@|blue   " + String.format("%1$-" + width + "s", name) + feature.getDescription() + "|@");

@@ -1,0 +1,40 @@
+import groovy.transform.CompileStatic
+
+plugins {
+    id "io.micronaut.internal.starter.published-module"
+    id "io.micronaut.internal.starter.convention"
+}
+
+def openApiOutputFile = layout.buildDirectory.file('generated/openapi/openapi.properties')
+
+def openApiProperties = tasks.register("openApiProperties", WriteProperties) {
+    outputFile(openApiOutputFile.get().asFile)
+    properties(
+            'swagger-ui.enabled':true,
+            'redoc.enabled':true,
+            'rapidoc.enabled': true,
+            'rapidoc.bg-color': '#14191f',
+            'rapidoc.text-color': '#aec2e0',
+            'rapidoc.sort-endpoints-by': 'method',
+            'micronaut.openapi.expand.api.version': projectVersion
+    )
+}
+
+tasks.named("compileJava", JavaCompile) {
+    def override = objects.newInstance(OpenApiSystemPropertyOverride)
+    override.openApiPropertiesFile = openApiProperties.map { openApiOutputFile.get() }
+    options.fork = true
+    options.forkOptions.jvmArgumentProviders.add(override)
+}
+
+@CompileStatic
+abstract class OpenApiSystemPropertyOverride implements CommandLineArgumentProvider {
+    @InputFile
+    @PathSensitive(PathSensitivity.RELATIVE)
+    abstract RegularFileProperty getOpenApiPropertiesFile()
+
+    @Override
+    Iterable<String> asArguments() {
+        ["-Dmicronaut.openapi.config.file=${openApiPropertiesFile.asFile.get().absolutePath}".toString()]
+    }
+}

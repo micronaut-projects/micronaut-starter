@@ -22,34 +22,59 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import io.micronaut.starter.feature.build.gradle.templates.settingsPluginManagement;
 
 public class GradlePlugin implements BuildPlugin {
 
+    private final GradleFile gradleFile;
     private final String id;
     private final String version;
     private final String artifactId;
     private final Writable extension;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
+    private final boolean requiresSettingsPluginsManagement;
+    private final Set<String> buildImports;
     private final int order;
 
-    public GradlePlugin(@NonNull String id,
+    public GradlePlugin(@NonNull GradleFile gradleFile,
+                        @NonNull String id,
                         @Nullable String version,
                         @Nullable String artifactId,
                         @Nullable Writable extension,
                         @Nullable Writable settingsExtension,
+                        boolean requiresSettingsPluginsManagement,
                         boolean requiresLookup,
-                        int order) {
+                        int order,
+                        Set<String> buildImports) {
+        this.gradleFile = gradleFile;
         this.id = id;
         this.version = version;
         this.artifactId = artifactId;
         this.extension = extension;
         this.settingsExtension = settingsExtension;
+        this.requiresSettingsPluginsManagement = requiresSettingsPluginsManagement;
         this.requiresLookup = requiresLookup;
         this.order = order;
+        this.buildImports = buildImports;
+    }
+
+    @Nullable
+    public Set<String> getBuildImports() {
+        return buildImports;
+    }
+
+    @NonNull
+    public GradleFile getGradleFile() {
+        return gradleFile;
     }
 
     @NonNull
@@ -65,7 +90,7 @@ public class GradlePlugin implements BuildPlugin {
     @Override
     @NonNull
     public BuildTool getBuildTool() {
-        return null;
+        return BuildTool.GRADLE;
     }
 
     @Override
@@ -77,6 +102,14 @@ public class GradlePlugin implements BuildPlugin {
     @Nullable
     public Writable getSettingsExtension() {
         return this.settingsExtension;
+    }
+
+    @NonNull
+    public Optional<Writable> getSettingsPluginsManagement() {
+        if (this.requiresSettingsPluginsManagement) {
+            return Optional.of(new RockerWritable(settingsPluginManagement.template()));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -93,7 +126,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(id, coordinate.getVersion(), null, extension, settingsExtension, false, order);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, requiresSettingsPluginsManagement, false, order, buildImports);
     }
 
     @Override
@@ -119,19 +152,34 @@ public class GradlePlugin implements BuildPlugin {
 
     public static final class Builder {
 
+        private GradleFile gradleFile = GradleFile.BUILD;
         private String id;
         private String artifactId;
         private String version;
         private Writable extension;
         private Writable settingsExtension;
+        private boolean requiresSettingsPluginsManagement;
         private boolean requiresLookup;
         private int order = 0;
+        private Set<String> buildImports = new HashSet<>();
 
         private Builder() { }
 
         @NonNull
+        public GradlePlugin.Builder gradleFile(@NonNull GradleFile file) {
+            this.gradleFile = file;
+            return this;
+        }
+
+        @NonNull
         public GradlePlugin.Builder id(@NonNull String id) {
             this.id = id;
+            return this;
+        }
+
+        @NonNull
+        public GradlePlugin.Builder buildImports(String ...imports) {
+            this.buildImports.addAll(Arrays.asList(imports));
             return this;
         }
 
@@ -166,8 +214,14 @@ public class GradlePlugin implements BuildPlugin {
             return this;
         }
 
+        @NonNull
+        public GradlePlugin.Builder requiresSettingsPluginsManagement() {
+            this.requiresSettingsPluginsManagement = true;
+            return this;
+        }
+
         public GradlePlugin build() {
-            return new GradlePlugin(id, version, artifactId, extension, settingsExtension, requiresLookup, order);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresSettingsPluginsManagement, requiresLookup, order, buildImports);
         }
     }
 

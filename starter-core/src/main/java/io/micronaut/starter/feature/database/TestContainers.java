@@ -30,8 +30,12 @@ import io.micronaut.starter.template.StringTemplate;
 
 import jakarta.inject.Singleton;
 
+import java.util.Optional;
+
 @Singleton
 public class TestContainers implements Feature {
+
+    private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
     @NonNull
     @Override
@@ -51,85 +55,106 @@ public class TestContainers implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.testcontainers")
-                .artifactId("testcontainers")
-                .test());
+        generatorContext.addDependency(testContainerTestDependency("testcontainers"));
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(driverFeature -> {
             generatorContext.getFeature(R2dbc.class).ifPresent(driverConfiguration -> {
-                String url = null;
-                if (driverFeature instanceof MySQL) {
-                    url = "r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8";
-                } else if (driverFeature instanceof PostgreSQL) {
-                    url = "r2dbc:tc:postgresql:///db?TC_IMAGE_TAG=12";
-                } else if (driverFeature instanceof MariaDB) {
-                    url = "r2dbc:tc:mariadb:///db?TC_IMAGE_TAG=10";
-                } else if (driverFeature instanceof SQLServer) {
-                    url = "r2dbc:tc:sqlserver:///db?TC_IMAGE_TAG=2019-CU4-ubuntu-16.04";
+                if (driverFeature instanceof SQLServer) {
                     generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
                 }
-
-                if (url != null) {
+                r2dbcUrlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
-                }
-                generatorContext.addDependency(Dependency.builder()
-                        .groupId("org.testcontainers")
-                        .artifactId("r2dbc")
-                        .test());
+                });
+                generatorContext.addDependency(testContainerTestDependency("r2dbc"));
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
-                String url = null;
                 String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
-                String dependencyArtifactId = null;
-                if (driverFeature instanceof MySQL) {
-                    url = "jdbc:tc:mysql:8:///db";
-                    dependencyArtifactId = "mysql";
-                } else if (driverFeature instanceof PostgreSQL) {
-                    url = "jdbc:tc:postgresql:12:///postgres";
-                    dependencyArtifactId = "postgresql";
-                } else if (driverFeature instanceof MariaDB) {
-                    url = "jdbc:tc:mariadb:10:///db";
-                    dependencyArtifactId = "mariadb";
-                } else if (driverFeature instanceof SQLServer) {
-                    url = "jdbc:tc:sqlserver:2019-CU4-ubuntu-16.04://databaseName=tempdb";
+                if (driverFeature instanceof SQLServer) {
                     generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
-                    dependencyArtifactId = "mssqlserver";
-                } else if (driverFeature instanceof Oracle) {
-                    url = "jdbc:tc:oracle:thin:@/xe";
-                    dependencyArtifactId = "oracle-xe";
                 }
-
-                if (url != null) {
+                urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                     testConfig.put(driverConfiguration.getDriverKey(), driver);
-                }
-                if (dependencyArtifactId != null) {
-                    generatorContext.addDependency(Dependency.builder()
-                            .groupId("org.testcontainers")
-                            .artifactId(dependencyArtifactId)
-                            .test());
-                }
+                });
+                artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
+                        generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
             });
         });
-        if (generatorContext.getTestFramework() == TestFramework.SPOCK) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.testcontainers")
-                    .artifactId("spock")
-                    .test());
-        } else if (generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.testcontainers")
-                    .artifactId("junit-jupiter")
-                    .test());
-        }
+        testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
+            generatorContext.addDependency(testContainerTestDependency(testArtifactId));
+        });
+
         if (generatorContext.isFeaturePresent(MongoFeature.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.testcontainers")
-                    .artifactId("mongodb")
-                    .test());
+            generatorContext.addDependency(testContainerTestDependency("mongodb"));
         }
+    }
+
+    @NonNull
+    private static Dependency.Builder testContainerTestDependency(@NonNull String artifactId) {
+        return Dependency.builder()
+                .groupId(TESTCONTAINERS_GROUP_ID)
+                .artifactId(artifactId)
+                .test();
+    }
+
+    @NonNull
+    private static Optional<String> testContainerArtifactIdByTestFramework(TestFramework testFramework) {
+        if (testFramework == TestFramework.SPOCK) {
+            return Optional.of("spock");
+        } else if (testFramework == TestFramework.JUNIT) {
+            return Optional.of("junit-jupiter");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> artifactIdForDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("mysql");
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("postgresql");
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("mariadb");
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("mssqlserver");
+        } else if (driverFeature instanceof Oracle) {
+            return Optional.of("oracle-xe");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> r2dbcUrlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("r2dbc:tc:mysql:///db?TC_IMAGE_TAG=8");
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("r2dbc:tc:postgresql:///db?TC_IMAGE_TAG=12");
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("r2dbc:tc:mariadb:///db?TC_IMAGE_TAG=10");
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("r2dbc:tc:sqlserver:///db?TC_IMAGE_TAG=2019-CU4-ubuntu-16.04");
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    private static Optional<String> urlForDatabaseDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+        if (driverFeature instanceof MySQL) {
+            return Optional.of("jdbc:tc:mysql:8:///db");
+
+        } else if (driverFeature instanceof PostgreSQL) {
+            return Optional.of("jdbc:tc:postgresql:12:///postgres");
+
+        } else if (driverFeature instanceof MariaDB) {
+            return Optional.of("jdbc:tc:mariadb:10:///db");
+
+        } else if (driverFeature instanceof SQLServer) {
+            return Optional.of("jdbc:tc:sqlserver:2019-CU4-ubuntu-16.04://databaseName=tempdb");
+        } else if (driverFeature instanceof Oracle) {
+            return Optional.of("jdbc:tc:oracle:thin:@/xe");
+        }
+        return Optional.empty();
     }
 
     @Override

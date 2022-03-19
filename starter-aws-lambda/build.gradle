@@ -1,5 +1,6 @@
 plugins {
-    id("io.micronaut.application") version "2.0.3"    
+    id "io.micronaut.internal.starter.convention"
+    id("io.micronaut.application")
 }
 
 
@@ -10,12 +11,18 @@ micronaut {
 
 dependencies {
     implementation project(":starter-api")
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
 }
 
-mainClassName = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+application {
+    mainClass = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime"
+}
 
-nativeImage {
-    imageName = "application"
+graalvmNative {
+    binaries {
+        main {
+            imageName = 'application'
+        }
+    }
 }

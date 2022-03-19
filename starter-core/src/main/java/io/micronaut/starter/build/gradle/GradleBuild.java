@@ -24,8 +24,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GradleBuild {
@@ -64,7 +67,12 @@ public class GradleBuild {
 
     @NonNull
     public List<GradlePlugin> getPlugins() {
-        return plugins;
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.BUILD).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public List<GradlePlugin> getSettingsPlugins() {
+        return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).collect(Collectors.toList());
     }
 
     @NonNull
@@ -78,6 +86,17 @@ public class GradleBuild {
     }
 
     @NonNull
+    public String renderSettingsPluginsManagement() {
+        return plugins == null ? "" : plugins.stream()
+                .map(plugin -> plugin.getSettingsPluginsManagement()
+                            .map(writable -> renderWritableExtensions(Stream.of(writable))).orElse(null)
+                )
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse("");
+    }
+
+    @NonNull
     private String renderWritableExtensions(Stream<Writable> extensions) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         extensions
@@ -85,6 +104,7 @@ public class GradleBuild {
                 .forEach(writable -> {
                     try {
                         writable.write(outputStream);
+                        outputStream.write(System.lineSeparator().getBytes(StandardCharsets.UTF_8));
                     } catch (IOException e) {
                         if (LOG.isErrorEnabled()) {
                             LOG.error("IO Exception rendering Gradle Plugin extension");
@@ -92,5 +112,17 @@ public class GradleBuild {
                     }
                 });
         return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
+    }
+
+    @NonNull
+    public Set<String> getPluginsImports() {
+        Set<String> imports = new HashSet<>();
+        for (GradlePlugin p : plugins) {
+            Set<String> pluginImports = p.getBuildImports();
+            if (pluginImports != null) {
+                imports.addAll(pluginImports);
+            }
+        }
+        return imports.stream().map(it -> it + System.lineSeparator()).collect(Collectors.toSet());
     }
 }

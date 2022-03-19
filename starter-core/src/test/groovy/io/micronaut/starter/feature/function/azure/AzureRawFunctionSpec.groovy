@@ -7,6 +7,20 @@ import io.micronaut.starter.options.*
 
 class AzureRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
+    void 'test readme.md with feature azure-function and Maven does not contain link to Azure Gradle plugin'() {
+        when:
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8)
+        def output = generate(ApplicationType.FUNCTION, options, ['azure-function'])
+        def readme = output["README.md"]
+
+        then:
+        readme
+        !readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
+
+        and: 'but contains link to CLI'
+        readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
+    }
+
     void 'test readme.md with feature azure-function contains links to docs'() {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
@@ -29,5 +43,12 @@ class AzureRawFunctionSpec extends BeanContextSpec  implements CommandOutputFixt
         then:
         // make sure we didn't add docs more than once
         !readme.contains("## Feature azure-function documentation")
+
+        and: 'contains link to Azure CLI'
+        readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
+
+        and: 'link to Azure Gradle Plugin'
+        readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
+
     }
 }

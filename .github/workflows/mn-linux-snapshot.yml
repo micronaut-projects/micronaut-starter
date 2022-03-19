@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
@@ -23,6 +23,8 @@ jobs:
       - name: Build the JAR
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
         run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
@@ -39,8 +41,8 @@ jobs:
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.2.x'
-        uses: actions/upload-artifact@v2.3.1
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.3.x'
+        uses: actions/upload-artifact@v3
         with:
           name: mn-linux-amd64-snapshot
           path: mn-linux-amd64-snapshot.zip

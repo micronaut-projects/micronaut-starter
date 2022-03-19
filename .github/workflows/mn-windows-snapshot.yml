@@ -11,7 +11,7 @@ jobs:
     name: Builds Windows Native CLI
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
@@ -23,6 +23,8 @@ jobs:
         shell: powershell
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: powershell
@@ -45,8 +47,8 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.2.x'
-        uses: actions/upload-artifact@v2.3.1
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.3.x'
+        uses: actions/upload-artifact@v3
         with:
           name: mn-win-amd64-snapshot
           path: ./mn-win-amd64-snapshot.zip

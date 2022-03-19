@@ -1,14 +1,16 @@
 plugins {
-    id 'com.google.cloud.tools.jib' version '3.0.0'
+    id "io.micronaut.internal.starter.convention"
+    id 'com.google.cloud.tools.jib' version '3.2.0'
     id "application"
 }
+
 dependencies {
     annotationProcessor "io.micronaut.data:micronaut-data-processor"
     annotationProcessor "io.micronaut:micronaut-graal"
 
     implementation project(":starter-core")
     implementation "io.micronaut:micronaut-http-server-netty"
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
     implementation("io.micronaut.data:micronaut-data-jdbc")
     implementation 'org.postgresql:postgresql:42.2.20'
     implementation 'com.google.cloud.sql:postgres-socket-factory:1.2.3'

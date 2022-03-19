@@ -1,4 +1,5 @@
 plugins {
+    id "io.micronaut.internal.starter.convention"
     id "application"
     id "war"
 }
@@ -14,22 +15,25 @@ dependencies {
     implementation project(":starter-api")
     implementation "io.micronaut:micronaut-inject"
 
-    implementation("io.micronaut.servlet:micronaut-servlet-engine:1.0.0.M3")
-    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
+    implementation("io.micronaut.servlet:micronaut-servlet-engine:3.1.0")
+    developmentOnly "io.micronaut.servlet:micronaut-http-server-jetty"
 
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-    testImplementation "io.micronaut.servlet:micronaut-http-server-jetty:1.0.0.M3"
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.11"
+    testImplementation "io.micronaut.servlet:micronaut-http-server-jetty"
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
     testImplementation "io.micronaut.test:micronaut-test-spock"
     testImplementation "io.micronaut:micronaut-http-client"
 }
-test.classpath += configurations.developmentOnly
 
-mainClassName = "io.micronaut.starter.servlet.Application"
-// use JUnit 5 platform
-test {
+tasks.named("test", Test) {
     useJUnitPlatform()
+    classpath += configurations.developmentOnly
 }
 
-run.classpath += configurations.developmentOnly
-//run.jvmArgs("-agentlib:native-image-agent=config-output-dir=tmp")
+application {
+    mainClass = "io.micronaut.starter.servlet.Application"
+}
+
+tasks.named("run") {
+    classpath += configurations.developmentOnly
+}

@@ -43,4 +43,34 @@ class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture 
     </dependency>
 """)
     }
+
+    void "test the flyway-mysql dependency is added to the gradle build"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['flyway', 'mysql'])
+                .render()
+
+        then:
+        template.contains('runtimeOnly("org.flywaydb:flyway-mysql")')
+    }
+
+    void "test the flyway-mysql dependency is added to the gradle build when mariadb is selected"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['flyway', 'mariadb'])
+                .render()
+
+        then:
+        template.contains('runtimeOnly("org.flywaydb:flyway-mysql")')
+    }
+
+    void "test the flyway-sqlserver dependency is added to the gradle build"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['flyway', 'sqlserver'])
+                .render()
+
+        then:
+        template.contains('runtimeOnly("org.flywaydb:flyway-sqlserver")')
+    }
 }

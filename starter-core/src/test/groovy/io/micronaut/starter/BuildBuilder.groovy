@@ -5,6 +5,7 @@ import io.micronaut.context.BeanContext
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildPlugin
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
 import io.micronaut.starter.build.gradle.GradleBuildCreator
@@ -65,25 +66,41 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
         this
     }
 
-    String render() {
+    Project getProject() {
+        this.project ?: buildProject()
+    }
+
+    /**
+     * If {@param render} is set to false it returns a {@link GradleBuild} or {@link MavenBuild} object
+     */
+    Object build(boolean render = true) {
         List<String> featureNames = this.features ?: []
         Language language = this.language ?: Language.DEFAULT_OPTION
         TestFramework testFramework = this.testFramework ?: language.defaults.test
         ApplicationType type = this.applicationType ?: ApplicationType.DEFAULT
-        Project project = this.project ?: buildProject()
+        Project project = getProject()
         JdkVersion jdkVersion = this.jdkVersion ?: JdkVersion.JDK_8
-
         Options options = new Options(language, testFramework, buildTool, jdkVersion)
         Features features = getFeatures(featureNames, options, type)
 
         if (buildTool.isGradle()) {
             GradleBuild build = gradleBuild(options, features, project, type)
-            return buildGradle.template(type, project, features, build).render().toString()
+            if (render) {
+                return buildGradle.template(type, project, features, build).render().toString()
+            }
+            return build
         } else if (buildTool == BuildTool.MAVEN) {
             MavenBuild build = mavenBuild(options, features, project, type)
-            return pom.template(type, project, features, build).render().toString()
+            if (render) {
+                return pom.template(type, project, features, build).render().toString()
+            }
+            return build
         }
         null
+    }
+
+    String render() {
+        return build()
     }
 
     private GradleBuildCreator getGradleDependencyResolver() {
