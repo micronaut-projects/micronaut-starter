@@ -140,7 +140,7 @@
         <dependency>
             <groupId>gradle.plugin.com.github.johnrengelman</groupId>
             <artifactId>shadow</artifactId>
-            <version>7.1.1</version>
+            <version>7.1.2</version>
         </dependency>
         <dependency>
             <groupId>gradle.plugin.org.zeroturnaround</groupId>
