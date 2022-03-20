@@ -75,9 +75,9 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
                 .render()
 
         then:
-        template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:1.7.30")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-api:2.17.1")')
-        template.contains('implementation("org.apache.logging.log4j:log4j-core:2.17.1")')
+        template.contains('runtimeOnly("org.slf4j:log4j-over-slf4j:')
+        template.contains('implementation("org.apache.logging.log4j:log4j-api:')
+        template.contains('implementation("org.apache.logging.log4j:log4j-core:')
 
         where:
         language << Language.values().toList() - Language.GROOVY
@@ -93,30 +93,19 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
                 .render()
 
         then:
-        template.contains("""
+        template.contains('''\
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>log4j-over-slf4j</artifactId>
-      <version>1.7.30</version>
-      <scope>runtime</scope>
-    </dependency>
-""")
-        template.contains("""
+      <artifactId>log4j-over-slf4j</artifactId>''')
+        template.contains('''\
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.17.1</version>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
+      <artifactId>log4j-api</artifactId>''')
+        template.contains('''\
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.17.1</version>
-      <scope>compile</scope>
-    </dependency>
-""")
+      <version>''')
 
         where:
         language << Language.values().toList() - Language.GROOVY
