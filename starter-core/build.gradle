@@ -22,7 +22,7 @@ dependencies {
     api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
     implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.1'
-    implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'org.apache.commons:commons-compress:1.21'
 }
 
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
