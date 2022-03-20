@@ -71,11 +71,12 @@ jte {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
+        template.contains('''\
       <plugin>
         <groupId>gg.jte</groupId>
         <artifactId>jte-maven-plugin</artifactId>
-        <version>1.12.1</version>
+        <version>''')
+        template.contains('''</version>
           <configuration>
             <sourceDirectory>src/main/jte</sourceDirectory>
             <contentType>Html</contentType>
@@ -89,7 +90,7 @@ jte {
             </execution>
           </executions>
       </plugin>
-""")
+''')
 
         where:
         language << Language.values().toList()
