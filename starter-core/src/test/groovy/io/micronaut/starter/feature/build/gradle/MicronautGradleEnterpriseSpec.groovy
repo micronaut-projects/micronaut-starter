@@ -77,9 +77,9 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["micronaut-gradle-enterprise"])
 
         then:
-        !output[".mvn/gradle-enterprise.xml"]
-        !output[".mvn/gradle-enterprise-custom-user-data.groovy"]
-        !output[".mvn/extensions.xml"]
+        output[".mvn/gradle-enterprise.xml"] == null
+        output[".mvn/gradle-enterprise-custom-user-data.groovy"] == null
+        output[".mvn/extensions.xml"] == null
 
         where:
         buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]

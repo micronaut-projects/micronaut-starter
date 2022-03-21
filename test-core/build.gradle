@@ -25,7 +25,6 @@ dependencies {
 }
 
 tasks.withType(Test).configureEach {
-    maxParallelForks = 2
     forkEvery = 10
 }
 
