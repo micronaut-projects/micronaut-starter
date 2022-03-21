@@ -23,6 +23,7 @@ dependencies {
     implementation "org.yaml:snakeyaml:1.28"
     implementation 'com.typesafe:config:1.4.1'
     implementation 'org.apache.commons:commons-compress:1.21'
+    testImplementation("org.codehaus.groovy:groovy-xml")
 }
 
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {

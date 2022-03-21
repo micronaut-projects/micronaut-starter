@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build.gradle
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
@@ -10,13 +11,10 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
-import spock.lang.Unroll
-import spock.util.environment.RestoreSystemProperties
 
 class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Unroll
-    void "if you add micronaut-gradle-enterprise is configured in settings.gradle"(BuildTool buildTool) {
+    void "if you add micronaut-gradle-enterprise it is configured for #buildTool"() {
         given:when:
         BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
                     .language(Language.JAVA)
@@ -53,36 +51,28 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
     void 'feature micronaut-gradle-enterprise creates a .mvn/extensions dot xml file'() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
-
-        String extensionsXml = output[".mvn/extensions.xml"]
+        def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
-        extensionsXml
-        extensionsXml.count('<extensions>') == 1
-        extensionsXml.count('</extensions>') == 1
-        extensionsXml.count('<extension>') == 2
-        extensionsXml.count('</extension>') == 2
-        extensionsXml.count('<groupId>com.gradle</groupId>') == 2
-        extensionsXml.count('<artifactId>gradle-enterprise-maven-extension</artifactId>') == 1
-        extensionsXml.count('<artifactId>common-custom-user-data-maven-extension</artifactId>') == 1
-        extensionsXml.count('<version>') == 2
-        extensionsXml.count('</version>') == 2
+        xml.name() == 'extensions'
+
+        def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'gradle-enterprise-maven-extension' }
+        enterpriseExtension.groupId.text() == 'com.gradle'
+        enterpriseExtension.version.text() ==~ /[\d.]+/ // numbers and fullstops
+        def userDataExtension = xml.extension.find { it.artifactId.text() == 'common-custom-user-data-maven-extension' }
+        userDataExtension.groupId.text() == 'com.gradle'
+        userDataExtension.version.text() ==~ /[\d.]+/ // numbers and fullstops
     }
 
-    void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise-custom-user-data dot groovv file'() {
+    void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise-custom-user-data dot groovy file'() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
 
-        String customUser = output[".mvn/gradle-enterprise-custom-user-data.groovy"]
-
         then:
-        customUser
-        customUser.count("buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null") == 1
-
+        output[".mvn/gradle-enterprise-custom-user-data.groovy"] == "buildCache.remote.storeEnabled = System.getenv('GITHUB_ACTIONS') != null"
     }
 
-    @Unroll
-    void 'feature micronaut-gradle-enterprise does not create maven files for Gradle'(BuildTool buildTool) {
+    void 'feature micronaut-gradle-enterprise does not create maven files for #buildTool'() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), ["micronaut-gradle-enterprise"])
 
@@ -98,25 +88,14 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {
         when:
         Map<String, String> output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ["micronaut-gradle-enterprise"])
-
-        String gradleEnterprise = output[".mvn/gradle-enterprise.xml"]
+        def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
 
         then:
-        gradleEnterprise.count('<gradleEnterprise>') == 1
-        gradleEnterprise.count('<server>') == 2
-        gradleEnterprise.count('<url>https://ge.micronaut.io</url>') == 1
-        gradleEnterprise.count('</server>') == 2
-        gradleEnterprise.count('<buildScan>') == 1
-        gradleEnterprise.count('<publish>ALWAYS</publish>') == 1
-        gradleEnterprise.count('</buildScan>') == 1
-        gradleEnterprise.count('<buildCache>') == 1
-        gradleEnterprise.count('<remote>') == 1
-        gradleEnterprise.count('<credentials>') == 1
-        gradleEnterprise.count('<username>${env.GRADLE_ENTERPRISE_CACHE_USERNAME}</username>') == 1
-        gradleEnterprise.count('<password>${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}</password>') == 1
-        gradleEnterprise.count('</credentials>') == 1
-        gradleEnterprise.count('</remote>') == 1
-        gradleEnterprise.count('</buildCache>') == 1
-        gradleEnterprise.count('</gradleEnterprise>') == 1
+        xml.name() == 'gradleEnterprise'
+        xml.server.url.text() == 'https://ge.micronaut.io'
+        xml.buildScan.publish.text() == 'ALWAYS'
+        xml.buildCache.remote.server.credentials.username.text() == '${env.GRADLE_ENTERPRISE_CACHE_USERNAME}'
+        xml.buildCache.remote.server.credentials.password.text() == '${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}'
+        !xml.buildCache.remote.storeEnabled // Not set in here, this is handled in custom data
     }
 }
