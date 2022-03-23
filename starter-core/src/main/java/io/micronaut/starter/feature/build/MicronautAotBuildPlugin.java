@@ -73,6 +73,9 @@ public class MicronautAotBuildPlugin implements Feature {
                     .lookupArtifactId(ARTIFACT_ID)
                     .order(PLUGIN_ORDER)
                     .build());
+        } else {
+            generatorContext.getBuildProperties()
+                .put("micronaut.aot.packageName", generatorContext.getProject().getPackageName());
         }
     }
 }

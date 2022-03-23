@@ -10,6 +10,7 @@ import spock.lang.Unroll
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
 import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
+import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -80,6 +81,18 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains(AOT_PLUGIN)
         output.contains(APP_PLUGIN)
         output.indexOf(APP_PLUGIN) < output.indexOf(AOT_PLUGIN)
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'application with maven and feature micronaut-aot for language=#language'() {
+        when:
+        String output = build(MAVEN, language)
+
+        then:
+        output.contains("<micronaut.aot.packageName>example.micronaut</micronaut.aot.packageName>")
 
         where:
         language << Language.values().toList()
