@@ -14,7 +14,7 @@ import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    private static final String GRADLE_PLUGIN_VERSION = '3.3.0'
+    private static final String GRADLE_PLUGIN_VERSION = '3.3.1'
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
 
@@ -32,7 +32,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment = true')
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
-        output.contains("version = '1.0.0-M7'")
+        output.contains("version = '1.0.0'")
 
         where:
         language << Language.values().toList()
@@ -52,7 +52,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment.set(true)')
         output.contains('optimizeClassLoading.set(true)')
         output.contains('deduceEnvironment.set(true)')
-        output.contains('version.set("1.0.0-M7")')
+        output.contains('version.set("1.0.0")')
 
         where:
         language << Language.values().toList()
