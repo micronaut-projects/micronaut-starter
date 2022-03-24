@@ -18,7 +18,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         readme
         readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
-        readme.contains("https://micronaut-projects.github.io/micronaut-data/snapshot/guide/#mongo")
+        readme.contains("https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo")
         readme.contains("https://docs.mongodb.com")
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
         build.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor')

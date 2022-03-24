@@ -31,7 +31,7 @@ import jakarta.inject.Singleton;
  */
 @Experimental
 @Singleton
-public class DataMongo implements Feature {
+public class DataMongo implements DataFeature {
 
     // TODO: Need to support either sync or async
     private final MongoSync mongoSync;
@@ -46,36 +46,22 @@ public class DataMongo implements Feature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-data/snapshot/guide/#mongo";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.DATABASE;
+        return "https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(
-            Dependency.builder()
+        generatorContext.addDependency(Dependency.builder()
                 .annotationProcessor()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-document-processor")
-                .version("3.3.0-M1")
-        );
-        generatorContext.addDependency(
-            Dependency.builder()
+                .versionProperty("micronaut.data.version"));
+        generatorContext.addDependency(Dependency.builder()
                 .compile()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-mongodb")
-                .version("3.3.0-M1")
-        );        
+                .versionProperty("micronaut.data.version"));
     }
 
     @Override
@@ -91,10 +77,5 @@ public class DataMongo implements Feature {
     @Override
     public String getTitle() {
         return "Micronaut Data MongoDB";
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 }
