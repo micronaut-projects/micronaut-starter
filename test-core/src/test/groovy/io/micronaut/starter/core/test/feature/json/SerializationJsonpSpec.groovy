@@ -31,8 +31,8 @@ class SerializationJsonpSpec extends CommandSpec {
 
         then:
         Files.exists(buildGradlePath)
-        Files.readAllLines(buildGradlePath).stream().map(x -> x.strip()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
-        Files.readAllLines(buildGradlePath).stream().map(x -> x.strip()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-jsonp\")")
+        Files.readAllLines(buildGradlePath).stream().map(x -> x.trim()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
+        Files.readAllLines(buildGradlePath).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-jsonp\")")
         output?.contains("BUILD SUCCESS")
     }
 }
