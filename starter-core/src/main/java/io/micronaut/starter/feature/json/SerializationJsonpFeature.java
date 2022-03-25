@@ -18,24 +18,24 @@ package io.micronaut.starter.feature.json;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SerializationJsonbFeature  implements SerializationFeature {
+public class SerializationJsonpFeature implements SerializationFeature {
     @Override
     public String getName() {
-        return "serialization-jsonb";
+        return "serialization-jsonp";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support using Micronaut Serialization with JSON-B";
+        return "Adds support using Micronaut Serialization with JSON-B and JSON-P";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Serialization JSON-B";
+        return "Micronaut Serialization JSON-B and JSON-P";
     }
 
     @Override
     public String getModule() {
-        return "jsonb";
+        return "jsonp";
     }
 }
