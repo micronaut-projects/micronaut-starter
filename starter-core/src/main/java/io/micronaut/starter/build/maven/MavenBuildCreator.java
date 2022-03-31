@@ -88,9 +88,6 @@ public class MavenBuildCreator {
             annotationProcessorsCoordinates.add(mnGraal);
         }
 
-        annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
-        testAnnotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
-
         List<MavenPlugin> plugins = generatorContext.getBuildPlugins()
                 .stream()
                 .filter(MavenPlugin.class::isInstance)
