@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.other
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Category
@@ -64,28 +65,22 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['lombok'])
                 .render()
+        def project = new XmlParser().parseText(template)
 
         then:
-        // ensure we use version from Micronaut BOM
-//        !template.contains("""
-//    <lombok.version>1.18.16</lombok.version>
-//""")
-        // make sure lombok is before inject-java or it won't work
-        template.contains('''\
-          <annotationProcessorPaths combine.self="override">
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-''')
-        template.contains("""
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
-""")
+        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
+            def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            artifacts.contains("org.projectlombok:lombok")
+            artifacts.contains("io.micronaut:micronaut-inject-java")
+
+            // make sure lombok is before inject-java or it won't work
+            artifacts.indexOf("org.projectlombok:lombok") < artifacts.indexOf("io.micronaut:micronaut-inject-java")
+        }
+
+        with(project.dependencies.dependency.find { it.artifactId.text() == "lombok" }) {
+            scope.text() == 'provided'
+            groupId.text() == 'org.projectlombok'
+        }
     }
 
     void 'micronaut-graal dependency is added because it is in the parent pom'() {
