@@ -32,7 +32,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment = true')
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
-        output.contains("version = '1.0.0'")
+        output.contains("version = '1.0.1'")
 
         where:
         language << Language.values().toList()
@@ -52,7 +52,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment.set(true)')
         output.contains('optimizeClassLoading.set(true)')
         output.contains('deduceEnvironment.set(true)')
-        output.contains('version.set("1.0.0")')
+        output.contains('version.set("1.0.1")')
 
         where:
         language << Language.values().toList()
