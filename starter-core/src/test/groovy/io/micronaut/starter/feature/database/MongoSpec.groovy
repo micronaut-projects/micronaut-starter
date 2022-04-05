@@ -1,15 +1,19 @@
 package io.micronaut.starter.feature.database
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 
 class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void "test add data-mongodb feature"() {
+    void "test add data-mongodb feature for Gradle"() {
         when:
         def output = generate(['data-mongodb'])
         def readme = output["README.md"]
@@ -22,7 +26,34 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         readme.contains("https://docs.mongodb.com")
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
         build.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor')
+        // We only add this to maven projects
+        !build.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor')
+    }
 
+    void "test add data-mongodb feature for Maven"() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ['data-mongodb'])
+        def readme = output["README.md"]
+        def project = new XmlParser().parseText(output['pom.xml'])
+
+        then:
+        readme
+        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
+        readme.contains("https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo")
+        readme.contains("https://docs.mongodb.com")
+
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-mongodb" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.data'
+        }
+
+        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
+            def artifacts = configuration.annotationProcessorPaths.path.artifactId*.text()
+            artifacts.contains("micronaut-data-document-processor")
+            artifacts.contains("micronaut-data-processor")
+            // data processor must come before the document processor because Maven
+            artifacts.indexOf("micronaut-data-document-processor") > artifacts.indexOf("micronaut-data-processor")
+        }
     }
 
     void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {

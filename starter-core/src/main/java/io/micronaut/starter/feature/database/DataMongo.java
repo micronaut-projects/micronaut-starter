@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Experimental;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
 /**
@@ -29,6 +30,9 @@ import jakarta.inject.Singleton;
 @Experimental
 @Singleton
 public class DataMongo implements DataFeature {
+
+    private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
+    private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
 
     // TODO: Need to support either sync or async
     private final MongoSync mongoSync;
@@ -49,16 +53,23 @@ public class DataMongo implements DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(Dependency.builder()
+                    .annotationProcessor()
+                    .groupId(MICRONAUT_DATA_GROUP)
+                    .artifactId("micronaut-data-processor")
+                    .versionProperty(MICRONAUT_DATA_VERSION));
+        }
         generatorContext.addDependency(Dependency.builder()
                 .annotationProcessor()
-                .groupId("io.micronaut.data")
+                .groupId(MICRONAUT_DATA_GROUP)
                 .artifactId("micronaut-data-document-processor")
-                .versionProperty("micronaut.data.version"));
+                .versionProperty(MICRONAUT_DATA_VERSION));
         generatorContext.addDependency(Dependency.builder()
                 .compile()
-                .groupId("io.micronaut.data")
+                .groupId(MICRONAUT_DATA_GROUP)
                 .artifactId("micronaut-data-mongodb")
-                .versionProperty("micronaut.data.version"));
+                .versionProperty(MICRONAUT_DATA_VERSION));
     }
 
     @Override
