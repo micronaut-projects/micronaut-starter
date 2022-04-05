@@ -34,7 +34,6 @@ public class DataMongo implements DataFeature {
     private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
     private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
 
-    // TODO: Need to support either sync or async
     private final MongoSync mongoSync;
 
     public DataMongo(MongoSync mongoSync) {
@@ -70,11 +69,16 @@ public class DataMongo implements DataFeature {
                 .groupId(MICRONAUT_DATA_GROUP)
                 .artifactId("micronaut-data-mongodb")
                 .versionProperty(MICRONAUT_DATA_VERSION));
+        if (generatorContext.isFeaturePresent(MongoSync.class) && generatorContext.isFeaturePresent(MongoReactive.class)) {
+            generatorContext.getConfiguration().put("micronaut.data.mongodb.driver-type", "reactive");
+        }
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(mongoSync);
+        if (!featureContext.isPresent(MongoReactive.class)) {
+            featureContext.addFeature(mongoSync);
+        }
     }
 
     @Override

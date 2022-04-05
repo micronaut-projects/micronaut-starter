@@ -3,58 +3,12 @@ package io.micronaut.starter.feature.database
 import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 
 class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
-
-    void "test add data-mongodb feature for Gradle"() {
-        when:
-        def output = generate(['data-mongodb'])
-        def readme = output["README.md"]
-        def build = output['build.gradle']
-
-        then:
-        readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
-        readme.contains("https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo")
-        readme.contains("https://docs.mongodb.com")
-        build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
-        build.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor')
-        // We only add this to maven projects
-        !build.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor')
-    }
-
-    void "test add data-mongodb feature for Maven"() {
-        when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), ['data-mongodb'])
-        def readme = output["README.md"]
-        def project = new XmlParser().parseText(output['pom.xml'])
-
-        then:
-        readme
-        readme.contains("https://micronaut-projects.github.io/micronaut-mongodb/latest/guide/index.html")
-        readme.contains("https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo")
-        readme.contains("https://docs.mongodb.com")
-
-        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-mongodb" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.data'
-        }
-
-        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
-            def artifacts = configuration.annotationProcessorPaths.path.artifactId*.text()
-            artifacts.contains("micronaut-data-document-processor")
-            artifacts.contains("micronaut-data-processor")
-            // data processor must come before the document processor because Maven
-            artifacts.indexOf("micronaut-data-document-processor") > artifacts.indexOf("micronaut-data-processor")
-        }
-    }
 
     void 'test readme.md with feature mongo-sync contains links to micronaut and 3rd party docs'() {
         when:
@@ -91,22 +45,17 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['mongo-sync'])
                 .render()
+        def project = new XmlParser().parseText(template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.mongodb</groupId>
-      <artifactId>micronaut-mongo-sync</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mongodb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-mongo-sync" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.mongodb'
+        }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+            scope.text() == 'test'
+            groupId.text() == 'org.testcontainers'
+        }
     }
 
     void 'test readme with feature mongo-reactive contains links to micronaut and 3rd party docs'() {
@@ -143,29 +92,35 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['mongo-reactive'])
                 .render()
+        def project = new XmlParser().parseText(template)
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.mongodb</groupId>
-      <artifactId>micronaut-mongo-reactive</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mongodb</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-mongo-reactive" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.mongodb'
+        }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+            scope.text() == 'test'
+            groupId.text() == 'org.testcontainers'
+        }
     }
 
-    void "test config"() {
+    void "test config for #features"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext(['mongo-reactive'])
+        GeneratorContext ctx = buildGeneratorContext(featureList)
 
         then:
-        ctx.getConfiguration().get("mongodb.uri") == "mongodb://\${MONGO_HOST:localhost}:\${MONGO_PORT:27017}/mydb"
+        with(ctx.getConfiguration()) {
+            get("mongodb.uri") == 'mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb'
+            get('micronaut.data.mongodb.driver-type') == driverType
+        }
+
+        where:
+        featureList                                      | driverType
+        ['mongo-reactive']                               | null
+        ['mongo-sync']                                   | null
+        ['mongo-reactive', 'mongo-sync']                 | null
+
+        features = featureList.dropRight(1).join(", ") + (featureList.size() > 1 ? " and " : '') + featureList.last()
     }
 }
