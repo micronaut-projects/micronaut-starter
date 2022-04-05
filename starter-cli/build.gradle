@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-    picocliVersion = '4.6.1'
+    picocliVersion = '4.6.3'
 }
 
 configurations {
