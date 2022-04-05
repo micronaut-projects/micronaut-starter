@@ -157,10 +157,31 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
         and:
-        build.contains('runtime("lambda")')
+        build.contains('runtime("lambda_java")')
 
         where:
         language << Language.values().toList()
+    }
+
+    void 'function with gradle, with features aws-lambda and graalvm for language=#language'() {
+        when:
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['aws-lambda', 'graalvm'])
+                .render()
+
+        then:
+        build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
+        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
+        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+
+        and:
+        build.contains('runtime("lambda_provided")')
+
+        where:
+        // Graalvm feature doesn't work with Groovy
+        language << Language.values().toList() - Language.GROOVY
     }
 
     @Unroll
@@ -343,12 +364,29 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
                 .render()
 
         then:
-        template.contains('runtime("lambda")')
+        template.contains('runtime("lambda_java")')
         !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !template.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
         language << Language.values()
+    }
+
+    void 'aws-lambda features includes dependency to micronaut-function-aws-api-proxy for function for gradle and language=#language with graalvm'(Language language) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['aws-lambda', 'graalvm'])
+                .language(language)
+                .render()
+
+        then:
+        template.contains('runtime("lambda_provided")')
+        !template.contains('implementation("io.micronaut:micronaut-http-server-netty")')
+        !template.contains('implementation("io.micronaut:micronaut-http-client")')
+
+        where:
+        // Graalvm feature doesn't work with Groovy
+        language << Language.values() - Language.GROOVY
     }
 
     @Unroll
@@ -386,7 +424,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         String build = output['build.gradle']
 
         then:
-        build.contains('runtime("lambda")')
+        build.contains('runtime("lambda_provided")')
         if (applicationType == ApplicationType.DEFAULT) {
             assert !build.contains('implementation("io.micronaut.aws:micronaut-function-aws-custom-runtime")')
         } else if (applicationType == ApplicationType.FUNCTION) {
@@ -458,7 +496,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         String build = output['build.gradle']
 
         then:
-        build.contains('runtime("lambda")')
+        build.contains('runtime("lambda_java")')
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 

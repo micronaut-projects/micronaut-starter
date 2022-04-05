@@ -59,7 +59,11 @@ public class MicronautBuildPlugin implements Feature {
             return Optional.of("azure_function");
         }
         if ((generatorContext.getApplicationType() == ApplicationType.DEFAULT || generatorContext.getApplicationType() == ApplicationType.FUNCTION) && generatorContext.getFeatures().contains("aws-lambda")) {
-            return Optional.of("lambda");
+            if (generatorContext.getFeatures().contains("graalvm")) {
+                return Optional.of("lambda_provided");
+            } else {
+                return Optional.of("lambda_java");
+            }
         }
         if (generatorContext.getFeatures().contains("tomcat-server")) {
             return Optional.of("tomcat");

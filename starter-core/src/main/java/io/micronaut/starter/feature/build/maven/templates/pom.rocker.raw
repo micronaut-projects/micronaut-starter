@@ -58,7 +58,11 @@ MavenBuild mavenBuild
     <micronaut.runtime>azure_function</micronaut.runtime>
 }
 @if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    <micronaut.runtime>lambda</micronaut.runtime>
+  @if (features.contains("graalvm")) {
+    <micronaut.runtime>lambda_provided</micronaut.runtime>
+  } else {
+    <micronaut.runtime>lambda_java</micronaut.runtime>
+  }
 }
 @if (features.contains("tomcat-server")) {
     <micronaut.runtime>tomcat</micronaut.runtime>

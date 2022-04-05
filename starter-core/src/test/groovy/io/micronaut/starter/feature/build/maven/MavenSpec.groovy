@@ -112,10 +112,10 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test micronaut runtime for #feature'(ApplicationType applicationType, String feature, String runtime) {
+    void 'test micronaut runtime for #chosenFeatures'(ApplicationType applicationType, List<String> chosenFeatures, String runtime) {
         given:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11)
-        Features features = getFeatures([feature], options, applicationType)
+        Features features = getFeatures(chosenFeatures, options, applicationType)
         println features.features
 
         when:
@@ -125,15 +125,16 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")
 
         where:
-        applicationType             | feature                       | runtime
-        ApplicationType.DEFAULT     | "google-cloud-function"       | "google_function"
-        ApplicationType.DEFAULT     | "oracle-function"             | "oracle_function"
-        ApplicationType.DEFAULT     | "azure-function"              | "azure_function"
-        ApplicationType.DEFAULT     | "aws-lambda"                  | "lambda"
-        ApplicationType.DEFAULT     | "tomcat-server"               | "tomcat"
-        ApplicationType.DEFAULT     | "jetty-server"                | "jetty"
-        ApplicationType.DEFAULT     | "netty-server"                | "netty"
-        ApplicationType.DEFAULT     | "undertow-server"             | "undertow"
+        applicationType             | chosenFeatures                       | runtime
+        ApplicationType.DEFAULT     | ["google-cloud-function"]       | "google_function"
+        ApplicationType.DEFAULT     | ["oracle-function"]             | "oracle_function"
+        ApplicationType.DEFAULT     | ["azure-function"]              | "azure_function"
+        ApplicationType.DEFAULT     | ["aws-lambda"]                  | "lambda_java"
+        ApplicationType.DEFAULT     | ["aws-lambda", 'graalvm']       | "lambda_provided"
+        ApplicationType.DEFAULT     | ["tomcat-server"]               | "tomcat"
+        ApplicationType.DEFAULT     | ["jetty-server"]                | "jetty"
+        ApplicationType.DEFAULT     | ["netty-server"]                | "netty"
+        ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
 }
