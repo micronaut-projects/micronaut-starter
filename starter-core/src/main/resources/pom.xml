@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
-            <version>1.13</version>
+            <version>1.13.1</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>io.micronaut.aot</groupId>
             <artifactId>micronaut-aot-core</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
