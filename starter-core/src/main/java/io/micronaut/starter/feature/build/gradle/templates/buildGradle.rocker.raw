@@ -235,7 +235,7 @@ protobuf {
     }
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")"
+            artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("micronaut.grpc")"
         }
     }
     generateProtoTasks {
