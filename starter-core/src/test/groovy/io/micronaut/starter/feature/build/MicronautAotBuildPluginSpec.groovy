@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build
 
+import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -32,7 +33,12 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment = true')
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
-        output.contains("version = '1.0.1'")
+
+        when:
+        Optional<SemanticVersion> semanticVersion = parseSemanticVersion(output, "version = '", "'")
+
+        then:
+        semanticVersion.isPresent()
 
         where:
         language << Language.values().toList()
@@ -52,10 +58,33 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment.set(true)')
         output.contains('optimizeClassLoading.set(true)')
         output.contains('deduceEnvironment.set(true)')
-        output.contains('version.set("1.0.1")')
+
+        when:
+        Optional<SemanticVersion> semanticVersion = parseSemanticVersion(output, 'version.set("', '")')
+
+        then:
+        semanticVersion.isPresent()
 
         where:
         language << Language.values().toList()
+    }
+
+    static Optional<SemanticVersion> parseSemanticVersion(String output, String versionPrefix, String suffix) {
+        if (!output.contains(versionPrefix)) {
+            return Optional.empty()
+        }
+
+        String version = output.substring(output.indexOf(versionPrefix) + versionPrefix.length())
+
+        if (version.indexOf(suffix) == -1) {
+            return Optional.empty()
+        }
+
+        try {
+            return Optional.of(new SemanticVersion(version.substring(0, version.indexOf(suffix))))
+        } catch (IllegalArgumentException e) {
+            return Optional.empty()
+        }
     }
 
     @Unroll
