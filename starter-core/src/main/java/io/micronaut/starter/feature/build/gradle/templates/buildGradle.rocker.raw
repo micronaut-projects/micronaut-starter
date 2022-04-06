@@ -251,7 +251,7 @@ protobuf {
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:@VersionInfo.getBomVersion("protobuf")" }
     plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("micronaut.grpc")" }
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:@VersionInfo.getBomVersion("grpc")" }
     }
     generateProtoTasks {
         all()*.plugins { grpc {} }
