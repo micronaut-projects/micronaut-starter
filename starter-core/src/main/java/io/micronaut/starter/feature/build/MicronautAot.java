@@ -72,11 +72,6 @@ public class MicronautAot implements Feature {
     }
 
     @Override
-    public boolean isPreview() {
-        return true;
-    }
-
-    @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
