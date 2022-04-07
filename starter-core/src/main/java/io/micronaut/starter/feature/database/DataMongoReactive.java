@@ -19,23 +19,21 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 
 /**
- * Add support for Micronaut Data MongoDB. 
- 
- * @author graemerocher
+ * Add support for Micronaut Data MongoDB Reactive.
  */
 @Singleton
-public class DataMongo extends DataMongoFeature {
+public class DataMongoReactive extends DataMongoFeature {
 
-    private static final String SYNC_MONGODB_ARTIFACT = "mongodb-driver-sync";
+    private static final String ASYNC_MONGODB_ARTIFACT = "mongodb-driver-reactivestreams";
 
-    public DataMongo(Data data) {
+    public DataMongoReactive(Data data) {
         super(data);
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "data-mongodb";
+        return "data-mongodb-async";
     }
 
     @Override
@@ -46,17 +44,17 @@ public class DataMongo extends DataMongoFeature {
     @NonNull
     @Override
     public String getDescription() {
-        return "Adds support for defining synchronous data repositories for MongoDB";
+        return "Adds support for defining asynchronous data repositories for MongoDB";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Data MongoDB";
+        return "Micronaut Data MongoDB Async";
     }
 
     @NonNull
     @Override
     protected String mongoArtifact() {
-        return SYNC_MONGODB_ARTIFACT;
+        return ASYNC_MONGODB_ARTIFACT;
     }
 }
