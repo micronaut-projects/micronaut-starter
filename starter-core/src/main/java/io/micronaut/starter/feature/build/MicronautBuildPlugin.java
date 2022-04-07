@@ -94,7 +94,7 @@ public class MicronautBuildPlugin implements Feature {
         if (testRuntimeOptional.isPresent()) {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
-        if (generatorContext.getFeatures().contains(MicronautAotBuildPlugin.FEATURE_NAME_AOT)) {
+        if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
         }
