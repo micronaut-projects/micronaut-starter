@@ -22,8 +22,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
@@ -42,7 +41,7 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class GoogleCloudRawFunction extends AbstractFunctionFeature implements CloudFeature {
+public class GoogleCloudRawFunction extends AbstractFunctionFeature {
     public static final String NAME = "google-cloud-function";
 
     private final GoogleCloudFunction googleCloudFunction;
@@ -171,8 +170,8 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
+    public Optional<CloudProvider> getCloudProvider() {
+        return Optional.of(CloudProvider.GCP);
     }
 
     @Override

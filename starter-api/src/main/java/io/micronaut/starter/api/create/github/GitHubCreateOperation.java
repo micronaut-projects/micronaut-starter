@@ -23,6 +23,7 @@ import io.micronaut.http.annotation.Header;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -58,6 +59,7 @@ public interface GitHubCreateOperation {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @NonNull String code,
             @NonNull String state,
             @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent,

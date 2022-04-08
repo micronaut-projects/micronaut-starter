@@ -13,11 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.function;
+package io.micronaut.starter.cli.command;
 
-public enum Cloud {
-    AZURE,
-    GCP,
-    AWS,
-    ORACLE
+import io.micronaut.starter.feature.function.CloudProvider;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public class CloudProviderCandidates extends ArrayList<String> {
+    public CloudProviderCandidates() {
+        super(Stream.of(CloudProvider.values()).map(l -> l.toString().toLowerCase()).collect(Collectors.toList()));
+    }
 }

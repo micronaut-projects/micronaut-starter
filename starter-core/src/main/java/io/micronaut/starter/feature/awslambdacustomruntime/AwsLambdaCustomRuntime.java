@@ -30,8 +30,7 @@ import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaR
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -42,8 +41,10 @@ import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
+import java.util.Optional;
+
 @Singleton
-public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
+public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
@@ -147,8 +148,8 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
+    public Optional<CloudProvider> getCloudProvider() {
+        return Optional.of(CloudProvider.AWS);
     }
 
     @Override

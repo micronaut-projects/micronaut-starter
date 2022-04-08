@@ -20,10 +20,12 @@ import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.starter.api.options.ApplicationTypeSelectOptions;
 import io.micronaut.starter.api.options.BuildToolSelectOptions;
+import io.micronaut.starter.api.options.CloudProviderSelectOptions;
 import io.micronaut.starter.api.options.JdkVersionSelectOptions;
 import io.micronaut.starter.api.options.LanguageSelectOptions;
 import io.micronaut.starter.api.options.TestFrameworkSelectOptions;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -53,15 +55,18 @@ public class SelectOptionsDTO {
 
     private BuildToolSelectOptions build;
 
+    private CloudProviderSelectOptions cloud;
+
     SelectOptionsDTO() { }
 
     @Creator
-    public SelectOptionsDTO(ApplicationTypeSelectOptions type, JdkVersionSelectOptions jdkVersion, LanguageSelectOptions lang, TestFrameworkSelectOptions test, BuildToolSelectOptions build) {
+    public SelectOptionsDTO(ApplicationTypeSelectOptions type, JdkVersionSelectOptions jdkVersion, LanguageSelectOptions lang, TestFrameworkSelectOptions test, BuildToolSelectOptions build, CloudProviderSelectOptions cloud) {
         this.type = type;
         this.jdkVersion = jdkVersion;
         this.lang = lang;
         this.test = test;
         this.build = build;
+        this.cloud = cloud;
     }
 
     @Schema(description = "supported options for application type")
@@ -77,6 +82,11 @@ public class SelectOptionsDTO {
     @Schema(description = "supported options for code languages")
     public LanguageSelectOptions getLang() {
         return lang;
+    }
+
+    @Schema(description = "supported options for cloud providers")
+    public CloudProviderSelectOptions getCloudProvider() {
+        return cloud;
     }
 
     @Schema(description = "supported options for test frameworks")
@@ -140,7 +150,13 @@ public class SelectOptionsDTO {
                new BuildToolDTO(BuildTool.DEFAULT_OPTION, messageSource, messageContext)
        );
 
-       return new SelectOptionsDTO(applicationOpts, jdkVersionOpts, languageOpts, testFrameworkOpts, buildToolOpts);
+       List<CloudProviderDTO> cloudProviders = Arrays.stream(CloudProvider.values())
+               .map(it -> new CloudProviderDTO(it, messageSource, messageContext))
+               .collect(Collectors.toList());
+
+       CloudProviderSelectOptions cloudProviderOpts = new CloudProviderSelectOptions(cloudProviders);
+
+       return new SelectOptionsDTO(applicationOpts, jdkVersionOpts, languageOpts, testFrameworkOpts, buildToolOpts, cloudProviderOpts);
 
     }
 }

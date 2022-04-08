@@ -18,7 +18,9 @@ package io.micronaut.starter.analytics;
 import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -36,6 +38,7 @@ public class Generated {
     private final BuildTool buildTool;
     private final TestFramework testFramework;
     private final JdkVersion jdkVersion;
+    private final CloudProvider cloudProvider;
     private Collection<? extends SelectedFeature> features = new ArrayList<>();
     private final String micronautVersion;
 
@@ -45,12 +48,14 @@ public class Generated {
             @NonNull Language language,
             @NonNull BuildTool buildTool,
             @NonNull TestFramework testFramework,
-            @NonNull JdkVersion jdkVersion) {
+            @NonNull JdkVersion jdkVersion,
+            @Nullable CloudProvider cloudProvider) {
         this.type = Objects.requireNonNull(type, "Type cannot be null");
         this.language = Objects.requireNonNull(language, "Language cannot be null");
         this.buildTool = Objects.requireNonNull(buildTool, "Build tool cannot be null");
         this.testFramework = Objects.requireNonNull(testFramework, "Test framework cannot be null");
         this.jdkVersion = Objects.requireNonNull(jdkVersion, "JDK version cannot be null");
+        this.cloudProvider = cloudProvider;
         this.micronautVersion = VersionInfo.getMicronautVersion();
     }
 
@@ -100,6 +105,14 @@ public class Generated {
      */
     public @NonNull JdkVersion getJdkVersion() {
         return jdkVersion;
+    }
+
+    /**
+     * @return The selected cloud provider
+     */
+    public @Nullable
+    CloudProvider getCloud() {
+        return cloudProvider;
     }
 
     /**

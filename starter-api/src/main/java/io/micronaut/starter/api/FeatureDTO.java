@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.naming.Named;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
@@ -39,6 +40,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String title;
     private final String description;
     private final String category;
+    private final String cloudProvider;
     private final boolean preview;
     private final boolean community;
 
@@ -53,6 +55,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.title = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".title", messageContext, feature.getTitle());
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.name + ".description", messageContext, feature.getDescription());
         this.category = feature.getCategory();
+        this.cloudProvider = feature.getCloudProvider().map(CloudProvider::name).orElse(null);
         this.preview = feature.isPreview();
         this.community = feature.isCommunity();
     }
@@ -65,11 +68,12 @@ public class FeatureDTO extends Linkable implements Named, Described {
      * @param category The category
      */
     @Creator
-    public FeatureDTO(String name, String title, String description, String category) {
+    public FeatureDTO(String name, String title, String description, String cloudProvider, String category) {
         this.name = name;
         this.title = title;
         this.description = description;
         this.category = category;
+        this.cloudProvider = cloudProvider;
         this.preview = false;
         this.community = false;
     }
@@ -104,6 +108,14 @@ public class FeatureDTO extends Linkable implements Named, Described {
     @Schema(description = "The category to which this feature belongs to")
     public String getCategory() {
         return category;
+    }
+
+    /**
+     * @return The cloud provider this feature relates to (if any)
+     */
+    @Schema(description = "The cloud provider this feature relates to (if any)")
+    public String getCloudProvider() {
+        return cloudProvider;
     }
 
     /**

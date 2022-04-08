@@ -48,7 +48,8 @@ public class GenerationListener {
                 context.getLanguage(),
                 context.getBuildTool(),
                 context.getTestFramework(),
-                context.getJdkVersion()
+                context.getJdkVersion(),
+                context.getCloudProvider()
         );
         generated.setSelectedFeatures(features);
         if (analyticsOperations != null) {

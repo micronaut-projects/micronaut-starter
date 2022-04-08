@@ -23,6 +23,7 @@ import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.AvailableFeatures;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.BuildTool;
@@ -50,6 +51,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     @ReflectiveAccess
     @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
     Language lang;
+
+    @ReflectiveAccess
+    @CommandLine.Option(names = {"-c", "--cloud"}, paramLabel = "CLOUD", description = "Which cloud provider to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = CloudProviderCandidates.class, converter = CloudProviderConverter.class)
+    CloudProvider cloudProvider;
 
     @ReflectiveAccess
     @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
@@ -98,7 +103,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     public Integer call() throws Exception {
         if (listFeatures) {
             new ListFeatures(availableFeatures,
-                    new Options(lang, test, build, getJdkVersion()),
+                    new Options(lang, test, build, getJdkVersion(), cloudProvider),
                     applicationType,
                     getOperatingSystem(),
                     contextFactory).output(this);
@@ -124,7 +129,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     public void generate(Project project, OutputHandler outputHandler) throws Exception {
-        Options options = new Options(lang, test, build, getJdkVersion(), getAdditionalOptions());
+        Options options = new Options(lang, test, build, getJdkVersion(), cloudProvider, getAdditionalOptions());
 
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }

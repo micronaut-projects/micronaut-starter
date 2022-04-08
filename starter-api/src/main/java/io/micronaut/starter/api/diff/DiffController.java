@@ -29,6 +29,7 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.diff.FeatureDiffer;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -100,6 +101,7 @@ public class DiffController implements DiffOperations {
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Parameter(hidden = true) RequestInfo requestInfo) {
 
         ProjectGenerator projectGenerator;
@@ -111,7 +113,8 @@ public class DiffController implements DiffOperations {
                     language,
                     test != null ? test : language.getDefaults().getTest(),
                     build != null ? build : language.getDefaults().getBuild(),
-                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION,
+                    cloudProvider
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(
@@ -153,6 +156,7 @@ public class DiffController implements DiffOperations {
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
         ProjectGenerator projectGenerator;
         GeneratorContext generatorContext;
@@ -163,7 +167,8 @@ public class DiffController implements DiffOperations {
                     language,
                     test != null ? test : language.getDefaults().getTest(),
                     build != null ? build : language.getDefaults().getBuild(),
-                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION
+                    javaVersion != null ? javaVersion : JdkVersion.DEFAULT_OPTION,
+                    cloudProvider
             );
             projectGenerator = this.projectGenerator;
             generatorContext = projectGenerator.createGeneratorContext(

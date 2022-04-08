@@ -18,6 +18,7 @@ package io.micronaut.starter.options;
 import io.micronaut.core.convert.ArgumentConversionContext;
 import io.micronaut.core.convert.value.ConvertibleValues;
 import io.micronaut.core.convert.value.ConvertibleValuesMap;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.Collection;
@@ -32,41 +33,47 @@ public class Options implements ConvertibleValues<Object> {
     private final TestFramework testFramework;
     private final BuildTool buildTool;
     private final JdkVersion javaVersion;
+    private final CloudProvider cloudProvider;
     private final ConvertibleValuesMap<Object> additionalOptions;
 
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, CloudProvider cloudProvider) {
+        this(language, testFramework, buildTool, javaVersion, cloudProvider, Collections.emptyMap());
+    }
+
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion) {
-        this(language, testFramework, buildTool, javaVersion, Collections.emptyMap());
+        this(language, testFramework, buildTool, javaVersion,  null, Collections.emptyMap());
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool) {
-        this(language, testFramework, buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, testFramework, buildTool, VersionInfo.getJavaVersion(), null, Collections.emptyMap());
     }
 
     public Options(Language language, TestFramework testFramework) {
-        this(language, testFramework, language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, testFramework, language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), null, Collections.emptyMap());
     }
 
     public Options(Language language, BuildTool buildTool) {
-        this(language, language.getDefaults().getTest(), buildTool, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), buildTool, VersionInfo.getJavaVersion(), null, Collections.emptyMap());
     }
 
     public Options(Language language) {
-        this(language, language.getDefaults().getTest(), language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(language, language.getDefaults().getTest(), language.getDefaults().getBuild(), VersionInfo.getJavaVersion(), null, Collections.emptyMap());
     }
 
     public Options() {
-        this(Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), Collections.emptyMap());
+        this(Language.DEFAULT_OPTION, TestFramework.JUNIT, BuildTool.GRADLE, VersionInfo.getJavaVersion(), null, Collections.emptyMap());
     }
 
     public Options(Language language, TestFramework testFramework, BuildTool buildTool, Map<String, Object> additionalOptions) {
-        this(language, testFramework, buildTool, VersionInfo.getJavaVersion(), additionalOptions);
+        this(language, testFramework, buildTool, VersionInfo.getJavaVersion(), null, additionalOptions);
     }
 
-    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, Map<String, Object> additionalOptions) {
+    public Options(Language language, TestFramework testFramework, BuildTool buildTool, JdkVersion javaVersion, CloudProvider cloudProvider, Map<String, Object> additionalOptions) {
         this.javaVersion = javaVersion;
         this.language = language;
         this.testFramework = testFramework;
         this.buildTool = buildTool;
+        this.cloudProvider = cloudProvider;
         this.additionalOptions = new ConvertibleValuesMap<>(additionalOptions);
     }
 
@@ -101,19 +108,27 @@ public class Options implements ConvertibleValues<Object> {
         return javaVersion;
     }
 
+    public CloudProvider getCloudProvider() {
+        return cloudProvider;
+    }
+
     public Options withLanguage(Language language) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, cloudProvider, additionalOptions.asMap());
     }
 
     public Options withTestFramework(TestFramework testFramework) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, cloudProvider, additionalOptions.asMap());
     }
 
     public Options withBuildTool(BuildTool buildTool) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, cloudProvider, additionalOptions.asMap());
     }
 
     public Options withJavaVersion(JdkVersion javaVersion) {
-        return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
+        return new Options(language, testFramework, buildTool, javaVersion, cloudProvider, additionalOptions.asMap());
+    }
+
+    public Options withCloud(CloudProvider cloudProvider) {
+        return new Options(language, testFramework, buildTool, javaVersion, cloudProvider, additionalOptions.asMap());
     }
 }

@@ -59,7 +59,8 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
                 Language.KOTLIN,
                 BuildTool.MAVEN,
                 TestFramework.SPOCK,
-                JdkVersion.JDK_11
+                JdkVersion.JDK_11,
+                null
         )
         generated.setSelectedFeatures([new SelectedFeature("google-cloud-function")])
 

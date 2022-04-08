@@ -31,6 +31,7 @@ import io.micronaut.starter.client.github.oauth.GitHubOAuthClient;
 import io.micronaut.starter.client.github.v3.GitHubApiClient;
 import io.micronaut.starter.client.github.v3.GitHubRepository;
 import io.micronaut.starter.client.github.v3.GitHubUser;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
@@ -90,6 +91,7 @@ public class GitHubCreateService extends AbstractCreateController {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @NonNull String code,
             @NonNull String state,
             @Nullable String userAgent) {
@@ -99,7 +101,7 @@ public class GitHubCreateService extends AbstractCreateController {
         GitHubUser gitHubUser = getGitHubUser(authToken);
 
         GeneratorContext generatorContext = createProjectGeneratorContext(
-                type, name, features, buildTool, testFramework, lang, javaVersion, userAgent);
+                type, name, features, buildTool, testFramework, lang, javaVersion, cloudProvider, userAgent);
 
         String repoName = generatorContext.getProject().getName();
         String repoDescription = String.format("Micronaut %s Application", generatorContext.getProject().getNaturalName());

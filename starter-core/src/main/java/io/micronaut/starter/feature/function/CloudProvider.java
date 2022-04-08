@@ -15,6 +15,25 @@
  */
 package io.micronaut.starter.feature.function;
 
-public interface CloudFeature {
-    Cloud getCloud();
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.naming.Named;
+
+public enum CloudProvider implements Named {
+
+    AZURE("Microsoft Azure"),
+    GCP("Google Cloud Platform (GCP)"),
+    AWS("Amazon Web Services (AWS)"),
+    ORACLE("Oracle Cloud");
+
+    private final String name;
+
+    CloudProvider(String name) {
+        this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String getName() {
+        return name;
+    }
 }
