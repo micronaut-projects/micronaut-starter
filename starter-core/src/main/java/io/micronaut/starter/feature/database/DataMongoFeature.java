@@ -30,11 +30,11 @@ public abstract class DataMongoFeature implements DataFeature {
     private static final String MONGODB_GROUP = "org.mongodb";
     private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
     private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
-    public static final String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
-    public static final String MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT = "micronaut-data-document-processor";
-    public static final String MICRONAUT_DATA_MONGODB_ARTIFACT = "micronaut-data-mongodb";
-    public static final String MONGODB_URI_CONFIGURATION_KEY = "mongodb.uri";
-    public static final String MONGODB_URI_CONFIGURATION_VALUE = "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb";
+    private static final String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
+    private static final String MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT = "micronaut-data-document-processor";
+    private static final String MICRONAUT_DATA_MONGODB_ARTIFACT = "micronaut-data-mongodb";
+    private static final String MONGODB_URI_CONFIGURATION_KEY = "mongodb.uri";
+    private static final String MONGODB_URI_CONFIGURATION_VALUE = "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb";
 
     private final Data data;
 
