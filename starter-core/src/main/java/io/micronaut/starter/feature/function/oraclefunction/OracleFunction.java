@@ -44,6 +44,8 @@ import java.util.Optional;
 @Primary
 public class OracleFunction extends AbstractFunctionFeature {
 
+    public static final String NAME = "oracle-function-http";
+
     private final SimpleLogging simpleLogging;
 
     public OracleFunction(SimpleLogging simpleLogging) {
@@ -76,7 +78,7 @@ public class OracleFunction extends AbstractFunctionFeature {
 
     @Override
     public String getName() {
-        return "oracle-function-http";
+        return NAME;
     }
 
     @Override

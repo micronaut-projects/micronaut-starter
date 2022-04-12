@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ import java.util.Optional;
 public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
-    public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
+    public static final String NAME = "aws-lambda-custom-runtime";
 
     private final Provider<AwsLambda> awsLambda;
     private final HttpClient httpClient;
@@ -70,7 +70,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
 
     @Override
     public String getName() {
-        return FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME;
+        return NAME;
     }
 
     @Override
