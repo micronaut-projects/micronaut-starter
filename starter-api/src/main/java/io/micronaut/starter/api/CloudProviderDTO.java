@@ -40,15 +40,14 @@ public class CloudProviderDTO implements Selectable<CloudProvider> {
 
     public CloudProviderDTO(CloudProvider cloudProvider) {
         this.value = cloudProvider;
-        this.label = cloudProvider.name();
+        this.label = cloudProvider.getName();
         this.description = cloudProvider.getName();
     }
 
     @Internal
     public CloudProviderDTO(CloudProvider cloudProvider, MessageSource messageSource, MessageSource.MessageContext messageContext) {
         this.value = cloudProvider;
-        String label = NameUtils.getNaturalNameOfEnum(cloudProvider.name());
-        this.label = messageSource.getMessage(MESSAGE_PREFIX + this.value + ".label", messageContext, label);
+        this.label = messageSource.getMessage(MESSAGE_PREFIX + this.value + ".label", messageContext, cloudProvider.getName());
         this.description = messageSource.getMessage(MESSAGE_PREFIX + this.value + ".description", messageContext, cloudProvider.getName());
     }
 

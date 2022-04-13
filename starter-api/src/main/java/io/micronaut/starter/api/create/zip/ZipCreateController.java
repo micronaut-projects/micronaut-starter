@@ -88,7 +88,7 @@ public class ZipCreateController extends AbstractCreateController implements Zip
      * @return A ZIP file containing the generated application.
      */
     @Override
-    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MEDIA_TYPE_APPLICATION_ZIP)
+    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion,cloudProvider}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",
             content = @Content(
@@ -121,7 +121,7 @@ public class ZipCreateController extends AbstractCreateController implements Zip
      * @param cloudProvider The optional cloud provider
      * @return A Zip file containing the application
      */
-    @Get(uri = "/{name}.zip{?type,features,lang,build,test}", produces = MEDIA_TYPE_APPLICATION_ZIP)
+    @Get(uri = "/{name}.zip{?type,features,lang,build,test,cloudProvider}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",
             content = @Content(
