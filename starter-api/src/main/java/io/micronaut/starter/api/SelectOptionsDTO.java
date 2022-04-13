@@ -55,18 +55,18 @@ public class SelectOptionsDTO {
 
     private BuildToolSelectOptions build;
 
-    private CloudProviderSelectOptions cloud;
+    private CloudProviderSelectOptions cloudProvider;
 
     SelectOptionsDTO() { }
 
     @Creator
-    public SelectOptionsDTO(ApplicationTypeSelectOptions type, JdkVersionSelectOptions jdkVersion, LanguageSelectOptions lang, TestFrameworkSelectOptions test, BuildToolSelectOptions build, CloudProviderSelectOptions cloud) {
+    public SelectOptionsDTO(ApplicationTypeSelectOptions type, JdkVersionSelectOptions jdkVersion, LanguageSelectOptions lang, TestFrameworkSelectOptions test, BuildToolSelectOptions build, CloudProviderSelectOptions cloudProvider) {
         this.type = type;
         this.jdkVersion = jdkVersion;
         this.lang = lang;
         this.test = test;
         this.build = build;
-        this.cloud = cloud;
+        this.cloudProvider = cloudProvider;
     }
 
     @Schema(description = "supported options for application type")
@@ -86,7 +86,7 @@ public class SelectOptionsDTO {
 
     @Schema(description = "supported options for cloud providers")
     public CloudProviderSelectOptions getCloudProvider() {
-        return cloud;
+        return cloudProvider;
     }
 
     @Schema(description = "supported options for test frameworks")
