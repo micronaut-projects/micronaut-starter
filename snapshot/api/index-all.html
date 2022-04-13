@@ -545,7 +545,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataJpa.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply(GeneratorContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataJpa.html" title="class in io.micronaut.starter.feature.database">DataJpa</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply(GeneratorContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply(GeneratorContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/H2.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply(GeneratorContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/H2.html" title="class in io.micronaut.starter.feature.database">H2</a></dt>
 <dd>&nbsp;</dd>
@@ -2658,7 +2658,19 @@
 <dd>
 <div class="block">Add support for Micronaut Data MongoDB.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#DataMongo-io.micronaut.starter.feature.database.MongoSync-">DataMongo(MongoSync)</a></span> - Constructor for class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#DataMongo-io.micronaut.starter.feature.database.Data-">DataMongo(Data)</a></span> - Constructor for class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database"><span class="typeNameLink">DataMongoFeature</span></a> - Class in <a href="io/micronaut/starter/feature/database/package-summary.html">io.micronaut.starter.feature.database</a></dt>
+<dd>
+<div class="block">Base class for our data-mongo features.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#DataMongoFeature-io.micronaut.starter.feature.database.Data-">DataMongoFeature(Data)</a></span> - Constructor for class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database"><span class="typeNameLink">DataMongoReactive</span></a> - Class in <a href="io/micronaut/starter/feature/database/package-summary.html">io.micronaut.starter.feature.database</a></dt>
+<dd>
+<div class="block">Add support for Micronaut Data MongoDB Reactive.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoReactive.html#DataMongoReactive-io.micronaut.starter.feature.database.Data-">DataMongoReactive(Data)</a></span> - Constructor for class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database">DataMongoReactive</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html" title="class in io.micronaut.starter.feature.database.r2dbc"><span class="typeNameLink">DataR2dbc</span></a> - Class in <a href="io/micronaut/starter/feature/database/r2dbc/package-summary.html">io.micronaut.starter.feature.database.r2dbc</a></dt>
 <dd>&nbsp;</dd>
@@ -5172,6 +5184,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#getDescription--">getDescription()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoReactive.html#getDescription--">getDescription()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database">DataMongoReactive</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/H2.html#getDescription--">getDescription()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/H2.html" title="class in io.micronaut.starter.feature.database">H2</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/HibernateGorm.html#getDescription--">getDescription()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/HibernateGorm.html" title="class in io.micronaut.starter.feature.database">HibernateGorm</a></dt>
@@ -6343,7 +6357,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataJdbc.html#getMicronautDocumentation--">getMicronautDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataJdbc.html" title="class in io.micronaut.starter.feature.database">DataJdbc</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#getMicronautDocumentation--">getMicronautDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#getMicronautDocumentation--">getMicronautDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/HibernateJpa.html#getMicronautDocumentation--">getMicronautDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/HibernateJpa.html" title="class in io.micronaut.starter.feature.database">HibernateJpa</a></dt>
 <dd>&nbsp;</dd>
@@ -6664,6 +6678,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataJpa.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataJpa.html" title="class in io.micronaut.starter.feature.database">DataJpa</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoReactive.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database">DataMongoReactive</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/H2.html#getName--">getName()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/H2.html" title="class in io.micronaut.starter.feature.database">H2</a></dt>
 <dd>&nbsp;</dd>
@@ -8506,6 +8522,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/coherence/CoherenceSessionStore.html#getThirdPartyDocumentation--">getThirdPartyDocumentation()</a></span> - Method in class io.micronaut.starter.feature.coherence.<a href="io/micronaut/starter/feature/coherence/CoherenceSessionStore.html" title="class in io.micronaut.starter.feature.coherence">CoherenceSessionStore</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#getThirdPartyDocumentation--">getThirdPartyDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/JAsyncSQLFeature.html#getThirdPartyDocumentation--">getThirdPartyDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/JAsyncSQLFeature.html" title="class in io.micronaut.starter.feature.database">JAsyncSQLFeature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/MongoGorm.html#getThirdPartyDocumentation--">getThirdPartyDocumentation()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/MongoGorm.html" title="class in io.micronaut.starter.feature.database">MongoGorm</a></dt>
@@ -8695,6 +8713,8 @@
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataJpa.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataJpa.html" title="class in io.micronaut.starter.feature.database">DataJpa</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoReactive.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database">DataMongoReactive</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/H2.html#getTitle--">getTitle()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/H2.html" title="class in io.micronaut.starter.feature.database">H2</a></dt>
 <dd>&nbsp;</dd>
@@ -11432,6 +11452,12 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/test/MockitoValidator.html#MockitoValidator--">MockitoValidator()</a></span> - Constructor for class io.micronaut.starter.feature.test.<a href="io/micronaut/starter/feature/test/MockitoValidator.html" title="class in io.micronaut.starter.feature.test">MockitoValidator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#mongoArtifact--">mongoArtifact()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#mongoArtifact--">mongoArtifact()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoReactive.html#mongoArtifact--">mongoArtifact()</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoReactive.html" title="class in io.micronaut.starter.feature.database">DataMongoReactive</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="io/micronaut/starter/feature/database/MongoFeature.html" title="class in io.micronaut.starter.feature.database"><span class="typeNameLink">MongoFeature</span></a> - Class in <a href="io/micronaut/starter/feature/database/package-summary.html">io.micronaut.starter.feature.database</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/MongoFeature.html#MongoFeature-io.micronaut.starter.feature.database.TestContainers-">MongoFeature(TestContainers)</a></span> - Constructor for class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/MongoFeature.html" title="class in io.micronaut.starter.feature.database">MongoFeature</a></dt>
@@ -12026,7 +12052,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataJpa.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataJpa.html" title="class in io.micronaut.starter.feature.database">DataJpa</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongo.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongo.html" title="class in io.micronaut.starter.feature.database">DataMongo</a></dt>
+<dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/DataMongoFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/DataMongoFeature.html" title="class in io.micronaut.starter.feature.database">DataMongoFeature</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="io/micronaut/starter/feature/database/HibernateGorm.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures(FeatureContext)</a></span> - Method in class io.micronaut.starter.feature.database.<a href="io/micronaut/starter/feature/database/HibernateGorm.html" title="class in io.micronaut.starter.feature.database">HibernateGorm</a></dt>
 <dd>&nbsp;</dd>
