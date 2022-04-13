@@ -62,7 +62,7 @@ class FeatureControllerSpec extends Specification {
         features.any { it.name == 'openapi' }
     }
 
-    void "test list features for application type and cloud provider #provider.name"() {
+    void "test list features includes #expected for cloud provider #provider.name"() {
         given:
         def allFeatures = [
                 GoogleCloudRawFunction.NAME,
