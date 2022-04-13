@@ -15,7 +15,9 @@
  */
 package io.micronaut.starter.api;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,7 +34,7 @@ public interface FeatureOperations {
      * @param locale The locale
      * @return The available features
      */
-    List<FeatureDTO> getAllFeatures(Locale locale);
+    List<FeatureDTO> getAllFeatures(Locale locale, @Nullable CloudProvider cloudProvider);
 
     /**
      * A list of features applicable to the given application type.
@@ -40,5 +42,5 @@ public interface FeatureOperations {
      * @param type The type
      * @return The features
      */
-    List<FeatureDTO> getFeatures(Locale locale, ApplicationType type);
+    List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, @Nullable CloudProvider cloudProvider);
 }

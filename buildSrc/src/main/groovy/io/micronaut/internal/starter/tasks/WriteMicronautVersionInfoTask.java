@@ -70,6 +70,10 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
                 .execute();
         Map<String, String> props = new TreeMap<>();
         props.put("micronaut.version", getVersion().get());
+
+        // TODO: Remove this before merging!!!
+        props.put("grpc.version", getProject().getProperties().get("grpc.version").toString());
+
         for (ComponentArtifactsResult component : result.getResolvedComponents()) {
             component.getArtifacts(MavenPomArtifact.class).forEach(artifact -> {
                 if (artifact instanceof ResolvedArtifactResult) {
