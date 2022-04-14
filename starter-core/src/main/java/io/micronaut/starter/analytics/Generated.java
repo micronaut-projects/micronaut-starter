@@ -111,7 +111,7 @@ public class Generated {
      * @return The selected cloud provider
      */
     public @Nullable
-    CloudProvider getCloud() {
+    CloudProvider getCloudProvider() {
         return cloudProvider;
     }
 

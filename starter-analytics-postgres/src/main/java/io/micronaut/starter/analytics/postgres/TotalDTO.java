@@ -34,4 +34,12 @@ public class TotalDTO {
     public long getTotal() {
         return total;
     }
+
+    @Override
+    public String toString() {
+        return "TotalDTO{" +
+                "name='" + name + '\'' +
+                ", total=" + total +
+                '}';
+    }
 }

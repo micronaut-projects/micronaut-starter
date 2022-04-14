@@ -80,6 +80,17 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     }
 
     @ReadOnly
+    List<TotalDTO> topCloudProviders() {
+        return this.jdbcOperations
+                .prepareStatement(query("cloud_provider", "application"),
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        });
+    }
+
+    @ReadOnly
     List<TotalDTO> topJdkVersion() {
         return this.jdbcOperations
                 .prepareStatement(query("jdk_version", "application"),
@@ -104,6 +115,6 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     }
 
     private String query(String name, String table) {
-        return "SELECT " + name + " AS name, count(*) AS total FROM " + table + " GROUP BY name ORDER BY total";
+        return "SELECT " + name + " AS name, count(*) AS total FROM " + table + " GROUP BY name ORDER BY total, name";
     }
 }
