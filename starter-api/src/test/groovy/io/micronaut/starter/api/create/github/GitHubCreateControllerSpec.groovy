@@ -2,16 +2,21 @@ package io.micronaut.starter.api.create.github
 
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.annotation.Requires
+import io.micronaut.core.type.Argument
 import io.micronaut.http.HttpHeaders
 import io.micronaut.http.HttpRequest
 import io.micronaut.http.HttpResponse
+import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.exceptions.HttpClientResponseException
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.starter.client.github.oauth.AccessToken
 import io.micronaut.starter.client.github.oauth.GitHubOAuthOperations
 import io.micronaut.starter.client.github.v3.*
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
+import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
 import io.micronaut.starter.util.GitHubUtil
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.revwalk.RevCommit
@@ -101,6 +106,50 @@ class GitHubCreateControllerSpec extends Specification {
         cleanup:
         embeddedServer.close()
         clonePath.toFile().deleteDir()
+    }
+
+    void "test invalid cloud provider"() {
+        given:
+        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
+                getConfiguration(new MapEntry("micronaut.starter.redirectUri", "")))
+
+        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+
+        when:
+        httpClient.toBlocking().exchange(HttpRequest.GET('/github/default/foo?code=123&state=123&cloudProvider=invalid'), Argument.of(String), Argument.of(Map))
+
+        then:
+        HttpClientResponseException e = thrown()
+        e.status == HttpStatus.BAD_REQUEST
+
+        when:
+        Optional<Map> response = e.response.getBody(Map)
+
+        then:
+        response.isPresent()
+        response.get()._embedded.errors[0].message == 'Failed to convert argument [cloudProvider] for value [invalid] due to: No enum constant io.micronaut.starter.feature.function.CloudProvider.invalid'
+    }
+
+    void "test invalid cloud provider feature combo"() {
+        given:
+        EmbeddedServer embeddedServer = ApplicationContext.run(EmbeddedServer,
+                getConfiguration(new MapEntry("micronaut.starter.redirectUri", "")))
+
+        HttpClient httpClient = embeddedServer.applicationContext.createBean(HttpClient, embeddedServer.URL)
+
+        when:
+        httpClient.toBlocking().exchange(HttpRequest.GET("/github/default/foo?code=123&state=123&cloudProvider=aws&features=$AwsLambdaCustomRuntime.NAME&features=$GoogleCloudFunction.NAME"), Argument.of(String), Argument.of(Map))
+
+        then:
+        HttpClientResponseException e = thrown()
+        e.status == HttpStatus.BAD_REQUEST
+
+        when:
+        Optional<Map> response = e.response.getBody(Map)
+
+        then:
+        response.isPresent()
+        response.get()._embedded.errors[0].message == 'Cannot use feature [google-cloud-function-http] when Cloud Provider is set to Amazon Web Services (AWS)'
     }
 
     @Requires(property = 'spec.name', value = 'GitHubCreateControllerSpec')

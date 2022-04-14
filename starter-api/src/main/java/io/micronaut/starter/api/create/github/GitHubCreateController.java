@@ -80,7 +80,7 @@ public class GitHubCreateController implements GitHubCreateOperation {
      * @return A json containing the generated application details.
      */
     @Override
-    @Get(uri = "/github/{type}/{name}{?features,lang,build,test,javaVersion,code,state}", produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "/github/{type}/{name}{?features,lang,build,test,javaVersion,cloudProvider,code,state}", produces = MediaType.APPLICATION_JSON)
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
