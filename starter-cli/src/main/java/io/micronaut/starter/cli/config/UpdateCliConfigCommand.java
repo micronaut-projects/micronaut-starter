@@ -74,7 +74,8 @@ public class UpdateCliConfigCommand extends CodeGenCommand {
                 //Only the package is used
                 NameUtils.parse(config.getDefaultPackage() + ".Ignored"),
                 config.getFeatures(),
-                config.getApplicationType())), true);
+                config.getApplicationType(),
+                config.getCloudProvider())), true);
 
         out("In order to use code generation commands that are dependent on a feature, you may need to modify the feature list to include any features that are in use.");
         out("For example, in order to execute `mn create-kafka-listener`, `kafka` must be in the list of features in `micronaut-cli.yml`.");

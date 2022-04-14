@@ -23,6 +23,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.BuildTool;
@@ -51,6 +52,7 @@ public class CodeGenConfig {
     private TestFramework testFramework;
     private Language sourceLanguage;
     private BuildTool buildTool;
+    private CloudProvider cloudProvider;
     private List<String> features;
 
     private boolean legacy;
@@ -101,6 +103,14 @@ public class CodeGenConfig {
 
     public void setBuildTool(BuildTool buildTool) {
         this.buildTool = buildTool;
+    }
+
+    public CloudProvider getCloudProvider() {
+        return cloudProvider;
+    }
+
+    public void setCloudProvider(CloudProvider cloudProvider) {
+        this.cloudProvider = cloudProvider;
     }
 
     public boolean isLegacy() {
