@@ -53,7 +53,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     Language lang;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-c", "--cloud"}, paramLabel = "CLOUD", description = "Which cloud provider to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = CloudProviderCandidates.class, converter = CloudProviderConverter.class)
+    @CommandLine.Option(names = {"-c", "--cloudprovider"}, paramLabel = "CLOUDPROVIDER", description = "Which cloud provider to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = CloudProviderCandidates.class, converter = CloudProviderConverter.class)
     CloudProvider cloudProvider;
 
     @ReflectiveAccess

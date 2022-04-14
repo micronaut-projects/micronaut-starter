@@ -261,7 +261,7 @@ public class GeneratorContext implements DependencyContext {
     }
 
     /**
-     * @return The JDK version
+     * @return The chosen Cloud Provider
      */
     @Nullable public CloudProvider getCloudProvider() {
         return options.getCloudProvider();
