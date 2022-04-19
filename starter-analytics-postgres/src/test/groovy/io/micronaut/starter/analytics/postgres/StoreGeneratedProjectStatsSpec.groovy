@@ -82,43 +82,20 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         def applications = repository.list(Pageable.UNPAGED)
 
         then:
-        with(applications[0]) {
-            type == generated[0].type
-            language == generated[0].language
-            buildTool == generated[0].buildTool
-            jdkVersion == generated[0].jdkVersion
-            testFramework == generated[0].testFramework
-            cloudProvider == generated[0].cloudProvider
-            features.find { it.name == 'google-cloud-function' }
-            micronautVersion == VersionInfo.micronautVersion
-            dateCreated
+        applications.eachWithIndex { app, idx ->
+            assert app.type == generated[idx].type
+            assert app.language == generated[idx].language
+            assert app.buildTool == generated[idx].buildTool
+            assert app.jdkVersion == generated[idx].jdkVersion
+            assert app.testFramework == generated[idx].testFramework
+            assert app.cloudProvider == generated[idx].cloudProvider
+            assert app.micronautVersion == VersionInfo.micronautVersion
+            assert app.dateCreated
         }
 
-        and:
-        with(applications[1]) {
-            type == generated[1].type
-            language == generated[1].language
-            buildTool == generated[1].buildTool
-            jdkVersion == generated[1].jdkVersion
-            testFramework == generated[1].testFramework
-            !cloudProvider
-            features.find { it.name == 'graalvm' }
-            micronautVersion == VersionInfo.micronautVersion
-            dateCreated
-        }
-
-        and:
-        with(applications[2]) {
-            type == generated[2].type
-            language == generated[2].language
-            buildTool == generated[2].buildTool
-            jdkVersion == generated[2].jdkVersion
-            testFramework == generated[2].testFramework
-            !cloudProvider
-            features.find { it.name == 'graalvm' }
-            micronautVersion == VersionInfo.micronautVersion
-            dateCreated
-        }
+        applications[0].features.find { it.name == 'google-cloud-function' }
+        applications[1].features.find { it.name == 'graalvm' }
+        applications[2].features.find { it.name == 'graalvm' }
 
         when:
         def topFeatures = featureRepository.topFeatures()
