@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 @Prototype
 public class CreateBuilderCommand extends BaseCommand implements Callable<Integer> {
 
+    private static final String PROMPT = CommandLine.Help.Ansi.AUTO.string("@|blue > |@");
     public static final String NAME = "create";
 
     private final ProjectGenerator projectGenerator;
@@ -89,7 +90,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
     private int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {
         String line;
         while (true) {
-            line = reader.readLine();
+            line = reader.readLine(PROMPT);
             try {
                 if (line == null || line.isEmpty()) {
                     return -1;
@@ -115,10 +116,9 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
             out(CommandLine.Help.Ansi.AUTO.string("@|blue " + (type == defaultOption ? "*" : " ") + (type.ordinal() + 1) + ")|@ " + titleFunc.apply(type)));
         }
         int option = getOption(reader, types.length);
+        out("");
         if (option == -1) {
             return defaultOption;
-        } else {
-            out("");
         }
         int choice = option - 1;
         return types[choice];
@@ -184,8 +184,9 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
 
         out("Enter any features to apply. Use tab for autocomplete and separate by a space.");
         while (true) {
-            String featuresLine = featuresReader.readLine();
+            String featuresLine = featuresReader.readLine(PROMPT);
             if (StringUtils.trimToNull(featuresLine) == null) {
+                out("");
                 return new ArrayList<>();
             }
             List<String> selectedFeatures = Arrays.asList(featuresLine.split(" "));
@@ -208,8 +209,10 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         out("Enter a name for the project.");
         while (true) {
             try {
-                String name = reader.readLine();
-                return NameUtils.parse(name);
+                String name = reader.readLine(PROMPT);
+                Project project = NameUtils.parse(name);
+                out("");
+                return project;
             } catch (IllegalArgumentException e) {
                 err(e.getMessage());
             }
