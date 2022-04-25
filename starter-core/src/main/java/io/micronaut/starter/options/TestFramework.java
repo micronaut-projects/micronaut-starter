@@ -29,18 +29,18 @@ public enum TestFramework {
 
     public static final TestFramework DEFAULT_OPTION = JUNIT;
 
+    private String title;
+
+    TestFramework(String title) {
+        this.title = title;
+    }
+
     public static boolean isKotlinTestFramework(TestFramework testFramework) {
         return testFramework == KOTEST;
     }
 
     public boolean isKotlinTestFramework() {
         return isKotlinTestFramework(this);
-    }
-
-    private String title;
-
-    TestFramework(String title) {
-        this.title = title;
     }
 
     @Override
