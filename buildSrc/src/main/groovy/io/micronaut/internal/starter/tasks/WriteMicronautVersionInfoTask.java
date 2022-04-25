@@ -23,6 +23,7 @@ import org.gradle.api.artifacts.result.ArtifactResolutionResult;
 import org.gradle.api.artifacts.result.ComponentArtifactsResult;
 import org.gradle.api.artifacts.result.ResolvedArtifactResult;
 import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Input;
@@ -45,6 +46,8 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
     @Input
     public abstract Property<String> getVersion();
 
+    @Input abstract ListProperty<String> getExtraBomProperties();
+
     @OutputDirectory
     public abstract DirectoryProperty getOutputDirectory();
 
@@ -64,15 +67,40 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
     }
 
     private Map<String, String> generateProperties() {
+        Map<String, String> props = new TreeMap<>();
+
+        props.put("micronaut.version", getVersion().get());
+        props.putAll(bomProperties("io.micronaut", "micronaut-bom", getVersion().get()));
+
+        for (String extraBomProperty : getExtraBomProperties().get()) {
+            String[] groupAndArtifact = extraBomProperty.split(":", 2);
+            String groupId = groupAndArtifact[0];
+            String artifactId = groupAndArtifact[1];
+            String key = artifactId.replace("-", ".") + ".version";
+            String version = props.get(key);
+
+            Map<String, String> bomProperties = bomProperties(groupId, artifactId + "-bom", version);
+            for (Map.Entry<String, String> entry : bomProperties.entrySet()) {
+                if (entry.getKey().startsWith("micronaut.")) {
+                    getLogger().lifecycle("Skipping {} from {}", entry.getKey(), extraBomProperty);
+                } else {
+                    if (props.containsKey(entry.getKey())) {
+                        getLogger().warn("Property {} from {} already exists ({}). Replacing with {}", entry.getKey(), extraBomProperty, props.get(entry.getKey()), entry.getValue());
+                    }
+                    props.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        return props;
+    }
+
+    private Map<String, String> bomProperties(String groupId, String artifactId, String version) {
         ArtifactResolutionResult result = getProject().getDependencies().createArtifactResolutionQuery()
-                .forModule("io.micronaut", "micronaut-bom", getVersion().get())
+                .forModule(groupId, artifactId, version)
                 .withArtifacts(MavenModule.class, MavenPomArtifact.class)
                 .execute();
         Map<String, String> props = new TreeMap<>();
         props.put("micronaut.version", getVersion().get());
-
-        // TODO: Remove this before merging!!!
-        props.put("grpc.version", getProject().getProperties().get("grpc.version").toString());
 
         for (ComponentArtifactsResult component : result.getResolvedComponents()) {
             component.getArtifacts(MavenPomArtifact.class).forEach(artifact -> {

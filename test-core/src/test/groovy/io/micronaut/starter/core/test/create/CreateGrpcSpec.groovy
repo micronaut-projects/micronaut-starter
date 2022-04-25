@@ -25,14 +25,6 @@ class CreateGrpcSpec extends CommandSpec {
         ApplicationType applicationType = ApplicationType.GRPC
         generateProject(lang, buildTool, [], applicationType)
 
-        // TODO: Remove this before merging!!!
-        if (buildTool == BuildTool.MAVEN) {
-            File pom = new File(dir, "pom.xml")
-            List<String> lines = pom.readLines()
-            lines.add(lines.indexOf("  </properties>"), "    <grpc.version>1.45.0</grpc.version>");
-            pom.text = lines.join("\n")
-        }
-
         CodeGenConfig codeGenConfig = CodeGenConfig.load(beanContext, dir, ConsoleOutput.NOOP)
         ConsoleOutput consoleOutput = Mock(ConsoleOutput)
 
