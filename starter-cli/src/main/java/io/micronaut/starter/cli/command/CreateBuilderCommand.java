@@ -42,20 +42,21 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@CommandLine.Command(name = CreateBuilderCommand.NAME, description = "Creates an application builder style")
+@CommandLine.Command(name = CreateBuilderCommand.NAME, description = "A guided walk-through to create an application")
 @Prototype
 public class CreateBuilderCommand extends BaseCommand implements Callable<Integer> {
 
-    private static final String PROMPT = CommandLine.Help.Ansi.AUTO.string("@|blue > |@");
     public static final String NAME = "create";
 
     private final ProjectGenerator projectGenerator;
     private final List<Feature> features;
+    private final String prompt;
 
     public CreateBuilderCommand(ProjectGenerator projectGenerator,
                                 List<Feature> features) {
         this.projectGenerator = projectGenerator;
         this.features = features;
+        this.prompt = CommandLine.Help.Ansi.AUTO.string("@|blue > |@");
     }
 
     @Override
@@ -90,7 +91,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
     private int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {
         String line;
         while (true) {
-            line = reader.readLine(PROMPT);
+            line = reader.readLine(prompt);
             try {
                 if (line == null || line.isEmpty()) {
                     return -1;
@@ -184,7 +185,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
 
         out("Enter any features to apply. Use tab for autocomplete and separate by a space.");
         while (true) {
-            String featuresLine = featuresReader.readLine(PROMPT);
+            String featuresLine = featuresReader.readLine(prompt);
             if (StringUtils.trimToNull(featuresLine) == null) {
                 out("");
                 return new ArrayList<>();
@@ -209,7 +210,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         out("Enter a name for the project.");
         while (true) {
             try {
-                String name = reader.readLine(PROMPT);
+                String name = reader.readLine(prompt);
                 Project project = NameUtils.parse(name);
                 out("");
                 return project;
