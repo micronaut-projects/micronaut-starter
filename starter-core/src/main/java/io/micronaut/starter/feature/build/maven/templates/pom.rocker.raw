@@ -208,8 +208,33 @@ MavenBuild mavenBuild
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false)
 }
+
 @for (MavenDependency f : mavenBuild.getDependencies(false)) {
+    @if (!(features.isFeaturePresent(io.micronaut.starter.feature.json.SerializationFeature.class) &&
+           "micronaut-runtime".equals(f.getArtifactId()))) {
 @dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false)
+    }
+}
+@if (features.isFeaturePresent(io.micronaut.starter.feature.json.SerializationFeature.class)) {
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-runtime</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>io.micronaut</groupId>
+          <artifactId>micronaut-jackson-databind</artifactId>
+        </exclusion>
+      </exclusions>
+      <scope>compile</scope>
+    </dependency>
+        @if (features.contains("serialization-jsonp") || features.contains("serialization-bson")) {
+    <dependency>
+      <groupId>jakarta.json.bind</groupId>
+      <artifactId>jakarta.json.bind-api</artifactId>
+      <version>@features.resolveCoordinate("jakarta.json.bind-api").getVersion()</version>
+      <scope>compile</scope>
+    </dependency>
+        }
 }
   </dependencies>
 

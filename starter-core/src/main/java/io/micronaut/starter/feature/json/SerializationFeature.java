@@ -34,7 +34,7 @@ public interface SerializationFeature extends JsonFeature {
 
     @Override
     default String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-serialization/1.0.x/guide/";
+        return "https://micronaut-projects.github.io/micronaut-serialization/latest/guide/";
     }
 
     @Override
