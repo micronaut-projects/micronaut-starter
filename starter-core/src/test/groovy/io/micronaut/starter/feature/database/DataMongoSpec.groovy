@@ -23,6 +23,15 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         readme.contains("https://docs.mongodb.com")
 
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
+
+        if (language == Language.GROOVY) {
+            assert build.contains('testImplementation("org.testcontainers:spock")')
+        } else {
+            assert build.contains('testImplementation("org.testcontainers:junit-jupiter")')
+        }
+        build.contains('testImplementation("org.testcontainers:mongodb")')
+        build.contains('testImplementation("org.testcontainers:testcontainers")')
+
         if (language == Language.KOTLIN) {
             assert build.contains('kapt("io.micronaut.data:micronaut-data-document-processor")')
         } else if (language == Language.JAVA) {
@@ -54,9 +63,14 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void "test adding #feature results in the correct build for a Maven app in #language"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), [feature])
+        def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
         def readme = output["README.md"]
         def project = new XmlParser().parseText(output['pom.xml'])
+        def expectedTestcontainersArtifacts = [
+                language == Language.GROOVY ? 'spock' : 'junit-jupiter',
+                'mongodb',
+                'testcontainers'
+        ].sort()
 
         then:
         readme
@@ -69,17 +83,16 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         with(project.dependencies.dependency.find { it.artifactId.text() == driver }) {
-            scope.text() == 'runtime'
+            scope.text() == (language == Language.GROOVY) ? 'compile' : 'runtime'
             groupId.text() == 'org.mongodb'
         }
 
-        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
-            def artifacts = configuration.annotationProcessorPaths.path.artifactId*.text()
-            artifacts.contains("micronaut-data-document-processor")
-            artifacts.contains("micronaut-data-processor")
-            // data processor must come before the document processor because Maven
-            artifacts.indexOf("micronaut-data-document-processor") > artifacts.indexOf("micronaut-data-processor")
-        }
+        def testContainersDependencies = project.dependencies.dependency.findAll { it.groupId.text() == 'org.testcontainers' }
+        testContainersDependencies.size == 3
+        testContainersDependencies.scope*.text().unique() == ['test']
+        testContainersDependencies.artifactId*.text().sort() == expectedTestcontainersArtifacts
+
+        validatePlugins(language, project)
 
         where:
         feature              | driver                           | language
@@ -89,6 +102,33 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.JAVA
         'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.KOTLIN
         'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.GROOVY
+    }
+
+    private boolean validatePlugins(Language language, project) {
+        switch (language) {
+            case Language.JAVA:
+                def mavenPlugin = project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }
+                def artifacts = mavenPlugin.configuration.annotationProcessorPaths.path.artifactId*.text()
+                assert artifacts.contains("micronaut-data-document-processor")
+                assert artifacts.contains("micronaut-data-processor")
+                // data processor must come before the document processor because Maven
+                assert artifacts.indexOf("micronaut-data-document-processor") > artifacts.indexOf("micronaut-data-processor")
+                return true
+            case Language.GROOVY:
+                // Groovy, these are "provided" dependencies
+                assert project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-processor" }.scope.text() == 'provided'
+                assert project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-document-processor" }.scope.text() == 'provided'
+                return true
+            case Language.KOTLIN:
+                def mavenPlugin = project.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }
+                def artifacts = mavenPlugin.executions.execution.find { it.id.text() == 'kapt' }.configuration.annotationProcessorPaths.annotationProcessorPath.artifactId*.text()
+                assert artifacts.contains("micronaut-data-document-processor")
+                assert artifacts.contains("micronaut-data-processor")
+                // data processor must come before the document processor because Maven
+                assert artifacts.indexOf("micronaut-data-document-processor") > artifacts.indexOf("micronaut-data-processor")
+                return true
+            default: throw new IllegalArgumentException("Unsupported language: $language")
+        }
     }
 
     void "adding testcontainers to a #feature feature #buildTool app adds a testcontainers-mongo dependency"() {

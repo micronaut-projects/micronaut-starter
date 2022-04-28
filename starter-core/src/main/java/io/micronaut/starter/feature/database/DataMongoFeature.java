@@ -37,9 +37,11 @@ public abstract class DataMongoFeature implements DataFeature {
     private static final String MONGODB_URI_CONFIGURATION_VALUE = "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb";
 
     private final Data data;
+    private final TestContainers testContainers;
 
-    protected DataMongoFeature(Data data) {
+    protected DataMongoFeature(Data data, TestContainers testContainers) {
         this.data = data;
+        this.testContainers = testContainers;
     }
 
     @Override
@@ -80,6 +82,9 @@ public abstract class DataMongoFeature implements DataFeature {
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
+        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
+            featureContext.addFeature(testContainers);
+        }
     }
 
     @Override
