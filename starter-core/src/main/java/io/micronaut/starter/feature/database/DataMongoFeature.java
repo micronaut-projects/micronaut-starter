@@ -25,7 +25,7 @@ import io.micronaut.starter.options.Language;
 /**
  * Base class for our data-mongo features.
  */
-public abstract class DataMongoFeature implements DataFeature {
+public abstract class DataMongoFeature extends TestContainersFeature implements DataFeature {
 
     private static final String MONGODB_GROUP = "org.mongodb";
     private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
@@ -37,11 +37,10 @@ public abstract class DataMongoFeature implements DataFeature {
     private static final String MONGODB_URI_CONFIGURATION_VALUE = "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb";
 
     private final Data data;
-    private final TestContainers testContainers;
 
     protected DataMongoFeature(Data data, TestContainers testContainers) {
+        super(testContainers);
         this.data = data;
-        this.testContainers = testContainers;
     }
 
     @Override
@@ -81,10 +80,8 @@ public abstract class DataMongoFeature implements DataFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         featureContext.addFeature(data);
-        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
-            featureContext.addFeature(testContainers);
-        }
     }
 
     @Override
