@@ -67,10 +67,6 @@ public class Kotlin implements LanguageFeature {
         generatorContext.addDependency(kotlin.artifactId("kotlin-stdlib-jdk8"));
         generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
-                .artifactId("micronaut-runtime")
-                .compile());
-        generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.kotlin")
                 .artifactId("micronaut-kotlin-runtime")
                 .compile());
