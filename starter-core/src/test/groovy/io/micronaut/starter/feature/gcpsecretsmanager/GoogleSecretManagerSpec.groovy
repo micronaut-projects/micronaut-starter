@@ -1,4 +1,4 @@
-package io.micronaut.starter.gcpsecretsmanager
+package io.micronaut.starter.feature.gcpsecretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
