@@ -68,10 +68,7 @@ public class SerializationJsonpFeature implements SerializationFeature {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
         String dataBindVersion = generatorContext.resolveCoordinate("jakarta.json.bind-api").getVersion();
         return Arrays.asList(Substitution.builder()
-                        .target(Dependency.builder()
-                                .groupId(GROUP_ID_MICRONAUT)
-                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
-                                .build())
+                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
                         .replacement(Dependency.builder()
                                 .groupId("jakarta.json.bind")
                                 .artifactId("jakarta.json.bind-api")

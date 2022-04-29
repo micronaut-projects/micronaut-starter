@@ -59,10 +59,7 @@ public class SerializationBsonFeature implements SerializationFeature {
                 .version(serializationVersion)
                 .build();
         return Arrays.asList(Substitution.builder()
-                        .target(Dependency.builder()
-                                .groupId(GROUP_ID_MICRONAUT)
-                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
-                                .build())
+                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
                         .replacement(replacement)
                         .build(),
                 Substitution.builder()

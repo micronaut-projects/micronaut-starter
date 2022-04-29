@@ -27,9 +27,7 @@ import java.util.List;
 
 public interface SerializationFeature extends JsonFeature {
     String MICRONAUT_SERIALIZATION = "micronaut.serialization";
-    String GROUP_ID_MICRONAUT = "io.micronaut";
     String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
-    String ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND = "micronaut-jackson-databind";
     String ARTIFACT_ID_MICRONAUT_JACKSON_CORE = "micronaut-jackson-core";
 
     @Override
@@ -75,10 +73,7 @@ public interface SerializationFeature extends JsonFeature {
                 .compile()
                 .groupId(GROUP_ID_MICRONAUT)
                 .artifactId("micronaut-runtime")
-                .exclude(Dependency.builder()
-                        .groupId("io.micronaut")
-                        .artifactId("micronaut-jackson-databind")
-                        .build());
+                .exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
     }
 
     @NonNull

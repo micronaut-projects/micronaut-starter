@@ -54,10 +54,7 @@ public class SerializationJacksonFeature implements SerializationFeature {
     public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
         return Collections.singletonList(Substitution.builder()
-                        .target(Dependency.builder()
-                                .groupId(GROUP_ID_MICRONAUT)
-                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
-                                .build())
+                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
                         .replacement(Dependency.builder()
                                 .groupId(GROUP_ID_MICRONAUT_SERDE)
                                 .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JACKSON)
