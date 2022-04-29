@@ -14,7 +14,7 @@
 @if (scope != null) {
       <scope>@scope</scope>
 }
-@if (exclusions != null) {
+@if (exclusions != null && !exclusions.isEmpty()) {
       <exclusions>
 @for (DependencyCoordinate dependency : exclusions) {
           <exclusion>
