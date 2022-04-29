@@ -33,7 +33,12 @@ public class DependencyCoordinate implements Coordinate, Ordered {
     private final String version;
     private final int order;
     private final boolean pom;
+
+    @Nullable
     private final List<DependencyCoordinate> exclusions;
+
+    @Nullable
+    private final List<Substitution> substitutions;
 
     public DependencyCoordinate(Dependency dependency) {
         this(dependency, false);
@@ -50,7 +55,8 @@ public class DependencyCoordinate implements Coordinate, Ordered {
                         dependency.getExclusions()
                                 .stream()
                                 .map(DependencyCoordinate::new)
-                                .collect(Collectors.toList()));
+                                .collect(Collectors.toList()),
+                dependency.getSubstitutions());
     }
 
     public DependencyCoordinate(String groupId,
@@ -63,6 +69,7 @@ public class DependencyCoordinate implements Coordinate, Ordered {
                 version,
                 order,
                 pom,
+                null,
                 null);
     }
 
@@ -71,13 +78,20 @@ public class DependencyCoordinate implements Coordinate, Ordered {
                                 @Nullable String version,
                                 int order,
                                 boolean pom,
-                                @Nullable List<DependencyCoordinate> exclusions) {
+                                @Nullable List<DependencyCoordinate> exclusions,
+                                @Nullable List<Substitution> substitutions) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
         this.order = order;
         this.pom = pom;
         this.exclusions = exclusions;
+        this.substitutions = substitutions;
+    }
+
+    @Nullable
+    public List<Substitution> getSubstitutions() {
+        return substitutions;
     }
 
     @Nullable

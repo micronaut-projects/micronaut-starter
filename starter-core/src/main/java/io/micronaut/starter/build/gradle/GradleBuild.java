@@ -16,10 +16,14 @@
 package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import io.micronaut.starter.feature.build.gradle.templates.substitutions;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -74,6 +78,19 @@ public class GradleBuild {
     @NonNull
     public List<GradlePlugin> getSettingsPlugins() {
         return plugins.stream().filter(gradlePlugin -> gradlePlugin.getGradleFile() == GradleFile.SETTINGS).collect(Collectors.toList());
+    }
+
+    @NonNull
+    public String renderSubstitutions() {
+        Set<Substitution> uniqueSubstitutions = new HashSet<>();
+        dependencies
+                .stream()
+                .map(DependencyCoordinate::getSubstitutions)
+                .filter(Objects::nonNull)
+                .forEach(uniqueSubstitutions::addAll);
+        return CollectionUtils.isEmpty(uniqueSubstitutions) ? "" :
+                renderWritableExtensions(Stream.of(
+                        new RockerWritable(substitutions.template(uniqueSubstitutions))));
     }
 
     @NonNull

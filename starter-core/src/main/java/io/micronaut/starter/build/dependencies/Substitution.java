@@ -48,6 +48,30 @@ public class Substitution {
         return new Builder();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Substitution that = (Substitution) o;
+
+        if (!target.equals(that.target)) {
+            return false;
+        }
+        return replacement.equals(that.replacement);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = target.hashCode();
+        result = 31 * result + replacement.hashCode();
+        return result;
+    }
+
     public static class Builder {
         private Dependency target;
         private Dependency replacement;

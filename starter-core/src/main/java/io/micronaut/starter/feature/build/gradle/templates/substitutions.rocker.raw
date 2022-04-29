@@ -1,0 +1,12 @@
+@import io.micronaut.starter.build.dependencies.Substitution
+@import java.util.Set
+@args (Set<Substitution> substitutions)
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+@for (substitution : substitutions) {
+        substitute(module("@substitution.getTarget().getGroupId():@substitution.getTarget().getArtifactId()"))
+            .using(module("@substitution.getReplacement().getGroupId():@substitution.getReplacement().getArtifactId():@substitution.getReplacement().getVersion()"))
+}
+    }
+}
