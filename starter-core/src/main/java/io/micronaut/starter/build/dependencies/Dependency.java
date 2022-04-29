@@ -182,10 +182,6 @@ public final class Dependency {
         return requiresLookup;
     }
 
-    public boolean isRequiresLookup() {
-        return requiresLookup;
-    }
-
     public Dependency resolved(Coordinate coordinate) {
         return new Dependency(
                 scope,
@@ -351,11 +347,6 @@ public final class Dependency {
 
         public Builder pom(boolean pom) {
             this.pom = pom;
-            return this;
-        }
-
-        public Builder pom() {
-            this.pom = true;
             return this;
         }
 
