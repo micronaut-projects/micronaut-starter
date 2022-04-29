@@ -35,6 +35,9 @@ dependencies {
     @dependency.template("com.google.cloud.functions", "functions-framework-api", "testImplementation", null, false)
     }
 }
+@if (features.contains("gcp-secrets-manager") && features.contains("graalvm")) {
+    @dependency.template("com.google.cloud", "native-image-support", "nativeImageCompileOnly", null, false)
+}
 @if (features.contains("azure-function")) {
     @if (!features.contains("azure-function-http")) {
     @dependency.template("com.microsoft.azure.functions", "azure-functions-java-library", "implementation", null, false)
