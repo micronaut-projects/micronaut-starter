@@ -26,6 +26,9 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.json.SerializationFeature.ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND;
+import static io.micronaut.starter.feature.json.SerializationFeature.GROUP_ID_MICRONAUT;
+
 @Singleton
 public class JacksonDatabindFeature implements JsonFeature, DefaultFeature {
     @Override
@@ -47,8 +50,8 @@ public class JacksonDatabindFeature implements JsonFeature, DefaultFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
             .compile()
-            .groupId("io.micronaut")
-            .artifactId("micronaut-jackson-databind")
+            .groupId(GROUP_ID_MICRONAUT)
+            .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
             .build()
         );
     }
