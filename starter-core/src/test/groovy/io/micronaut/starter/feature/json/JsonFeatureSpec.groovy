@@ -41,10 +41,10 @@ class JsonFeatureSpec extends ApplicationContextSpec {
         template.contains("substitute(module(\"$substitutiontarget1")
         template.contains(".using(module(\"$substitutionreplacement1")
         if (substitutiontarget2 != null) {
-            template.contains("substitute(module(\"$substitutiontarget2")
+            assert template.contains("substitute(module(\"$substitutiontarget2")
         }
         if (substitutionreplacement2 != null) {
-            template.contains(".using(module(\"$substitutionreplacement2")
+            assert template.contains(".using(module(\"$substitutionreplacement2")
         }
 
         where:
