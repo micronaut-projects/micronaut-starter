@@ -27,6 +27,7 @@ import java.util.List;
 
 @Singleton
 public class SerializationBsonFeature implements SerializationFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SERDE_BSON = "micronaut-serde-bson";
 
     @Override
     public String getName() {
@@ -53,21 +54,21 @@ public class SerializationBsonFeature implements SerializationFeature {
     public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
         Dependency replacement = Dependency.builder()
-                .groupId("io.micronaut.serde")
-                .artifactId("micronaut-serde-bson")
+                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_BSON)
                 .version(serializationVersion)
                 .build();
         return Arrays.asList(Substitution.builder()
                         .target(Dependency.builder()
-                                .groupId("io.micronaut")
-                                .artifactId("micronaut-jackson-databind")
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
                                 .build())
                         .replacement(replacement)
                         .build(),
                 Substitution.builder()
                         .target(Dependency.builder()
-                                .groupId("io.micronaut")
-                                .artifactId("micronaut-jackson-core")
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_CORE)
                                 .build())
                         .replacement(replacement)
                         .build()

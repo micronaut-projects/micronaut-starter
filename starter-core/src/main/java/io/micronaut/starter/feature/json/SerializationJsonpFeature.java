@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
@@ -27,6 +28,8 @@ import java.util.List;
 
 @Singleton
 public class SerializationJsonpFeature implements SerializationFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SERDE_JSONP = "micronaut-serde-jsonp";
+
     @Override
     public String getName() {
         return "serialization-jsonp";
@@ -47,6 +50,18 @@ public class SerializationJsonpFeature implements SerializationFeature {
         return "jsonp";
     }
 
+    @NonNull
+    @Override
+    public List<Dependency.Builder> dependencies(@NonNull GeneratorContext generatorContext) {
+        List<Dependency.Builder> dependencyList = SerializationFeature.super.dependencies(generatorContext);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            dependencyList.add(Dependency.builder()
+                    .lookupArtifactId("jakarta.json.bind-api")
+                    .compile());
+        }
+        return dependencyList;
+    }
+
     @Override
     @NonNull
     public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
@@ -54,8 +69,8 @@ public class SerializationJsonpFeature implements SerializationFeature {
         String dataBindVersion = generatorContext.resolveCoordinate("jakarta.json.bind-api").getVersion();
         return Arrays.asList(Substitution.builder()
                         .target(Dependency.builder()
-                                .groupId("io.micronaut")
-                                .artifactId("micronaut-jackson-databind")
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
                                 .build())
                         .replacement(Dependency.builder()
                                 .groupId("jakarta.json.bind")
@@ -65,12 +80,12 @@ public class SerializationJsonpFeature implements SerializationFeature {
                         .build(),
                 Substitution.builder()
                         .target(Dependency.builder()
-                                .groupId("io.micronaut")
-                                .artifactId("micronaut-jackson-core")
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_CORE)
                                 .build())
                         .replacement(Dependency.builder()
-                                .groupId("io.micronaut.serde")
-                                .artifactId("micronaut-serde-jsonp")
+                                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JSONP)
                                 .version(serializationVersion)
                                 .build())
                         .build()

@@ -8,26 +8,50 @@ import spock.lang.Unroll
 class JsonFeatureSpec extends ApplicationContextSpec {
 
     @Unroll
-    void "test selected JSON feature for Gradle: #impl"() {
+    void "test selected JSON feature for Gradle: #feature"(String feature, String coordinate) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([impl])
+                .features([feature])
+                .render()
+
+        then:
+        template.contains("implementation(\"$coordinate")
+
+        where:
+        coordinate                                | feature
+        'io.micronaut:micronaut-jackson-databind' | 'jackson-databind'
+    }
+
+    @Unroll
+    void "test selected JSON feature for Gradle: #feature"(String module,
+                                                           String feature,
+                                                           String substitutiontarget1,
+                                                           String substitutionreplacement1,
+                                                           String substitutiontarget2,
+                                                           String substitutionreplacement2) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([feature])
                 .render()
 
         then:
         template.contains("implementation(\"$module")
-        impl == 'jackson-databind' || template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
-        impl == 'jackson-databind' || template.contains('substitute(module("io.micronaut:micronaut-jackson-databind"))')
-        impl == 'jackson-databind' || template.contains(".using(module(\"$substitution1")
-        impl == 'jackson-databind' || impl == 'serialization-jackson' || template.contains('substitute(module("io.micronaut:micronaut-jackson-core"))')
-        impl == 'jackson-databind' || impl == 'serialization-jackson' || template.contains(".using(module(\"$substitution2")
+        template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
+        template.contains('substitute(module("io.micronaut:micronaut-jackson-databind"))')
+        template.contains("substitute(module(\"$substitutiontarget1")
+        template.contains(".using(module(\"$substitutionreplacement1")
+        if (substitutiontarget2 != null) {
+            template.contains("substitute(module(\"$substitutiontarget2")
+        }
+        if (substitutionreplacement2 != null) {
+            template.contains(".using(module(\"$substitutionreplacement2")
+        }
 
         where:
-        module                                       | impl                    | substitution1                                | substitution2
-        'io.micronaut:micronaut-jackson-databind'    | 'jackson-databind'      | null                                         | null
-        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut.serde:micronaut-serde-jackson' | null
-        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut.serde:micronaut-serde-jsonp'
-        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut.serde:micronaut-serde-bson'
+        module                                       | feature                 | substitutiontarget1                       | substitutionreplacement1                     | substitutiontarget2                   | substitutionreplacement2
+        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-jackson' | null                                  | null
+        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'io.micronaut:micronaut-jackson-databind' | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-jsonp'
+        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-bson'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-bson'
     }
 
     @Unroll
@@ -74,11 +98,12 @@ class JsonFeatureSpec extends ApplicationContextSpec {
       <scope>compile</scope>
     </dependency>
 """)
-        if (feature == 'serialization-jsonp')
-        template.contains("""\
+        if (feature == 'serialization-jsonp') {
+            assert template.contains("""\
     <dependency>
       <groupId>jakarta.json.bind</groupId>
       <artifactId>jakarta.json.bind-api</artifactId>""")
+        }
         where:
         artifactId                | feature
         'micronaut-serde-jackson' | 'serialization-jackson'

@@ -26,6 +26,8 @@ import java.util.List;
 
 @Singleton
 public class SerializationJacksonFeature implements SerializationFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SERDE_JACKSON = "micronaut-serde-jackson";
+
     @Override
     @NonNull
     public String getName() {
@@ -53,12 +55,12 @@ public class SerializationJacksonFeature implements SerializationFeature {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
         return Collections.singletonList(Substitution.builder()
                         .target(Dependency.builder()
-                                .groupId("io.micronaut")
-                                .artifactId("micronaut-jackson-databind")
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
                                 .build())
                         .replacement(Dependency.builder()
-                                .groupId("io.micronaut.serde")
-                                .artifactId("micronaut-serde-jackson")
+                                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JACKSON)
                                 .version(serializationVersion)
                                 .build())
                         .build());
