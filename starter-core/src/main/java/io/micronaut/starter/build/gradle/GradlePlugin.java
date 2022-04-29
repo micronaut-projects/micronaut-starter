@@ -25,10 +25,8 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -40,7 +38,7 @@ public class GradlePlugin implements BuildPlugin {
     private final String id;
     private final String version;
     private final String artifactId;
-    private final List<Writable> extensions;
+    private final Writable extension;
     private final Writable settingsExtension;
     private final boolean requiresLookup;
     private final boolean requiresSettingsPluginsManagement;
@@ -51,7 +49,7 @@ public class GradlePlugin implements BuildPlugin {
                         @Nullable String id,
                         @Nullable String version,
                         @Nullable String artifactId,
-                        @Nullable List<Writable> extensions,
+                        @Nullable Writable extension,
                         @Nullable Writable settingsExtension,
                         boolean requiresSettingsPluginsManagement,
                         boolean requiresLookup,
@@ -61,7 +59,7 @@ public class GradlePlugin implements BuildPlugin {
         this.id = id;
         this.version = version;
         this.artifactId = artifactId;
-        this.extensions = extensions;
+        this.extension = extension;
         this.settingsExtension = settingsExtension;
         this.requiresSettingsPluginsManagement = requiresSettingsPluginsManagement;
         this.requiresLookup = requiresLookup;
@@ -97,8 +95,8 @@ public class GradlePlugin implements BuildPlugin {
 
     @Override
     @Nullable
-    public List<Writable> getExtensions() {
-        return extensions;
+    public Writable getExtension() {
+        return extension;
     }
 
     @Nullable
@@ -128,7 +126,7 @@ public class GradlePlugin implements BuildPlugin {
     public BuildPlugin resolved(CoordinateResolver coordinateResolver) {
         Coordinate coordinate = coordinateResolver.resolve(artifactId)
                 .orElseThrow(() -> new LookupFailedException(artifactId));
-        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extensions, settingsExtension, requiresSettingsPluginsManagement, false, order, buildImports);
+        return new GradlePlugin(gradleFile, id, coordinate.getVersion(), null, extension, settingsExtension, requiresSettingsPluginsManagement, false, order, buildImports);
     }
 
     @Override
@@ -158,7 +156,7 @@ public class GradlePlugin implements BuildPlugin {
         private String id;
         private String artifactId;
         private String version;
-        private List<Writable> extensions;
+        private Writable extension;
         private Writable settingsExtension;
         private boolean requiresSettingsPluginsManagement;
         private boolean requiresLookup;
@@ -200,10 +198,7 @@ public class GradlePlugin implements BuildPlugin {
 
         @NonNull
         public GradlePlugin.Builder extension(@Nullable Writable extension) {
-            if (this.extensions == null) {
-                this.extensions = new ArrayList<>();
-            }
-            this.extensions.add(extension);
+            this.extension = extension;
             return this;
         }
 
@@ -226,7 +221,7 @@ public class GradlePlugin implements BuildPlugin {
         }
 
         public GradlePlugin build() {
-            return new GradlePlugin(gradleFile, id, version, artifactId, extensions, settingsExtension, requiresSettingsPluginsManagement, requiresLookup, order, buildImports);
+            return new GradlePlugin(gradleFile, id, version, artifactId, extension, settingsExtension, requiresSettingsPluginsManagement, requiresLookup, order, buildImports);
         }
     }
 

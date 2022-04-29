@@ -27,7 +27,6 @@ import io.micronaut.starter.feature.build.gradle.templates.substitutions;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -95,12 +94,9 @@ public class GradleBuild {
 
     @NonNull
     public String renderExtensions() {
-        List<Writable> extensions = new ArrayList<>();
-        plugins.stream()
-                .map(GradlePlugin::getExtensions)
-                .filter(Objects::nonNull)
-                .forEach(extensions::addAll);
-        return renderWritableExtensions(extensions.stream());
+        return renderWritableExtensions(plugins.stream()
+                .map(GradlePlugin::getExtension)
+                .filter(Objects::nonNull));
     }
 
     @NonNull
