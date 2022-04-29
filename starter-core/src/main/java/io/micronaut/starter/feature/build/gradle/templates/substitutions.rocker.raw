@@ -2,6 +2,7 @@
 @import java.util.Set
 @args (Set<Substitution> substitutions)
 
+@if (substitutions != null) {
 configurations.all {
     resolutionStrategy.dependencySubstitution {
 @for (substitution : substitutions) {
@@ -9,4 +10,5 @@ configurations.all {
             .using(module("@substitution.getReplacement().getGroupId():@substitution.getReplacement().getArtifactId():@substitution.getReplacement().getVersion()"))
 }
     }
+}
 }
