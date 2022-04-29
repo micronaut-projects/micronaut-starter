@@ -31,45 +31,58 @@ class JsonFeatureSpec extends ApplicationContextSpec {
     }
 
     @Unroll
-    void "test selected JSON feature for Maven: #impl"() {
+    void "feature #feature for Maven adds dependency with artifact id: #artifactId"(String artifactId, String feature) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([impl])
+                .features([feature])
                 .render()
 
         then:
-        template.contains("<artifactId>$module</artifactId>")
-        impl == 'jackson-databind' || template.contains('<artifactId>micronaut-serde-processor</artifactId>')
-        impl == 'jackson-databind' || template.contains("""
+        template.contains("<artifactId>$artifactId</artifactId>")
+
+        where:
+        artifactId                   | feature
+        'micronaut-jackson-databind' | 'jackson-databind'
+    }
+
+    @Unroll
+    void "test selected JSON feature for Maven: #feature"(String artifactId, String feature) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([feature])
+                .render()
+
+        then:
+        template.contains("<artifactId>$artifactId</artifactId>")
+        template.contains('<artifactId>micronaut-serde-processor</artifactId>')
+        template.contains("""\
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-runtime</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>io.micronaut</groupId>
-          <artifactId>micronaut-jackson-databind</artifactId>
-        </exclusion>
-      </exclusions>
       <scope>compile</scope>
-    </dependency>
-""")
-        impl == 'jackson-databind' || template.contains("""
+      <exclusions>
+          <exclusion>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jackson-databind</artifactId>
+          </exclusion>
+        </exclusions>
+    </dependency>""")
+        template.contains("""
     <dependency>
       <groupId>io.micronaut.serde</groupId>
-      <artifactId>$module</artifactId>
+      <artifactId>$artifactId</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
-        impl == 'jackson-databind' || impl == 'serialization-jackson' || template.contains("""
+        if (feature == 'serialization-jsonp')
+        template.contains("""\
     <dependency>
       <groupId>jakarta.json.bind</groupId>
-      <artifactId>jakarta.json.bind-api</artifactId>
-""")
+      <artifactId>jakarta.json.bind-api</artifactId>""")
         where:
-        module                                 | impl
-        'micronaut-jackson-databind'           | 'jackson-databind'
-        'micronaut-serde-jackson'              | 'serialization-jackson'
-        'micronaut-serde-jsonp'                | 'serialization-jsonp'
-        'micronaut-serde-bson'                 | 'serialization-bson'
+        artifactId                | feature
+        'micronaut-serde-jackson' | 'serialization-jackson'
+        'micronaut-serde-jsonp'   | 'serialization-jsonp'
+        'micronaut-serde-bson'    | 'serialization-bson'
     }
 }

@@ -22,17 +22,19 @@ import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.Writable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MavenPlugin implements BuildPlugin {
 
     private String artifactId;
-    private final Writable extension;
+    private final List<Writable> extensions;
     private final int order;
 
-    public MavenPlugin(String artifactId, Writable extension, int order) {
+    public MavenPlugin(String artifactId, List<Writable> extensions, int order) {
         this.artifactId = artifactId;
-        this.extension = extension;
+        this.extensions = extensions;
         this.order = order;
     }
 
@@ -80,8 +82,8 @@ public class MavenPlugin implements BuildPlugin {
 
     @Override
     @Nullable
-    public Writable getExtension() {
-        return extension;
+    public List<Writable> getExtensions() {
+        return extensions;
     }
 
     @Nullable
@@ -92,7 +94,7 @@ public class MavenPlugin implements BuildPlugin {
     public static final class Builder {
 
         private String artifactId;
-        private Writable extension;
+        private List<Writable> extensions;
         private int order = 0;
 
         private Builder() {
@@ -100,7 +102,10 @@ public class MavenPlugin implements BuildPlugin {
 
         @NonNull
         public MavenPlugin.Builder extension(@Nullable Writable extension) {
-            this.extension = extension;
+            if (this.extensions == null) {
+                this.extensions = new ArrayList<>();
+            }
+            this.extensions.add(extension);
             return this;
         }
 
@@ -119,8 +124,8 @@ public class MavenPlugin implements BuildPlugin {
         @NonNull
         public MavenPlugin build() {
             Objects.requireNonNull(artifactId, "The artifact id must be set");
-            Objects.requireNonNull(extension, "Maven plugins require an extension");
-            return new MavenPlugin(artifactId, extension, order);
+            Objects.requireNonNull(extensions, "Maven plugins require an extension");
+            return new MavenPlugin(artifactId, extensions, order);
         }
     }
 }

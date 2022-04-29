@@ -18,6 +18,7 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.template.Writable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,12 @@ public class MavenBuild {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         for (MavenPlugin plugin: plugins) {
             try {
-                plugin.getExtension().write(outputStream);
+                if (plugin.getExtensions() != null) {
+                    for (Writable extension : plugin.getExtensions()) {
+                        extension.write(outputStream);
+                    }
+                }
+
             } catch (IOException e) {
                 if (LOG.isErrorEnabled()) {
                     LOG.error("IO Exception rendering Gradle Plugin extension");

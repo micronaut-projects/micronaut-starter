@@ -50,30 +50,6 @@ repositories {
     }
 }
 
-@if (features.isFeaturePresent(io.micronaut.starter.feature.json.SerializationFeature.class)) {
-configurations.all {
-    resolutionStrategy.dependencySubstitution {
-    @with (serializationVersion = VersionInfo.getBomVersion("micronaut.serialization"),
-            dataBindVersion = features.resolveCoordinate("jakarta.json.bind-api").getVersion()) {
-        @if (features.contains("serialization-jackson")) {
-        substitute(module("io.micronaut:micronaut-jackson-databind"))
-            .using(module("io.micronaut.serde:micronaut-serde-jackson:@serializationVersion"))
-        } else if (features.contains("serialization-jsonp")) {
-        substitute(module("io.micronaut:micronaut-jackson-databind"))
-            .using(module("jakarta.json.bind:jakarta.json.bind-api:@dataBindVersion"))
-        substitute(module("io.micronaut:micronaut-jackson-core"))
-            .using(module("io.micronaut.serde:micronaut-serde-jsonp:@serializationVersion"))
-        } else if (features.contains("serialization-bson")) {
-        substitute(module("io.micronaut:micronaut-jackson-databind"))
-            .using(module("jakarta.json.bind:jakarta.json.bind-api:@dataBindVersion"))
-        substitute(module("io.micronaut:micronaut-jackson-core"))
-            .using(module("io.micronaut.serde:micronaut-serde-bson:@serializationVersion"))
-        }
-    }
-    }
-}
-}
-
 @dependencies.template(applicationType, project, features, gradleBuild)
 
 

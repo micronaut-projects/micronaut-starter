@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
@@ -128,9 +127,5 @@ public class Features extends ArrayList<String> {
             }
         }
         throw new IllegalStateException(String.format("The required feature type %s does not exist", feature.getName()));
-    }
-
-    public Coordinate resolveCoordinate(String artifactId) {
-        return context.resolveCoordinate(artifactId);
     }
 }

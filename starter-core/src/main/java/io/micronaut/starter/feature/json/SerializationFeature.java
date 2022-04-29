@@ -15,12 +15,18 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.options.BuildTool;
+
+import java.util.List;
 
 public interface SerializationFeature extends JsonFeature {
+    String MICRONAUT_SERIALIZATION = "micronaut.serialization";
 
     @Override
     default boolean isPreview() {
@@ -44,20 +50,34 @@ public interface SerializationFeature extends JsonFeature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-       generatorContext.addDependency(Dependency.builder()
+        generatorContext.addDependency(Dependency.builder()
             .annotationProcessor()
             .groupId("io.micronaut.serde")
             .artifactId("micronaut-serde-processor")
             .versionProperty("micronaut.serialization.version")
             .build()
-        );   
-         generatorContext.addDependency(Dependency.builder()
-            .compile()
-            .groupId("io.micronaut.serde")
-            .artifactId("micronaut-serde-" + getModule())
-            .build()
-        );  
+        );
+        Dependency.Builder builder = Dependency.builder()
+                .compile()
+                .groupId("io.micronaut.serde")
+                .artifactId("micronaut-serde-" + getModule());
+        substitutions(generatorContext).forEach(builder::substitution);
+        generatorContext.addDependency(builder.build());
+         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+             generatorContext.addDependency(Dependency.builder()
+                     .compile()
+                     .groupId("io.micronaut")
+                     .artifactId("micronaut-runtime")
+                     .exclude(Dependency.builder()
+                             .groupId("io.micronaut")
+                             .artifactId("micronaut-jackson-databind")
+                             .build())
+             );
+         }
     }
 
     String getModule();
+
+    @NonNull
+    List<Substitution> substitutions(@NonNull GeneratorContext generatorContext);
 }

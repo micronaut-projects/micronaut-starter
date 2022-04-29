@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -77,7 +78,12 @@ public class GradleBuild {
 
     @NonNull
     public String renderExtensions() {
-        return renderWritableExtensions(plugins.stream().map(GradlePlugin::getExtension));
+        List<Writable> extensions = new ArrayList<>();
+        plugins.stream()
+                .map(GradlePlugin::getExtensions)
+                .filter(Objects::nonNull)
+                .forEach(extensions::addAll);
+        return renderWritableExtensions(extensions.stream());
     }
 
     @NonNull

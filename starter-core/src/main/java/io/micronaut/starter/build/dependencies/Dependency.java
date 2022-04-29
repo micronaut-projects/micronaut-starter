@@ -18,6 +18,9 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public final class Dependency {
@@ -32,6 +35,8 @@ public final class Dependency {
     private final boolean annotationProcessorPriority;
     private final boolean pom;
 
+    private final List<Dependency> exclusions;
+
     private Dependency(Scope scope,
                        String groupId,
                        String artifactId,
@@ -40,7 +45,8 @@ public final class Dependency {
                        boolean requiresLookup,
                        boolean annotationProcessorPriority,
                        int order,
-                       boolean pom) {
+                       boolean pom,
+                       List<Dependency> exclusions) {
         this.scope = scope;
         this.groupId = groupId;
         this.artifactId = artifactId;
@@ -50,6 +56,11 @@ public final class Dependency {
         this.annotationProcessorPriority = annotationProcessorPriority;
         this.order = order;
         this.pom = pom;
+        this.exclusions = exclusions;
+    }
+
+    public List<Dependency> getExclusions() {
+        return exclusions;
     }
 
     public Scope getScope() {
@@ -90,6 +101,10 @@ public final class Dependency {
         return requiresLookup;
     }
 
+    public boolean isRequiresLookup() {
+        return requiresLookup;
+    }
+
     public Dependency resolved(Coordinate coordinate) {
         return new Dependency(
                 scope,
@@ -100,7 +115,8 @@ public final class Dependency {
                 false,
                 annotationProcessorPriority,
                 order,
-                coordinate.isPom());
+                coordinate.isPom(),
+                Collections.emptyList());
     }
 
     public boolean isAnnotationProcessorPriority() {
@@ -139,6 +155,8 @@ public final class Dependency {
         private boolean template = false;
         private boolean annotationProcessorPriority = false;
         private boolean pom = false;
+        private List<Dependency> exclusions = null;
+        private List<Substitution> substitutions = null;
 
         public Builder scope(@NonNull Scope scope) {
             if (template) {
@@ -239,6 +257,22 @@ public final class Dependency {
             }
         }
 
+        public Builder exclude(Dependency dependency) {
+            if (this.exclusions == null) {
+                this.exclusions = new ArrayList<>();
+            }
+            this.exclusions.add(dependency);
+            return this;
+        }
+
+        public Builder substitution(Substitution substitution) {
+            if (this.substitutions == null) {
+                this.substitutions = new ArrayList<>();
+            }
+            this.substitutions.add(substitution);
+            return this;
+        }
+
         public Builder order(int order) {
             if (template) {
                 return copy().order(order);
@@ -258,10 +292,13 @@ public final class Dependency {
             return this;
         }
 
-        public Dependency build() {
-            Objects.requireNonNull(scope, "The dependency scope must be set");
-            Objects.requireNonNull(artifactId, "The artifact id must be set");
+        public Builder pom() {
+            this.pom = true;
+            return this;
+        }
 
+        public Dependency build() {
+            Objects.requireNonNull(artifactId, "The artifact id must be set");
             return buildInternal();
         }
 
@@ -285,7 +322,8 @@ public final class Dependency {
                     requiresLookup,
                     annotationProcessorPriority,
                     order,
-                    pom);
+                    pom,
+                    exclusions);
         }
 
         private Builder copy() {

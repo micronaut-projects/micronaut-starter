@@ -15,7 +15,15 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Singleton
 public class SerializationJsonpFeature implements SerializationFeature {
@@ -37,5 +45,35 @@ public class SerializationJsonpFeature implements SerializationFeature {
     @Override
     public String getModule() {
         return "jsonp";
+    }
+
+    @Override
+    @NonNull
+    public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
+        String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
+        String dataBindVersion = generatorContext.resolveCoordinate("jakarta.json.bind-api").getVersion();
+        return Arrays.asList(Substitution.builder()
+                        .target(Dependency.builder()
+                                .groupId("io.micronaut")
+                                .artifactId("micronaut-jackson-databind")
+                                .build())
+                        .replacement(Dependency.builder()
+                                .groupId("jakarta.json.bind")
+                                .artifactId("jakarta.json.bind-api")
+                                .version(dataBindVersion)
+                                .build())
+                        .build(),
+                Substitution.builder()
+                        .target(Dependency.builder()
+                                .groupId("io.micronaut")
+                                .artifactId("micronaut-jackson-core")
+                                .build())
+                        .replacement(Dependency.builder()
+                                .groupId("io.micronaut.serde")
+                                .artifactId("micronaut-serde-jsonp")
+                                .version(serializationVersion)
+                                .build())
+                        .build()
+                );
     }
 }

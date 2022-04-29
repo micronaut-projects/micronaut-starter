@@ -22,13 +22,15 @@ import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.Writable;
 
+import java.util.List;
+
 public interface BuildPlugin extends Ordered {
 
     @NonNull
     BuildTool getBuildTool();
 
     @Nullable
-    Writable getExtension();
+    List<Writable> getExtensions();
 
     boolean requiresLookup();
 
