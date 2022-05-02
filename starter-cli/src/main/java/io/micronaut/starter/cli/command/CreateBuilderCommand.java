@@ -130,7 +130,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         out("Choose your preferred language. (enter for default)");
         return getEnumOption(
                 Language.class,
-                (language) -> StringUtils.capitalize(language.getName()),
+                language -> StringUtils.capitalize(language.getName()),
                 Language.DEFAULT_OPTION,
                 reader);
     }
@@ -168,7 +168,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         out("Choose the target JDK. (enter for default)");
         return getEnumOption(
                 JdkVersion.class,
-                (jdkVersion) -> Integer.toString(jdkVersion.majorVersion()),
+                jdkVersion -> Integer.toString(jdkVersion.majorVersion()),
                 JdkVersion.DEFAULT_OPTION,
                 reader
         );
