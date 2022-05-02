@@ -35,7 +35,7 @@
         <dependency>
             <groupId>io.micronaut.aot</groupId>
             <artifactId>micronaut-aot-core</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.3.1</version>
+            <version>3.4.0</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
