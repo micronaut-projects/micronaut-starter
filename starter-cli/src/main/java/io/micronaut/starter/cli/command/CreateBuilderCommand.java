@@ -76,10 +76,11 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
             List<String> features = getFeatures(applicationType, terminal);
             Project project = getProject(reader);
 
-            OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this);
-            Options options = new Options(language, testFramework, buildTool, jdkVersion);
-            projectGenerator.generate(applicationType, project, options, getOperatingSystem(), features, outputHandler, this);
-            out("@|blue ||@ Application created at " + outputHandler.getOutputLocation());
+            try (OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this)) {
+                Options options = new Options(language, testFramework, buildTool, jdkVersion);
+                projectGenerator.generate(applicationType, project, options, getOperatingSystem(), features, outputHandler, this);
+                out("@|blue ||@ Application created at " + outputHandler.getOutputLocation());
+            }
         } catch (UserInterruptException | EndOfFileException e) {
             //no-op
         } finally {
