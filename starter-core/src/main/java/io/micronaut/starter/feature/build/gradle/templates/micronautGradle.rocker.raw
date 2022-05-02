@@ -27,6 +27,7 @@ micronaut {
         cacheEnvironment.set(true)
         optimizeClassLoading.set(true)
         deduceEnvironment.set(true)
+        optimizeNetty.set(true)
 }
 @if (dsl == GradleDsl.GROOVY) {
         optimizeServiceLoading = true
@@ -35,6 +36,7 @@ micronaut {
         cacheEnvironment = true
         optimizeClassLoading = true
         deduceEnvironment = true
+        optimizeNetty = true
 }
     }
 }
