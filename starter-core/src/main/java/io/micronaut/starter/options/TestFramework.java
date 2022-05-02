@@ -74,6 +74,10 @@ public enum TestFramework {
         }
     }
 
+    public String getTestFrameworkSuffixWithoutTrailingDot() {
+        return getTestFrameworkSuffix().replace(".", "");
+    }
+
     /**
      *
      * @return The list of supported languages for a {@link TestFramework}
