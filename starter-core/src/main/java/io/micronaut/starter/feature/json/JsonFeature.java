@@ -15,7 +15,15 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Feature;
 
 public interface JsonFeature extends Feature {
+    String GROUP_ID_MICRONAUT = "io.micronaut";
+    String ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND = "micronaut-jackson-databind";
+    Dependency DEPENDENCY_MICRONAUT_JACKSON_DATABIND = Dependency.builder()
+            .groupId(GROUP_ID_MICRONAUT)
+            .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_DATABIND)
+            .compile()
+            .build();
 }

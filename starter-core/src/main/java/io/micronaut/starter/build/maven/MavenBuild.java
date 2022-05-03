@@ -77,7 +77,10 @@ public class MavenBuild {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         for (MavenPlugin plugin: plugins) {
             try {
-                plugin.getExtension().write(outputStream);
+                if (plugin.getExtension() != null) {
+                    plugin.getExtension().write(outputStream);
+                }
+
             } catch (IOException e) {
                 if (LOG.isErrorEnabled()) {
                     LOG.error("IO Exception rendering Gradle Plugin extension");

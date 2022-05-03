@@ -15,10 +15,21 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Singleton
 public class SerializationJsonpFeature implements SerializationFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SERDE_JSONP = "micronaut-serde-jsonp";
+
     @Override
     public String getName() {
         return "serialization-jsonp";
@@ -37,5 +48,44 @@ public class SerializationJsonpFeature implements SerializationFeature {
     @Override
     public String getModule() {
         return "jsonp";
+    }
+
+    @NonNull
+    @Override
+    public List<Dependency.Builder> dependencies(@NonNull GeneratorContext generatorContext) {
+        List<Dependency.Builder> dependencyList = SerializationFeature.super.dependencies(generatorContext);
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            dependencyList.add(Dependency.builder()
+                    .lookupArtifactId("jakarta.json.bind-api")
+                    .compile());
+        }
+        return dependencyList;
+    }
+
+    @Override
+    @NonNull
+    public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
+        String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
+        String dataBindVersion = generatorContext.resolveCoordinate("jakarta.json.bind-api").getVersion();
+        return Arrays.asList(Substitution.builder()
+                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
+                        .replacement(Dependency.builder()
+                                .groupId("jakarta.json.bind")
+                                .artifactId("jakarta.json.bind-api")
+                                .version(dataBindVersion)
+                                .build())
+                        .build(),
+                Substitution.builder()
+                        .target(Dependency.builder()
+                                .groupId(GROUP_ID_MICRONAUT)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_CORE)
+                                .build())
+                        .replacement(Dependency.builder()
+                                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JSONP)
+                                .version(serializationVersion)
+                                .build())
+                        .build()
+                );
     }
 }

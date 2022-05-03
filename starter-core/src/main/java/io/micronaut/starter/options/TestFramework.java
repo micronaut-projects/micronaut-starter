@@ -23,11 +23,17 @@ import java.util.List;
 import java.util.Locale;
 
 public enum TestFramework {
-    JUNIT,
-    SPOCK,
-    KOTEST;
+    JUNIT("JUnit"),
+    SPOCK("Spock"),
+    KOTEST("Kotest");
 
     public static final TestFramework DEFAULT_OPTION = JUNIT;
+
+    private String title;
+
+    TestFramework(String title) {
+        this.title = title;
+    }
 
     public static boolean isKotlinTestFramework(TestFramework testFramework) {
         return testFramework == KOTEST;
@@ -106,5 +112,9 @@ public enum TestFramework {
             default:
                 throw new RuntimeException("No default language have been defined for " + this.getName());
         }
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

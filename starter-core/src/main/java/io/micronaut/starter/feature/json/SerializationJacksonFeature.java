@@ -15,11 +15,21 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Substitution;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
+import java.util.Collections;
+import java.util.List;
 
 @Singleton
 public class SerializationJacksonFeature implements SerializationFeature {
+    private static final String ARTIFACT_ID_MICRONAUT_SERDE_JACKSON = "micronaut-serde-jackson";
+
     @Override
+    @NonNull
     public String getName() {
         return "serialization-jackson";
     }
@@ -38,5 +48,18 @@ public class SerializationJacksonFeature implements SerializationFeature {
     public String getModule() {
         return "jackson";
     }
-    
+
+    @Override
+    @NonNull
+    public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
+        String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
+        return Collections.singletonList(Substitution.builder()
+                        .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
+                        .replacement(Dependency.builder()
+                                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                                .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JACKSON)
+                                .version(serializationVersion)
+                                .build())
+                        .build());
+    }
 }

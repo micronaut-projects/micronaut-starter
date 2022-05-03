@@ -260,3 +260,5 @@ protobuf {
 }
 }
 @gradleBuild.renderExtensions()
+
+@gradleBuild.renderSubstitutions()

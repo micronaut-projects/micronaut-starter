@@ -24,20 +24,22 @@ import java.util.Objects;
 import java.util.Optional;
 
 public enum BuildTool {
-    GRADLE("build/libs", "build.gradle", "-*-all.jar"),
-    GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar"),
-    MAVEN("target", "pom.xml", "-*.jar");
+    GRADLE("build/libs", "build.gradle", "-*-all.jar", "Gradle (Groovy)"),
+    GRADLE_KOTLIN("build/libs", "build.gradle.kts", "-*-all.jar", "Gradle (Kotlin)"),
+    MAVEN("target", "pom.xml", "-*.jar", "Maven");
 
     public static final BuildTool DEFAULT_OPTION = BuildTool.GRADLE;
 
     private final String jarDirectory;
     private final String fileName;
     private final String shadeJarPattern;
+    private final String title;
 
-    BuildTool(String jarDirectory, String fileName, String shadeJarPattern) {
+    BuildTool(String jarDirectory, String fileName, String shadeJarPattern, String title) {
         this.jarDirectory = jarDirectory;
         this.fileName = fileName;
         this.shadeJarPattern = shadeJarPattern;
+        this.title = title;
     }
 
     public String getJarDirectory() {
@@ -76,5 +78,9 @@ public enum BuildTool {
             }
         }
         return Optional.empty();
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
