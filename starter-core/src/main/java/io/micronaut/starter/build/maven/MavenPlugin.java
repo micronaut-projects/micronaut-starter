@@ -21,7 +21,6 @@ import io.micronaut.starter.build.BuildPlugin;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.Writable;
-
 import java.util.Objects;
 
 public class MavenPlugin implements BuildPlugin {

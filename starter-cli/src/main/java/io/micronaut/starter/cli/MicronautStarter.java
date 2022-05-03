@@ -47,7 +47,8 @@ import java.util.function.BiFunction;
                 CreateCliCommand.class,
                 CreateFunctionCommand.class,
                 CreateGrpcCommand.class,
-                CreateMessagingCommand.class
+                CreateMessagingCommand.class,
+                CreateBuilderCommand.class
         })
 @Prototype
 @TypeHint({

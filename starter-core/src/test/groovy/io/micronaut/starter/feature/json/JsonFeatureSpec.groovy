@@ -8,42 +8,106 @@ import spock.lang.Unroll
 class JsonFeatureSpec extends ApplicationContextSpec {
 
     @Unroll
-    void "test selected JSON feature for Gradle: #impl"() {
+    void "test selected JSON feature for Gradle: #feature"(String feature, String coordinate) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([impl])
+                .features([feature])
+                .render()
+
+        then:
+        template.contains("implementation(\"$coordinate")
+
+        where:
+        coordinate                                | feature
+        'io.micronaut:micronaut-jackson-databind' | 'jackson-databind'
+    }
+
+    @Unroll
+    void "test selected JSON feature for Gradle: #feature"(String module,
+                                                           String feature,
+                                                           String substitutiontarget1,
+                                                           String substitutionreplacement1,
+                                                           String substitutiontarget2,
+                                                           String substitutionreplacement2) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([feature])
                 .render()
 
         then:
         template.contains("implementation(\"$module")
-        impl == 'jackson-databind' || template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
+        template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
+        template.contains('substitute(module("io.micronaut:micronaut-jackson-databind"))')
+        template.contains("substitute(module(\"$substitutiontarget1")
+        template.contains(".using(module(\"$substitutionreplacement1")
+        if (substitutiontarget2 != null) {
+            assert template.contains("substitute(module(\"$substitutiontarget2")
+        }
+        if (substitutionreplacement2 != null) {
+            assert template.contains(".using(module(\"$substitutionreplacement2")
+        }
 
         where:
-        module                                       | impl
-        'io.micronaut:micronaut-jackson-databind'    | 'jackson-databind'
-        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson'
-        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'
-        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'
-        
-        
+        module                                       | feature                 | substitutiontarget1                       | substitutionreplacement1                     | substitutiontarget2                   | substitutionreplacement2
+        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-jackson' | null                                  | null
+        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'io.micronaut:micronaut-jackson-databind' | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-jsonp'
+        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-bson'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-bson'
     }
 
     @Unroll
-    void "test selected JSON feature for Maven: #impl"() {
+    void "feature #feature for Maven adds dependency with artifact id: #artifactId"(String artifactId, String feature) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([impl])
+                .features([feature])
                 .render()
 
         then:
-        template.contains("<artifactId>$module</artifactId>")
-        impl == 'jackson-databind' || template.contains('<artifactId>micronaut-serde-processor</artifactId>')
+        template.contains("<artifactId>$artifactId</artifactId>")
 
         where:
-        module                                 | impl
-        'micronaut-jackson-databind'           | 'jackson-databind'
-        'micronaut-serde-jackson'              | 'serialization-jackson'
-        'micronaut-serde-jsonp'                | 'serialization-jsonp'
-        'micronaut-serde-bson'                 | 'serialization-bson'
+        artifactId                   | feature
+        'micronaut-jackson-databind' | 'jackson-databind'
+    }
+
+    @Unroll
+    void "test selected JSON feature for Maven: #feature"(String artifactId, String feature) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([feature])
+                .render()
+
+        then:
+        template.contains("<artifactId>$artifactId</artifactId>")
+        template.contains('<artifactId>micronaut-serde-processor</artifactId>')
+        template.contains("""\
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-runtime</artifactId>
+      <scope>compile</scope>
+      <exclusions>
+          <exclusion>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-jackson-databind</artifactId>
+          </exclusion>
+        </exclusions>
+    </dependency>""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.serde</groupId>
+      <artifactId>$artifactId</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        if (feature == 'serialization-jsonp') {
+            assert template.contains("""\
+    <dependency>
+      <groupId>jakarta.json.bind</groupId>
+      <artifactId>jakarta.json.bind-api</artifactId>""")
+        }
+        where:
+        artifactId                | feature
+        'micronaut-serde-jackson' | 'serialization-jackson'
+        'micronaut-serde-jsonp'   | 'serialization-jsonp'
+        'micronaut-serde-bson'    | 'serialization-bson'
     }
 }
