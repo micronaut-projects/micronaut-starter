@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.github.workflows.oci;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
@@ -29,6 +30,7 @@ import io.micronaut.starter.template.RockerWritable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Deploy dockerized app to Oracle Functions
@@ -92,6 +94,11 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
         if (!featureContext.isPresent(OracleRawFunction.class)) {
             featureContext.addFeature(oracleRawFunction);
         }
+    }
+
+    @Override
+    public Optional<CloudProvider> getCloudProvider() {
+        return Optional.of(CloudProvider.ORACLE);
     }
 
     @Override
