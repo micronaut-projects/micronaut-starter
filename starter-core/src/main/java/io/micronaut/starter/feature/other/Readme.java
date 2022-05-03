@@ -24,6 +24,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.other.template.maindocs;
 import io.micronaut.starter.feature.other.template.readme;
 import io.micronaut.starter.options.Options;
+import io.micronaut.starter.template.DefaultTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.Writable;
@@ -55,12 +56,7 @@ public class Readme implements DefaultFeature {
         List<Feature> featuresWithDocumentationLinks = generatorContext.getFeatures().getFeatures().stream().filter(feature -> feature.getMicronautDocumentation() != null || feature.getThirdPartyDocumentation() != null).collect(Collectors.toList());
         List<Writable> helpTemplates = generatorContext.getHelpTemplates();
         if (!helpTemplates.isEmpty() || !featuresWithDocumentationLinks.isEmpty()) {
-            generatorContext.addTemplate("readme", new Template() {
-                @Override
-                public String getPath() {
-                    return "README.md";
-                }
-
+            generatorContext.addTemplate("readme", new DefaultTemplate(Template.ROOT, "README.md") {
                 @Override
                 public void write(OutputStream outputStream) throws IOException {
                     Writable mainDocsWritable = new RockerWritable(maindocs.template());

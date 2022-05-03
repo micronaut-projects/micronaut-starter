@@ -21,6 +21,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
 import io.micronaut.starter.template.BinaryTemplate;
 
+import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 import java.util.Optional;
 
@@ -67,7 +68,7 @@ public class Springloaded implements ReloadingFeature {
     public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         generatorContext.addTemplate("springLoadedJar",
-                new BinaryTemplate("agent/" + JAR_NAME, classLoader.getResource("springloaded/" + JAR_NAME)));
+                new BinaryTemplate(Template.DEFAULT_MODULE, "agent/" + JAR_NAME, classLoader.getResource("springloaded/" + JAR_NAME)));
     }
 
     @Override

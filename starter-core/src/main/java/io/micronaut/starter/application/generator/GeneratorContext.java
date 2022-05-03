@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A context object used when generating projects.
@@ -109,6 +110,7 @@ public class GeneratorContext implements DependencyContext {
      * @param template The template
      */
     public void addTemplate(String name, Template template) {
+        template.setUseModule(features.hasMultiProjectFeature());
         templates.put(name, template);
     }
 
@@ -357,5 +359,9 @@ public class GeneratorContext implements DependencyContext {
 
     public Set<BuildPlugin> getBuildPlugins() {
         return buildPlugins;
+    }
+
+    public List<String> getModuleNames() {
+        return templates.values().stream().map(Template::getModule).filter(s -> !Template.ROOT.equals(s)).distinct().collect(Collectors.toList());
     }
 }

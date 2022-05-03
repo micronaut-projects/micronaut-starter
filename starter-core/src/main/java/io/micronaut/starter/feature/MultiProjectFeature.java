@@ -13,27 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.template;
+package io.micronaut.starter.feature;
 
-import io.micronaut.core.annotation.NonNull;
-
-public interface Template extends Writable {
-
-    String DEFAULT_MODULE = "app";
-    String ROOT = "";
-
-    String getPath();
-
-    void setUseModule(boolean useModule);
-
-    @NonNull String getModule();
-
-    default boolean isBinary() {
-        return false;
-    }
-
-    default boolean isExecutable() {
-        return false;
-    }
-
+public interface MultiProjectFeature extends Feature {
 }

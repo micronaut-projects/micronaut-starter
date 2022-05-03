@@ -19,8 +19,12 @@ import java.net.URL;
 
 public class BinaryTemplate extends URLTemplate {
 
+    public BinaryTemplate(String module, String path, URL url) {
+        super(module, path, url, false);
+    }
+
     public BinaryTemplate(String path, URL url) {
-        super(path, url);
+        this(Template.DEFAULT_MODULE, path, url);
     }
 
     @Override

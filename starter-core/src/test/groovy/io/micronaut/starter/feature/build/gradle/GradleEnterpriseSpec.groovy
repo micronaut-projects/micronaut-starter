@@ -24,7 +24,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
                     .features(["gradle-enterprise"])
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
-        String settings = settingsGradle.template(project, gradleBuild).render().toString()
+        String settings = settingsGradle.template(project, gradleBuild, []).render().toString()
 
         then:
         !settings.contains("allowUntrustedServer = true")

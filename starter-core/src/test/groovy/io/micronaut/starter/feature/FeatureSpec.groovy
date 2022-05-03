@@ -5,7 +5,9 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
+import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
+import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.options.*
 import spock.lang.Unroll
 
@@ -43,10 +45,14 @@ class FeatureSpec extends BeanContextSpec {
         }
         Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
         def features = [feature.getName()]
+
         if (feature instanceof JAsyncSQLFeature) {
             // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
             // so it can't be tested in isolation like this in isolation
             features += 'mysql'
+        } else if (feature instanceof Cdk) {
+            // Cdk fails unless it is combined with Lambda
+            features += AwsLambda.FEATURE_NAME_AWS_LAMBDA
         }
         def commandCtx = new GeneratorContext(buildProject(),
                 ApplicationType.DEFAULT,

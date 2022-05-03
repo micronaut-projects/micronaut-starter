@@ -16,24 +16,32 @@
 package io.micronaut.starter.template;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
 
-public interface Template extends Writable {
+public abstract class DefaultTemplate implements Template {
 
-    String DEFAULT_MODULE = "app";
-    String ROOT = "";
+    protected final String path;
+    protected final String module;
+    protected boolean useModule;
 
-    String getPath();
-
-    void setUseModule(boolean useModule);
-
-    @NonNull String getModule();
-
-    default boolean isBinary() {
-        return false;
+    protected DefaultTemplate(@NonNull String module, @NonNull String path) {
+        this.module = module;
+        this.path = path;
     }
 
-    default boolean isExecutable() {
-        return false;
+    @Override
+    public String getPath() {
+        return useModule && StringUtils.isNotEmpty(module) ? String.join("/", module, path) : path;
     }
 
+    @Override
+    public void setUseModule(boolean useModule) {
+        this.useModule = useModule;
+    }
+
+    @Override
+    @NonNull
+    public String getModule() {
+        return module;
+    }
 }

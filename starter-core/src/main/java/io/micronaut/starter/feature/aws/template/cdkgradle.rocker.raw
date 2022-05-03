@@ -1,0 +1,19 @@
+@import io.micronaut.starter.application.Project
+
+@args (Project project)
+plugins {
+    id("application")
+    id("java")
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("software.amazon.awscdk:aws-cdk-lib:2.17.0")
+}
+
+application {
+    mainClass.set("@(project.getPackageName()).Main")
+}

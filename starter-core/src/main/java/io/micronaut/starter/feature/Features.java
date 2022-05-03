@@ -63,6 +63,10 @@ public class Features extends ArrayList<String> {
         return getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
     }
 
+    public boolean hasMultiProjectFeature() {
+        return getFeatures().stream().anyMatch(MultiProjectFeature.class::isInstance);
+    }
+
     public BuildTool build() {
         return buildTool;
     }

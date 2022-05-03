@@ -42,5 +42,5 @@ rocker {
 }
 
 nohttp {
-    source.exclude "**/pom.rocker.raw"
+    source.exclude "**/*pom.rocker.raw"
 }

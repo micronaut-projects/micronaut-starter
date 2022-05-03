@@ -21,18 +21,26 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.Objects;
 
-public class URLTemplate implements Template {
+public class URLTemplate extends DefaultTemplate {
 
-    private final String path;
     private final URL url;
     private final boolean executable;
 
     public URLTemplate(String path, URL url) {
-        this(path, url, false);
+        this(DEFAULT_MODULE, path, url, false);
     }
 
     public URLTemplate(String path, URL url, boolean executable) {
-        this.path = Objects.requireNonNull(path, "Path cannot be null");
+        this(DEFAULT_MODULE, path, url, executable);
+    }
+
+    public URLTemplate(String module, String path, URL url) {
+        this(module, path, url, false);
+    }
+
+    public URLTemplate(String module, String path, URL url, boolean executable) {
+        super(module, path);
+
         this.url = Objects.requireNonNull(url, "Resource not found for path: " + path);
         this.executable = executable;
     }
@@ -50,10 +58,5 @@ public class URLTemplate implements Template {
 
     public boolean isExecutable() {
         return executable;
-    }
-
-    @Override
-    public String getPath() {
-        return path;
     }
 }

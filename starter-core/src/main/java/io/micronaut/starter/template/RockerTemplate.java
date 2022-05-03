@@ -19,19 +19,26 @@ import com.fizzed.rocker.RockerModel;
 
 import java.io.OutputStream;
 
-public class RockerTemplate implements Template {
+public class RockerTemplate extends DefaultTemplate {
 
-    private final String path;
     private final RockerWritable writable;
 
     private final boolean executable;
 
     public RockerTemplate(String path, RockerModel delegate) {
-        this(path, delegate, false);
+        this(DEFAULT_MODULE, path, delegate, false);
+    }
+
+    public RockerTemplate(String module, String path, RockerModel delegate) {
+        this(module, path, delegate, false);
     }
 
     public RockerTemplate(String path, RockerModel delegate, boolean executable) {
-        this.path = path;
+        this(DEFAULT_MODULE, path, delegate, executable);
+    }
+
+    public RockerTemplate(String module, String path, RockerModel delegate, boolean executable) {
+        super(module, path);
         this.writable = new RockerWritable(delegate);
         this.executable = executable;
     }
@@ -42,12 +49,8 @@ public class RockerTemplate implements Template {
     }
 
     @Override
-    public String getPath() {
-        return path;
-    }
-
-    @Override
     public boolean isExecutable() {
         return executable;
     }
+
 }
