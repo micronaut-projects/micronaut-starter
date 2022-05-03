@@ -23,13 +23,9 @@ internal class HelloWorldGruControllerTest {
     @@Test
     @@Throws(Throwable::class)
     fun testGet() {
-        gru.verify { test: TestDefinitionBuilder ->
-            test["/gru"]
-                .expect { response: ResponseDefinitionBuilder ->
-                    response.json(
-                        "gruIndex.json"
-                    )
-                }
+        gru.verify { it
+            .get("/gru")
+            .expect { it.json("gruIndex.json") }
         }
     }
 }
