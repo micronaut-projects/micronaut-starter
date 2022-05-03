@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.agora.gru
+package io.micronaut.starter.feature.agorapulse.gru
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder

@@ -1,4 +1,4 @@
-package io.micronaut.starter.core.test.feature.agora.gru
+package io.micronaut.starter.core.test.feature.agorapulse.gru
 
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.options.BuildTool
@@ -27,7 +27,7 @@ class GruHttpSpec extends CommandSpec {
         where:
         [language, testFramework] << [
                 Language.values(),
-                (TestFramework.values() - TestFramework.KOTEST)
+                TestFramework.values()
         ].combinations()
     }
 
@@ -44,7 +44,7 @@ class GruHttpSpec extends CommandSpec {
         [buildTool, language, testFramework] << [
                 [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE_KOTLIN],
                 Language.values(),
-                (TestFramework.values() - TestFramework.KOTEST)
+                TestFramework.values()
         ].combinations()
     }
 }

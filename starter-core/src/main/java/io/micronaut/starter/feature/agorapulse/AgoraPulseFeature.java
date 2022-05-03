@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.agora;
+package io.micronaut.starter.feature.agorapulse;
 
 import io.micronaut.starter.feature.Feature;
 
-public interface AgoraFeature extends Feature {
+public interface AgoraPulseFeature extends Feature {
 
     @Override
     default String getThirdPartyDocumentation() {
