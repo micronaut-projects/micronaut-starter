@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.context.annotation.Prototype;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -23,6 +24,7 @@ import io.micronaut.starter.application.generator.ProjectGenerator;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.*;
@@ -71,13 +73,14 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
             ApplicationType applicationType = getApplicationType(reader);
             Language language = getLanguage(reader);
             TestFramework testFramework = getTestFramework(reader, language);
+            CloudProviderSelection cloudProviderSelection = getCloudProvider(reader);
             BuildTool buildTool = getBuildTool(reader, language);
             JdkVersion jdkVersion = getJdkVersion(reader);
-            List<String> applicationFeatures = getFeatures(applicationType, terminal);
+            List<String> applicationFeatures = getFeatures(applicationType, cloudProviderSelection.provider, terminal);
             Project project = getProject(reader);
 
             try (OutputHandler outputHandler = new FileSystemOutputHandler(project, false, this)) {
-                Options options = new Options(language, testFramework, buildTool, jdkVersion);
+                Options options = new Options(language, testFramework, buildTool, jdkVersion, cloudProviderSelection.provider);
                 projectGenerator.generate(applicationType, project, options, getOperatingSystem(), applicationFeatures, outputHandler, this);
                 out("@|blue ||@ Application created at " + outputHandler.getOutputLocation());
             }
@@ -144,6 +147,15 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
                 reader);
     }
 
+    private CloudProviderSelection getCloudProvider(LineReader reader) throws UserInterruptException, EndOfFileException {
+        out("Which Cloud Provider are you targeting? (enter for default)");
+        return getEnumOption(
+                CloudProviderSelection.class,
+                CloudProviderSelection::getTitle,
+                CloudProviderSelection.DEFAULT_OPTION,
+                reader);
+    }
+
     private TestFramework getTestFramework(LineReader reader, Language language) {
         out("Choose your preferred test framework. (enter for default)");
         return getEnumOption(
@@ -174,8 +186,8 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         );
     }
 
-    private List<String> getFeatures(ApplicationType applicationType, Terminal terminal) {
-        AvailableFeatures availableFeatures = new BaseAvailableFeatures(features, applicationType);
+    private List<String> getFeatures(ApplicationType applicationType, @Nullable CloudProvider cloudProvider, Terminal terminal) {
+        AvailableFeatures availableFeatures = new BaseAvailableFeatures(features, applicationType, cloudProvider);
         List<String> featureNames = availableFeatures.getFeatures().map(Feature::getName).collect(Collectors.toList());
         LineReader featuresReader = LineReaderBuilder.builder()
                 .terminal(terminal)
@@ -218,6 +230,30 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
             } catch (IllegalArgumentException e) {
                 err(e.getMessage());
             }
+        }
+    }
+
+    enum CloudProviderSelection {
+        NONE(),
+        AWS(CloudProvider.AWS),
+        GCP(CloudProvider.GCP),
+        AZURE(CloudProvider.AZURE),
+        ORACLE(CloudProvider.ORACLE);
+
+        private static final CloudProviderSelection DEFAULT_OPTION = NONE;
+
+        final CloudProvider provider;
+
+        CloudProviderSelection() {
+            this(null);
+        }
+
+        CloudProviderSelection(CloudProvider provider) {
+            this.provider = provider;
+        }
+
+        public String getTitle() {
+            return provider == null ? "None" : provider.getName();
         }
     }
 }
