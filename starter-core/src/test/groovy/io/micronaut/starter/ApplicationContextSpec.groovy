@@ -1,7 +1,9 @@
 package io.micronaut.starter
 
 import io.micronaut.context.ApplicationContext
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.core.version.SemanticVersion
+import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import spock.lang.AutoCleanup
@@ -17,6 +19,13 @@ abstract class ApplicationContextSpec extends Specification implements ProjectFi
     @Shared
     @AutoCleanup
     ApplicationContext beanContext = ApplicationContext.run(configuration)
+
+    @NonNull
+    Optional<Feature> findFeatureByName(@NonNull String featureName) {
+        beanContext.streamOfType(Feature)
+                .filter(it -> it.getName() == featureName)
+                .findFirst()
+    }
 
     protected static Optional<SemanticVersion> parsePropertySemanticVersion(String template, String propertyName) {
         List<String> lines = template.split("\n")
