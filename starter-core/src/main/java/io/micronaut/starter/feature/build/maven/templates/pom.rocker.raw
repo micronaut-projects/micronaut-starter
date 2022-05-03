@@ -558,23 +558,5 @@ MavenBuild mavenBuild
        </pluginRepository>
     </pluginRepositories>
 }
-@if (features.contains("gcp-secrets-manager") && features.contains("graalvm")) {
-    <profiles>
-        <profile>
-          <id>graalVM</id>
-          <activation>
-            <property>
-              <name>packaging</name>
-              <value>native-image</value>
-            </property>
-          </activation>
-          <dependencies>
-            <dependency>
-              <groupId>com.google.cloud</groupId>
-              <artifactId>native-image-support</artifactId>
-            </dependency>
-          </dependencies>
-        </profile>
-    </profiles>
-}
+@profiles.template(mavenBuild.getProfiles())
 </project>

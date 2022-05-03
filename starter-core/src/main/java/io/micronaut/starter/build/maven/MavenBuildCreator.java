@@ -104,7 +104,8 @@ public class MavenBuildCreator {
                 buildProperties.getProperties(),
                 plugins,
                 combineAttribute,
-                testCombineAttribute);
+                testCombineAttribute,
+                generatorContext.getProfiles());
     }
 
     @NonNull

@@ -1,4 +1,4 @@
-package io.micronaut.starter.feature.gcpsecretsmanager
+package io.micronaut.starter.feature.secretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -129,22 +129,24 @@ micronaut:
 ''') == 1
 
         and:
-        template.count('''
+        template.count('''\
+    <profiles>
         <profile>
-          <id>graalVM</id>
-          <activation>
-            <property>
-              <name>packaging</name>
-              <value>native-image</value>
-            </property>
-          </activation>
-          <dependencies>
-            <dependency>
-              <groupId>com.google.cloud</groupId>
-              <artifactId>native-image-support</artifactId>
-            </dependency>
-          </dependencies>
+            <id>graalVM</id>
+            <activation>
+                <property>
+                    <name>packaging</name>
+                    <value>native-image</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.google.cloud</groupId>
+                    <artifactId>native-image-support</artifactId>
+               </dependency>
+            </dependencies>
         </profile>
+    </profiles>
 ''') == 1
 
         where:

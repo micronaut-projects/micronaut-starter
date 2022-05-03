@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.gcpsecretsmanager;
+package io.micronaut.starter.feature.gcp.secretsmanager;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 
-import java.util.Map;
-
 @Singleton
-public class GoogleSecretManager implements DistributedConfigFeature {
+public class GoogleSecretManager extends GcpFeature implements DistributedConfigFeature {
 
     @NonNull
     @Override
@@ -44,14 +43,17 @@ public class GoogleSecretManager implements DistributedConfigFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        super.apply(generatorContext);
+        generatorContext.addDependency(gcpSecretManagerDependency());
+        populateBootstrapForDistributedConfiguration(generatorContext);
+    }
+
+    @NonNull
+    private Dependency.Builder gcpSecretManagerDependency() {
+        return Dependency.builder()
                 .groupId("io.micronaut.gcp")
                 .artifactId("micronaut-gcp-secret-manager")
-                .compile());
-
-        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
-        config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
-        config.put("micronaut.config-client.enabled", true);
+                .compile();
     }
 
     @Override

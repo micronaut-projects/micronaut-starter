@@ -16,6 +16,7 @@
 package io.micronaut.starter.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
@@ -29,14 +30,16 @@ public class MavenDependency extends DependencyCoordinate {
         if (comparison != 0) {
             return comparison;
         }
-        comparison = Integer.compare(o1.getMavenScope().getOrder(), o2.getMavenScope().getOrder());
-        if (comparison != 0) {
-            return comparison;
+        if (o1.getMavenScope() != null && o2.getMavenScope() != null) {
+            comparison = Integer.compare(o1.getMavenScope().getOrder(), o2.getMavenScope().getOrder());
+            if (comparison != 0) {
+                return comparison;
+            }
         }
         return DependencyCoordinate.COMPARATOR.compare(o1, o2);
     };
 
-    @NonNull
+    @Nullable
     private final MavenScope mavenScope;
 
     public MavenDependency(@NonNull Dependency dependency) {
@@ -44,11 +47,11 @@ public class MavenDependency extends DependencyCoordinate {
         if (isPom()) {
             mavenScope = MavenScope.IMPORT;
         } else {
-            mavenScope = MavenScope.of(dependency.getScope()).orElseThrow(() ->
-                    new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Maven specific scope", dependency.getScope())));
+            mavenScope = MavenScope.of(dependency.getScope()).orElse(null);
         }
     }
 
+    @Nullable
     public MavenScope getMavenScope() {
         return mavenScope;
     }

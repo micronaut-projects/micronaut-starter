@@ -1,0 +1,34 @@
+@import java.util.Collection;
+@import io.micronaut.starter.feature.build.maven.Profile;
+@import io.micronaut.starter.feature.build.maven.Property;
+@import io.micronaut.starter.build.dependencies.Dependency;
+@args(Collection<Profile> profiles)
+@if (profiles != null && !profiles.isEmpty()) {
+    <profiles>
+@for (Profile profile : profiles) {
+        <profile>
+            <id>@profile.getId()</id>
+@if (profile.getActivationProperties() != null) {
+            <activation>
+@for (Property property : profile.getActivationProperties()) {
+                <property>
+                    <name>@property.getName()</name>
+                    <value>@property.getValue()</value>
+                </property>
+}
+            </activation>
+}
+@if (profile.getDependencies() != null) {
+            <dependencies>
+@for (Dependency dependency : profile.getDependencies()) {
+                <dependency>
+                    <groupId>@dependency.getGroupId()</groupId>
+                    <artifactId>@dependency.getArtifactId()</artifactId>
+               </dependency>
+}
+            </dependencies>
+}
+        </profile>
+}
+    </profiles>
+}

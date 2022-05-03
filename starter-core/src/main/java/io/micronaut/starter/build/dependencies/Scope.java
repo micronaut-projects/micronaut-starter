@@ -33,6 +33,7 @@ public class Scope {
     public static final Scope TEST_COMPILE_ONLY = new Scope(Source.TEST, Collections.singletonList(Phase.COMPILATION));
     public static final Scope TEST_RUNTIME = new Scope(Source.TEST, Collections.singletonList(Phase.RUNTIME));
     public static final Scope OPENREWRITE = new Scope(Source.MAIN, Collections.singletonList(Phase.OPENREWRITE));
+    public static final Scope NATIVE_IMAGE_COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.NATIVE_IMAGE_COMPILATION));
 
     @NonNull
     private Source source;
