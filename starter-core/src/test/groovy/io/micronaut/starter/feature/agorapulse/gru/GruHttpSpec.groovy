@@ -27,6 +27,9 @@ class GruHttpSpec extends ApplicationContextSpec {
         and: 'is in the DEV_TOOLS category'
         feature.getCategory() == "Development Tools"
 
+        and:
+        feature.isCommunity()
+
         and: 'supports only a ApplicationType.DEFAULT'
         for (ApplicationType type : (ApplicationType.values() - supportedApplicationTypes)) {
             assert !feature.supports(type)
