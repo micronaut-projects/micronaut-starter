@@ -20,7 +20,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.Ordered;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Introspected
 public class DependencyCoordinate implements Coordinate, Ordered {
@@ -32,20 +34,29 @@ public class DependencyCoordinate implements Coordinate, Ordered {
     private final int order;
     private final boolean pom;
 
+    @Nullable
+    private final List<DependencyCoordinate> exclusions;
+
+    @Nullable
+    private final List<Substitution> substitutions;
+
     public DependencyCoordinate(Dependency dependency) {
         this(dependency, false);
     }
 
     public DependencyCoordinate(Dependency dependency, boolean showVersionProperty) {
-        groupId = dependency.getGroupId();
-        artifactId = dependency.getArtifactId();
-        if (showVersionProperty && dependency.getVersionProperty() != null) {
-            version = "${" + dependency.getVersionProperty() + "}";
-        } else {
-            version = dependency.getVersion();
-        }
-        order = dependency.getOrder();
-        pom = dependency.isPom();
+        this(dependency.getGroupId(),
+                dependency.getArtifactId(),
+                showVersionProperty && dependency.getVersionProperty() != null ?
+                    "${" + dependency.getVersionProperty() + "}" : dependency.getVersion(),
+                dependency.getOrder(),
+                dependency.isPom(),
+                dependency.getExclusions() == null ? null :
+                        dependency.getExclusions()
+                                .stream()
+                                .map(DependencyCoordinate::new)
+                                .collect(Collectors.toList()),
+                dependency.getSubstitutions());
     }
 
     public DependencyCoordinate(String groupId,
@@ -53,11 +64,39 @@ public class DependencyCoordinate implements Coordinate, Ordered {
                                 @Nullable String version,
                                 int order,
                                 boolean pom) {
+        this(groupId,
+                artifactId,
+                version,
+                order,
+                pom,
+                null,
+                null);
+    }
+
+    public DependencyCoordinate(String groupId,
+                                String artifactId,
+                                @Nullable String version,
+                                int order,
+                                boolean pom,
+                                @Nullable List<DependencyCoordinate> exclusions,
+                                @Nullable List<Substitution> substitutions) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;
         this.order = order;
         this.pom = pom;
+        this.exclusions = exclusions;
+        this.substitutions = substitutions;
+    }
+
+    @Nullable
+    public List<Substitution> getSubstitutions() {
+        return substitutions;
+    }
+
+    @Nullable
+    public List<DependencyCoordinate> getExclusions() {
+        return exclusions;
     }
 
     @Override

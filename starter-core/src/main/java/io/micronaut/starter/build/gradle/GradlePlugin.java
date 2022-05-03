@@ -46,7 +46,7 @@ public class GradlePlugin implements BuildPlugin {
     private final int order;
 
     public GradlePlugin(@NonNull GradleFile gradleFile,
-                        @NonNull String id,
+                        @Nullable String id,
                         @Nullable String version,
                         @Nullable String artifactId,
                         @Nullable Writable extension,

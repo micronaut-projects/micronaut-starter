@@ -1,6 +1,6 @@
 package io.micronaut.starter.core.test.feature.json
 
-import io.micronaut.starter.feature.json.SerializationJsonpFeature
+import io.micronaut.starter.feature.json.SerializationBsonFeature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.CommandSpec
@@ -10,32 +10,30 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class SerializationJsonpSpec extends CommandSpec {
+class SerializationBsonSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
-        return "json"
+        return "bson"
     }
 
     @Unroll
-    void "test gradle build with jsonp feature"(BuildTool buildTool) {
+    void "test gradle build with bson feature"(BuildTool buildTool) {
         when:
-        generateProject(Language.JAVA, buildTool, [beanContext.getBeansOfType(SerializationJsonpFeature)[0].getName()])
+        generateProject(Language.JAVA, buildTool, [beanContext.getBeansOfType(SerializationBsonFeature)[0].getName()])
         String output = executeGradle("compileJava")?.output
 
         then:
         Files.exists(buildGradlePath(buildTool))
         Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-jsonp\")")
-
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-bson\")")
         Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-databind\"))")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"jakarta.json.bind:jakarta.json.bind-api"))
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
         Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-core\"))")
-        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-jsonp"))
-
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-bson"))
         output?.contains("BUILD SUCCESS")
 
         where:
-        buildTool << [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]
+        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
     }
 
     Path buildGradlePath(BuildTool buildTool) {
