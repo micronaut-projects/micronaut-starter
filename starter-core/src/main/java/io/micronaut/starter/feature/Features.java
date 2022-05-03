@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.aws.MultiprojectFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
@@ -61,6 +62,10 @@ public class Features extends ArrayList<String> {
 
     public boolean hasFunctionFeature() {
         return getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
+    }
+
+    public boolean hasMultiprojectFeature() {
+        return getFeatures().stream().anyMatch(f -> f instanceof MultiprojectFeature);
     }
 
     public BuildTool build() {

@@ -16,11 +16,13 @@
 package io.micronaut.starter.template;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.util.StringUtils;
 
 import java.io.OutputStream;
 
 public class RockerTemplate implements Template {
 
+    private String module;
     private final String path;
     private final RockerWritable writable;
 
@@ -30,10 +32,28 @@ public class RockerTemplate implements Template {
         this(path, delegate, false);
     }
 
+    public RockerTemplate(String path, RockerModel delegate, String module) {
+        this(path, delegate, false, module);
+    }
+
     public RockerTemplate(String path, RockerModel delegate, boolean executable) {
+        this(path, delegate, executable, "");
+    }
+
+    public RockerTemplate(String path, RockerModel delegate, boolean executable, String module) {
         this.path = path;
         this.writable = new RockerWritable(delegate);
         this.executable = executable;
+        this.module = module;
+    }
+
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 
     @Override
@@ -43,6 +63,9 @@ public class RockerTemplate implements Template {
 
     @Override
     public String getPath() {
+        if (StringUtils.isNotEmpty(module)) {
+            return String.join("/", module, path);
+        }
         return path;
     }
 

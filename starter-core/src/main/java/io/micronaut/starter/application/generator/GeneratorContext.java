@@ -18,6 +18,7 @@ package io.micronaut.starter.application.generator;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
@@ -109,7 +110,19 @@ public class GeneratorContext implements DependencyContext {
      * @param template The template
      */
     public void addTemplate(String name, Template template) {
-        templates.put(name, template);
+        if (template instanceof RockerTemplate) {
+            RockerTemplate rockerTemplate = (RockerTemplate) template;
+            if (isMultiproject() && StringUtils.isEmpty(rockerTemplate.getModule())) {
+                rockerTemplate.setModule("app");
+            }
+            templates.put(name, rockerTemplate);
+        } else {
+            templates.put(name, template);
+        }
+    }
+
+    private boolean isMultiproject() {
+        return getFeatures().hasFunctionFeature();
     }
 
     /**

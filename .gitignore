@@ -8,3 +8,4 @@ build
 !starter-core/src/**/build/
 .project
 .settings
+starter-cli/temp
