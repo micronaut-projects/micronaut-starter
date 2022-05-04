@@ -1,0 +1,24 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleBuild
+@import io.micronaut.starter.build.gradle.GradlePlugin
+@import io.micronaut.starter.build.gradle.GradleDependency
+@args (Project project, GradleBuild gradleBuild, String mainClassName)
+plugins {
+@for (GradlePlugin gradlePlugin : gradleBuild.getPlugins()) {
+    id("@gradlePlugin.getId()") @(gradlePlugin.getVersion() != null ? "version \"" + gradlePlugin.getVersion() + "\"" : "")
+}
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+@for (GradleDependency dependency : gradleBuild.getDependencies()) {
+    @dependency.toSnippet()
+}
+}
+
+application {
+    mainClass.set("@(project.getPackageName()).@mainClassName")
+}

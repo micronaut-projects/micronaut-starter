@@ -47,6 +47,7 @@ import io.micronaut.starter.template.Writable;
 import io.micronaut.starter.util.VersionInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -67,7 +68,7 @@ public class GeneratorContext implements DependencyContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
-    private final CoordinateResolver coordinateResolver;
+
     private final BuildProperties buildProperties = new BuildProperties();
     private final ApplicationConfiguration configuration = new ApplicationConfiguration();
     private final Map<String, ApplicationConfiguration> applicationEnvironmentConfiguration = new LinkedHashMap<>();
@@ -80,8 +81,8 @@ public class GeneratorContext implements DependencyContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
-    private final Set<Dependency> dependencies = new HashSet<>();
-
+    private final CoordinateResolver coordinateResolver;
+    private final DependencyContext dependencyContext;
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
@@ -93,7 +94,6 @@ public class GeneratorContext implements DependencyContext {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
-        this.coordinateResolver = coordinateResolver;
         this.features = new Features(this, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
@@ -102,6 +102,8 @@ public class GeneratorContext implements DependencyContext {
         } else if (options.getBuildTool() == BuildTool.MAVEN) {
             buildProperties.put("micronaut.version", micronautVersion);
         }
+        this.coordinateResolver = coordinateResolver;
+        this.dependencyContext = new DependencyContextImpl(coordinateResolver);
     }
 
     /**
@@ -327,23 +329,6 @@ public class GeneratorContext implements DependencyContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
-    @Override
-    public void addDependency(@NonNull Dependency dependency) {
-        if (dependency.requiresLookup()) {
-            Coordinate coordinate = coordinateResolver.resolve(dependency.getArtifactId())
-                    .orElseThrow(() -> new LookupFailedException(dependency.getArtifactId()));
-            this.dependencies.add(dependency.resolved(coordinate));
-        } else {
-            this.dependencies.add(dependency);
-        }
-    }
-
-    @NonNull
-    @Override
-    public Set<Dependency> getDependencies() {
-        return dependencies;
-    }
-
     public void addBuildPlugin(BuildPlugin buildPlugin) {
         if (buildPlugin.requiresLookup()) {
             this.buildPlugins.add(buildPlugin.resolved(coordinateResolver));
@@ -354,9 +339,20 @@ public class GeneratorContext implements DependencyContext {
 
     public Coordinate resolveCoordinate(String artifactId) {
         return coordinateResolver.resolve(artifactId)
-                    .orElseThrow(() -> new LookupFailedException(artifactId));
+                .orElseThrow(() -> new LookupFailedException(artifactId));
     }
 
+    @Override
+    public void addDependency(@NonNull Dependency dependency) {
+        dependencyContext.addDependency(dependency);
+    }
+
+    @NonNull
+    @Override
+    public Collection<Dependency> getDependencies() {
+        return dependencyContext.getDependencies();
+    }
+    
     public Set<BuildPlugin> getBuildPlugins() {
         return buildPlugins;
     }
