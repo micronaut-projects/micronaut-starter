@@ -1,7 +1,10 @@
 package io.micronaut.starter.feature.aws
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.dependencies.CoordinateResolver
+import io.micronaut.starter.build.dependencies.Dependency
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
@@ -14,9 +17,10 @@ import spock.lang.Subject
 
 class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    @Shared
     @Subject
     Cdk cdk = beanContext.getBean(Cdk)
+
+    CoordinateResolver resolver = beanContext.getBean(CoordinateResolver)
 
     void 'cdk feature is in the cloud category'() {
         expect:
@@ -41,6 +45,37 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         BuildTool.GRADLE        | "build.gradle"
         BuildTool.GRADLE_KOTLIN | "build.gradle.kts"
         BuildTool.MAVEN         | "pom.xml"
+    }
+
+    void "dependencies are added for cdk to infra project for #buildTool"() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        def version = resolver.resolve('aws-cdk-lib').get().version
+
+        then:
+        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("software.amazon.awscdk:aws-cdk-lib:$version")/$)
+
+        where:
+        buildTool               | buildFile
+        BuildTool.GRADLE        | "build.gradle"
+        BuildTool.GRADLE_KOTLIN | "build.gradle.kts"
+    }
+
+    void "dependencies are added for cdk to infra project for maven"() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
+        def version = resolver.resolve('aws-cdk-lib').get().version
+        println output."$Cdk.INFRA_MODULE/pom.xml"
+
+        def dependency = new XmlParser().parseText(output."$Cdk.INFRA_MODULE/pom.xml").dependencies.dependency.find {
+            it.artifactId.text() == 'aws-cdk-lib'
+        }
+
+        then:
+        with(dependency) {
+            it.groupId.text() == 'software.amazon.awscdk'
+            it.version.text() == version
+        }
     }
 
     void 'missing lambda feature is invalid'() {
