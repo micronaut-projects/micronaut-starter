@@ -18,6 +18,7 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.template.RockerWritable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,7 @@ public class MavenBuild {
         this(artifactId,
                 Collections.emptyList(),
                 Collections.emptyList(),
+<<<<<<< HEAD
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
@@ -63,11 +65,25 @@ public class MavenBuild {
     public MavenBuild(@NonNull String artifactId,
                       @NonNull List<MavenDependency> dependencies) {
         this(artifactId,
+=======
+>>>>>>> e554c1edb (generic maven)
                 Collections.emptyList(),
                 Collections.emptyList(),
                 dependencies,
                 Collections.emptyList(),
+                MavenCombineAttribute.APPEND,
+                MavenCombineAttribute.APPEND);
+    }
+
+    public MavenBuild(@NonNull String artifactId,
+                      @NonNull List<MavenDependency> dependencies,
+                      @NonNull List<MavenPlugin> plugins) {
+        this(artifactId,
                 Collections.emptyList(),
+                Collections.emptyList(),
+                dependencies,
+                Collections.emptyList(),
+                plugins,
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND);
     }

@@ -29,18 +29,28 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenDependency;
+<<<<<<< HEAD
+=======
+import io.micronaut.starter.build.maven.MavenPlugin;
+>>>>>>> e554c1edb (generic maven)
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
+<<<<<<< HEAD
+=======
+import io.micronaut.starter.feature.build.maven.templates.mavenShadePlugin;
+>>>>>>> e554c1edb (generic maven)
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,8 +122,18 @@ public class Cdk implements MultiProjectFeature {
 
     private MavenBuild infrastructureMavenBuild(GeneratorContext generatorContext) {
         List<MavenDependency> dependencies = MavenDependency.listOf(dependencyContext);
+<<<<<<< HEAD
         return new MavenBuild(generatorContext.getProject().getName() + "-" + INFRA_MODULE,
                 dependencies);
+=======
+        List<MavenPlugin> plugins = Collections.singletonList(MavenPlugin.builder()
+                .artifactId("artifactId>maven-shade-plugin")
+                .extension(new RockerWritable(mavenShadePlugin.template(generatorContext.getProject(), MAIN_CLASS_NAME)))
+                .build());
+        return new MavenBuild(generatorContext.getProject().getName() + "-" + INFRA_MODULE,
+                dependencies,
+                plugins);
+>>>>>>> e554c1edb (generic maven)
     }
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {
