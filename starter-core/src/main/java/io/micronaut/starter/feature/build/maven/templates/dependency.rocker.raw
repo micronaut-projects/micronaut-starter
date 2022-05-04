@@ -1,26 +1,27 @@
 @import java.util.List
 @import io.micronaut.starter.build.dependencies.DependencyCoordinate
 @args(String groupId, String artifactId, String scope, String version, boolean pom, List<DependencyCoordinate> exclusions)
-        <dependency>
-            <groupId>@groupId</groupId>
-            <artifactId>@artifactId</artifactId>
+
+    <dependency>
+      <groupId>@groupId</groupId>
+      <artifactId>@artifactId</artifactId>
 @if (version != null) {
-            <version>@version</version>
+      <version>@version</version>
 }
 @if (pom) {
-            <type>pom</type>
+      <type>pom</type>
 }
 @if (scope != null) {
-            <scope>@scope</scope>
+      <scope>@scope</scope>
 }
 @if (exclusions != null && !exclusions.isEmpty()) {
-            <exclusions>
+      <exclusions>
 @for (DependencyCoordinate dependency : exclusions) {
-                 <exclusion>
-                     <groupId>@dependency.getGroupId()</groupId>
-                     <artifactId>@dependency.getArtifactId()</artifactId>
-                 </exclusion>
+          <exclusion>
+            <groupId>@dependency.getGroupId()</groupId>
+            <artifactId>@dependency.getArtifactId()</artifactId>
+          </exclusion>
 }
-            </exclusions>
+        </exclusions>
 }
-        </dependency>
+    </dependency>
