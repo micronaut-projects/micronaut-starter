@@ -93,6 +93,7 @@ public class Cdk implements MultiProjectFeature {
             plugins.add(GradlePlugin.builder().id("java").build());
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("aws-cdk-lib")
+                    .compile()
                     .build());
             GradleBuild gradleBuild = new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
                     gradleDependencies(generatorContext),
