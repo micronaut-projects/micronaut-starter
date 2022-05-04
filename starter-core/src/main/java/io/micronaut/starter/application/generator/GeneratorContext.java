@@ -362,6 +362,11 @@ public class GeneratorContext implements DependencyContext {
     }
 
     public List<String> getModuleNames() {
-        return templates.values().stream().map(Template::getModule).filter(s -> !Template.ROOT.equals(s)).distinct().collect(Collectors.toList());
+        return templates.values()
+                .stream()
+                .map(Template::getModule)
+                .filter(s -> !Template.ROOT.equals(s))
+                .distinct()
+                .collect(Collectors.toList());
     }
 }
