@@ -24,11 +24,9 @@ import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.aws.template.cdkgradle;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
-import io.micronaut.starter.feature.aws.template.cdkparentpom;
 import io.micronaut.starter.feature.aws.template.cdkpom;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -70,7 +68,6 @@ public class Cdk implements MultiProjectFeature {
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/AppStack.java", cdkappstack.template(generatorContext.getProject())));
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addTemplate("cdk-build", new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), cdkpom.template(generatorContext.getProject())));
-            generatorContext.addTemplate("cdk-module-build", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), cdkparentpom.template(generatorContext.getProject())));
         } else {
             generatorContext.addTemplate("cdk-build", new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), cdkgradle.template(generatorContext.getProject())));
         }
