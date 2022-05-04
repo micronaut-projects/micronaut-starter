@@ -44,7 +44,8 @@ import java.util.stream.Collectors;
 @Singleton
 public class Cdk implements MultiProjectFeature {
     private static final String MAIN_CLASS_NAME = "Main";
-    private static final String INFRA_MODULE = "infra";
+    public static final String INFRA_MODULE = "infra";
+    public static final String NAME = "aws-cdk";
     private final DependencyContext dependencyContext;
 
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -54,7 +55,7 @@ public class Cdk implements MultiProjectFeature {
     @Override
     @NonNull
     public String getName() {
-        return "aws-cdk";
+        return NAME;
     }
 
     @Override
