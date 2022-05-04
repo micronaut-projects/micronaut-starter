@@ -54,22 +54,8 @@ public class MavenBuild {
         this(artifactId,
                 Collections.emptyList(),
                 Collections.emptyList(),
-<<<<<<< HEAD
                 Collections.emptyList(),
                 Collections.emptyList(),
-                Collections.emptyList(),
-                MavenCombineAttribute.APPEND,
-                MavenCombineAttribute.APPEND);
-    }
-
-    public MavenBuild(@NonNull String artifactId,
-                      @NonNull List<MavenDependency> dependencies) {
-        this(artifactId,
-=======
->>>>>>> e554c1edb (generic maven)
-                Collections.emptyList(),
-                Collections.emptyList(),
-                dependencies,
                 Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND);
