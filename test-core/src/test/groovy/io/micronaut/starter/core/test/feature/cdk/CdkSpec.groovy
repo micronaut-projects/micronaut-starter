@@ -24,7 +24,6 @@ class CdkSpec extends CommandSpec {
         output.contains("Building foo 1.0-SNAPSHOT")
         output.contains("Building foo-cdk 1.0-SNAPSHOT")
         output.contains("BUILD SUCCESS")
-        println output
 
         where:
         language << Language.values()
