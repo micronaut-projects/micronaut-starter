@@ -43,9 +43,9 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class Cdk implements MultiProjectFeature {
-    private static final String MAIN_CLASS_NAME = "Main";
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
+    private static final String MAIN_CLASS_NAME = "Main";
     private final DependencyContext dependencyContext;
 
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -112,5 +112,10 @@ public class Cdk implements MultiProjectFeature {
                 .map(dep -> new GradleDependency(dep, generatorContext))
                 .sorted(GradleDependency.COMPARATOR)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://docs.aws.amazon.com/cdk/v2/guide/home.html";
     }
 }
