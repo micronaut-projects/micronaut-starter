@@ -36,7 +36,7 @@ public class MavenBuildCreator {
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext) {
-        List<MavenDependency> dependencies = resolveDependencies(generatorContext);
+        List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext);
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
         List<Coordinate> testAnnotationProcessorsCoordinates = new ArrayList<>();
@@ -98,7 +98,8 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
 
-        return new MavenBuild(annotationProcessorsCoordinates,
+        return new MavenBuild(generatorContext.getProject().getName(),
+                annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
                 dependencies,
                 buildProperties.getProperties(),
@@ -106,15 +107,4 @@ public class MavenBuildCreator {
                 combineAttribute,
                 testCombineAttribute);
     }
-
-    @NonNull
-    private List<MavenDependency> resolveDependencies(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getDependencies()
-                .stream()
-                .filter(dep -> !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
-                .map(MavenDependency::new)
-                .sorted(MavenDependency.COMPARATOR)
-                .collect(Collectors.toList());
-    }
-
 }

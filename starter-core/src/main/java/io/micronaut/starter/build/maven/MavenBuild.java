@@ -46,8 +46,12 @@ public class MavenBuild {
 
     private final List<Property> properties;
 
-    public MavenBuild() {
-        this(Collections.emptyList(),
+    @NonNull
+    private final String artifactId;
+
+    public MavenBuild(String artifactId) {
+        this(artifactId,
+                Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
@@ -56,13 +60,27 @@ public class MavenBuild {
                 MavenCombineAttribute.APPEND);
     }
 
-    public MavenBuild(@NonNull List<Coordinate> annotationProcessors,
+    public MavenBuild(@NonNull String artifactId,
+                      @NonNull List<MavenDependency> dependencies) {
+        this(artifactId,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                dependencies,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                MavenCombineAttribute.APPEND,
+                MavenCombineAttribute.APPEND);
+    }
+
+    public MavenBuild(@NonNull String artifactId,
+                      @NonNull List<Coordinate> annotationProcessors,
                       @NonNull List<Coordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
                       @NonNull List<MavenPlugin> plugins,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute) {
+        this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
         this.dependencies = dependencies;
@@ -70,6 +88,11 @@ public class MavenBuild {
         this.plugins = plugins;
         this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
+    }
+
+    @NonNull
+    public String getArtifactId() {
+        return artifactId;
     }
 
     @NonNull

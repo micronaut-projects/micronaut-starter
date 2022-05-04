@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.aws;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
@@ -26,20 +27,22 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleDependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.maven.MavenBuild;
+import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
+import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
-import io.micronaut.starter.feature.aws.template.cdkpom;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Singleton
 public class Cdk implements MultiProjectFeature {
@@ -81,37 +84,45 @@ public class Cdk implements MultiProjectFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-
         generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template()));
-        generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java", cdkmain.template(generatorContext.getProject())));
-        generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/AppStack.java", cdkappstack.template(generatorContext.getProject())));
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addTemplate("cdk-build", new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), cdkpom.template(generatorContext.getProject())));
-        } else if (generatorContext.getBuildTool().isGradle()) {
-
-            List<GradlePlugin> plugins = new ArrayList<>();
-            plugins.add(GradlePlugin.builder().id("application").build());
-            plugins.add(GradlePlugin.builder().id("java").build());
-            dependencyContext.addDependency(Dependency.builder()
-                    .lookupArtifactId("aws-cdk-lib")
-                    .compile()
-                    .build());
-            GradleBuild gradleBuild = new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                    gradleDependencies(generatorContext),
-                    plugins);
-            generatorContext.addTemplate("cdk-build", new RockerTemplate(INFRA_MODULE,
-                    generatorContext.getBuildTool().getBuildFileName(),
-                    genericBuildGradle.template(generatorContext.getProject(), gradleBuild, MAIN_CLASS_NAME)));
-        }
+        generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
+                cdkmain.template(generatorContext.getProject())));
+        generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/AppStack.java",
+                cdkappstack.template(generatorContext.getProject())));
+        buildRockerModel(generatorContext).ifPresent(rockerModel -> {
+            generatorContext.addTemplate("cdk-build",
+                    new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
+        });
     }
 
-    @NonNull
-    private List<GradleDependency> gradleDependencies(GeneratorContext generatorContext) {
-        return dependencyContext.getDependencies()
-                .stream()
-                .map(dep -> new GradleDependency(dep, generatorContext))
-                .sorted(GradleDependency.COMPARATOR)
-                .collect(Collectors.toList());
+    private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {
+        dependencyContext.addDependency(Dependency.builder()
+                .lookupArtifactId("aws-cdk-lib")
+                .compile()
+                .build());
+
+        RockerModel rockerModel = null;
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
+        } else if (generatorContext.getBuildTool().isGradle()) {
+            rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME);
+        }
+        return Optional.ofNullable(rockerModel);
+    }
+
+    private MavenBuild infrastructureMavenBuild(GeneratorContext generatorContext) {
+        List<MavenDependency> dependencies = MavenDependency.listOf(dependencyContext);
+        return new MavenBuild(generatorContext.getProject().getName() + "-" + INFRA_MODULE,
+                dependencies);
+    }
+
+    private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {
+        List<GradlePlugin> plugins = new ArrayList<>();
+        plugins.add(GradlePlugin.builder().id("application").build());
+        plugins.add(GradlePlugin.builder().id("java").build());
+        return new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
+                GradleDependency.listOf(dependencyContext, generatorContext),
+                plugins);
     }
 
     @Override

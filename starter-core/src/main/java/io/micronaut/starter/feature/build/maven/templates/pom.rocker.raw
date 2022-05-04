@@ -24,7 +24,7 @@ MavenBuild mavenBuild
 @if (!features.contains("aws-cdk")) {
   <groupId>@project.getPackageName()</groupId>
 }
-  <artifactId>@project.getName()</artifactId>
+  <artifactId>@mavenBuild.getArtifactId()</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 

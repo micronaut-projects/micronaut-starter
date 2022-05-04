@@ -22,7 +22,7 @@ class CdkSpec extends CommandSpec {
 
         then:
         output.contains("Building foo 1.0-SNAPSHOT")
-        output.contains("Building foo-cdk 1.0-SNAPSHOT")
+        output.contains("Building foo-infra 1.0-SNAPSHOT")
         output.contains("BUILD SUCCESS")
 
         where:
@@ -42,4 +42,5 @@ class CdkSpec extends CommandSpec {
         where:
         [language, buildTool] << [Language.values(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
     }
+
 }

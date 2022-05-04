@@ -20,7 +20,7 @@
 
     <modules>
 @for (String moduleName : moduleNames) {
-<module>@moduleName</module>
+        <module>@moduleName</module>
 }
     </modules>
 </project>

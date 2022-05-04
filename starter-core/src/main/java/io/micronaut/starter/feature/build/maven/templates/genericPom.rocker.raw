@@ -1,6 +1,8 @@
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.maven.MavenBuild
+@import io.micronaut.starter.build.maven.MavenDependency
 
-@args (Project project)
+@args (Project project, MavenBuild mavenBuild)
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -12,16 +14,12 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>@(project.getName())-cdk</artifactId>
-
+    <artifactId>@mavenBuild.getArtifactId()</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>software.amazon.awscdk</groupId>
-            <artifactId>aws-cdk-lib</artifactId>
-            <version>2.17.0</version>
-        </dependency>
+@for (MavenDependency f : mavenBuild.getDependencies(false)) {
+@dependency.template(f.getGroupId(), f.getArtifactId(), f.getMavenScope().toString(), f.getVersion(), false, f.getExclusions())
+}
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

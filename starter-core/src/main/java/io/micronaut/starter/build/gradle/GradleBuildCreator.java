@@ -38,15 +38,6 @@ public class GradleBuildCreator {
                 .map(GradlePlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
-        return new GradleBuild(gradleDsl, resolveDependencies(generatorContext), gradlePlugins);
-    }
-
-    @NonNull
-    private List<GradleDependency> resolveDependencies(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getDependencies()
-                .stream()
-                .map(dep -> new GradleDependency(dep, generatorContext))
-                .sorted(GradleDependency.COMPARATOR)
-                .collect(Collectors.toList());
+        return new GradleBuild(gradleDsl, GradleDependency.listOf(generatorContext), gradlePlugins);
     }
 }
