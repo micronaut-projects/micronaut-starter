@@ -23,6 +23,6 @@ rootProject.name="@project.getName()"
 
 @if (moduleNames.size() > 1) {
 @for (String moduleName : moduleNames) {
-includeBuild("@moduleName")
+include("@moduleName")
 }
 }
