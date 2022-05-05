@@ -130,7 +130,6 @@ micronaut:
 
         and:
         template.count('''\
-    <profiles>
         <profile>
             <id>graalVM</id>
             <activation>
@@ -146,7 +145,6 @@ micronaut:
                </dependency>
             </dependencies>
         </profile>
-    </profiles>
 ''') == 1
 
         where:
