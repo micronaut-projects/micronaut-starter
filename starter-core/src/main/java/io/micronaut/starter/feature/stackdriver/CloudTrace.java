@@ -22,10 +22,11 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CloudTrace implements Feature {
+public class CloudTrace extends GcpFeature implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
@@ -64,6 +65,7 @@ public class CloudTrace implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.gcp")
                 .artifactId("micronaut-gcp-tracing")
