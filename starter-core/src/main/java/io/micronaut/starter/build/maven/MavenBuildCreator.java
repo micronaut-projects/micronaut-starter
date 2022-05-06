@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.micronaut.starter.build.Repository.micronautRepositories;
+
 @Singleton
 public class MavenBuildCreator {
 
@@ -104,6 +106,7 @@ public class MavenBuildCreator {
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
+                MavenRepository.listOf(micronautRepositories()),
                 combineAttribute,
                 testCombineAttribute);
     }

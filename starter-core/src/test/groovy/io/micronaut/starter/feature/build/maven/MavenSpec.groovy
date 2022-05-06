@@ -27,7 +27,7 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new MavenBuild(generatorContext.project.name, [],[], [], generatorContext.getBuildProperties().getProperties(), [], MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND),
+                new MavenBuild(generatorContext.project.name, [],[], [], generatorContext.getBuildProperties().getProperties(), [], [], MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND),
         ).render().toString()
 
         then: 'parent pom is used'

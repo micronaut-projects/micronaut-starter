@@ -41,22 +41,26 @@ public class GradleBuild {
     private final GradleDsl dsl;
     private final List<GradleDependency> dependencies;
     private final List<GradlePlugin> plugins;
+    private final List<? extends GradleRepository> repositories;
 
     public GradleBuild() {
-        this(GradleDsl.GROOVY, Collections.emptyList());
-    }
-
-    public GradleBuild(@NonNull GradleDsl gradleDsl,
-                       @NonNull List<GradleDependency> dependencies) {
-        this(gradleDsl, dependencies, Collections.emptyList());
+        this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList());
     }
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies,
-                       @NonNull List<GradlePlugin> plugins) {
+                       @NonNull List<? extends GradleRepository> repositories) {
+        this(gradleDsl, dependencies, Collections.emptyList(), repositories);
+    }
+
+    public GradleBuild(@NonNull GradleDsl gradleDsl,
+                       @NonNull List<GradleDependency> dependencies,
+                       @NonNull List<GradlePlugin> plugins,
+                       @NonNull List<? extends GradleRepository> repositories) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
         this.plugins = plugins;
+        this.repositories = repositories;
     }
 
     @NonNull
@@ -102,6 +106,11 @@ public class GradleBuild {
     @NonNull
     public String renderSettingsExtensions() {
         return renderWritableExtensions(plugins.stream().map(GradlePlugin::getSettingsExtension));
+    }
+
+    @NonNull
+    public String renderRepositories() {
+        return renderWritableExtensions(repositories.stream().map(it -> (Writable) it));
     }
 
     @NonNull

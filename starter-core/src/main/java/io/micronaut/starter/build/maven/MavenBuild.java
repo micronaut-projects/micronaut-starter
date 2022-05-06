@@ -18,7 +18,7 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.starter.template.Writable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +28,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MavenBuild {
@@ -47,6 +48,8 @@ public class MavenBuild {
 
     private final List<Property> properties;
 
+    private final List<MavenRepository> repositories;
+
     @NonNull
     private final String artifactId;
 
@@ -57,19 +60,22 @@ public class MavenBuild {
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
+                Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND);
     }
 
     public MavenBuild(@NonNull String artifactId,
                       @NonNull List<MavenDependency> dependencies,
-                      @NonNull List<MavenPlugin> plugins) {
+                      @NonNull List<MavenPlugin> plugins,
+                      @NonNull List<MavenRepository> repositories) {
         this(artifactId,
                 Collections.emptyList(),
                 Collections.emptyList(),
                 dependencies,
                 Collections.emptyList(),
                 plugins,
+                repositories,
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND);
     }
@@ -80,6 +86,7 @@ public class MavenBuild {
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
                       @NonNull List<MavenPlugin> plugins,
+                      @NonNull List<MavenRepository> repositories,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute) {
         this.artifactId = artifactId;
@@ -88,6 +95,7 @@ public class MavenBuild {
         this.dependencies = dependencies;
         this.properties = properties;
         this.plugins = plugins;
+        this.repositories = repositories;
         this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
     }
@@ -98,13 +106,24 @@ public class MavenBuild {
     }
 
     @NonNull
+    public String renderRepositories(int indentationSpaces) {
+        return renderWritableList(this.repositories.stream().map(it -> (Writable) it).collect(Collectors.toList()), indentationSpaces);
+    }
+
+    @NonNull
     public String renderPlugins(int indentationSpaces) {
+        List<Writable> writableList = plugins.stream()
+                .map(MavenPlugin::getExtension)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        return renderWritableList(writableList, indentationSpaces);
+    }
+
+    private String renderWritableList(List<Writable> writableList, int indentationSpaces) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        for (MavenPlugin plugin: plugins) {
+        for (Writable w: writableList) {
             try {
-                if (plugin.getExtension() != null) {
-                    plugin.getExtension().write(outputStream);
-                }
+                w.write(outputStream);
 
             } catch (IOException e) {
                 if (LOG.isErrorEnabled()) {

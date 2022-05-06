@@ -87,22 +87,7 @@ MavenBuild mavenBuild
   </properties>
 
   <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    @if (VersionInfo.isMicronautSnapshot()) {
-    <repository>
-      <id>sonatype-snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    }
+@mavenBuild.renderRepositories(4)
   </repositories>
 
 @if (mavenBuild.hasPomDependency()) {
