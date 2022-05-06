@@ -44,24 +44,29 @@ public class MavenBuildCreator {
      *
      * This comparator ensures that the order is as follows (if they exist):
      *
+     * - lombok
      * - micronaut-inject
      * - micronaut-inject-java
      * - micronaut-data-processor
      * - other dependencies
      */
     private static final Comparator<? super Coordinate> PROCESSOR_COMPARATOR = (o1, o2) -> {
-        if (MICRONAUT_INJECT.equals(o1.getArtifactId())) {
+        if ("lombok".equals(o1.getArtifactId()) && "org.projectlombok".equals(o1.getGroupId())) {
             return Integer.MIN_VALUE;
-        } else if (MICRONAUT_INJECT.equals(o2.getArtifactId())) {
+        } else if ("lombok".equals(o2.getArtifactId()) && "org.projectlombok".equals(o2.getGroupId())) {
             return Integer.MAX_VALUE;
-        } else if (MICRONAUT_INJECT_JAVA.equals(o1.getArtifactId())) {
+        } else if (MICRONAUT_INJECT.equals(o1.getArtifactId())) {
             return Integer.MIN_VALUE + 1;
-        } else if (MICRONAUT_INJECT_JAVA.equals(o2.getArtifactId())) {
+        } else if (MICRONAUT_INJECT.equals(o2.getArtifactId())) {
             return Integer.MAX_VALUE - 1;
-        } else if (MICRONAUT_DATA_PROCESSOR.equals(o1.getArtifactId())) {
+        } else if (MICRONAUT_INJECT_JAVA.equals(o1.getArtifactId())) {
             return Integer.MIN_VALUE + 2;
-        } else if (MICRONAUT_DATA_PROCESSOR.equals(o2.getArtifactId())) {
+        } else if (MICRONAUT_INJECT_JAVA.equals(o2.getArtifactId())) {
             return Integer.MAX_VALUE - 2;
+        } else if (MICRONAUT_DATA_PROCESSOR.equals(o1.getArtifactId())) {
+            return Integer.MIN_VALUE + 3;
+        } else if (MICRONAUT_DATA_PROCESSOR.equals(o2.getArtifactId())) {
+            return Integer.MAX_VALUE - 3;
         } else {
             return Coordinate.COMPARATOR.compare(o1, o2);
         }
