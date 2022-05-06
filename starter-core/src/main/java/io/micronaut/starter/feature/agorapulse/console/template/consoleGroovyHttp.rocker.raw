@@ -1,6 +1,11 @@
+@args (
+String headerName,
+String secret
+)
 POST http://localhost:8080/console/execute/result
 Content-Type: text/groovy
 Accept: text/plain
+@headerName: @secret
 
 // language=groovy
 ctx

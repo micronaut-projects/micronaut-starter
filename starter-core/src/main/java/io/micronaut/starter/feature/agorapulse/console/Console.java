@@ -32,12 +32,18 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Singleton
 public class Console implements AgoraPulseFeature {
 
     private static final String ARTIFACT_ID = "micronaut-console";
+    private static final String SSRF_HEADER_NAME = "X-Console-Verify";
 
     @Override
     @NonNull
@@ -67,8 +73,10 @@ public class Console implements AgoraPulseFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        String secret = UUID.randomUUID().toString();
         addDependency(generatorContext);
-        addExampleCode(generatorContext);
+        addExampleCode(generatorContext, secret);
+        addConfiguration(generatorContext, secret);
     }
 
     private void addDependency(GeneratorContext generatorContext) {
@@ -106,9 +114,9 @@ public class Console implements AgoraPulseFeature {
         generatorContext.addDependency(kotlin.artifactId("kotlin-scripting-jsr223").runtime());
     }
 
-    private void addExampleCode(GeneratorContext generatorContext) {
+    private void addExampleCode(GeneratorContext generatorContext, String secret) {
         addDslFile(generatorContext);
-        addHttpFile(generatorContext);
+        addHttpFile(generatorContext, secret);
     }
 
     private void addDslFile(GeneratorContext generatorContext) {
@@ -117,8 +125,8 @@ public class Console implements AgoraPulseFeature {
         });
     }
 
-    private void addHttpFile(GeneratorContext generatorContext) {
-        httpFile(generatorContext).ifPresent(rockerModel -> generatorContext.
+    private void addHttpFile(GeneratorContext generatorContext, String secret) {
+        httpFile(generatorContext, secret).ifPresent(rockerModel -> generatorContext.
                 addTemplate("consoleHttpFile", new RockerTemplate("src/test/resources/console.http", rockerModel))
         );
     }
@@ -133,13 +141,22 @@ public class Console implements AgoraPulseFeature {
     }
 
     @NonNull
-    private Optional<RockerModel> httpFile(GeneratorContext generatorContext) {
+    private Optional<RockerModel> httpFile(GeneratorContext generatorContext, String secret) {
         if (generatorContext.getLanguage() == Language.KOTLIN) {
-            return Optional.of(consoleKotlinHttp.template());
+            return Optional.of(consoleKotlinHttp.template(SSRF_HEADER_NAME, secret));
         }
         // both Java and Groovy uses Groovy
-        return Optional.of(consoleGroovyHttp.template());
+        return Optional.of(consoleGroovyHttp.template(SSRF_HEADER_NAME, secret));
     }
 
+    private void addConfiguration(GeneratorContext generatorContext, String secret) {
+        Map<String, Object> settings = new LinkedHashMap<>();
+        settings.put("enabled", true);
+        settings.put("addresses", Arrays.asList("/127.0.0.1", "/0:0:0:0:0:0:0:1"));
+        settings.put("header-name", SSRF_HEADER_NAME);
+        settings.put("header-value", secret);
+
+        generatorContext.getConfiguration().addNested(Collections.singletonMap("console", settings));
+    }
 
 }
