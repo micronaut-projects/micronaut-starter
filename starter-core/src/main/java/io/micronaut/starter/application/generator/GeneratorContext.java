@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -80,7 +79,7 @@ public class GeneratorContext implements DependencyContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
-    private final Set<Dependency> dependencies = new LinkedHashSet<>();
+    private final Set<Dependency> dependencies = new HashSet<>();
 
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 

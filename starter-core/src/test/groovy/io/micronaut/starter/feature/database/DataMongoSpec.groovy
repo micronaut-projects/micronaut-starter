@@ -122,6 +122,7 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
             case Language.KOTLIN:
                 def mavenPlugin = project.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }
                 def artifacts = mavenPlugin.executions.execution.find { it.id.text() == 'kapt' }.configuration.annotationProcessorPaths.annotationProcessorPath.artifactId*.text()
+                assert artifacts.indexOf("micronaut-inject-java") == 0
                 assert artifacts.contains("micronaut-data-document-processor")
                 assert artifacts.contains("micronaut-data-processor")
                 // data processor must come before the document processor because Maven
