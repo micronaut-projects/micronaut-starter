@@ -27,17 +27,19 @@ import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleDependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.gradle.GradleRepository;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
+import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
-import io.micronaut.starter.feature.build.maven.templates.genericPom;
-import io.micronaut.starter.feature.build.maven.templates.mavenShadePlugin;
-import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
+import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
+import io.micronaut.starter.feature.build.maven.templates.genericPom;
+import io.micronaut.starter.feature.build.maven.templates.mavenShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
@@ -47,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Cdk implements MultiProjectFeature {
@@ -122,7 +126,8 @@ public class Cdk implements MultiProjectFeature {
                 .build());
         return new MavenBuild(generatorContext.getProject().getName() + "-" + INFRA_MODULE,
                 dependencies,
-                plugins);
+                plugins,
+                MavenRepository.listOf(micronautRepositories()));
     }
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {
@@ -131,7 +136,9 @@ public class Cdk implements MultiProjectFeature {
         plugins.add(GradlePlugin.builder().id("java").build());
         return new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
                 GradleDependency.listOf(dependencyContext, generatorContext),
-                plugins);
+                plugins,
+                GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
+                        micronautRepositories()));
     }
 
     @Override
