@@ -1,0 +1,6 @@
+POST http://localhost:8080/console/execute/result
+Content-Type: text/groovy
+Accept: text/plain
+
+// language=groovy
+ctx

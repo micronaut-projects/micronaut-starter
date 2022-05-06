@@ -1,0 +1,6 @@
+POST http://localhost:8080/console/execute/result
+Content-Type: text/x-kotlin
+Accept: text/plain
+
+// language=kotlin
+ctx

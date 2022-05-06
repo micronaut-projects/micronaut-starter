@@ -18,6 +18,11 @@
             <version>1.0.3</version>
         </dependency>
         <dependency>
+            <groupId>com.agorapulse</groupId>
+            <artifactId>micronaut-console</artifactId>
+            <version>1.1.1-micronaut-3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
             <version>3.8.1</version>

@@ -1,0 +1,82 @@
+package io.micronaut.starter.feature.agorapulse.console
+
+import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import spock.lang.Unroll
+
+class ConsoleSpec extends ApplicationContextSpec {
+    void "Micronaut-console Feature override Feature->getThirdPartyDocumentation"() {
+        given:
+        List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
+
+        when:
+        Optional<Feature> featureOptional = findFeatureByName('micronaut-console')
+
+        then:
+        featureOptional.isPresent()
+
+        when:
+        Feature feature = featureOptional.get()
+
+        then:
+        feature.getThirdPartyDocumentation()
+
+        and: 'is in the DEV_TOOLS category'
+        feature.getCategory() == "Development Tools"
+
+        and:
+        feature.isCommunity()
+
+        and: 'supports only a ApplicationType.DEFAULT'
+        for (ApplicationType type : (ApplicationType.values() - supportedApplicationTypes)) {
+            assert !feature.supports(type)
+        }
+        for (ApplicationType type : supportedApplicationTypes) {
+            assert feature.supports(type)
+        }
+    }
+
+    @Unroll("#buildTool with feature micronaut-console adds dependency #groupId:#artifactId for #language")
+    void "verify micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+        given:
+        List<String> features = ['micronaut-console']
+        String coordinate = "${groupId}:${artifactId}"
+
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features(features)
+                .language(language)
+                .render()
+
+        then:
+        if (buildTool.isGradle()) {
+            assert template.contains("runtimeOnly(\"$coordinate")
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert template.contains("<artifactId>$artifactId</artifactId>")
+            assert template.contains("<groupId>$groupId</groupId>")
+        }
+
+        where:
+        language        | buildTool                 | groupId                   | artifactId
+        Language.JAVA   | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-console'
+        Language.JAVA   | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-console'
+        Language.JAVA   | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-console'
+        Language.JAVA   | BuildTool.GRADLE          | 'org.codehaus.groovy'     | 'groovy'
+        Language.JAVA   | BuildTool.GRADLE_KOTLIN   | 'org.codehaus.groovy'     | 'groovy'
+        Language.JAVA   | BuildTool.MAVEN           | 'org.codehaus.groovy'     | 'groovy'
+        Language.GROOVY | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-console'
+        Language.GROOVY | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-console'
+        Language.GROOVY | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-console'
+        Language.KOTLIN | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-console'
+        Language.KOTLIN | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-console'
+        Language.KOTLIN | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-console'
+        Language.KOTLIN | BuildTool.GRADLE          | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
+        Language.KOTLIN | BuildTool.GRADLE_KOTLIN   | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
+        Language.KOTLIN | BuildTool.MAVEN           | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
+    }
+
+}
