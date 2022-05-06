@@ -350,6 +350,10 @@ public final class Dependency {
             return this;
         }
 
+        public Builder pom() {
+            return pom(true);
+        }
+
         public Dependency build() {
             Objects.requireNonNull(artifactId, "The artifact id must be set");
             return buildInternal();

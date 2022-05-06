@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
+import io.micronaut.starter.template.WritableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.micronaut.starter.feature.build.gradle.templates.substitutions;
@@ -110,7 +111,8 @@ public class GradleBuild {
 
     @NonNull
     public String renderRepositories() {
-        return renderWritableExtensions(repositories.stream().map(it -> (Writable) it));
+        return WritableUtils.renderWritableList(repositories.stream()
+                .map(Writable.class::cast).collect(Collectors.toList()), 4);
     }
 
     @NonNull

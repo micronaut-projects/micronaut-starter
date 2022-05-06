@@ -35,14 +35,20 @@ import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
+import io.micronaut.starter.feature.aws.template.cdkappstacktest;
+import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenShadePlugin;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
+import io.micronaut.starter.template.Template;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -95,20 +101,63 @@ public class Cdk implements MultiProjectFeature {
         generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template()));
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
-        generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/AppStack.java",
-                cdkappstack.template(generatorContext.getProject())));
+
+        String handler = generatorContext.getApplicationType() == ApplicationType.DEFAULT ?
+                AwsLambda.MICRONAUT_LAMBDA_HANDLER :
+                AwsLambda.REQUEST_HANDLER;
+        Language lang = Language.JAVA;
+        generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
+                cdkappstacktest.template(generatorContext.getProject(), handler)));
+        generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
+                cdkappstack.template(generatorContext.getProject(),
+                        generatorContext.getApplicationType(),
+                        Template.DEFAULT_MODULE,
+                        generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
+                        "micronaut-function",
+                        "micronaut-function-api",
+                        "0.1",
+                        handler,
+                        generatorContext.getFeatures().hasGraalvm(),
+                        generatorContext.getFeatures().hashAotBuildPlugin())));
         buildRockerModel(generatorContext).ifPresent(rockerModel -> {
             generatorContext.addTemplate("cdk-build",
                     new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
         });
     }
 
-    private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {
+    private void populateDependencies() {
         dependencyContext.addDependency(Dependency.builder()
                 .lookupArtifactId("aws-cdk-lib")
-                .compile()
-                .build());
+                .compile());
+        dependencyContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-bom")
+                .version(VersionInfo.getMicronautVersion())
+                .pom()
+                .compile());
+        dependencyContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.aws")
+                .artifactId("micronaut-aws-cdk")
+                .version("3.4.0")
+                .compile());
+        dependencyContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut")
+                .artifactId("micronaut-bom")
+                .version(VersionInfo.getMicronautVersion())
+                .pom()
+                .test());
+        dependencyContext.addDependency(Dependency.builder()
+                .groupId("org.junit.jupiter")
+                .artifactId("junit-jupiter-api")
+                .test());
+        dependencyContext.addDependency(Dependency.builder()
+                .groupId("org.junit.jupiter")
+                .artifactId("junit-jupiter-engine")
+                .test());
+    }
 
+    private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {
+        populateDependencies();
         RockerModel rockerModel = null;
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
@@ -132,7 +181,9 @@ public class Cdk implements MultiProjectFeature {
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {
         List<GradlePlugin> plugins = new ArrayList<>();
-        plugins.add(GradlePlugin.builder().id("application").build());
+        plugins.add(GradlePlugin.builder().id("application")
+                        .extension(new RockerTemplate(useJunitPlatform.template(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY))))
+                .build());
         plugins.add(GradlePlugin.builder().id("java").build());
         return new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
                 GradleDependency.listOf(dependencyContext, generatorContext),

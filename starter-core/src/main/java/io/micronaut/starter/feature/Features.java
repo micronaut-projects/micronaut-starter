@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.build.MicronautAotBuildPlugin;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -60,7 +62,15 @@ public class Features extends ArrayList<String> {
     }
 
     public boolean hasFunctionFeature() {
-        return getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
+        return getFeatures().stream().anyMatch(FunctionFeature.class::isInstance);
+    }
+
+    public boolean hasGraalvm() {
+        return getFeatures().stream().anyMatch(GraalVM.class::isInstance);
+    }
+
+    public boolean hashAotBuildPlugin() {
+        return getFeatures().stream().anyMatch(MicronautAotBuildPlugin.class::isInstance);
     }
 
     public boolean hasMultiProjectFeature() {

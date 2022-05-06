@@ -25,6 +25,10 @@ public class RockerTemplate extends DefaultTemplate {
 
     private final boolean executable;
 
+    public RockerTemplate(RockerModel delegate) {
+        this(DEFAULT_MODULE, "", delegate, false);
+    }
+
     public RockerTemplate(String path, RockerModel delegate) {
         this(DEFAULT_MODULE, path, delegate, false);
     }

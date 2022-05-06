@@ -13,19 +13,19 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-public class BookRequestHandlerTest {
+public class FunctionRequestHandlerTest {
 
-    private static BookRequestHandler bookRequestHandler;
+    private static FunctionRequestHandler functionRequestHandler;
 
     @@BeforeAll
     public static void setupServer() {
-        bookRequestHandler = new BookRequestHandler();
+        functionRequestHandler = new FunctionRequestHandler();
     }
 
     @@AfterAll
     public static void stopServer() {
-        if (bookRequestHandler != null) {
-            bookRequestHandler.getApplicationContext().close();
+        if (functionRequestHandler != null) {
+            functionRequestHandler.getApplicationContext().close();
         }
     }
 
@@ -33,7 +33,7 @@ public class BookRequestHandlerTest {
     public void testHandler() {
         Book book = new Book();
         book.setName("Building Microservices");
-        BookSaved bookSaved = bookRequestHandler.execute(book);
+        BookSaved bookSaved = functionRequestHandler.execute(book);
         assertEquals(bookSaved.getName(),book.getName());
         assertNotNull(bookSaved.getIsbn());
     }

@@ -1,0 +1,38 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micronaut.core.annotation.Introspected;
+import io.micronaut.function.aws.MicronautRequestHandler;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javax.validation.ConstraintViolationException;
+
+@@Introspected
+public class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(FunctionRequestHandler.class);
+
+    @@Inject
+    ObjectMapper objectMapper;
+
+    @@Override
+    public APIGatewayProxyResponseEvent execute(APIGatewayProxyRequestEvent input) {
+        String json = objectMapper.writeValueAsString(Collections.singletonMap("message", "Hello World"));
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+        response.setStatusCode(201);
+        response.setBody(json);
+        return response;
+    }
+}

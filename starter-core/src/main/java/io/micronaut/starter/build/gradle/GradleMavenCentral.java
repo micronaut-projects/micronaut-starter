@@ -27,6 +27,6 @@ public class GradleMavenCentral extends GradleRepository {
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        outputStream.write("mavenCentral()".getBytes(StandardCharsets.UTF_8));
+        outputStream.write("mavenCentral()\n".getBytes(StandardCharsets.UTF_8));
     }
 }
