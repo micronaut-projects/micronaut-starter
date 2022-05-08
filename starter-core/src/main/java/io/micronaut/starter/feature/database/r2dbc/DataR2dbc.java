@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
@@ -53,7 +54,8 @@ public class DataR2dbc implements R2dbcFeature {
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-processor")
                 .versionProperty("micronaut.data.version")
-                .annotationProcessor());
+                .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                .annotationProcessor(true));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-r2dbc")

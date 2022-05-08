@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -49,7 +50,8 @@ public abstract class DataMongoFeature extends TestContainersFeature implements 
 
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()
-                    .annotationProcessor()
+                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+                    .annotationProcessor(true)
                     .groupId(MICRONAUT_DATA_GROUP)
                     .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
                     .versionProperty(MICRONAUT_DATA_VERSION));

@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
+import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
@@ -65,6 +66,7 @@ public class MavenBuildCreator {
                 .groupId("io.micronaut")
                 .artifactId("micronaut-inject-java")
                 .versionProperty("micronaut.version")
+                .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
                 .buildCoordinate(true);
         Coordinate validation = Dependency.builder()
                 .groupId("io.micronaut")
@@ -87,6 +89,9 @@ public class MavenBuildCreator {
             testAnnotationProcessorsCoordinates.add(validation);
             annotationProcessorsCoordinates.add(mnGraal);
         }
+
+        annotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
+        testAnnotationProcessorsCoordinates.sort(Coordinate.COMPARATOR);
 
         List<MavenPlugin> plugins = generatorContext.getBuildPlugins()
                 .stream()
