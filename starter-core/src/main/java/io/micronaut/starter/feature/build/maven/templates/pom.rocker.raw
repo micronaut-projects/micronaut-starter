@@ -22,7 +22,7 @@ MavenBuild mavenBuild
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>@project.getPackageName()</groupId>
-  <artifactId>@project.getName()</artifactId>
+  <artifactId>@mavenBuild.getArtifactId()</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 
@@ -75,22 +75,7 @@ MavenBuild mavenBuild
   </properties>
 
   <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    @if (VersionInfo.isMicronautSnapshot()) {
-    <repository>
-      <id>sonatype-snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    }
+@mavenBuild.renderRepositories(4)
   </repositories>
 
 @if (mavenBuild.hasPomDependency()) {
