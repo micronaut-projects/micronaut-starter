@@ -13,6 +13,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-events</artifactId>
+            <version>3.11.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.agorapulse</groupId>
             <artifactId>gru-micronaut</artifactId>
             <version>1.0.3</version>

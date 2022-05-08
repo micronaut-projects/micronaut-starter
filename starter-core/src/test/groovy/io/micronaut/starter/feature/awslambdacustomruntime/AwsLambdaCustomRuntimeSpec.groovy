@@ -53,13 +53,13 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
                 ['aws-lambda-custom-runtime']
         )
-        output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
+        output.containsKey("src/main/${language.srcDir}/example/micronaut/FunctionLambdaRuntime".toString())
         String bootstrap = output['bootstrap']
 
         then:
         bootstrap.contains('#!/bin/sh')
         bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo-all.jar example.micronaut.BookLambdaRuntime')
+        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo-all.jar example.micronaut.FunctionLambdaRuntime')
 
         where:
         language << Language.values().toList()
@@ -73,13 +73,13 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
                 ['aws-lambda-custom-runtime']
         )
-        output.containsKey("src/main/${language.srcDir}/example/micronaut/BookLambdaRuntime".toString())
+        output.containsKey("src/main/${language.srcDir}/example/micronaut/FunctionLambdaRuntime".toString())
         String bootstrap = output['bootstrap']
 
         then:
         bootstrap.contains('#!/bin/sh')
         bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo.jar example.micronaut.BookLambdaRuntime')
+        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo.jar example.micronaut.FunctionLambdaRuntime')
 
         where:
         language << Language.values().toList()
