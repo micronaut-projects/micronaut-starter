@@ -55,9 +55,6 @@ io.micronaut.starter.defaults
 io.micronaut.starter.diff
 io.micronaut.starter.feature
 io.micronaut.starter.feature.acme
-io.micronaut.starter.feature.agorapulse
-io.micronaut.starter.feature.agorapulse.gru
-io.micronaut.starter.feature.agorapulse.gru.template
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.aws
