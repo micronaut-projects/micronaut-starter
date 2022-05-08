@@ -42,7 +42,7 @@ public class AppStack extends Stack {
                 this,
                 "@(functionId)")
 @if (applicationType == ApplicationType.FUNCTION) {
-                .handler(handler)
+                .handler("@(handler)")
 }
                 .environment(environmentVariables)
                 .code(Code.fromAsset(functionPath()))

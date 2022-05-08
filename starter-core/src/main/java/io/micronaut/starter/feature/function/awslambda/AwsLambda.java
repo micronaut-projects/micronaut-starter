@@ -103,14 +103,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                     addHomeControllerTest(generatorContext, project);
                 } else {
                     addRequestHandler(generatorContext, project);
+                    generatorContext.addDependency(Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile());
                     addTest(generatorContext, project);
                 }
                 DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
                 generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
-
-            }
-            if (applicationType == FUNCTION) {
-                generatorContext.addDependency(Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile());
             }
         }
     }
@@ -121,11 +118,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HomeController");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(bookControllerSpock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project),
                 homeControllerJavaJunit.template(project),
-                bookControllerGroovyJunit.template(project),
-                bookControllerKotlinJunit.template(project),
-                bookControllerKoTest.template(project));
+                homeControllerGroovyJunit.template(project),
+                homeControllerKotlinJunit.template(project),
+                homeControllerKoTest.template(project));
         generatorContext.addTemplate("testHomeController", testSource, provider);
     }
 
@@ -133,17 +130,17 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
         String controllerFile = generatorContext.getSourcePath("/{packagePath}/HomeController");
         generatorContext.addTemplate("homeController", controllerFile,
                 homeControllerJava.template(project),
-                bookControllerKotlin.template(project),
-                bookControllerGroovy.template(project));
+                homeControllerKotlin.template(project),
+                homeControllerGroovy.template(project));
     }
 
     private void addTest(GeneratorContext generatorContext, Project project) {
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/FunctionRequestHandler");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaBookRequestHandlerSpock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaFunctionRequestHandlerSpock.template(project),
                 awsLambdaFunctionRequestHandlerJavaJunit.template(project),
-                awsLambdaBookRequestHandlerGroovyJunit.template(project),
-                awsLambdaBookRequestHandlerKotlinJunit.template(project),
-                awsLambdaBookRequestHandlerKoTest.template(project));
+                awsLambdaFunctionRequestHandlerGroovyJunit.template(project),
+                awsLambdaFunctionRequestHandlerKotlinJunit.template(project),
+                awsLambdaFunctionRequestHandlerKoTest.template(project));
         generatorContext.addTemplate("testFunctionRequestHandler", testSource, provider);
     }
 
@@ -151,8 +148,8 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
         String awsLambdaRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + REQUEST_HANDLER);
         generatorContext.addTemplate("functionRequestHandler", awsLambdaRequestHandlerFile,
                 awsLambdaFunctionRequestHandlerJava.template(project),
-                awsLambdaBookRequestHandlerKotlin.template(project),
-                awsLambdaBookRequestHandlerGroovy.template(project));
+                awsLambdaFunctionRequestHandlerKotlin.template(project),
+                awsLambdaFunctionRequestHandlerGroovy.template(project));
     }
 
     @Override

@@ -16,21 +16,21 @@ import io.micronaut.function.aws.MicronautRequestHandler;
 import jakarta.inject.Inject;
 import java.util.Collections;
 
-public class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     @@Inject
-    ObjectMapper objectMapper;
+    ObjectMapper objectMapper
 
     @@Override
-    public APIGatewayProxyResponseEvent execute(APIGatewayProxyRequestEvent input) {
-        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+    APIGatewayProxyResponseEvent execute(APIGatewayProxyRequestEvent input) {
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
         try {
-            String json = objectMapper.writeValueAsString(Collections.singletonMap("message", "Hello World"));
+            String json = objectMapper.writeValueAsString([message: "Hello World"])
             response.setStatusCode(200);
             response.setBody(json);
         } catch (JsonProcessingException e) {
             response.setStatusCode(500);
         }
-        return response;
+        response
     }
 }

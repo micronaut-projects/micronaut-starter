@@ -7,34 +7,38 @@ Project project
 @if (project.getPackageName() != null) {
 package @project.getPackageName();
 }
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class FunctionRequestHandlerTest {
 
-    private static FunctionRequestHandler functionRequestHandler;
+    private static FunctionRequestHandler handler;
 
     @@BeforeAll
     public static void setupServer() {
-        functionRequestHandler = new FunctionRequestHandler();
+        handler = new FunctionRequestHandler();
     }
 
     @@AfterAll
     public static void stopServer() {
-        if (functionRequestHandler != null) {
-            functionRequestHandler.getApplicationContext().close();
+        if (handler != null) {
+            handler.getApplicationContext().close();
         }
     }
 
     @@Test
     public void testHandler() {
-        Book book = new Book();
-        book.setName("Building Microservices");
-        BookSaved bookSaved = functionRequestHandler.execute(book);
-        assertEquals(bookSaved.getName(),book.getName());
-        assertNotNull(bookSaved.getIsbn());
+        APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent();
+        request.setHttpMethod("GET");
+        request.setPath("/");
+        APIGatewayProxyResponseEvent response = handler.execute(request);
+        assertEquals(200, response.getStatusCode().intValue());
+        assertEquals("{\"message\":\"Hello World\"}", response.getBody());
     }
 }
