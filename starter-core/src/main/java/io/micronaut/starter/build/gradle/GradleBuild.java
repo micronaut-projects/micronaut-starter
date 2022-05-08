@@ -42,7 +42,7 @@ public class GradleBuild {
     private final GradleDsl dsl;
     private final List<GradleDependency> dependencies;
     private final List<GradlePlugin> plugins;
-    private final List<? extends GradleRepository> repositories;
+    private final List<GradleRepository> repositories;
 
     public GradleBuild() {
         this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList());
@@ -50,14 +50,14 @@ public class GradleBuild {
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies,
-                       @NonNull List<? extends GradleRepository> repositories) {
+                       @NonNull List<GradleRepository> repositories) {
         this(gradleDsl, dependencies, Collections.emptyList(), repositories);
     }
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies,
                        @NonNull List<GradlePlugin> plugins,
-                       @NonNull List<? extends GradleRepository> repositories) {
+                       @NonNull List<GradleRepository> repositories) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
         this.plugins = plugins;
