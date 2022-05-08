@@ -1,7 +1,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.application.ApplicationType;
-
-@args (Project project, ApplicationType applicationType, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
+@import io.micronaut.starter.options.BuildTool;
+@args (Project project, BuildTool buildTool, ApplicationType applicationType, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
 
 package @project.getPackageName();
 
@@ -74,7 +74,11 @@ public class AppStack extends Stack {
             .graalVMNative(@nativeImage)
             .version("@(version)")
             .archiveBaseName("app")
-            .buildTool(BuildTool.GRADLE_KOTLIN)
+@if (buildTool.isGradle()) {
+            .buildTool(BuildTool.GRADLE)
+} else {
+            .buildTool(BuildTool.MAVEN)
+}
             .build();
     }
 }

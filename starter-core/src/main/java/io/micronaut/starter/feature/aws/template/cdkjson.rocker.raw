@@ -1,5 +1,11 @@
+@import io.micronaut.starter.options.BuildTool;
+@args(BuildTool buildTool, String infrastructureModuleName)
 {
-  "app": "../gradlew :infra:run",
+@if(buildTool.isGradle()) {
+  "app": "../gradlew :@(infrastructureModuleName):run",
+} else {
+  "app": "../mvnw -e -q compile exec:java --pl @(infrastructureModuleName)",
+}
   "context": {
     "@@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
     "@@aws-cdk/core:stackRelativeExports": true,

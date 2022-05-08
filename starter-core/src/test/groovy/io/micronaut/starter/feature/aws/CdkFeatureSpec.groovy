@@ -50,10 +50,9 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
     void "dependencies are added for cdk to infra project for #buildTool"() {
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, buildTool), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-        def version = resolver.resolve('aws-cdk-lib').get().version
 
         then:
-        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("software.amazon.awscdk:aws-cdk-lib:$version")/$)
+        output."$Cdk.INFRA_MODULE/$buildFile".contains($/implementation("io.micronaut.aws:micronaut-aws-cdk/$)
 
         where:
         buildTool               | buildFile
@@ -64,17 +63,13 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
     void "dependencies are added for cdk to infra project for maven"() {
         when:
         def output = generate(ApplicationType.DEFAULT, new Options(Language.JAVA, BuildTool.MAVEN), [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-        def version = resolver.resolve('aws-cdk-lib').get().version
-        println output."$Cdk.INFRA_MODULE/pom.xml"
-
         def dependency = new XmlParser().parseText(output."$Cdk.INFRA_MODULE/pom.xml").dependencies.dependency.find {
-            it.artifactId.text() == 'aws-cdk-lib'
+            it.artifactId.text() == 'micronaut-aws-cdk'
         }
 
         then:
         with(dependency) {
-            it.groupId.text() == 'software.amazon.awscdk'
-            it.version.text() == version
+            it.groupId.text() == 'io.micronaut.aws'
         }
     }
 

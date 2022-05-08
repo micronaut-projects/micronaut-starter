@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
@@ -29,19 +30,22 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradleRepository;
 import io.micronaut.starter.build.maven.MavenBuild;
+import io.micronaut.starter.build.maven.MavenCombineAttribute;
 import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
+import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
 import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
-import io.micronaut.starter.feature.build.maven.templates.mavenShadePlugin;
+import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
+import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -52,6 +56,7 @@ import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +68,7 @@ public class Cdk implements MultiProjectFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
+    private static final String GROUP_ID_IO_MICRONAUT = "io.micronaut";
     private final DependencyContext dependencyContext;
 
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -98,7 +104,7 @@ public class Cdk implements MultiProjectFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template()));
+        generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template(generatorContext.getBuildTool(), INFRA_MODULE)));
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
@@ -110,6 +116,7 @@ public class Cdk implements MultiProjectFeature {
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getProject(),
+                        generatorContext.getBuildTool(),
                         generatorContext.getApplicationType(),
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
@@ -123,14 +130,13 @@ public class Cdk implements MultiProjectFeature {
             generatorContext.addTemplate("cdk-build",
                     new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
         });
+
+        generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE)));
     }
 
     private void populateDependencies() {
         dependencyContext.addDependency(Dependency.builder()
-                .lookupArtifactId("aws-cdk-lib")
-                .compile());
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
+                .groupId(GROUP_ID_IO_MICRONAUT)
                 .artifactId("micronaut-bom")
                 .version(VersionInfo.getMicronautVersion())
                 .pom()
@@ -138,10 +144,9 @@ public class Cdk implements MultiProjectFeature {
         dependencyContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.aws")
                 .artifactId("micronaut-aws-cdk")
-                .version("3.4.0")
                 .compile());
         dependencyContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
+                .groupId(GROUP_ID_IO_MICRONAUT)
                 .artifactId("micronaut-bom")
                 .version(VersionInfo.getMicronautVersion())
                 .pom()
@@ -169,14 +174,35 @@ public class Cdk implements MultiProjectFeature {
 
     private MavenBuild infrastructureMavenBuild(GeneratorContext generatorContext) {
         List<MavenDependency> dependencies = MavenDependency.listOf(dependencyContext);
-        List<MavenPlugin> plugins = Collections.singletonList(MavenPlugin.builder()
-                .artifactId("artifactId>maven-shade-plugin")
-                .extension(new RockerWritable(mavenShadePlugin.template(generatorContext.getProject(), MAIN_CLASS_NAME)))
-                .build());
+        List<MavenPlugin> plugins = Arrays.asList(
+                MavenPlugin.builder()
+                        .artifactId("maven-compiler-plugin")
+                        .extension(new RockerWritable(mavenCompilerPlugin.template()))
+                        .build(),
+                MavenPlugin.builder()
+                        .artifactId("exec-maven-plugin")
+                        .extension(new RockerWritable(execMavenPlugin.template(generatorContext.getProject().getPackageName() + "." + MAIN_CLASS_NAME)))
+                        .build());
+        List<Property> properties = Collections.singletonList(new Property() {
+            @Override
+            public String getKey() {
+                return "jdk.version";
+            }
+
+            @Override
+            public String getValue() {
+                return generatorContext.getFeatures().getTargetJdk();
+            }
+        });
         return new MavenBuild(generatorContext.getProject().getName() + "-" + INFRA_MODULE,
+                Collections.emptyList(),
+                Collections.emptyList(),
                 dependencies,
+                properties,
                 plugins,
-                MavenRepository.listOf(micronautRepositories()));
+                MavenRepository.listOf(micronautRepositories()),
+                MavenCombineAttribute.APPEND,
+                MavenCombineAttribute.APPEND);
     }
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {
