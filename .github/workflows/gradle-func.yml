@@ -24,7 +24,7 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-test-cli-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-core-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
@@ -76,7 +76,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
@@ -102,7 +102,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
@@ -128,7 +128,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
@@ -154,7 +154,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-test-aws-
       - name: Set up JDK
-        uses: actions/setup-java@v3.1.1
+        uses: actions/setup-java@v3.3.0
         with:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
