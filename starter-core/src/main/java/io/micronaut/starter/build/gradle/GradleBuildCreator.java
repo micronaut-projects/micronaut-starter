@@ -19,7 +19,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 
+import io.micronaut.starter.build.Repository;
 import jakarta.inject.Singleton;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 public class GradleBuildCreator {
 
     @NonNull
-    public GradleBuild create(@NonNull GeneratorContext generatorContext) {
+    public GradleBuild create(@NonNull GeneratorContext generatorContext, List<Repository> repositories) {
         GradleDsl gradleDsl = generatorContext
                 .getBuildTool()
                 .getGradleDsl()
@@ -38,15 +40,9 @@ public class GradleBuildCreator {
                 .map(GradlePlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
-        return new GradleBuild(gradleDsl, resolveDependencies(generatorContext), gradlePlugins);
+        return new GradleBuild(gradleDsl, GradleDependency.listOf(generatorContext), gradlePlugins,
+                GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
+                        repositories));
     }
 
-    @NonNull
-    private List<GradleDependency> resolveDependencies(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getDependencies()
-                .stream()
-                .map(dep -> new GradleDependency(dep, generatorContext))
-                .sorted(GradleDependency.COMPARATOR)
-                .collect(Collectors.toList());
-    }
 }
