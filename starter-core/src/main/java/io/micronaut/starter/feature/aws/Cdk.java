@@ -110,7 +110,7 @@ public class Cdk implements MultiProjectFeature {
 
         String handler = generatorContext.getApplicationType() == ApplicationType.DEFAULT ?
                 AwsLambda.MICRONAUT_LAMBDA_HANDLER :
-                AwsLambda.REQUEST_HANDLER;
+                generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
         Language lang = Language.JAVA;
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
