@@ -66,13 +66,11 @@ public class MicroStreamRest implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.DATABASE;
+        return Category.DEV_TOOLS;
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("microstream.rest.enabled", "true");
-        generatorContext.getConfiguration().put("microstream.rest.path", "microstream");
         generatorContext.addDependency(Dependency.builder()
                 .compile()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)

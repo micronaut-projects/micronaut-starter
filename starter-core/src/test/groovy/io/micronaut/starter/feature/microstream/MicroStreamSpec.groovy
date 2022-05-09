@@ -53,6 +53,14 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
+        if (language == Language.KOTLIN) {
+            assert template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
+        } else if (language == Language.JAVA) {
+            assert template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
+        } else {
+            assert !template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
+            assert !template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
+        }
 
         where:
         language << Language.values().toList()
@@ -69,6 +77,14 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream-rest")')
+        if (language == Language.KOTLIN) {
+            assert template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
+        } else if (language == Language.JAVA) {
+            assert template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
+        } else {
+            assert !template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
+            assert !template.contains('annotationProcessor("io.micronaut.microstream:micronaut-microstream-annotations")')
+        }
 
         where:
         language << Language.values().toList()
@@ -85,7 +101,6 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         !template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
         !template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream-cache")')
-        template.contains('implementation("io.micronaut.cache:micronaut-cache-core")')
 
         where:
         language << Language.values().toList()
@@ -113,6 +128,22 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+        if (language == Language.KOTLIN) {
+            assert template.contains('''
+               <annotationProcessorPath>
+                 <groupId>io.micronaut.microstream</groupId>
+                 <artifactId>micronaut-microstream-annotations</artifactId>
+                 <version>${micronaut.microstream.version}</version>
+               </annotationProcessorPath>''')
+        } else if(language == Language.JAVA) {
+            assert template.contains('''
+            <path>
+              <groupId>io.micronaut.microstream</groupId>
+              <artifactId>micronaut-microstream-annotations</artifactId>
+              <version>${micronaut.microstream.version}</version>
+            </path>''')
+        }
+
         where:
         language << Language.values().toList()
     }
@@ -179,13 +210,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.cache</groupId>
-      <artifactId>micronaut-cache-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+
         where:
         language << Language.values().toList()
     }
@@ -194,20 +219,17 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['microstream'])
 
-        then:
-        commandContext.configuration.'microstream.storage.main.storage-directory' == '/tmp/microstream'
-        commandContext.configuration.'microstream.storage.main.root-class' == 'java.util.ArrayList'
+        then: "we don't configure storage as there are no sensible defaults"
+        !commandContext.configuration.keySet().any { it.startsWith('microstream.storage.') }
     }
 
     void 'test microstream-rest configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['microstream-rest'])
 
-        then:
-        commandContext.configuration.'microstream.storage.main.storage-directory' == '/tmp/microstream'
-        commandContext.configuration.'microstream.storage.main.root-class' == 'java.util.ArrayList'
-        commandContext.configuration.'microstream.rest.enabled' == 'true'
-        commandContext.configuration.'microstream.rest.path' == 'microstream'
+        then: "no configuration is created"
+        !commandContext.configuration.keySet().any { it.startsWith('microstream.storage.') }
+        !commandContext.configuration.keySet().any { it.startsWith('microstream.rest.') }
     }
 
     void 'test microstream-cache configuration'() {
@@ -215,13 +237,9 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         GeneratorContext commandContext = buildGeneratorContext(['microstream-cache'])
 
         then:
-        !commandContext.configuration.'microstream.storage.main.storage-directory'
-        !commandContext.configuration.'microstream.storage.main.root-class'
-        !commandContext.configuration.'microstream.rest.enabled'
-        !commandContext.configuration.'microstream.rest.path'
-        commandContext.configuration.'microstream.storage.cachestore.storage-directory' == '/tmp/cache'
+        !commandContext.configuration.keySet().any { it.startsWith('microstream.storage.') }
+        !commandContext.configuration.keySet().any { it.startsWith('microstream.rest.') }
         commandContext.configuration.'microstream.cache.my-cache.key-type' == 'java.lang.Integer'
         commandContext.configuration.'microstream.cache.my-cache.value-type' == 'java.lang.String'
-        commandContext.configuration.'microstream.cache.my-cache.backing-storage' == 'cachestore'
     }
 }

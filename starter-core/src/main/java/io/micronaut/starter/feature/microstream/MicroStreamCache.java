@@ -64,14 +64,8 @@ public class MicroStreamCache implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("microstream.storage.cachestore.storage-directory", "/tmp/cache");
         generatorContext.getConfiguration().put("microstream.cache.my-cache.key-type", "java.lang.Integer");
         generatorContext.getConfiguration().put("microstream.cache.my-cache.value-type", "java.lang.String");
-        generatorContext.getConfiguration().put("microstream.cache.my-cache.backing-storage", "cachestore");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.cache")
-                .artifactId("micronaut-cache-core")
-                .compile());
         generatorContext.addDependency(Dependency.builder()
                 .compile()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)

@@ -64,8 +64,6 @@ public class MicroStream implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("microstream.storage.main.storage-directory", "/tmp/microstream");
-        generatorContext.getConfiguration().put("microstream.storage.main.root-class", "java.util.ArrayList");
         generatorContext.addDependency(Dependency.builder()
                 .compile()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
@@ -76,6 +74,13 @@ public class MicroStream implements Feature {
                 .compile()
                 .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
                 .artifactId("micronaut-microstream-annotations")
+                .build()
+        );
+        generatorContext.addDependency(Dependency.builder()
+                .annotationProcessor()
+                .groupId(MICRONAUT_MICROSTREAM_GROUP_ID)
+                .artifactId("micronaut-microstream-annotations")
+                .versionProperty("micronaut.microstream.version")
                 .build()
         );
     }
