@@ -54,7 +54,10 @@ public class Application {
     private final BuildTool buildTool;
     private final TestFramework testFramework;
     private final JdkVersion jdkVersion;
+
+    @Nullable
     private final CloudProvider cloudProvider;
+
     private final String micronautVersion;
     @DateCreated
     private LocalDateTime dateCreated;
