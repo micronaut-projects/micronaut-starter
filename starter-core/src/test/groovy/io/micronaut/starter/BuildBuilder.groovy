@@ -17,6 +17,7 @@ import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
 import io.micronaut.starter.options.*
+import static io.micronaut.starter.build.Repository.micronautRepositories
 
 import static io.micronaut.starter.build.Repository.micronautRepositories
 
