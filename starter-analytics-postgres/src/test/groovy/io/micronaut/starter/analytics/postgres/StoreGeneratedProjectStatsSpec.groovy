@@ -108,8 +108,8 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         def topCloudProviders = featureRepository.topCloudProviders()
 
         then:
-        topCloudProviders.name == [CloudProvider.GCP.name(), null]
-        topCloudProviders.total == [1, 2]
+        topCloudProviders.name == [CloudProvider.GCP.name()]
+        topCloudProviders.total == [1]
 
         when:
         def languages = featureRepository.topLanguages()

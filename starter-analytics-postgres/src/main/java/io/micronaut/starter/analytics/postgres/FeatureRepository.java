@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
 public abstract class FeatureRepository implements CrudRepository<Feature, Long> {
@@ -87,7 +88,9 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
                             try (ResultSet resultSet = statement.executeQuery()) {
                                 return resultSetToTotals(resultSet);
                             }
-                        });
+                        }).stream()
+                .filter(totalDTO -> totalDTO.getName() != null)
+                .collect(Collectors.toList());
     }
 
     @ReadOnly
