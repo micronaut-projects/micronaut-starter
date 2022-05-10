@@ -36,6 +36,7 @@ import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.MultiProjectFeature;
+import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
@@ -104,6 +105,7 @@ public class Cdk implements MultiProjectFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("test-lambda", new RockerTemplate(Template.ROOT, "test-lambda.sh", testlambda.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE), true));
         generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template(generatorContext.getBuildTool(), INFRA_MODULE)));
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));

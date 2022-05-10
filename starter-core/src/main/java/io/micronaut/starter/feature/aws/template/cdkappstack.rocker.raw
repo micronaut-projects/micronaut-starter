@@ -73,7 +73,11 @@ public class AppStack extends Stack {
 }
             .graalVMNative(@nativeImage)
             .version("@(version)")
+@if (buildTool.isGradle()) {
+            .archiveBaseName("@(codeModule)")
+} else {
             .archiveBaseName("@(project.getName())")
+}
 @if (buildTool.isGradle()) {
             .buildTool(BuildTool.GRADLE)
 } else {
