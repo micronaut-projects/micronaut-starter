@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,62 +16,72 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsV2Sdk implements AwsFeature {
+public class DynamoDb implements AwsFeature {
+    public static final String ARTIFACTID_DYNAMODB = "dynamodb";
+    private final AwsV2Sdk awsV2Sdk;
 
-    public static final String ARTIFACT_ID_MICRONAUT_AWS_SDK_V_2 = "micronaut-aws-sdk-v2";
-
-    @Override
-    @NonNull
-    public String getName() {
-        return "aws-v2-sdk";
+    public DynamoDb(AwsV2Sdk awsV2Sdk) {
+        this.awsV2Sdk = awsV2Sdk;
     }
 
     @Override
-    public String getTitle() {
-        return "AWS SDK 2.x";
-    }
-
-    @Override
-    @NonNull
-    public String getDescription() {
-        return "Provides integration with the AWS SDK 2.x";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLOUD;
-    }
-
-    @Nullable
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/";
-    }
-
-    @Nullable
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://docs.aws.amazon.com/sdk-for-java/v2/developer-guide/welcome.html";
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(AwsV2Sdk.class)) {
+            featureContext.addFeature(awsV2Sdk);
+        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID_MICRONAUT_AWS)
-                .artifactId(ARTIFACT_ID_MICRONAUT_AWS_SDK_V_2)
+                .groupId(GROUP_ID_AWS_SDK_V2)
+                .artifactId(ARTIFACTID_DYNAMODB)
                 .compile());
+    }
+
+    @Override
+    @NonNull
+    public String getName() {
+        return "dynamodb";
+    }
+
+    @Override
+    @NonNull
+    public String getTitle() {
+        return "Amazon DynamoDB";
+    }
+
+    @Override
+    @NonNull
+    public String getDescription() {
+        return "Integrates with Amazon DynamoDB a NoSQL database service";
+    }
+
+    @Override
+    public String getCategory() {
+        return Category.DATABASE;
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/#dynamodb";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://aws.amazon.com/dynamodb/";
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return true;
     }
 }
