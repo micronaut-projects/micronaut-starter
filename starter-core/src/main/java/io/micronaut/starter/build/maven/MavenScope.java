@@ -59,11 +59,8 @@ public enum MavenScope implements Ordered {
                     }
                     return Optional.of(MavenScope.RUNTIME);
                 }
-                if (scope.getPhases().contains(Phase.COMPILATION)) {
+                if (scope.getPhases().contains(Phase.COMPILATION) || scope.getPhases().contains(Phase.DEVELOPMENT)) {
                     return Optional.of(MavenScope.PROVIDED);
-                }
-                if (scope.getPhases().contains(Phase.DEVELOPMENT)) {
-                    return Optional.of(MavenScope.COMPILE);
                 }
                 break;
             case TEST:
