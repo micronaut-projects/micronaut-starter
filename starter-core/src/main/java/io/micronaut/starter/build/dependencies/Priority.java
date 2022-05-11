@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2020 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.build.dependencies;
 
-public abstract class MongoFeature extends TestContainersFeature {
+import io.micronaut.core.order.Ordered;
 
-    protected MongoFeature(TestContainers testContainers) {
-        super(testContainers);
+public enum Priority {
+
+    LOMBOK,
+    MICRONAUT_INJECT_JAVA,
+    MICRONAUT_DATA_PROCESSOR;
+
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + ordinal();
     }
 }

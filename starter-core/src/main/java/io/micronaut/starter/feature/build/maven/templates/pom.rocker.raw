@@ -205,7 +205,7 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot")) {
           <configuration>
 @if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
@@ -227,6 +227,9 @@ MavenBuild mavenBuild
             <appArguments>
               <arg>${exec.mainClass}::handleRequest</arg>
             </appArguments>
+}
+@if (features.contains("micronaut-aot")) {
+            <configFile>aot-${packaging}.properties</configFile>
 }
           </configuration>
 }
