@@ -20,6 +20,7 @@ class MavenScopeSpec extends Specification {
 
         where:
         source      | phases                              || scope
+        Source.MAIN | [Phase.DEVELOPMENT]                 || MavenScope.COMPILE
         Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION]  || MavenScope.COMPILE
         Source.MAIN | [Phase.RUNTIME]                     || MavenScope.RUNTIME
         Source.MAIN | [Phase.COMPILATION]                 || MavenScope.PROVIDED
