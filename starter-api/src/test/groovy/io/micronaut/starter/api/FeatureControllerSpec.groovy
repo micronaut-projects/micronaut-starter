@@ -34,7 +34,12 @@ class FeatureControllerSpec extends Specification {
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL, null).features.findAll { it.community }
 
         then:
-        communityFeatures.name == ['camunda', 'camunda-external-worker', 'zeebe']
+        communityFeatures.name == [
+                'camunda',
+                'camunda-external-worker',
+                'gru-http',
+                'zeebe',
+        ]
     }
 
     void "test list features - spanish"() {

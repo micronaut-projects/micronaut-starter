@@ -18,8 +18,9 @@ micronaut {
 }
 @if(aotVersion != null) {
     aot {
+        // Please review carefully the optimizations enabled below
+        // Check https://micronaut-projects.github.io/micronaut-aot/latest/guide/ for more details
 @if (dsl == GradleDsl.KOTLIN) {
-        version.set("@(aotVersion)")
         optimizeServiceLoading.set(true)
         convertYamlToJava.set(true)
         precomputeOperations.set(true)
@@ -29,7 +30,6 @@ micronaut {
         optimizeNetty.set(true)
 }
 @if (dsl == GradleDsl.GROOVY) {
-        version = '@(aotVersion)'
         optimizeServiceLoading = true
         convertYamlToJava = true
         precomputeOperations = true

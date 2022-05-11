@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
@@ -25,26 +24,21 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
-import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.HttpClient;
-import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
-
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
-import java.util.Optional;
-
 @Singleton
-public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature {
+public class AwsLambdaCustomRuntime implements AwsFeature, FunctionFeature, ApplicationFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
     public static final String NAME = "aws-lambda-custom-runtime";
@@ -97,7 +91,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (shouldGenerateMainClassForRuntime(generatorContext)) {
             addBookLambdaRuntime(generatorContext, project);
         }
-        addBootstrap(generatorContext, applicationType);
 
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
             generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
@@ -107,16 +100,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {
         return generatorContext.getApplicationType() == ApplicationType.FUNCTION &&
                 generatorContext.getFeatures().isFeaturePresent(AwsLambda.class);
-    }
-
-    private void addBootstrap(GeneratorContext generatorContext, ApplicationType applicationType) {
-        RockerModel bootstrapRockerModel = bootstrap.template(
-                applicationType,
-                generatorContext.getProject(),
-                generatorContext.getBuildTool(),
-                generatorContext.getFeatures()
-        );
-        generatorContext.addTemplate("bootstrap", new RockerTemplate("bootstrap", bootstrapRockerModel));
     }
 
     @Override
@@ -145,11 +128,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
-    }
-
-    @Override
-    public Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.AWS);
     }
 
     @Override

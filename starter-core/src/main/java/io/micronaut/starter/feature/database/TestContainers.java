@@ -85,7 +85,9 @@ public class TestContainers implements Feature {
             generatorContext.addDependency(testContainerTestDependency(testArtifactId));
         });
 
-        if (generatorContext.isFeaturePresent(MongoFeature.class)) {
+        if (generatorContext.isFeaturePresent(MongoFeature.class) ||
+                generatorContext.isFeaturePresent(DataMongoFeature.class) ||
+                generatorContext.isFeaturePresent(DataMongoReactive.class)) {
             generatorContext.addDependency(testContainerTestDependency("mongodb"));
         }
     }

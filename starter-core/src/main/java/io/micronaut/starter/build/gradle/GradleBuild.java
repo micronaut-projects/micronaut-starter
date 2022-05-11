@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Writable;
+import io.micronaut.starter.template.WritableUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import io.micronaut.starter.feature.build.gradle.templates.substitutions;
@@ -41,22 +42,26 @@ public class GradleBuild {
     private final GradleDsl dsl;
     private final List<GradleDependency> dependencies;
     private final List<GradlePlugin> plugins;
+    private final List<GradleRepository> repositories;
 
     public GradleBuild() {
-        this(GradleDsl.GROOVY, Collections.emptyList());
-    }
-
-    public GradleBuild(@NonNull GradleDsl gradleDsl,
-                       @NonNull List<GradleDependency> dependencies) {
-        this(gradleDsl, dependencies, Collections.emptyList());
+        this(GradleDsl.GROOVY, Collections.emptyList(), Collections.emptyList());
     }
 
     public GradleBuild(@NonNull GradleDsl gradleDsl,
                        @NonNull List<GradleDependency> dependencies,
-                       @NonNull List<GradlePlugin> plugins) {
+                       @NonNull List<GradleRepository> repositories) {
+        this(gradleDsl, dependencies, Collections.emptyList(), repositories);
+    }
+
+    public GradleBuild(@NonNull GradleDsl gradleDsl,
+                       @NonNull List<GradleDependency> dependencies,
+                       @NonNull List<GradlePlugin> plugins,
+                       @NonNull List<GradleRepository> repositories) {
         this.dsl = gradleDsl;
         this.dependencies = dependencies;
         this.plugins = plugins;
+        this.repositories = repositories;
     }
 
     @NonNull
@@ -102,6 +107,12 @@ public class GradleBuild {
     @NonNull
     public String renderSettingsExtensions() {
         return renderWritableExtensions(plugins.stream().map(GradlePlugin::getSettingsExtension));
+    }
+
+    @NonNull
+    public String renderRepositories() {
+        return WritableUtils.renderWritableList(repositories.stream()
+                .map(Writable.class::cast).collect(Collectors.toList()), 4);
     }
 
     @NonNull

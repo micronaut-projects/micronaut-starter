@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Scope;
+import io.micronaut.starter.build.gradle.GradleConfiguration;
 
 import java.util.Optional;
 
@@ -58,11 +59,10 @@ public enum MavenScope implements Ordered {
                     }
                     return Optional.of(MavenScope.RUNTIME);
                 }
-                if (scope.getPhases().contains(Phase.COMPILATION)) {
+                if (scope.getPhases().contains(Phase.COMPILATION) || scope.getPhases().contains(Phase.DEVELOPMENT)) {
                     return Optional.of(MavenScope.PROVIDED);
                 }
                 break;
-
             case TEST:
                 return Optional.of(MavenScope.TEST);
             default:
