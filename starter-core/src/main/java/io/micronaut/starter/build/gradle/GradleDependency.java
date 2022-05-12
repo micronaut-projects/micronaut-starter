@@ -20,10 +20,13 @@ import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GradleDependency extends DependencyCoordinate {
 
@@ -100,5 +103,19 @@ public class GradleDependency extends DependencyCoordinate {
             snippet += ")";
         }
         return snippet;
+    }
+
+    @NonNull
+    public static List<GradleDependency> listOf(GeneratorContext generatorContext) {
+        return listOf(generatorContext, generatorContext);
+    }
+
+    @NonNull
+    public static List<GradleDependency> listOf(DependencyContext dependencyContext, GeneratorContext generatorContext) {
+        return dependencyContext.getDependencies()
+                .stream()
+                .map(dep -> new GradleDependency(dep, generatorContext))
+                .sorted(GradleDependency.COMPARATOR)
+                .collect(Collectors.toList());
     }
 }
