@@ -55,7 +55,7 @@ class ConsoleSpec extends ApplicationContextSpec {
 
         then:
         if (buildTool.isGradle()) {
-            assert template.contains("runtimeOnly(\"$coordinate")
+            assert template.contains("developmentOnly(\"$coordinate")
         } else if (buildTool == BuildTool.MAVEN) {
             assert template.contains("<artifactId>$artifactId</artifactId>")
             assert template.contains("<groupId>$groupId</groupId>")
