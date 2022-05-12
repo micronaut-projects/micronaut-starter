@@ -82,7 +82,7 @@ public class Console implements AgoraPulseFeature {
     private void addDependency(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .lookupArtifactId(ARTIFACT_ID)
-                .runtime());
+                .developmentOnly());
 
         if (generatorContext.getLanguage() == Language.JAVA) {
             addGroovyDependency(generatorContext);
@@ -98,7 +98,7 @@ public class Console implements AgoraPulseFeature {
         Dependency.Builder groovy = Dependency.builder()
                 .groupId("org.codehaus.groovy")
                 .artifactId("groovy")
-                .runtime();
+                .developmentOnly();
         generatorContext.addDependency(groovy);
     }
 
@@ -111,7 +111,7 @@ public class Console implements AgoraPulseFeature {
                 .version("${kotlinVersion}")
                 .template();
 
-        generatorContext.addDependency(kotlin.artifactId("kotlin-scripting-jsr223").runtime());
+        generatorContext.addDependency(kotlin.artifactId("kotlin-scripting-jsr223").developmentOnly());
     }
 
     private void addExampleCode(GeneratorContext generatorContext, String secret) {
