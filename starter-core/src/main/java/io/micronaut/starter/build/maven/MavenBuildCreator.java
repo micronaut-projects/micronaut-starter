@@ -23,6 +23,7 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import io.micronaut.starter.build.dependencies.Phase;
+import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
 import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
@@ -31,12 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static io.micronaut.starter.build.Repository.micronautRepositories;
+
 @Singleton
 public class MavenBuildCreator {
 
     @NonNull
     public MavenBuild create(GeneratorContext generatorContext) {
-        List<MavenDependency> dependencies = resolveDependencies(generatorContext);
+        List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext);
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
         List<Coordinate> testAnnotationProcessorsCoordinates = new ArrayList<>();
@@ -65,6 +68,7 @@ public class MavenBuildCreator {
                 .groupId("io.micronaut")
                 .artifactId("micronaut-inject-java")
                 .versionProperty("micronaut.version")
+                .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
                 .buildCoordinate(true);
         Coordinate validation = Dependency.builder()
                 .groupId("io.micronaut")
@@ -98,23 +102,14 @@ public class MavenBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
 
-        return new MavenBuild(annotationProcessorsCoordinates,
+        return new MavenBuild(generatorContext.getProject().getName(),
+                annotationProcessorsCoordinates,
                 testAnnotationProcessorsCoordinates,
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
+                MavenRepository.listOf(micronautRepositories()),
                 combineAttribute,
                 testCombineAttribute);
     }
-
-    @NonNull
-    private List<MavenDependency> resolveDependencies(@NonNull GeneratorContext generatorContext) {
-        return generatorContext.getDependencies()
-                .stream()
-                .filter(dep -> !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
-                .map(MavenDependency::new)
-                .sorted(MavenDependency.COMPARATOR)
-                .collect(Collectors.toList());
-    }
-
 }

@@ -45,86 +45,8 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         language << graalSupportedLanguages()
     }
 
-    @Unroll
-    void 'verify bootstrap for a function application type with gradle and feature aws-lambda-custom-runtime for language=#language'() {
-        when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE),
-                ['aws-lambda-custom-runtime']
-        )
-        output.containsKey("src/main/${language.srcDir}/example/micronaut/FunctionLambdaRuntime".toString())
-        String bootstrap = output['bootstrap']
-
-        then:
-        bootstrap.contains('#!/bin/sh')
-        bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo-all.jar example.micronaut.FunctionLambdaRuntime')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'verify bootstrap for a function application type with maven and feature aws-lambda-custom-runtime for language=#language'() {
-        when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN),
-                ['aws-lambda-custom-runtime']
-        )
-        output.containsKey("src/main/${language.srcDir}/example/micronaut/FunctionLambdaRuntime".toString())
-        String bootstrap = output['bootstrap']
-
-        then:
-        bootstrap.contains('#!/bin/sh')
-        bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('java -XX:TieredStopAtLevel=1 -noverify -cp foo.jar example.micronaut.FunctionLambdaRuntime')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    @Unroll
-    void 'verify bootstrap for a function application type with maven and feature graalvm for language=#language aws-lambda-custom-runtime shoudl be included even if not specified '() {
-        when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['graalvm']
-        )
-        String bootstrap = output['bootstrap']
-
-        then:
-        bootstrap.contains('#!/bin/sh')
-        bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('./foo -Xmx512m')
-
-        where:
-        language << graalSupportedLanguages()
-    }
-
     private List<Language> graalSupportedLanguages() {
         Language.values().toList() - Language.GROOVY
-    }
-
-    @Unroll
-    void 'verify bootstrap for a function application type with maven and feature aws-lambda-custom-runtime and graalvm for language=#language'() {
-        when:
-        def output = generate(
-                ApplicationType.FUNCTION,
-                new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['aws-lambda-custom-runtime', 'graalvm']
-        )
-        String bootstrap = output['bootstrap']
-
-        then:
-        bootstrap.contains('#!/bin/sh')
-        bootstrap.contains('set -euo pipefail')
-        bootstrap.contains('./foo -Xmx512m')
-
-        where:
-        language << graalSupportedLanguages()
     }
 
     @Unroll

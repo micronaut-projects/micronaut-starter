@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.exceptions.ConfigurationException;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
@@ -36,9 +35,7 @@ import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.HttpClient;
-import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
-
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
@@ -96,7 +93,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (shouldGenerateMainClassForRuntime(generatorContext)) {
             addFunctionLambdaRuntime(generatorContext, project);
         }
-        addBootstrap(generatorContext, applicationType);
 
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
             generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
@@ -106,16 +102,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {
         return generatorContext.getApplicationType() == ApplicationType.FUNCTION &&
                 generatorContext.getFeatures().isFeaturePresent(AwsLambda.class);
-    }
-
-    private void addBootstrap(GeneratorContext generatorContext, ApplicationType applicationType) {
-        RockerModel bootstrapRockerModel = bootstrap.template(
-                applicationType,
-                generatorContext.getProject(),
-                generatorContext.getBuildTool(),
-                generatorContext.getFeatures()
-        );
-        generatorContext.addTemplate("bootstrap", new RockerTemplate("bootstrap", bootstrapRockerModel));
     }
 
     @Override

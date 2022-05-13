@@ -60,7 +60,7 @@ class SpringBootSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot\")")
+        template.contains("${getGradleAnnotationProcessorScope(language)}(\"io.micronaut.spring:micronaut-spring-boot-annotation\")")
         template.contains('implementation("org.springframework.boot:spring-boot-starter-web")')
         template.contains('runtimeOnly("io.micronaut.spring:micronaut-spring-boot")')
 
@@ -92,7 +92,7 @@ class SpringBootSpec extends ApplicationContextSpec {
         template.contains("""
             <path>
               <groupId>io.micronaut.spring</groupId>
-              <artifactId>micronaut-spring-boot</artifactId>
+              <artifactId>micronaut-spring-boot-annotation</artifactId>
               <version>\${micronaut.spring.version}</version>
             </path>
 """)
@@ -127,7 +127,7 @@ class SpringBootSpec extends ApplicationContextSpec {
         template.count('''\
                <annotationProcessorPath>
                  <groupId>io.micronaut.spring</groupId>
-                 <artifactId>micronaut-spring-boot</artifactId>
+                 <artifactId>micronaut-spring-boot-annotation</artifactId>
                  <version>${micronaut.spring.version}</version>
                </annotationProcessorPath>
 ''') == 2
