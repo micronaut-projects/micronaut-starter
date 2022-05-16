@@ -15,14 +15,13 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.Feature;
-
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
@@ -34,9 +33,10 @@ import java.util.Optional;
 import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
 @Singleton
-public class MicronautBuildPlugin implements Feature {
+public class MicronautBuildPlugin implements BuildPluginFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "micronaut-build";
     }
@@ -54,7 +54,7 @@ public class MicronautBuildPlugin implements Feature {
         return generatorContext.getBuildProperties()
                 .getProperties()
                 .stream()
-                .filter(property -> property.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME))
+                .filter(property -> MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME.equals(property.getKey()))
                 .map(Property::getValue)
                 .findFirst();
     }
@@ -127,10 +127,5 @@ public class MicronautBuildPlugin implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public int getOrder() {
-        return LOWEST_PRECEDENCE;
     }
 }
