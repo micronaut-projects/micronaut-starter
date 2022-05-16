@@ -1,10 +1,14 @@
 package io.micronaut.starter.feature.build
 
+import io.micronaut.starter.feature.build.maven.templates.aot
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT
@@ -12,9 +16,9 @@ import static io.micronaut.starter.options.BuildTool.GRADLE
 import static io.micronaut.starter.options.BuildTool.GRADLE_KOTLIN
 import static io.micronaut.starter.options.BuildTool.MAVEN
 
-class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    private static final String GRADLE_PLUGIN_VERSION = '3.3.1'
+    private static final String GRADLE_PLUGIN_VERSION = '3.4.0'
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
 
@@ -32,7 +36,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment = true')
         output.contains('optimizeClassLoading = true')
         output.contains('deduceEnvironment = true')
-        output.contains("version = '1.0.0'")
+        output.contains('optimizeNetty = true')
 
         where:
         language << Language.values().toList()
@@ -52,7 +56,7 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         output.contains('cacheEnvironment.set(true)')
         output.contains('optimizeClassLoading.set(true)')
         output.contains('deduceEnvironment.set(true)')
-        output.contains('version.set("1.0.0")')
+        output.contains('optimizeNetty.set(true)')
 
         where:
         language << Language.values().toList()
@@ -92,17 +96,54 @@ class MicronautAotBuildPluginSpec extends ApplicationContextSpec implements Comm
         String output = build(MAVEN, language)
 
         then:
-        output.contains("<micronaut.aot.packageName>example.micronaut</micronaut.aot.packageName>")
+        output.contains("<micronaut.aot.packageName>example.micronaut.aot.generated</micronaut.aot.packageName>")
+        output.contains("<micronaut.aot.enabled>true</micronaut.aot.enabled>")
+        output.contains('<configFile>aot-${packaging}.properties</configFile>')
 
         where:
         language << Language.values().toList()
+    }
+
+    @Unroll
+    void 'aot-#packaging properties file is correct'(String packaging) {
+        when:
+        String aotProperties = aot.template(packaging).render().toString()
+        String expected = getClass().getResource("/expected-aot-${packaging}.properties").text
+
+        then:
+        aotProperties == expected
+
+        where:
+        packaging << ['jar', 'native-image']
+    }
+
+    void 'aot properties file is generated when aot feature is selected'() {
+        given:
+        def output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT])
+
+        expect:
+        output.containsKey('aot-jar.properties')
+        !output.containsKey('aot-native-image.properties')
+    }
+
+    void 'aot properties files are generated when aot and graalvm features are selected'() {
+        given:
+        def output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT, GraalVM.FEATURE_NAME_GRAALVM])
+
+        expect:
+        output.containsKey('aot-jar.properties')
+        output.containsKey('aot-native-image.properties')
     }
 
     private String build(BuildTool buildTool, Language language) {
         new BuildBuilder(beanContext, buildTool)
                 .language(language)
                 .applicationType(DEFAULT)
-                .features(['micronaut-aot'])
+                .features([MicronautAot.FEATURE_NAME_AOT])
                 .render()
+    }
+
+    private Options mavenAotOptions() {
+        return new Options(Language.DEFAULT_OPTION, TestFramework.DEFAULT_OPTION, MAVEN)
     }
 }

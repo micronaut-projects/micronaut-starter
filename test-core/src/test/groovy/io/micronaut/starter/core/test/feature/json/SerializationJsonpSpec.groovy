@@ -11,28 +11,38 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class SerializationJsonpSpec extends CommandSpec {
-
-    Path buildGradlePath
-
-    void setup() {
-        buildGradlePath = Paths.get(dir.getPath(), "build.gradle")
-    }
-
     @Override
     String getTempDirectoryPrefix() {
         return "json"
     }
 
     @Unroll
-    void "test gradle build with jsonp feature"() {
+    void "test gradle build with jsonp feature"(BuildTool buildTool) {
         when:
-        generateProject(Language.JAVA, BuildTool.GRADLE, [beanContext.getBeansOfType(SerializationJsonpFeature)[0].getName()])
+        generateProject(Language.JAVA, buildTool, [beanContext.getBeansOfType(SerializationJsonpFeature)[0].getName()])
         String output = executeGradle("compileJava")?.output
 
         then:
-        Files.exists(buildGradlePath)
-        Files.readAllLines(buildGradlePath).stream().map(x -> x.trim()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
-        Files.readAllLines(buildGradlePath).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-jsonp\")")
+        Files.exists(buildGradlePath(buildTool))
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "annotationProcessor(\"io.micronaut.serde:micronaut-serde-processor\")")
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "implementation(\"io.micronaut.serde:micronaut-serde-jsonp\")")
+
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-databind\"))")
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"jakarta.json.bind:jakarta.json.bind-api"))
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x == "substitute(module(\"io.micronaut:micronaut-jackson-core\"))")
+        Files.readAllLines(buildGradlePath(buildTool)).stream().map(x -> x.trim()).anyMatch(x -> x.startsWith(".using(module(\"io.micronaut.serde:micronaut-serde-jsonp"))
+
         output?.contains("BUILD SUCCESS")
+
+        where:
+        buildTool << [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]
+    }
+
+    Path buildGradlePath(BuildTool buildTool) {
+        String fileName = "build.gradle"
+        if (buildTool == BuildTool.GRADLE_KOTLIN) {
+            fileName += ".kts"
+        }
+        Paths.get(dir.getPath(), fileName)
     }
 }

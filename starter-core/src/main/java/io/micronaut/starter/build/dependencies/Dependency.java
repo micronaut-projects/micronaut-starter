@@ -18,19 +18,37 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public final class Dependency {
 
+    @Nullable
     private final Scope scope;
+
+    @Nullable
     private final String groupId;
+
+    @NonNull
     private final String artifactId;
+
+    @Nullable
     private final String version;
+
+    @Nullable
     private final String versionProperty;
     private final boolean requiresLookup;
     private final int order;
     private final boolean annotationProcessorPriority;
     private final boolean pom;
+
+    @Nullable
+    private final List<Dependency> exclusions;
+
+    @Nullable
+    private final List<Substitution> substitutions;
 
     private Dependency(Scope scope,
                        String groupId,
@@ -40,7 +58,9 @@ public final class Dependency {
                        boolean requiresLookup,
                        boolean annotationProcessorPriority,
                        int order,
-                       boolean pom) {
+                       boolean pom,
+                       @Nullable List<Dependency> exclusions,
+                       @Nullable List<Substitution> substitutions) {
         this.scope = scope;
         this.groupId = groupId;
         this.artifactId = artifactId;
@@ -50,6 +70,78 @@ public final class Dependency {
         this.annotationProcessorPriority = annotationProcessorPriority;
         this.order = order;
         this.pom = pom;
+        this.exclusions = exclusions;
+        this.substitutions = substitutions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Dependency that = (Dependency) o;
+
+        if (requiresLookup != that.requiresLookup) {
+            return false;
+        }
+        if (order != that.order) {
+            return false;
+        }
+        if (annotationProcessorPriority != that.annotationProcessorPriority) {
+            return false;
+        }
+        if (pom != that.pom) {
+            return false;
+        }
+        if (scope != null ? !scope.equals(that.scope) : that.scope != null) {
+            return false;
+        }
+        if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) {
+            return false;
+        }
+        if (!artifactId.equals(that.artifactId)) {
+            return false;
+        }
+        if (version != null ? !version.equals(that.version) : that.version != null) {
+            return false;
+        }
+        if (versionProperty != null ? !versionProperty.equals(that.versionProperty) : that.versionProperty != null) {
+            return false;
+        }
+        if (exclusions != null ? !exclusions.equals(that.exclusions) : that.exclusions != null) {
+            return false;
+        }
+        return substitutions != null ? substitutions.equals(that.substitutions) : that.substitutions == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = scope != null ? scope.hashCode() : 0;
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
+        result = 31 * result + artifactId.hashCode();
+        result = 31 * result + (version != null ? version.hashCode() : 0);
+        result = 31 * result + (versionProperty != null ? versionProperty.hashCode() : 0);
+        result = 31 * result + (requiresLookup ? 1 : 0);
+        result = 31 * result + order;
+        result = 31 * result + (annotationProcessorPriority ? 1 : 0);
+        result = 31 * result + (pom ? 1 : 0);
+        result = 31 * result + (exclusions != null ? exclusions.hashCode() : 0);
+        result = 31 * result + (substitutions != null ? substitutions.hashCode() : 0);
+        return result;
+    }
+
+    @Nullable
+    public List<Dependency> getExclusions() {
+        return exclusions;
+    }
+
+    @Nullable
+    public List<Substitution> getSubstitutions() {
+        return substitutions;
     }
 
     public Scope getScope() {
@@ -100,31 +192,13 @@ public final class Dependency {
                 false,
                 annotationProcessorPriority,
                 order,
-                coordinate.isPom());
+                coordinate.isPom(),
+                Collections.emptyList(),
+                Collections.emptyList());
     }
 
     public boolean isAnnotationProcessorPriority() {
         return annotationProcessorPriority;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Dependency that = (Dependency) o;
-
-        return Objects.equals(getGroupId(), that.getGroupId()) &&
-                Objects.equals(getArtifactId(), that.getArtifactId()) &&
-                Objects.equals(getScope(), that.getScope());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getGroupId(), getArtifactId(), getScope());
     }
 
     public static class Builder {
@@ -139,6 +213,8 @@ public final class Dependency {
         private boolean template = false;
         private boolean annotationProcessorPriority = false;
         private boolean pom = false;
+        private List<Dependency> exclusions = null;
+        private List<Substitution> substitutions = null;
 
         public Builder scope(@NonNull Scope scope) {
             if (template) {
@@ -147,6 +223,10 @@ public final class Dependency {
                 this.scope = scope;
                 return this;
             }
+        }
+
+        public Builder developmentOnly() {
+            return scope(Scope.DEVELOPMENT_ONLY);
         }
 
         public Builder compile() {
@@ -239,6 +319,22 @@ public final class Dependency {
             }
         }
 
+        public Builder exclude(Dependency dependency) {
+            if (this.exclusions == null) {
+                this.exclusions = new ArrayList<>();
+            }
+            this.exclusions.add(dependency);
+            return this;
+        }
+
+        public Builder substitution(Substitution substitution) {
+            if (this.substitutions == null) {
+                this.substitutions = new ArrayList<>();
+            }
+            this.substitutions.add(substitution);
+            return this;
+        }
+
         public Builder order(int order) {
             if (template) {
                 return copy().order(order);
@@ -259,9 +355,7 @@ public final class Dependency {
         }
 
         public Dependency build() {
-            Objects.requireNonNull(scope, "The dependency scope must be set");
             Objects.requireNonNull(artifactId, "The artifact id must be set");
-
             return buildInternal();
         }
 
@@ -285,7 +379,9 @@ public final class Dependency {
                     requiresLookup,
                     annotationProcessorPriority,
                     order,
-                    pom);
+                    pom,
+                    exclusions,
+                    substitutions);
         }
 
         private Builder copy() {

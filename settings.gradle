@@ -4,13 +4,13 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id 'io.micronaut.application' version '3.3.1'
+        id 'io.micronaut.application' version '3.4.0'
         id 'com.microsoft.azure.azurefunctions' version '1.4.0'
     }
 }
 
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.1.1'
+    id 'io.micronaut.build.shared.settings' version '5.3.4'
 }
 
 rootProject.name = 'micronaut-starter'

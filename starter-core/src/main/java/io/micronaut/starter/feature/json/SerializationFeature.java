@@ -15,12 +15,20 @@
  */
 package io.micronaut.starter.feature.json;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.options.BuildTool;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface SerializationFeature extends JsonFeature {
+    String MICRONAUT_SERIALIZATION = "micronaut.serialization";
+    String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
+    String ARTIFACT_ID_MICRONAUT_JACKSON_CORE = "micronaut-jackson-core";
 
     @Override
     default boolean isPreview() {
@@ -34,7 +42,7 @@ public interface SerializationFeature extends JsonFeature {
 
     @Override
     default String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-serialization/1.0.x/guide/";
+        return "https://micronaut-projects.github.io/micronaut-serialization/latest/guide/";
     }
 
     @Override
@@ -44,20 +52,51 @@ public interface SerializationFeature extends JsonFeature {
 
     @Override
     default void apply(GeneratorContext generatorContext) {
-       generatorContext.addDependency(Dependency.builder()
-            .annotationProcessor()
-            .groupId("io.micronaut.serde")
-            .artifactId("micronaut-serde-processor")
-            .versionProperty("micronaut.serialization.version")
-            .build()
-        );   
-         generatorContext.addDependency(Dependency.builder()
-            .compile()
-            .groupId("io.micronaut.serde")
-            .artifactId("micronaut-serde-" + getModule())
-            .build()
-        );  
+        dependencies(generatorContext)
+                .forEach(generatorContext::addDependency);
+    }
+
+    @NonNull
+    default List<Dependency.Builder> dependencies(@NonNull GeneratorContext generatorContext) {
+        List<Dependency.Builder> dependencyList = new ArrayList<>();
+        dependencyList.add(serdeProcessor());
+        dependencyList.add(serdeModule(generatorContext));
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            dependencyList.add(micronautRuntimeDependency());
+        }
+        return dependencyList;
+    }
+
+    @NonNull
+    default Dependency.Builder micronautRuntimeDependency() {
+        return Dependency.builder()
+                .compile()
+                .groupId(GROUP_ID_MICRONAUT)
+                .artifactId("micronaut-runtime")
+                .exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
+    }
+
+    @NonNull
+    default Dependency.Builder serdeModule(@NonNull GeneratorContext generatorContext) {
+        Dependency.Builder builder = Dependency.builder()
+                .compile()
+                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                .artifactId("micronaut-serde-" + getModule());
+        substitutions(generatorContext).forEach(builder::substitution);
+        return builder;
+    }
+
+    @NonNull
+    default Dependency.Builder serdeProcessor() {
+        return Dependency.builder()
+                .annotationProcessor()
+                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                .artifactId("micronaut-serde-processor")
+                .versionProperty("micronaut.serialization.version");
     }
 
     String getModule();
+
+    @NonNull
+    List<Substitution> substitutions(@NonNull GeneratorContext generatorContext);
 }

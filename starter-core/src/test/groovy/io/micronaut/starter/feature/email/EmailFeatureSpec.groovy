@@ -1,6 +1,5 @@
 package io.micronaut.starter.feature.email
 
-import io.micronaut.core.annotation.NonNull
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.Feature
@@ -12,13 +11,6 @@ class EmailFeatureSpec extends ApplicationContextSpec {
 
     @Shared
     List<Feature> emailFeatures = beanContext.getBeansOfType(EmailFeature)
-
-    @NonNull
-    Optional<Feature> findFeatureByName(@NonNull String featureName) {
-        beanContext.streamOfType(Feature)
-                .filter(it -> it.getName() == featureName)
-                .findFirst()
-    }
 
     @Unroll("#feature category is MESSAGING")
     void "Email Features are in the MESSAGING category"(String feature) {
