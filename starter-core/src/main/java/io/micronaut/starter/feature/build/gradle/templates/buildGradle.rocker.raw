@@ -40,14 +40,7 @@ val kotlinVersion=project.properties.get("kotlinVersion")
 }
 
 repositories {
-    mavenCentral()
-    @if (VersionInfo.isMicronautSnapshot()) {
-    @if(gradleBuild.getDsl() == GradleDsl.KOTLIN) {
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    } else {
-    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
-    }
-    }
+@gradleBuild.renderRepositories()
 }
 
 @dependencies.template(applicationType, project, features, gradleBuild)

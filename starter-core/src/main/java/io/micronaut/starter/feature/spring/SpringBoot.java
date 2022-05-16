@@ -53,7 +53,7 @@ public class SpringBoot extends SpringFeature {
     public void apply(GeneratorContext generatorContext) {
         Dependency.Builder springBoot = Dependency.builder()
                 .groupId("io.micronaut.spring")
-                .artifactId("micronaut-spring-boot")
+                .artifactId("micronaut-spring-boot-annotation")
                 .versionProperty("micronaut.spring.version")
                 .template();
 

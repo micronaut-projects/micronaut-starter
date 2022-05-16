@@ -118,7 +118,7 @@ abstract class CommandSpec extends Specification {
                          BuildTool buildTool = BuildTool.DEFAULT_OPTION,
                          List<String> features = [],
                          ApplicationType applicationType = ApplicationType.DEFAULT,
-                         TestFramework testFramework = null,
+                         TestFramework testFramework = lang.getDefaults().test,
                          boolean addMicronautGradleEnterpriseFeature = true
     ) {
         if (addMicronautGradleEnterpriseFeature) {

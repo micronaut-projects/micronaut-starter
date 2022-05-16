@@ -37,7 +37,8 @@ public enum GradleConfiguration implements Ordered {
     TEST_IMPLEMENTATION("testImplementation", 9),
     TEST_COMPILE_ONLY("testCompileOnly", 10),
     TEST_RUNTIME_ONLY("testRuntimeOnly", 11),
-    OPENREWRITE("rewrite", 12);
+    DEVELOPMENT_ONLY("developmentOnly", 12),
+    OPENREWRITE("rewrite", 13);
 
     private final String configurationName;
     private final int order;
@@ -96,8 +97,10 @@ public enum GradleConfiguration implements Ordered {
                 if (scope.getPhases().contains(Phase.OPENREWRITE)) {
                     return Optional.of(GradleConfiguration.OPENREWRITE);
                 }
+                if (scope.getPhases().contains(Phase.DEVELOPMENT)) {
+                    return Optional.of(GradleConfiguration.DEVELOPMENT_ONLY);
+                }
                 break;
-
             case TEST:
                 if (scope.getPhases().contains(Phase.ANNOTATION_PROCESSING)) {
                     if (language == Language.JAVA) {

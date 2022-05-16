@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.build.maven
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenCombineAttribute
@@ -26,7 +27,7 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
-                new MavenBuild([],[], [], generatorContext.getBuildProperties().getProperties(), [], MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND, []),
+                new MavenBuild(generatorContext.project.name, [],[], [], generatorContext.getBuildProperties().getProperties(), [], [], MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND, [])
         ).render().toString()
 
         then: 'parent pom is used'
@@ -119,7 +120,8 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
         println features.features
 
         when:
-        String template = pom.template(applicationType, buildProject(), features, new MavenBuild()).render().toString()
+        Project project = buildProject()
+        String template = pom.template(applicationType, project, features, new MavenBuild(project.name)).render().toString()
 
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")

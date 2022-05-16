@@ -1,0 +1,31 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.agorapulse.gru.Gru
+import com.agorapulse.gru.ResponseDefinitionBuilder
+import com.agorapulse.gru.TestDefinitionBuilder
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Test
+
+@@MicronautTest
+internal class HelloWorldGruControllerTest {
+    @@Inject
+    lateinit var gru: Gru
+
+    @@Test
+    @@Throws(Throwable::class)
+    fun testGet() {
+        gru.verify { it
+            .get("/gru")
+            .expect { it.json("gruIndex.json") }
+        }
+    }
+}

@@ -17,20 +17,26 @@ package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.build.maven.templates.aot;
+import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MicronautAotBuildPlugin implements Feature {
+public class MicronautAot implements Feature {
 
     public static final String FEATURE_NAME_AOT = "micronaut-aot";
-    private static final String ID = "io.micronaut.aot";
-    private static final String ARTIFACT_ID = "micronaut-gradle-plugin";
-    private static final int PLUGIN_ORDER = 10;
+
+    private static final String GRADLE_PLUGIN_ID = "io.micronaut.aot";
+    private static final String GRADLE_PLUGIN_ARTIFACT_ID = "micronaut-gradle-plugin";
+    private static final int GRADLE_PLUGIN_ORDER = 10;
 
     @Override
     public String getCategory() {
@@ -69,13 +75,19 @@ public class MicronautAotBuildPlugin implements Feature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .id(ID)
-                    .lookupArtifactId(ARTIFACT_ID)
-                    .order(PLUGIN_ORDER)
+                    .id(GRADLE_PLUGIN_ID)
+                    .lookupArtifactId(GRADLE_PLUGIN_ARTIFACT_ID)
+                    .order(GRADLE_PLUGIN_ORDER)
                     .build());
         } else {
-            generatorContext.getBuildProperties()
-                .put("micronaut.aot.packageName", generatorContext.getProject().getPackageName());
+            BuildProperties buildProperties = generatorContext.getBuildProperties();
+            buildProperties.put("micronaut.aot.enabled", StringUtils.TRUE);
+            buildProperties.put("micronaut.aot.packageName", generatorContext.getProject().getPackageName() + ".aot.generated");
+
+            generatorContext.addTemplate("aotJitProperties", new RockerTemplate("aot-jar.properties", aot.template("jar")));
+            if (generatorContext.isFeaturePresent(GraalVM.class)) {
+                generatorContext.addTemplate("aotNativeProperties", new RockerTemplate("aot-native-image.properties", aot.template("jar")));
+            }
         }
     }
 }

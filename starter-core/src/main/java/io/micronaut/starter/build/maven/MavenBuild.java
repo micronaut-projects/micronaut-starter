@@ -18,6 +18,7 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
+
 import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import io.micronaut.starter.template.Writable;
+import io.micronaut.starter.template.WritableUtils;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MavenBuild {
@@ -50,8 +56,15 @@ public class MavenBuild {
 
     private final Collection<Profile> profiles;
 
-    public MavenBuild() {
-        this(Collections.emptyList(),
+    private final List<MavenRepository> repositories;
+
+    @NonNull
+    private final String artifactId;
+
+    public MavenBuild(String artifactId) {
+        this(artifactId,
+                Collections.emptyList(),
+                Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
                 Collections.emptyList(),
@@ -61,53 +74,63 @@ public class MavenBuild {
                 Collections.emptyList());
     }
 
-    public MavenBuild(@NonNull List<Coordinate> annotationProcessors,
+    public MavenBuild(@NonNull String artifactId,
+                      @NonNull List<MavenDependency> dependencies,
+                      @NonNull List<MavenPlugin> plugins,
+                      @NonNull List<MavenRepository> repositories) {
+        this(artifactId,
+                Collections.emptyList(),
+                Collections.emptyList(),
+                dependencies,
+                Collections.emptyList(),
+                plugins,
+                repositories,
+                MavenCombineAttribute.APPEND,
+                MavenCombineAttribute.APPEND,
+                Collections.emptyList());
+    }
+
+    public MavenBuild(@NonNull String artifactId,
+                      @NonNull List<Coordinate> annotationProcessors,
                       @NonNull List<Coordinate> testAnnotationProcessors,
                       @NonNull List<MavenDependency> dependencies,
                       @NonNull List<Property> properties,
                       @NonNull List<MavenPlugin> plugins,
+                      @NonNull List<MavenRepository> repositories,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
                       @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute,
                       @NonNull Collection<Profile> profiles) {
+        this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
         this.dependencies = dependencies;
         this.properties = properties;
         this.plugins = plugins;
+        this.repositories = repositories;
         this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
         this.profiles = profiles;
     }
 
     @NonNull
-    public String renderPlugins(int indentationSpaces) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        for (MavenPlugin plugin: plugins) {
-            try {
-                if (plugin.getExtension() != null) {
-                    plugin.getExtension().write(outputStream);
-                }
+    public String getArtifactId() {
+        return artifactId;
+    }
 
-            } catch (IOException e) {
-                if (LOG.isErrorEnabled()) {
-                    LOG.error("IO Exception rendering Gradle Plugin extension");
-                }
-            }
-        }
-        String str = new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
-        if (indentationSpaces == 0) {
-            return str;
-        }
-        String[] lines = str.split("\n");
-        List<String> indentedLines = new ArrayList<>();
-        StringBuilder newLine = new StringBuilder();
-        for (int i = 0; i < indentationSpaces; i++) {
-            newLine.append(" ");
-        }
-        for (String originalLine : lines) {
-            indentedLines.add(newLine + originalLine);
-        }
-        return String.join("\n", indentedLines) + "\n";
+    @NonNull
+    public String renderRepositories(int indentationSpaces) {
+        return WritableUtils.renderWritableList(this.repositories.stream()
+                .map(Writable.class::cast)
+                .collect(Collectors.toList()), indentationSpaces);
+    }
+
+    @NonNull
+    public String renderPlugins(int indentationSpaces) {
+        List<Writable> writableList = plugins.stream()
+                .map(MavenPlugin::getExtension)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        return WritableUtils.renderWritableList(writableList, indentationSpaces);
     }
 
     @NonNull

@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Scope {
-
     public static final Scope ANNOTATION_PROCESSOR = new Scope(Source.MAIN, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
     public static final Scope COMPILE = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
+    public static final Scope DEVELOPMENT_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.DEVELOPMENT));
     public static final Scope COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION));
     public static final Scope RUNTIME = new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME));
     public static final Scope TEST = new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));

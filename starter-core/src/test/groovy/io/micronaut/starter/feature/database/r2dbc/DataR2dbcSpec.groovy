@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.database.r2dbc
 
+import groovy.xml.XmlParser
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -89,54 +90,26 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["data-r2dbc"])
                 .render()
+        def project = new XmlParser().parseText(template)
 
         then:
-        //src/main
-        template.contains('''
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-          </annotationProcessorPaths>
-''')
+        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
+            def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            artifacts.contains("io.micronaut.data:micronaut-data-processor")
+        }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-r2dbc" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.data'
+        }
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-r2dbc-core" }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "r2dbc-h2" }) {
+            scope.text() == 'runtime'
+            groupId.text() == 'io.r2dbc'
+        }
+        !project.dependencies.dependency.find { it.artifactId.text() == "h2" }
 
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-r2dbc</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        !template.contains('''
-    <dependency>
-      <groupId>io.micronaut.r2dbc</groupId>
-      <artifactId>micronaut-r2dbc-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>io.r2dbc</groupId>
-      <artifactId>r2dbc-h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''')
-        !template.contains('''
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''')
         jdbcFeature.name == 'jdbc-hikari'
-        !template.contains('''
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jdbc-hikari</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
@@ -151,54 +124,30 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["data-r2dbc", "flyway"])
                 .render()
+        def project = new XmlParser().parseText(template)
 
         then:
         //src/main
-        template.contains('''
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-          </annotationProcessorPaths>
-''')
+        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
+            def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            artifacts.contains("io.micronaut.data:micronaut-data-processor")
+        }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-r2dbc" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.data'
+        }
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-r2dbc-core" }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "r2dbc-h2" }) {
+            scope.text() == 'runtime'
+            groupId.text() == 'io.r2dbc'
+        }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "h2" }) {
+            scope.text() == 'runtime'
+            groupId.text() == 'com.h2database'
+        }
 
-        template.contains('''
-    <dependency>
-      <groupId>io.micronaut.data</groupId>
-      <artifactId>micronaut-data-r2dbc</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        !template.contains('''
-    <dependency>
-      <groupId>io.micronaut.r2dbc</groupId>
-      <artifactId>micronaut-r2dbc-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>io.r2dbc</groupId>
-      <artifactId>r2dbc-h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''')
-        template.contains('''
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-''')
         jdbcFeature.name == 'jdbc-hikari'
-        !template.contains('''
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jdbc-hikari</artifactId>
-      <scope>compile</scope>
-    </dependency>
-''')
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")

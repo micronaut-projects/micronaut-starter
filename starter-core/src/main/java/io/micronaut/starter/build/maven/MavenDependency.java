@@ -19,9 +19,13 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.build.dependencies.Phase;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MavenDependency extends DependencyCoordinate {
 
@@ -78,5 +82,15 @@ public class MavenDependency extends DependencyCoordinate {
         int result = super.hashCode();
         result = 31 * result + mavenScope.hashCode();
         return result;
+    }
+
+    @NonNull
+    public static List<MavenDependency> listOf(@NonNull DependencyContext dependencyContext) {
+        return dependencyContext.getDependencies()
+                .stream()
+                .filter(dep -> dep.getScope() != null && !dep.getScope().getPhases().contains(Phase.ANNOTATION_PROCESSING))
+                .map(MavenDependency::new)
+                .sorted(MavenDependency.COMPARATOR)
+                .collect(Collectors.toList());
     }
 }
