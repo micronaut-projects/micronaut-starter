@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -22,6 +23,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.Cloud;
@@ -45,7 +47,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     private static final String BOOK_REQUEST_HANDLER = "BookRequestHandler";
@@ -109,6 +111,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                 DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
                 generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
             }
+        }
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, micronautRuntime());
         }
     }
 
@@ -193,4 +198,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                 return null;
         }
     }
+
+    @Override
+    @NonNull
+    public String micronautRuntime() {
+        return "lambda";
+    }
 }
+

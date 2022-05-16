@@ -76,6 +76,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         ApplicationType type = generatorContext.getApplicationType();
         generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));
@@ -105,7 +106,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             props.put("stagingDirectory", "${project.build.directory}/azure-functions/${functionAppName}");
         }
         addFunctionTemplate(generatorContext, project);
-        applyFunction(generatorContext, type);
     }
 
     @NonNull
@@ -180,4 +180,9 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         return Cloud.AZURE;
     }
 
+    @Override
+    @NonNull
+    public String micronautRuntime() {
+        return "azure_function";
+    }
 }
