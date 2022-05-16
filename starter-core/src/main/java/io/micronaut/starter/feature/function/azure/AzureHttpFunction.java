@@ -85,7 +85,6 @@ public class AzureHttpFunction extends AbstractAzureFunction implements Feature 
                     azureFunctionTriggerKotlin.template(project),
                     azureFunctionTriggerGroovy.template(project));
         }
-
     }
 
     @Override

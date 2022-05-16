@@ -42,6 +42,7 @@ public class OracleFunctionsJavaWorkflow extends AbstractOracleFunctionsWorkflow
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds a GitHub Actions Workflow to deploy to Oracle Functions from Oracle Cloud Infrastructure Registry";
     }

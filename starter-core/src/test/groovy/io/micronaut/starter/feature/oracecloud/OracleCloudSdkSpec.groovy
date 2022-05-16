@@ -2,12 +2,27 @@ package io.micronaut.starter.feature.oracecloud
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.function.CloudProvider
+import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk
+import io.micronaut.starter.feature.oraclecloud.OracleCloudVault
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class OracleCloudSdkSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Shared
+    @Subject
+    OracleCloudSdk oracleCloudSdk = beanContext.getBean(OracleCloudSdk)
+
+    @Unroll
+    void "oracle-cloud-vault belongs to cloud ORACLE"() {
+        expect:
+        oracleCloudSdk.cloudProvider.isPresent()
+        CloudProvider.ORACLE == oracleCloudSdk.cloudProvider.get()
+    }
 
     @Unroll
     void 'test Oracle Cloud SDK feature for language=#language'() {

@@ -147,6 +147,7 @@ public interface Feature extends Named, Ordered, Described {
     /**
      * @return The {@link CloudProvider} to which the feature belongs to (if any).
      */
+    @NonNull
     default Optional<CloudProvider> getCloudProvider() {
         return Optional.empty();
     }

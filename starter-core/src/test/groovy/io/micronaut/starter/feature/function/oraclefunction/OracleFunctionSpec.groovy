@@ -2,11 +2,26 @@ package io.micronaut.starter.feature.function.oraclefunction
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.CloudProvider
+import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
-class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
+class OracleFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Shared
+    @Subject
+    OracleFunction oracleFunction = beanContext.getBean(OracleFunction)
+
+    @Unroll
+    void "OracleFunction belongs to cloud ORACLE"() {
+        expect:
+        oracleFunction.cloudProvider.isPresent()
+        CloudProvider.ORACLE == oracleFunction.cloudProvider.get()
+    }
 
     void 'test readme.md with feature oracle-function contains links to docs'() {
         when:

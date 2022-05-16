@@ -1,9 +1,11 @@
 package io.micronaut.starter.feature.function.awslambda
 
+import io.micronaut.core.annotation.NonNull
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.build.gradle.Gradle
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Shared
@@ -15,6 +17,13 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Shared
     @Subject
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
+
+    @Unroll
+    void "aws-lambda belongs to cloud AWS"() {
+        expect:
+        awsLambda.cloudProvider.isPresent()
+        CloudProvider.AWS == awsLambda.cloudProvider.get()
+    }
 
     void 'test readme.md with feature aws-lambda contains links to micronaut docs'() {
         when:

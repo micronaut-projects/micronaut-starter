@@ -2,12 +2,27 @@ package io.micronaut.starter.feature.oracecloud
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.function.CloudProvider
+import io.micronaut.starter.feature.oraclecloud.OracleCloudVault
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class OracleCloudVaultSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Shared
+    @Subject
+    OracleCloudVault oracleCloudVault = beanContext.getBean(OracleCloudVault)
+
+    @Unroll
+    void "oracle-cloud-vault belongs to cloud ORACLE"() {
+        expect:
+        oracleCloudVault.cloudProvider.isPresent()
+        CloudProvider.ORACLE == oracleCloudVault.cloudProvider.get()
+    }
+
     void 'test readme.md with feature oracle-cloud-vault contains links to micronaut docs'() {
         when:
         def output = generate(['oracle-cloud-vault'])

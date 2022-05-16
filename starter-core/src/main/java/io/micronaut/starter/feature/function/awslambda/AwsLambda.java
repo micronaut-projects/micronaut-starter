@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -22,9 +23,9 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
-import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.DocumentationLink;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
@@ -39,14 +40,13 @@ import io.micronaut.starter.template.RockerWritable;
 
 import jakarta.inject.Singleton;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, HandlerClassFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, HandlerClassFeature, AwsFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     private static final String BOOK_REQUEST_HANDLER = "BookRequestHandler";
@@ -78,6 +78,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, HandlerClassF
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_AWS_LAMBDA;
     }
@@ -88,6 +89,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, HandlerClassF
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to AWS Lambda";
     }
@@ -171,11 +173,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, HandlerClassF
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
-    }
-
-    @Override
-    public Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.AWS);
     }
 
     @Override

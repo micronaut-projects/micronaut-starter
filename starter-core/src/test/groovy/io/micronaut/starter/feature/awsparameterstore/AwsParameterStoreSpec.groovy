@@ -2,12 +2,27 @@ package io.micronaut.starter.feature.awsparameterstore
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class AwsParameterStoreSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Shared
+    @Subject
+    AwsParameterStore awsParameterStore = beanContext.getBean(AwsParameterStore)
+
+    @Unroll
+    void "aws-lambda-custom-runtime belongs to cloud AWS"() {
+        expect:
+        awsParameterStore.cloudProvider.isPresent()
+        CloudProvider.AWS == awsParameterStore.cloudProvider.get()
+    }
+
     void 'test readme.md with feature aws-parameter-store contains links to micronaut docs'() {
         when:
         def output = generate(['aws-parameter-store'])

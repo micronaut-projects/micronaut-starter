@@ -25,7 +25,6 @@ import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
@@ -47,7 +46,7 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractAzureFunction extends AbstractFunctionFeature {
+public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureFeature {
 
     public static final String NAME = "azure-function";
 
@@ -173,10 +172,4 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature {
             throw new IllegalStateException("Unsupported build tool");
         }
     }
-
-    @Override
-    public Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.AZURE);
-    }
-
 }

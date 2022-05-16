@@ -2,12 +2,27 @@ package io.micronaut.starter.feature.awssecretsmanager
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.feature.awsparameterstore.AwsParameterStore
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class AwsSecretsManagerSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Shared
+    @Subject
+    AwsSecretsManager awsSecretsManager = beanContext.getBean(AwsSecretsManager)
+
+    @Unroll
+    void "aws-secrets-manager belongs to cloud AWS"() {
+        expect:
+        awsSecretsManager.cloudProvider.isPresent()
+        CloudProvider.AWS == awsSecretsManager.cloudProvider.get()
+    }
+
     void 'test readme.md with feature aws-secrets-manager contains links to micronaut docs'() {
         when:
         def output = generate(['aws-secrets-manager'])

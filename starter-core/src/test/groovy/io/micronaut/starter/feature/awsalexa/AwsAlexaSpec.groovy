@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.awsalexa
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -52,6 +53,13 @@ class AwsAlexaSpec extends ApplicationContextSpec implements CommandOutputFixtur
                 ApplicationType.DEFAULT,
                 ApplicationType.FUNCTION]
         description = applicationType.name
+    }
+
+    @Unroll
+    void "aws-alexa belongs to cloud AWS"() {
+        expect:
+        alexaFunction.cloudProvider.isPresent()
+        CloudProvider.AWS == alexaFunction.cloudProvider.get()
     }
 
     @Unroll

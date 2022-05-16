@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.github.workflows.gcloud;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import io.micronaut.starter.feature.server.Netty;
 
 import jakarta.inject.Singleton;
@@ -28,7 +29,7 @@ import jakarta.inject.Singleton;
  * @since 2.3
  */
 @Singleton
-public class GoogleCloudRunJavaWorkflow extends AbstractCloudRunWorkflow {
+public class GoogleCloudRunJavaWorkflow extends AbstractCloudRunWorkflow implements GcpFeature {
 
     public static final String NAME = "github-workflow-google-cloud-run";
 

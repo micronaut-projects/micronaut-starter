@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.oraclecloud;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.CloudProvider;
-
 import java.util.Optional;
 
 /**
- * Marker interface for AWS related features.
+ * Marker interface for Oracle Cloud features
  */
-public interface AwsFeature extends Feature {
-    String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
-    String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
+public interface OracleCloudFeature extends Feature {
+    String GROUP_ID_MICRONAUT_ORACLE_CLOUD = "io.micronaut.oraclecloud";
 
     @Override
     @NonNull
     default Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.AWS);
+        return Optional.of(CloudProvider.ORACLE);
     }
 }

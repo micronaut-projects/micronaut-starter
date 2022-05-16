@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.awslambdacustomruntime
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Issue
@@ -15,6 +16,13 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     @Shared
     @Subject
     AwsLambdaCustomRuntime awsLambdaCustomRuntime = beanContext.getBean(AwsLambdaCustomRuntime)
+
+    @Unroll
+    void "aws-lambda-custom-runtime belongs to cloud AWS"() {
+        expect:
+        awsLambdaCustomRuntime.cloudProvider.isPresent()
+        CloudProvider.AWS == awsLambdaCustomRuntime.cloudProvider.get()
+    }
 
     void 'test readme.md with feature aws-lambda-custom-runtime contains links to micronaut docs'() {
         when:

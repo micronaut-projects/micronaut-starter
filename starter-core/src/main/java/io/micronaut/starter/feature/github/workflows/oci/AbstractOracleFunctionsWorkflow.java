@@ -18,19 +18,18 @@ package io.micronaut.starter.feature.github.workflows.oci;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.feature.function.oraclefunction.OracleRawFunction;
 import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflowReadme;
+import io.micronaut.starter.feature.oraclecloud.OracleCloudFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Deploy dockerized app to Oracle Functions
@@ -39,7 +38,8 @@ import java.util.Optional;
  * @since 2.3
  */
 
-public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegistryWorkflow {
+public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegistryWorkflow
+        implements OracleCloudFeature {
 
     // Secrets
     public static final String OCI_AUTH_TOKEN = "OCI_AUTH_TOKEN";
@@ -94,11 +94,6 @@ public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegi
         if (!featureContext.isPresent(OracleRawFunction.class)) {
             featureContext.addFeature(oracleRawFunction);
         }
-    }
-
-    @Override
-    public Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.ORACLE);
     }
 
     @Override

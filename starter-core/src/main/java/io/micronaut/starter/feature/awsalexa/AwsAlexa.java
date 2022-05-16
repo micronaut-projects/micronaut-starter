@@ -15,12 +15,13 @@
  */
 package io.micronaut.starter.feature.awsalexa;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovy;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovyJunit;
 import io.micronaut.starter.feature.awsalexa.templates.cancelIntentHandlerGroovySpock;
@@ -69,17 +70,15 @@ import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerJavaJuni
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKoTest;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlin;
 import io.micronaut.starter.feature.awsalexa.templates.stopIntentHandlerKotlinJunit;
-import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import jakarta.inject.Singleton;
 
-import java.util.Optional;
-
 @Singleton
-public class AwsAlexa implements Feature {
+public class AwsAlexa implements AwsFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "aws-alexa";
     }
@@ -90,6 +89,7 @@ public class AwsAlexa implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Build Alexa Skills with Micronaut";
     }
@@ -250,11 +250,6 @@ public class AwsAlexa implements Feature {
     @Override
     public String getCategory() {
         return Category.IOT;
-    }
-
-    @Override
-    public Optional<CloudProvider> getCloudProvider() {
-        return Optional.of(CloudProvider.AWS);
     }
 
     @Override
