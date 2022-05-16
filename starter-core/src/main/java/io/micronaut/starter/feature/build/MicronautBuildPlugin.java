@@ -17,11 +17,13 @@ package io.micronaut.starter.feature.build;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
@@ -49,35 +51,12 @@ public class MicronautBuildPlugin implements Feature {
     }
 
     Optional<String> resolveRuntime(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().contains("google-cloud-function-http")) {
-            return Optional.of("google_function");
-        }
-        if (generatorContext.getFeatures().contains("oracle-function-http")) {
-            return Optional.of("oracle_function");
-        }
-        if (generatorContext.getFeatures().contains("azure-function-http")) {
-            return Optional.of("azure_function");
-        }
-        if ((generatorContext.getApplicationType() == ApplicationType.DEFAULT || generatorContext.getApplicationType() == ApplicationType.FUNCTION) && generatorContext.getFeatures().contains("aws-lambda")) {
-            if (generatorContext.getFeatures().contains("graalvm")) {
-                return Optional.of("lambda_provided");
-            } else {
-                return Optional.of("lambda_java");
-            }
-        }
-        if (generatorContext.getFeatures().contains("tomcat-server")) {
-            return Optional.of("tomcat");
-        }
-        if (generatorContext.getFeatures().contains("jetty-server")) {
-            return Optional.of("jetty");
-        }
-        if (generatorContext.getFeatures().contains("netty-server")) {
-            return Optional.of("netty");
-        }
-        if (generatorContext.getFeatures().contains("undertow-server")) {
-            return Optional.of("undertow");
-        }
-        return Optional.empty();
+        return generatorContext.getBuildProperties()
+                .getProperties()
+                .stream()
+                .filter(property -> property.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME))
+                .map(Property::getValue)
+                .findFirst();
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext, String id) {
@@ -148,5 +127,10 @@ public class MicronautBuildPlugin implements Feature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
+    }
+
+    @Override
+    public int getOrder() {
+        return LOWEST_PRECEDENCE;
     }
 }

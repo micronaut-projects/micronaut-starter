@@ -44,9 +44,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     @Override
     public void apply(GeneratorContext generatorContext) {
         applyFunction(generatorContext, generatorContext.getApplicationType());
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, micronautRuntime());
-        }
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
     }
 
     protected RockerModel javaControllerTemplate(Project project) {

@@ -159,7 +159,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "oracle_function";
     }
 }

@@ -182,7 +182,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "azure_function";
     }
 }

@@ -57,7 +57,7 @@ public class Tomcat extends AbstractMicronautServerFeature {
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "tomcat";
     }
 }

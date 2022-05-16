@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function.gcp;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
@@ -44,7 +45,7 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "google_function";
     }
 }

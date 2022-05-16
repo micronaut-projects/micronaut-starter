@@ -66,7 +66,7 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "netty";
     }
 }

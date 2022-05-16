@@ -16,11 +16,12 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
 public interface MicronautRuntimeFeature {
 
     String PROPERTY_MICRONAUT_RUNTIME = "micronaut.runtime";
 
     @NonNull
-    String micronautRuntime();
+    String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext);
 }

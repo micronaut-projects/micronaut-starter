@@ -57,7 +57,7 @@ public class Jetty extends AbstractMicronautServerFeature {
 
     @Override
     @NonNull
-    public String micronautRuntime() {
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
         return "jetty";
     }
 }

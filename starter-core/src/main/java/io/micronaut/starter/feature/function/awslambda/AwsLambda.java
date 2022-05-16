@@ -41,6 +41,7 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
 
 import jakarta.inject.Singleton;
+
 import java.util.Set;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
@@ -112,9 +113,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                 generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
             }
         }
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, micronautRuntime());
-        }
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
     }
 
     boolean shouldGenerateSources(GeneratorContext generatorContext) {
@@ -201,8 +200,11 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
 
     @Override
     @NonNull
-    public String micronautRuntime() {
-        return "lambda";
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            return "lambda";
+        }
+        return generatorContext.getFeatures().contains("graalvm") ? "lambda_provided" : "lambda_java";
     }
 }
 

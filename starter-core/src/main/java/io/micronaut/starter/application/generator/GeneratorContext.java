@@ -18,6 +18,7 @@ package io.micronaut.starter.application.generator;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
@@ -268,7 +269,7 @@ public class GeneratorContext implements DependencyContext {
 
     public void applyFeatures() {
         List<Feature> features = new ArrayList<>(this.features.getFeatures());
-        features.sort(Comparator.comparingInt(Feature::getOrder));
+        features.sort(OrderUtil.COMPARATOR);
 
         for (Feature feature: features) {
             feature.apply(this);
