@@ -34,7 +34,7 @@ dockerBuildNative {
     ]
 }''')
         where:
-        language << [Language.JAVA] // Language.values().toList()
-        extension << [Language.JAVA.extension]//Language.extensions()
+        language << Language.values().toList()
+        extension << Language.extensions()
     }
 }
