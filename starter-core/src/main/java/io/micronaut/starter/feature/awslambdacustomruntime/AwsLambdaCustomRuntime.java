@@ -25,7 +25,6 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bootstrap;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
