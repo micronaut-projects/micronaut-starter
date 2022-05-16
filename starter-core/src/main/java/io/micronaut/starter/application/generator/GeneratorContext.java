@@ -55,7 +55,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * A context object used when generating projects.
@@ -270,8 +269,6 @@ public class GeneratorContext implements DependencyContext {
     public void applyFeatures() {
         List<Feature> features = new ArrayList<>(this.features.getFeatures());
         features.sort(Comparator.comparingInt(Feature::getOrder));
-
-        List<String> str = features.stream().map(it -> "name: " + it.getName() + " order: " + it.getOrder()).collect(Collectors.toList());
         for (Feature feature: features) {
             feature.apply(this);
         }
