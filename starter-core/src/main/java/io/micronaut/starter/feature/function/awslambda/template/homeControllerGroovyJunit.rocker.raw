@@ -19,7 +19,7 @@ import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals
 
 class HomeControllerTest {
 
@@ -46,10 +46,10 @@ class HomeControllerTest {
     @@Test
     void testHandler() throws JsonProcessingException {
         AwsProxyRequest request = new AwsProxyRequest()
-        request.setHttpMethod("GET")
-        request.setPath("/")
+        request.httpMethod = "GET"
+        request.path = "/"
         AwsProxyResponse response = handler.handleRequest(request, lambdaContext)
         assertEquals(200, response.getStatusCode().intValue())
-        assertEquals("{\"message\":\"Hello World\"}",  response.getBody())
+        assertEquals("{\"message\":\"Hello World\"}",  response.body)
     }
 }

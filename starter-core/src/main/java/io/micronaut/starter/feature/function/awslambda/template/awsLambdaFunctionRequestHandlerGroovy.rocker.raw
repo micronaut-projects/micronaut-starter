@@ -8,13 +8,12 @@ Project project
 package @project.getPackageName();
 }
 
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.micronaut.function.aws.MicronautRequestHandler;
-import jakarta.inject.Inject;
-import java.util.Collections;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.ObjectMapper
+import io.micronaut.function.aws.MicronautRequestHandler
+import jakarta.inject.Inject
 
 class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
@@ -26,10 +25,10 @@ class FunctionRequestHandler extends MicronautRequestHandler<APIGatewayProxyRequ
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
         try {
             String json = objectMapper.writeValueAsString([message: "Hello World"])
-            response.setStatusCode(200);
-            response.setBody(json);
+            response.setStatusCode(200)
+            response.setBody(json)
         } catch (JsonProcessingException e) {
-            response.setStatusCode(500);
+            response.setStatusCode(500)
         }
         response
     }
