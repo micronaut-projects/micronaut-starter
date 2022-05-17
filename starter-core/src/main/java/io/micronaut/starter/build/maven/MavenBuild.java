@@ -23,10 +23,6 @@ import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collection;
 
 import io.micronaut.starter.template.Writable;
