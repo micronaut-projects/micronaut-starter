@@ -32,3 +32,33 @@ rocker {
     javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
+
+tasks.register("coreTest", Test) {
+    filter {
+        includeTestsMatching "io.micronaut.starter.core.test.create.*"
+    }
+}
+
+tasks.register("awsTest", Test) {
+    filter {
+        includeTestsMatching "io.micronaut.starter.core.test.aws.*"
+    }
+}
+
+tasks.register("featureTest", Test) {
+    filter {
+        includeTestsMatching "io.micronaut.starter.core.test.feature.*"
+    }
+}
+
+tasks.register("cloudTest", Test) {
+    filter {
+        includeTestsMatching "io.micronaut.starter.core.test.cloud.*"
+    }
+}
+
+tasks.register("buildToolTest", Test) {
+    filter {
+        includeTestsMatching "io.micronaut.starter.core.test.buildTool.*"
+    }
+}
