@@ -6,6 +6,10 @@ import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Header
 import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime
+import io.micronaut.starter.feature.function.CloudProvider
+import io.micronaut.starter.feature.function.azure.AzureHttpFunction
+import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
@@ -19,7 +23,7 @@ class FeatureControllerSpec extends Specification {
 
     void "test list features"() {
         when:
-        List<FeatureDTO> features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features
+        List<FeatureDTO> features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL, null).features
 
         then:
         !features.isEmpty()
@@ -27,7 +31,7 @@ class FeatureControllerSpec extends Specification {
 
     void "test community features"() {
         when:
-        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
+        List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL, null).features.findAll { it.community }
 
         then:
         communityFeatures.name == [
@@ -51,16 +55,42 @@ class FeatureControllerSpec extends Specification {
 
     void "test list features for application type"() {
         when:
-        def features = client.features(ApplicationType.CLI, RequestInfo.LOCAL).features
+        def features = client.features(ApplicationType.CLI, RequestInfo.LOCAL, null).features
 
         then:
         !features.any { it.name == 'openapi' }
 
         when:
-        features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features
+        features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL, null).features
 
         then:
         features.any { it.name == 'openapi' }
+    }
+
+    void "test list features includes #expected for cloud provider #provider.name"() {
+        given:
+        def allFeatures = [
+                GoogleCloudRawFunction.NAME,
+                AwsLambdaCustomRuntime.NAME,
+                AzureHttpFunction.NAME
+        ]
+
+        when:
+        def features = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL, provider).features
+
+        then: "The feature for the provider is available"
+        features.any { it.name == expected }
+
+        and: "The features for the other providers are not available"
+        (allFeatures - expected).each { feature ->
+            assert !features.name.contains(feature)
+        }
+
+        where:
+        provider            | expected
+        CloudProvider.AWS   | AwsLambdaCustomRuntime.NAME
+        CloudProvider.GCP   | GoogleCloudRawFunction.NAME
+        CloudProvider.AZURE | AzureHttpFunction.NAME
     }
 
     @Client('/')

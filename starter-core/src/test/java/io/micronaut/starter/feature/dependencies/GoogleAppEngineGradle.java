@@ -7,15 +7,15 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @Requires(property = "spec.name", value = "SettingsExtensionsSpec")
 @Singleton
-public class GoogleAppEngineGradle implements Feature {
+public class GoogleAppEngineGradle implements GcpFeature {
     @Override
     public String getCategory() {
         return Category.CLOUD;

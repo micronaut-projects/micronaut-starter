@@ -55,6 +55,8 @@ import java.util.function.BiFunction;
     MicronautStarter.class,
     LanguageCandidates.class,
     LanguageConverter.class,
+    CloudProviderCandidates.class,
+    CloudProviderConverter.class,
     BuildToolCandidates.class,
     BuildToolConverter.class,
     CommonOptionsMixin.class,

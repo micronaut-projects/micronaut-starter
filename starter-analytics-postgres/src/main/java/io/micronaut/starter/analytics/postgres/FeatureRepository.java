@@ -25,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
 public abstract class FeatureRepository implements CrudRepository<Feature, Long> {
@@ -80,6 +81,19 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     }
 
     @ReadOnly
+    List<TotalDTO> topCloudProviders() {
+        return this.jdbcOperations
+                .prepareStatement(query("cloud_provider", "application"),
+                        statement -> {
+                            try (ResultSet resultSet = statement.executeQuery()) {
+                                return resultSetToTotals(resultSet);
+                            }
+                        }).stream()
+                .filter(totalDTO -> totalDTO.getName() != null)
+                .collect(Collectors.toList());
+    }
+
+    @ReadOnly
     List<TotalDTO> topJdkVersion() {
         return this.jdbcOperations
                 .prepareStatement(query("jdk_version", "application"),
@@ -104,6 +118,6 @@ public abstract class FeatureRepository implements CrudRepository<Feature, Long>
     }
 
     private String query(String name, String table) {
-        return "SELECT " + name + " AS name, count(*) AS total FROM " + table + " GROUP BY name ORDER BY total";
+        return "SELECT " + name + " AS name, count(*) AS total FROM " + table + " GROUP BY name ORDER BY total, name";
     }
 }

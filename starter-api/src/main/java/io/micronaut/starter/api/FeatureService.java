@@ -17,11 +17,13 @@ package io.micronaut.starter.api;
 
 import io.micronaut.context.BeanLocator;
 import io.micronaut.context.MessageSource;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.AvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 
+import io.micronaut.starter.feature.function.CloudProvider;
 import jakarta.inject.Singleton;
 import java.util.Comparator;
 import java.util.List;
@@ -53,20 +55,22 @@ public class FeatureService implements FeatureOperations {
     }
 
     @Override
-    public List<FeatureDTO> getAllFeatures(Locale locale) {
+    public List<FeatureDTO> getAllFeatures(Locale locale, @Nullable CloudProvider cloudProvider) {
         MessageSource.MessageContext context = MessageSource.MessageContext.of(locale);
         return features.stream()
                 .filter(Feature::isVisible)
+                .filter(feature -> cloudProvider == null || feature.getCloudProvider().map(p -> p == cloudProvider).orElse(true))
                 .map(feature -> new FeatureDTO(feature, messageSource, context))
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type) {
+    public List<FeatureDTO> getFeatures(Locale locale, ApplicationType type, @Nullable CloudProvider cloudProvider) {
         MessageSource.MessageContext context = MessageSource.MessageContext.of(locale);
         return beanLocator.getBean(AvailableFeatures.class, Qualifiers.byName(type.getName()))
                 .getFeatures()
+                .filter(feature -> cloudProvider == null || feature.getCloudProvider().map(p -> p == cloudProvider).orElse(true))
                 .map(feature -> new FeatureDTO(feature, messageSource, context))
                 .sorted(Comparator.comparing(FeatureDTO::getName))
                 .collect(Collectors.toList());

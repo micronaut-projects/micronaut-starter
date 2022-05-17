@@ -68,6 +68,11 @@ public class AnalyticsController {
         return featureRepository.topTestFrameworks();
     }
 
+    @Get("/top/cloudProviders")
+    List<TotalDTO> topCloudProviders() {
+        return featureRepository.topCloudProviders();
+    }
+
     /**
      * Report analytics.
      * @param generated The generated data
@@ -83,6 +88,7 @@ public class AnalyticsController {
                 generated.getBuildTool(),
                 generated.getTestFramework(),
                 generated.getJdkVersion(),
+                generated.getCloudProvider(),
                 generated.getMicronautVersion()
         );
         Application saved = applicationRepository.save(application);

@@ -87,7 +87,8 @@ public class DefaultProjectGenerator implements ProjectGenerator {
                                 generatorContext.getBuildTool(),
                                 generatorContext.getProject(),
                                 features,
-                                applicationType)));
+                                applicationType,
+                                generatorContext.getCloudProvider())));
 
         generatorContext.applyFeatures();
 

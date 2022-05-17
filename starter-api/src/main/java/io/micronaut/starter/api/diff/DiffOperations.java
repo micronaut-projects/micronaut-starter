@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -57,6 +58,7 @@ public interface DiffOperations {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
 
     /**
@@ -78,5 +80,6 @@ public interface DiffOperations {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException;
 }

@@ -4,6 +4,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Feature
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -81,5 +82,9 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         for (ApplicationType applicationType : ApplicationType.values()) {
             assert f.supports(applicationType)
         }
+
+        and: "aws-alexa belongs to cloud AWS"
+        f.cloudProvider.isPresent()
+        CloudProvider.AWS == f.cloudProvider.get()
     }
 }

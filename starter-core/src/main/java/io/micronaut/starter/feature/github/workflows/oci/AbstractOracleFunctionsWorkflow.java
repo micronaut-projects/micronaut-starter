@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.github.workflows.Secret;
 import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflow;
 import io.micronaut.starter.feature.github.workflows.oci.templates.ociFunctionsWorkflowReadme;
+import io.micronaut.starter.feature.oraclecloud.OracleCloudFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
@@ -37,7 +38,8 @@ import java.util.List;
  * @since 2.3
  */
 
-public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegistryWorkflow {
+public abstract class AbstractOracleFunctionsWorkflow extends AbstractDockerRegistryWorkflow
+        implements OracleCloudFeature {
 
     // Secrets
     public static final String OCI_AUTH_TOKEN = "OCI_AUTH_TOKEN";

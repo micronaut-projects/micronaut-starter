@@ -100,6 +100,8 @@ public abstract class WriteMicronautVersionInfoTask extends DefaultTask {
                 .withArtifacts(MavenModule.class, MavenPomArtifact.class)
                 .execute();
         Map<String, String> props = new TreeMap<>();
+        props.put("micronaut.version", getVersion().get());
+
         for (ComponentArtifactsResult component : result.getResolvedComponents()) {
             component.getArtifacts(MavenPomArtifact.class).forEach(artifact -> {
                 if (artifact instanceof ResolvedArtifactResult) {

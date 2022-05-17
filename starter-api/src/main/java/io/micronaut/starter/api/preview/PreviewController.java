@@ -29,6 +29,7 @@ import io.micronaut.starter.api.create.AbstractCreateController;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.MapOutputHandler;
 import io.micronaut.starter.options.BuildTool;
@@ -86,6 +87,7 @@ public class PreviewController extends AbstractCreateController implements Previ
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Parameter(hidden = true) RequestInfo requestInfo) throws IOException {
         try {
             Project project = NameUtils.parse(name);
@@ -96,7 +98,9 @@ public class PreviewController extends AbstractCreateController implements Previ
                             lang,
                             test != null ? test.toTestFramework() : null,
                             build == null ? BuildTool.DEFAULT_OPTION : build,
-                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
+                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion,
+                            cloudProvider
+                    ),
                     getOperatingSystem(requestInfo.getUserAgent()),
                     features == null ? Collections.emptyList() : features,
                     outputHandler,

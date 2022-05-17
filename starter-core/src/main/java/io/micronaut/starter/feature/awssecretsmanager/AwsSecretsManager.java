@@ -15,8 +15,10 @@
  */
 package io.micronaut.starter.feature.awssecretsmanager;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 import java.util.Map;
@@ -27,18 +29,20 @@ import java.util.Map;
  * @since 3.0.0
  */
 @Singleton
-public class AwsSecretsManager implements DistributedConfigFeature {
+public class AwsSecretsManager implements AwsFeature, DistributedConfigFeature {
     @Override
     public String getTitle() {
         return "AWS Secrets Manager";
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "aws-secrets-manager";
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for Distributed Configuration with AWS Secrets Manager";
     }

@@ -3,7 +3,9 @@
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.application.ApplicationType
+@import io.micronaut.starter.feature.function.CloudProvider
 @import java.util.List
+@import java.util.Locale
 
 
 @args (
@@ -12,7 +14,8 @@ TestFramework testFramework,
 BuildTool buildTool,
 Project project,
 List<String> features,
-ApplicationType applicationType
+ApplicationType applicationType,
+CloudProvider cloudProvider
 )
 
 applicationType: @applicationType.getName()
@@ -21,3 +24,4 @@ testFramework: @testFramework.getName()
 sourceLanguage: @language.getName()
 buildTool: @buildTool.getName()
 features: @features.toString()
+@if (cloudProvider != null) {cloudProvider: @cloudProvider.name().toLowerCase(Locale.ENGLISH)}

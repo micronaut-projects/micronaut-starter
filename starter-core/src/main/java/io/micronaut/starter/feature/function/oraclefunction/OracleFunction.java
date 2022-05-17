@@ -17,17 +17,17 @@ package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
+import io.micronaut.starter.feature.oraclecloud.OracleCloudFeature;
 import io.micronaut.starter.feature.server.ServerFeature;
 import io.micronaut.starter.feature.server.template.groovyJunit;
 import io.micronaut.starter.feature.server.template.javaJunit;
@@ -36,12 +36,13 @@ import io.micronaut.starter.feature.server.template.kotlinJunit;
 import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 @Primary
-public class OracleFunction extends AbstractFunctionFeature implements CloudFeature {
+public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {
+
+    public static final String NAME = "oracle-function-http";
 
     private final SimpleLogging simpleLogging;
 
@@ -74,8 +75,9 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
+    @NonNull
     public String getName() {
-        return "oracle-function-http";
+        return NAME;
     }
 
     @Override
@@ -84,6 +86,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Oracle Cloud Function";
     }
@@ -144,11 +147,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public RockerModel spockTemplate(Project project) {
         return spock.template(project);
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.ORACLE;
     }
 
     @Nullable

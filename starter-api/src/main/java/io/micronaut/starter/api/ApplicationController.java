@@ -24,7 +24,9 @@ import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Produces;
+import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.api.starterApi;
 import io.micronaut.starter.util.VersionInfo;
@@ -133,7 +135,7 @@ public class ApplicationController implements ApplicationTypeOperations {
     @Get("/application-types")
     public ApplicationTypeList list(RequestInfo info) {
         List<ApplicationTypeDTO> types = Arrays.stream(ApplicationType.values())
-                .map(type -> typeToDTO(type, info, false))
+                .map(type -> typeToDTO(type, info, false, null))
                 .collect(Collectors.toList());
         ApplicationTypeList applicationTypeList = new ApplicationTypeList(types);
         applicationTypeList.addLink(
@@ -151,8 +153,8 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types/{type}")
-    public ApplicationTypeDTO getType(ApplicationType type, RequestInfo info) {
-        return typeToDTO(type, info, true);
+    public ApplicationTypeDTO getType(ApplicationType type, RequestInfo info, @QueryValue @Nullable CloudProvider cloudProvider) {
+        return typeToDTO(type, info, true, cloudProvider);
     }
 
     /**
@@ -163,8 +165,8 @@ public class ApplicationController implements ApplicationTypeOperations {
      */
     @Override
     @Get("/application-types/{type}/features")
-    public FeatureList features(ApplicationType type, RequestInfo requestInfo) {
-        FeatureList featureList = new FeatureList(featureOperations.getFeatures(requestInfo.getLocale(), type));
+    public FeatureList features(ApplicationType type, RequestInfo requestInfo, @QueryValue @Nullable CloudProvider cloudProvider) {
+        FeatureList featureList = new FeatureList(featureOperations.getFeatures(requestInfo.getLocale(), type, cloudProvider));
         featureList.addLink(
                 Relationship.SELF,
                 requestInfo.self()
@@ -172,8 +174,8 @@ public class ApplicationController implements ApplicationTypeOperations {
         return featureList;
     }
 
-    private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures) {
-        List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(requestInfo.getLocale(), type) : Collections.emptyList();
+    private ApplicationTypeDTO typeToDTO(ApplicationType type, RequestInfo requestInfo, boolean includeFeatures, @QueryValue @Nullable CloudProvider cloudProvider) {
+        List<FeatureDTO> features = includeFeatures ? featureOperations.getFeatures(requestInfo.getLocale(), type, cloudProvider) : Collections.emptyList();
         features.forEach(featureDTO -> featureDTO.addLink(
                 Relationship.DIFF,
                 requestInfo.link("/diff/" + type.getName() + "/feature/" + featureDTO.getName())

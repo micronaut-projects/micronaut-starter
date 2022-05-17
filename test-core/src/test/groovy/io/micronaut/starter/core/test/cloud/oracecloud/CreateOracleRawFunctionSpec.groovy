@@ -10,7 +10,7 @@ import spock.lang.Retry
 import spock.lang.Unroll
 
 @Retry // can fail on CI due to port binding race condition, so retry
-class CreateOracleRawFunctionSpec extends CommandSpec{
+class CreateOracleRawFunctionSpec extends CommandSpec {
     @Override
     String getTempDirectoryPrefix() {
         "test-raw-oraclefunction"

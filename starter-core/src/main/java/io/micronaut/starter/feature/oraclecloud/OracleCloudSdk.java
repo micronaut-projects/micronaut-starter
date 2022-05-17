@@ -15,21 +15,20 @@
  */
 package io.micronaut.starter.feature.oraclecloud;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OracleCloudSdk implements Feature {
-
-    public static final String ORACLE_CLOUD_GROUP = "io.micronaut.oraclecloud";
+public class OracleCloudSdk implements OracleCloudFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "oracle-cloud-sdk";
     }
@@ -40,6 +39,7 @@ public class OracleCloudSdk implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Provides integration with the Oracle Cloud SDK";
     }
@@ -69,7 +69,7 @@ public class OracleCloudSdk implements Feature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId(ORACLE_CLOUD_GROUP)
+                .groupId(GROUP_ID_MICRONAUT_ORACLE_CLOUD)
                 .artifactId("micronaut-oraclecloud-sdk")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");

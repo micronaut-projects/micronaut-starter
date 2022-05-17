@@ -21,13 +21,12 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
 
@@ -40,7 +39,7 @@ import jakarta.inject.Singleton;
  * @since 2.0.0
  */
 @Singleton
-public class GoogleCloudFunction extends AbstractFunctionFeature implements CloudFeature {
+public class GoogleCloudFunction extends AbstractFunctionFeature implements GcpFeature {
 
     public static final String NAME = "google-cloud-function-http";
 
@@ -69,6 +68,7 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Google Cloud Function";
     }
@@ -124,11 +124,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
         } else {
             return "gradlew clean shadowJar";
         }
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
     }
 
     @Override

@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires
@@ -10,11 +11,18 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @Requires({ jvm.current.isJava11Compatible() })
-class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
+class GoogleCloudFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
     GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
+
+    @Unroll
+    void "GoogleCloudFunction belongs to cloud ORACLE"() {
+        expect:
+        googleCloudFunction.cloudProvider.isPresent()
+        CloudProvider.GCP == googleCloudFunction.cloudProvider.get()
+    }
 
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:

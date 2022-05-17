@@ -23,6 +23,9 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.order.Ordered;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.function.CloudProvider;
+
+import java.util.Optional;
 
 /**
  * A feature is a class that affects the outcome of a generated
@@ -139,6 +142,14 @@ public interface Feature extends Named, Ordered, Described {
      */
     default String getCategory() {
         return Category.OTHER;
+    }
+
+    /**
+     * @return The {@link CloudProvider} to which the feature belongs to (if any).
+     */
+    @NonNull
+    default Optional<CloudProvider> getCloudProvider() {
+        return Optional.empty();
     }
 
     /**

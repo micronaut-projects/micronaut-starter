@@ -15,7 +15,11 @@
  */
 package io.micronaut.starter.feature.aws;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudProvider;
+
+import java.util.Optional;
 
 /**
  * Marker interface for AWS related features.
@@ -23,4 +27,10 @@ import io.micronaut.starter.feature.Feature;
 public interface AwsFeature extends Feature {
     String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
+
+    @Override
+    @NonNull
+    default Optional<CloudProvider> getCloudProvider() {
+        return Optional.of(CloudProvider.AWS);
+    }
 }

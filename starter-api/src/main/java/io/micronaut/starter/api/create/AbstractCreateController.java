@@ -29,6 +29,7 @@ import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -73,6 +74,7 @@ public abstract class AbstractCreateController {
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent) {
         Project project;
         try {
@@ -90,7 +92,9 @@ public abstract class AbstractCreateController {
                     new Options(lang,
                             testFramework != null ? testFramework.toTestFramework() : language.getDefaults().getTest(),
                             buildTool == null ? language.getDefaults().getBuild() : buildTool,
-                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion),
+                            javaVersion == null ? JdkVersion.DEFAULT_OPTION : javaVersion,
+                            cloudProvider
+                    ),
                     getOperatingSystem(userAgent),
                     features != null ? features : Collections.emptyList(),
                     ConsoleOutput.NOOP

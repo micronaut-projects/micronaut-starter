@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -45,6 +46,7 @@ public class OracleRawFunction extends OracleFunction {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_ORACLE_RAW_FUNCTION;
     }

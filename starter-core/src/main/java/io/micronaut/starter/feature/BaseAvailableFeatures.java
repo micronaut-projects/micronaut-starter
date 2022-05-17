@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.CloudProvider;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -31,8 +33,13 @@ public class BaseAvailableFeatures implements AvailableFeatures {
     private final Map<String, Feature> features;
 
     public BaseAvailableFeatures(List<Feature> features, ApplicationType applicationType) {
+        this(features, applicationType, null);
+    }
+
+    public BaseAvailableFeatures(List<Feature> features, ApplicationType applicationType, @Nullable CloudProvider cloudProvider) {
         this.features = features.stream()
                 .filter(f -> f.supports(applicationType))
+                .filter(f -> cloudProvider == null || f.getCloudProvider().map(p -> p == cloudProvider).orElse(true))
                 .collect(Collectors.toMap(
                         Feature::getName,
                         Function.identity(),

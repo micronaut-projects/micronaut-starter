@@ -31,11 +31,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
-public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
+public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature implements OracleCloudFeature {
 
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature, TestContainers testContainers, OracleCloudSdk oracleCloudSdkFeature) {
+    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature,
+                                         TestContainers testContainers,
+                                         OracleCloudSdk oracleCloudSdkFeature) {
         super(jdbcFeature, testContainers);
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
@@ -137,7 +139,7 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .compile()
-                .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
+                .groupId(GROUP_ID_MICRONAUT_ORACLE_CLOUD)
                 .artifactId("micronaut-oraclecloud-atp")
                 .build());
     }

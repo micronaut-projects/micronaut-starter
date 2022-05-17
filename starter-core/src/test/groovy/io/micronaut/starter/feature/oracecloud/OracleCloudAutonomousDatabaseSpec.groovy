@@ -3,6 +3,9 @@ package io.micronaut.starter.feature.oracecloud
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.awssecretsmanager.AwsSecretsManager
+import io.micronaut.starter.feature.function.CloudProvider
+import io.micronaut.starter.feature.oraclecloud.OracleCloudAutonomousDatabase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -10,9 +13,21 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implements CommandOutputFixture {
+    @Shared
+    @Subject
+    OracleCloudAutonomousDatabase oracleCloudAutonomousDatabase = beanContext.getBean(OracleCloudAutonomousDatabase)
+
+    @Unroll
+    void "oracle-cloud-atp belongs to cloud ORACLE"() {
+        expect:
+        oracleCloudAutonomousDatabase.cloudProvider.isPresent()
+        CloudProvider.ORACLE == oracleCloudAutonomousDatabase.cloudProvider.get()
+    }
 
     @Unroll
     void 'test ATP feature for language=#language'() {
@@ -113,7 +128,6 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     dialect: ORACLE
 """)
     }
-
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/942")
     void 'test oracle-cloud-atp requires java 11 or higher'() {

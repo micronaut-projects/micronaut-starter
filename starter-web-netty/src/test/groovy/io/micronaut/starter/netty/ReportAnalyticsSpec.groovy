@@ -12,6 +12,7 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.client.ServiceHttpClientConfiguration
 import io.micronaut.runtime.server.EmbeddedServer
 import io.micronaut.starter.analytics.Generated
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Shared
@@ -54,12 +55,13 @@ class ReportAnalyticsSpec extends Specification {
 
     void "test report analytics"() {
         when:
-        client.createApp("test", Collections.emptyList(), BuildTool.MAVEN, null, null)
+        client.createApp("test", Collections.emptyList(), BuildTool.MAVEN, null, null, CloudProvider.AWS)
         PollingConditions conditions = new PollingConditions()
 
         then:
         conditions.eventually {
             controller.generated.buildTool == BuildTool.MAVEN
+            controller.generated.cloudProvider == CloudProvider.AWS
         }
     }
 

@@ -6,6 +6,7 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.starter.api.SelectOptionsDTO
 import io.micronaut.starter.api.TestFrameworkDTO
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.function.CloudProvider
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
@@ -84,6 +85,18 @@ class SelectOptionsTest extends Specification {
         BuildTool.values().each { t ->
             then: "We can find the ${t.name()} build tool"
             buildOpts.find {so -> t == so.value} != null
+        }
+
+        then: "We have all the cloud provider options"
+        def cloudProviders = selectOptions.cloudProvider.options
+        cloudProviders.size() == CloudProvider.values().size()
+
+        then: "There is no default cloud provider"
+        selectOptions.cloudProvider.defaultOption == null
+
+        CloudProvider.values().each { t ->
+            then: "We can find the ${t.name()} cloud provider"
+            cloudProviders.find {so -> t == so.value} != null
         }
     }
 

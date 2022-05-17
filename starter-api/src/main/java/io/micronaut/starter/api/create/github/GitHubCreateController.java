@@ -32,6 +32,7 @@ import io.micronaut.starter.api.RequestInfo;
 import io.micronaut.starter.api.TestFramework;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.client.github.v3.GitHubRepository;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Language;
@@ -79,7 +80,7 @@ public class GitHubCreateController implements GitHubCreateOperation {
      * @return A json containing the generated application details.
      */
     @Override
-    @Get(uri = "/github/{type}/{name}{?features,lang,build,test,javaVersion,code,state}", produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "/github/{type}/{name}{?features,lang,build,test,javaVersion,cloudProvider,code,state}", produces = MediaType.APPLICATION_JSON)
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -106,6 +107,7 @@ public class GitHubCreateController implements GitHubCreateOperation {
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Nullable String code,
             @Nullable String state,
             @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent,
@@ -116,7 +118,7 @@ public class GitHubCreateController implements GitHubCreateOperation {
                 return HttpResponse.temporaryRedirect(redirectService.constructOAuthRedirectUrl(requestInfo));
             } else {
                 GitHubRepository repository = gitHubCreateService.creatApp(
-                        type, name, features, build, test, lang, javaVersion, code, state, userAgent);
+                        type, name, features, build, test, lang, javaVersion, cloudProvider, code, state, userAgent);
 
                 if (launcherURI == null) {
                     return HttpResponse.ok(new GitHubCreateDTO(repository.getUrl(), repository.getCloneUrl(), repository.getHtmlUrl()));

@@ -34,6 +34,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.application.generator.ProjectGenerator;
+import io.micronaut.starter.feature.function.CloudProvider;
 import io.micronaut.starter.io.ZipOutputHandler;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.JdkVersion;
@@ -87,7 +88,7 @@ public class ZipCreateController extends AbstractCreateController implements Zip
      * @return A ZIP file containing the generated application.
      */
     @Override
-    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion}", produces = MEDIA_TYPE_APPLICATION_ZIP)
+    @Get(uri = "/create/{type}/{name}{?features,lang,build,test,javaVersion,cloudProvider}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",
             content = @Content(
@@ -102,22 +103,25 @@ public class ZipCreateController extends AbstractCreateController implements Zip
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Nullable @Header(HttpHeaders.USER_AGENT) String userAgent) {
-        return generateAppIntoZipFile(type, name, features, build, test, lang, javaVersion, userAgent);
+        return generateAppIntoZipFile(type, name, features, build, test, lang, javaVersion, cloudProvider, userAgent);
     }
 
     /**
      * Creates the default application type using the name of the given Zip.
      *
-     * @param type     The type
-     * @param name     The ZIP name
-     * @param features The features
-     * @param build    The build tool
-     * @param test     The test framework
-     * @param lang     The language
+     * @param type          The type
+     * @param name          The ZIP name
+     * @param features      The features
+     * @param build         The build tool
+     * @param test          The test framework
+     * @param lang          The language
+     * @param javaVersion   The java version
+     * @param cloudProvider The optional cloud provider
      * @return A Zip file containing the application
      */
-    @Get(uri = "/{name}.zip{?type,features,lang,build,test}", produces = MEDIA_TYPE_APPLICATION_ZIP)
+    @Get(uri = "/{name}.zip{?type,features,lang,build,test,cloudProvider}", produces = MEDIA_TYPE_APPLICATION_ZIP)
     @ApiResponse(
             description = "A ZIP file containing the generated application.",
             content = @Content(
@@ -132,8 +136,9 @@ public class ZipCreateController extends AbstractCreateController implements Zip
             @Nullable TestFramework test,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Nullable @Header("User-Agent") String userAgent) {
-        return generateAppIntoZipFile(type, name, features, build, test, lang, javaVersion, userAgent);
+        return generateAppIntoZipFile(type, name, features, build, test, lang, javaVersion, cloudProvider, userAgent);
     }
 
     public HttpResponse<Writable> generateAppIntoZipFile(
@@ -144,9 +149,10 @@ public class ZipCreateController extends AbstractCreateController implements Zip
             @Nullable TestFramework testFramework,
             @Nullable Language lang,
             @Nullable JdkVersion javaVersion,
+            @Nullable CloudProvider cloudProvider,
             @Nullable String userAgent) {
 
-        GeneratorContext generatorContext = createProjectGeneratorContext(type, name, features, buildTool, testFramework, lang, javaVersion, userAgent);
+        GeneratorContext generatorContext = createProjectGeneratorContext(type, name, features, buildTool, testFramework, lang, javaVersion, cloudProvider, userAgent);
         MutableHttpResponse<Writable> response = HttpResponse.created(new Writable() {
             @Override
             public void writeTo(OutputStream outputStream, @Nullable Charset charset) throws IOException {

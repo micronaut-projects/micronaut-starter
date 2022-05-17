@@ -17,13 +17,14 @@ package io.micronaut.starter.feature.awsparameterstore;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 
 import jakarta.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class AwsParameterStore implements DistributedConfigFeature {
+public class AwsParameterStore implements AwsFeature, DistributedConfigFeature {
     @Override
     public String getTitle() {
         return "AWS Parameter Store Distributed Configuration";
@@ -42,7 +43,7 @@ public class AwsParameterStore implements DistributedConfigFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.aws")
+                .groupId(GROUP_ID_MICRONAUT_AWS)
                 .artifactId("micronaut-aws-parameter-store")
                 .compile());
         Map<String, Object> config = generatorContext.getBootstrapConfiguration();

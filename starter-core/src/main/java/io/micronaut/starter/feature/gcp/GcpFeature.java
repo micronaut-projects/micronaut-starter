@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.function;
+package io.micronaut.starter.feature.gcp;
 
-public interface CloudFeature {
-    Cloud getCloud();
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudProvider;
+
+import java.util.Optional;
+
+public interface GcpFeature extends Feature {
+
+    @Override
+    @NonNull
+    default Optional<CloudProvider> getCloudProvider() {
+        return Optional.of(CloudProvider.GCP);
+    }
 }

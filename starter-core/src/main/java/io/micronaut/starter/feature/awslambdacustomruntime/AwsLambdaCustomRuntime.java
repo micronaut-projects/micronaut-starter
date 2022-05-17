@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,11 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.aws.AwsFeature;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -39,10 +38,10 @@ import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
+public class AwsLambdaCustomRuntime implements AwsFeature, FunctionFeature, ApplicationFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
-    public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
+    public static final String NAME = "aws-lambda-custom-runtime";
 
     private final Provider<AwsLambda> awsLambda;
     private final HttpClient httpClient;
@@ -65,7 +64,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
 
     @Override
     public String getName() {
-        return FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME;
+        return NAME;
     }
 
     @Override
@@ -129,11 +128,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
     }
 
     @Override

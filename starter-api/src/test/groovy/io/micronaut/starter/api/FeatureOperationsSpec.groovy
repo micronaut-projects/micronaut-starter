@@ -13,7 +13,7 @@ class FeatureOperationsSpec extends Specification {
 
     void "only visible features are exposed"() {
         when:
-        List<FeatureDTO> features = featureOperations.getAllFeatures(Locale.ENGLISH)
+        List<FeatureDTO> features = featureOperations.getAllFeatures(Locale.ENGLISH, null)
 
         then:
         features
