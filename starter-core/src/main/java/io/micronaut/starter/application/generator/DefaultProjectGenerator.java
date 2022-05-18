@@ -110,7 +110,6 @@ public class DefaultProjectGenerator implements ProjectGenerator {
             List<String> selectedFeatures,
             ConsoleOutput consoleOutput) {
         AvailableFeatures availableFeatures = beanContext.getBean(AvailableFeatures.class, Qualifiers.byName(applicationType.getName()));
-
         FeatureContext featureContext = contextFactory.createFeatureContext(availableFeatures, selectedFeatures, applicationType, options, operatingSystem);
         return contextFactory.createGeneratorContext(project, featureContext, consoleOutput);
     }

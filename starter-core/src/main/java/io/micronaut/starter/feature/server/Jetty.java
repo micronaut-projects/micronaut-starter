@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
@@ -52,5 +53,11 @@ public class Jetty extends AbstractMicronautServerFeature {
                     .artifactId("micronaut-http-server-jetty")
                     .compile());
         }
+    }
+
+    @Override
+    @NonNull
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        return "jetty";
     }
 }

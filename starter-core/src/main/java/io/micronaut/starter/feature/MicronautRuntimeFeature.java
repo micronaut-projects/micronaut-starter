@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,13 @@
  */
 package io.micronaut.starter.feature;
 
-public enum FeaturePhase {
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 
-    LOWEST(-200),
-    LOW(-100),
-    DEFAULT(0),
-    LANGUAGE(300),
-    TEST(400),
-    BUILD_PLUGIN(400),
-    BUILD(600),
-    HIGH(700),
-    HIGHEST(800);
+public interface MicronautRuntimeFeature {
 
-    private final int order;
+    String PROPERTY_MICRONAUT_RUNTIME = "micronaut.runtime";
 
-    FeaturePhase(int order) {
-        this.order = order;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
+    @NonNull
+    String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext);
 }
