@@ -46,7 +46,7 @@ public class SecurityJWT extends SecurityFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("micronaut.security.authentication", "bearer");
-        generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "\"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}\"");
+        generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}");
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-jwt")
