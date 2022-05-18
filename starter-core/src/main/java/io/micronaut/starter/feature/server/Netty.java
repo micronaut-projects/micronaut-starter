@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -61,5 +62,11 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
         }
         generatorContext.getConfiguration()
                 .addNested("netty.default.allocator.max-order", 3);
+    }
+
+    @Override
+    @NonNull
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        return "netty";
     }
 }

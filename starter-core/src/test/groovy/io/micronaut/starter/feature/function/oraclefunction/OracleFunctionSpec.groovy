@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.function.oraclefunction
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -40,20 +41,37 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['oracle-function']
         )
-        String build = output['build.gradle']
         def readme = output["README.md"]
         def funcYaml = output["func.yml"]
 
         then:
         readme
         funcYaml
-        build.contains('runtime("oracle_function")')
-        build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
+
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
                 .contains("class FooController {")
         output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
                 .contains("class FooControllerTest")
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    void "runtime for gradle and oracle-function"() {
+        when:
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['oracle-function'])
+                .testFramework(TestFramework.JUNIT)
+                .jdkVersion(JdkVersion.JDK_11)
+                .render()
+
+        then:
+        build.contains('runtime("oracle_function")')
+        build.contains('runtimeOnly("org.slf4j:slf4j-simple")')
 
         where:
         language << Language.values().toList()

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.server;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.options.BuildTool;
@@ -52,5 +53,11 @@ public class Undertow extends AbstractMicronautServerFeature {
                     .artifactId("micronaut-http-server-undertow")
                     .compile());
         }
+    }
+
+    @Override
+    @NonNull
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        return "undertow";
     }
 }

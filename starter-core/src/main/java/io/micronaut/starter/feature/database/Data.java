@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class Data implements Feature {
 
     @Override
+    @NonNull
     public String getName() {
         return "data";
     }

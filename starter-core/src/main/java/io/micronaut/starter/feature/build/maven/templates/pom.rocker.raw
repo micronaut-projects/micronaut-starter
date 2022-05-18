@@ -48,30 +48,6 @@ MavenBuild mavenBuild
     <@prop.getKey()>@prop.getValue()</@prop.getKey()>
 }
 }
-@if (features.contains("google-cloud-function-http")) {
-    <micronaut.runtime>google_function</micronaut.runtime>
-}
-@if (features.contains("oracle-function-http") || features.contains("oracle-function")) {
-    <micronaut.runtime>oracle_function</micronaut.runtime>
-}
-@if (features.contains("azure-function-http")) {
-    <micronaut.runtime>azure_function</micronaut.runtime>
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    <micronaut.runtime>lambda</micronaut.runtime>
-}
-@if (features.contains("tomcat-server")) {
-    <micronaut.runtime>tomcat</micronaut.runtime>
-}
-@if (features.contains("jetty-server")) {
-    <micronaut.runtime>jetty</micronaut.runtime>
-}
-@if (features.contains("netty-server")) {
-    <micronaut.runtime>netty</micronaut.runtime>
-}
-@if (features.contains("undertow-server")) {
-    <micronaut.runtime>undertow</micronaut.runtime>
-}
   </properties>
 
   <repositories>

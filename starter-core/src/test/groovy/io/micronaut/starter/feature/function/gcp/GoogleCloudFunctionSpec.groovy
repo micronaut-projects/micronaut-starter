@@ -1,6 +1,7 @@
 package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -76,14 +77,9 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['google-cloud-function']
         )
-        String build = output['build.gradle']
         def readme = output["README.md"]
 
         then:
-        build.contains('runtime("google_function")')
-        !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
-        !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
-        !build.contains('implementation("io.micronaut:micronaut-http-client")')
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
         output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
@@ -91,6 +87,27 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
                 .contains("FooFunctionTest")
         readme?.contains("Micronaut and Google Cloud Function")
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
+
+        where:
+        language << Language.values().toList()
+        extension << Language.extensions()
+        srcDir << Language.srcDirs()
+        testSrcDir << Language.testSrcDirs()
+    }
+
+    void "runtime for gradle and google-cloud-function"() {
+        when:
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['google-cloud-function'])
+                .testFramework(TestFramework.JUNIT)
+                .jdkVersion(JdkVersion.JDK_11)
+                .render()
+
+        then:
+        build.contains('runtime("google_function")')
+        !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
+        !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
+        !build.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
         language << Language.values().toList()

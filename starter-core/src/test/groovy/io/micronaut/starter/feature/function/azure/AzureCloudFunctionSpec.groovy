@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.function.azure
 
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -95,13 +96,13 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     @Unroll
     void 'test gradle azure function feature for language=#language'() {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
-                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function']
-        )
-        String build = output['build.gradle']
-
+        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .applicationType(ApplicationType.DEFAULT)
+                .testFramework(TestFramework.JUNIT)
+                .jdkVersion(JdkVersion.JDK_8)
+                .features(['azure-function'])
+                .render()
         then:
         build.contains('runtime("azure_function")')
         build.contains('azurefunctions {')

@@ -1,0 +1,28 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+class FunctionRequestHandlerTest : StringSpec({
+
+    "test handler" {
+        val handler = FunctionRequestHandler()
+        val request = APIGatewayProxyRequestEvent()
+        request.httpMethod = "GET"
+        request.path = "/"
+        val response = handler.execute(request)
+        response.statusCode.toInt().shouldBe(200)
+        response.body.shouldBe("{\"message\":\"Hello World\"}")
+        handler.close()
+    }
+})
+

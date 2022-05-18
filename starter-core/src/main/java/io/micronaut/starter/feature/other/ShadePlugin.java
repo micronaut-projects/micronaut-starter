@@ -22,6 +22,7 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.build.BuildPluginFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -33,7 +34,7 @@ import java.util.Set;
  * Adds a shaded JAR feature.
  */
 @Singleton
-public class ShadePlugin implements DefaultFeature {
+public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
 
     @Override
     public boolean shouldApply(
@@ -94,7 +95,6 @@ public class ShadePlugin implements DefaultFeature {
                 });
             }
             generatorContext.addBuildPlugin(builder.build());
-
         }
     }
 }
