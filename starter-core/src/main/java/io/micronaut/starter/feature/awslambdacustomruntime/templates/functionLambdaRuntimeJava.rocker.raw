@@ -15,11 +15,11 @@ import java.net.MalformedURLException;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import io.micronaut.core.annotation.Nullable;
 
-public class BookLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent, Book, BookSaved> {
+public class FunctionLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent, APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     public static void main(String[] args) {
         try {
-            new BookLambdaRuntime().run(args);
+            new FunctionLambdaRuntime().run(args);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -28,7 +28,7 @@ public class BookLambdaRuntime extends AbstractMicronautLambdaRuntime<APIGateway
 
     @@Override
     @@Nullable
-    protected RequestHandler<Book, BookSaved> createRequestHandler(String... args) {
-        return new BookRequestHandler();
+    protected RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> createRequestHandler(String... args) {
+        return new FunctionRequestHandler();
     }
 }

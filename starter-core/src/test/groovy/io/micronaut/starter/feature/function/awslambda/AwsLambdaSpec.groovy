@@ -40,7 +40,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         where:
         applicationType             | handler
         ApplicationType.DEFAULT     | 'io.micronaut.function.aws.proxy.MicronautLambdaHandler'
-        ApplicationType.FUNCTION    | 'example.micronaut.BookRequestHandler'
+        ApplicationType.FUNCTION    | 'example.micronaut.FunctionRequestHandler'
     }
 
     @Unroll
@@ -173,10 +173,8 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         )
 
         then:
-        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
+        output.containsKey("$srcDir/example/micronaut/FunctionRequestHandler.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/FunctionRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -201,10 +199,8 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !build.contains('</exec.mainClass>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
 
-        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookRequestHandler.$extension".toString())
-        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookRequestHandler", language))
+        output.containsKey("$srcDir/example/micronaut/FunctionRequestHandler.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/FunctionRequestHandler", language))
 
         where:
         language << Language.values().toList()
@@ -462,10 +458,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
         !build.contains('implementation "io.micronaut:micronaut-http-client"')
 
-        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
+        output.containsKey("$srcDir/example/micronaut/HomeController.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))
 
         where:
         language << Language.values().toList()
@@ -487,11 +481,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         then:
         build.contains('<artifactId>micronaut-function-aws-api-proxy</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
-
-        output.containsKey("$srcDir/example/micronaut/Book.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookSaved.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/BookController.$extension".toString())
-        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/BookController", language))
+        output.containsKey("$srcDir/example/micronaut/HomeController.$extension".toString())
+        output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/HomeController", language))
 
         where:
         language << Language.values().toList()
