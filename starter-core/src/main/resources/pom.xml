@@ -30,7 +30,7 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.2</version>
+            <version>5.3.8</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-noarg</artifactId>
-            <version>1.6.20</version>
+            <version>1.6.21</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
