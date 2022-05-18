@@ -55,7 +55,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.create.*"
+        run: ./gradlew test-core:coreTest --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -81,7 +81,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.aws.*"
+        run: ./gradlew test-core:awsTest --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -107,7 +107,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.feature.*"
+        run: ./gradlew test-core:featureTest --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -133,7 +133,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.cloud.*"
+        run: ./gradlew test-core:cloudTest --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -159,7 +159,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue --tests="io.micronaut.starter.core.test.buildTool.*"
+        run: ./gradlew test-core:buildToolTest --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
