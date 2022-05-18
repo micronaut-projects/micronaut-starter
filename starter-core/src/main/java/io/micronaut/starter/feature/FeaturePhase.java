@@ -22,9 +22,10 @@ public enum FeaturePhase {
     DEFAULT(0),
     LANGUAGE(300),
     TEST(400),
-    BUILD(500),
-    HIGH(600),
-    HIGHEST(700);
+    BUILD_PLUGIN(400),
+    BUILD(600),
+    HIGH(700),
+    HIGHEST(800);
 
     private final int order;
 

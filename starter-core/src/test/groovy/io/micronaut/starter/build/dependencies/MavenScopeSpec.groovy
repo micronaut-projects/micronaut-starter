@@ -16,10 +16,12 @@ class MavenScopeSpec extends Specification {
                                                                           List<Phase> phases,
                                                                           MavenScope scope,
                                                                           String description) {
+        expect:
         scope == MavenScope.of(new Scope(source, phases)).get()
 
         where:
         source      | phases                              || scope
+        Source.MAIN | [Phase.DEVELOPMENT]                 || MavenScope.PROVIDED
         Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION]  || MavenScope.COMPILE
         Source.MAIN | [Phase.RUNTIME]                     || MavenScope.RUNTIME
         Source.MAIN | [Phase.COMPILATION]                 || MavenScope.PROVIDED

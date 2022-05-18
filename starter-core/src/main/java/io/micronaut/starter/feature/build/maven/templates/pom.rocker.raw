@@ -22,7 +22,7 @@ MavenBuild mavenBuild
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>@project.getPackageName()</groupId>
-  <artifactId>@project.getName()</artifactId>
+  <artifactId>@mavenBuild.getArtifactId()</artifactId>
   <version>0.1</version>
   <packaging>${packaging}</packaging>
 
@@ -48,49 +48,10 @@ MavenBuild mavenBuild
     <@prop.getKey()>@prop.getValue()</@prop.getKey()>
 }
 }
-@if (features.contains("google-cloud-function-http")) {
-    <micronaut.runtime>google_function</micronaut.runtime>
-}
-@if (features.contains("oracle-function-http") || features.contains("oracle-function")) {
-    <micronaut.runtime>oracle_function</micronaut.runtime>
-}
-@if (features.contains("azure-function-http")) {
-    <micronaut.runtime>azure_function</micronaut.runtime>
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    <micronaut.runtime>lambda</micronaut.runtime>
-}
-@if (features.contains("tomcat-server")) {
-    <micronaut.runtime>tomcat</micronaut.runtime>
-}
-@if (features.contains("jetty-server")) {
-    <micronaut.runtime>jetty</micronaut.runtime>
-}
-@if (features.contains("netty-server")) {
-    <micronaut.runtime>netty</micronaut.runtime>
-}
-@if (features.contains("undertow-server")) {
-    <micronaut.runtime>undertow</micronaut.runtime>
-}
   </properties>
 
   <repositories>
-    <repository>
-      <id>central</id>
-      <url>https://repo.maven.apache.org/maven2</url>
-    </repository>
-    @if (VersionInfo.isMicronautSnapshot()) {
-    <repository>
-      <id>sonatype-snapshots</id>
-      <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    }
+@mavenBuild.renderRepositories(4)
   </repositories>
 
 @if (mavenBuild.hasPomDependency()) {
@@ -220,7 +181,7 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot")) {
           <configuration>
 @if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
@@ -242,6 +203,9 @@ MavenBuild mavenBuild
             <appArguments>
               <arg>${exec.mainClass}::handleRequest</arg>
             </appArguments>
+}
+@if (features.contains("micronaut-aot")) {
+            <configFile>aot-${packaging}.properties</configFile>
 }
           </configuration>
 }

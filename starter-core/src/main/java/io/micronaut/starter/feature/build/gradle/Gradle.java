@@ -35,7 +35,10 @@ import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
+
 import java.util.Set;
+
+import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Gradle implements BuildFeature {
@@ -81,7 +84,7 @@ public class Gradle implements BuildFeature {
         }
 
         BuildTool buildTool = generatorContext.getBuildTool();
-        GradleBuild build = dependencyResolver.create(generatorContext);
+        GradleBuild build = dependencyResolver.create(generatorContext, micronautRepositories());
 
         generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
                 generatorContext.getApplicationType(),
@@ -92,6 +95,7 @@ public class Gradle implements BuildFeature {
 
         generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
         generatorContext.addTemplate("projectProperties", new RockerTemplate("gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
+
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(settingsFile, settingsGradle.template(generatorContext.getProject(), build)));
     }

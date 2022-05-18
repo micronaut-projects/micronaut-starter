@@ -25,19 +25,17 @@ import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
 import java.util.Collections;
 import java.util.Map;
 
-public abstract class DatabaseDriverFeature implements OneOfFeature {
+public abstract class DatabaseDriverFeature extends TestContainersFeature implements OneOfFeature {
 
     private final JdbcFeature jdbcFeature;
-    private final TestContainers testContainers;
 
     public DatabaseDriverFeature() {
-        this.jdbcFeature = null;
-        this.testContainers = null;
+        this(null, null);
     }
 
     public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestContainers testContainers) {
+        super(testContainers);
         this.jdbcFeature = jdbcFeature;
-        this.testContainers = testContainers;
     }
 
     @Override
@@ -52,12 +50,10 @@ public abstract class DatabaseDriverFeature implements OneOfFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
             && jdbcFeature != null) {
             featureContext.addFeature(jdbcFeature);
-        }
-        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
-            featureContext.addFeature(testContainers);
         }
     }
 

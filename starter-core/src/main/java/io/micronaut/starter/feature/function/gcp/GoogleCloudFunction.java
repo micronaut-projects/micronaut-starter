@@ -18,11 +18,6 @@ package io.micronaut.starter.feature.function.gcp;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionJavaJunit;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKoTest;
@@ -30,7 +25,6 @@ import io.micronaut.starter.feature.function.gcp.template.gcpFunctionKotlinJunit
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionSpock;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.options.BuildTool;
-
 import jakarta.inject.Singleton;
 
 /**
@@ -40,21 +34,12 @@ import jakarta.inject.Singleton;
  * @since 2.0.0
  */
 @Singleton
-public class GoogleCloudFunction extends AbstractFunctionFeature implements CloudFeature {
+public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
 
     public static final String NAME = "google-cloud-function-http";
 
-    private final ShadePlugin shadePlugin;
-
     public GoogleCloudFunction(ShadePlugin shadePlugin) {
-        this.shadePlugin = shadePlugin;
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(ShadePlugin.class)) {
-            featureContext.addFeature(shadePlugin);
-        }
+        super(shadePlugin);
     }
 
     @NonNull
@@ -76,11 +61,6 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        applyFunction(generatorContext, generatorContext.getApplicationType());
     }
 
     @Override
@@ -127,12 +107,8 @@ public class GoogleCloudFunction extends AbstractFunctionFeature implements Clou
     }
 
     @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
-    }
-
-    @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions";
     }
+
 }

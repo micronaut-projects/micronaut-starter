@@ -17,8 +17,9 @@ package io.micronaut.starter.feature.server;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 
-public abstract class AbstractMicronautServerFeature implements ServerFeature {
+public abstract class AbstractMicronautServerFeature implements ServerFeature, MicronautRuntimeFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
@@ -27,6 +28,7 @@ public abstract class AbstractMicronautServerFeature implements ServerFeature {
                 .artifactId("micronaut-http-validation")
                 .versionProperty("micronaut.version")
                 .annotationProcessor());
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
         doApply(generatorContext);
     }
 

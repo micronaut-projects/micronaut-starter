@@ -16,6 +16,7 @@ class ServerSpec extends ApplicationContextSpec {
                 .render()
 
         then:
+        template.contains("runtime(")
         template.contains(dependency)
 
         where:

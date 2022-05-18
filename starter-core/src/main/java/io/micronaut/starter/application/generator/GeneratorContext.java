@@ -269,7 +269,6 @@ public class GeneratorContext implements DependencyContext {
     public void applyFeatures() {
         List<Feature> features = new ArrayList<>(this.features.getFeatures());
         features.sort(Comparator.comparingInt(Feature::getOrder));
-
         for (Feature feature: features) {
             feature.apply(this);
         }
