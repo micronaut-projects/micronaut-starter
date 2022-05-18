@@ -26,10 +26,9 @@ import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MicroStreamRest implements Feature {
+public class MicroStreamRest implements MicroStreamFeature {
 
     public static final String NAME = "microstream-rest";
-    private static final String MICRONAUT_MICROSTREAM_GROUP_ID = "io.micronaut.microstream";
 
     private final MicroStream microStream;
 
