@@ -76,7 +76,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         then:
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream")')
         template.contains('implementation("io.micronaut.microstream:micronaut-microstream-annotations")')
-        template.contains('implementation("io.micronaut.microstream:micronaut-microstream-rest")')
+        template.contains('developmentOnly("io.micronaut.microstream:micronaut-microstream-rest")')
         if (language == Language.KOTLIN) {
             assert template.contains('kapt("io.micronaut.microstream:micronaut-microstream-annotations")')
         } else if (language == Language.JAVA) {
@@ -174,7 +174,7 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
     <dependency>
       <groupId>io.micronaut.microstream</groupId>
       <artifactId>micronaut-microstream-rest</artifactId>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
 """)
         where:
