@@ -381,6 +381,5 @@ public class GeneratorContext implements DependencyContext {
     @NonNull
     public Collection<Profile> getProfiles() {
         return profiles;
-
     }
 }
