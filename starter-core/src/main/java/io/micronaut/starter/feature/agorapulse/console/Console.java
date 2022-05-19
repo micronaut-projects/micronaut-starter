@@ -57,6 +57,11 @@ public class Console implements AgoraPulseFeature {
     }
 
     @Override
+    public String getDescription() {
+        return "An extension to Micronaut applications and functions which allows executing arbitrary code.";
+    }
+
+    @Override
     public String getThirdPartyDocumentation() {
         return "https://agorapulse.github.io/micronaut-console/";
     }
