@@ -69,7 +69,7 @@ public class Features extends ArrayList<String> {
         return hasFeature(GraalVM.class);
     }
 
-    public boolean hashAotBuildPlugin() {
+    public boolean hasAotBuildPlugin() {
         return hasFeature(MicronautAot.class);
     }
 

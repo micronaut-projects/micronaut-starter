@@ -128,7 +128,7 @@ public class Cdk implements MultiProjectFeature {
                         "0.1",
                         handler,
                         generatorContext.getFeatures().hasGraalvm(),
-                        generatorContext.getFeatures().hashAotBuildPlugin())));
+                        generatorContext.getFeatures().hasAotBuildPlugin())));
         buildRockerModel(generatorContext).ifPresent(rockerModel -> {
             generatorContext.addTemplate("cdk-build",
                     new RockerTemplate(INFRA_MODULE, generatorContext.getBuildTool().getBuildFileName(), rockerModel));
