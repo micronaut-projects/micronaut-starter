@@ -49,9 +49,7 @@ public class AwsSecretsManager implements DistributedConfigFeature {
                 .groupId("io.micronaut.aws")
                 .artifactId("micronaut-aws-secretsmanager")
                 .compile());
-        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
-        config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
-        config.put("micronaut.config-client.enabled", true);
+        Map<String, Object> config = populateBootstrapForDistributedConfiguration(generatorContext);
         config.put("aws.client.system-manager.parameterstore.enabled", true);
     }
 

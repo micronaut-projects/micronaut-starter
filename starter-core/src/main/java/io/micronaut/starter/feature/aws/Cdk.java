@@ -204,7 +204,8 @@ public class Cdk implements MultiProjectFeature {
                 plugins,
                 MavenRepository.listOf(micronautRepositories()),
                 MavenCombineAttribute.APPEND,
-                MavenCombineAttribute.APPEND);
+                MavenCombineAttribute.APPEND,
+                Collections.emptyList());
     }
 
     private GradleBuild infrastructureGradleBuild(GeneratorContext generatorContext) {

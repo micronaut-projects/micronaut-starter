@@ -110,6 +110,7 @@ public class MavenBuildCreator {
                 plugins,
                 MavenRepository.listOf(micronautRepositories()),
                 combineAttribute,
-                testCombineAttribute);
+                testCombineAttribute,
+                generatorContext.getProfiles());
     }
 }

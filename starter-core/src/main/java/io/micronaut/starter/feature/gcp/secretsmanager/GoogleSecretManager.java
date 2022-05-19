@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,62 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.stackdriver;
+package io.micronaut.starter.feature.gcp.secretsmanager;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
+import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CloudTrace extends GcpFeature implements Feature {
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
+public class GoogleSecretManager extends GcpFeature implements DistributedConfigFeature {
 
     @NonNull
     @Override
     public String getName() {
-        return "gcp-cloud-trace";
+        return "gcp-secrets-manager";
     }
 
     @Override
     public String getTitle() {
-        return "Google Cloud Trace";
+        return "Google Secret Manager";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for distributed tracing Google Cloud Trace";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.TRACING;
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://cloud.google.com/trace";
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#tracing";
+        return "Adds support for Distributed Configuration with Google Secrets Manager";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.gcp")
-                .artifactId("micronaut-gcp-tracing")
-                .compile());
+        generatorContext.addDependency(gcpSecretManagerDependency());
+        populateBootstrapForDistributedConfiguration(generatorContext);
     }
+
+    @NonNull
+    private Dependency.Builder gcpSecretManagerDependency() {
+        return Dependency.builder()
+                .groupId("io.micronaut.gcp")
+                .artifactId("micronaut-gcp-secret-manager")
+                .compile();
+    }
+
+    @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#secretManager";
+    }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://cloud.google.com/secret-manager";
+    }
+
 }

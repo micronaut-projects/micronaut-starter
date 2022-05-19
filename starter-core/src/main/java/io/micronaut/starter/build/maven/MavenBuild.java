@@ -18,10 +18,15 @@ package io.micronaut.starter.build.maven;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.Coordinate;
-import io.micronaut.starter.template.Writable;
-import io.micronaut.starter.template.WritableUtils;
+
+import io.micronaut.starter.feature.build.maven.Profile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
+
+import io.micronaut.starter.template.Writable;
+import io.micronaut.starter.template.WritableUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +50,8 @@ public class MavenBuild {
 
     private final List<Property> properties;
 
+    private final Collection<Profile> profiles;
+
     private final List<MavenRepository> repositories;
 
     @NonNull
@@ -59,7 +66,8 @@ public class MavenBuild {
                 Collections.emptyList(),
                 Collections.emptyList(),
                 MavenCombineAttribute.APPEND,
-                MavenCombineAttribute.APPEND);
+                MavenCombineAttribute.APPEND,
+                Collections.emptyList());
     }
 
     public MavenBuild(@NonNull String artifactId,
@@ -74,7 +82,8 @@ public class MavenBuild {
                 plugins,
                 repositories,
                 MavenCombineAttribute.APPEND,
-                MavenCombineAttribute.APPEND);
+                MavenCombineAttribute.APPEND,
+                Collections.emptyList());
     }
 
     public MavenBuild(@NonNull String artifactId,
@@ -85,7 +94,8 @@ public class MavenBuild {
                       @NonNull List<MavenPlugin> plugins,
                       @NonNull List<MavenRepository> repositories,
                       @NonNull MavenCombineAttribute annotationProcessorCombineAttribute,
-                      @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute) {
+                      @NonNull MavenCombineAttribute testAnnotationProcessorCombineAttribute,
+                      @NonNull Collection<Profile> profiles) {
         this.artifactId = artifactId;
         this.annotationProcessors = annotationProcessors;
         this.testAnnotationProcessors = testAnnotationProcessors;
@@ -95,6 +105,7 @@ public class MavenBuild {
         this.repositories = repositories;
         this.annotationProcessorCombineAttribute = annotationProcessorCombineAttribute;
         this.testAnnotationProcessorCombineAttribute = testAnnotationProcessorCombineAttribute;
+        this.profiles = profiles;
     }
 
     @NonNull
@@ -126,6 +137,11 @@ public class MavenBuild {
     @NonNull
     public List<Coordinate> getTestAnnotationProcessors() {
         return testAnnotationProcessors;
+    }
+
+    @NonNull
+    public Collection<Profile> getProfiles() {
+        return profiles;
     }
 
     @NonNull

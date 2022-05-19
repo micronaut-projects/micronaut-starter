@@ -30,6 +30,7 @@ import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.LookupFailedException;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.build.maven.Profile;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.BootstrapConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
@@ -83,6 +84,7 @@ public class GeneratorContext implements DependencyContext {
     private final Options options;
     private final CoordinateResolver coordinateResolver;
     private final DependencyContext dependencyContext;
+    private final Set<Profile> profiles = new HashSet<>();
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
@@ -363,5 +365,22 @@ public class GeneratorContext implements DependencyContext {
                 .filter(s -> !Template.ROOT.equals(s))
                 .distinct()
                 .collect(Collectors.toList());
+    }
+  
+    public void addProfile(@NonNull Profile profile) {
+        Optional<Profile> optionalProfile = profiles.stream().filter(it -> it.getId().equals(profile.getId())).findFirst();
+        if (optionalProfile.isPresent()) {
+            optionalProfile.get().addActivationProperties(profile.getActivationProperties());
+            optionalProfile.get().addDependencies(profile.getDependencies());
+        } else {
+            profiles.add(profile);
+        }
+
+    }
+
+    @NonNull
+    public Collection<Profile> getProfiles() {
+        return profiles;
+
     }
 }

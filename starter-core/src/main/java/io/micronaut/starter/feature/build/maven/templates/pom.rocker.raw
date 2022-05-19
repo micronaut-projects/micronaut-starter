@@ -533,4 +533,5 @@ MavenBuild mavenBuild
        </pluginRepository>
     </pluginRepositories>
 }
+@profiles.template(mavenBuild.getProfiles())
 </project>
