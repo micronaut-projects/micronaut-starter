@@ -42,7 +42,7 @@ public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature {
     @Override
     @NonNull
     public String getDescription() {
-        return "A function URL is a dedicated HTTP(S) endpoint for a Lambda function. This features combines with CDK to configure a function url for lambda";
+        return "A function URL is a dedicated HTTP(S) endpoint for a Lambda function. This features combines with CDK to configure a function URL for Lambda";
     }
 
     @Override
