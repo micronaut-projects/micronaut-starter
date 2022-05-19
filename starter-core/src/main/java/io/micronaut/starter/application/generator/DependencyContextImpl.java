@@ -38,9 +38,9 @@ public class DependencyContextImpl implements DependencyContext {
         if (dependency.requiresLookup()) {
             Coordinate coordinate = coordinateResolver.resolve(dependency.getArtifactId())
                     .orElseThrow(() -> new LookupFailedException(dependency.getArtifactId()));
-            this.dependencies.add(dependency.resolved(coordinate));
+            dependencies.add(dependency.resolved(coordinate));
         } else {
-            this.dependencies.add(dependency);
+            dependencies.add(dependency);
         }
     }
 
