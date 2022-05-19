@@ -117,7 +117,8 @@ public class Cdk implements MultiProjectFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
-                cdkappstack.template(generatorContext.getProject(),
+                cdkappstack.template(generatorContext.getFeatures(),
+                        generatorContext.getProject(),
                         generatorContext.getBuildTool(),
                         generatorContext.getApplicationType(),
                         Template.DEFAULT_MODULE,
