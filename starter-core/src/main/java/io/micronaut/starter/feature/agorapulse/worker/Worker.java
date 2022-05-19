@@ -86,7 +86,7 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     public String getCategory() {
-        return Category.OTHER;
+        return Category.SCHEDULING;
     }
 
     @Override

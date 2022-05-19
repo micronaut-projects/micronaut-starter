@@ -26,8 +26,8 @@ class WorkerSpec extends ApplicationContextSpec {
         then:
         feature.thirdPartyDocumentation
 
-        and: 'is in the OTHER category'
-        feature.category == "Other"
+        and: 'is in the SCHEDULING category'
+        feature.category == "Scheduling"
 
         and:
         feature.community
