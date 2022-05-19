@@ -62,18 +62,18 @@ public class Features extends ArrayList<String> {
     }
 
     public boolean hasFunctionFeature() {
-        return hashFeature(FunctionFeature.class);
+        return hasFeature(FunctionFeature.class);
     }
 
     public boolean hasGraalvm() {
-        return hashFeature(GraalVM.class);
+        return hasFeature(GraalVM.class);
     }
 
     public boolean hashAotBuildPlugin() {
-        return hashFeature(MicronautAot.class);
+        return hasFeature(MicronautAot.class);
     }
 
-    public boolean hashFeature(Class<?> clazz) {
+    public boolean hasFeature(Class<?> clazz) {
         return getFeatures().stream().anyMatch(clazz::isInstance);
     }
 
