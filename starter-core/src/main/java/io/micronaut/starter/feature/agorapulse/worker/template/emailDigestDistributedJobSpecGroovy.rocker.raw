@@ -29,15 +29,15 @@ class EmailDigestDistributedJobSpec extends Specification {
 
     void 'send email using distributed job'() {
         expect:
-            job.emailsSent.size() == 0
+        job.emailsSent.size() == 0
 
         when:
-            jobManager.forceRun(EmailDigestDistributedJob, 'generateEmailsForDigest')
+        jobManager.forceRun(EmailDigestDistributedJob, 'generateEmailsForDigest')
 
         then:
-            conditions.eventually {
-                job.emailsSent.size() == 1
-            }
+        conditions.eventually {
+            job.emailsSent.size() == 1
+        }
     }
 
 }

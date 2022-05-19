@@ -26,15 +26,15 @@ class EmailDigestSimpleJobSpec extends Specification {
 
     void 'send email using simple job'() {
             expect:
-                job.emailsSent == 0
+            job.emailsSent == 0
 
             when:
-                jobManager.forceRun(EmailDigestSimpleJob)
+            jobManager.forceRun(EmailDigestSimpleJob)
 
             then:
-                conditions.eventually {
-                    job.emailsSent == 1
-                }
+            conditions.eventually {
+                job.emailsSent == 1
+            }
     }
 
 }

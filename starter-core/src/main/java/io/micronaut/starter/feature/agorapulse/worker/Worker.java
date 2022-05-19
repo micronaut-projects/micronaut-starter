@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobGroovy;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobJava;
@@ -37,6 +38,7 @@ import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimple
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestJava;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotest;
+import io.micronaut.starter.feature.test.Awaitility;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -49,7 +51,12 @@ import java.util.Optional;
 public class Worker implements AgoraPulseFeature {
 
     private static final String ARTIFACT_ID = "micronaut-worker";
-    private static final String AWAITILITY_ARTIFACT_ID = "awaitility";
+
+    private final Awaitility awaitility;
+
+    public Worker(Awaitility awaitility) {
+        this.awaitility = awaitility;
+    }
 
     @Override
     @NonNull
@@ -59,7 +66,7 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     public String getTitle() {
-        return "Advanced distributed scheduling for Micronaut";
+        return "Micronaut Worker";
     }
 
     @Override
@@ -93,11 +100,14 @@ public class Worker implements AgoraPulseFeature {
         generatorContext.addDependency(Dependency.builder()
                 .lookupArtifactId(ARTIFACT_ID)
                 .compile());
+    }
 
-        if (generatorContext.getLanguage() == Language.JAVA || generatorContext.getLanguage() == Language.KOTLIN) {
-            generatorContext.addDependency(Dependency.builder()
-                    .lookupArtifactId(AWAITILITY_ARTIFACT_ID)
-                    .test());
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(Awaitility.class)) {
+            if (featureContext.getLanguage() == Language.JAVA || featureContext.getLanguage() == Language.KOTLIN) {
+                featureContext.addFeature(awaitility);
+            }
         }
     }
 

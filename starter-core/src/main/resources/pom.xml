@@ -222,5 +222,15 @@
             <artifactId>awaitility</artifactId>
             <version>4.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-groovy</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-kotlin</artifactId>
+            <version>4.2.0</version>
+        </dependency>
     </dependencies>
 </project>
