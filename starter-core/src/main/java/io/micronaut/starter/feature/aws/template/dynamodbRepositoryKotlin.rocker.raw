@@ -1,0 +1,14 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+
+package @project.getPackageName();
+
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
+import jakarta.inject.Singleton;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+
+@@Requires(beans = [DynamoDbClient::class, DynamoConfiguration::class])
+@@Singleton
+class DynamoRepository(private val dynamoDbClient: DynamoDbClient, private val dynamoConfiguration: DynamoConfiguration)  {
+}

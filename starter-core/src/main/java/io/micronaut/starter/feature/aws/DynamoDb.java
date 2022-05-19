@@ -21,6 +21,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.aws.template.dynamodbConfigurationGroovy;
+import io.micronaut.starter.feature.aws.template.dynamodbConfigurationJava;
+import io.micronaut.starter.feature.aws.template.dynamodbConfigurationKotlin;
+import io.micronaut.starter.feature.aws.template.dynamodbRepositoryGroovy;
+import io.micronaut.starter.feature.aws.template.dynamodbRepositoryJava;
+import io.micronaut.starter.feature.aws.template.dynamodbRepositoryKotlin;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -45,6 +51,18 @@ public class DynamoDb implements AwsFeature {
                 .groupId(GROUP_ID_AWS_SDK_V2)
                 .artifactId(ARTIFACTID_DYNAMODB)
                 .compile());
+
+        String repositoryFile = generatorContext.getSourcePath("/{packagePath}/DynamoRepository");
+        generatorContext.addTemplate("dynamoRepository", repositoryFile,
+                dynamodbRepositoryJava.template(generatorContext.getProject()),
+                dynamodbRepositoryKotlin.template(generatorContext.getProject()),
+                dynamodbRepositoryGroovy.template(generatorContext.getProject()));
+
+        String configurationFile = generatorContext.getSourcePath("/{packagePath}/DynamoConfiguration");
+        generatorContext.addTemplate("dynamoConfiguration", configurationFile,
+                dynamodbConfigurationJava.template(generatorContext.getProject()),
+                dynamodbConfigurationKotlin.template(generatorContext.getProject()),
+                dynamodbConfigurationGroovy.template(generatorContext.getProject()));
     }
 
     @Override

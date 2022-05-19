@@ -1,0 +1,23 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+
+package @project.getPackageName();
+
+import io.micronaut.context.annotation.Requires;
+import io.micronaut.core.annotation.NonNull;
+import jakarta.inject.Singleton;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+
+@@Requires(beans = [DynamoConfiguration, DynamoDbClient])
+@@Singleton
+class DynamoRepository  {
+
+    private final DynamoDbClient dynamoDbClient
+    private final DynamoConfiguration dynamoConfiguration
+
+    DynamoRepository(DynamoDbClient dynamoDbClient,
+                            DynamoConfiguration dynamoConfiguration) {
+        this.dynamoDbClient = dynamoDbClient
+        this.dynamoConfiguration = dynamoConfiguration
+    }
+}
