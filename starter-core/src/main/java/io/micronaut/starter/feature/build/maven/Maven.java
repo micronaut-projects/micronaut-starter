@@ -35,7 +35,6 @@ import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 @Singleton
