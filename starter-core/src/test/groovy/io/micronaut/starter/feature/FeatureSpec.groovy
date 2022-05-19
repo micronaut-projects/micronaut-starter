@@ -6,6 +6,7 @@ import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
 import io.micronaut.starter.feature.aws.Cdk
+import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.options.*
@@ -38,13 +39,14 @@ class FeatureSpec extends BeanContextSpec {
     @Unroll
     void "test #feature does not add an unmodifiable map to config"(Feature feature) {
         when:
-        JdkVersion javaVersion = javaVersionForFeature(feature.getName())
+        ApplicationType applicationType = applicationTypeForFeature(feature.name)
+        JdkVersion javaVersion = javaVersionForFeature(feature.name)
         Language language = Language.JAVA
         if (feature instanceof LanguageSpecificFeature) {
             language = ((LanguageSpecificFeature) feature).getRequiredLanguage()
         }
         Options options = new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, javaVersion)
-        def features = [feature.getName()]
+        List<String> features = [feature.getName()]
 
         if (feature instanceof JAsyncSQLFeature) {
             // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
@@ -55,10 +57,10 @@ class FeatureSpec extends BeanContextSpec {
             features += AwsLambda.FEATURE_NAME_AWS_LAMBDA
         }
         def commandCtx = new GeneratorContext(buildProject(),
-                ApplicationType.DEFAULT,
+                applicationType,
                 options,
                 OperatingSystem.LINUX,
-                getFeatures(features, options).getFeatures(),
+                getFeatures(features, options, applicationType).getFeatures(),
                 (String artifactId) -> Optional.of(new DependencyCoordinate("io.test", artifactId, null, 0, false))
         )
         commandCtx.applyFeatures()
@@ -82,7 +84,11 @@ class FeatureSpec extends BeanContextSpec {
             .collect(Collectors.toList())
     }
 
-    private JdkVersion javaVersionForFeature(String feature) {
+    private static JdkVersion javaVersionForFeature(String feature) {
         feature == 'azure-function' ? JdkVersion.JDK_8 : JdkVersion.JDK_11
+    }
+
+    private static ApplicationType applicationTypeForFeature(String feature) {
+        feature == LambdaFunctionUrl.NAME ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
     }
 }

@@ -14,6 +14,11 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
+@if (features.contains("dynamodb")) {
+import software.amazon.awscdk.services.dynamodb.Attribute;
+import software.amazon.awscdk.services.dynamodb.AttributeType;
+import software.amazon.awscdk.services.dynamodb.Table;
+}
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 }
@@ -39,6 +44,20 @@ public class AppStack extends Stack {
         super(parent, id, props);
 
         Map<String, String> environmentVariables = new HashMap<>();
+@if (features.contains("dynamodb")) {
+        Table table = Table.Builder.create(this, "micronautapptable")
+                .partitionKey(Attribute.builder()
+                        .name("pk")
+                        .type(AttributeType.STRING)
+                        .build())
+                .sortKey(Attribute.builder()
+                        .name("sk")
+                        .type(AttributeType.STRING)
+                        .build())
+                .build();
+
+        environmentVariables.put("DYNAMODB_TABLE_NAME", table.getTableName());
+}
 @if (functionId != null) {
 @if (applicationType == ApplicationType.DEFAULT) {
         Function function = MicronautFunction.create(ApplicationType.DEFAULT,
@@ -58,6 +77,9 @@ public class AppStack extends Stack {
                 .memorySize(512)
                 .tracing(Tracing.ACTIVE)
                 .build();
+}
+@if (features.contains("dynamodb")) {
+        table.grantReadWriteData(function);
 }
 @if (functionId != null && apiId != null) {
 @if (features.contains("aws-lambda-function-url")) {

@@ -22,6 +22,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature {
 
+    public static final String NAME = "aws-lambda-function-url";
+
     public LambdaFunctionUrl(Cdk cdk) {
         super(cdk);
     }
@@ -29,7 +31,7 @@ public class LambdaFunctionUrl extends CdkFeature implements AwsApiFeature {
     @Override
     @NonNull
     public String getName() {
-        return "aws-lambda-function-url";
+        return NAME;
     }
 
     @Override
