@@ -13,19 +13,32 @@ import com.agorapulse.worker.JobManager
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.kotest.core.spec.style.StringSpec
 import io.micronaut.context.annotation.Property
-import org.awaitility.Awaitility
-import org.junit.jupiter.api.Assertions
+import io.micronaut.test.annotation.MockBean
+import io.mockk.*
+import org.awaitility.Awaitility.await
 import java.util.concurrent.TimeUnit
 
 @@MicronautTest
 @@Property(name = "worker.jobs.email-digest-distributed-job-send-email.enabled", value = "true")
 @@Property(name = "worker.jobs.email-digest-distributed-job-send-email.fixed-rate", value = "1ms")
-class EmailDigestDistributedJobTest(private val jobManager: JobManager, private val job: EmailDigestDistributedJob): StringSpec({
+class EmailDigestDistributedJobTest(
+    private val jobManager: JobManager,
+    private val emailDigestService: EmailDigestService
+) : StringSpec({
 
     "send emails distributed" {
-        Assertions.assertEquals(0, job.emailsSent.size)
+        every { emailDigestService.sendEmail("user@@example.com") } just Runs
+
         jobManager.forceRun(EmailDigestDistributedJob::class.java, "generateEmailsForDigest")
-        Awaitility.await().atMost(1, TimeUnit.SECONDS).until { job.emailsSent.size == 1 }
+
+        await().atMost(1, TimeUnit.SECONDS).untilAsserted {
+            verify { emailDigestService.sendEmail("user@@example.com") }
+        }
     }
 
-})
+}) {
+    @@MockBean(FallbackEmailDigestService::class)
+    fun mockEmailDigestService(): EmailDigestService {
+        return mockk()
+    }
+}

@@ -29,16 +29,23 @@ import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistri
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobSpecGroovy;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotest;
+import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestDistributedJobTestKotlin;
+import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceGroovy;
+import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceJava;
+import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestServiceKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobGroovy;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobJava;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobSpecGroovy;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestJava;
-import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotlin;
 import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotest;
+import io.micronaut.starter.feature.agorapulse.worker.template.emailDigestSimpleJobTestKotlin;
+import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceGroovy;
+import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceJava;
+import io.micronaut.starter.feature.agorapulse.worker.template.fallbackEmailDigestServiceKotlin;
 import io.micronaut.starter.feature.test.Awaitility;
+import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -54,8 +61,11 @@ public class Worker implements AgoraPulseFeature {
 
     private final Awaitility awaitility;
 
-    public Worker(Awaitility awaitility) {
+    private final Mockito mockito;
+
+    public Worker(Awaitility awaitility, Mockito mockito) {
         this.awaitility = awaitility;
+        this.mockito = mockito;
     }
 
     @Override
@@ -109,9 +119,22 @@ public class Worker implements AgoraPulseFeature {
                 featureContext.addFeature(awaitility);
             }
         }
+        if (!featureContext.isPresent(Mockito.class)) {
+            if (featureContext.getTestFramework() == TestFramework.JUNIT) {
+                featureContext.addFeature(mockito);
+            }
+        }
     }
 
     private void addExampleCode(GeneratorContext generatorContext) {
+        serviceModel(generatorContext).ifPresent(rockerModel ->
+                addMain(generatorContext, "EmailDigestService", rockerModel, "emailDigestService")
+        );
+
+        fallbackServiceModel(generatorContext).ifPresent(rockerModel ->
+                addMain(generatorContext, "FallbackEmailDigestService", rockerModel, "fallbackEmailDigestService")
+        );
+
         simpleJobModel(generatorContext).ifPresent(rockerModel ->
                 addMain(generatorContext, "EmailDigestSimpleJob", rockerModel, "emailDigestSimpleJob")
         );
@@ -150,19 +173,44 @@ public class Worker implements AgoraPulseFeature {
 
     @NonNull
     private Optional<RockerModel> simpleJobModel(GeneratorContext generatorContext) {
-        if (generatorContext.getLanguage() == Language.JAVA) {
-            return Optional.of(emailDigestSimpleJobJava.template(generatorContext.getProject()));
+        switch (generatorContext.getLanguage()) {
+            case JAVA:
+                return Optional.of(emailDigestSimpleJobJava.template(generatorContext.getProject()));
+            case GROOVY:
+                return Optional.of(emailDigestSimpleJobGroovy.template(generatorContext.getProject()));
+            case KOTLIN:
+                return Optional.of(emailDigestSimpleJobKotlin.template(generatorContext.getProject()));
+            default:
+                return Optional.empty();
         }
+    }
 
-        if (generatorContext.getLanguage() == Language.GROOVY) {
-            return Optional.of(emailDigestSimpleJobGroovy.template(generatorContext.getProject()));
+    @NonNull
+    private Optional<RockerModel> serviceModel(GeneratorContext generatorContext) {
+        switch (generatorContext.getLanguage()) {
+            case JAVA:
+                return Optional.of(emailDigestServiceJava.template(generatorContext.getProject()));
+            case GROOVY:
+                return Optional.of(emailDigestServiceGroovy.template(generatorContext.getProject()));
+            case KOTLIN:
+                return Optional.of(emailDigestServiceKotlin.template(generatorContext.getProject()));
+            default:
+                return Optional.empty();
         }
+    }
 
-        if (generatorContext.getLanguage() == Language.KOTLIN) {
-            return Optional.of(emailDigestSimpleJobKotlin.template(generatorContext.getProject()));
+    @NonNull
+    private Optional<RockerModel> fallbackServiceModel(GeneratorContext generatorContext) {
+        switch (generatorContext.getLanguage()) {
+            case JAVA:
+                return Optional.of(fallbackEmailDigestServiceJava.template(generatorContext.getProject()));
+            case GROOVY:
+                return Optional.of(fallbackEmailDigestServiceGroovy.template(generatorContext.getProject()));
+            case KOTLIN:
+                return Optional.of(fallbackEmailDigestServiceKotlin.template(generatorContext.getProject()));
+            default:
+                return Optional.empty();
         }
-
-        return Optional.empty();
     }
 
     @NonNull
@@ -188,19 +236,16 @@ public class Worker implements AgoraPulseFeature {
 
     @NonNull
     private Optional<RockerModel> distributedJobModel(GeneratorContext generatorContext) {
-        if (generatorContext.getLanguage() == Language.JAVA) {
-            return Optional.of(emailDigestDistributedJobJava.template(generatorContext.getProject()));
+        switch (generatorContext.getLanguage()) {
+            case JAVA:
+                return Optional.of(emailDigestDistributedJobJava.template(generatorContext.getProject()));
+            case GROOVY:
+                return Optional.of(emailDigestDistributedJobGroovy.template(generatorContext.getProject()));
+            case KOTLIN:
+                return Optional.of(emailDigestDistributedJobKotlin.template(generatorContext.getProject()));
+            default:
+                return Optional.empty();
         }
-
-        if (generatorContext.getLanguage() == Language.GROOVY) {
-            return Optional.of(emailDigestDistributedJobGroovy.template(generatorContext.getProject()));
-        }
-
-        if (generatorContext.getLanguage() == Language.KOTLIN) {
-            return Optional.of(emailDigestDistributedJobKotlin.template(generatorContext.getProject()));
-        }
-
-        return Optional.empty();
     }
 
     @NonNull

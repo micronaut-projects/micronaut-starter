@@ -20,7 +20,11 @@ import org.reactivestreams.Publisher
 @@CompileStatic
 class EmailDigestDistributedJob {
 
-    final List<String> emailsSent = []
+    private final EmailDigestService emailDigestService
+
+    EmailDigestDistributedJob(EmailDigestService emailDigestService) {
+        this.emailDigestService = emailDigestService
+    }
 
     @@Cron('45 6 * * *')
     Publisher<String> generateEmailsForDigest() {
@@ -29,8 +33,7 @@ class EmailDigestDistributedJob {
 
     @@FixedRate('1s')
     void sendEmail(String email) {
-        emailsSent << email
-        println "Sending email to $email"
+        emailDigestService.sendEmail(email)
     }
 
 }

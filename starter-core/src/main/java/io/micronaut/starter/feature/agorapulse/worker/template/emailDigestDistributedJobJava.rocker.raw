@@ -15,13 +15,14 @@ import io.micronaut.core.async.publisher.Publishers;
 import jakarta.inject.Singleton;
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @@Singleton
 public class EmailDigestDistributedJob {
 
-    private final List<String> emailsSent = new ArrayList<>();
+    private final EmailDigestService emailDigestService;
+
+    public EmailDigestDistributedJob(EmailDigestService emailDigestService) {
+        this.emailDigestService = emailDigestService;
+    }
 
     @@Cron("45 6 * * *")
     public Publisher<String> generateEmailsForDigest() {
@@ -30,12 +31,7 @@ public class EmailDigestDistributedJob {
 
     @@FixedRate("1s")
     public void sendEmail(String email) {
-        emailsSent.add(email);
-        System.out.println("Sending email to " + email);
-    }
-
-    public List<String> getEmailsSent() {
-        return emailsSent;
+        emailDigestService.sendEmail(email);
     }
 
 }

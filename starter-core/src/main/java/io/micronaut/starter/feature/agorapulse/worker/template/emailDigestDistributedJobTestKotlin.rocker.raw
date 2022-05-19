@@ -11,11 +11,12 @@ package @project.getPackageName()
 
 import com.agorapulse.worker.JobManager
 import io.micronaut.context.annotation.Property
+import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
-import org.awaitility.Awaitility
-import org.junit.jupiter.api.Assertions
+import org.awaitility.Awaitility.await
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.*
 import java.util.concurrent.TimeUnit
 
 @@MicronautTest
@@ -24,18 +25,23 @@ import java.util.concurrent.TimeUnit
 internal class EmailDigestDistributedJobTest {
 
     @@Inject
-    lateinit var job: EmailDigestDistributedJob
+    lateinit var jobManager: JobManager
 
     @@Inject
-    lateinit var jobManager: JobManager
+    lateinit var emailDigestService: EmailDigestService
+
+    @@MockBean(FallbackEmailDigestService::class)
+    fun emailDigestServiceMock(): EmailDigestService {
+        return mock(EmailDigestService::class.java)
+    }
 
     @@Test
     fun testSendEmailsDistributed() {
-        Assertions.assertEquals(0, job.emailsSent.size)
-
         jobManager.forceRun(EmailDigestDistributedJob::class.java, "generateEmailsForDigest")
 
-        Awaitility.await().atMost(2, TimeUnit.SECONDS).until { job.emailsSent.size == 1 }
+        await().atMost(2, TimeUnit.SECONDS).untilAsserted {
+            verify(emailDigestService, times(1)).sendEmail("user@@example.com")
+        }
     }
 
 }

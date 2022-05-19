@@ -11,6 +11,7 @@ package @project.getPackageName()
 
 import com.agorapulse.worker.JobManager
 import io.micronaut.context.annotation.Property
+import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 
@@ -23,20 +24,22 @@ import spock.util.concurrent.PollingConditions
 class EmailDigestDistributedJobSpec extends Specification {
 
     PollingConditions conditions = new PollingConditions()
+    List<String> emailsSent = []
 
-    @@Inject EmailDigestDistributedJob job
+    @@MockBean(FallbackEmailDigestService)
+    EmailDigestService emailDigestService = Mock {
+        sendEmail(_) >> { String email -> emailsSent << email }
+    }
+
     @@Inject JobManager jobManager
 
     void 'send email using distributed job'() {
-        expect:
-        job.emailsSent.size() == 0
-
         when:
         jobManager.forceRun(EmailDigestDistributedJob, 'generateEmailsForDigest')
 
         then:
         conditions.eventually {
-            job.emailsSent.size() == 1
+            'user@@example.com' in emailsSent
         }
     }
 

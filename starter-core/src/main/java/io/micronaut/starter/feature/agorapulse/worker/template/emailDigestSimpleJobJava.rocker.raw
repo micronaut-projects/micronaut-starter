@@ -15,16 +15,15 @@ import jakarta.inject.Singleton;
 @@Singleton
 public class EmailDigestSimpleJob {
 
-    private int emailsSent;
+    private final EmailDigestService emailDigestService;
+
+    public EmailDigestSimpleJob(EmailDigestService emailDigestService) {
+        this.emailDigestService = emailDigestService;
+    }
 
     @@Cron("45 6 * * *")
     public void sendDigestEmail() {
-        emailsSent++;
-        System.out.println("Emails has been sent at 6:45");
-    }
-
-    public int getEmailsSent() {
-        return emailsSent;
+        emailDigestService.sendEmail("user@@example.com");
     }
 
 }

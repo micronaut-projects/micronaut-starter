@@ -10,6 +10,7 @@ package @project.getPackageName()
 }
 
 import com.agorapulse.worker.JobManager
+import io.micronaut.test.annotation.MockBean
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import jakarta.inject.Inject
 
@@ -20,21 +21,23 @@ import spock.util.concurrent.PollingConditions
 class EmailDigestSimpleJobSpec extends Specification {
 
     PollingConditions conditions = new PollingConditions()
+    List<String> emailsSent = []
 
-    @@Inject EmailDigestSimpleJob job
+    @@MockBean(FallbackEmailDigestService)
+    EmailDigestService emailDigestService = Mock {
+        sendEmail(_) >> { String email -> emailsSent << email }
+    }
+
     @@Inject JobManager jobManager
 
     void 'send email using simple job'() {
-            expect:
-            job.emailsSent == 0
+        when:
+        jobManager.forceRun(EmailDigestSimpleJob)
 
-            when:
-            jobManager.forceRun(EmailDigestSimpleJob)
-
-            then:
-            conditions.eventually {
-                job.emailsSent == 1
-            }
+        then:
+        conditions.eventually {
+            'user@@example.com' in emailsSent
+        }
     }
 
 }

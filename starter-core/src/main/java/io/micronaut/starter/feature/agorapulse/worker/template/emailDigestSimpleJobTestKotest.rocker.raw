@@ -12,17 +12,31 @@ package @project.getPackageName()
 import com.agorapulse.worker.JobManager
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.kotest.core.spec.style.StringSpec
-import org.awaitility.Awaitility
-import org.junit.jupiter.api.Assertions
+import io.micronaut.test.annotation.MockBean
+import io.mockk.*
+import org.awaitility.Awaitility.await
 import java.util.concurrent.TimeUnit
 
 @@MicronautTest
-class EmailDigestSimpleJobTest(private val jobManager: JobManager, private val job: EmailDigestSimpleJob): StringSpec({
+class EmailDigestSimpleJobTest(
+    private val jobManager: JobManager, private val emailDigestService: EmailDigestService
+) : StringSpec({
 
     "send emails direct" {
-        Assertions.assertEquals(0, job.emailsSent)
+        every { emailDigestService.sendEmail("user@@example.com") } just Runs
+
         jobManager.forceRun(EmailDigestSimpleJob::class.java)
-        Awaitility.await().atMost(1, TimeUnit.SECONDS).until { job.emailsSent == 1 }
+
+        await().atMost(1, TimeUnit.SECONDS).untilAsserted {
+            verify { emailDigestService.sendEmail("user@@example.com") }
+        }
     }
 
-})
+}) {
+
+    @@MockBean(FallbackEmailDigestService::class)
+    fun mockEmailDigestService(): EmailDigestService {
+        return mockk()
+    }
+
+}
