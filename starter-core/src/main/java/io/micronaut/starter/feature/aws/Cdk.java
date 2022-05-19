@@ -24,6 +24,7 @@ import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleDependency;
 import io.micronaut.starter.build.gradle.GradleDsl;
@@ -69,7 +70,6 @@ public class Cdk implements MultiProjectFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
-    private static final String GROUP_ID_IO_MICRONAUT = "io.micronaut";
     private final DependencyContext dependencyContext;
 
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -137,22 +137,11 @@ public class Cdk implements MultiProjectFeature {
     }
 
     private void populateDependencies() {
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID_IO_MICRONAUT)
-                .artifactId("micronaut-bom")
-                .version(VersionInfo.getMicronautVersion())
-                .pom()
-                .compile());
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.aws")
+        dependencyContext.addDependency(bomDependency().compile());
+        dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
                 .compile());
-        dependencyContext.addDependency(Dependency.builder()
-                .groupId(GROUP_ID_IO_MICRONAUT)
-                .artifactId("micronaut-bom")
-                .version(VersionInfo.getMicronautVersion())
-                .pom()
-                .test());
+        dependencyContext.addDependency(bomDependency().test());
         dependencyContext.addDependency(Dependency.builder()
                 .groupId("org.junit.jupiter")
                 .artifactId("junit-jupiter-api")
@@ -161,6 +150,13 @@ public class Cdk implements MultiProjectFeature {
                 .groupId("org.junit.jupiter")
                 .artifactId("junit-jupiter-engine")
                 .test());
+    }
+
+    private Dependency.Builder bomDependency() {
+        return MicronautDependencyUtils.coreDependency()
+                .artifactId("micronaut-bom")
+                .version(VersionInfo.getMicronautVersion())
+                .pom();
     }
 
     private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {

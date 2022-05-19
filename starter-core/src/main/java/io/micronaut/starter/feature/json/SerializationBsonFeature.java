@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.json;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
@@ -53,8 +54,7 @@ public class SerializationBsonFeature implements SerializationFeature {
     @NonNull
     public List<Substitution> substitutions(@NonNull GeneratorContext generatorContext) {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
-        Dependency replacement = Dependency.builder()
-                .groupId(GROUP_ID_MICRONAUT_SERDE)
+        Dependency replacement = MicronautDependencyUtils.serdeDependency()
                 .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_BSON)
                 .version(serializationVersion)
                 .build();
@@ -63,8 +63,7 @@ public class SerializationBsonFeature implements SerializationFeature {
                         .replacement(replacement)
                         .build(),
                 Substitution.builder()
-                        .target(Dependency.builder()
-                                .groupId(GROUP_ID_MICRONAUT)
+                        .target(MicronautDependencyUtils.coreDependency()
                                 .artifactId(ARTIFACT_ID_MICRONAUT_JACKSON_CORE)
                                 .build())
                         .replacement(replacement)

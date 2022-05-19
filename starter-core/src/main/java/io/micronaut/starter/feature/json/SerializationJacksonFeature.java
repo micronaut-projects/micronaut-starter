@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.json;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
@@ -55,8 +55,7 @@ public class SerializationJacksonFeature implements SerializationFeature {
         String serializationVersion = VersionInfo.getBomVersion(MICRONAUT_SERIALIZATION);
         return Collections.singletonList(Substitution.builder()
                         .target(DEPENDENCY_MICRONAUT_JACKSON_DATABIND)
-                        .replacement(Dependency.builder()
-                                .groupId(GROUP_ID_MICRONAUT_SERDE)
+                        .replacement(MicronautDependencyUtils.serdeDependency()
                                 .artifactId(ARTIFACT_ID_MICRONAUT_SERDE_JACKSON)
                                 .version(serializationVersion)
                                 .build())
