@@ -1,7 +1,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.util.VersionInfo
-@import java.util.List
-@args (Project project, List<String> moduleNames)
+@import java.util.Collection
+@args (Project project, Collection<String> moduleNames)
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">

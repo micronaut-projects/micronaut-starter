@@ -34,6 +34,7 @@ import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -75,8 +76,7 @@ public class Maven implements BuildFeature {
         )));
         generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore.template()));
 
-
-        List<String> moduleNames = generatorContext.getModuleNames();
+        Collection<String> moduleNames = generatorContext.getModuleNames();
         if (CollectionUtils.isNotEmpty(moduleNames)) {
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(generatorContext.getProject(), moduleNames)));
         }

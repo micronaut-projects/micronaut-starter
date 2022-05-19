@@ -358,7 +358,7 @@ public class GeneratorContext implements DependencyContext {
         return buildPlugins;
     }
 
-    public List<String> getModuleNames() {
+    public Collection<String> getModuleNames() {
         return templates.values()
                 .stream()
                 .map(Template::getModule)
