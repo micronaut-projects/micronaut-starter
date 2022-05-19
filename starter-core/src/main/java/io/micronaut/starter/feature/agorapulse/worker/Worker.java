@@ -173,99 +173,107 @@ public class Worker implements AgoraPulseFeature {
 
     @NonNull
     private Optional<RockerModel> simpleJobModel(GeneratorContext generatorContext) {
-        switch (generatorContext.getLanguage()) {
-            case JAVA:
-                return Optional.of(emailDigestSimpleJobJava.template(generatorContext.getProject()));
-            case GROOVY:
-                return Optional.of(emailDigestSimpleJobGroovy.template(generatorContext.getProject()));
-            case KOTLIN:
-                return Optional.of(emailDigestSimpleJobKotlin.template(generatorContext.getProject()));
-            default:
-                return Optional.empty();
-        }
+        return mainModel(
+                generatorContext,
+                emailDigestSimpleJobJava.template(generatorContext.getProject()),
+                emailDigestSimpleJobGroovy.template(generatorContext.getProject()),
+                emailDigestSimpleJobKotlin.template(generatorContext.getProject())
+        );
     }
 
     @NonNull
     private Optional<RockerModel> serviceModel(GeneratorContext generatorContext) {
-        switch (generatorContext.getLanguage()) {
-            case JAVA:
-                return Optional.of(emailDigestServiceJava.template(generatorContext.getProject()));
-            case GROOVY:
-                return Optional.of(emailDigestServiceGroovy.template(generatorContext.getProject()));
-            case KOTLIN:
-                return Optional.of(emailDigestServiceKotlin.template(generatorContext.getProject()));
-            default:
-                return Optional.empty();
-        }
+        return mainModel(
+                generatorContext,
+                emailDigestServiceJava.template(generatorContext.getProject()),
+                emailDigestServiceGroovy.template(generatorContext.getProject()),
+                emailDigestServiceKotlin.template(generatorContext.getProject())
+        );
     }
 
     @NonNull
     private Optional<RockerModel> fallbackServiceModel(GeneratorContext generatorContext) {
-        switch (generatorContext.getLanguage()) {
-            case JAVA:
-                return Optional.of(fallbackEmailDigestServiceJava.template(generatorContext.getProject()));
-            case GROOVY:
-                return Optional.of(fallbackEmailDigestServiceGroovy.template(generatorContext.getProject()));
-            case KOTLIN:
-                return Optional.of(fallbackEmailDigestServiceKotlin.template(generatorContext.getProject()));
-            default:
-                return Optional.empty();
-        }
+        return mainModel(
+                generatorContext,
+                fallbackEmailDigestServiceJava.template(generatorContext.getProject()),
+                fallbackEmailDigestServiceGroovy.template(generatorContext.getProject()),
+                fallbackEmailDigestServiceKotlin.template(generatorContext.getProject())
+        );
     }
 
     @NonNull
     private Optional<RockerModel> simpleJobTestModel(GeneratorContext generatorContext) {
-        if (generatorContext.getLanguage() == Language.JAVA && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.of(emailDigestSimpleJobTestJava.template(generatorContext.getProject()));
-        }
-
-        if (generatorContext.getLanguage() == Language.GROOVY && generatorContext.getTestFramework() == TestFramework.SPOCK) {
-            return Optional.of(emailDigestSimpleJobSpecGroovy.template(generatorContext.getProject()));
-        }
-
-        if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.of(emailDigestSimpleJobTestKotlin.template(generatorContext.getProject()));
-        }
-
-        if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.KOTEST) {
-            return Optional.of(emailDigestSimpleJobTestKotest.template(generatorContext.getProject()));
-        }
-        return Optional.empty();
+        return testModel(
+                generatorContext,
+                emailDigestSimpleJobTestJava.template(generatorContext.getProject()),
+                emailDigestSimpleJobSpecGroovy.template(generatorContext.getProject()),
+                emailDigestSimpleJobTestKotlin.template(generatorContext.getProject()),
+                emailDigestSimpleJobTestKotest.template(generatorContext.getProject())
+        );
     }
-
 
     @NonNull
     private Optional<RockerModel> distributedJobModel(GeneratorContext generatorContext) {
+        return mainModel(
+                generatorContext,
+                emailDigestDistributedJobJava.template(generatorContext.getProject()),
+                emailDigestDistributedJobGroovy.template(generatorContext.getProject()),
+                emailDigestDistributedJobKotlin.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> distributedJobTestModel(GeneratorContext generatorContext) {
+        return testModel(
+                generatorContext,
+                emailDigestDistributedJobTestJava.template(generatorContext.getProject()),
+                emailDigestDistributedJobSpecGroovy.template(generatorContext.getProject()),
+                emailDigestDistributedJobTestKotlin.template(generatorContext.getProject()),
+                emailDigestDistributedJobTestKotest.template(generatorContext.getProject())
+        );
+    }
+
+    private Optional<RockerModel> mainModel(
+            GeneratorContext generatorContext,
+            @Nullable RockerModel javaModel,
+            @Nullable RockerModel groovyModel,
+            @Nullable RockerModel kotlinModel
+    ) {
         switch (generatorContext.getLanguage()) {
             case JAVA:
-                return Optional.of(emailDigestDistributedJobJava.template(generatorContext.getProject()));
+                return Optional.ofNullable(javaModel);
             case GROOVY:
-                return Optional.of(emailDigestDistributedJobGroovy.template(generatorContext.getProject()));
+                return Optional.ofNullable(groovyModel);
             case KOTLIN:
-                return Optional.of(emailDigestDistributedJobKotlin.template(generatorContext.getProject()));
+                return Optional.ofNullable(kotlinModel);
             default:
                 return Optional.empty();
         }
     }
 
     @NonNull
-    private Optional<RockerModel> distributedJobTestModel(GeneratorContext generatorContext) {
+    private Optional<RockerModel> testModel(
+            GeneratorContext generatorContext,
+            @Nullable RockerModel javaModel,
+            @Nullable RockerModel groovyModel,
+            @Nullable RockerModel kotlinJUnitModel,
+            @Nullable RockerModel kotestModel
+    ) {
         if (generatorContext.getLanguage() == Language.JAVA && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.of(emailDigestDistributedJobTestJava.template(generatorContext.getProject()));
+            return Optional.ofNullable(javaModel);
         }
 
         if (generatorContext.getLanguage() == Language.GROOVY && generatorContext.getTestFramework() == TestFramework.SPOCK) {
-            return Optional.of(emailDigestDistributedJobSpecGroovy.template(generatorContext.getProject()));
+            return Optional.ofNullable(groovyModel);
         }
 
         if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.of(emailDigestDistributedJobTestKotlin.template(generatorContext.getProject()));
+            return Optional.ofNullable(kotlinJUnitModel);
         }
 
         if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.KOTEST) {
-            return Optional.of(emailDigestDistributedJobTestKotest.template(generatorContext.getProject()));
+            return Optional.ofNullable(kotestModel);
         }
         return Optional.empty();
     }
-
 }
