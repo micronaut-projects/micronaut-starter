@@ -88,7 +88,7 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         def testContainersDependencies = project.dependencies.dependency.findAll { it.groupId.text() == 'org.testcontainers' }
-        testContainersDependencies.size == 3
+        testContainersDependencies.size() == 3
         testContainersDependencies.scope*.text().unique() == ['test']
         testContainersDependencies.artifactId*.text().sort() == expectedTestcontainersArtifacts
 

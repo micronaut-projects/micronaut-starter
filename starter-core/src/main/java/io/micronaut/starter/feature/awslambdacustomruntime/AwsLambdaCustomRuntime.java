@@ -25,9 +25,9 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeGroovy;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeJava;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.bookLambdaRuntimeKotlin;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -90,7 +90,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         ApplicationType applicationType = generatorContext.getApplicationType();
         Project project = generatorContext.getProject();
         if (shouldGenerateMainClassForRuntime(generatorContext)) {
-            addBookLambdaRuntime(generatorContext, project);
+            addFunctionLambdaRuntime(generatorContext, project);
         }
 
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
@@ -112,18 +112,18 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
             if (applicationType == ApplicationType.DEFAULT) {
                 return AwsLambdaCustomRuntime.MAIN_CLASS_NAME;
             } else if (applicationType == ApplicationType.FUNCTION) {
-                return generatorContext.getProject().getPackageName() + ".BookLambdaRuntime";
+                return generatorContext.getProject().getPackageName() + ".FunctionLambdaRuntime";
             }
         }
         throw new ConfigurationException("aws-lambda-custom-runtime should be used together with aws-lambda or aws-gateway-lambda-proxy");
     }
 
-    private void addBookLambdaRuntime(GeneratorContext generatorContext, Project project) {
-        String bookLambdaRuntime = generatorContext.getSourcePath("/{packagePath}/BookLambdaRuntime");
-        generatorContext.addTemplate("bookLambdaRuntime", bookLambdaRuntime,
-                bookLambdaRuntimeJava.template(project),
-                bookLambdaRuntimeKotlin.template(project),
-                bookLambdaRuntimeGroovy.template(project));
+    private void addFunctionLambdaRuntime(GeneratorContext generatorContext, Project project) {
+        String functionLambdaRuntime = generatorContext.getSourcePath("/{packagePath}/FunctionLambdaRuntime");
+        generatorContext.addTemplate("functionLambdaRuntime", functionLambdaRuntime,
+                functionLambdaRuntimeJava.template(project),
+                functionLambdaRuntimeKotlin.template(project),
+                functionLambdaRuntimeGroovy.template(project));
     }
 
     @Override

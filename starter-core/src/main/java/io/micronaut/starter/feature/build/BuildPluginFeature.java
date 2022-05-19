@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.build;
 
-public enum FeaturePhase {
+import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
 
-    LOWEST(-200),
-    LOW(-100),
-    DEFAULT(0),
-    LANGUAGE(300),
-    TEST(400),
-    BUILD_PLUGIN(400),
-    BUILD(600),
-    HIGH(700),
-    HIGHEST(800);
-
-    private final int order;
-
-    FeaturePhase(int order) {
-        this.order = order;
+public interface BuildPluginFeature extends Feature  {
+    @Override
+    default int getOrder() {
+        return FeaturePhase.BUILD_PLUGIN.getOrder();
     }
-
-    public int getOrder() {
-        return order;
-    }
-
 }

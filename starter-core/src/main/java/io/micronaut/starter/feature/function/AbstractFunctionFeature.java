@@ -20,6 +20,7 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
@@ -38,7 +39,13 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractFunctionFeature implements FunctionFeature {
+public abstract class AbstractFunctionFeature implements FunctionFeature, MicronautRuntimeFeature {
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        applyFunction(generatorContext, generatorContext.getApplicationType());
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+    }
 
     protected RockerModel javaControllerTemplate(Project project) {
         return httpFunctionJavaController.template(project);

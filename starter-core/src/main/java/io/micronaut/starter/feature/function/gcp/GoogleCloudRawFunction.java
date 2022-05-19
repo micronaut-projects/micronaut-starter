@@ -21,9 +21,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
@@ -42,15 +40,14 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class GoogleCloudRawFunction extends AbstractFunctionFeature implements CloudFeature {
+public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     public static final String NAME = "google-cloud-function";
 
     private final GoogleCloudFunction googleCloudFunction;
-    private final ShadePlugin shadePlugin;
 
     public GoogleCloudRawFunction(GoogleCloudFunction googleCloudFunction, ShadePlugin shadePlugin) {
+        super(shadePlugin);
         this.googleCloudFunction = googleCloudFunction;
-        this.shadePlugin = shadePlugin;
     }
 
     @NonNull
@@ -61,8 +58,8 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         ApplicationType type = generatorContext.getApplicationType();
-        applyFunction(generatorContext, type);
         if (type == ApplicationType.FUNCTION) {
             Language language = generatorContext.getLanguage();
             Project project = generatorContext.getProject();
@@ -117,14 +114,11 @@ public class GoogleCloudRawFunction extends AbstractFunctionFeature implements C
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        super.processSelectedFeatures(featureContext);
         if (featureContext.getApplicationType() == ApplicationType.DEFAULT) {
             featureContext.addFeature(
                     googleCloudFunction
             );
-        }
-
-        if (!featureContext.isPresent(ShadePlugin.class)) {
-            featureContext.addFeature(shadePlugin);
         }
     }
 

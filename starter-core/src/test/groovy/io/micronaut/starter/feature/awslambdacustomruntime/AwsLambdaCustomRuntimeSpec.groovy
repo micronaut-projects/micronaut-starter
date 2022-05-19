@@ -45,7 +45,6 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         language << graalSupportedLanguages()
     }
 
-
     private List<Language> graalSupportedLanguages() {
         Language.values().toList() - Language.GROOVY
     }

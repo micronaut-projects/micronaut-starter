@@ -18,12 +18,12 @@ class MicronautBuildPluginDockerBuildNativeSpec extends ApplicationContextSpec i
     @Unroll
     void 'it is possible to generate an application type with gradle and dockerBuild extension for language: #language'(Language language, String extension) {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, BuildTool.GRADLE),
                 []
         )
-        def buildGradle = output['build.gradle']
+        String buildGradle = output['build.gradle']
 
         then:
         buildGradle.contains('id("io.micronaut.application")')

@@ -8,6 +8,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.MapOutputHandler
+import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.NameUtils
 
@@ -15,9 +16,13 @@ import io.micronaut.starter.util.NameUtils
 trait CommandOutputFixture {
     abstract BeanContext getBeanContext()
 
+    ProjectGenerator getProjectGenerator() {
+        beanContext.getBean(ProjectGenerator)
+    }
+
     Map<String, String> generate(ApplicationType type, Options options, List<String> features = []) {
-        def handler = new MapOutputHandler()
-        beanContext.getBean(ProjectGenerator).generate(type,
+        OutputHandler handler = new MapOutputHandler()
+        projectGenerator.generate(type,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
                 OperatingSystem.LINUX,
@@ -33,9 +38,9 @@ trait CommandOutputFixture {
     }
 
     Map<String, String> generate(ApplicationType type, List<String> features = []) {
-        def handler = new MapOutputHandler()
+        OutputHandler handler = new MapOutputHandler()
         Options options = new Options()
-        beanContext.getBean(ProjectGenerator).generate(type,
+        projectGenerator.generate(type,
                 NameUtils.parse("example.micronaut.foo"),
                 options,
                 OperatingSystem.LINUX,
@@ -47,12 +52,11 @@ trait CommandOutputFixture {
     }
 
     Map<String, String> generate(ApplicationType type, GeneratorContext generatorContext) {
-        def handler = new MapOutputHandler()
-        beanContext.getBean(ProjectGenerator).generate(type,
+        OutputHandler handler = new MapOutputHandler()
+        projectGenerator.generate(type,
                 NameUtils.parse("example.micronaut.foo"),
                 handler,
-                generatorContext
-        )
+                generatorContext)
         handler.getProject()
     }
 }

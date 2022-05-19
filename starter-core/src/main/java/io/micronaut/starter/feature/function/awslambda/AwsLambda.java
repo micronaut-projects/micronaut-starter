@@ -15,13 +15,16 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.function.Cloud;
@@ -39,17 +42,18 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
 
 import jakarta.inject.Singleton;
+
 import java.util.Set;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
-    private static final String BOOK_REQUEST_HANDLER = "BookRequestHandler";
-    private static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
+    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
+    public static final String REQUEST_HANDLER = "FunctionRequestHandler";
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
 
@@ -95,69 +99,61 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     public void apply(GeneratorContext generatorContext) {
         Project project = generatorContext.getProject();
         if (shouldGenerateSources(generatorContext)) {
-            addBook(generatorContext, project);
-            addBookSaved(generatorContext, project);
             ApplicationType applicationType = generatorContext.getApplicationType();
             if (applicationType == DEFAULT || applicationType == FUNCTION) {
                 if (applicationType == DEFAULT) {
-                    addBookController(generatorContext, project);
-                    addBookControllerTest(generatorContext, project);
+                    addHomeController(generatorContext, project);
+                    addHomeControllerTest(generatorContext, project);
                 } else {
                     addRequestHandler(generatorContext, project);
+                    generatorContext.addDependency(Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile());
                     addTest(generatorContext, project);
                 }
                 DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
                 generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
             }
         }
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
     }
 
     boolean shouldGenerateSources(GeneratorContext generatorContext) {
         return !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
     }
 
-    private void addBookControllerTest(GeneratorContext generatorContext, Project project) {
-        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookController");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(bookControllerSpock.template(project),
-                bookControllerJavaJunit.template(project),
-                bookControllerGroovyJunit.template(project),
-                bookControllerKotlinJunit.template(project),
-                bookControllerKoTest.template(project));
-        generatorContext.addTemplate("testBookController", testSource, provider);
+    private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/HomeController");
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(homeControllerSpock.template(project),
+                homeControllerJavaJunit.template(project),
+                homeControllerGroovyJunit.template(project),
+                homeControllerKotlinJunit.template(project),
+                homeControllerKoTest.template(project));
+        generatorContext.addTemplate("testHomeController", testSource, provider);
     }
 
-    private void addBookController(GeneratorContext generatorContext, Project project) {
-        String bookControllerFile = generatorContext.getSourcePath("/{packagePath}/BookController");
-        generatorContext.addTemplate("bookController", bookControllerFile,
-                bookControllerJava.template(project),
-                bookControllerKotlin.template(project),
-                bookControllerGroovy.template(project));
+    private void addHomeController(GeneratorContext generatorContext, Project project) {
+        String controllerFile = generatorContext.getSourcePath("/{packagePath}/HomeController");
+        generatorContext.addTemplate("homeController", controllerFile,
+                homeControllerJava.template(project),
+                homeControllerKotlin.template(project),
+                homeControllerGroovy.template(project));
     }
 
     private void addTest(GeneratorContext generatorContext, Project project) {
-        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/BookRequestHandler");
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaBookRequestHandlerSpock.template(project),
-                awsLambdaBookRequestHandlerJavaJunit.template(project),
-                awsLambdaBookRequestHandlerGroovyJunit.template(project),
-                awsLambdaBookRequestHandlerKotlinJunit.template(project),
-                awsLambdaBookRequestHandlerKoTest.template(project));
-        generatorContext.addTemplate("testBookRequestHandler", testSource, provider);
-    }
-
-    private void addBook(GeneratorContext generatorContext, Project project) {
-        String bookFile = generatorContext.getSourcePath("/{packagePath}/Book");
-        generatorContext.addTemplate("book", bookFile, awsLambdaBookJava.template(project), awsLambdaBookKotlin.template(project), awsLambdaBookGroovy.template(project));
-    }
-
-    private void addBookSaved(GeneratorContext generatorContext, Project project) {
-        String bookSavedFile = generatorContext.getSourcePath("/{packagePath}/BookSaved");
-        generatorContext.addTemplate("bookSaved", bookSavedFile, awsLambdaBookSavedJava.template(project),
-                awsLambdaBookSavedKotlin.template(project), awsLambdaBookSavedGroovy.template(project));
+        String testSource =  generatorContext.getTestSourcePath("/{packagePath}/FunctionRequestHandler");
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(awsLambdaFunctionRequestHandlerSpock.template(project),
+                awsLambdaFunctionRequestHandlerJavaJunit.template(project),
+                awsLambdaFunctionRequestHandlerGroovyJunit.template(project),
+                awsLambdaFunctionRequestHandlerKotlinJunit.template(project),
+                awsLambdaFunctionRequestHandlerKoTest.template(project));
+        generatorContext.addTemplate("testFunctionRequestHandler", testSource, provider);
     }
 
     private void addRequestHandler(GeneratorContext generatorContext, Project project) {
-        String awsLambdaBookRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + BOOK_REQUEST_HANDLER);
-        generatorContext.addTemplate("bookMicronautRequestHandler", awsLambdaBookRequestHandlerFile, awsLambdaBookRequestHandlerJava.template(project), awsLambdaBookRequestHandlerKotlin.template(project), awsLambdaBookRequestHandlerGroovy.template(project));
+        String awsLambdaRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + REQUEST_HANDLER);
+        generatorContext.addTemplate("functionRequestHandler", awsLambdaRequestHandlerFile,
+                awsLambdaFunctionRequestHandlerJava.template(project),
+                awsLambdaFunctionRequestHandlerKotlin.template(project),
+                awsLambdaFunctionRequestHandlerGroovy.template(project));
     }
 
     @Override
@@ -188,9 +184,19 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
             case DEFAULT:
                 return MICRONAUT_LAMBDA_HANDLER;
             case FUNCTION:
-                return project.getPackageName() + "." + BOOK_REQUEST_HANDLER;
+                return project.getPackageName() + "." + REQUEST_HANDLER;
             default:
                 return null;
         }
     }
+
+    @Override
+    @NonNull
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            return "lambda";
+        }
+        return generatorContext.getFeatures().contains("graalvm") ? "lambda_provided" : "lambda_java";
+    }
 }
+
