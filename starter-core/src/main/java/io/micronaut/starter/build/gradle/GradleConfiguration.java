@@ -31,13 +31,14 @@ public enum GradleConfiguration implements Ordered {
     IMPLEMENTATION("implementation", 3),
     COMPILE_ONLY("compileOnly", 4),
     RUNTIME_ONLY("runtimeOnly", 5),
-    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 6),
-    TEST_KAPT("kaptTest", 7),
-    TEST_IMPLEMENTATION("testImplementation", 8),
-    TEST_COMPILE_ONLY("testCompileOnly", 9),
-    TEST_RUNTIME_ONLY("testRuntimeOnly", 10),
-    DEVELOPMENT_ONLY("developmentOnly", 11),
-    OPENREWRITE("rewrite", 12);
+    NATIVE_IMAGE_COMPILE_ONLY("nativeImageCompileOnly", 6),
+    TEST_ANNOTATION_PROCESSOR("testAnnotationProcessor", 7),
+    TEST_KAPT("kaptTest", 8),
+    TEST_IMPLEMENTATION("testImplementation", 9),
+    TEST_COMPILE_ONLY("testCompileOnly", 10),
+    TEST_RUNTIME_ONLY("testRuntimeOnly", 11),
+    DEVELOPMENT_ONLY("developmentOnly", 12),
+    OPENREWRITE("rewrite", 13);
 
     private final String configurationName;
     private final int order;
@@ -89,6 +90,9 @@ public enum GradleConfiguration implements Ordered {
                 }
                 if (scope.getPhases().contains(Phase.COMPILATION)) {
                     return Optional.of(GradleConfiguration.COMPILE_ONLY);
+                }
+                if (scope.getPhases().contains(Phase.NATIVE_IMAGE_COMPILATION)) {
+                    return Optional.of(GradleConfiguration.NATIVE_IMAGE_COMPILE_ONLY);
                 }
                 if (scope.getPhases().contains(Phase.OPENREWRITE)) {
                     return Optional.of(GradleConfiguration.OPENREWRITE);

@@ -61,11 +61,12 @@ public class OracleCloudVault implements DistributedConfigFeature {
                 .artifactId("micronaut-oraclecloud-vault")
                 .compile());
         generatorContext.getConfiguration().put("oci.config.profile", "DEFAULT");
-        generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
-        generatorContext.getBootstrapConfiguration().put("oci.vault.config.enabled", true);
+
+        Map<String, Object> bootstrapConfiguration = populateBootstrapForDistributedConfiguration(generatorContext);
+        bootstrapConfiguration.put("oci.vault.config.enabled", true);
         Map<String, String> map = new HashMap<>();
         map.put("ocid", "");
         map.put("compartment-ocid", "");
-        generatorContext.getBootstrapConfiguration().put("oci.vault.config.vaults", map);
+        bootstrapConfiguration.put("oci.vault.config.vaults", map);
     }
 }

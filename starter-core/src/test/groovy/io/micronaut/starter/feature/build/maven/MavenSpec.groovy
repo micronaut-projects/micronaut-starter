@@ -21,7 +21,6 @@ class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .render()
-
         then: 'parent pom is used'
         template.contains("""
   <parent>

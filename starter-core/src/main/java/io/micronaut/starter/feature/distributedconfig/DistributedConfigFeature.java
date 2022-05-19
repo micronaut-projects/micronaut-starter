@@ -15,9 +15,13 @@
  */
 package io.micronaut.starter.feature.distributedconfig;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+
+import java.util.Map;
 
 public interface DistributedConfigFeature extends Feature {
 
@@ -29,5 +33,13 @@ public interface DistributedConfigFeature extends Feature {
     @Override
     default String getCategory() {
         return Category.DISTRIBUTED_CONFIG;
+    }
+
+    @NonNull
+    default Map<String, Object> populateBootstrapForDistributedConfiguration(@NonNull GeneratorContext generatorContext) {
+        Map<String, Object> config = generatorContext.getBootstrapConfiguration();
+        config.put("micronaut.application.name", generatorContext.getProject().getPropertyName());
+        config.put("micronaut.config-client.enabled", true);
+        return config;
     }
 }

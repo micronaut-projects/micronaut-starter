@@ -17,14 +17,14 @@ package io.micronaut.starter.feature.messaging.pubsub;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class PubSub implements MessagingFeature {
+public class PubSub extends GcpFeature implements MessagingFeature {
 
     public static final String NAME = "gcp-pubsub";
 
@@ -51,12 +51,13 @@ public class PubSub implements MessagingFeature {
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/#pubsub";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.gcp")
                 .artifactId("micronaut-gcp-pubsub")
