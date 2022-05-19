@@ -59,30 +59,6 @@ MavenBuild mavenBuild
     <@prop.getKey()>@prop.getValue()</@prop.getKey()>
 }
 }
-@if (features.contains("google-cloud-function-http")) {
-    <micronaut.runtime>google_function</micronaut.runtime>
-}
-@if (features.contains("oracle-function-http") || features.contains("oracle-function")) {
-    <micronaut.runtime>oracle_function</micronaut.runtime>
-}
-@if (features.contains("azure-function-http")) {
-    <micronaut.runtime>azure_function</micronaut.runtime>
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-    <micronaut.runtime>lambda</micronaut.runtime>
-}
-@if (features.contains("tomcat-server")) {
-    <micronaut.runtime>tomcat</micronaut.runtime>
-}
-@if (features.contains("jetty-server")) {
-    <micronaut.runtime>jetty</micronaut.runtime>
-}
-@if (features.contains("netty-server")) {
-    <micronaut.runtime>netty</micronaut.runtime>
-}
-@if (features.contains("undertow-server")) {
-    <micronaut.runtime>undertow</micronaut.runtime>
-}
   </properties>
 
   <repositories>
@@ -216,7 +192,7 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot")) {
           <configuration>
 @if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
@@ -238,6 +214,9 @@ MavenBuild mavenBuild
             <appArguments>
               <arg>${exec.mainClass}::handleRequest</arg>
             </appArguments>
+}
+@if (features.contains("micronaut-aot")) {
+            <configFile>aot-${packaging}.properties</configFile>
 }
           </configuration>
 }

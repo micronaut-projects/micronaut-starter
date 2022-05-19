@@ -225,6 +225,10 @@ public final class Dependency {
             }
         }
 
+        public Builder developmentOnly() {
+            return scope(Scope.DEVELOPMENT_ONLY);
+        }
+
         public Builder compile() {
             return scope(Scope.COMPILE);
         }

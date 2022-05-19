@@ -23,6 +23,11 @@
             <version>1.0.3</version>
         </dependency>
         <dependency>
+            <groupId>com.agorapulse</groupId>
+            <artifactId>micronaut-console</artifactId>
+            <version>2.0.1-micronaut-3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
             <version>3.8.1</version>
@@ -30,12 +35,12 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.0</version>
+            <version>5.3.8</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
-            <version>1.13</version>
+            <version>1.13.1</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -48,24 +53,24 @@
             <version>1.1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.assert</groupId>
+            <groupId>org.camunda.assert</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
-            <version>14.0.0</version>
+            <version>7.17.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-bpm-feature</artifactId>
-            <version>2.6.0</version>
+            <version>2.7.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-external-client-feature</artifactId>
-            <version>2.5.0</version>
+            <version>2.6.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-zeebe-client-feature</artifactId>
-            <version>1.5.0</version>
+            <version>1.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -75,7 +80,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-noarg</artifactId>
-            <version>1.6.10</version>
+            <version>1.6.21</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -85,7 +90,7 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-gradle-plugin</artifactId>
-            <version>1.6.10</version>
+            <version>1.6.20</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
@@ -180,12 +185,12 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>1.7.0</version>
+            <version>1.11.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>4.20.0</version>
+            <version>4.24.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>
@@ -200,7 +205,7 @@
         <dependency>
             <groupId>gg.jte</groupId>
             <artifactId>jte-maven-plugin</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>jakarta.json.bind</groupId>

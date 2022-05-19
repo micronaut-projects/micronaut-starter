@@ -1,34 +1,26 @@
 package io.micronaut.starter.feature.build.maven
 
-import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.application.Project
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenCombineAttribute
-import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import io.micronaut.starter.util.VersionInfo
-import spock.lang.Issue
-import spock.lang.PendingFeature
 import spock.lang.Unroll
 
-class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
+class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test use defaults from parent pom'() {
-        given:
-        GeneratorContext generatorContext = buildGeneratorContext([], new Options(null, null, BuildTool.MAVEN))
-
         when:
-        String template = pom.template(
-                generatorContext.getApplicationType(),
-                generatorContext.getProject(),
-                generatorContext.getFeatures(),
-                new MavenBuild(generatorContext.project.name, [],[], [], generatorContext.getBuildProperties().getProperties(), [], [], MavenCombineAttribute.APPEND, MavenCombineAttribute.APPEND),
-        ).render().toString()
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .render()
 
         then: 'parent pom is used'
         template.contains("""
@@ -113,29 +105,30 @@ class MavenSpec extends BeanContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test micronaut runtime for #feature'(ApplicationType applicationType, String feature, String runtime) {
-        given:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11)
-        Features features = getFeatures([feature], options, applicationType)
-        println features.features
+    void 'test micronaut runtime for #chosenFeatures'(ApplicationType applicationType,
+                                                      List<String> chosenFeatures,
+                                                      String runtime) {
 
         when:
-        Project project = buildProject()
-        String template = pom.template(applicationType, project, features, new MavenBuild(project.name)).render().toString()
-
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(chosenFeatures)
+                .language(Language.JAVA)
+                .jdkVersion(JdkVersion.JDK_11)
+                .render()
         then:
         template.contains("<micronaut.runtime>${runtime}</micronaut.runtime>")
 
         where:
-        applicationType             | feature                       | runtime
-        ApplicationType.DEFAULT     | "google-cloud-function"       | "google_function"
-        ApplicationType.DEFAULT     | "oracle-function"             | "oracle_function"
-        ApplicationType.DEFAULT     | "azure-function"              | "azure_function"
-        ApplicationType.DEFAULT     | "aws-lambda"                  | "lambda"
-        ApplicationType.DEFAULT     | "tomcat-server"               | "tomcat"
-        ApplicationType.DEFAULT     | "jetty-server"                | "jetty"
-        ApplicationType.DEFAULT     | "netty-server"                | "netty"
-        ApplicationType.DEFAULT     | "undertow-server"             | "undertow"
+        applicationType             | chosenFeatures                  | runtime
+        ApplicationType.DEFAULT     | ["google-cloud-function"]       | "google_function"
+        ApplicationType.DEFAULT     | ["oracle-function"]             | "oracle_function"
+        ApplicationType.DEFAULT     | ["azure-function"]              | "azure_function"
+        ApplicationType.DEFAULT     | ["aws-lambda"]                  | "lambda"
+        ApplicationType.DEFAULT     | ["aws-lambda", 'graalvm']       | "lambda"
+        ApplicationType.DEFAULT     | ["tomcat-server"]               | "tomcat"
+        ApplicationType.DEFAULT     | ["jetty-server"]                | "jetty"
+        ApplicationType.DEFAULT     | ["netty-server"]                | "netty"
+        ApplicationType.DEFAULT     | ["undertow-server"]             | "undertow"
     }
 
 }

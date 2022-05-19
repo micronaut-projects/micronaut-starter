@@ -4,19 +4,18 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.Project
+import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.build.gradle.GradleBuild
-import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.feature.build.gradle.templates.settingsGradle
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Unroll
 
 class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll
-    void "if you add gradle-enterprise plugin is configured in settings.gradle"(BuildTool buildTool) {
+    void "if you add gradle-enterprise to a #buildTool build plugin is configured in settings"(BuildTool buildTool) {
         when:
         BuildBuilder builder = new BuildBuilder(beanContext, buildTool)
                     .language(Language.JAVA)
@@ -25,6 +24,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
         String settings = settingsGradle.template(project, gradleBuild, []).render().toString()
+        String expectedVersion = builder.beanContext.getBean(CoordinateResolver).resolve(GradleEnterprise.GRADLE_ENTERPRISE_ARTIFACT_ID).get().version
 
         then:
         !settings.contains("allowUntrustedServer = true")
@@ -34,9 +34,9 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
         settings.contains('termsOfServiceUrl = "https://gradle.com/terms-of-service"')
         settings.contains('termsOfServiceAgree = "yes"')
         if (buildTool == BuildTool.GRADLE_KOTLIN) {
-            assert settings.contains('id("com.gradle.enterprise") version("3.8.1")')
+            assert settings.contains($/id("com.gradle.enterprise") version("$expectedVersion")/$)
         } else if (buildTool == BuildTool.GRADLE) {
-            assert settings.contains('id "com.gradle.enterprise" version "3.8.1"')
+            assert settings.contains($/id "com.gradle.enterprise" version "$expectedVersion"/$)
         }
 
         where:

@@ -9,7 +9,7 @@ package @project.getPackageName()
 }
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification

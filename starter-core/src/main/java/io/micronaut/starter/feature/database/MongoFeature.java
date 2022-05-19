@@ -15,21 +15,9 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
+public abstract class MongoFeature extends TestContainersFeature {
 
-public abstract class MongoFeature implements Feature {
-
-    private final TestContainers testContainers;
-
-    public MongoFeature(TestContainers testContainers) {
-        this.testContainers = testContainers;
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
-            featureContext.addFeature(testContainers);
-        }
+    protected MongoFeature(TestContainers testContainers) {
+        super(testContainers);
     }
 }

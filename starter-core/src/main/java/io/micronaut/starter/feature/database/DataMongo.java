@@ -15,10 +15,7 @@
  */
 package io.micronaut.starter.feature.database;
 
-import io.micronaut.core.annotation.Experimental;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 
 /**
@@ -26,53 +23,35 @@ import jakarta.inject.Singleton;
  
  * @author graemerocher
  */
-@Experimental
 @Singleton
-public class DataMongo implements DataFeature {
+public class DataMongo extends DataMongoFeature {
 
-    // TODO: Need to support either sync or async
-    private final MongoSync mongoSync;
+    private static final String SYNC_MONGODB_ARTIFACT = "mongodb-driver-sync";
 
-    public DataMongo(MongoSync mongoSync) {
-        this.mongoSync = mongoSync;
+    public DataMongo(Data data, TestContainers testContainers) {
+        super(data, testContainers);
     }
 
+    @NonNull
     @Override
     public String getName() {
         return "data-mongodb";
     }
 
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-data/latest/guide/#mongo";
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .annotationProcessor()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-document-processor")
-                .versionProperty("micronaut.data.version"));
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-mongodb")
-                .versionProperty("micronaut.data.version"));
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        featureContext.addFeature(mongoSync);
-    }
-
+    @NonNull
     @Override
     public String getDescription() {
-        return "Adds support for defining data repositories for MongoDB";
+        return "Adds support for defining synchronous data repositories for MongoDB";
     }
 
     @Override
     public String getTitle() {
         return "Micronaut Data MongoDB";
+    }
+
+    @NonNull
+    @Override
+    protected String mongoArtifact() {
+        return SYNC_MONGODB_ARTIFACT;
     }
 }

@@ -21,7 +21,7 @@ class FunctionRequestHandler : MicronautRequestHandler<APIGatewayProxyRequestEve
     lateinit var objectMapper: ObjectMapper
 
     override fun execute(input: APIGatewayProxyRequestEvent): APIGatewayProxyResponseEvent {
-        val response = APIGatewayProxyResponseEvent();
+        val response = APIGatewayProxyResponseEvent()
         try {
             val json = objectMapper.writeValueAsString(mapOf("message" to "Hello World"))
             response.statusCode = 200

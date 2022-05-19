@@ -35,8 +35,8 @@ class FunctionRequestHandlerTest {
     @@Test
     void testHandler() {
         APIGatewayProxyRequestEvent request = new APIGatewayProxyRequestEvent()
-        request.setHttpMethod("GET")
-        request.setPath("/")
+        request.httpMethod = "GET"
+        request.path = "/"
         APIGatewayProxyResponseEvent response = handler.execute(request)
         assertEquals(200, response.getStatusCode().intValue())
         assertEquals("{\"message\":\"Hello World\"}", response.body)

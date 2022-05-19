@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.function.oraclefunction;
 
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Primary;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -63,14 +64,13 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addTemplate(
                 "func.yml", new RockerTemplate(
                         "func.yml",
                         projectFnFunc.template(generatorContext.getProject()
                 ))
         );
-
-        applyFunction(generatorContext, generatorContext.getApplicationType());
     }
 
     @Override
@@ -155,5 +155,11 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-oracle-cloud/latest/guide/#httpFunctions";
+    }
+
+    @Override
+    @NonNull
+    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        return "oracle_function";
     }
 }

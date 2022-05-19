@@ -15,10 +15,10 @@ import io.micronaut.function.aws.proxy.MicronautLambdaHandler
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class BookRequestHandlerTest {
+class FunctionRequestHandlerTest {
 
     @@Test
-    fun testBookController() {
+    fun testFunctionRequestHandler() {
         val handler = MicronautLambdaHandler()
         val lambdaContext: Context = MockLambdaContext()
         val request = AwsProxyRequest()

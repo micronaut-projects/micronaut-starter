@@ -70,7 +70,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         status == HttpStatus.ACCEPTED
 
         when:
-        def application = repository.list(Pageable.UNPAGED)[0]
+        Application application = repository.list(Pageable.UNPAGED)[0]
 
         then:
         application.type == generated.type
@@ -83,7 +83,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         application.dateCreated
 
         when:
-        def topFeatures = featureRepository.topFeatures()
+        List<TotalDTO> topFeatures = featureRepository.topFeatures()
 
         then:
         !topFeatures.isEmpty()
@@ -91,11 +91,12 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         topFeatures[0].total == 1
 
         when:
-        def languages = featureRepository.topLanguages()
+        List<TotalDTO> languages = featureRepository.topLanguages()
 
         then:
         languages
-        languages[0].name == 'kotlin'
+        Language
+        languages[0].getName() == 'kotlin'
         featureRepository.topBuildTools()
         featureRepository.topJdkVersion()
         featureRepository.topTestFrameworks()
