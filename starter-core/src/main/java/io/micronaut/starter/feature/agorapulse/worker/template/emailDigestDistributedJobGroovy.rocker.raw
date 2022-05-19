@@ -26,7 +26,7 @@ class EmailDigestDistributedJob {
 
     @@Cron('45 6 * * *')
     Iterable<String> generateEmailsForDigest() {
-        return Collections.singleton('user@@example.com')
+        return ['user@@example.com']
     }
 
     @@FixedRate('1s')

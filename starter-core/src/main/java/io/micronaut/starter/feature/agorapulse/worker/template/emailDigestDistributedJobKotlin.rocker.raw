@@ -20,7 +20,7 @@ class EmailDigestDistributedJob(private val emailDigestService: EmailDigestServi
 
     @@Cron("45 6 * * *")
     fun generateEmailsForDigest(): Iterable<String> {
-        return Collections.singleton("user@@example.com");
+        return listOf("user@@example.com");
     }
 
     @@FixedRate("1s")
