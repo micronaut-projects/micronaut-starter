@@ -12,9 +12,7 @@ package @project.getPackageName()
 import com.agorapulse.worker.annotation.Cron
 import com.agorapulse.worker.annotation.FixedRate
 import groovy.transform.CompileStatic
-import io.micronaut.core.async.publisher.Publishers
 import jakarta.inject.Singleton
-import org.reactivestreams.Publisher
 
 @@Singleton
 @@CompileStatic
@@ -27,8 +25,8 @@ class EmailDigestDistributedJob {
     }
 
     @@Cron('45 6 * * *')
-    Publisher<String> generateEmailsForDigest() {
-        return Publishers.just('user@@example.com')
+    Iterable<String> generateEmailsForDigest() {
+        return Collections.singleton('user@@example.com')
     }
 
     @@FixedRate('1s')

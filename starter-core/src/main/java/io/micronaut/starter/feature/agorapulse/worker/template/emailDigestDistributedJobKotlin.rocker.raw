@@ -11,16 +11,16 @@ package @project.getPackageName()
 
 import com.agorapulse.worker.annotation.Cron
 import com.agorapulse.worker.annotation.FixedRate
-import io.micronaut.core.async.publisher.Publishers
 import jakarta.inject.Singleton
-import org.reactivestreams.Publisher
+
+import java.util.Collections
 
 @@Singleton
 class EmailDigestDistributedJob(private val emailDigestService: EmailDigestService) {
 
     @@Cron("45 6 * * *")
-    fun generateEmailsForDigest(): Publisher<String> {
-        return Publishers.just("user@@example.com");
+    fun generateEmailsForDigest(): Iterable<String> {
+        return Collections.singleton("user@@example.com");
     }
 
     @@FixedRate("1s")
