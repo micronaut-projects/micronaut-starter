@@ -1,0 +1,41 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+
+}
+
+import com.agorapulse.worker.annotation.Cron;
+import com.agorapulse.worker.annotation.FixedRate;
+import io.micronaut.core.async.publisher.Publishers;
+import jakarta.inject.Singleton;
+import org.reactivestreams.Publisher;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@@Singleton
+public class EmailDigestDistributedJob {
+
+    private final List<String> emailsSent = new ArrayList<>();
+
+    @@Cron("45 6 * * *")
+    public Publisher<String> generateEmailsForDigest() {
+        return Publishers.just("user@@example.com");
+    }
+
+    @@FixedRate("1s")
+    public void sendEmail(String email) {
+        emailsSent.add(email);
+        System.out.println("Sending email to " + email);
+    }
+
+    public List<String> getEmailsSent() {
+        return emailsSent;
+    }
+
+}

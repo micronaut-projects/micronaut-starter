@@ -23,6 +23,11 @@
             <version>1.0.3</version>
         </dependency>
         <dependency>
+            <groupId>com.agorapulse</groupId>
+            <artifactId>micronaut-worker</artifactId>
+            <version>1.2.1-micronaut-3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
             <version>3.8.1</version>
@@ -206,6 +211,11 @@
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
             <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.0</version>
         </dependency>
     </dependencies>
 </project>

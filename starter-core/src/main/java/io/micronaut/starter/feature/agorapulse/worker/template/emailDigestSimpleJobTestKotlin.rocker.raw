@@ -1,0 +1,36 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import com.agorapulse.worker.JobManager
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.awaitility.Awaitility
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import java.util.concurrent.TimeUnit
+
+@@MicronautTest
+internal class EmailDigestSimpleJobTest {
+
+    @@Inject
+    lateinit var job: EmailDigestSimpleJob
+
+    @@Inject
+    lateinit var jobManager: JobManager
+
+    @@Test
+    fun testSendEmailsDirect() {
+        Assertions.assertEquals(0, job.emailsSent)
+        jobManager.forceRun(EmailDigestSimpleJob::class.java)
+        Awaitility.await().atMost(1, TimeUnit.SECONDS).until { job.emailsSent == 1 }
+    }
+
+}

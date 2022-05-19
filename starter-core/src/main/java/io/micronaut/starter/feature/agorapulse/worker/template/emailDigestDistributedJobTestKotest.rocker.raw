@@ -1,0 +1,31 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import com.agorapulse.worker.JobManager
+import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.kotest.core.spec.style.StringSpec
+import io.micronaut.context.annotation.Property
+import org.awaitility.Awaitility
+import org.junit.jupiter.api.Assertions
+import java.util.concurrent.TimeUnit
+
+@@MicronautTest
+@@Property(name = "worker.jobs.email-digest-distributed-job-send-email.enabled", value = "true")
+@@Property(name = "worker.jobs.email-digest-distributed-job-send-email.fixed-rate", value = "1ms")
+class EmailDigestDistributedJobTest(private val jobManager: JobManager, private val job: EmailDigestDistributedJob): StringSpec({
+
+    "send emails distributed" {
+        Assertions.assertEquals(0, job.emailsSent.size)
+        jobManager.forceRun(EmailDigestDistributedJob::class.java, "generateEmailsForDigest")
+        Awaitility.await().atMost(1, TimeUnit.SECONDS).until { job.emailsSent.size == 1 }
+    }
+
+})
