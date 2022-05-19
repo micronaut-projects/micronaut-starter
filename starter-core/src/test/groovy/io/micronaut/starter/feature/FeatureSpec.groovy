@@ -51,10 +51,10 @@ class FeatureSpec extends BeanContextSpec {
         if (feature instanceof JAsyncSQLFeature) {
             // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
             // so it can't be tested in isolation like this in isolation
-            features += 'mysql'
+            features << 'mysql'
         } else if (feature instanceof Cdk) {
             // Cdk fails unless it is combined with Lambda
-            features += AwsLambda.FEATURE_NAME_AWS_LAMBDA
+            features << AwsLambda.FEATURE_NAME_AWS_LAMBDA
         }
         def commandCtx = new GeneratorContext(buildProject(),
                 applicationType,
