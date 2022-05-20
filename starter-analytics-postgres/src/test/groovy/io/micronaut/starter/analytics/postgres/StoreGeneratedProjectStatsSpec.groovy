@@ -96,8 +96,7 @@ class StoreGeneratedProjectStatsSpec extends Specification implements TestProper
         then:
         languages
         Language
-        //Regression languages[0].getName() == 'kotlin'
-        Language.KOTLIN == Language.valueOf(languages[0].name)
+        languages[0].getName() == 'kotlin'
         featureRepository.topBuildTools()
         featureRepository.topJdkVersion()
         featureRepository.topTestFrameworks()

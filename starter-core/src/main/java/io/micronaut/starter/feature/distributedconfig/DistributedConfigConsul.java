@@ -60,7 +60,7 @@ public class DistributedConfigConsul implements DistributedConfigFeature {
                 .groupId("io.micronaut.discovery")
                 .artifactId("micronaut-discovery-client")
                 .compile());
-        generatorContext.getBootstrapConfiguration().put("micronaut.config-client.enabled", true);
+        populateBootstrapForDistributedConfiguration(generatorContext);
     }
 
     @Override
