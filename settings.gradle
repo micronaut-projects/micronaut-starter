@@ -28,6 +28,7 @@ include 'starter-gcp-function'
 include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
 
+include 'test-aws'
 include 'test-core'
 include 'test-cloud'
 include 'test-utils'
