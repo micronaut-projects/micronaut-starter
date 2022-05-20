@@ -1,6 +1,5 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
-
 import io.micronaut.starter.core.test.feature.testcontainers.book
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
 import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
