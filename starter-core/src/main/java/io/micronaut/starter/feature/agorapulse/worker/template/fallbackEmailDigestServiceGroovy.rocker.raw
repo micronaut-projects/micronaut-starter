@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+import jakarta.inject.Singleton
+
+@@Slf4j
+@@Singleton
+@@CompileStatic
+class FallbackEmailDigestService implements EmailDigestService {
+
+    void sendEmail(String email) {
+        log.info "Sending email to $email"
+    }
+
+}

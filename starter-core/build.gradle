@@ -29,7 +29,8 @@ dependencies {
 def micronautVersionInfo = tasks.register("micronautVersionInfo", io.micronaut.internal.starter.tasks.WriteMicronautVersionInfoTask) {
     version = micronautVersion
     extraBomProperties = [
-            'io.micronaut.grpc:micronaut-grpc'
+            'io.micronaut.grpc:micronaut-grpc',
+            'io.micronaut.picocli:micronaut-picocli',
     ]
     outputDirectory = layout.buildDirectory.dir("version-info")
 }

@@ -29,6 +29,11 @@
         </dependency>
         <dependency>
             <groupId>com.agorapulse</groupId>
+            <artifactId>micronaut-worker</artifactId>
+            <version>1.2.1-micronaut-3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.agorapulse</groupId>          
             <artifactId>micronaut-console</artifactId>
             <version>2.0.1-micronaut-3.0</version>
         </dependency>
@@ -216,6 +221,21 @@
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
             <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-groovy</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility-kotlin</artifactId>
+            <version>4.2.0</version>
         </dependency>
     </dependencies>
 </project>

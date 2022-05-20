@@ -35,6 +35,7 @@ class FeatureControllerSpec extends Specification {
                 'camunda-external-worker',
                 'gru-http',
                 'micronaut-console',
+                'micronaut-worker',
                 'zeebe',
         ]
     }
