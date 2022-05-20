@@ -56,7 +56,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:coreTest --refresh-dependencies --parallel --continue
+        run: ./gradlew test-core:test --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -110,7 +110,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:featureTest --refresh-dependencies --parallel --continue
+        run: ./gradlew test-features:test --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
@@ -164,7 +164,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:buildToolTest --refresh-dependencies --parallel --continue
+        run: ./gradlew test-buildtool:test --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}

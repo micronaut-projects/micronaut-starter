@@ -2,7 +2,12 @@ package io.micronaut.starter.core.test.feature.github.workflows.oci
 
 import com.oracle.bmc.Region
 import com.oracle.bmc.apigateway.DeploymentClient
-import com.oracle.bmc.apigateway.model.*
+import com.oracle.bmc.apigateway.model.ApiSpecification
+import com.oracle.bmc.apigateway.model.ApiSpecificationRoute
+import com.oracle.bmc.apigateway.model.CreateDeploymentDetails
+import com.oracle.bmc.apigateway.model.Deployment
+import com.oracle.bmc.apigateway.model.DeploymentSummary
+import com.oracle.bmc.apigateway.model.OracleFunctionBackend
 import com.oracle.bmc.apigateway.requests.CreateDeploymentRequest
 import com.oracle.bmc.apigateway.requests.DeleteDeploymentRequest
 import com.oracle.bmc.apigateway.requests.GetDeploymentRequest
