@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+@args (Project project)
+
+package @project.getPackageName()
+
+import io.micronaut.context.condition.Condition
+import io.micronaut.context.condition.ConditionContext
+
+import java.io.File
+
+/**
+ * @@see <a href="https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/region-selection.html">Default region provider chain</a>
+ */
+class CIAwsRegionProviderChainCondition implements Condition {
+    @@Override
+    boolean matches(ConditionContext context) {
+        if (System.getenv("CI")) {
+            return true
+        }
+        if (System.getenv("AWS_REGION")) {
+            return true
+        }
+        System.getenv("HOME") && new File("${System.getenv("HOME")}/.aws/config").exists()
+    }
+}
