@@ -16,9 +16,8 @@ class CreateAwsLambdaGraalvmSpec extends CommandSpec {
 
     @Requires({ Jvm.current.java8 || Jvm.current.java11 })
     @Unroll
-    void 'create-#applicationType with features aws-lambda, graalvm and lang #lang and build #build and test framework: #testFramework'(ApplicationType applicationType, Language lang, BuildTool build, TestFramework testFramework
-
-    ) {
+    void 'create-#applicationType with features aws-lambda, graalvm and lang #lang and build #build and test framework: #testFramework'(
+            ApplicationType applicationType, Language lang, BuildTool build, TestFramework testFramework) {
         given:
         List<String> features = ['aws-lambda', 'graalvm']
         generateProject(lang, build, features, applicationType, testFramework)

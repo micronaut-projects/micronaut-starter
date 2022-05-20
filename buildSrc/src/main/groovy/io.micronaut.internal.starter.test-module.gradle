@@ -5,3 +5,7 @@ plugins {
 dependencies {
     implementation gradleTestKit()
 }
+
+tasks.withType(Test).configureEach {
+    forkEvery = 10
+}
