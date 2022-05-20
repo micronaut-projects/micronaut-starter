@@ -137,7 +137,7 @@ jobs:
           distribution: 'adopt'
           java-version: ${{ matrix.java }}
       - name: Run app Functional Tests
-        run: ./gradlew test-core:cloudTest --refresh-dependencies --parallel --continue
+        run: ./gradlew test-cloud:check --refresh-dependencies --parallel --continue
         env:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}

@@ -51,12 +51,6 @@ tasks.register("featureTest", Test) {
     }
 }
 
-tasks.register("cloudTest", Test) {
-    filter {
-        includeTestsMatching "io.micronaut.starter.core.test.cloud.**"
-    }
-}
-
 tasks.register("buildToolTest", Test) {
     filter {
         includeTestsMatching "io.micronaut.starter.core.test.buildTool.**"

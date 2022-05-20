@@ -29,6 +29,7 @@ include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
 
 include 'test-core'
+include 'test-cloud'
 include 'test-utils'
 include 'test-cli'
 
