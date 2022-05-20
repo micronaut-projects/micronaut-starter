@@ -7,7 +7,3 @@ dependencies {
     testImplementation project(":micronaut-cli")
     testImplementation "ch.qos.logback:logback-classic:1.2.11"
 }
-
-tasks.withType(Test).configureEach {
-    forkEvery = 10
-}

@@ -8,26 +8,3 @@ dependencies {
     testImplementation project(":micronaut-cli")
     testImplementation "ch.qos.logback:logback-classic:1.2.11"
 }
-
-tasks.withType(Test).configureEach {
-    forkEvery = 10
-}
-
-
-tasks.register("coreTest", Test) {
-    filter {
-        includeTestsMatching "io.micronaut.starter.core.test.create.**"
-    }
-}
-
-tasks.register("featureTest", Test) {
-    filter {
-        includeTestsMatching "io.micronaut.starter.core.test.feature.**"
-    }
-}
-
-tasks.register("buildToolTest", Test) {
-    filter {
-        includeTestsMatching "io.micronaut.starter.core.test.buildTool.**"
-    }
-}

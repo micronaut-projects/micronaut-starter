@@ -26,7 +26,3 @@ rocker {
     javaVersion = '1.8'
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
-
-tasks.withType(Test).configureEach {
-    forkEvery = 10
-}
