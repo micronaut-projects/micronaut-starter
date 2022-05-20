@@ -27,6 +27,9 @@ import io.micronaut.starter.feature.aws.template.dynamodbConfigurationKotlin;
 import io.micronaut.starter.feature.aws.template.dynamodbRepositoryGroovy;
 import io.micronaut.starter.feature.aws.template.dynamodbRepositoryJava;
 import io.micronaut.starter.feature.aws.template.dynamodbRepositoryKotlin;
+import io.micronaut.starter.feature.aws.template.ciawsconditionGroovy;
+import io.micronaut.starter.feature.aws.template.ciawsconditionJava;
+import io.micronaut.starter.feature.aws.template.ciawsconditionKotlin;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -63,6 +66,12 @@ public class DynamoDb implements AwsFeature {
                 dynamodbConfigurationJava.template(generatorContext.getProject()),
                 dynamodbConfigurationKotlin.template(generatorContext.getProject()),
                 dynamodbConfigurationGroovy.template(generatorContext.getProject()));
+
+        String ciAwsCredentialsProviderChainCondition = generatorContext.getSourcePath("/{packagePath}/CIAwsCredentialsProviderChainCondition");
+        generatorContext.addTemplate("ciAwsCredentialsProviderChainCondition", ciAwsCredentialsProviderChainCondition,
+                ciawsconditionJava.template(generatorContext.getProject()),
+                ciawsconditionKotlin.template(generatorContext.getProject()),
+                ciawsconditionGroovy.template(generatorContext.getProject()));
     }
 
     @Override

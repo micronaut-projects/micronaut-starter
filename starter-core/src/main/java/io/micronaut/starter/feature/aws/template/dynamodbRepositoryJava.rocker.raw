@@ -8,6 +8,7 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
+@@Requires(condition = CIAwsCredentialsProviderChainCondition.class)
 @@Requires(beans = { DynamoConfiguration.class, DynamoDbClient.class })
 @@Singleton
 public class DynamoRepository  {

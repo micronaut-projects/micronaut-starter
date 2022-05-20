@@ -3,12 +3,13 @@
 
 package @project.getPackageName();
 
-import io.micronaut.context.annotation.Requires;
-import io.micronaut.core.annotation.NonNull;
-import jakarta.inject.Singleton;
-import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import io.micronaut.context.annotation.Requirements
+import io.micronaut.context.annotation.Requires
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient
+import jakarta.inject.Singleton
 
-@@Requires(beans = [DynamoDbClient::class, DynamoConfiguration::class])
+@@Requirements(Requires(beans = [DynamoDbClient::class, DynamoConfiguration::class]),
+        Requires(condition = CIAwsCredentialsProviderChainCondition::class))
 @@Singleton
 class DynamoRepository(private val dynamoDbClient: DynamoDbClient, private val dynamoConfiguration: DynamoConfiguration)  {
 }
