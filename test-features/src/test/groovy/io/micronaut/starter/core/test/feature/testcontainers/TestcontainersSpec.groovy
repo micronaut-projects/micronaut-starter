@@ -1,5 +1,8 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
+import io.micronaut.starter.core.test.feature.testcontainers.book
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
