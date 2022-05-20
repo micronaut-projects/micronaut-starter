@@ -34,7 +34,7 @@ class CIAwsCredentialsProviderChainCondition implements Condition {
             LOG.info("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI environment variable present - Condition fulfilled")
             return true
         }
-        boolean result = System.getenv("HOME") && new File(System.getenv("HOME") + "/.aws/credentials").exists()
+        boolean result = System.getenv("HOME") != null && new File(System.getenv("HOME") + "/.aws/credentials").exists()
         if (result) {
             LOG.info("~/.aws/credentials file exists - Condition fulfilled")
         }

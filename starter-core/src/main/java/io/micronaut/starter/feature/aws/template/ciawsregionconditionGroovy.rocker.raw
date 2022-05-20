@@ -25,7 +25,7 @@ class CIAwsRegionProviderChainCondition implements Condition {
             LOG.info("AWS_REGION environment variable present - Condition fulfilled")
             return true
         }
-        boolean result = System.getenv("HOME") && new File(System.getenv("HOME") + "/.aws/config").exists()
+        boolean result = System.getenv("HOME") != null && new File(System.getenv("HOME") + "/.aws/config").exists()
         if (result) {
             LOG.info("~/.aws/config file exists - Condition fulfilled");
         }
