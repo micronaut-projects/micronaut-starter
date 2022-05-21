@@ -1,19 +1,19 @@
 @import io.micronaut.starter.application.Project
 @args (Project project)
 
-package @project.getPackageName();
+package @project.getPackageName()
 
 import io.micronaut.context.condition.Condition
 import io.micronaut.context.condition.ConditionContext
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.File
 
 /**
  * @@see <a href="https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/region-selection.html">Default region provider chain</a>
  */
 class CIAwsRegionProviderChainCondition : Condition {
-    private val LOG = LoggerFactory.getLogger(CIAwsRegionProviderChainCondition)
+    private val LOG : Logger = LoggerFactory.getLogger(CIAwsRegionProviderChainCondition::class.java)
 
     override fun matches(context: ConditionContext<*>?): Boolean {
         if (System.getenv("CI") == null) {
@@ -32,6 +32,6 @@ class CIAwsRegionProviderChainCondition : Condition {
         if (result) {
             LOG.info("~/.aws/config file exists - Condition fulfilled");
         }
-        return result;
+        return result
     }
 }

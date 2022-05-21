@@ -84,7 +84,7 @@ public class DynamoDb implements AwsFeature {
                 ciawsregionconditionKotlin.template(generatorContext.getProject()),
                 ciawsregionconditionGroovy.template(generatorContext.getProject()));
 
-        Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+        Configuration testConfig = generatorContext.getConfiguration("function", new ApplicationConfiguration("test", "function"));
         testConfig.put("aws.region", "us-east-1");
     }
 
