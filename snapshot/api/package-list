@@ -65,6 +65,7 @@ io.micronaut.starter.feature.agorapulse.worker.template
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.aws
+io.micronaut.starter.feature.aws.template
 io.micronaut.starter.feature.awsalexa
 io.micronaut.starter.feature.awsalexa.templates
 io.micronaut.starter.feature.awslambdacustomruntime

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/starter/application/generator/DefaultProjectGenerator.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/application/generator/DependencyContextImpl.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -262,7 +262,7 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Depen
                 <a href="../../../../../io/micronaut/starter/feature/config/ApplicationConfiguration.html" title="class in io.micronaut.starter.feature.config">ApplicationConfiguration</a>&nbsp;defaultConfig)</code>&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getDependencies--">getDependencies</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
@@ -286,48 +286,52 @@ implements <a href="../../../../../io/micronaut/starter/build/dependencies/Depen
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getLanguage--">getLanguage</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
+<td class="colFirst"><code>java.util.Collection&lt;java.lang.String&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getModuleNames--">getModuleNames</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/OperatingSystem.html" title="enum in io.micronaut.starter.application">OperatingSystem</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getOperatingSystem--">getOperatingSystem</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.util.Collection&lt;<a href="../../../../../io/micronaut/starter/feature/build/maven/Profile.html" title="class in io.micronaut.starter.feature.build.maven">Profile</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getProfiles--">getProfiles</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getProject--">getProject</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>&lt;T extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getRequiredFeature-java.lang.Class-">getRequiredFeature</a></span>(java.lang.Class&lt;T&gt;&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getSourcePath-java.lang.String-">getSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,<a href="../../../../../io/micronaut/starter/template/Template.html" title="interface in io.micronaut.starter.template">Template</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTemplates--">getTemplates</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/options/TestFramework.html" title="enum in io.micronaut.starter.options">TestFramework</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestFramework--">getTestFramework</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#getTestSourcePath-java.lang.String-">getTestSourcePath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#isFeaturePresent-java.lang.Class-">isFeaturePresent</a></span>(java.lang.Class&lt;? extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;feature)</code>&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#removeTemplate-java.lang.String-">removeTemplate</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Adds a template.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="../../../../../io/micronaut/starter/build/dependencies/Coordinate.html" title="interface in io.micronaut.starter.build.dependencies">Coordinate</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html#resolveCoordinate-java.lang.String-">resolveCoordinate</a></span>(java.lang.String&nbsp;artifactId)</code>&nbsp;</td>
 </tr>
@@ -773,6 +777,24 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/application/OperatingSy
                         com.fizzed.rocker.RockerModel&nbsp;groovyTemplate)</pre>
 </li>
 </ul>
+<a name="addBuildPlugin-io.micronaut.starter.build.BuildPlugin-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addBuildPlugin</h4>
+<pre>public&nbsp;void&nbsp;addBuildPlugin(<a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a>&nbsp;buildPlugin)</pre>
+</li>
+</ul>
+<a name="resolveCoordinate-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveCoordinate</h4>
+<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/Coordinate.html" title="interface in io.micronaut.starter.build.dependencies">Coordinate</a>&nbsp;resolveCoordinate(java.lang.String&nbsp;artifactId)</pre>
+</li>
+</ul>
 <a name="addDependency-io.micronaut.starter.build.dependencies.Dependency-">
 <!--   -->
 </a>
@@ -794,29 +816,11 @@ public&nbsp;<a href="../../../../../io/micronaut/starter/application/OperatingSy
 <li class="blockList">
 <h4>getDependencies</h4>
 <pre>@NonNull
-public&nbsp;java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;&nbsp;getDependencies()</pre>
+public&nbsp;java.util.Collection&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a>&gt;&nbsp;getDependencies()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyContext.html#getDependencies--">getDependencies</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/build/dependencies/DependencyContext.html" title="interface in io.micronaut.starter.build.dependencies">DependencyContext</a></code></dd>
 </dl>
-</li>
-</ul>
-<a name="addBuildPlugin-io.micronaut.starter.build.BuildPlugin-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addBuildPlugin</h4>
-<pre>public&nbsp;void&nbsp;addBuildPlugin(<a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a>&nbsp;buildPlugin)</pre>
-</li>
-</ul>
-<a name="resolveCoordinate-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>resolveCoordinate</h4>
-<pre>public&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/Coordinate.html" title="interface in io.micronaut.starter.build.dependencies">Coordinate</a>&nbsp;resolveCoordinate(java.lang.String&nbsp;artifactId)</pre>
 </li>
 </ul>
 <a name="getBuildPlugins--">
@@ -826,6 +830,15 @@ public&nbsp;java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/
 <li class="blockList">
 <h4>getBuildPlugins</h4>
 <pre>public&nbsp;java.util.Set&lt;<a href="../../../../../io/micronaut/starter/build/BuildPlugin.html" title="interface in io.micronaut.starter.build">BuildPlugin</a>&gt;&nbsp;getBuildPlugins()</pre>
+</li>
+</ul>
+<a name="getModuleNames--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getModuleNames</h4>
+<pre>public&nbsp;java.util.Collection&lt;java.lang.String&gt;&nbsp;getModuleNames()</pre>
 </li>
 </ul>
 <a name="addProfile-io.micronaut.starter.feature.build.maven.Profile-">
@@ -875,7 +888,7 @@ public&nbsp;java.util.Collection&lt;<a href="../../../../../io/micronaut/starter
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../io/micronaut/starter/application/generator/DefaultProjectGenerator.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../io/micronaut/starter/application/generator/DependencyContextImpl.html" title="class in io.micronaut.starter.application.generator"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../../io/micronaut/starter/application/generator/ProjectGenerator.html" title="interface in io.micronaut.starter.application.generator"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
