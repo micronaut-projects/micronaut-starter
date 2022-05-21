@@ -15,5 +15,18 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature {
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.OneOfFeature;
+
+public interface AwsLambdaEventFeature extends OneOfFeature {
+
+    @Override
+    default Class<?> getFeatureClass() {
+        return AwsLambdaEventFeature.class;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.CLOUD;
+    }
 }

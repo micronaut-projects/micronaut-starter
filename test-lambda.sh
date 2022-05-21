@@ -23,8 +23,11 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
+
 
 ############
 # | BUILD  | TYPE     | RUNTIME | FEATURES
@@ -46,7 +49,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -69,7 +74,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -92,7 +99,9 @@ rm -rf starter-cli/temp
 #   exit $EXIT_STATUS
 # fi
 # 
-# cd ../..
+# cd infra
+# cdk destroy -f
+# cd ../../..
 # rm -rf starter-cli/temp
 
 ############
@@ -115,7 +124,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -138,7 +149,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -161,7 +174,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -184,7 +199,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -207,7 +224,9 @@ rm -rf starter-cli/temp
 #   exit $EXIT_STATUS
 # fi
 # 
-# cd ../..
+# cd infra
+# cdk destroy -f
+# cd ../../..
 # rm -rf starter-cli/temp
 
 ############
@@ -230,7 +249,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -253,7 +274,9 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 
-cd ../..
+cd infra
+cdk destroy -f
+cd ../../..
 rm -rf starter-cli/temp
 
 ############
@@ -276,7 +299,9 @@ rm -rf starter-cli/temp
 #   exit $EXIT_STATUS
 # fi
 # 
-# cd ../..
+# cd infra
+# cdk destroy -f
+# cd ../../..
 # rm -rf starter-cli/temp
 
 exit $EXIT_STATUS

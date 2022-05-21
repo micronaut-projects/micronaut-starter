@@ -1,22 +1,38 @@
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.feature.Features;
 
-@args (
-Project project
-)
+@args (Features features, Project project)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
 }
 
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
-import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
+import io.micronaut.function.aws.MicronautRequestHandler
+@if (features.contains("aws-lambda-scheduled-event")) {
+import com.amazonaws.services.lambda.runtime.events.ScheduledEvent
+} else if (features.contains("aws-lambda-s3-event-notification")) {
+import com.amazonaws.services.lambda.runtime.events.models.s3.S3EventNotification;
+} else {
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.micronaut.function.aws.MicronautRequestHandler
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import jakarta.inject.Inject
-
+}
+@if (features.contains("aws-lambda-scheduled-event")) {
+class FunctionRequestHandler : MicronautRequestHandler<ScheduledEvent, Void?>() {
+    override fun execute(input: ScheduledEvent): Void? {
+        return null
+    }
+}
+} else if (features.contains("aws-lambda-s3-event-notification")) {
+class FunctionRequestHandler : MicronautRequestHandler<S3EventNotification, Void?>() {
+    override fun execute(input: S3EventNotification): Void? {
+        return null
+    }
+}
+} else {
 class FunctionRequestHandler : MicronautRequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent>() {
-
     @@Inject
     lateinit var objectMapper: ObjectMapper
 
@@ -31,5 +47,6 @@ class FunctionRequestHandler : MicronautRequestHandler<APIGatewayProxyRequestEve
         }
         return response
     }
+}
 }
 
