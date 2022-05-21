@@ -1,0 +1,26 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.util.VersionInfo
+@import java.util.Collection
+@args (Project project, Collection<String> moduleNames)
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.micronaut</groupId>
+        <artifactId>micronaut-parent</artifactId>
+        <version>@VersionInfo.getMicronautVersion()</version>
+    </parent>
+
+    <artifactId>@(project.getName())-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <groupId>@project.getPackageName()</groupId>
+    <name>@project.getName()</name>
+    <packaging>pom</packaging>
+
+    <modules>
+@for (String moduleName : moduleNames) {
+        <module>@moduleName</module>
+}
+    </modules>
+</project>

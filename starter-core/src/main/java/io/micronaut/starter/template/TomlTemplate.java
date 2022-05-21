@@ -38,13 +38,16 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class TomlTemplate implements Template {
-    private final String path;
+public class TomlTemplate extends DefaultTemplate {
 
     private final Map<DottedKey, Map<DottedKey, Object>> tables;
 
     public TomlTemplate(String path, Configuration config) {
-        this.path = path;
+        this(DEFAULT_MODULE, path, config);
+    }
+
+    public TomlTemplate(String module, String path, Configuration config) {
+        super(module, path);
 
         // normalize config
         Map<DottedKey, Object> normalized = normalizeTopLevel(config);
@@ -71,11 +74,6 @@ public class TomlTemplate implements Template {
         for (DottedKey tableKey : tableKeys) {
             this.tables.put(tableKey, tables.get(tableKey));
         }
-    }
-
-    @Override
-    public String getPath() {
-        return path;
     }
 
     @Override

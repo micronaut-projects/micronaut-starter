@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.build.MicronautAot;
 import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.feature.test.TestFeature;
 import io.micronaut.starter.options.BuildTool;
@@ -60,7 +62,23 @@ public class Features extends ArrayList<String> {
     }
 
     public boolean hasFunctionFeature() {
-        return getFeatures().stream().anyMatch(f -> f instanceof FunctionFeature);
+        return hasFeature(FunctionFeature.class);
+    }
+
+    public boolean hasGraalvm() {
+        return hasFeature(GraalVM.class);
+    }
+
+    public boolean hasAotBuildPlugin() {
+        return hasFeature(MicronautAot.class);
+    }
+
+    public boolean hasFeature(Class<?> clazz) {
+        return getFeatures().stream().anyMatch(clazz::isInstance);
+    }
+
+    public boolean hasMultiProjectFeature() {
+        return getFeatures().stream().anyMatch(MultiProjectFeature.class::isInstance);
     }
 
     public BuildTool build() {

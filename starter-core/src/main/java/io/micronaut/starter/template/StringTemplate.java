@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,19 +19,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class StringTemplate implements Template {
+public class StringTemplate extends DefaultTemplate {
 
-    private final String path;
     private final String content;
 
     public StringTemplate(String path, String content) {
-        this.path = path;
-        this.content = content;
+        this(DEFAULT_MODULE, path, content);
     }
 
-    @Override
-    public String getPath() {
-        return path;
+    public StringTemplate(String module, String path, String content) {
+        super(module, path);
+        this.content = content;
     }
 
     @Override

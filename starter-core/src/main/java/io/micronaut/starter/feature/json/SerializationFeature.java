@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.options.BuildTool;
@@ -27,7 +28,6 @@ import java.util.List;
 
 public interface SerializationFeature extends JsonFeature {
     String MICRONAUT_SERIALIZATION = "micronaut.serialization";
-    String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     String ARTIFACT_ID_MICRONAUT_JACKSON_CORE = "micronaut-jackson-core";
 
     @Override
@@ -69,18 +69,16 @@ public interface SerializationFeature extends JsonFeature {
 
     @NonNull
     default Dependency.Builder micronautRuntimeDependency() {
-        return Dependency.builder()
-                .compile()
-                .groupId(GROUP_ID_MICRONAUT)
+        return MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-runtime")
+                .compile()
                 .exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
     }
 
     @NonNull
     default Dependency.Builder serdeModule(@NonNull GeneratorContext generatorContext) {
-        Dependency.Builder builder = Dependency.builder()
+        Dependency.Builder builder = MicronautDependencyUtils.serdeDependency()
                 .compile()
-                .groupId(GROUP_ID_MICRONAUT_SERDE)
                 .artifactId("micronaut-serde-" + getModule());
         substitutions(generatorContext).forEach(builder::substitution);
         return builder;
@@ -88,9 +86,8 @@ public interface SerializationFeature extends JsonFeature {
 
     @NonNull
     default Dependency.Builder serdeProcessor() {
-        return Dependency.builder()
+        return MicronautDependencyUtils.serdeDependency()
                 .annotationProcessor()
-                .groupId(GROUP_ID_MICRONAUT_SERDE)
                 .artifactId("micronaut-serde-processor")
                 .versionProperty("micronaut.serialization.version");
     }

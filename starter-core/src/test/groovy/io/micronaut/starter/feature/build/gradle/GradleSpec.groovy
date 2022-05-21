@@ -17,7 +17,7 @@ class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
 
     void "test settings.gradle"() {
         GradleBuild gradleBuild = new GradleBuild()
-        String template = settingsGradle.template(buildProject(), gradleBuild).render().toString()
+        String template = settingsGradle.template(buildProject(), gradleBuild, []).render().toString()
 
         expect:
         template.contains('rootProject.name="foo"')

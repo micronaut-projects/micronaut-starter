@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.cli;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
 import picocli.CommandLine;
@@ -68,7 +69,7 @@ public class UpdateCliConfigCommand extends CodeGenCommand {
     public Integer call() throws Exception {
         TemplateRenderer templateRenderer = getTemplateRenderer();
 
-        templateRenderer.render(new RockerTemplate("micronaut-cli.yml", cli.template(config.getSourceLanguage(),
+        templateRenderer.render(new RockerTemplate(Template.ROOT, "micronaut-cli.yml", cli.template(config.getSourceLanguage(),
                 config.getTestFramework(),
                 config.getBuildTool(),
                 //Only the package is used

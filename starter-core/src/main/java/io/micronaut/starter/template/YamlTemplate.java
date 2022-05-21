@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,20 +25,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class YamlTemplate implements Template {
+public class YamlTemplate extends DefaultTemplate {
 
     private static final Pattern DOT_PATTERN = Pattern.compile("\\.");
-    private final String path;
     private final Map<String, Object> config;
 
     public YamlTemplate(String path, Map<String, Object> config) {
-        this.path = path;
-        this.config = transform(config);
+        this(DEFAULT_MODULE, path, config);
     }
 
-    @Override
-    public String getPath() {
-        return path;
+    public YamlTemplate(String module, String path, Map<String, Object> config) {
+        super(module, path);
+        this.config = transform(config);
     }
 
     @Override

@@ -1,0 +1,15 @@
+@import io.micronaut.starter.application.Project
+
+@args (Project project)
+
+package @project.getPackageName();
+
+import software.amazon.awscdk.App;
+
+public class Main {
+    public static void main(final String[] args) {
+        App app = new App();
+        new AppStack(app, "MicronautAppStack");
+        app.synth();
+    }
+}

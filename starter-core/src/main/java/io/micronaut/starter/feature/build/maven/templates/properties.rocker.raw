@@ -1,0 +1,14 @@
+@import io.micronaut.starter.build.Property
+@import java.util.List
+
+@args (List<Property> properties)
+
+@if (properties != null && !properties.isEmpty()) {
+  <properties>
+@for (Property prop : properties) {
+@if (!prop.isComment()) {
+    <@(prop.getKey())>@(prop.getValue())</@(prop.getKey())>
+}
+}
+  </properties>
+}

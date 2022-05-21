@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.feature.build.maven;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.maven.MavenBuild;
@@ -27,9 +29,12 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
+import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Singleton
@@ -37,6 +42,7 @@ public class Maven implements BuildFeature {
     private static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     private static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
     private static final String WRAPPER_DOWNLOADER = ".mvn/wrapper/MavenWrapperDownloader.java";
+    private static final String MAVEN_PREFIX = "maven/";
 
     private final MavenBuildCreator dependencyResolver;
 
@@ -45,6 +51,7 @@ public class Maven implements BuildFeature {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "maven";
     }
@@ -53,11 +60,11 @@ public class Maven implements BuildFeature {
     public void apply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        generatorContext.addTemplate("mavenWrapperJar", new BinaryTemplate(WRAPPER_JAR, classLoader.getResource("maven/" + WRAPPER_JAR)));
-        generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(WRAPPER_PROPS, classLoader.getResource("maven/" + WRAPPER_PROPS)));
-        generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(WRAPPER_DOWNLOADER, classLoader.getResource("maven/" + WRAPPER_DOWNLOADER)));
-        generatorContext.addTemplate("mavenWrapper", new URLTemplate("mvnw", classLoader.getResource("maven/mvnw"), true));
-        generatorContext.addTemplate("mavenWrapperBat", new URLTemplate("mvnw.bat", classLoader.getResource("maven/mvnw.cmd"), false));
+        generatorContext.addTemplate("mavenWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(MAVEN_PREFIX + WRAPPER_JAR)));
+        generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(MAVEN_PREFIX + WRAPPER_PROPS)));
+        generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(Template.ROOT, WRAPPER_DOWNLOADER, classLoader.getResource(MAVEN_PREFIX + WRAPPER_DOWNLOADER)));
+        generatorContext.addTemplate("mavenWrapper", new URLTemplate(Template.ROOT, "mvnw", classLoader.getResource(MAVEN_PREFIX + "mvnw"), true));
+        generatorContext.addTemplate("mavenWrapperBat", new URLTemplate(Template.ROOT, "mvnw.bat", classLoader.getResource(MAVEN_PREFIX + "mvnw.cmd"), false));
 
         MavenBuild mavenBuild = dependencyResolver.create(generatorContext);
         generatorContext.addTemplate("mavenPom", new RockerTemplate("pom.xml", pom.template(
@@ -66,7 +73,13 @@ public class Maven implements BuildFeature {
                 generatorContext.getFeatures(),
                 mavenBuild
         )));
-        generatorContext.addTemplate("gitignore", new RockerTemplate(".gitignore", gitignore.template()));
+        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore.template()));
+
+        Collection<String> moduleNames = generatorContext.getModuleNames();
+        if (CollectionUtils.isNotEmpty(moduleNames)) {
+            generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(generatorContext.getProject(), moduleNames)));
+        }
+
     }
 
     @Override

@@ -1,0 +1,49 @@
+@import io.micronaut.starter.options.BuildTool;
+@args(BuildTool buildTool, boolean nativeImage, String infrastructureModuleName)
+
+## Requisites
+
+- [AWS Account](https://aws.amazon.com/free/)
+- [CDK CLI](https://docs.aws.amazon.com/cdk/v2/guide/cli.html)
+- [AWS CLI](https://aws.amazon.com/cli/)
+
+## How to deploy
+
+### Generate the deployable artifact
+
+```
+@if(buildTool.isGradle() && nativeImage) {
+./gradlew :app:buildNativeLambda
+./gradlew test
+} else if(buildTool.isGradle() && !nativeImage) {
+./gradlew :app:shadowJar
+./gradlew test
+} else if(buildTool == BuildTool.MAVEN && nativeImage) {
+./mvnw package -Dpackaging=docker-native -Dmicronaut.runtime=lambda
+} else if(buildTool == BuildTool.MAVEN && !nativeImage) {
+./mvnw package
+}
+```
+
+### Deploy
+
+The `@(infrastructureModuleName)/cdk.json` file tells the CDK Toolkit how to execute your app.
+
+`cd @infrastructureModuleName`
+`cdk synth` - emits the synthesized CloudFormation template
+`cdk deploy` - deploy this stack to your default AWS account/region
+`cd ..`
+
+Other useful commands:
+
+`cdk diff` - compare deployed stack with current state
+`cdk docs`- open CDK documentation
+
+### Cleanup
+
+```
+cd @infrastructureModuleName
+cdk destroy
+cd ..
+```
+
