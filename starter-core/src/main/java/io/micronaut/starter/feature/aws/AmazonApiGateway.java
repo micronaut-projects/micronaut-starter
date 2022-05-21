@@ -18,12 +18,13 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonApiGateway extends CdkFeature {
-    public AmazonApiGateway(Cdk cdk) {
-        super(cdk);
+public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiFeature {
+    public AmazonApiGateway(AwsLambda awsLambda) {
+        super(awsLambda);
     }
 
     @Override
@@ -46,11 +47,6 @@ public class AmazonApiGateway extends CdkFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://aws.amazon.com/api-gateway/";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.CLOUD;
     }
 
     @Override

@@ -16,6 +16,11 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         amazonApiGateway.category == Category.CLOUD
     }
 
+    void 'amazon-api-gateway feature is an instance of AwsApiFeature'() {
+        expect:
+        amazonApiGateway instanceof AwsApiFeature
+    }
+
     void "amazon-api-gateway does not support #applicationType application type"(ApplicationType applicationType) {
         expect:
         !amazonApiGateway.supports(applicationType)

@@ -50,6 +50,7 @@ public class FeatureDiffer {
      * @param project The project
      * @param applicationType The application type
      * @param options The options
+     * @param operatingSystem Operating System
      * @param features The features to diff
      * @param consoleOutput The console output
      * @throws Exception If something does wrong

@@ -15,20 +15,20 @@
  */
 package io.micronaut.starter.feature.aws;
 
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 
-/**
- * An abstract class for {@link AwsLambdaEventFeature} which are applicable only for {@link ApplicationType#FUNCTION}.
- */
-public abstract class AwsLambdaEventFunctionFeature extends AwsLambdaRelatedFeature {
+public abstract class AwsLambdaRelatedFeature implements AwsLambdaEventFeature {
+    private final AwsLambda awsLambda;
 
-    public AwsLambdaEventFunctionFeature(AwsLambda awsLambda) {
-        super(awsLambda);
+    public AwsLambdaRelatedFeature(AwsLambda awsLambda) {
+        this.awsLambda = awsLambda;
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.FUNCTION;
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(AwsLambda.class)) {
+            featureContext.addFeature(awsLambda);
+        }
     }
 }
