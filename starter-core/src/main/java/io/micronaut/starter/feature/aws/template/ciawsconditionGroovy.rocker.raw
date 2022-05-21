@@ -18,7 +18,7 @@ class CIAwsCredentialsProviderChainCondition implements Condition {
 
     @@Override
     boolean matches(ConditionContext context) {
-        if (System.getenv("CI")) {
+        if (System.getenv("CI") == null) {
             LOG.info("CI environment variable present - Condition fulfilled")
             return true
         }

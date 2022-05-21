@@ -33,6 +33,8 @@ import io.micronaut.starter.feature.aws.template.ciawsconditionKotlin;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionGroovy;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionJava;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionKotlin;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.config.Configuration;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -81,6 +83,9 @@ public class DynamoDb implements AwsFeature {
                 ciawsregionconditionJava.template(generatorContext.getProject()),
                 ciawsregionconditionKotlin.template(generatorContext.getProject()),
                 ciawsregionconditionGroovy.template(generatorContext.getProject()));
+
+        Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+        testConfig.put("aws.region", "us-east-1");
     }
 
     @Override

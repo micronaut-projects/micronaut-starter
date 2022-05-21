@@ -17,7 +17,7 @@ public class CIAwsCredentialsProviderChainCondition implements Condition {
     @@Override
     public boolean matches(ConditionContext context) {
         if (System.getenv("CI") == null) {
-            LOG.info("CI environment variable present - Condition fulfilled");
+            LOG.info("CI environment variable not present - Condition fulfilled");
             return true;
         }
         if (System.getProperty("aws.accessKeyId") != null && System.getProperty("aws.secretAccessKey") !=null ) {
