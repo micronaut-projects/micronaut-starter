@@ -15,23 +15,35 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 
 public class ApplicationConfiguration extends Configuration {
+
+    private static final String MAIN = "main";
+    private static final String TEST = "test";
 
     public ApplicationConfiguration(@NonNull String sourceSet, @NonNull String environment) {
         super(sourceSet, "application-" + environment, "application-config-" + environment);
     }
 
     public ApplicationConfiguration(@NonNull String environment) {
-        this("main", environment);
+        this(MAIN, environment);
     }
 
     public ApplicationConfiguration() {
-        super("main", "application", "application-config");
+        super(MAIN, "application", "application-config");
     }
 
     public static ApplicationConfiguration testConfig() {
-        return new ApplicationConfiguration("test", "test");
+        return new ApplicationConfiguration(TEST, Environment.TEST);
+    }
+
+    public static ApplicationConfiguration functionTestConfig() {
+        return new ApplicationConfiguration(TEST, Environment.FUNCTION);
+    }
+
+    public static ApplicationConfiguration devConfig() {
+        return new ApplicationConfiguration(MAIN, Environment.DEVELOPMENT);
     }
 }

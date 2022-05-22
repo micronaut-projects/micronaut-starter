@@ -13,21 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.security;
 
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.core.order.Ordered;
 
-/**
- * Marker interface for AWS related features.
- */
-public interface AwsFeature extends Feature, CloudFeature {
-    String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
-    String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
+public enum SecurityAuthenticationMode implements Ordered {
+    IDTOKEN("idtoken", 1),
+    COOKIE("cookie", 2),
+    SESSION("session", 3),
+    BEARER("bearer", 4);
+
+    private final String value;
+    private final int order;
+
+    SecurityAuthenticationMode(String value,
+                               int order) {
+        this.value = value;
+        this.order = order;
+    }
 
     @Override
-    default Cloud getCloud() {
-        return Cloud.AWS;
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public int getOrder() {
+        return order;
     }
 }

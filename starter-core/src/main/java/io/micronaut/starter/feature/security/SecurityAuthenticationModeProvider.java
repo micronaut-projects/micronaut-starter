@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.security;
 
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.core.annotation.NonNull;
 
-/**
- * Marker interface for AWS related features.
- */
-public interface AwsFeature extends Feature, CloudFeature {
-    String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
-    String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
+@FunctionalInterface
+public interface SecurityAuthenticationModeProvider {
+    String PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION = "micronaut.security.authentication";
 
-    @Override
-    default Cloud getCloud() {
-        return Cloud.AWS;
-    }
+    @NonNull
+    SecurityAuthenticationMode getSecurityAuthenticationMode();
 }

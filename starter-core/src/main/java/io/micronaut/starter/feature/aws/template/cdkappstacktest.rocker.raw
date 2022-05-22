@@ -1,5 +1,4 @@
 @import io.micronaut.starter.application.Project
-
 @args (Project project, String handler)
 
 package @project.getPackageName();
@@ -17,7 +16,9 @@ class AppStackTest {
         if (new File(AppStack.functionPath()).exists()) {
             AppStack stack = new AppStack(new App(), "TestMicronautAppStack");
             Template template = Template.fromStack(stack);
+@if (handler != null) {
             template.hasResourceProperties("AWS::Lambda::Function", Collections.singletonMap("Handler", "@(handler)"));
+}
         }
     }
 }

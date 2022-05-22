@@ -15,14 +15,17 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.other.HttpSession;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.security.SecurityAuthenticationModeProvider.PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION;
+
 @Singleton
-public class SecuritySession extends SecurityFeature {
+public class SecuritySession extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
     public static final int ORDER = SecurityOAuth2.ORDER + 10;
 
@@ -53,7 +56,7 @@ public class SecuritySession extends SecurityFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.authentication", "session");
+        generatorContext.getConfiguration().put(PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION, getSecurityAuthenticationMode().toString());
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.security")
                 .artifactId("micronaut-security-session")
@@ -68,5 +71,11 @@ public class SecuritySession extends SecurityFeature {
     @Override
     public int getOrder() {
         return ORDER;
+    }
+
+    @Override
+    @NonNull
+    public SecurityAuthenticationMode getSecurityAuthenticationMode() {
+        return SecurityAuthenticationMode.SESSION;
     }
 }

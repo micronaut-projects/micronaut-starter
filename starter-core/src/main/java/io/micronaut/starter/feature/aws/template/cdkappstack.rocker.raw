@@ -22,6 +22,19 @@ import software.amazon.awscdk.services.dynamodb.Table;
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 }
+@if (features.contains("amazon-cognito")) {
+import java.util.Arrays;
+import java.util.Collections;
+import software.amazon.awscdk.services.cognito.AutoVerifiedAttrs;
+import software.amazon.awscdk.services.cognito.CognitoDomainOptions;
+import software.amazon.awscdk.services.cognito.OAuthFlows;
+import software.amazon.awscdk.services.cognito.OAuthScope;
+import software.amazon.awscdk.services.cognito.OAuthSettings;
+import software.amazon.awscdk.services.cognito.SignInAliases;
+import software.amazon.awscdk.services.cognito.UserPool;
+import software.amazon.awscdk.services.cognito.UserPoolClientOptions;
+import software.amazon.awscdk.services.cognito.UserPoolDomainOptions;
+}
 @if (features.contains("aws-lambda-function-url")) {
 import software.amazon.awscdk.services.lambda.FunctionUrl;
 import software.amazon.awscdk.services.lambda.FunctionUrlAuthType;
@@ -58,6 +71,39 @@ public class AppStack extends Stack {
 
         environmentVariables.put("DYNAMODB_TABLE_NAME", table.getTableName());
 }
+@if (features.contains("amazon-cognito")) {
+        UserPool userPool = UserPool.Builder.create(this, "micronautapppool")
+                .userPoolName("micronautapppool-name")
+                .signInAliases(SignInAliases.builder()
+                        .phone(false)
+                        .username(false)
+                        .email(true)
+                        .build())
+                .autoVerify(AutoVerifiedAttrs.builder()
+                        .email(true)
+                        .build())
+                .selfSignUpEnabled(true)
+                .build();
+        userPool.addDomain("micronautapppool-domain", UserPoolDomainOptions.builder()
+                        .cognitoDomain(CognitoDomainOptions.builder()
+                                .domainPrefix("micronautapppool")
+                                .build())
+                .build());
+        userPool.addClient("micronautapppool-client", UserPoolClientOptions.builder()
+                .generateSecret(true)
+                .userPoolClientName("micronautapppool-client")
+                .oAuth(OAuthSettings.builder()
+                        .scopes(Arrays.asList(OAuthScope.PROFILE,
+                                OAuthScope.EMAIL,
+                                OAuthScope.OPENID))
+                        .flows(OAuthFlows.builder()
+                                .authorizationCodeGrant(true)
+                                .build())
+                        .callbackUrls(Collections.singletonList("http://localhost:8080/oauth/callback/default"))
+                        .logoutUrls(Collections.singletonList("http://localhost:8080/logout"))
+                        .build())
+                .build());
+}
 @if (functionId != null) {
 @if (applicationType == ApplicationType.DEFAULT) {
         Function function = MicronautFunction.create(ApplicationType.DEFAULT,
@@ -68,7 +114,7 @@ public class AppStack extends Stack {
                 @nativeImage,
                 this,
                 "@(functionId)")
-@if (applicationType == ApplicationType.FUNCTION) {
+@if (applicationType == ApplicationType.FUNCTION && handler != null) {
                 .handler("@(handler)")
 }
                 .environment(environmentVariables)

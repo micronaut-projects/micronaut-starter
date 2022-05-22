@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.aws;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
-public interface AwsLambdaEventFeature extends OneOfFeature {
+public interface AwsLambdaEventFeature extends OneOfFeature, AwsFeature {
 
     @Override
     default Class<?> getFeatureClass() {

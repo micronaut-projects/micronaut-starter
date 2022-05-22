@@ -20,6 +20,7 @@ public enum FeaturePhase {
     LOWEST(-200),
     LOW(-100),
     DEFAULT(0),
+    INFRASTRUCTURE_AS_CODE(200),
     LANGUAGE(300),
     TEST(400),
     BUILD_PLUGIN(400),

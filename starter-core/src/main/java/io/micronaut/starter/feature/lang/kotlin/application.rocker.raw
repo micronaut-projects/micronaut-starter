@@ -4,9 +4,15 @@
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import java.util.stream.Collectors
 
-@args (Project project, Features features)
+@args (Project project, Features features, String defaultEnvironment)
 
 package @project.getPackageName()
+
+@if (defaultEnvironment != null) {
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
+}
 
 import io.micronaut.runtime.Micronaut.*
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
