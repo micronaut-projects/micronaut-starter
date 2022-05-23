@@ -16,6 +16,11 @@
 package io.micronaut.starter.feature.lang.java;
 
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.FeaturePhase;
 
 public interface JavaApplicationFeature extends ApplicationFeature {
+    @Override
+    default int getOrder() {
+        return FeaturePhase.LANGUAGE.getOrder();
+    }
 }

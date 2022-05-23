@@ -36,6 +36,7 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
@@ -66,7 +67,7 @@ import java.util.Optional;
 import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
-public class Cdk implements MultiProjectFeature {
+public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
@@ -105,17 +106,18 @@ public class Cdk implements MultiProjectFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("test-lambda", new RockerTemplate(Template.ROOT, "test-lambda.sh", testlambda.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE), true));
+        if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class)) {
+            generatorContext.addTemplate("test-lambda", new RockerTemplate(Template.ROOT, "test-lambda.sh", testlambda.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE), true));
+        }
         generatorContext.addTemplate("cdk-json", new RockerTemplate(INFRA_MODULE, "cdk.json", cdkjson.template(generatorContext.getBuildTool(), INFRA_MODULE)));
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
-        String handler = generatorContext.getApplicationType() == ApplicationType.DEFAULT ?
-                AwsLambda.MICRONAUT_LAMBDA_HANDLER :
-                generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
+        String handler = resolveHandler(generatorContext).orElse(null);
         Language lang = Language.JAVA;
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
+
 
 
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
@@ -125,7 +127,7 @@ public class Cdk implements MultiProjectFeature {
                         generatorContext.getApplicationType(),
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
-                        "micronaut-function",
+                        generatorContext.getFeatures().hasFeature(AwsLambda.class) ? "micronaut-function" : null,
                         generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ? "micronaut-function-api" : null,
                         "0.1",
                         handler,
@@ -137,6 +139,17 @@ public class Cdk implements MultiProjectFeature {
         });
 
         generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE)));
+    }
+
+    @NonNull
+    private Optional<String> resolveHandler(@NonNull GeneratorContext generatorContext) {
+        if (!generatorContext.getFeatures().hasFeature(AwsApiFeature.class)) {
+            return Optional.empty();
+        }
+        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+            return Optional.of(AwsLambda.MICRONAUT_LAMBDA_HANDLER);
+        }
+        return Optional.of(generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER);
     }
 
     private void populateDependencies() {

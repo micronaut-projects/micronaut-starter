@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature;
 
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
-
-/**
- * Marker interface for AWS related features.
- */
-public interface AwsFeature extends Feature, CloudFeature {
-    String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
-    String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
-
+public interface InfrastructureAsCodeFeature extends Feature  {
     @Override
-    default Cloud getCloud() {
-        return Cloud.AWS;
+    default int getOrder() {
+        return FeaturePhase.INFRASTRUCTURE_AS_CODE.getOrder();
     }
 }

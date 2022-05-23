@@ -18,6 +18,7 @@ class ScheduledEventSpec extends ApplicationContextSpec {
     void 'aws-lambda-scheduled-event feature is an instance of AwsLambdaEventFeature'() {
         expect:
         awsLambdaScheduledEvent instanceof AwsLambdaEventFeature
+        awsLambdaScheduledEvent instanceof AwsFeature
     }
 
     void "aws-lambda-scheduled-event does not support #applicationType application type"(ApplicationType applicationType) {

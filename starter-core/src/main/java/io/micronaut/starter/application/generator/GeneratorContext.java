@@ -159,17 +159,29 @@ public class GeneratorContext implements DependencyContext {
     }
 
     /**
+     * @param env Environment
      * @return The configuration
      */
     @Nullable public ApplicationConfiguration getConfiguration(String env) {
         return applicationEnvironmentConfiguration.get(env);
     }
 
+    public boolean hasConfigurationEnvironment(@NonNull String env) {
+        return applicationEnvironmentConfiguration.containsKey(env);
+    }
+
+    /**
+     *
+     * @param env Environment
+     * @param defaultConfig Default Configuration
+     * @return Application Configuration
+     */
     @NonNull public ApplicationConfiguration getConfiguration(String env, ApplicationConfiguration defaultConfig) {
         return applicationEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
     }
 
     /**
+     * @param env Environment
      * @return The configuration
      */
     @Nullable public BootstrapConfiguration getBootstrapConfiguration(String env) {

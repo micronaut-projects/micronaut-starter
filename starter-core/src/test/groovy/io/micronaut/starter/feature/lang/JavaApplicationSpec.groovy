@@ -34,7 +34,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
     }
 
     void "test java application"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]))
+        String applicationJava = application.template(buildProject(), getFeatures([]), null)
         .render()
         .toString()
 
@@ -45,7 +45,6 @@ package example.micronaut;
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
-
     public static void main(String[] args) {
         Micronaut.run(Application.class, args);
     }
@@ -54,7 +53,7 @@ public class Application {
     }
 
     void "test java application with openapi"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]))
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), null)
                 .render()
                 .toString()
 
@@ -73,7 +72,6 @@ import io.swagger.v3.oas.annotations.info.*;
     )
 )
 public class Application {
-
     public static void main(String[] args) {
         Micronaut.run(Application.class, args);
     }
@@ -82,7 +80,7 @@ public class Application {
     }
 
     void "test java application with dekorate-kubernetes"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]))
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), null)
                 .render()
                 .toString()
 
@@ -104,7 +102,6 @@ import io.dekorate.kubernetes.annotation.Probe;
     readinessProbe = @Probe(httpActionPath = "/health/readiness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10)
 )
 public class Application {
-
     public static void main(String[] args) {
         Micronaut.run(Application.class, args);
     }

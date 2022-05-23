@@ -18,6 +18,7 @@ class AwsLambdaS3EventNotificationSpec  extends ApplicationContextSpec {
     void 'aws-lambda-s3-event-notification feature is an instance of AwsLambdaEventFeature'() {
         expect:
         awsLambdaS3EventNotification instanceof AwsLambdaEventFeature
+        awsLambdaS3EventNotification instanceof AwsFeature
     }
 
     void "aws-lambda-s3-event-notification does not support #applicationType application type"(ApplicationType applicationType) {

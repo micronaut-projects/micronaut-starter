@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -53,8 +54,10 @@ public class GroovyApplication implements GroovyApplicationFeature {
         GroovyApplicationFeature.super.apply(generatorContext);
 
         if (shouldGenerateApplicationFile(generatorContext)) {
+            String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+
             generatorContext.addTemplate("application", new RockerTemplate(getPath(),
-                    application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+                    application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment)));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
             Project project = generatorContext.getProject();
