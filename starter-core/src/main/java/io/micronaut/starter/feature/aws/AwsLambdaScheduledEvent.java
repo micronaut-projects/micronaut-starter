@@ -42,6 +42,6 @@ public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature {
     @Override
     @NonNull
     public String getDescription() {
-        return "It creates a function handler that subscribes to a scheduled event.";
+        return "Creates a function handler that subscribes to a scheduled event.";
     }
 }

@@ -42,6 +42,6 @@ public class AwsLambdaS3EventNotification extends AwsLambdaEventFunctionFeature 
     @Override
     @NonNull
     public String getDescription() {
-        return "It creates a function handler that subscribes to a S3 notification event.";
+        return "Creates a function handler that subscribes to a S3 notification event.";
     }
 }
