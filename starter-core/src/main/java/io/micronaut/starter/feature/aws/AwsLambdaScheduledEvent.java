@@ -16,42 +16,32 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiFeature {
-    public AmazonApiGateway(AwsLambda awsLambda) {
+public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature {
+    public static final String NAME = "aws-lambda-scheduled-event";
+
+    public AwsLambdaScheduledEvent(AwsLambda awsLambda) {
         super(awsLambda);
+    }
+    
+    @Override
+    @NonNull
+    public String getName() {
+        return NAME;
     }
 
     @Override
     @NonNull
-    public String getName() {
-        return "amazon-api-gateway";
-    }
-
-    @Override
     public String getTitle() {
-        return "Amazon API Gateway";
+        return "AWS Lambda Scheduled Event";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "This features combines with the CDK to define an API Gateway";
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://aws.amazon.com/api-gateway/";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT ||
-               applicationType == ApplicationType.FUNCTION;
+        return "Creates a function handler that subscribes to a scheduled event.";
     }
 }

@@ -15,5 +15,20 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature {
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+
+/**
+ * An abstract class for {@link AwsLambdaEventFeature} which are applicable only for {@link ApplicationType#FUNCTION}.
+ */
+public abstract class AwsLambdaEventFunctionFeature extends AwsLambdaRelatedFeature {
+
+    public AwsLambdaEventFunctionFeature(AwsLambda awsLambda) {
+        super(awsLambda);
+    }
+
+    @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.FUNCTION;
+    }
 }

@@ -5,6 +5,8 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.dependencies.DependencyCoordinate
+import io.micronaut.starter.feature.aws.AwsLambdaEventFeature
+import io.micronaut.starter.feature.aws.AwsLambdaEventFunctionFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
@@ -39,7 +41,6 @@ class FeatureSpec extends BeanContextSpec {
     @Unroll
     void "test #feature does not add an unmodifiable map to config"(Feature feature) {
         when:
-        ApplicationType applicationType = applicationTypeForFeature(feature.name)
         JdkVersion javaVersion = javaVersionForFeature(feature.name)
         Language language = Language.JAVA
         if (feature instanceof LanguageSpecificFeature) {
@@ -52,10 +53,11 @@ class FeatureSpec extends BeanContextSpec {
             // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
             // so it can't be tested in isolation like this in isolation
             features << 'mysql'
-        } else if (feature instanceof Cdk) {
+        } else if (feature instanceof Cdk || feature instanceof AwsLambdaEventFunctionFeature) {
             // Cdk fails unless it is combined with Lambda
             features << AwsLambda.FEATURE_NAME_AWS_LAMBDA
         }
+        ApplicationType applicationType = applicationTypeForFeature(feature)
         def commandCtx = new GeneratorContext(buildProject(),
                 applicationType,
                 options,
@@ -88,7 +90,7 @@ class FeatureSpec extends BeanContextSpec {
         feature == 'azure-function' ? JdkVersion.JDK_8 : JdkVersion.JDK_11
     }
 
-    private static ApplicationType applicationTypeForFeature(String feature) {
-        feature == LambdaFunctionUrl.NAME ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
+    private static ApplicationType applicationTypeForFeature(Feature feature) {
+        (feature.name == LambdaFunctionUrl.NAME || feature instanceof AwsLambdaEventFunctionFeature) ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
     }
 }

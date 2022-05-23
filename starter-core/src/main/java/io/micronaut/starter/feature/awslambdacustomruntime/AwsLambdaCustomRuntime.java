@@ -121,9 +121,9 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     private void addFunctionLambdaRuntime(GeneratorContext generatorContext, Project project) {
         String functionLambdaRuntime = generatorContext.getSourcePath("/{packagePath}/FunctionLambdaRuntime");
         generatorContext.addTemplate("functionLambdaRuntime", functionLambdaRuntime,
-                functionLambdaRuntimeJava.template(project),
-                functionLambdaRuntimeKotlin.template(project),
-                functionLambdaRuntimeGroovy.template(project));
+                functionLambdaRuntimeJava.template(generatorContext.getFeatures(), project),
+                functionLambdaRuntimeKotlin.template(generatorContext.getFeatures(), project),
+                functionLambdaRuntimeGroovy.template(generatorContext.getFeatures(), project));
     }
 
     @Override

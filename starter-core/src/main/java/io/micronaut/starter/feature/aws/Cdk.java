@@ -116,6 +116,8 @@ public class Cdk implements MultiProjectFeature {
         Language lang = Language.JAVA;
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
+
+
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),
@@ -124,7 +126,7 @@ public class Cdk implements MultiProjectFeature {
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
                         "micronaut-function",
-                        "micronaut-function-api",
+                        generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ? "micronaut-function-api" : null,
                         "0.1",
                         handler,
                         generatorContext.getFeatures().hasGraalvm(),

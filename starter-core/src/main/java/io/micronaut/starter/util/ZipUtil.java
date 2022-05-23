@@ -80,7 +80,9 @@ public class ZipUtil {
      * Does the specified zip bytes contain the specified file.
      * @param bytes The bytes
      * @param filename The file name
-     * @return True if it does
+     * @param contents Contents
+     * @return
+     * True if it does
      */
     public static boolean containsFileWithContents(byte[] bytes, String filename, String contents) {
         Objects.requireNonNull(bytes, "Byte cannot be null");

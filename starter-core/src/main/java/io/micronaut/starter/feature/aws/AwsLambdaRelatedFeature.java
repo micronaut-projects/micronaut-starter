@@ -15,5 +15,20 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature {
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+
+public abstract class AwsLambdaRelatedFeature implements AwsLambdaEventFeature {
+    private final AwsLambda awsLambda;
+
+    public AwsLambdaRelatedFeature(AwsLambda awsLambda) {
+        this.awsLambda = awsLambda;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(AwsLambda.class)) {
+            featureContext.addFeature(awsLambda);
+        }
+    }
 }
