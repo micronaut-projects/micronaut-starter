@@ -55,17 +55,9 @@ io.micronaut.starter.defaults
 io.micronaut.starter.diff
 io.micronaut.starter.feature
 io.micronaut.starter.feature.acme
-io.micronaut.starter.feature.agorapulse
-io.micronaut.starter.feature.agorapulse.console
-io.micronaut.starter.feature.agorapulse.console.template
-io.micronaut.starter.feature.agorapulse.gru
-io.micronaut.starter.feature.agorapulse.gru.template
-io.micronaut.starter.feature.agorapulse.worker
-io.micronaut.starter.feature.agorapulse.worker.template
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.aws
-io.micronaut.starter.feature.aws.template
 io.micronaut.starter.feature.awsalexa
 io.micronaut.starter.feature.awsalexa.templates
 io.micronaut.starter.feature.awslambdacustomruntime
@@ -105,8 +97,6 @@ io.micronaut.starter.feature.function.oraclefunction.template
 io.micronaut.starter.feature.function.oraclefunction.template.raw
 io.micronaut.starter.feature.function.template
 io.micronaut.starter.feature.function.template.http
-io.micronaut.starter.feature.gcp
-io.micronaut.starter.feature.gcp.secretsmanager
 io.micronaut.starter.feature.github.workflows
 io.micronaut.starter.feature.github.workflows.azure
 io.micronaut.starter.feature.github.workflows.azure.template
@@ -146,7 +136,6 @@ io.micronaut.starter.feature.messaging.nats
 io.micronaut.starter.feature.messaging.pubsub
 io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
-io.micronaut.starter.feature.microstream
 io.micronaut.starter.feature.migration
 io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
