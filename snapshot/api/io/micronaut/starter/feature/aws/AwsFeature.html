@@ -17,6 +17,12 @@
     catch(err) {
     }
 //-->
+var methods = {"i0":18};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],16:["t5","Default Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -69,13 +75,13 @@
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a name="skip.navbar.top">
@@ -93,16 +99,20 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd>io.micronaut.core.naming.Described, <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered</dd>
+<dd><a href="../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, io.micronaut.core.naming.Described, <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered</dd>
+</dl>
+<dl>
+<dt>All Known Subinterfaces:</dt>
+<dd><a href="../../../../../io/micronaut/starter/feature/aws/AwsApiFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsApiFeature</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsLambdaEventFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsLambdaEventFeature</a></dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../../../io/micronaut/starter/feature/aws/AwsV2Sdk.html" title="class in io.micronaut.starter.feature.aws">AwsV2Sdk</a>, <a href="../../../../../io/micronaut/starter/feature/aws/CdkFeature.html" title="class in io.micronaut.starter.feature.aws">CdkFeature</a>, <a href="../../../../../io/micronaut/starter/feature/aws/DynamoDb.html" title="class in io.micronaut.starter.feature.aws">DynamoDb</a>, <a href="../../../../../io/micronaut/starter/feature/aws/LambdaFunctionUrl.html" title="class in io.micronaut.starter.feature.aws">LambdaFunctionUrl</a></dd>
+<dd><a href="../../../../../io/micronaut/starter/feature/aws/AmazonApiGateway.html" title="class in io.micronaut.starter.feature.aws">AmazonApiGateway</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AmazonCognito.html" title="class in io.micronaut.starter.feature.aws">AmazonCognito</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsLambdaEventFunctionFeature.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaEventFunctionFeature</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsLambdaRelatedFeature.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaRelatedFeature</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsLambdaS3EventNotification.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaS3EventNotification</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsLambdaScheduledEvent.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaScheduledEvent</a>, <a href="../../../../../io/micronaut/starter/feature/aws/AwsV2Sdk.html" title="class in io.micronaut.starter.feature.aws">AwsV2Sdk</a>, <a href="../../../../../io/micronaut/starter/feature/aws/CdkFeature.html" title="class in io.micronaut.starter.feature.aws">CdkFeature</a>, <a href="../../../../../io/micronaut/starter/feature/aws/DynamoDb.html" title="class in io.micronaut.starter.feature.aws">DynamoDb</a>, <a href="../../../../../io/micronaut/starter/feature/aws/LambdaFunctionUrl.html" title="class in io.micronaut.starter.feature.aws">LambdaFunctionUrl</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">AwsFeature</span>
-extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></pre>
+extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></pre>
 <div class="block">Marker interface for AWS related features.</div>
 </li>
 </ul>
@@ -146,6 +156,17 @@ extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t5" class="tableTab"><span><a href="javascript:show(16);">Default Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code>default <a href="../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/aws/AwsFeature.html#getCloud--">getCloud</a></span>()</code>&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.Feature">
 <!--   -->
@@ -197,6 +218,27 @@ extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#io.micronaut.starter.feature.aws.AwsFeature.GROUP_ID_AWS_SDK_V2">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getCloud--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getCloud</h4>
+<pre>default&nbsp;<a href="../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a>&nbsp;getCloud()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/function/CloudFeature.html#getCloud--">getCloud</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -255,13 +297,13 @@ extends <a href="../../../../../io/micronaut/starter/feature/Feature.html" title
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a name="skip.navbar.bottom">
