@@ -9,7 +9,6 @@
 package @project.getPackageName()
 
 @if (defaultEnvironment != null) {
-import io.micronaut.core.annotation.NonNull
 import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.context.ApplicationContextConfigurer
 import io.micronaut.context.annotation.ContextConfigurer
@@ -86,10 +85,18 @@ object Dekorate {
 }
 }
 
+
+@if (defaultEnvironment != null) {
+
+@@ContextConfigurer
+class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
+	override fun configure(builder: ApplicationContextBuilder) {
+		builder.defaultEnvironments("@(defaultEnvironment)");
+	}
+}
+
+}
 fun main(args: Array<String>) {
-	build()
-	    .args(*args)
-		.packages("@project.getPackageName()")
-		.start()
+	run(*args)
 }
 
