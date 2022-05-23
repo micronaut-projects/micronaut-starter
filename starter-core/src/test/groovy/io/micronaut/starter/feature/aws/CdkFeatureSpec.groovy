@@ -72,13 +72,4 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
             it.groupId.text() == 'io.micronaut.aws'
         }
     }
-
-    void 'missing lambda feature is invalid'() {
-        when:
-        def output = generate([Cdk.NAME])
-
-        then:
-        IllegalArgumentException ex = thrown()
-        ex.message == 'CDK requires AWS Lambda'
-    }
 }
