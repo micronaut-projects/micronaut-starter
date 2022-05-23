@@ -66,7 +66,7 @@ public class ContextFactory {
                 .withBuildTool(determineBuildTool(language, options.getBuildTool()));
 
         availableFeatures.getAllFeatures()
-                .filter(f -> f instanceof DefaultFeature)
+                .filter(DefaultFeature.class::isInstance)
                 .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, newOptions, features))
                 .forEach(features::add);
 

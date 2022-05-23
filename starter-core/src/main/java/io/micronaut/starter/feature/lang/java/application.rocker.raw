@@ -9,6 +9,7 @@
 package @project.getPackageName();
 
 @if (defaultEnvironment != null) {
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
 import io.micronaut.context.annotation.ContextConfigurer;
@@ -84,7 +85,7 @@ public class Application {
     public static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
         @@Override
         public void configure(@@NonNull ApplicationContextBuilder builder) {
-            builder.defaultEnvironments(defaultEnvironment);
+            builder.defaultEnvironments("@(defaultEnvironment)");
         }
     }
 }

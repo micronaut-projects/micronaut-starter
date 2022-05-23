@@ -31,7 +31,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class JavaApplication implements JavaApplicationFeature {
+public class JavaApplication implements JavaApplicationFeature  {
 
     @Override
     @Nullable

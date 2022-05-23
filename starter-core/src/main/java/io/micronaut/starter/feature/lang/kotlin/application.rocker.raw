@@ -9,9 +9,10 @@
 package @project.getPackageName()
 
 @if (defaultEnvironment != null) {
-import io.micronaut.context.ApplicationContextBuilder;
-import io.micronaut.context.ApplicationContextConfigurer;
-import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.context.ApplicationContextBuilder
+import io.micronaut.context.ApplicationContextConfigurer
+import io.micronaut.context.annotation.ContextConfigurer
 }
 
 import io.micronaut.runtime.Micronaut.*
