@@ -49,7 +49,7 @@ public class AmazonCognito extends SecurityOAuth2Feature implements AwsFeature, 
     @Override
     @NonNull
     public String getDescription() {
-        return "It applies Micronaut Security OAuth 2.0 and provides configuration. You can also use it in combination with CDK";
+        return "Applies Micronaut Security OAuth 2.0 and provides configuration. Can be used in combination with '" + Cdk.NAME + "' to generate a Cognito User Pool with a OAuth 2.0 application.";
     }
 
     @Override
