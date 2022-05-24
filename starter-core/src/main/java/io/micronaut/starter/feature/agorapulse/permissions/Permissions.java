@@ -34,8 +34,8 @@ import io.micronaut.starter.feature.agorapulse.permissions.template.messageServi
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceJava;
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceKotlin;
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceSpecGroovy;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceSpecKotest;
-import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceSpecKotlin;
+import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestKotest;
+import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestKotlin;
 import io.micronaut.starter.feature.agorapulse.permissions.template.messageServiceTestJava;
 import io.micronaut.starter.feature.security.Security;
 import io.micronaut.starter.feature.test.Mockito;
@@ -174,8 +174,8 @@ public class Permissions implements AgoraPulseFeature {
                 generatorContext,
                 messageServiceTestJava.template(generatorContext.getProject()),
                 messageServiceSpecGroovy.template(generatorContext.getProject()),
-                messageServiceSpecKotlin.template(generatorContext.getProject()),
-                messageServiceSpecKotest.template(generatorContext.getProject())
+                messageServiceTestKotlin.template(generatorContext.getProject()),
+                messageServiceTestKotest.template(generatorContext.getProject())
         );
     }
 
