@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import groovy.transform.CompileStatic
+
+@@CompileStatic
+class Message {
+
+    final String author
+    final String body
+
+    Message(String author, String body) {
+        this.author = author
+        this.body = body
+    }
+
+}

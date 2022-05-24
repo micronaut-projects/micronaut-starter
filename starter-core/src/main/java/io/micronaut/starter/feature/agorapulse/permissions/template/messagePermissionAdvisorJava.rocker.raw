@@ -1,0 +1,43 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+
+import com.agorapulse.permissions.PermissionAdvisor;
+import com.agorapulse.permissions.PermissionCheckResult;
+import io.micronaut.core.type.Argument;
+import io.micronaut.security.utils.SecurityService;
+import jakarta.inject.Singleton;
+
+@@Singleton
+public class MessagePermissionAdvisor implements PermissionAdvisor<Message> {
+
+    private final SecurityService securityService;
+
+    public MessagePermissionAdvisor(SecurityService securityService) {
+        this.securityService = securityService;
+    }
+
+    @@Override
+    public Argument<Message> argumentType() {
+        return Argument.of(Message.class);
+    }
+
+    @@Override
+    public PermissionCheckResult checkPermissions(String permissionDefinition, Message value, Argument<Message> argument) {
+        if ("create".equals(permissionDefinition)) {
+            return securityService.getAuthentication()
+                    .filter(auth -> auth.getName().equals(value.getAuthor()))
+                    .map(auth -> PermissionCheckResult.ALLOW)
+                    .orElse(PermissionCheckResult.DENY);
+        }
+
+        return PermissionCheckResult.UNKNOWN;
+    }
+}
