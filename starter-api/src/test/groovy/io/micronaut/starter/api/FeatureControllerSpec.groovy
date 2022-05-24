@@ -31,12 +31,12 @@ class FeatureControllerSpec extends Specification {
 
         then:
         communityFeatures.name == [
-                'camunda',
-                'camunda-external-worker',
-                'gru-http',
-                'micronaut-console',
-                'micronaut-worker',
-                'zeebe',
+                'novatec-camunda',
+                'novatec-camunda-external-worker',
+                'agorapulse-gru-http',
+                'agorapulse-micronaut-console',
+                'agorapulse-micronaut-worker',
+                'novatec-zeebe',
         ]
     }
 

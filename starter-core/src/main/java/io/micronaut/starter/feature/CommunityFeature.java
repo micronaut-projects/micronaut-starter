@@ -13,24 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.agorapulse;
+package io.micronaut.starter.feature;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.CommunityFeature;
 
-public interface AgoraPulseFeature extends CommunityFeature {
+public interface CommunityFeature extends Feature {
+    @NonNull
+    default String getName() {
+        return getCommunityContributor().toLowerCase() + "-" + getCommunityFeatureName();
+    }
 
     @Override
-    default String getThirdPartyDocumentation() {
-        return "https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries";
+    @NonNull
+    default String getTitle() {
+        return getCommunityContributor() + " " + getCommunityFeatureTitle();
     }
+
+    @NonNull
+    String getCommunityFeatureTitle();
+
+    @NonNull
+    String getCommunityFeatureName();
 
     /**
      * @return Indicates name of the community contributor.
      */
-    @Override
     @NonNull
-    default String getCommunityContributor() {
-        return "Agorapulse";
+    String getCommunityContributor();
+
+    @Override
+    default boolean isCommunity() {
+        return true;
     }
 }

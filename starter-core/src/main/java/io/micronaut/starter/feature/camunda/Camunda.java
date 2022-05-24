@@ -21,15 +21,13 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.test.AssertJ;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Camunda implements Feature {
+public class Camunda implements NovatecFeature {
 
     private final AssertJ assertJ;
     private final DatabaseDriverFeature defaultDbFeature;
@@ -41,12 +39,13 @@ public class Camunda implements Feature {
 
     @NonNull
     @Override
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "camunda";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Camunda Workflow Engine";
     }
 
