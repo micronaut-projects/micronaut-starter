@@ -48,7 +48,7 @@ public class GraalVMFeatureValidator implements FeatureValidator {
             }
 
             // See https://github.com/micronaut-projects/micronaut-maven-plugin/issues/373
-            if (options.getBuildTool() == BuildTool.MAVEN || features.stream().anyMatch(f -> f instanceof Cdk)) {
+            if (options.getBuildTool() == BuildTool.MAVEN && features.stream().anyMatch(Cdk.class::isInstance)) {
                 throw new IllegalArgumentException("Maven, CDK and GraalVM are not yet supporteds");
             }
         }
