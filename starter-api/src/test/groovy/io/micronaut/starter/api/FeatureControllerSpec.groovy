@@ -30,14 +30,14 @@ class FeatureControllerSpec extends Specification {
         List<FeatureDTO> communityFeatures = client.features(ApplicationType.DEFAULT, RequestInfo.LOCAL).features.findAll { it.community }
 
         then:
-        communityFeatures.name == [
+        communityFeatures.name.sort() == [
                 'novatec-camunda',
                 'novatec-camunda-external-worker',
                 'agorapulse-gru-http',
                 'agorapulse-micronaut-console',
                 'agorapulse-micronaut-worker',
                 'novatec-zeebe',
-        ]
+        ].sort()
     }
 
     void "test list features - spanish"() {
