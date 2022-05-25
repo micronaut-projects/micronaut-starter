@@ -15,7 +15,7 @@ class WorkerSpec extends ApplicationContextSpec {
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
 
         when:
-        Optional<Feature> featureOptional = findFeatureByName('micronaut-worker')
+        Optional<Feature> featureOptional = findFeatureByName('agorapulse-micronaut-worker')
 
         then:
         featureOptional.present
@@ -41,10 +41,10 @@ class WorkerSpec extends ApplicationContextSpec {
         }
     }
 
-    @Unroll("#buildTool with feature micronaut-worker adds dependency #groupId:#artifactId for #language")
-    void "verify micronaut-worker feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    @Unroll("#buildTool with feature agorapulse-micronaut-worker adds dependency #groupId:#artifactId for #language")
+    void "verify agorapulse-micronaut-worker feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
-        List<String> features = ['micronaut-worker']
+        List<String> features = ['agorapulse-micronaut-worker']
         String coordinate = "${groupId}:${artifactId}"
 
         when:
@@ -62,16 +62,18 @@ class WorkerSpec extends ApplicationContextSpec {
         }
 
         where:
-        language        | buildTool                 | groupId                   | artifactId
-        Language.JAVA   | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-worker'
-        Language.JAVA   | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-worker'
-        Language.JAVA   | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-worker'
-        Language.GROOVY | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-worker'
-        Language.GROOVY | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-worker'
-        Language.GROOVY | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-worker'
-        Language.KOTLIN | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-worker'
-        Language.KOTLIN | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-worker'
-        Language.KOTLIN | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-worker'
+        language        | buildTool
+        Language.JAVA   | BuildTool.GRADLE
+        Language.JAVA   | BuildTool.GRADLE_KOTLIN
+        Language.JAVA   | BuildTool.MAVEN
+        Language.GROOVY | BuildTool.GRADLE
+        Language.GROOVY | BuildTool.GRADLE_KOTLIN
+        Language.GROOVY | BuildTool.MAVEN
+        Language.KOTLIN | BuildTool.GRADLE
+        Language.KOTLIN | BuildTool.GRADLE_KOTLIN
+        Language.KOTLIN | BuildTool.MAVEN
+        groupId = 'com.agorapulse'
+        artifactId = 'micronaut-worker'
     }
 
 }

@@ -12,13 +12,13 @@ class WorkerSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
-        return "micronaut-worker"
+        return "agorapulse-micronaut-worker"
     }
 
     @Unroll
-    void "test maven micronaut-worker with #language and #testFramework"(Language language, TestFramework testFramework) {
+    void "test maven agorapulse-micronaut-worker with #language and #testFramework"(Language language, TestFramework testFramework) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["micronaut-worker"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, BuildTool.MAVEN, ["agorapulse-micronaut-worker"], ApplicationType.DEFAULT, testFramework)
         String output = executeMaven("compile test")
 
         then:
@@ -32,9 +32,9 @@ class WorkerSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle micronaut-worker with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
+    void "test gradle agorapulse-micronaut-worker with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
         when:
-        generateProject(language, buildTool, ["micronaut-worker"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, buildTool, ["agorapulse-micronaut-worker"], ApplicationType.DEFAULT, testFramework)
         BuildResult result = executeGradle("test")
 
         then:

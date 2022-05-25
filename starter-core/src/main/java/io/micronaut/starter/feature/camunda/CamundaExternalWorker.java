@@ -21,26 +21,21 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CamundaExternalWorker implements Feature {
+public class CamundaExternalWorker implements NovatecFeature {
 
     @NonNull
     @Override
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "camunda-external-worker";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Camunda Workflow Engine External Worker";
-    }
-
-    @Override
-    public boolean isCommunity() {
-        return true;
     }
 
     @Override

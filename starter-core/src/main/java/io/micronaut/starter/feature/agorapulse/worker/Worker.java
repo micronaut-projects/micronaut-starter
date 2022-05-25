@@ -53,7 +53,6 @@ import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
-
 @Singleton
 public class Worker implements AgoraPulseFeature {
 
@@ -70,12 +69,13 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     @NonNull
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "micronaut-worker";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Micronaut Worker";
     }
 
@@ -97,7 +97,7 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://agorapulse.github.io/micronaut-worker/";
+        return "https://agorapulse.github.io/agorapulse-micronaut-worker/";
     }
 
     @Override

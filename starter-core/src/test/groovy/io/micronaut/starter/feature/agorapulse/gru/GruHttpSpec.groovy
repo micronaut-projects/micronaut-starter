@@ -13,7 +13,7 @@ class GruHttpSpec extends ApplicationContextSpec {
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
 
         when:
-        Optional<Feature> featureOptional = findFeatureByName('gru-http')
+        Optional<Feature> featureOptional = findFeatureByName('agorapulse-gru-http')
 
         then:
         featureOptional.isPresent()
@@ -39,12 +39,12 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
     }
 
-    @Unroll("#buildTool with feature gru-http adds dependency for #buildTool")
-    void "verify gru-http feature dependencies"(BuildTool buildTool) {
+    @Unroll("#buildTool with feature agorapulse-gru-http adds dependency for #buildTool")
+    void "verify agorapulse-gru-http feature dependencies"(BuildTool buildTool) {
         given:
         String groupId = 'com.agorapulse'
         String artifactId = 'gru-micronaut'
-        List<String> features = ['gru-http']
+        List<String> features = ['agorapulse-gru-http']
         String coordinate = "${groupId}:${artifactId}"
 
         when:
