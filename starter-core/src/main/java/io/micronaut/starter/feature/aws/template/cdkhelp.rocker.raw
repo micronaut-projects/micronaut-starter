@@ -19,7 +19,7 @@
 ./gradlew :app:shadowJar
 ./gradlew test
 } else if(buildTool == BuildTool.MAVEN && nativeImage) {
-./mvnw package -Dpackaging=docker-native -Dmicronaut.runtime=lambda
+./mvnw package -Dpackaging=docker-native -Dmicronaut.runtime=lambda -Pgraalvm
 } else if(buildTool == BuildTool.MAVEN && !nativeImage) {
 ./mvnw package
 }
