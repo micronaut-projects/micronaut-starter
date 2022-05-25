@@ -66,12 +66,12 @@ public class Permissions implements AgoraPulseFeature {
 
     @Override
     @NonNull
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "micronaut-permissions";
     }
 
     @Override
-    public String getTitle() {
+    public String getCommunityFeatureTitle() {
         return "Micronaut Permissions";
     }
 

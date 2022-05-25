@@ -12,17 +12,17 @@ class PermissionsSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
-        return 'micronaut-permissions'
+        return 'agorapulse-micronaut-permissions'
     }
 
     @Unroll
-    void "test maven micronaut-permissions with #language, #testFramework and #applicationType"(
+    void "test maven agorapulse-micronaut-permissions with #language, #testFramework and #applicationType"(
             Language language,
             TestFramework testFramework,
             ApplicationType applicationType
     ) {
         when:
-        generateProject(language, BuildTool.MAVEN, ['micronaut-permissions'], applicationType, testFramework)
+        generateProject(language, BuildTool.MAVEN, ['agorapulse-micronaut-permissions'], applicationType, testFramework)
         String output = executeMaven('compile test')
 
         then:
@@ -37,14 +37,14 @@ class PermissionsSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle micronaut-permissions with #language, #testFramework and #applicationType using #buildTool"(
+    void "test gradle agorapulse-micronaut-permissions with #language, #testFramework and #applicationType using #buildTool"(
             BuildTool buildTool,
             Language language,
             TestFramework testFramework,
             ApplicationType applicationType
     ) {
         when:
-        generateProject(language, buildTool, ['micronaut-permissions'], applicationType, testFramework)
+        generateProject(language, buildTool, ['agorapulse-micronaut-permissions'], applicationType, testFramework)
         BuildResult result = executeGradle('test')
 
         then:
