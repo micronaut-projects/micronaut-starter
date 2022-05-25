@@ -13,24 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.agorapulse;
+package io.micronaut.starter.feature.camunda;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.CommunityFeature;
 
-public interface AgoraPulseFeature extends CommunityFeature {
+public interface NovatecFeature extends CommunityFeature {
 
-    @Override
-    default String getThirdPartyDocumentation() {
-        return "https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries";
-    }
-
-    /**
-     * @return Indicates name of the community contributor.
-     */
     @Override
     @NonNull
     default String getCommunityContributor() {
-        return "Agorapulse";
+        return "Novatec";
     }
 }

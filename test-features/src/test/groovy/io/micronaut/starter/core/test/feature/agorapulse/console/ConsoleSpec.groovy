@@ -12,13 +12,13 @@ class ConsoleSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
-        return "micronaut-console"
+        return "agorapulse-micronaut-console"
     }
 
     @Unroll
-    void "test maven micronaut-console with #language and #testFramework"(Language language, TestFramework testFramework) {
+    void "test maven agorapulse-micronaut-console with #language and #testFramework"(Language language, TestFramework testFramework) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["micronaut-console"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, BuildTool.MAVEN, ["agorapulse-micronaut-console"], ApplicationType.DEFAULT, testFramework)
         String output = executeMaven("compile test")
 
         then:
@@ -32,9 +32,9 @@ class ConsoleSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle micronaut-console with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
+    void "test gradle agorapulse-micronaut-console with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
         when:
-        generateProject(language, buildTool, ["micronaut-console"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, buildTool, ["agorapulse-micronaut-console"], ApplicationType.DEFAULT, testFramework)
         BuildResult result = executeGradle("test")
 
         then:
