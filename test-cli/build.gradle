@@ -5,8 +5,5 @@ plugins {
 dependencies {
     testImplementation project(":test-utils")
     testImplementation project(":micronaut-cli")
-}
-
-tasks.withType(Test).configureEach {
-    forkEvery = 10
+    testImplementation "ch.qos.logback:logback-classic:1.2.11"
 }

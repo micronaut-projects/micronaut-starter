@@ -1,0 +1,22 @@
+@import io.micronaut.starter.options.BuildTool;
+@args(BuildTool buildTool, String infrastructureModuleName)
+{
+@if(buildTool.isGradle()) {
+  "app": "../gradlew :@(infrastructureModuleName):run",
+} else {
+  "app": "../mvnw -e -q compile exec:java --pl @(infrastructureModuleName) -f ../pom.xml",
+}
+  "context": {
+    "@@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
+    "@@aws-cdk/core:stackRelativeExports": true,
+    "@@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
+    "@@aws-cdk/aws-lambda:recognizeVersionProps": true,
+    "@@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
+    "@@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver": true,
+    "@@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
+    "@@aws-cdk/core:target-partitions": [
+      "aws",
+      "aws-cn"
+    ]
+  }
+}

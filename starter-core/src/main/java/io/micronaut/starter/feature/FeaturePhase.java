@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ public enum FeaturePhase {
     LOWEST(-200),
     LOW(-100),
     DEFAULT(0),
+    INFRASTRUCTURE_AS_CODE(200),
     LANGUAGE(300),
     TEST(400),
     BUILD_PLUGIN(400),

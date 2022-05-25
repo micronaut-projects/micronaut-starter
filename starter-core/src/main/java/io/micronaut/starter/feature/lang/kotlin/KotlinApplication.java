@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -52,9 +53,11 @@ public class KotlinApplication implements KotlinApplicationFeature {
     public void apply(GeneratorContext generatorContext) {
         KotlinApplicationFeature.super.apply(generatorContext);
 
+        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+
         if (shouldGenerateApplicationFile(generatorContext)) {
             generatorContext.addTemplate("application", new RockerTemplate(getPath(),
-                    application.template(generatorContext.getProject(), generatorContext.getFeatures())));
+                    application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment)));
             TestFramework testFramework = generatorContext.getTestFramework();
             String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
             Project project = generatorContext.getProject();

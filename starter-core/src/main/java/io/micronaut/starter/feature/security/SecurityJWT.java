@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
+import java.util.Optional;
+
 @Singleton
-public class SecurityJWT extends SecurityFeature {
+public class SecurityJWT extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
     public static final int ORDER = 0;
 
@@ -45,10 +48,14 @@ public class SecurityJWT extends SecurityFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.authentication", "bearer");
-        generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}");
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.security")
+        generatorContext.getConfiguration().put(PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION, getSecurityAuthenticationMode().toString());
+        Optional<SecurityAuthenticationMode> securityAuthenticationModeOptional = SecurityAuthenticationModeUtils.resolveSecurityAuthenticationMode(generatorContext);
+        if (securityAuthenticationModeOptional.isPresent() &&
+                (securityAuthenticationModeOptional.get() == SecurityAuthenticationMode.BEARER || securityAuthenticationModeOptional.get() == SecurityAuthenticationMode.COOKIE)
+        ) {
+            generatorContext.getConfiguration().put("micronaut.security.token.jwt.signatures.secret.generator.secret", "${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}");
+        }
+        generatorContext.addDependency(MicronautDependencyUtils.securityDependency()
                 .artifactId("micronaut-security-jwt")
                 .compile());
     }
@@ -61,5 +68,11 @@ public class SecurityJWT extends SecurityFeature {
     @Override
     public int getOrder() {
         return ORDER;
+    }
+
+    @Override
+    @NonNull
+    public SecurityAuthenticationMode getSecurityAuthenticationMode() {
+        return SecurityAuthenticationMode.BEARER;
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,15 @@
  */
 package io.micronaut.starter.feature.security;
 
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class SecurityOAuth2 extends SecurityFeature {
+public class SecurityOAuth2 extends SecurityFeature implements SecurityAuthenticationModeProvider {
 
     public static final int ORDER = SecurityJWT.ORDER + 10;
 
@@ -41,22 +43,39 @@ public class SecurityOAuth2 extends SecurityFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for authentication with OAuth 2.0 providers";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("micronaut.security.authentication", "cookie");
-        generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.client-id", "${OAUTH_CLIENT_ID}");
-        generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.client-secret", "${OAUTH_CLIENT_SECRET}");
+        generatorContext.getConfiguration().put(PROPERTY_MICRONAUT_SECURITY_AUTHENTICATION,
+                SecurityAuthenticationModeUtils.resolveSecurityAuthenticationMode(generatorContext)
+                        .orElseGet(this::getSecurityAuthenticationMode).toString());
+
+        SecurityOAuth2Configuration oAuth2Config = securityOAuth2Configuration(generatorContext);
+
+        ApplicationConfiguration devConfig = generatorContext.getConfiguration(Environment.DEVELOPMENT, ApplicationConfiguration.devConfig());
+        devConfig.put("micronaut.security.oauth2.clients.default.client-id", oAuth2Config.getClientId());
+        devConfig.put("micronaut.security.oauth2.clients.default.client-secret", oAuth2Config.getClientSecret());
         if (generatorContext.isFeaturePresent(SecurityJWT.class)) {
-            generatorContext.getConfiguration().put("micronaut.security.oauth2.clients.default.openid.issuer", "${OAUTH_ISSUER}");
+            devConfig.put("micronaut.security.oauth2.clients.default.openid.issuer", oAuth2Config.getIssuer());
         }
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.security")
+        generatorContext.addDependency(MicronautDependencyUtils.securityDependency()
                 .artifactId("micronaut-security-oauth2")
                 .compile());
+    }
+
+    @NonNull
+    private SecurityOAuth2Configuration securityOAuth2Configuration(@NonNull GeneratorContext generatorContext) {
+        return generatorContext.getFeatures()
+                .getFeatures()
+                .stream()
+                .filter(SecurityOAuth2Configuration.class::isInstance)
+                .map(SecurityOAuth2Configuration.class::cast)
+                .findFirst()
+                .orElseGet(() -> new SecurityOAuth2Configuration() { });
     }
 
     @Override
@@ -67,5 +86,11 @@ public class SecurityOAuth2 extends SecurityFeature {
     @Override
     public int getOrder() {
         return ORDER;
+    }
+
+    @Override
+    @NonNull
+    public SecurityAuthenticationMode getSecurityAuthenticationMode() {
+        return SecurityAuthenticationMode.COOKIE;
     }
 }

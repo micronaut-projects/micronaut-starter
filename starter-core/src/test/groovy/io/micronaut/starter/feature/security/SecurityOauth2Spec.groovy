@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.security
 
+import io.micronaut.context.env.Environment
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
@@ -84,17 +85,17 @@ class SecurityOauth2Spec extends ApplicationContextSpec implements CommandOutput
 
         then:
         commandContext.configuration.get("micronaut.security.authentication") == "cookie"
-        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-id")
-        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-secret")
-        !commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
+        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
+        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
+        !commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
 
         when:
         commandContext = buildGeneratorContext(['security-oauth2', 'security-jwt'])
 
         then:
         commandContext.configuration.get("micronaut.security.authentication") == "cookie"
-        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-id")
-        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.client-secret")
-        commandContext.configuration.containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
+        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-id")
+        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.client-secret")
+        commandContext.getConfiguration(Environment.DEVELOPMENT).containsKey("micronaut.security.oauth2.clients.default.openid.issuer")
     }
 }

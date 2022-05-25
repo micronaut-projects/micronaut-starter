@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 package io.micronaut.starter.feature.lang.kotlin;
 
 import io.micronaut.starter.feature.ApplicationFeature;
+import io.micronaut.starter.feature.FeaturePhase;
 
 public interface KotlinApplicationFeature extends ApplicationFeature {
+    @Override
+    default int getOrder() {
+        return FeaturePhase.LANGUAGE.getOrder();
+    }
 }

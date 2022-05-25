@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,19 +25,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class PropertiesTemplate implements Template {
+public class PropertiesTemplate extends DefaultTemplate {
 
-    private final String path;
     private final Properties properties;
 
     public PropertiesTemplate(String path, Map<String, Object> config) {
-        this.path = path;
-        this.properties = transform(new LinkedProperties(), "", config);
+        this(DEFAULT_MODULE, path, config);
     }
 
-    @Override
-    public String getPath() {
-        return path;
+    public PropertiesTemplate(String module, String path, Map<String, Object> config) {
+        super(module, path);
+        this.properties = transform(new LinkedProperties(), "", config);
     }
 
     @Override

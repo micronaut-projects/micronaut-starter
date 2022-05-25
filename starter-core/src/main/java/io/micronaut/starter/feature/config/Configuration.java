@@ -39,6 +39,8 @@ public class Configuration extends LinkedHashMap<String, Object> {
      * A configuration rooted at path, with the given map of configurations
      *
      * @param sourceSet where the configuration is rooted, e.g. main, test
+     * @param fileName Filename
+     * @param templateKey Template Key
      */
     public Configuration(@NonNull String sourceSet, @NonNull String fileName, @NonNull String templateKey) {
         super();

@@ -15,17 +15,22 @@
  */
 package io.micronaut.starter.feature.agorapulse;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.CommunityFeature;
 
-public interface AgoraPulseFeature extends Feature {
+public interface AgoraPulseFeature extends CommunityFeature {
 
     @Override
     default String getThirdPartyDocumentation() {
         return "https://agorapulse.github.io/agorapulse-oss/#_micronaut_libraries";
     }
 
+    /**
+     * @return Indicates name of the community contributor.
+     */
     @Override
-    default boolean isCommunity() {
-        return true;
+    @NonNull
+    default String getCommunityContributor() {
+        return "Agorapulse";
     }
 }

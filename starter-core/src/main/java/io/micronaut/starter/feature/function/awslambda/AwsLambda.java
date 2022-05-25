@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -25,8 +26,11 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
+import io.micronaut.starter.feature.aws.AwsApiFeature;
+import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
@@ -35,6 +39,7 @@ import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.template.*;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.ShadePlugin;
+import io.micronaut.starter.feature.security.SecurityFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
@@ -107,10 +112,17 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                 } else {
                     addRequestHandler(generatorContext, project);
                     generatorContext.addDependency(Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile());
-                    addTest(generatorContext, project);
+                    if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ||
+                            !generatorContext.getFeatures().hasFeature(AwsLambdaEventFeature.class)) {
+                        addTest(generatorContext, project);
+                    }
                 }
                 DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
                 generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
+                if (generatorContext.getFeatures().hasFeature(SecurityFeature.class)) {
+                    ApplicationConfiguration test = generatorContext.getConfiguration(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
+                    test.put("micronaut.security.filter.enabled", false);
+                }
             }
         }
         generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
@@ -151,9 +163,9 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     private void addRequestHandler(GeneratorContext generatorContext, Project project) {
         String awsLambdaRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + REQUEST_HANDLER);
         generatorContext.addTemplate("functionRequestHandler", awsLambdaRequestHandlerFile,
-                awsLambdaFunctionRequestHandlerJava.template(project),
-                awsLambdaFunctionRequestHandlerKotlin.template(project),
-                awsLambdaFunctionRequestHandlerGroovy.template(project));
+                awsLambdaFunctionRequestHandlerJava.template(generatorContext.getFeatures(), project),
+                awsLambdaFunctionRequestHandlerKotlin.template(generatorContext.getFeatures(), project),
+                awsLambdaFunctionRequestHandlerGroovy.template(generatorContext.getFeatures(), project));
     }
 
     @Override

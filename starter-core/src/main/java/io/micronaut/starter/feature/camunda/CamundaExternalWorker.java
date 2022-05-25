@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,26 +21,21 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CamundaExternalWorker implements Feature {
+public class CamundaExternalWorker implements NovatecFeature {
 
     @NonNull
     @Override
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "camunda-external-worker";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Camunda Workflow Engine External Worker";
-    }
-
-    @Override
-    public boolean isCommunity() {
-        return true;
     }
 
     @Override

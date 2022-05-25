@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,18 @@
  */
 package io.micronaut.starter.template;
 
+import io.micronaut.core.annotation.NonNull;
+
 public interface Template extends Writable {
 
+    String DEFAULT_MODULE = "app";
+    String ROOT = "";
+
     String getPath();
+
+    void setUseModule(boolean useModule);
+
+    @NonNull String getModule();
 
     default boolean isBinary() {
         return false;

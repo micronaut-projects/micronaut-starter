@@ -4,10 +4,16 @@
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import java.util.stream.Collectors
 
-@args (Project project, Features features)
+@args (Project project, Features features, String defaultEnvironment)
 
 package @project.getPackageName();
 
+@if (defaultEnvironment != null) {
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
+}
 import io.micronaut.runtime.Micronaut;
 @if (features.contains("openapi")) {
 import io.swagger.v3.oas.annotations.*;
@@ -64,7 +70,6 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
     readinessProbe = @@Probe(httpActionPath = "/health/readiness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10)
 )
 }
-
 @if (features.contains("dekorate-prometheus")) {
 @@EnableServiceMonitor(port = "http", path="/prometheus")
 }
@@ -75,7 +80,15 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
 @@HalkyonComponent(name = "@project.getName()")
 }
 public class Application {
-
+@if (defaultEnvironment != null) {
+    @@ContextConfigurer
+    public static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
+        @@Override
+        public void configure(@@NonNull ApplicationContextBuilder builder) {
+            builder.defaultEnvironments("@(defaultEnvironment)");
+        }
+    }
+}
     public static void main(String[] args) {
         Micronaut.run(Application.class, args);
     }

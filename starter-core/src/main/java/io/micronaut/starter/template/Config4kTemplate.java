@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,18 +24,17 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-public class Config4kTemplate implements Template {
-    private final String path;
+public class Config4kTemplate extends DefaultTemplate {
+
     private final Config config;
 
     public Config4kTemplate(String path, Map<String, Object> values) {
-        this.path = path;
-        config = ConfigFactory.parseMap(values);
+        this(DEFAULT_MODULE, path, values);
     }
 
-    @Override
-    public String getPath() {
-        return path;
+    public Config4kTemplate(String module, String path, Map<String, Object> values) {
+        super(module, path);
+        config = ConfigFactory.parseMap(values);
     }
 
     @Override

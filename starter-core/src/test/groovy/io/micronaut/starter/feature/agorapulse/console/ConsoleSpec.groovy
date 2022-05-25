@@ -15,7 +15,7 @@ class ConsoleSpec extends ApplicationContextSpec {
         List<ApplicationType> supportedApplicationTypes = [ApplicationType.DEFAULT]
 
         when:
-        Optional<Feature> featureOptional = findFeatureByName('micronaut-console')
+        Optional<Feature> featureOptional = findFeatureByName('agorapulse-micronaut-console')
 
         then:
         featureOptional.isPresent()
@@ -41,10 +41,10 @@ class ConsoleSpec extends ApplicationContextSpec {
         }
     }
 
-    @Unroll("#buildTool with feature micronaut-console adds dependency #groupId:#artifactId for #language")
-    void "verify micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
+    @Unroll("#buildTool with feature agorapulse-micronaut-console adds dependency #groupId:#artifactId for #language")
+    void "verify agorapulse-micronaut-console feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
-        List<String> features = ['micronaut-console']
+        List<String> features = ['agorapulse-micronaut-console']
         String coordinate = "${groupId}:${artifactId}"
 
         when:
@@ -80,9 +80,9 @@ class ConsoleSpec extends ApplicationContextSpec {
         Language.KOTLIN | BuildTool.MAVEN           | 'org.jetbrains.kotlin'    | 'kotlin-scripting-jsr223'
     }
 
-    void 'verify micronaut-console configuration'() {
+    void 'verify agorapulse-micronaut-console configuration'() {
         when:
-            GeneratorContext commandContext = buildGeneratorContext(['micronaut-console'])
+            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-console'])
             int expectedLength = UUID.randomUUID().toString().length()
         then:
             commandContext.configuration.get('console.enabled') == true

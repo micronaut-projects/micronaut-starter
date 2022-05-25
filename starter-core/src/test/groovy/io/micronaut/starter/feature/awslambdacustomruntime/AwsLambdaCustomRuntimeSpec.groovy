@@ -30,9 +30,9 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     void 'test readme.md with feature aws-lambda-custom-runtime and graalvm contains extra documentation. language = #language'() {
         when:
         def output = generate(
-            ApplicationType.DEFAULT,
-            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-            ['aws-lambda-custom-runtime', 'graalvm']
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                ['aws-lambda-custom-runtime', 'graalvm']
         )
 
         def readme = output["README.md"]
@@ -141,9 +141,9 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
     void 'test maven aws-lambda-custom-runtime include http-client in compile scope: language=#language, application: #applicationType'(Language language, ApplicationType applicationType) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-            .language(language)
-            .features(['aws-lambda-custom-runtime'])
-            .render()
+                .language(language)
+                .features(['aws-lambda-custom-runtime'])
+                .render()
 
         then:
         template.contains("""

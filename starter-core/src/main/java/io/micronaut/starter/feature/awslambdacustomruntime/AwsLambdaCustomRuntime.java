@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,7 +94,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         }
 
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
-            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
+            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template(generatorContext.getBuildTool())));
         }
     }
 
@@ -121,9 +121,9 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     private void addFunctionLambdaRuntime(GeneratorContext generatorContext, Project project) {
         String functionLambdaRuntime = generatorContext.getSourcePath("/{packagePath}/FunctionLambdaRuntime");
         generatorContext.addTemplate("functionLambdaRuntime", functionLambdaRuntime,
-                functionLambdaRuntimeJava.template(project),
-                functionLambdaRuntimeKotlin.template(project),
-                functionLambdaRuntimeGroovy.template(project));
+                functionLambdaRuntimeJava.template(generatorContext.getFeatures(), project),
+                functionLambdaRuntimeKotlin.template(generatorContext.getFeatures(), project),
+                functionLambdaRuntimeGroovy.template(generatorContext.getFeatures(), project));
     }
 
     @Override

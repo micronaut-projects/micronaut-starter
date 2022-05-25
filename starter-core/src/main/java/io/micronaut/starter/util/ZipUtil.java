@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,9 @@ public class ZipUtil {
      * Does the specified zip bytes contain the specified file.
      * @param bytes The bytes
      * @param filename The file name
-     * @return True if it does
+     * @param contents Contents
+     * @return
+     * True if it does
      */
     public static boolean containsFileWithContents(byte[] bytes, String filename, String contents) {
         Objects.requireNonNull(bytes, "Byte cannot be null");

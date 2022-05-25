@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,8 @@ public class DefaultProjectGenerator implements ProjectGenerator {
         features.sort(Comparator.comparing(Function.identity()));
 
         generatorContext.addTemplate("micronautCli",
-                new RockerTemplate("micronaut-cli.yml",
+                new RockerTemplate(Template.ROOT,
+                        "micronaut-cli.yml",
                         cli.template(generatorContext.getLanguage(),
                                 generatorContext.getTestFramework(),
                                 generatorContext.getBuildTool(),

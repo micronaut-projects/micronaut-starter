@@ -1,10 +1,16 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
 
-@args (Project project, Features features)
+@args (Project project, Features features, String defaultEnvironment)
 
 package @project.getPackageName()
 
+@if (defaultEnvironment != null) {
+import io.micronaut.core.annotation.NonNull
+import io.micronaut.context.ApplicationContextBuilder
+import io.micronaut.context.ApplicationContextConfigurer
+import io.micronaut.context.annotation.ContextConfigurer
+}
 import io.micronaut.runtime.Micronaut
 import groovy.transform.CompileStatic
 @if (features.contains("openapi")) {
@@ -23,6 +29,15 @@ import io.swagger.v3.oas.annotations.info.*
 }
 @@CompileStatic
 class Application {
+@if (defaultEnvironment != null) {
+    @@ContextConfigurer
+    static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
+        @@Override
+        public void configure(@@NonNull ApplicationContextBuilder builder) {
+            builder.defaultEnvironments("@(defaultEnvironment)");
+        }
+    }
+}
     static void main(String[] args) {
         Micronaut.run(Application, args)
     }

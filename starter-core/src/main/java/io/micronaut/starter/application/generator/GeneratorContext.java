@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A context object used when generating projects.
@@ -68,7 +69,7 @@ public class GeneratorContext implements DependencyContext {
 
     private final Project project;
     private final OperatingSystem operatingSystem;
-    private final CoordinateResolver coordinateResolver;
+
     private final BuildProperties buildProperties = new BuildProperties();
     private final ApplicationConfiguration configuration = new ApplicationConfiguration();
     private final Map<String, ApplicationConfiguration> applicationEnvironmentConfiguration = new LinkedHashMap<>();
@@ -81,9 +82,9 @@ public class GeneratorContext implements DependencyContext {
     private final ApplicationType command;
     private final Features features;
     private final Options options;
-    private final Set<Dependency> dependencies = new HashSet<>();
+    private final CoordinateResolver coordinateResolver;
+    private final DependencyContext dependencyContext;
     private final Set<Profile> profiles = new HashSet<>();
-
     private final Set<BuildPlugin> buildPlugins = new HashSet<>();
 
     public GeneratorContext(Project project,
@@ -95,7 +96,6 @@ public class GeneratorContext implements DependencyContext {
         this.command = type;
         this.project = project;
         this.operatingSystem = operatingSystem;
-        this.coordinateResolver = coordinateResolver;
         this.features = new Features(this, features, options);
         this.options = options;
         String micronautVersion = VersionInfo.getMicronautVersion();
@@ -104,6 +104,8 @@ public class GeneratorContext implements DependencyContext {
         } else if (options.getBuildTool() == BuildTool.MAVEN) {
             buildProperties.put("micronaut.version", micronautVersion);
         }
+        this.coordinateResolver = coordinateResolver;
+        this.dependencyContext = new DependencyContextImpl(coordinateResolver);
     }
 
     /**
@@ -112,6 +114,7 @@ public class GeneratorContext implements DependencyContext {
      * @param template The template
      */
     public void addTemplate(String name, Template template) {
+        template.setUseModule(features.hasMultiProjectFeature());
         templates.put(name, template);
     }
 
@@ -156,17 +159,29 @@ public class GeneratorContext implements DependencyContext {
     }
 
     /**
+     * @param env Environment
      * @return The configuration
      */
     @Nullable public ApplicationConfiguration getConfiguration(String env) {
         return applicationEnvironmentConfiguration.get(env);
     }
 
+    public boolean hasConfigurationEnvironment(@NonNull String env) {
+        return applicationEnvironmentConfiguration.containsKey(env);
+    }
+
+    /**
+     *
+     * @param env Environment
+     * @param defaultConfig Default Configuration
+     * @return Application Configuration
+     */
     @NonNull public ApplicationConfiguration getConfiguration(String env, ApplicationConfiguration defaultConfig) {
         return applicationEnvironmentConfiguration.computeIfAbsent(env, (key) -> defaultConfig);
     }
 
     /**
+     * @param env Environment
      * @return The configuration
      */
     @Nullable public BootstrapConfiguration getBootstrapConfiguration(String env) {
@@ -327,23 +342,6 @@ public class GeneratorContext implements DependencyContext {
         addTemplate(templateName, new RockerTemplate(triggerFile, rockerModel));
     }
 
-    @Override
-    public void addDependency(@NonNull Dependency dependency) {
-        if (dependency.requiresLookup()) {
-            Coordinate coordinate = coordinateResolver.resolve(dependency.getArtifactId())
-                    .orElseThrow(() -> new LookupFailedException(dependency.getArtifactId()));
-            this.dependencies.add(dependency.resolved(coordinate));
-        } else {
-            this.dependencies.add(dependency);
-        }
-    }
-
-    @NonNull
-    @Override
-    public Set<Dependency> getDependencies() {
-        return dependencies;
-    }
-
     public void addBuildPlugin(BuildPlugin buildPlugin) {
         if (buildPlugin.requiresLookup()) {
             this.buildPlugins.add(buildPlugin.resolved(coordinateResolver));
@@ -354,13 +352,33 @@ public class GeneratorContext implements DependencyContext {
 
     public Coordinate resolveCoordinate(String artifactId) {
         return coordinateResolver.resolve(artifactId)
-                    .orElseThrow(() -> new LookupFailedException(artifactId));
+                .orElseThrow(() -> new LookupFailedException(artifactId));
     }
 
+    @Override
+    public void addDependency(@NonNull Dependency dependency) {
+        dependencyContext.addDependency(dependency);
+    }
+
+    @NonNull
+    @Override
+    public Collection<Dependency> getDependencies() {
+        return dependencyContext.getDependencies();
+    }
+    
     public Set<BuildPlugin> getBuildPlugins() {
         return buildPlugins;
     }
 
+    public Collection<String> getModuleNames() {
+        return templates.values()
+                .stream()
+                .map(Template::getModule)
+                .filter(s -> !Template.ROOT.equals(s))
+                .distinct()
+                .collect(Collectors.toList());
+    }
+  
     public void addProfile(@NonNull Profile profile) {
         Optional<Profile> optionalProfile = profiles.stream().filter(it -> it.getId().equals(profile.getId())).findFirst();
         if (optionalProfile.isPresent()) {
