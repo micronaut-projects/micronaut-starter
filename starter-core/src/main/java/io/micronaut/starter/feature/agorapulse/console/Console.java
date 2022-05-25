@@ -47,12 +47,13 @@ public class Console implements AgoraPulseFeature {
 
     @Override
     @NonNull
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "micronaut-console";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Micronaut Console";
     }
 

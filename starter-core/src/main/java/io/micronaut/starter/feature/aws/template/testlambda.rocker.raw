@@ -22,7 +22,7 @@ if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
 } else if(buildTool == BuildTool.MAVEN && nativeImage) {
-./mvnw package -Dpackaging=docker-native -Dmicronaut.runtime=lambda || EXIT_STATUS=$?
+./mvnw package -Dpackaging=docker-native -Dmicronaut.runtime=lambda -Pgraalvm || EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ]; then
   exit $EXIT_STATUS
 fi
