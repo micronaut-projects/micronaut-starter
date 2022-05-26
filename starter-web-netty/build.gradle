@@ -30,3 +30,7 @@ tasks.named("dockerBuildNative") {
     images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
 }
 
+tasks.named("dockerBuild") {
+    images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
+}
+
