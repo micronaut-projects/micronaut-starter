@@ -23,9 +23,6 @@ application {
     mainClass = "io.micronaut.starter.netty.Application"
 }
 
-dockerfileNative {
-    graalVersion.set("22.0.0.2")
-}
 tasks.named("dockerBuildNative") {
     images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
 }
@@ -34,3 +31,15 @@ tasks.named("dockerBuild") {
     images = [project.hasProperty("dockerImageName") ? project.getProperty("dockerImageName") : "micronaut-starter"]
 }
 
+graalvmNative {
+    toolchainDetection = false
+
+    binaries {
+        main {
+            // Main options
+            sharedLibrary = false
+            imageName = 'micronaut-starter'
+            mainClass = 'io.micronaut.starter.netty.Application'
+        }
+    }
+}
