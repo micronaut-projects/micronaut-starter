@@ -84,16 +84,6 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
                     .id("com.github.johnrengelman.shadow")
                     .lookupArtifactId("shadow");
 
-            if (generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
-                builder.extension(outputStream -> {
-                    String str = String.join("\n", Arrays.asList(
-                            "tasks.named(\"assemble\") {",
-                            "    dependsOn(\":shadowJar\")",
-                            "}"
-                    ));
-                    outputStream.write(str.getBytes(StandardCharsets.UTF_8));
-                });
-            }
             generatorContext.addBuildPlugin(builder.build());
         }
     }

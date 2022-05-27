@@ -42,11 +42,6 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
         noExceptionThrown()
         semanticVersionOptional.isPresent()
 
-        and:
-        String dependency = '''\
-tasks.named("assemble") {
-    dependsOn(":shadowJar")
-}'''
         if (applicationType == ApplicationType.DEFAULT) {
             assert !template.contains(dependency)
         } else if (applicationType == ApplicationType.FUNCTION) {
