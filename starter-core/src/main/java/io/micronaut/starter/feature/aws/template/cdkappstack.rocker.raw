@@ -114,7 +114,7 @@ public class AppStack extends Stack {
                 @nativeImage,
                 this,
                 "@(functionId)")
-@if (applicationType == ApplicationType.FUNCTION && handler != null) {
+@if (applicationType == ApplicationType.FUNCTION) {
                 .handler("@(handler)")
 }
                 .environment(environmentVariables)
