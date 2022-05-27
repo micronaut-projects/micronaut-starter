@@ -22,6 +22,11 @@ import software.amazon.awscdk.services.dynamodb.Table;
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 }
+@if (features.contains("aws-lambda-scheduled-event")) {
+import software.amazon.awscdk.services.events.Rule;
+import software.amazon.awscdk.services.events.Schedule;
+import software.amazon.awscdk.services.events.targets.LambdaFunction;
+}
 @if (features.contains("amazon-cognito")) {
 import java.util.Arrays;
 import java.util.Collections;
@@ -137,6 +142,12 @@ public class AppStack extends Stack {
         LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
                 .handler(function)
                 .build();
+}
+@if (features.contains("aws-lambda-scheduled-event")) {
+        Rule rule = Rule.Builder.create(this, "micronaut-function-rule")
+                .schedule(Schedule.rate(Duration.minutes(1)))
+                .build();
+        rule.addTarget(LambdaFunction.Builder.create(function).build());
 }
         CfnOutput.Builder.create(this, "ApiUrl")
                 .exportName("ApiUrl")

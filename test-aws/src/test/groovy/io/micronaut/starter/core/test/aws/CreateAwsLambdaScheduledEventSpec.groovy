@@ -33,4 +33,23 @@ class CreateAwsLambdaScheduledEventSpec extends CommandSpec {
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION])
     }
+
+    @Unroll
+    void 'create-#applicationType with features aws-lambda-scheduled-event and aws-cdk #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
+                                                                                                                                Language lang,
+                                                                                                                                BuildTool build,
+                                                                                                                                TestFramework testFramework) {
+        given:
+        List<String> features = ['aws-lambda-scheduled-event', 'aws-cdk']
+        generateProject(lang, build, features, applicationType, testFramework)
+
+        when:
+        String output = executeBuild(build, "test")
+
+        then:
+        output.contains("BUILD SUCCESS")
+
+        where:
+        [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.FUNCTION])
+    }
 }
