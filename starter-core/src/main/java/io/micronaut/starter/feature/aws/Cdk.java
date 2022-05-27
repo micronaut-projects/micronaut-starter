@@ -155,9 +155,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
                 .compile());
-        dependencyContext.addDependency(Dependency.builder()
-                .lookupArtifactId("aws-cdk-lib")
-                .compile());
         dependencyContext.addDependency(bomDependency().test());
         dependencyContext.addDependency(Dependency.builder()
                 .groupId("org.junit.jupiter")
