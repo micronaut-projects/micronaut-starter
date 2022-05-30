@@ -26,8 +26,6 @@ import io.micronaut.starter.feature.build.BuildPluginFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Set;
 
 /**
