@@ -185,8 +185,8 @@ MavenBuild mavenBuild
 @dependency.template("io.mockk", "mockk", "test", "1.9.3", false)
 @if (features.testFramework().isKoTest()) {
 @dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null, false)
-@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.2.5", false)
-@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.2.5", false)
+@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "5.3.0", false)
+@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "5.3.0", false)
 }
 } else if (features.testFramework().isSpock()) {
 @if (!features.language().isGroovy()) {
