@@ -41,12 +41,7 @@ class ShadePluginSpec extends ApplicationContextSpec  implements CommandOutputFi
         then:
         noExceptionThrown()
         semanticVersionOptional.isPresent()
-
-        if (applicationType == ApplicationType.DEFAULT) {
-            assert !template.contains(dependency)
-        } else if (applicationType == ApplicationType.FUNCTION) {
-            assert template.contains(dependency)
-        }
+        
         where:
         [language, applicationType] << [Language.values(), [ApplicationType.FUNCTION, ApplicationType.DEFAULT]].combinations()
     }
