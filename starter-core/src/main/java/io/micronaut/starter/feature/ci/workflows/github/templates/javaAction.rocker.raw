@@ -17,7 +17,7 @@ on:
   pull_request:
     branches: [ main ]
 
-@if (buildTool.equals(BuildTool.MAVEN)) {
+@if (buildTool.isGradle()) {
 permissions:
   contents: read
 }
@@ -35,8 +35,8 @@ jobs:
 @if (buildTool.equals(BuildTool.MAVEN)) {
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
-} else if (buildTool.equals(BuildTool.GRADLE) || buildTool.equals(BuildTool.GRADLE_KOTLIN)) {
+      run: mvn -B verify --file pom.xml
+} else if (buildTool.isGradle()) {
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@@v1.0.4
     - name: Build with Gradle
@@ -47,6 +47,5 @@ jobs:
       with:
         name: Build Artifacts
         path: |
-          **/build/libs
           **/build/reports
 }
