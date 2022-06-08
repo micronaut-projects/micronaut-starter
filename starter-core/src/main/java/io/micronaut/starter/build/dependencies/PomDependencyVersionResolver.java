@@ -16,7 +16,6 @@
 package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.io.ResourceResolver;
 import io.micronaut.core.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -29,72 +28,73 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Singleton
 public class PomDependencyVersionResolver implements CoordinateResolver {
 
     private static final String NODE_NAME_TEXT = "#text";
-    private final Map<String, Coordinate> coordinates;
 
-    public PomDependencyVersionResolver(ResourceResolver resourceResolver) {
+    /**
+     * Initialize coordinates early to remove runtime dependencies on javax.xml.
+     */
+    private final static Map<String, Coordinate> coordinates = readCoordinates();
+
+    private static Map<String, Coordinate> readCoordinates() {
         Map<String, Coordinate> coordinates = new HashMap<>();
-        for (URL url : resourceResolver.getResources("classpath:pom.xml").collect(Collectors.toList())) {
-            try {
-                InputStream inputStream = url.openStream();
-                Document doc = documentFor(inputStream);
-                doc.getDocumentElement().normalize();
-                NodeList nList = doc.getElementsByTagName("dependency");
-                for (int i = 0; i < nList.getLength(); i++) {
-                    Node node = nList.item(i);
-                    NodeList childNodes = node.getChildNodes();
-                    String groupId = null;
-                    String artifactId = null;
-                    String version = null;
-                    boolean pom = false;
-                    for (int x = 0; x < childNodes.getLength(); x++) {
-                        Node child = childNodes.item(x);
-                        if (child.getNodeName().equals("version")) {
-                            if (valueOfNode(child).isPresent()) {
-                                version = valueOfNode(child).get();
-                            }
-                        }
-                        if (child.getNodeName().equals("groupId")) {
-                            if (valueOfNode(child).isPresent()) {
-                                groupId = valueOfNode(child).get();
-                            }
-                        }
-                        if (child.getNodeName().equals("artifactId")) {
-                            if (valueOfNode(child).isPresent()) {
-                                artifactId = valueOfNode(child).get();
-                            }
-                        }
-                        if (child.getNodeName().equals("type")) {
-                            if (valueOfNode(child).isPresent()) {
-                                pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
-                            }
+        try {
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            InputStream inputStream = classloader.getResourceAsStream("pom.xml");
+            Document doc = documentFor(inputStream);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("dependency");
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node node = nList.item(i);
+                NodeList childNodes = node.getChildNodes();
+                String groupId = null;
+                String artifactId = null;
+                String version = null;
+                boolean pom = false;
+                for (int x = 0; x < childNodes.getLength(); x++) {
+                    Node child = childNodes.item(x);
+                    if (child.getNodeName().equals("version")) {
+                        if (valueOfNode(child).isPresent()) {
+                            version = valueOfNode(child).get();
                         }
                     }
-
-                    if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
-                        DependencyCoordinate dependencyCoordinate = Dependency.builder()
-                                .groupId(groupId)
-                                .artifactId(artifactId)
-                                .version(version)
-                                .pom(pom)
-                                .buildCoordinate();
-                        coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
+                    if (child.getNodeName().equals("groupId")) {
+                        if (valueOfNode(child).isPresent()) {
+                            groupId = valueOfNode(child).get();
+                        }
+                    }
+                    if (child.getNodeName().equals("artifactId")) {
+                        if (valueOfNode(child).isPresent()) {
+                            artifactId = valueOfNode(child).get();
+                        }
+                    }
+                    if (child.getNodeName().equals("type")) {
+                        if (valueOfNode(child).isPresent()) {
+                            pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
+                        }
                     }
                 }
-            } catch (IOException | SAXException | ParserConfigurationException e) {
-                e.printStackTrace();
+
+                if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
+                    DependencyCoordinate dependencyCoordinate = Dependency.builder()
+                            .groupId(groupId)
+                            .artifactId(artifactId)
+                            .version(version)
+                            .pom(pom)
+                            .buildCoordinate();
+                    coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
+                }
             }
+        } catch (IOException | SAXException | ParserConfigurationException e) {
+            e.printStackTrace();
         }
-        this.coordinates = coordinates;
+        return coordinates;
     }
 
     @Override
@@ -111,7 +111,7 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
     }
 
     @NonNull
-    private Optional<String> valueOfNode(@NonNull Node node) {
+    private static Optional<String> valueOfNode(@NonNull Node node) {
         NodeList children = node.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             Node child = children.item(i);
