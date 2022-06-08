@@ -40,7 +40,7 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
     /**
      * Initialize coordinates early to remove runtime dependencies on javax.xml.
      */
-    private final static Map<String, Coordinate> coordinates = readCoordinates();
+    private static final Map<String, Coordinate> COORDINATES = readCoordinates();
 
     private static Map<String, Coordinate> readCoordinates() {
         Map<String, Coordinate> coordinates = new HashMap<>();
@@ -100,7 +100,7 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
     @Override
     @NonNull
     public Optional<Coordinate> resolve(@NonNull String artifactId) {
-        return Optional.ofNullable(coordinates.get(artifactId));
+        return Optional.ofNullable(COORDINATES.get(artifactId));
     }
 
     private static Document documentFor(@NonNull InputStream inputStream)
@@ -124,6 +124,6 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
 
     @NonNull
     public Map<String, Coordinate> getCoordinates() {
-        return coordinates;
+        return COORDINATES;
     }
 }
