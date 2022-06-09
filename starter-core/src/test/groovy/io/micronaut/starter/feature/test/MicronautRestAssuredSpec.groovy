@@ -52,29 +52,6 @@ class MicronautRestAssuredSpec extends ApplicationContextSpec implements Command
     }
 
     @Unroll
-    void 'test gradle micronaut-test-rest-assured feature fails for language=#language when test framework is not Junit'() {
-        when:
-        new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([FEATURE])
-                .language(language)
-                .testFramework(testfw)
-                .render()
-
-        then:
-        def e = thrown(IllegalArgumentException)
-        e.message.startsWith("Micronaut Rest-Assured requires JUnit.")
-
-        where:
-        language        | testfw
-        Language.JAVA   | TestFramework.SPOCK
-        Language.KOTLIN | TestFramework.SPOCK
-        Language.GROOVY | TestFramework.SPOCK
-        Language.JAVA   | TestFramework.KOTEST
-        Language.KOTLIN | TestFramework.KOTEST
-        Language.GROOVY | TestFramework.KOTEST
-    }
-
-    @Unroll
     void 'test maven micronaut-test-rest-assured feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)

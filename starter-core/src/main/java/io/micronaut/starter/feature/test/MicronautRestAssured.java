@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -26,6 +27,7 @@ import jakarta.inject.Singleton;
 public class MicronautRestAssured implements Feature {
     private static final String ARTIFACT_ID_MICRONAUT_TEST_REST_ASSURED = "micronaut-test-rest-assured";
 
+    @NonNull
     @Override
     public String getName() {
         return "micronaut-test-rest-assured";
@@ -33,9 +35,10 @@ public class MicronautRestAssured implements Feature {
 
     @Override
     public String getTitle() {
-        return "Micronaut-Test Rest-Assured";
+        return "Micronaut-Test REST-assured";
     }
 
+    @NonNull
     @Override
     public String getDescription() {
         return "A small Micronaut-Test utility module that helps integrate the REST-assured library";
