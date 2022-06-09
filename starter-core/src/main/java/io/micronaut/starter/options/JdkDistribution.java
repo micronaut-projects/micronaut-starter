@@ -15,6 +15,8 @@
  */
 package io.micronaut.starter.options;
 
+import io.micronaut.core.annotation.NonNull;
+
 public enum JdkDistribution {
     ADOPT("adopt", "Adopt OpenJDK Hotspot"),
     CORRETTO("corretto", "Amazon Corretto Build of OpenJDK"),
@@ -38,10 +40,12 @@ public enum JdkDistribution {
         this.description = description;
     }
 
+    @NonNull
     public String distribution() {
         return distribution;
     }
 
+    @NonNull
     public String description() {
         return description;
     }

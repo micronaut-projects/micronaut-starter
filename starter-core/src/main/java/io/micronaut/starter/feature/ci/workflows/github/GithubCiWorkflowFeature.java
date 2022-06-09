@@ -35,13 +35,13 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
 
     @Override
     public String getTitle() {
-        return "Build and test a Java project using a wrapper script";
+        return "Github Actions CI Workflow";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Adds a GitHub Actions Workflow to build and test a Java project";
+        return "Adds a GitHub Actions Workflow to build a Micronaut application";
     }
 
     @Override
@@ -64,10 +64,12 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
         return "https://docs.github.com/en/actions";
     }
 
+    @NonNull
     @Override
     public String getWorkflowFileName(GeneratorContext generatorContext) {
         switch (generatorContext.getBuildTool()) {
-            case GRADLE: case GRADLE_KOTLIN:
+            case GRADLE:
+            case GRADLE_KOTLIN:
                 return "gradle.yml";
             case MAVEN:
                 return "maven.yml";
