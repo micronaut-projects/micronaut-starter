@@ -28,9 +28,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Singleton
 public class PomDependencyVersionResolver implements CoordinateResolver {
@@ -40,59 +38,62 @@ public class PomDependencyVersionResolver implements CoordinateResolver {
     /**
      * Initialize coordinates early to remove runtime dependencies on javax.xml.
      */
-    private static final Map<String, Coordinate> COORDINATES = readCoordinates();
+    private static final Map<String, Coordinate> COORDINATES =
+        readCoordinates(Collections.singletonList(Thread.currentThread()
+        .getContextClassLoader()
+        .getResourceAsStream("pom.xml")));
 
-    private static Map<String, Coordinate> readCoordinates() {
+    public static Map<String, Coordinate> readCoordinates(List<InputStream> pomInputStreams) {
         Map<String, Coordinate> coordinates = new HashMap<>();
-        try {
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream inputStream = classloader.getResourceAsStream("pom.xml");
-            Document doc = documentFor(inputStream);
-            doc.getDocumentElement().normalize();
-            NodeList nList = doc.getElementsByTagName("dependency");
-            for (int i = 0; i < nList.getLength(); i++) {
-                Node node = nList.item(i);
-                NodeList childNodes = node.getChildNodes();
-                String groupId = null;
-                String artifactId = null;
-                String version = null;
-                boolean pom = false;
-                for (int x = 0; x < childNodes.getLength(); x++) {
-                    Node child = childNodes.item(x);
-                    if (child.getNodeName().equals("version")) {
-                        if (valueOfNode(child).isPresent()) {
-                            version = valueOfNode(child).get();
+        for (InputStream inputStream : pomInputStreams) {
+            try {
+                Document doc = documentFor(inputStream);
+                doc.getDocumentElement().normalize();
+                NodeList nList = doc.getElementsByTagName("dependency");
+                for (int i = 0; i < nList.getLength(); i++) {
+                    Node node = nList.item(i);
+                    NodeList childNodes = node.getChildNodes();
+                    String groupId = null;
+                    String artifactId = null;
+                    String version = null;
+                    boolean pom = false;
+                    for (int x = 0; x < childNodes.getLength(); x++) {
+                        Node child = childNodes.item(x);
+                        if (child.getNodeName().equals("version")) {
+                            if (valueOfNode(child).isPresent()) {
+                                version = valueOfNode(child).get();
+                            }
+                        }
+                        if (child.getNodeName().equals("groupId")) {
+                            if (valueOfNode(child).isPresent()) {
+                                groupId = valueOfNode(child).get();
+                            }
+                        }
+                        if (child.getNodeName().equals("artifactId")) {
+                            if (valueOfNode(child).isPresent()) {
+                                artifactId = valueOfNode(child).get();
+                            }
+                        }
+                        if (child.getNodeName().equals("type")) {
+                            if (valueOfNode(child).isPresent()) {
+                                pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
+                            }
                         }
                     }
-                    if (child.getNodeName().equals("groupId")) {
-                        if (valueOfNode(child).isPresent()) {
-                            groupId = valueOfNode(child).get();
-                        }
-                    }
-                    if (child.getNodeName().equals("artifactId")) {
-                        if (valueOfNode(child).isPresent()) {
-                            artifactId = valueOfNode(child).get();
-                        }
-                    }
-                    if (child.getNodeName().equals("type")) {
-                        if (valueOfNode(child).isPresent()) {
-                            pom = "pom".equalsIgnoreCase(valueOfNode(child).get());
-                        }
-                    }
-                }
 
-                if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
-                    DependencyCoordinate dependencyCoordinate = Dependency.builder()
-                            .groupId(groupId)
-                            .artifactId(artifactId)
-                            .version(version)
-                            .pom(pom)
-                            .buildCoordinate();
-                    coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
+                    if (StringUtils.isNotEmpty(groupId) && StringUtils.isNotEmpty(artifactId)) {
+                        DependencyCoordinate dependencyCoordinate = Dependency.builder()
+                                .groupId(groupId)
+                                .artifactId(artifactId)
+                                .version(version)
+                                .pom(pom)
+                                .buildCoordinate();
+                        coordinates.put(dependencyCoordinate.getArtifactId(), dependencyCoordinate);
+                    }
                 }
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
             }
-        } catch (IOException | SAXException | ParserConfigurationException e) {
-            e.printStackTrace();
         }
         return coordinates;
     }
