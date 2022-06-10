@@ -40,7 +40,7 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.9</version>
+            <version>5.3.10</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -115,7 +115,7 @@
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>2.5.3</version>
+            <version>2.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.jruby</groupId>
