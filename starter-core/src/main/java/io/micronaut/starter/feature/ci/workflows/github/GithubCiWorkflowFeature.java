@@ -21,11 +21,15 @@ import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.github.templates.javaAction;
 import io.micronaut.starter.options.JdkDistribution;
 import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class GithubCiWorkflowFeature extends CIWorkflowFeature {
     public static final String NAME = "github-workflow-ci";
+
+    private static final String WORKFLOW_BASE_PATH = ".github/workflows/";
+    private static final String DEFAULT_BRANCH = "main";
 
     @Override
     @NonNull
@@ -48,14 +52,16 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
 
-        String workflowFilePath = ".github/workflows/" + getWorkflowFileName(generatorContext);
-        generatorContext.addTemplate("javaAction",
-                new RockerTemplate(workflowFilePath,
-                        javaAction.template(
-                                generatorContext.getJdkVersion(),
-                                JdkDistribution.DEFAULT_DISTRIBUTION,
-                                generatorContext.getBuildTool())
-                )
+        generatorContext.addTemplate("javaAction", workflowRockerTemplate(generatorContext));
+    }
+
+    private Template workflowRockerTemplate(GeneratorContext generatorContext) {
+        String workflowFilePath = WORKFLOW_BASE_PATH + getWorkflowFileName(generatorContext);
+        return new RockerTemplate(workflowFilePath, javaAction.template(
+            generatorContext.getJdkVersion(),
+            JdkDistribution.DEFAULT_DISTRIBUTION,
+            generatorContext.getBuildTool(),
+            DEFAULT_BRANCH)
         );
     }
 

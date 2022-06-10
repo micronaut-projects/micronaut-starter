@@ -6,16 +6,17 @@
 @args (
 JdkVersion jdkVersion,
 JdkDistribution jdkDistribution,
-BuildTool buildTool
+BuildTool buildTool,
+String branch
 )
 
 name: Java CI with @buildTool.getTitle()
 
 on:
   push:
-    branches: [ main ]
+    branches: [ @branch ]
   pull_request:
-    branches: [ main ]
+    branches: [ @branch ]
 
 @if (buildTool.isGradle()) {
 permissions:
