@@ -113,7 +113,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-main", new RockerTemplate(INFRA_MODULE, "src/main/java/{packagePath}/" + MAIN_CLASS_NAME + ".java",
                 cdkmain.template(generatorContext.getProject())));
 
-        String handler = resolveHandler(generatorContext).orElse(null);
+        String handler = resolveHandler(generatorContext);
         Language lang = Language.JAVA;
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
@@ -142,23 +142,18 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     @NonNull
-    private Optional<String> resolveHandler(@NonNull GeneratorContext generatorContext) {
-        if (!generatorContext.getFeatures().hasFeature(AwsApiFeature.class)) {
-            return Optional.empty();
+    private String resolveHandler(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) &&
+                generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
+            return AwsLambda.MICRONAUT_LAMBDA_HANDLER;
         }
-        if (generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
-            return Optional.of(AwsLambda.MICRONAUT_LAMBDA_HANDLER);
-        }
-        return Optional.of(generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER);
+        return generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
     }
 
     private void populateDependencies() {
         dependencyContext.addDependency(bomDependency().compile());
         dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
-                .compile());
-        dependencyContext.addDependency(Dependency.builder()
-                .lookupArtifactId("aws-cdk-lib")
                 .compile());
         dependencyContext.addDependency(bomDependency().test());
         dependencyContext.addDependency(Dependency.builder()

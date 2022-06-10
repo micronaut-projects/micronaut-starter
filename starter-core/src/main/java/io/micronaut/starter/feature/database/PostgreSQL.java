@@ -87,7 +87,7 @@ public class PostgreSQL extends DatabaseDriverFeature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.isFeaturePresent(R2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.r2dbc")
+                    .groupId("org.postgresql")
                     .artifactId("r2dbc-postgresql")
                     .runtime());
             if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
