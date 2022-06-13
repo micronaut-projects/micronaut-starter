@@ -22,6 +22,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
+    public static final String GROUP_ID_MICRONAUT_SPRING = "io.micronaut.spring";
 
     @NonNull
     public static Dependency.Builder coreDependency() {
@@ -44,8 +45,15 @@ public final class MicronautDependencyUtils {
     }
 
     @NonNull
+    public static Dependency.Builder springDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SPRING);
+    }
+
+    @NonNull
     private static Dependency.Builder micronautDependency(@NonNull String groupId) {
         return Dependency.builder()
                 .groupId(groupId);
     }
+
+
 }
