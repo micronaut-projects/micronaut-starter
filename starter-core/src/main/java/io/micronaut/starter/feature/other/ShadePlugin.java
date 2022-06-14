@@ -26,8 +26,6 @@ import io.micronaut.starter.feature.build.BuildPluginFeature;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.Set;
 
 /**
@@ -84,16 +82,6 @@ public class ShadePlugin implements DefaultFeature, BuildPluginFeature {
                     .id("com.github.johnrengelman.shadow")
                     .lookupArtifactId("shadow");
 
-            if (generatorContext.getApplicationType().equals(ApplicationType.FUNCTION)) {
-                builder.extension(outputStream -> {
-                    String str = String.join("\n", Arrays.asList(
-                            "tasks.named(\"assemble\") {",
-                            "    dependsOn(\":shadowJar\")",
-                            "}"
-                    ));
-                    outputStream.write(str.getBytes(StandardCharsets.UTF_8));
-                });
-            }
             generatorContext.addBuildPlugin(builder.build());
         }
     }
