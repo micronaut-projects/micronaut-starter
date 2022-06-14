@@ -35,6 +35,7 @@ class FeatureControllerSpec extends Specification {
                 'novatec-camunda-external-worker',
                 'agorapulse-gru-http',
                 'agorapulse-micronaut-console',
+                'agorapulse-micronaut-permissions',
                 'agorapulse-micronaut-worker',
                 'novatec-zeebe',
         ].sort()

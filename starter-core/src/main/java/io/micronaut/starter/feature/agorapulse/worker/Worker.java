@@ -102,7 +102,7 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://agorapulse.github.io/agorapulse-micronaut-worker/";
+        return "https://agorapulse.github.io/micronaut-worker/";
     }
 
     @Override

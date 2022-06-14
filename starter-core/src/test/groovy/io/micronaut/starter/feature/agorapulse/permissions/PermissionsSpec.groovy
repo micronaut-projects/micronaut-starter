@@ -12,7 +12,7 @@ class PermissionsSpec extends ApplicationContextSpec {
 
     void "Permissions Feature override Feature->getThirdPartyDocumentation"() {
         when:
-        Optional<Feature> featureOptional = findFeatureByName('micronaut-permissions')
+        Optional<Feature> featureOptional = findFeatureByName('agorapulse-micronaut-permissions')
 
         then:
         featureOptional.present
@@ -38,7 +38,7 @@ class PermissionsSpec extends ApplicationContextSpec {
     @Unroll("#buildTool with feature micronaut-permissions adds dependency #groupId:#artifactId for #language")
     void "verify micronaut-permissions feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
-        List<String> features = ['micronaut-permissions']
+        List<String> features = ['agorapulse-micronaut-permissions']
         String coordinate = "${groupId}:${artifactId}"
 
         when:
