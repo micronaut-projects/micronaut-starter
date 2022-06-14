@@ -15,13 +15,16 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.Property;
 import io.micronaut.starter.build.gradle.GradleBuild;
 import io.micronaut.starter.build.gradle.GradleBuildCreator;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.KotlinBuildPlugins;
 import io.micronaut.starter.feature.build.MicronautBuildPlugin;
@@ -37,7 +40,9 @@ import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static io.micronaut.starter.build.Repository.micronautRepositories;
 
@@ -95,10 +100,17 @@ public class Gradle implements BuildFeature {
         )));
 
         generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore.template()));
-        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(generatorContext.getBuildProperties().getProperties())));
+        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(gradleProperties(generatorContext))));
 
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
+    }
+
+    @NonNull
+    private static List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
+        return generatorContext.getBuildProperties().getProperties().stream()
+                .filter(p -> p.getKey() == null || !p.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)) // It is set via the DSL
+                .collect(Collectors.toList());
     }
 
     @Override

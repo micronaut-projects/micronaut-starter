@@ -94,7 +94,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         }
 
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
-            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template()));
+            generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template(generatorContext.getBuildTool())));
         }
     }
 

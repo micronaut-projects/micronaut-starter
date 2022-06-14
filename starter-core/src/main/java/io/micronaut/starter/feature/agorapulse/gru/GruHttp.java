@@ -46,12 +46,13 @@ public class GruHttp implements AgoraPulseFeature {
 
     @Override
     @NonNull
-    public String getName() {
+    public String getCommunityFeatureName() {
         return "gru-http";
     }
 
     @Override
-    public String getTitle() {
+    @NonNull
+    public String getCommunityFeatureTitle() {
         return "Gru HTTP - interaction testing";
     }
 

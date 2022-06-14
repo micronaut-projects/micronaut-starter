@@ -3,7 +3,9 @@ package io.micronaut.starter.feature.function.awslambda
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.build.gradle.Gradle
+import io.micronaut.starter.feature.coherence.CoherenceFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Shared
@@ -15,6 +17,17 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Shared
     @Subject
     AwsLambda awsLambda = beanContext.getBean(AwsLambda)
+
+    void 'test gradle.properties does not contain micronaut.runtime'() {
+        when:
+        Map<String, String> output = generate(['aws-lambda'])
+        String properties = output["gradle.properties"]
+
+        then:
+        properties
+        !properties.contains(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)
+        output["build.gradle"].contains('runtime("lambda_java")')
+    }
 
     void 'test readme.md with feature aws-lambda contains links to micronaut docs'() {
         when:

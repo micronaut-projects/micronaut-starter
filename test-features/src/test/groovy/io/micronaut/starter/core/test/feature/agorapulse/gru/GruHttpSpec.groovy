@@ -12,13 +12,13 @@ class GruHttpSpec extends CommandSpec {
 
     @Override
     String getTempDirectoryPrefix() {
-        return "gru-http"
+        return "agorapulse-gru-http"
     }
 
     @Unroll
-    void "test maven gru-http with #language and #testFramework"(Language language, TestFramework testFramework) {
+    void "test maven agorapulse-gru-http with #language and #testFramework"(Language language, TestFramework testFramework) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["gru-http"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, BuildTool.MAVEN, ["agorapulse-gru-http"], ApplicationType.DEFAULT, testFramework)
         String output = executeMaven("compile test")
 
         then:
@@ -32,9 +32,9 @@ class GruHttpSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test gradle gru-http with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
+    void "test gradle agorapulse-gru-http with #language and #testFramework"(BuildTool buildTool, Language language, TestFramework testFramework) {
         when:
-        generateProject(language, buildTool, ["gru-http"], ApplicationType.DEFAULT, testFramework)
+        generateProject(language, buildTool, ["agorapulse-gru-http"], ApplicationType.DEFAULT, testFramework)
         BuildResult result = executeGradle("test")
 
         then:
