@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.build.maven;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.maven.MavenBuild;
@@ -76,7 +75,7 @@ public class Maven implements BuildFeature {
         generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore.template()));
 
         Collection<String> moduleNames = generatorContext.getModuleNames();
-        if (CollectionUtils.isNotEmpty(moduleNames)) {
+        if (moduleNames.size() > 1) {
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(generatorContext.getProject(), moduleNames)));
         }
 
