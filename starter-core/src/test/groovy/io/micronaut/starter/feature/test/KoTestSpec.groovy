@@ -35,4 +35,57 @@ class KoTestSpec extends ApplicationContextSpec {
 ''')
 
     }
+    void 'test maven configure unit tests for Kotest5'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .testFramework(TestFramework.KOTEST)
+                .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.kotest</groupId>
+      <artifactId>kotest-assertions-core-jvm</artifactId>
+      <version>5.3.1</version>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.kotest</groupId>
+      <artifactId>kotest-runner-junit5-jvm</artifactId>
+      <version>5.3.1</version>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.test</groupId>
+      <artifactId>micronaut-test-kotest5</artifactId>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.mockk</groupId>
+      <artifactId>mockk</artifactId>
+      <version>1.12.4</version>
+      <scope>test</scope>
+    </dependency>
+''')
+
+    }
+
+    void 'test gradle configure unit tests for Kotest5'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .testFramework(TestFramework.KOTEST)
+                .render()
+
+        then:
+        template.contains("testImplementation(\"io.kotest:kotest-assertions-core-jvm:5.3.1\")")
+        template.contains("testImplementation(\"io.micronaut.test:micronaut-test-kotest5\")")
+        template.contains("testImplementation(\"io.mockk:mockk:1.12.4\")")
+        template.contains("testRuntimeOnly(\"io.kotest:kotest-runner-junit5-jvm:5.3.1\")")
+    }
 }
