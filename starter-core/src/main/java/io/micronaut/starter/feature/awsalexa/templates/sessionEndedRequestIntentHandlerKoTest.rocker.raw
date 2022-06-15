@@ -13,7 +13,7 @@ import com.amazon.ask.model.RequestEnvelope
 import com.amazon.ask.model.SessionEndedRequest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
-import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 
 @@MicronautTest
 class SessionEndedRequestIntentHandlerTest(private val handler: SessionEndedRequestIntentHandler): StringSpec({
