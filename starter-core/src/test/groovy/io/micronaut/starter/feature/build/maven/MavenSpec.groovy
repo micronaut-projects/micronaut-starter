@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenCombineAttribute
+import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -16,6 +17,26 @@ import io.micronaut.starter.util.VersionInfo
 import spock.lang.Unroll
 
 class MavenSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void "multi-module-pom isn't created for single-module builds"() {
+        when:
+        Options options = new Options(Language.JAVA, null, BuildTool.MAVEN)
+        GeneratorContext generatorContext = buildGeneratorContext([], options, ApplicationType.DEFAULT)
+
+        then:
+        generatorContext.templates.mavenPom
+        !generatorContext.templates.'multi-module-pom'
+    }
+
+    void "multi-module-pom is created for multi-module builds"() {
+        when:
+        Options options = new Options(Language.JAVA, null, BuildTool.MAVEN)
+        GeneratorContext generatorContext = buildGeneratorContext(['aws-cdk'], options, ApplicationType.DEFAULT)
+
+        then:
+        generatorContext.templates.mavenPom
+        generatorContext.templates.'multi-module-pom'
+    }
 
     void 'test use defaults from parent pom'() {
         when:
