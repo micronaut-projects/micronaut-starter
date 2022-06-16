@@ -22,13 +22,14 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class MySQL extends DatabaseDriverFeature {
 
-    public MySQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public MySQL(JdbcFeature jdbcFeature, TestResources testResources) {
+        super(jdbcFeature, testResources);
     }
 
     @Override
@@ -48,11 +49,6 @@ public class MySQL extends DatabaseDriverFeature {
     }
 
     @Override
-    public String getJdbcUrl() {
-        return "jdbc:mysql://localhost:3306/db";
-    }
-
-    @Override
     public String getR2dbcUrl() {
         return "r2dbc:mysql://localhost:3306/db";
     }
@@ -60,16 +56,6 @@ public class MySQL extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "com.mysql.cj.jdbc.Driver";
-    }
-
-    @Override
-    public String getDefaultUser() {
-        return "root";
-    }
-
-    @Override
-    public String getDefaultPassword() {
-        return "";
     }
 
     @Override

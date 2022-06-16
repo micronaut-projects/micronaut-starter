@@ -43,11 +43,6 @@ public class H2 extends DatabaseDriverFeature {
     }
 
     @Override
-    public String getJdbcUrl() {
-        return "jdbc:h2:mem:devDb;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE";
-    }
-
-    @Override
     public String getR2dbcUrl() {
         return "r2dbc:h2:mem:///testdb;DB_CLOSE_ON_EXIT=FALSE";
     }
@@ -55,16 +50,6 @@ public class H2 extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "org.h2.Driver";
-    }
-
-    @Override
-    public String getDefaultUser() {
-        return "sa";
-    }
-
-    @Override
-    public String getDefaultPassword() {
-        return "";
     }
 
     @Override

@@ -22,13 +22,14 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class PostgreSQL extends DatabaseDriverFeature {
 
-    public PostgreSQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public PostgreSQL(JdbcFeature jdbcFeature, TestResources testResources) {
+        super(jdbcFeature, testResources);
     }
 
     @Override
@@ -48,12 +49,6 @@ public class PostgreSQL extends DatabaseDriverFeature {
     }
 
     @Override
-    public String getJdbcUrl() {
-        // postgres docker image uses default db name and username of postgres so we use the same
-        return "jdbc:postgresql://localhost:5432/postgres";
-    }
-
-    @Override
     public String getR2dbcUrl() {
         return "r2dbc:postgresql://localhost:5432/postgres";
     }
@@ -62,17 +57,7 @@ public class PostgreSQL extends DatabaseDriverFeature {
     public String getDriverClass() {
         return "org.postgresql.Driver";
     }
-
-    @Override
-    public String getDefaultUser() {
-        return "postgres";
-    }
-
-    @Override
-    public String getDefaultPassword() {
-        return "";
-    }
-
+    
     @Override
     public String getDataDialect() {
         return "POSTGRES";

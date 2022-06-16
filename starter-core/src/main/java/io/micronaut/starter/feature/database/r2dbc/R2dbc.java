@@ -89,13 +89,6 @@ public class R2dbc implements R2dbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
-            Map<String, Object> rdbcConfig = new LinkedHashMap<>();
-            rdbcConfig.put(getUrlKey(), dbFeature.getR2dbcUrl());
-            rdbcConfig.put(USERNAME_KEY, dbFeature.getDefaultUser());
-            rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
-            generatorContext.getConfiguration().putAll(rdbcConfig);
-        });
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId("io.micronaut.r2dbc")

@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 /**
@@ -26,8 +27,8 @@ public class DataMongoReactive extends DataMongoFeature {
 
     private static final String ASYNC_MONGODB_ARTIFACT = "mongodb-driver-reactivestreams";
 
-    public DataMongoReactive(Data data, TestContainers testContainers) {
-        super(data, testContainers);
+    public DataMongoReactive(Data data, TestResources testResources) {
+        super(data, testResources);
     }
 
     @NonNull

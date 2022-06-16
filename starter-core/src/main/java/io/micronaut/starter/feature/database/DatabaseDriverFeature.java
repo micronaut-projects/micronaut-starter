@@ -21,11 +21,13 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.feature.testresources.TestResourcesFeature;
 
 import java.util.Collections;
 import java.util.Map;
 
-public abstract class DatabaseDriverFeature extends TestContainersFeature implements OneOfFeature {
+public abstract class DatabaseDriverFeature extends TestResourcesFeature implements OneOfFeature {
 
     private final JdbcFeature jdbcFeature;
 
@@ -33,8 +35,8 @@ public abstract class DatabaseDriverFeature extends TestContainersFeature implem
         this(null, null);
     }
 
-    public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(testContainers);
+    public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestResources testResources) {
+        super(testResources);
         this.jdbcFeature = jdbcFeature;
     }
 
@@ -64,15 +66,23 @@ public abstract class DatabaseDriverFeature extends TestContainersFeature implem
 
     public abstract boolean embedded();
 
-    public abstract String getJdbcUrl();
+    public String getJdbcUrl() {
+        return null;
+    }
 
-    public abstract String getR2dbcUrl();
+    public String getR2dbcUrl() {
+        return null;
+    }
 
     public abstract String getDriverClass();
 
-    public abstract String getDefaultUser();
+    public String getDefaultUser() {
+        return null;
+    }
 
-    public abstract String getDefaultPassword();
+    public String getDefaultPassword() {
+        return null;
+    }
 
     public abstract String getDataDialect();
 
