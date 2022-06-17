@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -43,8 +44,6 @@ public class KoTest implements TestFeature {
                 new URLTemplate("src/test/kotlin/io/kotest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotest/ProjectConfig.kt")));
 
-        // FIXME use MicronautDependencyUtils after merge of https://github.com/micronaut-projects/micronaut-starter/pull/1288
-//        generatorContext.addDependency(MicronautDependencyUtils.testDependency()
         if (generatorContext.getBuildTool() == MAVEN) {
             // FIXME Maven tests fail without this due to older, incompatible version
             //  I think this can be removed after everything else is updated to Kotest5 and removes Kotest4
@@ -63,7 +62,7 @@ public class KoTest implements TestFeature {
                 .artifactId("mockk")
                 .version(MOCKK_VERSION)
                 .test());
-        generatorContext.addDependency(new Dependency.Builder().groupId("io.micronaut.test")
+        generatorContext.addDependency(MicronautDependencyUtils.testDependency()
                 .artifactId(ARTIFACT_ID_KOTEST5)
                 .test());
         generatorContext.addDependency(new Dependency.Builder().groupId("io.kotest")
