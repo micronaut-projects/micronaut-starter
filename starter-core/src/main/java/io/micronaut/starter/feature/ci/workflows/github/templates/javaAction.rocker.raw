@@ -1,0 +1,52 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.options.JdkDistribution
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+JdkVersion jdkVersion,
+JdkDistribution jdkDistribution,
+BuildTool buildTool,
+String branch
+)
+
+name: Java CI with @buildTool.getTitle()
+
+on:
+  push:
+    branches: [ @branch ]
+  pull_request:
+    branches: [ @branch ]
+
+@if (buildTool.isGradle()) {
+permissions:
+  contents: read
+}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@@v3
+    - name: Set up JDK @jdkVersion.majorVersion()
+      uses: actions/setup-java@@v3
+      with:
+        java-version: @jdkVersion.majorVersion()
+        distribution: @jdkDistribution.distribution()
+@if (buildTool.equals(BuildTool.MAVEN)) {
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B verify --file pom.xml
+} else if (buildTool.isGradle()) {
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@@v1.0.4
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@@v2.2.0
+      with:
+        arguments: build
+    - uses: actions/upload-artifact@@v3.1.0
+      with:
+        name: Build Artifacts
+        path: |
+          **/build/reports
+}
