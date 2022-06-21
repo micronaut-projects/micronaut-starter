@@ -208,11 +208,11 @@ MavenBuild mavenBuild
 @if (applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
             <nativeImageBuildArgs>
               <arg>-H:+StaticExecutableWithDynamicLibC</arg>
-              <arg>-Dfn.handler=${exec.mainClass}::handleRequest</arg>
-              <arg>--initialize-at-build-time=com.example</arg>
+              <arg>-Dfn.handler=${function.entrypoint}</arg>
+              <arg>--initialize-at-build-time=@project.getPackageName()</arg>
             </nativeImageBuildArgs>
             <appArguments>
-              <arg>${exec.mainClass}::handleRequest</arg>
+              <arg>${function.entrypoint}</arg>
             </appArguments>
 }
 @if (features.contains("micronaut-aot")) {
@@ -492,7 +492,7 @@ MavenBuild mavenBuild
           </to>
   @if(applicationType == ApplicationType.FUNCTION && features.contains("oracle-function")){
           <container>
-            <args>${exec.mainClass}::handleRequest</args>
+            <args>${function.entrypoint}</args>
             <mainClass>${exec.mainClass}</mainClass>
           </container>
   }
