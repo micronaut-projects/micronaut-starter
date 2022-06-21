@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import com.agorapulse.permissions.RequiresPermission
+import groovy.transform.CompileStatic
+import jakarta.inject.Singleton
+
+@@Singleton
+@@CompileStatic
+class MessageService {
+
+    @@RequiresPermission('create')
+    Message save(Message message) {
+        return message
+    }
+
+}

@@ -48,10 +48,15 @@ import io.micronaut.starter.feature.test.Awaitility;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
-import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
+
+import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addMain;
+import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTest;
+import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.mainModel;
+import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.testModel;
+
 
 @Singleton
 public class Worker implements AgoraPulseFeature {
@@ -97,7 +102,7 @@ public class Worker implements AgoraPulseFeature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://agorapulse.github.io/agorapulse-micronaut-worker/";
+        return "https://agorapulse.github.io/micronaut-worker/";
     }
 
     @Override
@@ -149,25 +154,6 @@ public class Worker implements AgoraPulseFeature {
 
         distributedJobTestModel(generatorContext).ifPresent(rockerModel ->
                 addTest(generatorContext, "EmailDigestDistributedJob", rockerModel, "emailDigestDistributedJobTest")
-        );
-    }
-
-    private void addMain(GeneratorContext generatorContext, String className, RockerModel rockerModel, String templateName) {
-        String extension = generatorContext.getLanguage().getExtension();
-        String srcDir = generatorContext.getLanguage().getSrcDir();
-        generatorContext.addTemplate(
-                templateName,
-                new RockerTemplate(srcDir + "/{packagePath}/" + className + "." + extension, rockerModel)
-        );
-    }
-
-    private void addTest(GeneratorContext generatorContext, String className, RockerModel rockerModel, String templateName) {
-        String testSrcDir = generatorContext.getLanguage().getTestSrcDir();
-        String extension = generatorContext.getLanguage().getExtension();
-        String testFrameworkSuffix = generatorContext.getTestFramework().getTestFrameworkSuffix();
-        generatorContext.addTemplate(
-                templateName,
-                new RockerTemplate(testSrcDir + "/{packagePath}/" + className + testFrameworkSuffix + extension, rockerModel)
         );
     }
 
@@ -233,47 +219,4 @@ public class Worker implements AgoraPulseFeature {
         );
     }
 
-    private Optional<RockerModel> mainModel(
-            GeneratorContext generatorContext,
-            @Nullable RockerModel javaModel,
-            @Nullable RockerModel groovyModel,
-            @Nullable RockerModel kotlinModel
-    ) {
-        switch (generatorContext.getLanguage()) {
-            case JAVA:
-                return Optional.ofNullable(javaModel);
-            case GROOVY:
-                return Optional.ofNullable(groovyModel);
-            case KOTLIN:
-                return Optional.ofNullable(kotlinModel);
-            default:
-                return Optional.empty();
-        }
-    }
-
-    @NonNull
-    private Optional<RockerModel> testModel(
-            GeneratorContext generatorContext,
-            @Nullable RockerModel javaModel,
-            @Nullable RockerModel groovyModel,
-            @Nullable RockerModel kotlinJUnitModel,
-            @Nullable RockerModel kotestModel
-    ) {
-        if (generatorContext.getLanguage() == Language.JAVA && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.ofNullable(javaModel);
-        }
-
-        if (generatorContext.getLanguage() == Language.GROOVY && generatorContext.getTestFramework() == TestFramework.SPOCK) {
-            return Optional.ofNullable(groovyModel);
-        }
-
-        if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.JUNIT) {
-            return Optional.ofNullable(kotlinJUnitModel);
-        }
-
-        if (generatorContext.getLanguage() == Language.KOTLIN && generatorContext.getTestFramework() == TestFramework.KOTEST) {
-            return Optional.ofNullable(kotestModel);
-        }
-        return Optional.empty();
-    }
 }
