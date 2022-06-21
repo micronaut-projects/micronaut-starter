@@ -22,9 +22,7 @@ class GoogleCloudWorkflowCISpec extends BeanContextSpec implements CommandOutput
         then:
         workflow
         workflow.contains("entrypoint: gradle")
-        workflow.contains("args: [\"test\"]")
-        workflow.contains("args: [\"assemble\"]")
-        workflow.contains("args: [\"build\", \"-t\", \"gcr.io/\$PROJECT_ID/foo\", \"--build-arg=JAR_FILE=build/libs/foo-0.1.jar\", \".\"]")
+        workflow.contains("args: [\"build\"]")
     }
 
     @Unroll
@@ -38,9 +36,7 @@ class GoogleCloudWorkflowCISpec extends BeanContextSpec implements CommandOutput
         then:
         workflow
         workflow.contains("entrypoint: mvn")
-        workflow.contains("args: [\"test\"]")
-        workflow.contains("args: [\"package\", \"-Dmaven.test.skip=true\"]")
-        workflow.contains("args: [\"build\", \"-t\", \"gcr.io/\$PROJECT_ID/foo\", \"--build-arg=JAR_FILE=target/foo-0.1.jar\", \".\"]")
+        workflow.contains("args: [\"package\"]")
     }
 
 }
