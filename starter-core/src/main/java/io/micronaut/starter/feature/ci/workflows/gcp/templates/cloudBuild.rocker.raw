@@ -27,13 +27,7 @@ BuildTool buildTool
 steps:
   - name: maven:3-jdk-@jdkVersion.majorVersion()
     entrypoint: mvn
-    args: ["test"]
-  - name: maven:3-jdk-@jdkVersion.majorVersion()
-    entrypoint: mvn
-    args: ["package", "-Dmaven.test.skip=true"]
-  - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/@projectName", "--build-arg=JAR_FILE=target/@projectName-0.1.jar", "."]
-images: ["gcr.io/$PROJECT_ID/@projectName"]
+    args: ["package"]
 # [END cloudbuild_maven]
 
     } else if (buildTool.isGradle()) {
@@ -42,13 +36,7 @@ images: ["gcr.io/$PROJECT_ID/@projectName"]
 steps:
   - name: gradle:7.4.2-jdk@jdkVersion.majorVersion()
     entrypoint: gradle
-    args: ["test"]
-  - name: gradle:7.4.2-jdk@jdkVersion.majorVersion()
-    entrypoint: gradle
-    args: ["assemble"]
-  - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/@projectName", "--build-arg=JAR_FILE=build/libs/@projectName-0.1.jar", "."]
-images: ["gcr.io/$PROJECT_ID/@projectName"]
+    args: ["build"]
 # [END cloudbuild_gradle]
 
     }
