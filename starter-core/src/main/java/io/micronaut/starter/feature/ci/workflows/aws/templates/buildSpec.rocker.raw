@@ -20,7 +20,7 @@ phases:
     commands:
       - echo Build started on `date`
 @if (buildTool.equals(BuildTool.MAVEN)) {
-      - mvn install
+      - mvn verify
 } else if (buildTool.isGradle()) {
       - ./gradlew build
 }
