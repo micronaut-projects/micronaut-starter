@@ -46,7 +46,7 @@ class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture
         then:
         template.count('implementation("info.novatec:micronaut-camunda-bpm-feature:') == 1
         template.count('testImplementation("org.assertj:assertj-core")') == 1
-        template.count('testImplementation("org.camunda.assert:camunda-bpm-assert') == 1
+        template.count('testImplementation("org.camunda.bpm:camunda-bpm-assert') == 1
         template.count('runtimeOnly("com.h2database:h2")') == 1
 
         where:
@@ -69,7 +69,7 @@ class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture
  ''') == 1
         template.count('''\
     <dependency>
-      <groupId>org.camunda.assert</groupId>
+      <groupId>org.camunda.bpm</groupId>
       <artifactId>camunda-bpm-assert</artifactId>
  ''') == 1
         template.count('''\
