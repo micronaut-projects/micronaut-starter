@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpecGraal;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -30,7 +31,6 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
 
     public static final String NAME = "oci-devops-build-ci";
     private static final String WORKFLOW_FILENAME = "build_spec.yml";
-    private static final String GRAALVM_VERSION = "22.1.0";
 
     @NonNull
     @Override
@@ -74,7 +74,7 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
                     generatorContext.getProject().getName(),
                     generatorContext.getJdkVersion(),
                     generatorContext.getBuildTool(),
-                    GRAALVM_VERSION
+                    VersionInfo.getDependencyVersion("graal").getValue()
             ));
         }
     }
