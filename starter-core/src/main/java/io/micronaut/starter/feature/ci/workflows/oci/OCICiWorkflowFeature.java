@@ -19,6 +19,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpec;
+import io.micronaut.starter.feature.ci.workflows.oci.templates.buildSpecGraal;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
@@ -28,6 +30,7 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
 
     public static final String NAME = "oci-devops-build-ci";
     private static final String WORKFLOW_FILENAME = "build_spec.yml";
+    private static final String GRAALVM_VERSION = "22.1.0";
 
     @NonNull
     @Override
@@ -60,11 +63,20 @@ public class OCICiWorkflowFeature extends CIWorkflowFeature {
     }
 
     private Template workflowRockerTemplate(GeneratorContext generatorContext) {
-        return new RockerTemplate(getWorkflowFileName(generatorContext), buildSpec.template(
-                generatorContext.getProject().getName(),
-                generatorContext.getJdkVersion(),
-                generatorContext.getBuildTool()
-        ));
+        if (!generatorContext.getFeatures().hasFeature(GraalVM.class)) {
+            return new RockerTemplate(getWorkflowFileName(generatorContext), buildSpec.template(
+                    generatorContext.getProject().getName(),
+                    generatorContext.getJdkVersion(),
+                    generatorContext.getBuildTool()
+            ));
+        } else {
+            return new RockerTemplate(getWorkflowFileName(generatorContext), buildSpecGraal.template(
+                    generatorContext.getProject().getName(),
+                    generatorContext.getJdkVersion(),
+                    generatorContext.getBuildTool(),
+                    GRAALVM_VERSION
+            ));
+        }
     }
 
     @Override

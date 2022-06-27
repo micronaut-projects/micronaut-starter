@@ -1,0 +1,89 @@
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+String projectName,
+JdkVersion jdkVersion,
+BuildTool buildTool,
+String graalVmVersion
+)
+
+version: 0.1
+component: build
+timeoutInSeconds: 1000
+shell: bash
+
+inputArtifacts:
+  - name: graalvm
+    type: URL
+    @if (jdkVersion.majorVersion() == 17) {
+    url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-@graalVmVersion/graalvm-ce-java17-linux-amd64-@(graalVmVersion).tar.gz
+    } else {
+    url: https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-@graalVmVersion/graalvm-ce-java11-linux-amd64-@(graalVmVersion).tar.gz
+    }
+    location: /workspace/graalvm-ce.tar.gz
+
+steps:
+  - type: Command
+    name: "Setup GraalVM"
+    timeoutInSeconds: 40
+    command: |
+      tar -xzf /workspace/graalvm-ce.tar.gz
+  - type: Command
+    name: "Build an application"
+    command: |
+    @if (jdkVersion.majorVersion() == 17) {
+      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
+    } else {
+      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
+    }
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw verify
+    } else if (buildTool.isGradle()) {
+      ./gradlew build
+    }
+  - type: Command
+    name: "Build a native image"
+    command: |
+    @if (jdkVersion.majorVersion() == 17) {
+      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
+    } else {
+      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
+    }
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw package -Dpackaging=native-image
+    } else if (buildTool.isGradle()) {
+      ./gradlew nativeCompile
+    }
+  - type: Command
+    name: "Build a docker image with native image"
+    command: |
+    @if (jdkVersion.majorVersion() == 17) {
+      JAVA_HOME=$(pwd)/graalvm-ce-java17-@graalVmVersion
+    } else {
+      JAVA_HOME=$(pwd)/graalvm-ce-java11-@graalVmVersion
+    }
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw package -Dpackaging=docker-native
+    } else if (buildTool.isGradle()) {
+      ./gradlew dockerBuildNative
+    }
+
+outputArtifacts:
+  - name: jar
+    type: BINARY
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+    location: target/@projectName-0.1.jar
+    } else if (buildTool.isGradle()) {
+    location: build/libs/@projectName-0.1-all.jar
+    }
+  - name: build-service-demo
+    type: DOCKER_IMAGE
+    location: @projectName
+  - name: jar
+    type: BINARY
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+    location: target/@projectName
+    } else if (buildTool.isGradle()) {
+    location: build/native/nativeCompile/@projectName
+    }

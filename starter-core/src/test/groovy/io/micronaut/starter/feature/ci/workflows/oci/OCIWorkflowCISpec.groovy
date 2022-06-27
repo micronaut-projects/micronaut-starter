@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.ci.workflows.oci
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.graalvm.GraalVM
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
@@ -38,10 +39,54 @@ class OCIWorkflowCISpec extends BeanContextSpec implements CommandOutputFixture 
         if (buildTool.isGradle()) {
             assert workflow.contains("./gradlew build")
             assert workflow.contains("location: build/libs/foo-0.1-all.jar")
+            assert workflow.contains("./gradlew dockerBuild")
         } else if (buildTool == BuildTool.MAVEN) {
             assert workflow.contains("./mvnw verify")
             assert workflow.contains("location: target/foo-0.1.jar")
+            assert workflow.contains("./mvnw package -Dpackaging=docker")
         }
+
+        workflow.contains("location: foo")
+
+        where:
+        [buildTool, jdkVersion] << [BuildTool.values(), JdkVersion.values()].combinations()
+    }
+
+    @Unroll
+    void 'test oci-devops-build-ci and graalvm is created for #buildTool and #jdkVersion'(BuildTool buildTool, JdkVersion jdkVersion) {
+        when:
+        def output = generate(ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.valueOf(jdkVersion.majorVersion())),
+                [OCICiWorkflowFeature.NAME, GraalVM.FEATURE_NAME_GRAALVM])
+        def workflow = output["build_spec.yml"]
+
+        then:
+        workflow
+
+        workflow.contains("tar -xzf /workspace/graalvm-ce.tar.gz")
+
+
+
+        if (buildTool.isGradle()) {
+            assert workflow.contains("./gradlew build")
+            assert workflow.contains("./gradlew nativeCompile")
+            assert workflow.contains("./gradlew dockerBuildNative")
+            assert workflow.contains("location: build/libs/foo-0.1-all.jar")
+            assert workflow.contains("location: build/native/nativeCompile/foo")
+        } else if (buildTool == BuildTool.MAVEN) {
+            assert workflow.contains("./mvnw verify")
+            assert workflow.contains("./mvnw package -Dpackaging=native-image")
+            assert workflow.contains("./mvnw package -Dpackaging=docker-native")
+            assert workflow.contains("location: target/foo-0.1.jar")
+            assert workflow.contains("location: target/foo")
+        }
+        if (jdkVersion.majorVersion() == 17) {
+            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java17-")
+        } else {
+            assert workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce-java11-")
+        }
+        workflow.contains("JAVA_HOME=\$(pwd)/graalvm-ce")
+        workflow.contains("location: foo")
 
         where:
         [buildTool, jdkVersion] << [BuildTool.values(), JdkVersion.values()].combinations()

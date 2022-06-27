@@ -35,6 +35,14 @@ steps:
     } else if (buildTool.isGradle()) {
       ./gradlew build
     }
+  - type: Command
+    name: "Build a docker image"
+    command: |
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw package -Dpackaging=docker
+    } else if (buildTool.isGradle()) {
+      ./gradlew dockerBuild
+    }
 
 outputArtifacts:
   - name: jar
@@ -44,3 +52,6 @@ outputArtifacts:
     } else if (buildTool.isGradle()) {
     location: build/libs/@projectName-0.1-all.jar
     }
+  - name: build-service-demo
+    type: DOCKER_IMAGE
+    location: @projectName
