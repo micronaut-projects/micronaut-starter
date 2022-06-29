@@ -18,19 +18,28 @@ package io.micronaut.starter.feature.opentelemetry;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.aws.AwsV2Sdk;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class OpenTelemetryXray implements OpenTelemetryFeature {
-
     private static final Dependency.Builder OPEN_TELEMETRY_EXTENSION_AWS =
             OpenTelemetryDependencyUtils.openTelemetryDependency()
-            .artifactId("opentelemetry-extension-aws")
-            .compile();
+                    .artifactId("opentelemetry-extension-aws")
+                    .compile();
+
+    private static final Dependency.Builder OPEN_TELEMETRY_INSTRUMENTATION_AWS_SDK =
+            OpenTelemetryDependencyUtils.openTelemetryInstrumentationDependency()
+                    .artifactId("opentelemetry-aws-sdk-2.2")
+                    .compile();
 
     private static final Dependency.Builder OPEN_TELEMETRY_CONTRIB_XRAY = Dependency.builder()
             .groupId("io.opentelemetry.contrib")
             .artifactId("opentelemetry-aws-xray")
+            .compile();
+
+    private static final Dependency.Builder OPEN_TELEMETRY_BOM_ALPHA = Dependency.builder()
+            .lookupArtifactId("opentelemetry-instrumentation-bom-alpha")
             .compile();
 
     @NonNull
@@ -54,6 +63,11 @@ public class OpenTelemetryXray implements OpenTelemetryFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(OPEN_TELEMETRY_EXTENSION_AWS);
         generatorContext.addDependency(OPEN_TELEMETRY_CONTRIB_XRAY);
+        if (generatorContext.getFeatures().isFeaturePresent(AwsV2Sdk.class)) {
+            generatorContext.addDependency(OPEN_TELEMETRY_BOM_ALPHA);
+            generatorContext.addDependency(OPEN_TELEMETRY_INSTRUMENTATION_AWS_SDK);
+        }
+        generatorContext.getConfiguration().put("otel.traces.exporter", "otlp");
         generatorContext.getConfiguration().put("otel.traces.propagator", "tracecontext, baggage, xray");
     }
 

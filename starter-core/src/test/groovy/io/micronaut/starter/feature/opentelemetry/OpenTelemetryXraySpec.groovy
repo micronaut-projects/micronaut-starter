@@ -8,6 +8,7 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.See
 import spock.lang.Subject
 import spock.lang.Unroll
 
@@ -56,6 +57,24 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
                 .render()
 
         then:
+        template.contains('implementation("io.opentelemetry.contrib:opentelemetry-aws-xray")')
+        template.contains('implementation("io.opentelemetry:opentelemetry-extension-aws")')
+
+        where:
+        language << Language.values().toList()
+    }
+
+    @See("https://aws-otel.github.io/docs/getting-started/java-sdk/trace-manual-instr#instrumenting-the-aws-sdk")
+    void 'test gradle tracing-opentelemetry-xray dynamodb features for language=#language include aws-sdk instrumentation opentelemetry dependency'(Language language) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(language)
+                .features(['tracing-opentelemetry-xray', 'dynamodb'])
+                .render()
+
+        then:
+        template.contains('implementation platform("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha:1.14.0-alpha")')
+        template.contains('implementation("io.opentelemetry.instrumentation:opentelemetry-aws-sdk-2.2")')
         template.contains('implementation("io.opentelemetry.contrib:opentelemetry-aws-xray")')
         template.contains('implementation("io.opentelemetry:opentelemetry-extension-aws")')
 

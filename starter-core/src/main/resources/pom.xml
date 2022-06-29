@@ -13,6 +13,12 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-instrumentation-bom-alpha</artifactId>
+            <version>1.14.0-alpha</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
             <version>3.11.0</version>

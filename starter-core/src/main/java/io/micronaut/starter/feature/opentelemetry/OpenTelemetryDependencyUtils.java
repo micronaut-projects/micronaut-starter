@@ -20,10 +20,16 @@ import io.micronaut.starter.build.dependencies.Dependency;
 
 public final class OpenTelemetryDependencyUtils {
     public static final String GROUP_ID_OPENTELEMETRY = "io.opentelemetry";
+    public static final String GROUP_ID_OPENTELEMETRY_INSTRUMENTATION = "io.opentelemetry.instrumentation";
 
     @NonNull
     public static Dependency.Builder openTelemetryDependency() {
         return dependency(GROUP_ID_OPENTELEMETRY);
+    }
+
+    @NonNull
+    public static Dependency.Builder openTelemetryInstrumentationDependency() {
+        return dependency(GROUP_ID_OPENTELEMETRY_INSTRUMENTATION);
     }
 
     @NonNull
