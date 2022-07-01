@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.aws.AwsLambdaEventFeature
 import io.micronaut.starter.feature.aws.AwsLambdaEventFunctionFeature
 import io.micronaut.starter.feature.aws.Cdk
 import io.micronaut.starter.feature.aws.LambdaFunctionUrl
+import io.micronaut.starter.feature.database.DataJpaReactive
 import io.micronaut.starter.feature.database.JAsyncSQLFeature
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.options.*
@@ -52,6 +53,9 @@ class FeatureSpec extends BeanContextSpec {
         if (feature instanceof JAsyncSQLFeature) {
             // JAsyncSQLFeatureValidator fails unless exactly one of mysql or postgress are included
             // so it can't be tested in isolation like this in isolation
+            features << 'mysql'
+        } else if (feature instanceof DataJpaReactive) {
+            // DataJpaReactiveFeatureValidator fails unless a supported database feature is also added
             features << 'mysql'
         } else if (feature instanceof Cdk || feature instanceof AwsLambdaEventFunctionFeature) {
             // Cdk fails unless it is combined with Lambda
