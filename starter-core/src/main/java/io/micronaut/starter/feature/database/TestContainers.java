@@ -80,6 +80,14 @@ public class TestContainers implements Feature {
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
                         generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
             });
+            generatorContext.getFeature(DataHibernateReactive.class).ifPresent(dataHibernateReactive -> {
+                urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    testConfig.put(dataHibernateReactive.getUrlKey(), url);
+                });
+                artifactIdForDriverFeature(driverFeature)
+                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
+            });
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
             generatorContext.addDependency(testContainerTestDependency(testArtifactId));

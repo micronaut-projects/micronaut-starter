@@ -49,13 +49,16 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains($/implementation("$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
+        template.contains($/testImplementation("org.testcontainers:$container")/$)
+
         where:
-        db              | client
-        MySQL.NAME      | 'vertx-mysql-client'
-        MariaDB.NAME    | 'vertx-mysql-client'
-        PostgreSQL.NAME | 'vertx-pg-client'
-        Oracle.NAME     | 'vertx-oracle-client'
-        SQLServer.NAME  | 'vertx-mssql-client'
+        db              | client                                    | container
+        MySQL.NAME      | DataHibernateReactive.VERTX_MYSQL_CLIENT  | 'mysql'
+        MariaDB.NAME    | DataHibernateReactive.VERTX_MYSQL_CLIENT  | 'mariadb'
+        PostgreSQL.NAME | DataHibernateReactive.VERTX_PG_CLIENT     | 'postgresql'
+        Oracle.NAME     | DataHibernateReactive.VERTX_ORACLE_CLIENT | 'oracle-xe'
+        SQLServer.NAME  | DataHibernateReactive.VERTX_MSSQL_CLIENT  | 'mssqlserver'
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
@@ -122,11 +125,11 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
         where:
         db              | client
-        MySQL.NAME      | 'vertx-mysql-client'
-        MariaDB.NAME    | 'vertx-mysql-client'
-        PostgreSQL.NAME | 'vertx-pg-client'
-        Oracle.NAME     | 'vertx-oracle-client'
-        SQLServer.NAME  | 'vertx-mssql-client'
+        MySQL.NAME      | DataHibernateReactive.VERTX_MYSQL_CLIENT
+        MariaDB.NAME    | DataHibernateReactive.VERTX_MYSQL_CLIENT
+        PostgreSQL.NAME | DataHibernateReactive.VERTX_PG_CLIENT
+        Oracle.NAME     | DataHibernateReactive.VERTX_ORACLE_CLIENT
+        SQLServer.NAME  | DataHibernateReactive.VERTX_MSSQL_CLIENT
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {

@@ -22,13 +22,25 @@ import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataHibernateReactive implements JpaFeature, DataFeature {
+public class DataHibernateReactive extends TestContainersFeature implements JpaFeature, DataFeature {
+
+    public static final String NAME = "data-hibernate-reactive";
+
+    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL = "jpa.default.properties.hibernate.connection.url";
+    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME = "jpa.default.properties.hibernate.connection.username";
+    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD = "jpa.default.properties.hibernate.connection.password";
+    public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
-    public static final String NAME = "data-hibernate-reactive";
+    public static final String VERTX_MYSQL_CLIENT = "vertx-mysql-client";
+    public static final String VERTX_PG_CLIENT = "vertx-pg-client";
+    public static final String VERTX_MSSQL_CLIENT = "vertx-mssql-client";
+    public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
+
     private final Data data;
 
-    public DataHibernateReactive(Data data) {
+    public DataHibernateReactive(Data data, TestContainers testContainers) {
+        super(testContainers);
         this.data = data;
     }
 
@@ -70,10 +82,10 @@ public class DataHibernateReactive implements JpaFeature, DataFeature {
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
 
         if (getDatasourceClient(generatorContext, dbFeature)) {
-            generatorContext.getConfiguration().put("jpa.default.reactive", true);
-            generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.url", dbFeature.getJdbcUrl());
-            generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.username", dbFeature.getDefaultUser());
-            generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.password", dbFeature.getDefaultPassword());
+            generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME, dbFeature.getDefaultUser());
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD, dbFeature.getDefaultPassword());
         }
     }
 
@@ -81,29 +93,33 @@ public class DataHibernateReactive implements JpaFeature, DataFeature {
         if (dbFeature instanceof MySQL || dbFeature instanceof MariaDB) {
             ctx.addDependency(Dependency.builder()
                     .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId("vertx-mysql-client")
+                    .artifactId(VERTX_MYSQL_CLIENT)
                     .compile());
             return true;
         } else if (dbFeature instanceof PostgreSQL) {
             ctx.addDependency(Dependency.builder()
                     .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId("vertx-pg-client")
+                    .artifactId(VERTX_PG_CLIENT)
                     .compile());
             return true;
         } else if (dbFeature instanceof SQLServer) {
             ctx.addDependency(Dependency.builder()
                     .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId("vertx-mssql-client")
+                    .artifactId(VERTX_MSSQL_CLIENT)
                     .compile());
             return true;
         } else if (dbFeature instanceof Oracle) {
             ctx.addDependency(Dependency.builder()
                     .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId("vertx-oracle-client")
+                    .artifactId(VERTX_ORACLE_CLIENT)
                     .compile());
             return true;
         }
         // Not found, stop configuring properties
         return false;
+    }
+
+    public String getUrlKey() {
+        return JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL;
     }
 }
