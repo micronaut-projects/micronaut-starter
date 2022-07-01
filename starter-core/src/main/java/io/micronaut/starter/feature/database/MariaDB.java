@@ -27,6 +27,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class MariaDB extends DatabaseDriverFeature {
 
+    public static final String NAME = "mariadb";
+
     public MariaDB(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
     }
@@ -34,7 +36,7 @@ public class MariaDB extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "mariadb";
+        return NAME;
     }
 
     @Override

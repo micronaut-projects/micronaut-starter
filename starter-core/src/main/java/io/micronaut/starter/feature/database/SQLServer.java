@@ -27,6 +27,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SQLServer extends DatabaseDriverFeature {
 
+    public static final String NAME = "sqlserver";
+
     public SQLServer(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
     }
@@ -34,7 +36,7 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "sqlserver";
+        return NAME;
     }
 
     @Override

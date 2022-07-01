@@ -27,6 +27,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class MySQL extends DatabaseDriverFeature {
 
+    public static final String NAME = "mysql";
+
     public MySQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
     }
@@ -34,7 +36,7 @@ public class MySQL extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "mysql";
+        return NAME;
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MySQL extends DatabaseDriverFeature {
         }
 
         generatorContext.addDependency(Dependency.builder()
-                .groupId("mysql")
+                .groupId(NAME)
                 .artifactId("mysql-connector-java")
                 .runtime());
     }

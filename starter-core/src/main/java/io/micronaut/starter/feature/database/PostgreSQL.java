@@ -27,6 +27,8 @@ import jakarta.inject.Singleton;
 @Singleton
 public class PostgreSQL extends DatabaseDriverFeature {
 
+    public static final String NAME = "postgres";
+
     public PostgreSQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
     }
@@ -34,7 +36,7 @@ public class PostgreSQL extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "postgres";
+        return NAME;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class PostgreSQL extends DatabaseDriverFeature {
 
     @Override
     public String getDefaultUser() {
-        return "postgres";
+        return NAME;
     }
 
     @Override
