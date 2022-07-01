@@ -22,7 +22,6 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
-import java.util.function.Predicate;
 
 @Singleton
 public class DataJpaReactiveFeatureValidator implements FeatureValidator {
