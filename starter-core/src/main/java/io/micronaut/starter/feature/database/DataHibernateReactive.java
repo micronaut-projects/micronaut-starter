@@ -79,6 +79,8 @@ public class DataHibernateReactive implements JpaFeature, DataFeature {
         if (getDatasourceClient(generatorContext, dbFeature)) {
             generatorContext.getConfiguration().put("jpa.default.reactive", true);
             generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.url", dbFeature.getJdbcUrl());
+            generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.username", dbFeature.getDefaultUser());
+            generatorContext.getConfiguration().put("jpa.default.properties.hibernate.connection.password", dbFeature.getDefaultPassword());
         }
     }
 

@@ -96,10 +96,12 @@ public class Oracle extends DatabaseDriverFeature {
             }
         }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.oracle.database.jdbc")
-                .artifactId("ojdbc8")
-                .runtime());
+        if (!generatorContext.isFeaturePresent(DataHibernateReactive.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("com.oracle.database.jdbc")
+                    .artifactId("ojdbc8")
+                    .runtime());
+        }
     }
 
 }

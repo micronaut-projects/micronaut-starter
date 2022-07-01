@@ -96,9 +96,11 @@ public class MySQL extends DatabaseDriverFeature {
             }
         }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId(NAME)
-                .artifactId("mysql-connector-java")
-                .runtime());
+        if (!generatorContext.isFeaturePresent(DataHibernateReactive.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId(NAME)
+                    .artifactId("mysql-connector-java")
+                    .runtime());
+        }
     }
 }

@@ -51,7 +51,7 @@ public abstract class DatabaseDriverFeature extends TestContainersFeature implem
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
+        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class) || featureContext.isPresent(DataHibernateReactive.class))
             && jdbcFeature != null) {
             featureContext.addFeature(jdbcFeature);
         }

@@ -3,13 +3,16 @@ package io.micronaut.starter.feature.database
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
-class DataHibernateReactiveSpec extends ApplicationContextSpec {
+class DataHibernateReactiveSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test data jpa reactive requires db"() {
         when:
@@ -29,7 +32,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         then:
         features.contains("data")
         features.contains(db)
-        features.contains("jdbc-hikari")
+        !features.contains("jdbc-hikari")
         features.contains(DataHibernateReactive.NAME)
 
         where:
@@ -46,7 +49,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
         template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-jpa")')
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
-        template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
+        !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains($/implementation("$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
         where:
@@ -98,7 +101,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
       <scope>compile</scope>
     </dependency>
 ''')
-        template.contains('''\
+        !template.contains('''\
     <dependency>
       <groupId>io.micronaut.sql</groupId>
       <artifactId>micronaut-jdbc-hikari</artifactId>
@@ -151,13 +154,17 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         GeneratorContext ctx = buildGeneratorContext([DataHibernateReactive.NAME, db])
 
         then:
-        ctx.configuration.containsKey("datasources.default.url")
+        !ctx.configuration.containsKey("datasources.default.url")
+        !ctx.configuration.containsKey("datasources.default.username")
+        !ctx.configuration.containsKey("datasources.default.password")
         ctx.configuration."datasources.default.dialect" == dialect
         ctx.configuration."jpa.default.reactive" == true
         with(ctx.configuration."jpa.default.properties.hibernate.connection.url") {
             it.startsWith("jdbc:")
             it.contains(jdbcContains)
         }
+        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.username")
+        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
 
         where:
         db              | dialect      | jdbcContains

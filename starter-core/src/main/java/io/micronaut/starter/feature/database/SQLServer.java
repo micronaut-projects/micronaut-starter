@@ -96,9 +96,11 @@ public class SQLServer extends DatabaseDriverFeature {
             }
         }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.microsoft.sqlserver")
-                .artifactId("mssql-jdbc")
-                .runtime());
+        if (!generatorContext.isFeaturePresent(DataHibernateReactive.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("com.microsoft.sqlserver")
+                    .artifactId("mssql-jdbc")
+                    .runtime());
+        }
     }
 }

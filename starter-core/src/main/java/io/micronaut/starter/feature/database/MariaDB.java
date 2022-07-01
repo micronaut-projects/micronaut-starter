@@ -96,9 +96,11 @@ public class MariaDB extends DatabaseDriverFeature {
             }
         }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.mariadb.jdbc")
-                .artifactId("mariadb-java-client")
-                .runtime());
+        if (!generatorContext.isFeaturePresent(DataHibernateReactive.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("org.mariadb.jdbc")
+                    .artifactId("mariadb-java-client")
+                    .runtime());
+        }
     }
 }

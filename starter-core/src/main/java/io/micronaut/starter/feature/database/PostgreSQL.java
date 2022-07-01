@@ -97,9 +97,11 @@ public class PostgreSQL extends DatabaseDriverFeature {
             }
         }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.postgresql")
-                .artifactId("postgresql")
-                .runtime());
+        if (!generatorContext.isFeaturePresent(DataHibernateReactive.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("org.postgresql")
+                    .artifactId("postgresql")
+                    .runtime());
+        }
     }
 }
