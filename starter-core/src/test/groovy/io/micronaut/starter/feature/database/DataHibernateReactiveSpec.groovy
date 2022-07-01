@@ -3,20 +3,17 @@ package io.micronaut.starter.feature.database
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
-import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
-import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
-class DataHibernateReactiveSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
     void "test data jpa reactive requires db"() {
         when:
-        Features features = getFeatures([DataHibernateReactive.NAME])
+        getFeatures([DataHibernateReactive.NAME])
 
         then:
         def exception = thrown(IllegalArgumentException)
