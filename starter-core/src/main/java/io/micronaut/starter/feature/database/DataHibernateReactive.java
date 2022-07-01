@@ -23,14 +23,14 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataJpaReactive implements JpaFeature, DataFeature {
+public class DataHibernateReactive implements JpaFeature, DataFeature {
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
-    public static final String NAME = "data-jpa-reactive";
+    public static final String NAME = "data-hibernate-reactive";
     private final Data data;
     private final JdbcFeature jdbcFeature;
 
-    public DataJpaReactive(Data data, JdbcFeature jdbcFeature) {
+    public DataHibernateReactive(Data data, JdbcFeature jdbcFeature) {
         this.data = data;
         this.jdbcFeature = jdbcFeature;
     }
@@ -42,20 +42,17 @@ public class DataJpaReactive implements JpaFeature, DataFeature {
 
     @Override
     public String getTitle() {
-        return "Micronaut Data JPA Reactive";
+        return "Micronaut Data Hibernate Reactive";
     }
 
     @Override
     public String getDescription() {
-        return "Adds support for Micronaut Data Hibernate Reactive/JPA";
+        return "Adds support for Micronaut Data Hibernate Reactive";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
-        if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(jdbcFeature);
-        }
     }
 
     @Override

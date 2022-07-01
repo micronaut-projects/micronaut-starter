@@ -9,28 +9,28 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Issue
 
-class DataJpaReactiveSpec extends ApplicationContextSpec {
+class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
     void "test data jpa reactive requires db"() {
         when:
-        Features features = getFeatures([DataJpaReactive.NAME])
+        Features features = getFeatures([DataHibernateReactive.NAME])
 
         then:
         def exception = thrown(IllegalArgumentException)
 
         and:
-        exception.message == "$DataJpaReactive.NAME requires $MySQL.NAME, $MariaDB.NAME, $PostgreSQL.NAME, $Oracle.NAME, or $SQLServer.NAME"
+        exception.message == "$DataHibernateReactive.NAME requires $MySQL.NAME, $MariaDB.NAME, $PostgreSQL.NAME, $Oracle.NAME, or $SQLServer.NAME"
     }
 
     void "test data jpa reactive features for #db"() {
         when:
-        Features features = getFeatures([DataJpaReactive.NAME, db])
+        Features features = getFeatures([DataHibernateReactive.NAME, db])
 
         then:
         features.contains("data")
         features.contains(db)
         features.contains("jdbc-hikari")
-        features.contains("data-jpa-reactive")
+        features.contains(DataHibernateReactive.NAME)
 
         where:
         db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
@@ -39,7 +39,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
     void "test dependencies are present for gradle with #db (#client)"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["data-jpa-reactive", db])
+                .features([DataHibernateReactive.NAME, db])
                 .render()
 
         then:
@@ -47,7 +47,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-jpa")')
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
         template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
-        template.contains($/implementation("$DataJpaReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
+        template.contains($/implementation("$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
         where:
         db              | client
@@ -61,7 +61,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["data-jpa-reactive", MySQL.NAME])
+                .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .language(Language.KOTLIN)
                 .render()
 
@@ -72,7 +72,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
     void "test dependencies are present for maven with #db (#client)"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([DataJpaReactive.NAME, db])
+                .features([DataHibernateReactive.NAME, db])
                 .render()
 
         then:
@@ -107,7 +107,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
 ''')
         template.contains("""\
     <dependency>
-      <groupId>$DataJpaReactive.IO_VERTX_DEPENDENCY_GROUP</groupId>
+      <groupId>$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP</groupId>
       <artifactId>$client</artifactId>
       <scope>compile</scope>
     </dependency>
@@ -132,7 +132,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
     void "test kotlin jpa plugin is present for maven kotlin project"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([DataJpaReactive.NAME, MySQL.NAME])
+                .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .language(Language.KOTLIN)
                 .render()
 
@@ -148,7 +148,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
 
     void "test config for #db"() {
         when:
-        GeneratorContext ctx = buildGeneratorContext([DataJpaReactive.NAME, db])
+        GeneratorContext ctx = buildGeneratorContext([DataHibernateReactive.NAME, db])
 
         then:
         ctx.configuration.containsKey("datasources.default.url")
@@ -173,7 +173,7 @@ class DataJpaReactiveSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(Language.GROOVY)
-                .features(["data-jpa-reactive", MySQL.NAME])
+                .features([DataHibernateReactive.NAME, MySQL.NAME])
                 .render()
 
         then:

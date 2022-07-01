@@ -24,13 +24,13 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class DataJpaReactiveFeatureValidator implements FeatureValidator {
+public class DataHibernateReactiveFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(DataJpaReactive.class::isInstance) && features.stream().noneMatch(this::requiredDatabaseFeature)) {
+        if (features.stream().anyMatch(DataHibernateReactive.class::isInstance) && features.stream().noneMatch(this::requiredDatabaseFeature)) {
             throw new IllegalArgumentException(
-                    DataJpaReactive.NAME + " requires " +
+                    DataHibernateReactive.NAME + " requires " +
                             MySQL.NAME + ", " +
                             MariaDB.NAME + ", " +
                             PostgreSQL.NAME + ", " +
