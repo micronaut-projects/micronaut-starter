@@ -19,7 +19,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -28,11 +27,9 @@ public class DataHibernateReactive implements JpaFeature, DataFeature {
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
     public static final String NAME = "data-hibernate-reactive";
     private final Data data;
-    private final JdbcFeature jdbcFeature;
 
-    public DataHibernateReactive(Data data, JdbcFeature jdbcFeature) {
+    public DataHibernateReactive(Data data) {
         this.data = data;
-        this.jdbcFeature = jdbcFeature;
     }
 
     @Override
@@ -63,17 +60,13 @@ public class DataHibernateReactive implements JpaFeature, DataFeature {
                 .versionProperty("micronaut.data.version")
                 .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
                 .annotationProcessor(true));
+
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-hibernate-jpa")
-                .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.sql")
-                .artifactId("micronaut-hibernate-reactive")
+                .artifactId("micronaut-data-hibernate-reactive")
                 .compile());
 
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
 
         if (getDatasourceClient(generatorContext, dbFeature)) {

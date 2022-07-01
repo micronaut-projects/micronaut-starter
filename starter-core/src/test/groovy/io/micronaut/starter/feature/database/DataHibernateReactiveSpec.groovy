@@ -44,8 +44,8 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
         then:
         template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
-        template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-jpa")')
-        template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
+        template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-reactive")')
+        !template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
         !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains($/implementation("$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
@@ -84,7 +84,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
               <version>${micronaut.data.version}</version>
             </path>
 ''')
-        template.contains('''\
+        !template.contains('''\
     <dependency>
       <groupId>io.micronaut.data</groupId>
       <artifactId>micronaut-data-hibernate-jpa</artifactId>
@@ -93,8 +93,8 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 ''')
         template.contains('''\
     <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-hibernate-reactive</artifactId>
+      <groupId>io.micronaut.data</groupId>
+      <artifactId>micronaut-data-hibernate-reactive</artifactId>
       <scope>compile</scope>
     </dependency>
 ''')
@@ -154,7 +154,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         !ctx.configuration.containsKey("datasources.default.url")
         !ctx.configuration.containsKey("datasources.default.username")
         !ctx.configuration.containsKey("datasources.default.password")
-        ctx.configuration."datasources.default.dialect" == dialect
+        !ctx.configuration.containsKey("datasources.default.dialect")
         ctx.configuration."jpa.default.reactive" == true
         with(ctx.configuration."jpa.default.properties.hibernate.connection.url") {
             it.startsWith("jdbc:")
@@ -164,12 +164,12 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
 
         where:
-        db              | dialect      | jdbcContains
-        MySQL.NAME      | 'MYSQL'      | 'mysql'
-        MariaDB.NAME    | 'MYSQL'      | 'mariadb'
-        PostgreSQL.NAME | 'POSTGRES'   | 'postgresql'
-        Oracle.NAME     | 'ORACLE'     | 'oracle'
-        SQLServer.NAME  | 'SQL_SERVER' | 'sqlserver'
+        db              | jdbcContains
+        MySQL.NAME      | 'mysql'
+        MariaDB.NAME    | 'mariadb'
+        PostgreSQL.NAME | 'postgresql'
+        Oracle.NAME     | 'oracle'
+        SQLServer.NAME  | 'sqlserver'
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")
