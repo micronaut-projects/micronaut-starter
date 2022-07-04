@@ -130,7 +130,7 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-functions-maven-plugin</artifactId>
-            <version>1.16.0</version>
+            <version>1.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
