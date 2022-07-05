@@ -36,8 +36,11 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature, TestResources testResources, OracleCloudSdk oracleCloudSdkFeature) {
-        super(jdbcFeature, testResources);
+    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature,
+                                         TestContainers testContainers,
+                                         TestResources testResources,
+                                         OracleCloudSdk oracleCloudSdkFeature) {
+        super(jdbcFeature, testContainers, testResources);
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
 
@@ -89,6 +92,11 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getJdbcUrl() {
+        return null;
+    }
+
+    @Override
     public String getR2dbcUrl() {
         return null;
     }
@@ -96,6 +104,16 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return null;
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
     }
 
     @Override
