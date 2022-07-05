@@ -23,8 +23,6 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
-import java.util.Optional;
-
 @Singleton
 public class DataHibernateReactive extends TestContainersFeature implements JpaFeature, DataFeature {
 
@@ -36,30 +34,6 @@ public class DataHibernateReactive extends TestContainersFeature implements JpaF
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
-    public static final String VERTX_MYSQL_CLIENT = "vertx-mysql-client";
-    public static final String VERTX_PG_CLIENT = "vertx-pg-client";
-    public static final String VERTX_MSSQL_CLIENT = "vertx-mssql-client";
-    public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
-
-    private static final Dependency.Builder DEPENDENCY_VERTX_MYSQL_CLIENT = Dependency.builder()
-            .groupId(IO_VERTX_DEPENDENCY_GROUP)
-            .artifactId(VERTX_MYSQL_CLIENT)
-            .compile();
-
-    private static final Dependency.Builder DEPENDENCY_VERTX_PG_CLIENT = Dependency.builder()
-            .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId(VERTX_PG_CLIENT)
-                    .compile();
-
-    private static final Dependency.Builder DEPENDENCY_VERTX_MSSQL_CLIENT = Dependency.builder()
-            .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId(VERTX_MSSQL_CLIENT)
-                    .compile();
-
-    private static final Dependency.Builder DEPENDENCY_VERTX_ORACLE_CLIENT = Dependency.builder()
-            .groupId(IO_VERTX_DEPENDENCY_GROUP)
-                    .artifactId(VERTX_ORACLE_CLIENT)
-                    .compile();
 
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE = MicronautDependencyUtils.dataDependency()
             .artifactId("micronaut-data-hibernate-reactive")
@@ -107,27 +81,10 @@ public class DataHibernateReactive extends TestContainersFeature implements JpaF
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
 
-        parseDependency(dbFeature).ifPresent(dependencyBuilder -> {
-            generatorContext.addDependency(dependencyBuilder);
-            generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
-            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
-            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME, dbFeature.getDefaultUser());
-            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD, dbFeature.getDefaultPassword());
-        });
-    }
-
-    @NonNull
-    private Optional<Dependency.Builder> parseDependency(@NonNull DatabaseDriverFeature dbFeature) {
-        if (dbFeature instanceof MySQL || dbFeature instanceof MariaDB) {
-            return Optional.of(DEPENDENCY_VERTX_MYSQL_CLIENT);
-        } else if (dbFeature instanceof PostgreSQL) {
-            return Optional.of(DEPENDENCY_VERTX_PG_CLIENT);
-        } else if (dbFeature instanceof SQLServer) {
-            return Optional.of(DEPENDENCY_VERTX_MSSQL_CLIENT);
-        } else if (dbFeature instanceof Oracle) {
-            return Optional.of(DEPENDENCY_VERTX_ORACLE_CLIENT);
-        }
-        return Optional.empty();
+        generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME, dbFeature.getDefaultUser());
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD, dbFeature.getDefaultPassword());
     }
 
     public String getUrlKey() {

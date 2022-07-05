@@ -54,11 +54,11 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
         where:
         db              | client                                    | container
-        MySQL.NAME      | DataHibernateReactive.VERTX_MYSQL_CLIENT  | 'mysql'
-        MariaDB.NAME    | DataHibernateReactive.VERTX_MYSQL_CLIENT  | 'mariadb'
-        PostgreSQL.NAME | DataHibernateReactive.VERTX_PG_CLIENT     | 'postgresql'
-        Oracle.NAME     | DataHibernateReactive.VERTX_ORACLE_CLIENT | 'oracle-xe'
-        SQLServer.NAME  | DataHibernateReactive.VERTX_MSSQL_CLIENT  | 'mssqlserver'
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT  | 'mysql'
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT  | 'mariadb'
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT     | 'postgresql'
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT | 'oracle-xe'
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT  | 'mssqlserver'
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
@@ -125,11 +125,11 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 
         where:
         db              | client
-        MySQL.NAME      | DataHibernateReactive.VERTX_MYSQL_CLIENT
-        MariaDB.NAME    | DataHibernateReactive.VERTX_MYSQL_CLIENT
-        PostgreSQL.NAME | DataHibernateReactive.VERTX_PG_CLIENT
-        Oracle.NAME     | DataHibernateReactive.VERTX_ORACLE_CLIENT
-        SQLServer.NAME  | DataHibernateReactive.VERTX_MSSQL_CLIENT
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
