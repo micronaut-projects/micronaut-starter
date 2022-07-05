@@ -30,6 +30,11 @@
         </dependency>
         <dependency>
             <groupId>com.agorapulse</groupId>
+            <artifactId>micronaut-permissions</artifactId>
+            <version>1.0.2-micronaut-3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.agorapulse</groupId>
             <artifactId>micronaut-worker</artifactId>
             <version>1.2.1-micronaut-3.0</version>
         </dependency>
