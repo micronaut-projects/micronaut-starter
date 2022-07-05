@@ -45,7 +45,7 @@ public interface OpenTelemetryExporterFeature extends OpenTelemetryFeature {
         generatorContext.addDependency(OpenTelemetryDependencyUtils.openTelemetryDependency()
                 .artifactId(exporterArtifactId())
                 .compile());
-        generatorContext.getConfiguration().put("otel.traces.exporter", exporterName().toLowerCase(Locale.ROOT));
+        generatorContext.getConfiguration().addNested("otel.traces.exporter", exporterName().toLowerCase(Locale.ROOT));
     }
 
     @Override

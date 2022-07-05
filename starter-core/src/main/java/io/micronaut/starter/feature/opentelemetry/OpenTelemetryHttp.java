@@ -53,7 +53,7 @@ public class OpenTelemetryHttp implements TracingFeature, MicronautServerDepende
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY_HTTP);
         if (generatorContext.getFeatures().hasFeature(Management.class)) {
-            generatorContext.getConfiguration().put("otel.traces.exclusions", "/health");
+            generatorContext.getConfiguration().addNested("otel.traces.exclusions", "/health");
         }
     }
 
