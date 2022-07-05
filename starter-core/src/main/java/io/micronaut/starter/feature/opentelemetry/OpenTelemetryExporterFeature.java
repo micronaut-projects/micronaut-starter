@@ -17,31 +17,43 @@ package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
-
+import io.micronaut.starter.feature.FeatureContext;
 import java.util.Locale;
 
-public interface OpenTelemetryExporterFeature extends OpenTelemetryFeature {
+public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature, OpenTelemetryExporter {
+    private final OpenTelemetry openTelemetry;
+
+    public OpenTelemetryExporterFeature(OpenTelemetry openTelemetry) {
+        this.openTelemetry = openTelemetry;
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (!featureContext.isPresent(OpenTelemetryHttp.class)) {
+            featureContext.addFeature(openTelemetry);
+        }
+    }
 
     @NonNull
     @Override
-    default String getName() {
+    public String getName() {
         return "tracing-opentelemetry-exporter-" + exporterName().toLowerCase(Locale.ROOT);
     }
 
     @NonNull
     @Override
-    default String getTitle() {
+    public String getTitle() {
         return "OpenTelemetry Exporter " + exporterName();
     }
 
     @Override
     @NonNull
-    default String getDescription() {
+    public String getDescription() {
         return "Adds the open telemetry exporter depedendency for " + exporterName();
     }
 
     @Override
-    default void apply(GeneratorContext generatorContext) {
+    public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(OpenTelemetryDependencyUtils.openTelemetryDependency()
                 .artifactId(exporterArtifactId())
                 .compile());
@@ -49,15 +61,15 @@ public interface OpenTelemetryExporterFeature extends OpenTelemetryFeature {
     }
 
     @Override
-    default String getMicronautDocumentation() {
+    public String getMicronautDocumentation() {
         return "http://localhost/micronaut-tracing/guide/index.html#opentelemetry";
     }
 
     @NonNull
-    String exporterName();
+    protected abstract String exporterName();
 
     @NonNull
-    default String exporterArtifactId() {
+    protected String exporterArtifactId() {
         return "opentelemetry-exporter-"  + exporterName().toLowerCase(Locale.ROOT);
     }
 }

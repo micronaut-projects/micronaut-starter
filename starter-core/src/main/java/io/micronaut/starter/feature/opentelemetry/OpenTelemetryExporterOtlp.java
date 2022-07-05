@@ -19,8 +19,12 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenTelemetryExporterOtlp implements OpenTelemetryExporterFeature {
+public class OpenTelemetryExporterOtlp extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_OTLP = "OTLP";
+
+    public OpenTelemetryExporterOtlp(OpenTelemetry openTelemetry) {
+        super(openTelemetry);
+    }
 
     @NonNull
     public String exporterName() {

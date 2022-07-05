@@ -19,8 +19,12 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenTelemetryExporterZipkin implements OpenTelemetryExporterFeature {
+public class OpenTelemetryExporterZipkin extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_ZIPKIN = "Zipkin";
+
+    public OpenTelemetryExporterZipkin(OpenTelemetry openTelemetry) {
+        super(openTelemetry);
+    }
 
     @NonNull
     public String exporterName() {

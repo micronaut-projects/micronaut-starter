@@ -15,18 +15,11 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
-import io.micronaut.core.annotation.NonNull;
-import jakarta.inject.Singleton;
+import io.micronaut.starter.feature.OneOfFeature;
 
-@Singleton
-public class OpenTelemetryExporterLogging extends OpenTelemetryExporterFeature {
-    private static final String EXPORTER_LOGGING = "Logging";
-    public OpenTelemetryExporterLogging(OpenTelemetry openTelemetry) {
-        super(openTelemetry);
-    }
-
-    @NonNull
-    public String exporterName() {
-        return EXPORTER_LOGGING;
+public interface OpenTelemetryExporter extends OneOfFeature {
+    @Override
+    default Class<?> getFeatureClass() {
+        return OpenTelemetryExporter.class;
     }
 }
