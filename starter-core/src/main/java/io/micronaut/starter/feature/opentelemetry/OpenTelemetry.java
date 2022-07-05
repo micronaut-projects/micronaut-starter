@@ -18,9 +18,6 @@ package io.micronaut.starter.feature.opentelemetry;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.other.Management;
-import io.micronaut.starter.feature.server.MicronautServerDependent;
-import io.micronaut.starter.feature.tracing.TracingFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
