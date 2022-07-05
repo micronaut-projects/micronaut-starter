@@ -23,6 +23,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
+    public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
 
     @NonNull
     public static Dependency.Builder coreDependency() {
@@ -44,8 +45,14 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SECURITY);
     }
 
+    @NonNull
     public static Dependency.Builder testDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_TEST);
+    }
+
+    @NonNull
+    public static Dependency.Builder r2dbcDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_R2DBC);
     }
 
     @NonNull
@@ -53,4 +60,6 @@ public final class MicronautDependencyUtils {
         return Dependency.builder()
                 .groupId(groupId);
     }
+
+
 }

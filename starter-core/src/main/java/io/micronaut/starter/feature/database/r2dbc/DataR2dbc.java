@@ -32,6 +32,8 @@ import java.util.Map;
 
 @Singleton
 public class DataR2dbc implements R2dbcFeature {
+    public static final String NAME = "data-r2dbc";
+
     private final Data data;
     private final R2dbc r2dbc;
 
@@ -74,7 +76,7 @@ public class DataR2dbc implements R2dbcFeature {
     @NonNull
     @Override
     public String getName() {
-        return "data-r2dbc";
+        return NAME;
     }
 
     @Override

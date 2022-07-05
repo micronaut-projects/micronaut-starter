@@ -37,10 +37,12 @@ public class TestContainers implements Feature {
 
     private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
+    public static final String NAME = "testcontainers";
+
     @NonNull
     @Override
     public String getName() {
-        return "testcontainers";
+        return NAME;
     }
 
     @Override

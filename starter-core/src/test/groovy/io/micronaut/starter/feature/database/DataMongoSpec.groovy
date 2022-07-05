@@ -24,13 +24,15 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
 
-        if (language == Language.GROOVY) {
+        if (buildTool == BuildTool.MAVEN && language == Language.GROOVY) {
             assert build.contains('testImplementation("org.testcontainers:spock")')
-        } else {
+        } else if (buildTool == BuildTool.MAVEN) {
             assert build.contains('testImplementation("org.testcontainers:junit-jupiter")')
         }
-        build.contains('testImplementation("org.testcontainers:mongodb")')
-        build.contains('testImplementation("org.testcontainers:testcontainers")')
+        if (buildTool == BuildTool.MAVEN) {
+            assert build.contains('testImplementation("org.testcontainers:mongodb")')
+            assert build.contains('testImplementation("org.testcontainers:testcontainers")')
+        }
 
         if (language == Language.KOTLIN) {
             assert build.contains('kapt("io.micronaut.data:micronaut-data-document-processor")')
