@@ -26,6 +26,7 @@ import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyDsl;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleGroovyHttp;
 import io.micronaut.starter.feature.agorapulse.console.template.consoleKotlinHttp;
+import io.micronaut.starter.feature.agorapulse.worker.Worker;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -143,7 +144,7 @@ public class Console implements AgoraPulseFeature {
             return Optional.empty();
         }
         // both Java and Groovy uses Groovy
-        return Optional.of(consoleGroovyDsl.template());
+        return Optional.of(consoleGroovyDsl.template(generatorContext.isFeaturePresent(Worker.class)));
     }
 
     @NonNull
