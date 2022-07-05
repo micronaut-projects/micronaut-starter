@@ -49,7 +49,7 @@ public class AWSCiWorkflowFeature extends CIWorkflowFeature {
     @Override
     @NonNull
     public String getDescription() {
-        return "Adds a AWS CodeBuild Workflow to build a Micronaut application";
+        return "Adds a AWS CodeBuild build specification to build a Micronaut application";
     }
 
     @Override
