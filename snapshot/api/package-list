@@ -60,6 +60,8 @@ io.micronaut.starter.feature.agorapulse.console
 io.micronaut.starter.feature.agorapulse.console.template
 io.micronaut.starter.feature.agorapulse.gru
 io.micronaut.starter.feature.agorapulse.gru.template
+io.micronaut.starter.feature.agorapulse.permissions
+io.micronaut.starter.feature.agorapulse.permissions.template
 io.micronaut.starter.feature.agorapulse.worker
 io.micronaut.starter.feature.agorapulse.worker.template
 io.micronaut.starter.feature.asciidoctor
@@ -79,6 +81,13 @@ io.micronaut.starter.feature.build.maven
 io.micronaut.starter.feature.build.maven.templates
 io.micronaut.starter.feature.cache
 io.micronaut.starter.feature.camunda
+io.micronaut.starter.feature.ci.workflows
+io.micronaut.starter.feature.ci.workflows.aws
+io.micronaut.starter.feature.ci.workflows.aws.templates
+io.micronaut.starter.feature.ci.workflows.gcp
+io.micronaut.starter.feature.ci.workflows.gcp.templates
+io.micronaut.starter.feature.ci.workflows.github
+io.micronaut.starter.feature.ci.workflows.github.templates
 io.micronaut.starter.feature.coherence
 io.micronaut.starter.feature.config
 io.micronaut.starter.feature.consul
