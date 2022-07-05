@@ -22,38 +22,38 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenTelemetry implements OpenTelemetryFeature {
+public class OpenTelemetryGrpc implements OpenTelemetryFeature {
 
-    private static final Dependency MICRONAUT_OPEN_TELEMETRY = MicronautDependencyUtils.tracingDependency()
-            .artifactId("micronaut-tracing-opentelemetry")
+    private static final Dependency MICRONAUT_OPEN_TELEMETRY_GRPC = MicronautDependencyUtils.tracingDependency()
+            .artifactId("micronaut-tracing-opentelemetry-grpc")
             .compile()
             .build();
 
     @NonNull
     @Override
     public String getName() {
-        return "tracing-opentelemetry";
+        return "tracing-opentelemetry-grpc";
     }
 
     @NonNull
     @Override
     public String getTitle() {
-        return "Micronaut Integration with OpenTelemetry";
+        return "Micronaut Integration with OpenTelemetry and gRPC";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Enables the integration with OpenTelemetry";
+        return "Adds Micronaut OpenTelemetry gRPC related dependencies.";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY);
+        generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY_GRPC);
     }
 
     @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#opentelemetry";
+        return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#grpc";
     }
 }

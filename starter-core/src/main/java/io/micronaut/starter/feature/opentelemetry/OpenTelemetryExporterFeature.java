@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import java.util.Locale;
 
@@ -54,10 +55,21 @@ public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeatu
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(OpenTelemetryDependencyUtils.openTelemetryDependency()
+        generatorContext.addDependency(exporterDependency());
+        generatorContext.getConfiguration().addNested("otel.traces.exporter", exporterValue());
+    }
+
+    @NonNull
+    protected String exporterValue() {
+        return exporterName().toLowerCase(Locale.ROOT);
+    }
+
+    @NonNull
+    protected Dependency exporterDependency() {
+        return OpenTelemetryDependencyUtils.openTelemetryDependency()
                 .artifactId(exporterArtifactId())
-                .compile());
-        generatorContext.getConfiguration().addNested("otel.traces.exporter", exporterName().toLowerCase(Locale.ROOT));
+                .compile()
+                .build();
     }
 
     @Override

@@ -21,6 +21,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OpenTelemetryExporterLogging extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_LOGGING = "Logging";
+    
     public OpenTelemetryExporterLogging(OpenTelemetry openTelemetry) {
         super(openTelemetry);
     }

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.opentelemetry;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.other.Management;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.feature.tracing.TracingFeature;
@@ -26,8 +27,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OpenTelemetryHttp implements TracingFeature, MicronautServerDependent {
 
-    private static final Dependency MICRONAUT_OPEN_TELEMETRY_HTTP = Dependency.builder()
-            .groupId("io.micronaut.tracing")
+    private static final Dependency MICRONAUT_OPEN_TELEMETRY_HTTP = MicronautDependencyUtils.tracingDependency()
             .artifactId("micronaut-tracing-opentelemetry-http")
             .compile()
             .build();
