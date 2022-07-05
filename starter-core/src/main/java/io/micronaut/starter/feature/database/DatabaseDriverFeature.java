@@ -21,22 +21,23 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
-import io.micronaut.starter.feature.testresources.TestResourcesFeature;
-
 import java.util.Collections;
 import java.util.Map;
 
-public abstract class DatabaseDriverFeature extends TestResourcesFeature implements OneOfFeature {
+public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature {
 
     private final JdbcFeature jdbcFeature;
 
     public DatabaseDriverFeature() {
-        this(null, null);
+        this(null, null, null);
     }
 
-    public DatabaseDriverFeature(JdbcFeature jdbcFeature, TestResources testResources) {
-        super(testResources);
+    public DatabaseDriverFeature(JdbcFeature jdbcFeature,
+                                 TestContainers testContainers,
+                                 TestResources testResources) {
+        super(testContainers, testResources);
         this.jdbcFeature = jdbcFeature;
     }
 
@@ -54,7 +55,7 @@ public abstract class DatabaseDriverFeature extends TestResourcesFeature impleme
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
         if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
-            && jdbcFeature != null) {
+                && jdbcFeature != null) {
             featureContext.addFeature(jdbcFeature);
         }
     }
@@ -66,23 +67,15 @@ public abstract class DatabaseDriverFeature extends TestResourcesFeature impleme
 
     public abstract boolean embedded();
 
-    public String getJdbcUrl() {
-        return null;
-    }
+    public abstract String getJdbcUrl();
 
-    public String getR2dbcUrl() {
-        return null;
-    }
+    public abstract String getR2dbcUrl();
 
     public abstract String getDriverClass();
 
-    public String getDefaultUser() {
-        return null;
-    }
+    public abstract String getDefaultUser();
 
-    public String getDefaultPassword() {
-        return null;
-    }
+    public abstract String getDefaultPassword();
 
     public abstract String getDataDialect();
 

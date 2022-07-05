@@ -27,8 +27,10 @@ public class DataMongoReactive extends DataMongoFeature {
 
     private static final String ASYNC_MONGODB_ARTIFACT = "mongodb-driver-reactivestreams";
 
-    public DataMongoReactive(Data data, TestResources testResources) {
-        super(data, testResources);
+    public DataMongoReactive(Data data,
+                             TestContainers testContainers,
+                             TestResources testResources) {
+        super(data, testContainers, testResources);
     }
 
     @NonNull

@@ -19,12 +19,14 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class MongoReactive extends MongoFeature {
-    public MongoReactive(TestContainers testContainers) {
-        super(testContainers);
+    public MongoReactive(TestContainers testContainers,
+                         TestResources testResources) {
+        super(testContainers, testResources);
     }
 
     @Override

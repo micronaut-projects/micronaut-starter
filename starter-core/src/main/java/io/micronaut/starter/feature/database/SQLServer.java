@@ -28,8 +28,10 @@ import jakarta.inject.Singleton;
 @Singleton
 public class SQLServer extends DatabaseDriverFeature {
 
-    public SQLServer(JdbcFeature jdbcFeature, TestResources testResources) {
-        super(jdbcFeature, testResources);
+    public SQLServer(JdbcFeature jdbcFeature,
+                     TestContainers testContainers,
+                     TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override
@@ -49,6 +51,11 @@ public class SQLServer extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getJdbcUrl() {
+        return "jdbc:sqlserver://localhost:1433;databaseName=tempdb";
+    }
+
+    @Override
     public String getR2dbcUrl() {
         return "r2dbc:mssql://localhost:1433/tempdb";
     }
@@ -56,6 +63,16 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "sa";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "";
     }
 
     @Override

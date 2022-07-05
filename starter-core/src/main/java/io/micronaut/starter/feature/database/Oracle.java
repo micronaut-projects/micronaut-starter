@@ -30,10 +30,12 @@ public class Oracle extends DatabaseDriverFeature {
 
     public static final String NAME = "oracle";
 
-    public Oracle(JdbcFeature jdbcFeature, TestResources testResources) {
-        super(jdbcFeature, testResources);
+    public Oracle(JdbcFeature jdbcFeature,
+                  TestContainers testContainers,
+                  TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
-
+    
     @Override
     @NonNull
     public String getName() {
@@ -51,6 +53,11 @@ public class Oracle extends DatabaseDriverFeature {
     }
 
     @Override
+    public String getJdbcUrl() {
+        return "jdbc:oracle:thin:@localhost:1521/xe";
+    }
+
+    @Override
     public String getR2dbcUrl() {
         return "r2dbc:oracle://localhost:1521/xe";
     }
@@ -58,6 +65,16 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "oracle.jdbc.OracleDriver";
+    }
+
+    @Override
+    public String getDefaultUser() {
+        return "system";
+    }
+
+    @Override
+    public String getDefaultPassword() {
+        return "oracle";
     }
 
     @Override

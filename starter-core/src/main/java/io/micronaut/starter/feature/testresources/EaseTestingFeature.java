@@ -17,24 +17,33 @@ package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.database.TestContainers;
 
-public abstract class TestResourcesFeature implements Feature  {
+public abstract class EaseTestingFeature implements Feature  {
     private final TestResources testResources;
+    private final TestContainers testContainers;
 
-    protected TestResourcesFeature() {
+    protected EaseTestingFeature() {
+        this.testContainers = null;
         this.testResources = null;
     }
 
-    protected TestResourcesFeature(TestResources testResources) {
+    protected EaseTestingFeature(TestContainers testContainers,
+                                 TestResources testResources) {
+        this.testContainers = testContainers;
         this.testResources = testResources;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(TestResources.class) && testResources != null) {
-            featureContext.addFeature(testResources);
+        if (featureContext.getBuildTool().isGradle()) {
+            if (!featureContext.isPresent(TestResources.class) && testResources != null) {
+                featureContext.addFeature(testResources);
+            }
+        } else {
+            if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
+                featureContext.addFeature(testContainers);
+            }
         }
-
-
     }
 }

@@ -29,8 +29,8 @@ public class DataMongo extends DataMongoFeature {
 
     private static final String SYNC_MONGODB_ARTIFACT = "mongodb-driver-sync";
 
-    public DataMongo(Data data, TestResources testResources) {
-        super(data, testResources);
+    public DataMongo(Data data, TestContainers testContainers, TestResources testResources) {
+        super(data, testContainers, testResources);
     }
 
     @NonNull

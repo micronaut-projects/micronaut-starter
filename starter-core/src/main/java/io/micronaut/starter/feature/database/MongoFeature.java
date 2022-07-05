@@ -15,9 +15,13 @@
  */
 package io.micronaut.starter.feature.database;
 
-public abstract class MongoFeature extends TestContainersFeature {
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 
-    protected MongoFeature(TestContainers testContainers) {
-        super(testContainers);
+public abstract class MongoFeature extends EaseTestingFeature {
+
+    protected MongoFeature(TestContainers testContainers,
+                           TestResources testResources) {
+        super(testContainers, testResources);
     }
 }
