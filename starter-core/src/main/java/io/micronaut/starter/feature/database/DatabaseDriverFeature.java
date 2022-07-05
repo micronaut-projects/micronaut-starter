@@ -15,16 +15,19 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature {
 
@@ -78,6 +81,11 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     public abstract String getDefaultPassword();
 
     public abstract String getDataDialect();
+
+    @NonNull
+    public Optional<DbType> getDbType() {
+        return Optional.empty();
+    }
 
     public Map<String, Object> getAdditionalConfig() {
         return Collections.emptyMap();

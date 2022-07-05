@@ -28,8 +28,6 @@ import jakarta.inject.Singleton;
 @Singleton
 public class TestResources implements Feature {
 
-    public static final String PROPERTY_DATASOURCES_DEFAULT_DB_TYPE = "datasources.default.db-type";
-
     @Override
     @NonNull
     public String getName() {
@@ -62,11 +60,6 @@ public class TestResources implements Feature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(MicronautTestResourcesGradlePlugin.builder().build());
-        } else if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            //TODO
-        }
-        if (generatorContext.getFeatures().hasFeature(MariaDB.class)) {
-            generatorContext.getConfiguration().put(PROPERTY_DATASOURCES_DEFAULT_DB_TYPE, DbType.MariaDB.toString());
         }
     }
 

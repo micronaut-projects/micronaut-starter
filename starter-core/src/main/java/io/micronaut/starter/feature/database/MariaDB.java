@@ -22,8 +22,11 @@ import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
 
 @Singleton
 public class MariaDB extends DatabaseDriverFeature {
@@ -83,6 +86,12 @@ public class MariaDB extends DatabaseDriverFeature {
     @Override
     public boolean embedded() {
         return false;
+    }
+
+    @Override
+    @NonNull
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.MariaDB);
     }
 
     @Override

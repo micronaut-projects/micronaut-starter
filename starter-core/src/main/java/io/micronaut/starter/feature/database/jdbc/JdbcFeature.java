@@ -23,13 +23,15 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverConfigurationFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.MariaDB;
+import io.micronaut.starter.feature.testresources.DbType;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class JdbcFeature implements OneOfFeature, DatabaseDriverConfigurationFeature {
-
     private static final String PREFIX = "datasources.default.";
+    public static final String PROPERTY_DATASOURCES_DEFAULT_DB_TYPE = PREFIX + "db-type";
     private static final String URL_KEY = PREFIX + "url";
     private static final String DRIVER_KEY = PREFIX + "driverClassName";
     private static final String USERNAME_KEY = PREFIX + "username";
@@ -62,7 +64,7 @@ public abstract class JdbcFeature implements OneOfFeature, DatabaseDriverConfigu
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
             Map<String, Object> jdbcConfig = new LinkedHashMap<>();
-            applyDefaultConfig(dbFeature, jdbcConfig);
+            applyDefaultConfig(generatorContext, dbFeature, jdbcConfig);
             generatorContext.getConfiguration().addNested(jdbcConfig);
         });
     }
