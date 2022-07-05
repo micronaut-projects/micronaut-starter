@@ -15,13 +15,12 @@
  */
 package io.micronaut.starter.feature.ci.workflows.github;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
 import io.micronaut.starter.feature.ci.workflows.github.templates.javaAction;
 import io.micronaut.starter.options.JdkDistribution;
-import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -49,20 +48,12 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
-
-        generatorContext.addTemplate("javaAction", workflowRockerTemplate(generatorContext));
-    }
-
-    private Template workflowRockerTemplate(GeneratorContext generatorContext) {
-        String workflowFilePath = WORKFLOW_BASE_PATH + getWorkflowFileName(generatorContext);
-        return new RockerTemplate(workflowFilePath, javaAction.template(
-            generatorContext.getJdkVersion(),
-            JdkDistribution.DEFAULT_DISTRIBUTION,
-            generatorContext.getBuildTool(),
-            DEFAULT_BRANCH)
-        );
+    public RockerModel workflowRockerModel(GeneratorContext generatorContext) {
+        return  javaAction.template(
+                generatorContext.getJdkVersion(),
+                JdkDistribution.DEFAULT_DISTRIBUTION,
+                generatorContext.getBuildTool(),
+                DEFAULT_BRANCH);
     }
 
     @Override
@@ -72,15 +63,25 @@ public class GithubCiWorkflowFeature extends CIWorkflowFeature {
 
     @NonNull
     @Override
+    public String getWorkflowTemplateName() {
+        return "javaAction";
+    }
+
+    @NonNull
+    @Override
     public String getWorkflowFileName(GeneratorContext generatorContext) {
-        switch (generatorContext.getBuildTool()) {
+        String result = WORKFLOW_BASE_PATH;
+                switch (generatorContext.getBuildTool()) {
             case GRADLE:
             case GRADLE_KOTLIN:
-                return "gradle.yml";
+                result += "gradle.yml";
+                break;
             case MAVEN:
-                return "maven.yml";
+                result += "maven.yml";
+                break;
             default:
                 throw new IllegalArgumentException("Unexpected constant for BuildTool enum");
         }
+        return result;
     }
 }

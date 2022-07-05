@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.ci.workflows;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.template.RockerTemplate;
 
 public abstract class CIWorkflowFeature  implements Feature {
 
@@ -37,6 +39,15 @@ public abstract class CIWorkflowFeature  implements Feature {
         return Category.CICD;
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate(getWorkflowTemplateName(),
+                new RockerTemplate(getWorkflowFileName(generatorContext), workflowRockerModel(generatorContext)));
+    }
+
     public abstract String getWorkflowFileName(GeneratorContext generatorContext);
 
+    public abstract String getWorkflowTemplateName();
+
+    public abstract RockerModel workflowRockerModel(GeneratorContext generatorContext);
 }
