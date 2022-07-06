@@ -24,16 +24,9 @@ import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataHibernateReactive extends TestContainersFeature implements JpaFeature, DataFeature {
+public class DataHibernateReactive extends HibernateReactiveFeature implements DataFeature {
 
     public static final String NAME = "data-hibernate-reactive";
-
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL = "jpa.default.properties.hibernate.connection.url";
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME = "jpa.default.properties.hibernate.connection.username";
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD = "jpa.default.properties.hibernate.connection.password";
-    public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
-
-    public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE = MicronautDependencyUtils.dataDependency()
             .artifactId("micronaut-data-hibernate-reactive")
@@ -76,18 +69,8 @@ public class DataHibernateReactive extends TestContainersFeature implements JpaF
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE);
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
-
-        generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME, dbFeature.getDefaultUser());
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD, dbFeature.getDefaultPassword());
-    }
-
-    public String getUrlKey() {
-        return JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL;
     }
 }

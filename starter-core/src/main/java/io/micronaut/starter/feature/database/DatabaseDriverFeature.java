@@ -62,10 +62,17 @@ public abstract class DatabaseDriverFeature
         if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
             featureContext.addFeature(testContainers);
         }
-        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class) || featureContext.isPresent(DataHibernateReactive.class))
-            && jdbcFeature != null) {
+        if (shouldAddJdbcFeature(featureContext)) {
             featureContext.addFeature(jdbcFeature);
         }
+    }
+
+    private boolean shouldAddJdbcFeature(FeatureContext featureContext) {
+        return !featureContext.isPresent(JdbcFeature.class)
+                && !featureContext.isPresent(R2dbcFeature.class)
+                && !featureContext.isPresent(DataHibernateReactive.class)
+                && !featureContext.isPresent(HibernateReactiveJpa.class)
+                && jdbcFeature != null;
     }
 
     @Override
@@ -105,7 +112,7 @@ public abstract class DatabaseDriverFeature
                 return dependencies;
             }
         }
-        if (generatorContext.getFeatures().hasFeature(DataHibernateReactive.class)) {
+        if (generatorContext.getFeatures().hasFeature(DataHibernateReactive.class) || generatorContext.getFeatures().hasFeature(HibernateReactiveJpa.class)) {
             getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
         } else {
             getJavaClientDependency().ifPresent(dependencies::add);

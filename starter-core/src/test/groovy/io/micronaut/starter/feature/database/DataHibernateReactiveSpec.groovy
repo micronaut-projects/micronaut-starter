@@ -47,7 +47,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-reactive")')
         !template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
         !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
-        template.contains($/implementation("$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
+        template.contains($/implementation("$HibernateReactiveFeature.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
         template.contains('testImplementation("org.testcontainers:testcontainers")')
         template.contains($/testImplementation("org.testcontainers:$container")/$)
@@ -110,7 +110,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
 ''')
         template.contains("""\
     <dependency>
-      <groupId>$DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP</groupId>
+      <groupId>$HibernateReactiveFeature.IO_VERTX_DEPENDENCY_GROUP</groupId>
       <artifactId>$client</artifactId>
       <scope>compile</scope>
     </dependency>
