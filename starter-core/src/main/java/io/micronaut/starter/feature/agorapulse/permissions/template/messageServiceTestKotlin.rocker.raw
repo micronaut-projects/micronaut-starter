@@ -1,0 +1,63 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.agorapulse.permissions.PermissionException
+import io.micronaut.security.authentication.Authentication
+import io.micronaut.security.utils.DefaultSecurityService
+import io.micronaut.security.utils.SecurityService
+import io.micronaut.test.annotation.MockBean
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.mockito.Mockito
+import java.util.Optional
+
+@@MicronautTest
+internal class MessageServiceTest {
+
+    @@Inject
+    lateinit var messageService: MessageService
+
+    @@Inject
+    lateinit var securityService: SecurityService
+
+
+    var authentication = Mockito.mock(
+        Authentication::class.java
+    )
+
+    @@MockBean(DefaultSecurityService::class)
+    fun mockSecurityService(): SecurityService {
+      return Mockito.mock(SecurityService::class.java)
+    }
+
+    @@BeforeEach
+    fun setup() {
+        Mockito.`when`(securityService.authentication).thenReturn(Optional.of(authentication))
+        Mockito.`when`(authentication.name).thenReturn("author")
+    }
+
+    @@Test
+    fun testSaveMessageAsValidAuthor() {
+        val message = Message("author", "body")
+        val saved = messageService.save(message)
+        assertEquals(message, saved)
+    }
+
+    @@Test
+    fun testSaveMessageAsInvalidAuthor() {
+        val message = Message("notanauthor", "body")
+        assertThrows(PermissionException::class.java) { messageService.save(message) }
+    }
+
+}
