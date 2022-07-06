@@ -129,6 +129,34 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         String build = output['pom.xml']
 
         then:
+        build.contains('<micronaut.runtime>oracle_function</micronaut.runtime>')
+        build.contains('<jib.docker.tag>${project.version}</jib.docker.tag>')
+        build.contains('<exec.mainClass>com.fnproject.fn.runtime.EntryPoint</exec.mainClass>')
+        build.contains('<jib.docker.image>[REGION].ocir.io/[TENANCY]/[REPO]/${project.artifactId}</jib.docker.image>')
+        build.contains('<function.entrypoint>example.micronaut.Function::handleRequest</function.entrypoint>')
+        build.contains('''
+          <configuration>
+            <nativeImageBuildArgs>
+              <arg>-H:+StaticExecutableWithDynamicLibC</arg>
+              <arg>-Dfn.handler=${function.entrypoint}</arg>
+              <arg>--initialize-at-build-time=example.micronaut</arg>
+            </nativeImageBuildArgs>
+            <appArguments>
+              <arg>${function.entrypoint}</arg>
+            </appArguments>
+          </configuration>''')
+
+        build.contains('''
+        <configuration>
+          <to>
+            <image>${jib.docker.image}:${jib.docker.tag}</image>
+          </to>
+          <container>
+            <args>${function.entrypoint}</args>
+            <mainClass>${exec.mainClass}</mainClass>
+          </container>
+        </configuration>''')
+
         build.contains('''
     <dependency>
       <groupId>com.fnproject.fn</groupId>
