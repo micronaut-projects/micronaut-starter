@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -137,11 +137,19 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#GROUP_ID_MICRONAUT_SECURITY">GROUP_ID_MICRONAUT_SECURITY</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#GROUP_ID_MICRONAUT_DATA">GROUP_ID_MICRONAUT_DATA</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#GROUP_ID_MICRONAUT_SECURITY">GROUP_ID_MICRONAUT_SECURITY</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#GROUP_ID_MICRONAUT_SERDE">GROUP_ID_MICRONAUT_SERDE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#GROUP_ID_MICRONAUT_SQL">GROUP_ID_MICRONAUT_SQL</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
@@ -189,13 +197,21 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#securityDependency--">securityDependency</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#dataDependency--">dataDependency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#serdeDependency--">serdeDependency</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#securityDependency--">securityDependency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#serdeDependency--">serdeDependency</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#sqlDependency--">sqlDependency</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/build/dependencies/MicronautDependencyUtils.html#testDependency--">testDependency</a></span>()</code>&nbsp;</td>
 </tr>
@@ -276,13 +292,39 @@ extends java.lang.Object</pre>
 <a name="GROUP_ID_MICRONAUT_TEST">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>GROUP_ID_MICRONAUT_TEST</h4>
 <pre>public static final&nbsp;java.lang.String GROUP_ID_MICRONAUT_TEST</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../../constant-values.html#io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_TEST">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="GROUP_ID_MICRONAUT_DATA">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>GROUP_ID_MICRONAUT_DATA</h4>
+<pre>public static final&nbsp;java.lang.String GROUP_ID_MICRONAUT_DATA</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../constant-values.html#io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_DATA">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="GROUP_ID_MICRONAUT_SQL">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>GROUP_ID_MICRONAUT_SQL</h4>
+<pre>public static final&nbsp;java.lang.String GROUP_ID_MICRONAUT_SQL</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../constant-values.html#io.micronaut.starter.build.dependencies.MicronautDependencyUtils.GROUP_ID_MICRONAUT_SQL">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -354,10 +396,30 @@ public static&nbsp;<a href="../../../../../io/micronaut/starter/build/dependenci
 <a name="testDependency--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>testDependency</h4>
 <pre>public static&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&nbsp;testDependency()</pre>
+</li>
+</ul>
+<a name="dataDependency--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dataDependency</h4>
+<pre>@NonNull
+public static&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&nbsp;dataDependency()</pre>
+</li>
+</ul>
+<a name="sqlDependency--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>sqlDependency</h4>
+<pre>@NonNull
+public static&nbsp;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&nbsp;sqlDependency()</pre>
 </li>
 </ul>
 </li>
