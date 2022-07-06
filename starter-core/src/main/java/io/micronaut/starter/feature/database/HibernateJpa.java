@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -57,7 +58,9 @@ public class HibernateJpa implements JpaFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+        generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
+                generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
+                        Hbm2ddlAuto.UPDATE.toString());
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.sql")
                 .artifactId("micronaut-hibernate-jpa")

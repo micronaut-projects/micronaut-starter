@@ -15,60 +15,55 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataJdbc implements DataFeature {
+public class DataHibernateReactive extends HibernateReactiveFeature implements DataFeature {
+
+    public static final String NAME = "data-hibernate-reactive";
+
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE = MicronautDependencyUtils.dataDependency()
+            .artifactId("micronaut-data-hibernate-reactive")
+                .compile();
 
     private final Data data;
-    private final JdbcFeature jdbcFeature;
 
-    public DataJdbc(Data data, JdbcFeature jdbcFeature) {
+    public DataHibernateReactive(Data data, TestContainers testContainers) {
+        super(testContainers);
         this.data = data;
-        this.jdbcFeature = jdbcFeature;
     }
 
     @Override
+    @NonNull
     public String getName() {
-        return "data-jdbc";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Data JDBC";
+        return "Micronaut Data Hibernate Reactive";
     }
 
     @Override
+    @NonNull
     public String getDescription() {
-        return "Adds support for Micronaut Data JDBC";
+        return "Adds support for Micronaut Data Hibernate Reactive";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeature(data);
-        if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(jdbcFeature);
-        }
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-jdbc")
-                .compile());
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().addNested(getDatasourceConfig(dbFeature));
-    }
-
-    @Override
-    public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-data/latest/guide/index.html#jdbc";
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE);
     }
 }

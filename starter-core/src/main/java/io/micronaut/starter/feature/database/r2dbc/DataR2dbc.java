@@ -17,13 +17,12 @@ package io.micronaut.starter.feature.database.r2dbc;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.Priority;
-import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
+import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
 import jakarta.inject.Singleton;
@@ -31,7 +30,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
-public class DataR2dbc implements R2dbcFeature {
+public class DataR2dbc implements R2dbcFeature, DataFeature {
+    private static final Dependency DEPENDENCY_MICRONAUT_DATA_R2DBC = MicronautDependencyUtils.dataDependency()
+            .artifactId("micronaut-data-r2dbc")
+            .compile()
+            .build();
     private final Data data;
     private final R2dbc r2dbc;
 
@@ -50,24 +53,17 @@ public class DataR2dbc implements R2dbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-processor")
-                .versionProperty("micronaut.data.version")
-                .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-                .annotationProcessor(true));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-r2dbc")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
     }
 
-    private Map<? extends String, ?> getDatasourceConfig(DatabaseDriverFeature dbFeature) {
+    @Override
+    public Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
         Map<String, Object> conf = new LinkedHashMap<>();
         conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
-        conf.put("r2dbc.datasources.default.dialect", dbFeature.getDataDialect());
+        conf.put("r2dbc.datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
     }
 
@@ -88,13 +84,9 @@ public class DataR2dbc implements R2dbcFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Micronaut Data support for Reactive Database Connectivity (R2DBC)";
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.DATABASE;
     }
 
     @Nullable
@@ -107,10 +99,5 @@ public class DataR2dbc implements R2dbcFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://r2dbc.io";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
     }
 }
