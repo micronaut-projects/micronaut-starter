@@ -15,10 +15,10 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         getFeatures([HibernateReactiveJpa.NAME])
 
         then:
-        def exception = thrown(IllegalArgumentException)
+        IllegalArgumentException exception = thrown()
 
         and:
-        exception.message == "$HibernateReactiveJpa.NAME requires $MySQL.NAME, $MariaDB.NAME, $PostgreSQL.NAME, $Oracle.NAME, or $SQLServer.NAME"
+        exception.message == "Hibernate Reactive requires $MariaDB.NAME, $MySQL.NAME, $Oracle.NAME, $PostgreSQL.NAME, or $SQLServer.NAME"
     }
 
     void "test hibernate reactive jpa features for #db"() {

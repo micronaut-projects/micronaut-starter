@@ -17,12 +17,10 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 
 public abstract class HibernateReactiveFeature extends TestContainersFeature implements JpaFeature {
 
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL = "jpa.default.properties.hibernate.connection.url";
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME = "jpa.default.properties.hibernate.connection.username";
-    public static final String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD = "jpa.default.properties.hibernate.connection.password";
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
@@ -34,7 +32,9 @@ public abstract class HibernateReactiveFeature extends TestContainersFeature imp
     @Override
     public void apply(GeneratorContext generatorContext) {
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+        generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
+                generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
+                        Hbm2ddlAuto.UPDATE.toString());
 
         generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
         generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
