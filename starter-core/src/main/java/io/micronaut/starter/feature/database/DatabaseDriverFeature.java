@@ -62,8 +62,10 @@ public abstract class DatabaseDriverFeature
         if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
             featureContext.addFeature(testContainers);
         }
-        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class) || featureContext.isPresent(DataHibernateReactive.class))
-            && jdbcFeature != null) {
+        if (!(featureContext.isPresent(JdbcFeature.class) ||
+                featureContext.isPresent(R2dbcFeature.class) ||
+                featureContext.isPresent(DataHibernateReactive.class)) &&
+                jdbcFeature != null) {
             featureContext.addFeature(jdbcFeature);
         }
     }

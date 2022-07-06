@@ -24,6 +24,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
     public static final String GROUP_ID_MICRONAUT_DATA = "io.micronaut.data";
+    public static final String GROUP_ID_MICRONAUT_SQL = "io.micronaut.sql";
 
     @NonNull
     public static Dependency.Builder coreDependency() {
@@ -52,6 +53,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder  dataDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_DATA);
+    }
+
+    @NonNull
+    public static Dependency.Builder sqlDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_SQL);
     }
 
     @NonNull

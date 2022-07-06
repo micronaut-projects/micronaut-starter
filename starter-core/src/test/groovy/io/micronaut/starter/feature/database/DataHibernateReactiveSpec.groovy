@@ -16,7 +16,7 @@ class DataHibernateReactiveSpec extends ApplicationContextSpec {
         getFeatures([DataHibernateReactive.NAME])
 
         then:
-        def exception = thrown(IllegalArgumentException)
+        IllegalArgumentException exception = thrown()
 
         and:
         exception.message == "$DataHibernateReactive.NAME requires $MySQL.NAME, $MariaDB.NAME, $PostgreSQL.NAME, $Oracle.NAME, or $SQLServer.NAME"

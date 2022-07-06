@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DataHibernateReactive extends TestContainersFeature implements JpaFeature, DataFeature {
+public class DataHibernateReactive extends TestContainersFeature implements JpaFeature, DataFeature, HibernateReactiveFeature {
 
     public static final String NAME = "data-hibernate-reactive";
 
