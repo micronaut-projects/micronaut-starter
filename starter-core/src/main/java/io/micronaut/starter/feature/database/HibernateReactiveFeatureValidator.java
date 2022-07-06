@@ -33,7 +33,7 @@ public class HibernateReactiveFeatureValidator implements FeatureValidator {
     public HibernateReactiveFeatureValidator(List<DatabaseDriverFeature> databaseDriverFeatures) {
         StringBuilder errorMsg = new StringBuilder("Hibernate Reactive requires ");
         List<String> hibernateReactiveDatabaseDriverFeatures = databaseDriverFeatures.stream()
-                .filter(it -> it.getHibernateReactiveJavaClientDependency().isPresent())
+                .filter(HibernateReactiveFeatureValidator::supportsHibernateReactive)
                 .map(Feature::getName)
                 .sorted()
                 .collect(Collectors.toList());
