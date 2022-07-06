@@ -16,6 +16,9 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
@@ -23,6 +26,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public interface DataFeature extends OneOfFeature {
+
+    Dependency.Builder DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
+            .artifactId("micronaut-data-processor")
+            .versionProperty("micronaut.data.version")
+            .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
+            .annotationProcessor(true);
 
     @Override
     default Class<?> getFeatureClass() {

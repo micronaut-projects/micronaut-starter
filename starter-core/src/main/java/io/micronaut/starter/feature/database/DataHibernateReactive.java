@@ -19,7 +19,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
 import jakarta.inject.Singleton;
 
@@ -31,12 +30,6 @@ public class DataHibernateReactive extends HibernateReactiveFeature implements D
     private static final Dependency.Builder DEPENDENCY_MICRONAUT_DATA_HIBERNATE_REACTIVE = MicronautDependencyUtils.dataDependency()
             .artifactId("micronaut-data-hibernate-reactive")
                 .compile();
-
-    private static final Dependency.Builder DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
-            .artifactId("micronaut-data-processor")
-            .versionProperty("micronaut.data.version")
-            .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-            .annotationProcessor(true);
 
     private final Data data;
 
