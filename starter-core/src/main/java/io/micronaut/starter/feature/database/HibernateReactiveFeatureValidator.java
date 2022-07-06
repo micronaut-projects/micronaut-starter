@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
@@ -58,7 +59,11 @@ public class HibernateReactiveFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        // Do nothing
+        if (features.stream().anyMatch(HibernateReactiveFeature.class::isInstance)
+                && options.getJavaVersion().majorVersion() < JdkVersion.JDK_11.majorVersion()) {
+            System.out.println(options.getJavaVersion().majorVersion());
+            throw new IllegalArgumentException("Hibernate Reactive requires at least JDK 11");
+        }
     }
 
     public static boolean isThereADatabaseDriverFeatureCompatibleWithHibernateReactive(@NonNull Set<Feature> features) {
