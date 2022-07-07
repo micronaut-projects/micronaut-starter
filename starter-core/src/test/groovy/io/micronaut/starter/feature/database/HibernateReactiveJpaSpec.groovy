@@ -8,7 +8,9 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 
+@Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends ApplicationContextSpec {
 
     void "test hibernate reactive jpa requires db"() {
@@ -45,7 +47,7 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        def ex = thrown(IllegalArgumentException)
+        IllegalArgumentException ex = thrown()
         ex.message == "Hibernate Reactive requires at least JDK 11"
 
         when:
