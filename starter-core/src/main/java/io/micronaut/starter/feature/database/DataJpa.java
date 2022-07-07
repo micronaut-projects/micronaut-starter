@@ -17,10 +17,10 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -59,19 +59,16 @@ public class DataJpa implements JpaFeature, DataFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.data")
-                .artifactId("micronaut-data-processor")
-                .versionProperty("micronaut.data.version")
-                .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-                .annotationProcessor(true));
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-hibernate-jpa")
                 .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
-        generatorContext.getConfiguration().put("jpa.default.properties.hibernate.hbm2ddl.auto", "update");
+        generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
+                generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
+                        Hbm2ddlAuto.UPDATE.toString());
 
     }
 }
