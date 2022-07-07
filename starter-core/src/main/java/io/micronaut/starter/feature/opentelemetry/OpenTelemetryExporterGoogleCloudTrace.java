@@ -16,7 +16,9 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -32,6 +34,13 @@ public class OpenTelemetryExporterGoogleCloudTrace extends OpenTelemetryExporter
 
     public OpenTelemetryExporterGoogleCloudTrace(OpenTelemetry openTelemetry) {
         super(openTelemetry);
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        super.apply(generatorContext);
+        GcpFeature.getGraalVMDependencyIfNecessary(generatorContext).ifPresent(generatorContext::addDependency);
+        GcpFeature.getGraalVMProfileIfNecessary(generatorContext).ifPresent(generatorContext::addProfile);
     }
 
     @NonNull
