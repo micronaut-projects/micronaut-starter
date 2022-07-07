@@ -21,6 +21,11 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
         feature.category == Category.TRACING
     }
 
+    void 'tracing-opentelemetry-exporter-logging feature is not visible'() {
+        expect:
+        feature.isVisible()
+    }
+
     @Unroll
     void 'feature tracing-opentelemetry-exporter-logging does not support type: #applicationType'(ApplicationType applicationType) {
         expect:
@@ -48,23 +53,6 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
 
         then:
         template.contains('implementation("io.opentelemetry:opentelemetry-exporter-logging")')
-        template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
-        !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void 'test gradle tracing-opentelemetry-exporter-logging  feature does not add OpenTelemetry if OpenTelemetryHttp is present for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['tracing-opentelemetry-exporter-logging', 'tracing-opentelemetry-http'])
-                .render()
-
-        then:
-        !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
-        template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
         language << Language.values().toList()
@@ -82,20 +70,6 @@ class OpenTelemetryExporterLoggingSpec extends ApplicationContextSpec implements
     <dependency>
       <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-exporter-logging</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
       <scope>compile</scope>
     </dependency>
     """)

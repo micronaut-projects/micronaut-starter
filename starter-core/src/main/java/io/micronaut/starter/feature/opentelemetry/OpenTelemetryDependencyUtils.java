@@ -22,6 +22,10 @@ public final class OpenTelemetryDependencyUtils {
     public static final String GROUP_ID_OPENTELEMETRY = "io.opentelemetry";
     public static final String GROUP_ID_OPENTELEMETRY_INSTRUMENTATION = "io.opentelemetry.instrumentation";
 
+    private OpenTelemetryDependencyUtils() {
+
+    }
+
     @NonNull
     public static Dependency.Builder openTelemetryDependency() {
         return dependency(GROUP_ID_OPENTELEMETRY);

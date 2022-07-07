@@ -22,17 +22,10 @@ import io.micronaut.starter.feature.FeatureContext;
 import java.util.Locale;
 
 public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature {
-    private final OpenTelemetry openTelemetry;
-
-    public OpenTelemetryExporterFeature(OpenTelemetry openTelemetry) {
-        this.openTelemetry = openTelemetry;
-    }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(OpenTelemetryHttp.class)) {
-            featureContext.addFeature(openTelemetry);
-        }
+    public boolean isVisible() {
+        return false;
     }
 
     @NonNull

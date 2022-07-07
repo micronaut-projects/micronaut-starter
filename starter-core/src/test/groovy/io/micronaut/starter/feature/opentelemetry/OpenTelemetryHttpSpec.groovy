@@ -20,6 +20,11 @@ class OpenTelemetryHttpSpec extends ApplicationContextSpec implements CommandOut
         feature.category == Category.TRACING
     }
 
+    void 'tracing-opentelemetry-exporter-http feature is not visible'() {
+        expect:
+        !feature.isVisible()
+    }
+
     @Unroll
     void 'feature tracing-opentelemetry-http does not support type: #applicationType'(ApplicationType applicationType) {
         expect:

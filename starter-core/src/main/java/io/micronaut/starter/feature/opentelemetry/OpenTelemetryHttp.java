@@ -32,6 +32,11 @@ public class OpenTelemetryHttp implements TracingFeature, MicronautServerDepende
             .compile()
             .build();
 
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
     @NonNull
     @Override
     public String getName() {

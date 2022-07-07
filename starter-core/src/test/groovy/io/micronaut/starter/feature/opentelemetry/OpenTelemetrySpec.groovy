@@ -20,6 +20,11 @@ class OpenTelemetrySpec extends ApplicationContextSpec implements CommandOutputF
         feature.category == Category.TRACING
     }
 
+    void 'tracing-opentelemetry feature is not visible'() {
+        expect:
+        !feature.isVisible()
+    }
+
     @Unroll
     void 'feature tracing-opentelemetry does not support type: #applicationType'(ApplicationType applicationType) {
         expect:

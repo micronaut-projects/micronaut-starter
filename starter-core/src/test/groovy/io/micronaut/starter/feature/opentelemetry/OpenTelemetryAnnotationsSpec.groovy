@@ -20,6 +20,11 @@ class OpenTelemetryAnnotationsSpec extends ApplicationContextSpec implements Com
         feature.category == Category.TRACING
     }
 
+    void 'tracing-opentelemetry-annotations feature is not visible'() {
+        expect:
+        !feature.isVisible()
+    }
+
     @Unroll
     void 'feature tracing-opentelemetry-annotations does not support type: #applicationType'(ApplicationType applicationType) {
         expect:

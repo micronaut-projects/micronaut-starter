@@ -20,6 +20,11 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
         feature.category == Category.TRACING
     }
 
+    void 'tracing-opentelemetry-exporter-gcp feature is not visible'() {
+        expect:
+        !feature.isVisible()
+    }
+
     @Unroll
     void 'feature tracing-opentelemetry-exporter-gcp does not support type: #applicationType'(ApplicationType applicationType) {
         expect:
@@ -47,23 +52,6 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
 
         then:
         template.contains('implementation("com.google.cloud.opentelemetry:exporter-auto")')
-        template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
-        !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
-
-        where:
-        language << Language.values().toList()
-    }
-
-    void 'test gradle tracing-opentelemetry-exporter-gcp  feature does not add OpenTelemetry if OpenTelemetryHttp is present for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['tracing-opentelemetry-exporter-gcp', 'tracing-opentelemetry-http'])
-                .render()
-
-        then:
-        !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
-        template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
 
         where:
         language << Language.values().toList()
@@ -81,20 +69,6 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
     <dependency>
       <groupId>com.google.cloud.opentelemetry</groupId>
       <artifactId>exporter-auto</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    """)
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.tracing</groupId>
-      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
       <scope>compile</scope>
     </dependency>
     """)

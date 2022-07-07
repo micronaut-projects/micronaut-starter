@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
@@ -53,7 +54,17 @@ public class OpenTelemetryGrpc implements OpenTelemetryFeature {
     }
 
     @Override
+    public boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.GRPC;
+    }
+
+    @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#grpc";
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 }

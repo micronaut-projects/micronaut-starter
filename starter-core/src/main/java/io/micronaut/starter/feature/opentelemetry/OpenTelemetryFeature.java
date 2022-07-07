@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.opentelemetry;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
 
@@ -28,12 +29,23 @@ public interface OpenTelemetryFeature extends Feature  {
     }
 
     @Override
+    @NonNull
+    default String getName() {
+        return "tracing-opentelemetry-";
+    }
+
+    @Override
     default String getCategory() {
         return TRACING;
     }
 
     @Override
     default String getMicronautDocumentation() {
-        return "http://localhost/micronaut-tracing/guide/index.html#opentelemetry";
+        return "https://micronaut-projects.github.io/micronaut-tracing/latest/guide/#opentelemetry";
+    }
+
+    @Override
+    default String getThirdPartyDocumentation() {
+        return "https://opentelemetry.io";
     }
 }

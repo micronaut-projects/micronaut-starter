@@ -22,10 +22,6 @@ import jakarta.inject.Singleton;
 public class OpenTelemetryExporterJaeger extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_JAEGER = "Jaeger";
 
-    public OpenTelemetryExporterJaeger(OpenTelemetry openTelemetry) {
-        super(openTelemetry);
-    }
-
     @NonNull
     public String exporterName() {
         return EXPORTER_JAEGER;

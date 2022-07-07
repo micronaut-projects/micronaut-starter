@@ -30,11 +30,8 @@ public class OpenTelemetryExporterGoogleCloudTrace extends OpenTelemetryExporter
                     .artifactId("exporter-auto")
                     .compile()
                     .build();
-    private static final String GOOGLE_CLOUD_TRACE = "google_cloud_trace";
 
-    public OpenTelemetryExporterGoogleCloudTrace(OpenTelemetry openTelemetry) {
-        super(openTelemetry);
-    }
+    private static final String GOOGLE_CLOUD_TRACE = "google_cloud_trace";
 
     @Override
     public void apply(GeneratorContext generatorContext) {

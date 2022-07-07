@@ -16,44 +16,32 @@
 package io.micronaut.starter.feature.opentelemetry;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class OpenTelemetry implements OpenTelemetryFeature {
-
-    private static final Dependency MICRONAUT_OPEN_TELEMETRY = MicronautDependencyUtils.tracingDependency()
-            .artifactId("micronaut-tracing-opentelemetry")
-            .compile()
-            .build();
-
-    @Override
-    public boolean isVisible() {
-        return false;
+public class OpenTelemetryGoogleCloudTrace extends AbstractOpenTelemetry {
+    public OpenTelemetryGoogleCloudTrace(OpenTelemetry otel,
+                                         OpenTelemetryHttp otelHttp,
+                                         OpenTelemetryAnnotations otelAnnotations,
+                                         OpenTelemetryGrpc openTelemetryGrpc,
+                                         OpenTelemetryExporterGoogleCloudTrace otelExporter) {
+        super(otel, otelHttp, otelAnnotations, openTelemetryGrpc, otelExporter);
     }
 
-    @NonNull
     @Override
+    @NonNull
     public String getName() {
-        return "tracing-opentelemetry";
+        return super.getName() + "gcp";
     }
 
-    @NonNull
     @Override
     public String getTitle() {
-        return "Micronaut Integration with OpenTelemetry";
+        return "OpenTelemetry Google Cloud Trace";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Enables the integration with OpenTelemetry";
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY);
+        return "It adds Micronaut integration with OpenTelemetry and sets Google Cloud Trace as the exporter.";
     }
 }

@@ -22,10 +22,6 @@ import jakarta.inject.Singleton;
 public class OpenTelemetryExporterZipkin extends OpenTelemetryExporterFeature {
     private static final String EXPORTER_ZIPKIN = "Zipkin";
 
-    public OpenTelemetryExporterZipkin(OpenTelemetry openTelemetry) {
-        super(openTelemetry);
-    }
-
     @NonNull
     public String exporterName() {
         return EXPORTER_ZIPKIN;
