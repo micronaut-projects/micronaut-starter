@@ -21,7 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import java.util.Locale;
 
-public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature, OpenTelemetryExporter {
+public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature {
     private final OpenTelemetry openTelemetry;
 
     public OpenTelemetryExporterFeature(OpenTelemetry openTelemetry) {
