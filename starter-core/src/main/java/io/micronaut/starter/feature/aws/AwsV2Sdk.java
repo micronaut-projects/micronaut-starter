@@ -27,18 +27,18 @@ import jakarta.inject.Singleton;
 public class AwsV2Sdk implements AwsFeature {
 
     public static final String ARTIFACT_ID_MICRONAUT_AWS_SDK_V_2 = "micronaut-aws-sdk-v2";
-    public static final Dependency.Builder URL_CONNECTION_CLIENT = Dependency.builder()
+    static final Dependency.Builder URL_CONNECTION_CLIENT = Dependency.builder()
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("url-connection-client")
             .compile();
-    public static final Dependency.Builder APACHE_CLIENT_DEPENDENCY = Dependency.builder()
+    static final Dependency APACHE_CLIENT_DEPENDENCY = Dependency.builder()
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("apache-client")
-            .compile();
-    public static final Dependency.Builder NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
+            .compile()
+    static final Dependency NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("netty-nio-client")
-            .compile();
+            .compile()
 
     @Override
     @NonNull

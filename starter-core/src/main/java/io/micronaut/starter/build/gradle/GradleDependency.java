@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static io.micronaut.core.util.CollectionUtils.isNotEmpty;
+
 public class GradleDependency extends DependencyCoordinate {
 
     public static final Comparator<GradleDependency> COMPARATOR = (o1, o2) -> {
@@ -102,7 +104,8 @@ public class GradleDependency extends DependencyCoordinate {
         if (isPom() && isKotlinDSL) {
             snippet += ")";
         }
-        if (CollectionUtils.isNotEmpty(getExclusions())) {
+
+        if (isNotEmpty(getExclusions())) {
             snippet += " {\n";
             final String mapAccessor = isKotlinDSL ? " = " : ": ";
             final StringBuilder exclusionBuilder = new StringBuilder();
