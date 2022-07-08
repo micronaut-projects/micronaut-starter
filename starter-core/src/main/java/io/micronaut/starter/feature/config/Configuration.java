@@ -195,22 +195,21 @@ public class Configuration extends LinkedHashMap<String, Object> {
         return null;
     }
 
-    public void addListItem(String key, String value) {
-        put(key, valuesList(key, value));
+    public void addCommaSeparatedValue(String key, String value) {
+        if(containsNested(key)) {
+            addNested(key, getNested(key) + "," + value);
+        } else {
+            addNested(key, value);
+        }
     }
 
-    public void addCommaSeparatedValue(String key, String value) {
-        if (containsKey(key)) {
-            put(key, get(key) + "," + value);
-        } else {
-            put(key, value);
-        }
-
+    public void addListItem(String key, String value) {
+        addNested(key, valuesList(key, value));
     }
 
     private List<String> valuesList(String key, String value) {
-        if (containsKey(key)) {
-            List<String> values = new ArrayList<>((List<String>) get(key));
+        if (containsNested(key)) {
+            List<String> values = new ArrayList<>((List<String>) getNested(key));
             values.add(value);
             return values;
         }
