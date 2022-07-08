@@ -38,24 +38,14 @@ import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import jakarta.inject.Singleton;
 
+import static io.micronaut.starter.feature.aws.AwsV2Sdk.APACHE_CLIENT_DEPENDENCY;
+import static io.micronaut.starter.feature.aws.AwsV2Sdk.NETTY_NIO_CLIENT_DEPENDENCY;
+import static io.micronaut.starter.feature.aws.AwsV2Sdk.URL_CONNECTION_CLIENT;
+
 @Singleton
 public class DynamoDb implements AwsFeature {
-    public static final String ARTIFACTID_DYNAMODB = "dynamodb";
 
-    private static final Dependency.Builder URL_CONNECTION_CLIENT = Dependency.builder()
-            .groupId(GROUP_ID_AWS_SDK_V2)
-            .artifactId("url-connection-client")
-            .compile();
-    private static final Dependency APACHE_CLIENT_DEPENDENCY = Dependency.builder()
-            .groupId(GROUP_ID_AWS_SDK_V2)
-            .artifactId("apache-client")
-            .compile()
-            .build();
-    private static final Dependency NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
-            .groupId(GROUP_ID_AWS_SDK_V2)
-            .artifactId("netty-nio-client")
-            .compile()
-            .build();
+    public static final String ARTIFACTID_DYNAMODB = "dynamodb";
     public static final String NAME = "dynamodb";
 
     private final AwsV2Sdk awsV2Sdk;
