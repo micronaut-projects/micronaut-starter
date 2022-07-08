@@ -17,7 +17,6 @@ package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
-import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
