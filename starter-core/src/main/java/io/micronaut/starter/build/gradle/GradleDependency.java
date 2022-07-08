@@ -102,6 +102,18 @@ public class GradleDependency extends DependencyCoordinate {
         if (isPom() && isKotlinDSL) {
             snippet += ")";
         }
+        if (getExclusions() != null && !getExclusions().isEmpty()) {
+            snippet += " {\n";
+            final String mapAccessor = isKotlinDSL ? " = " : ": ";
+            final StringBuilder exclusionBuilder = new StringBuilder();
+            for (DependencyCoordinate exclusion : getExclusions()) {
+                exclusionBuilder
+                        .append("      exclude(group").append(mapAccessor).append("\"").append(exclusion.getGroupId())
+                        .append("\", name").append(mapAccessor).append("\"").append(exclusion.getArtifactId()).append("\")\n");
+            }
+            snippet += exclusionBuilder.toString();
+            snippet += "    }";
+        }
         return snippet;
     }
 

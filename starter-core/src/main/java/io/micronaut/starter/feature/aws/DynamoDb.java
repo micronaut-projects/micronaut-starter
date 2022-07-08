@@ -35,11 +35,29 @@ import io.micronaut.starter.feature.aws.template.ciawsregionconditionJava;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionKotlin;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class DynamoDb implements AwsFeature {
     public static final String ARTIFACTID_DYNAMODB = "dynamodb";
+
+    private static final Dependency.Builder URL_CONNECTION_CLIENT = Dependency.builder()
+            .groupId(GROUP_ID_AWS_SDK_V2)
+            .artifactId("url-connection-client")
+            .compile();
+    private static final Dependency APACHE_CLIENT_DEPENDENCY = Dependency.builder()
+            .groupId(GROUP_ID_AWS_SDK_V2)
+            .artifactId("apache-client")
+            .compile()
+            .build();
+    private static final Dependency NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
+            .groupId(GROUP_ID_AWS_SDK_V2)
+            .artifactId("netty-nio-client")
+            .compile()
+            .build();
+    public static final String NAME = "dynamodb";
+
     private final AwsV2Sdk awsV2Sdk;
 
     public DynamoDb(AwsV2Sdk awsV2Sdk) {
@@ -55,10 +73,16 @@ public class DynamoDb implements AwsFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        Dependency.Builder dynamoDbDependency = Dependency.builder()
                 .groupId(GROUP_ID_AWS_SDK_V2)
                 .artifactId(ARTIFACTID_DYNAMODB)
-                .compile());
+                .compile();
+
+        if (generatorContext.isFeaturePresent(GraalVM.class)) {
+            dynamoDbDependency.exclude(APACHE_CLIENT_DEPENDENCY).exclude(NETTY_NIO_CLIENT_DEPENDENCY);
+            generatorContext.addDependency(URL_CONNECTION_CLIENT);
+        }
+        generatorContext.addDependency(dynamoDbDependency);
 
         String repositoryFile = generatorContext.getSourcePath("/{packagePath}/DynamoRepository");
         generatorContext.addTemplate("dynamoRepository", repositoryFile,
@@ -91,7 +115,7 @@ public class DynamoDb implements AwsFeature {
     @Override
     @NonNull
     public String getName() {
-        return "dynamodb";
+        return NAME;
     }
 
     @Override
