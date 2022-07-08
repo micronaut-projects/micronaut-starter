@@ -26,4 +26,9 @@ public class OpenTelemetryExporterOtlp extends OpenTelemetryExporterFeature {
     public String exporterName() {
         return EXPORTER_OTLP;
     }
+
+    @Override
+    public boolean isVisible() {
+        return true;
+    }
 }

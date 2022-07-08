@@ -23,7 +23,7 @@ class OpenTelemetryExporterOtlpSpec extends ApplicationContextSpec implements Co
 
     void 'tracing-opentelemetry-exporter-otlp feature is not visible'() {
         expect:
-        !feature.isVisible()
+        feature.isVisible()
     }
     
     void 'test otel.traces.exporter configuration'() {
