@@ -31,7 +31,7 @@ class OpenTelemetryExporterZipkinSpec extends ApplicationContextSpec implements 
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-exporter-zipkin'])
 
         then:
-        commandContext.configuration.get('otel.traces.exporter') == ['zipkin']
+        commandContext.configuration.get('otel.traces.exporter') == 'zipkin'
     }
 
     @Unroll

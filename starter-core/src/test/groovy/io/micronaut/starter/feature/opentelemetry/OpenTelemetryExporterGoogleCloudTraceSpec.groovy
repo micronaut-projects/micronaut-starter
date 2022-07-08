@@ -31,7 +31,7 @@ class OpenTelemetryExporterGoogleCloudTraceSpec extends ApplicationContextSpec i
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-exporter-gcp'])
 
         then:
-        commandContext.configuration.get('otel.traces.exporter') == ['google_cloud_trace']
+        commandContext.configuration.get('otel.traces.exporter') == 'google_cloud_trace'
     }
 
     @Unroll

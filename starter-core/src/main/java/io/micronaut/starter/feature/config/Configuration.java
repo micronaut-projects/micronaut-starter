@@ -199,6 +199,15 @@ public class Configuration extends LinkedHashMap<String, Object> {
         put(key, valuesList(key, value));
     }
 
+    public void addCommaSeparatedValue(String key, String value) {
+        if (containsKey(key)) {
+            put(key, get(key) + "," + value);
+        } else {
+            put(key, value);
+        }
+
+    }
+
     private List<String> valuesList(String key, String value) {
         if (containsKey(key)) {
             List<String> values = new ArrayList<>((List<String>) get(key));

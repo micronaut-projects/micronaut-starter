@@ -90,9 +90,9 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
     void 'test exporter configuration'() {
         when:
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
-
+        String exporter = commandContext.configuration.get('otel.traces.exporter')
         then:
-        commandContext.configuration.get('otel.traces.exporter').sort() == ['google_cloud_trace', 'logging'].sort()
+        exporter == 'google_cloud_trace,logging' || exporter == 'logging,google_cloud_trace'
     }
 
     void 'for #applicationType test gradle tracing-opentelemetry-gcp feature for language=#language'(Language language,

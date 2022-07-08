@@ -31,7 +31,7 @@ class OpenTelemetryExporterOtlpSpec extends ApplicationContextSpec implements Co
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-exporter-otlp'])
 
         then:
-        commandContext.configuration.get('otel.traces.exporter') == ['otlp']
+        commandContext.configuration.get('otel.traces.exporter') == 'otlp'
     }
 
     @Unroll

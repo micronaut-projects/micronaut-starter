@@ -31,7 +31,7 @@ class OpenTelemetryExporterJaegerSpec extends ApplicationContextSpec implements 
         GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-exporter-jaeger'])
 
         then:
-        commandContext.configuration.get('otel.traces.exporter') == ['jaeger']
+        commandContext.configuration.get('otel.traces.exporter') == 'jaeger'
     }
 
     @Unroll
