@@ -6,8 +6,11 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
+import spock.lang.Requires
 
+@Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends ApplicationContextSpec {
 
     void "test hibernate reactive jpa requires db"() {
@@ -36,10 +39,41 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
     }
 
+    void "data hibernate reactive requires java 11"() {
+        when:
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .jdkVersion(JdkVersion.JDK_8)
+                .features([HibernateReactiveJpa.NAME, MySQL.NAME])
+                .render()
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message == "Hibernate Reactive requires at least JDK 11"
+
+        when:
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .jdkVersion(JdkVersion.JDK_11)
+                .features([DataHibernateReactive.NAME, MySQL.NAME])
+                .render()
+
+        then:
+        noExceptionThrown()
+
+        when:
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .jdkVersion(JdkVersion.JDK_17)
+                .features([DataHibernateReactive.NAME, MySQL.NAME])
+                .render()
+
+        then:
+        noExceptionThrown()
+    }
+
     void "test dependencies are present for gradle with #db (#client)"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([HibernateReactiveJpa.NAME, db])
+                .jdkVersion(JdkVersion.JDK_11)
                 .render()
 
         then:
@@ -65,6 +99,7 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([HibernateReactiveJpa.NAME, MySQL.NAME])
+                .jdkVersion(JdkVersion.JDK_11)
                 .language(Language.KOTLIN)
                 .render()
 
@@ -76,6 +111,7 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([HibernateReactiveJpa.NAME, db])
+                .jdkVersion(JdkVersion.JDK_11)
                 .render()
 
         then:
@@ -143,6 +179,7 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features([HibernateReactiveJpa.NAME, MySQL.NAME])
+                .jdkVersion(JdkVersion.JDK_11)
                 .language(Language.KOTLIN)
                 .render()
 
