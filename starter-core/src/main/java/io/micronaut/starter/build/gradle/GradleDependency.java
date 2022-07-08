@@ -22,11 +22,12 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static io.micronaut.core.util.CollectionUtils.isNotEmpty;
 
 public class GradleDependency extends DependencyCoordinate {
 
@@ -101,6 +102,19 @@ public class GradleDependency extends DependencyCoordinate {
                 (getVersion() != null ? (':' + getVersion()) : "") + "\")";
         if (isPom() && isKotlinDSL) {
             snippet += ")";
+        }
+
+        if (isNotEmpty(getExclusions())) {
+            snippet += " {\n";
+            final String mapAccessor = isKotlinDSL ? " = " : ": ";
+            final StringBuilder exclusionBuilder = new StringBuilder();
+            for (DependencyCoordinate exclusion : getExclusions()) {
+                exclusionBuilder
+                        .append("      exclude(group").append(mapAccessor).append("\"").append(exclusion.getGroupId())
+                        .append("\", name").append(mapAccessor).append("\"").append(exclusion.getArtifactId()).append("\")\n");
+            }
+            snippet += exclusionBuilder.toString();
+            snippet += "    }";
         }
         return snippet;
     }
