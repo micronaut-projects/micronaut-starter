@@ -17,12 +17,12 @@ package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -102,7 +102,7 @@ public class GradleDependency extends DependencyCoordinate {
         if (isPom() && isKotlinDSL) {
             snippet += ")";
         }
-        if (getExclusions() != null && !getExclusions().isEmpty()) {
+        if (CollectionUtils.isNotEmpty(getExclusions())) {
             snippet += " {\n";
             final String mapAccessor = isKotlinDSL ? " = " : ": ";
             final StringBuilder exclusionBuilder = new StringBuilder();
