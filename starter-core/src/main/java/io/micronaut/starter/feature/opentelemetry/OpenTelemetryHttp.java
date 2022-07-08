@@ -24,8 +24,6 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.feature.tracing.TracingFeature;
 import jakarta.inject.Singleton;
 
-import java.util.Collections;
-
 @Singleton
 public class OpenTelemetryHttp implements TracingFeature, MicronautServerDependent {
 

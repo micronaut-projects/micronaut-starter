@@ -24,16 +24,16 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OpenTelemetryAnnotations implements OpenTelemetryFeature {
 
-    @Override
-    public boolean isVisible() {
-        return false;
-    }
-
     private static final Dependency.Builder MICRONAUT_OPEN_TELEMETRY_ANNOTATION_PROCESSOR = MicronautDependencyUtils.tracingDependency()
             .artifactId("micronaut-tracing-opentelemetry-annotation")
             .versionProperty("micronaut.tracing.version")
             .annotationProcessor();
-
+    
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+    
     @NonNull
     @Override
     public String getName() {

@@ -23,13 +23,6 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class OpenTelemetryXray extends AbstractOpenTelemetry {
-    public OpenTelemetryXray(OpenTelemetry otel,
-                             OpenTelemetryHttp otelHttp,
-                             OpenTelemetryAnnotations otelAnnotations,
-                             OpenTelemetryGrpc openTelemetryGrpc,
-                             OpenTelemetryExporterOtlp otelExporter) {
-        super(otel, otelHttp, otelAnnotations, openTelemetryGrpc, otelExporter);
-    }
 
     private static final Dependency.Builder OPEN_TELEMETRY_EXTENSION_AWS =
             OpenTelemetryDependencyUtils.openTelemetryDependency()
@@ -49,6 +42,14 @@ public class OpenTelemetryXray extends AbstractOpenTelemetry {
     private static final Dependency.Builder OPEN_TELEMETRY_BOM_ALPHA = Dependency.builder()
             .lookupArtifactId("opentelemetry-instrumentation-bom-alpha")
             .compile();
+    
+    public OpenTelemetryXray(OpenTelemetry otel,
+                             OpenTelemetryHttp otelHttp,
+                             OpenTelemetryAnnotations otelAnnotations,
+                             OpenTelemetryGrpc openTelemetryGrpc,
+                             OpenTelemetryExporterOtlp otelExporter) {
+        super(otel, otelHttp, otelAnnotations, openTelemetryGrpc, otelExporter);
+    }
 
     @NonNull
     @Override
