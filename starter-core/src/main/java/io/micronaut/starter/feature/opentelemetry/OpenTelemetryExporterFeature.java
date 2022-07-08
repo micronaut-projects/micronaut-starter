@@ -19,6 +19,10 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeature {
@@ -49,7 +53,7 @@ public abstract class OpenTelemetryExporterFeature implements OpenTelemetryFeatu
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(exporterDependency());
-        generatorContext.getConfiguration().addNested("otel.traces.exporter", exporterValue());
+        generatorContext.getConfiguration().addListItem("otel.traces.exporter", exporterValue());
     }
 
     @NonNull

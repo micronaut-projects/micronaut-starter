@@ -24,6 +24,8 @@ import io.micronaut.starter.feature.server.MicronautServerDependent;
 import io.micronaut.starter.feature.tracing.TracingFeature;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
+
 @Singleton
 public class OpenTelemetryHttp implements TracingFeature, MicronautServerDependent {
 
@@ -59,7 +61,7 @@ public class OpenTelemetryHttp implements TracingFeature, MicronautServerDepende
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(MICRONAUT_OPEN_TELEMETRY_HTTP);
         if (generatorContext.getFeatures().hasFeature(Management.class)) {
-            generatorContext.getConfiguration().addNested("otel.traces.exclusions", "/health");
+            generatorContext.getConfiguration().addListItem("otel.traces.exclusions", "/health");
         }
     }
 

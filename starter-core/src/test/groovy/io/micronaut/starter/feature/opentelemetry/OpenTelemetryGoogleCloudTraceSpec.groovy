@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.opentelemetry
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -61,6 +62,39 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE]].combinations()
     }
 
+    void 'for #applicationType test gradle tracing-opentelemetry-gcp and tracing-opentelemetry-exporter-logging features for language=#language'(Language language,
+                                                                                                     BuildTool buildTool,
+                                                                                                     ApplicationType applicationType) {
+        when:
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(applicationType)
+                .language(language)
+                .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
+                .render()
+
+        then:
+        assertAnnotationProcessorInGradleTemplate(template, "io.micronaut.tracing:micronaut-tracing-opentelemetry-annotation", language)
+        template.contains('implementation("io.opentelemetry:opentelemetry-exporter-logging")')
+        template.contains('implementation("com.google.cloud.opentelemetry:exporter-auto")')
+        template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry")')
+        !template.contains('implementation("io.micronaut.tracing:micronaut-tracing-opentelemetry-http")')
+
+        where:
+        [language, buildTool, applicationType] << [
+                Language.values().toList(),
+                [BuildTool.GRADLE_KOTLIN, BuildTool.GRADLE],
+                (ApplicationType.values().toList() - ApplicationType.GRPC - ApplicationType.DEFAULT - ApplicationType.CLI)
+        ].combinations()
+    }
+
+    void 'test exporter configuration'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
+
+        then:
+        commandContext.configuration.get('otel.traces.exporter').sort() == ['google_cloud_trace', 'logging'].sort()
+    }
+
     void 'for #applicationType test gradle tracing-opentelemetry-gcp feature for language=#language'(Language language,
                                                                                                      BuildTool buildTool,
                                                                                                      ApplicationType applicationType) {
@@ -117,6 +151,48 @@ class OpenTelemetryGoogleCloudTraceSpec extends ApplicationContextSpec {
         where:
         language << Language.values().toList()
     }
+
+    void 'test maven tracing-opentelemetry-gcp and tracing-opentelemetry-exporter-logging feature for language=#language'(Language language) {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .language(language)
+                .features(['tracing-opentelemetry-gcp', 'tracing-opentelemetry-exporter-logging'])
+                .render()
+
+        then:
+        template.contains("""
+    <dependency>
+      <groupId>com.google.cloud.opentelemetry</groupId>
+      <artifactId>exporter-auto</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    """)
+        !template.contains("""
+    <dependency>
+      <groupId>io.micronaut.tracing</groupId>
+      <artifactId>micronaut-tracing-opentelemetry</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    """)
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut.tracing</groupId>
+      <artifactId>micronaut-tracing-opentelemetry-http</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    """)
+        template.contains("""
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-logging</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    """)
+        where:
+        language << Language.values().toList()
+    }
+
+
 
     void 'for function test maven tracing-opentelemetry-gcp feature for language=#language'(Language language) {
         when:

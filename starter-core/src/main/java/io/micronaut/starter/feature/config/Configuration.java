@@ -22,6 +22,9 @@ import io.micronaut.core.util.StringUtils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
 /**
  * Models application environment configuration to specify where the configuration is rooted
@@ -192,4 +195,16 @@ public class Configuration extends LinkedHashMap<String, Object> {
         return null;
     }
 
+    public void addListItem(String key, String value) {
+        put(key, valuesList(key, value));
+    }
+
+    private List<String> valuesList(String key, String value) {
+        if (containsKey(key)) {
+            List<String> values = new ArrayList<>((List<String>) get(key));
+            values.add(value);
+            return values;
+        }
+        return Collections.singletonList(value);
+    }
 }
