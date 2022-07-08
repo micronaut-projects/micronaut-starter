@@ -31,16 +31,14 @@ public class AwsV2Sdk implements AwsFeature {
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("url-connection-client")
             .compile();
-    static final Dependency APACHE_CLIENT_DEPENDENCY = Dependency.builder()
+    static final Dependency.Builder APACHE_CLIENT_DEPENDENCY = Dependency.builder()
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("apache-client")
-            .compile()
-            .build();
-    static final Dependency NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
+            .compile();
+    static final Dependency.Builder NETTY_NIO_CLIENT_DEPENDENCY = Dependency.builder()
             .groupId(GROUP_ID_AWS_SDK_V2)
             .artifactId("netty-nio-client")
-            .compile()
-            .build();
+            .compile();
 
     @Override
     @NonNull

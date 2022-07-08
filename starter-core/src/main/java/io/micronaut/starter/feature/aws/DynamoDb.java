@@ -35,12 +35,7 @@ import io.micronaut.starter.feature.aws.template.ciawsregionconditionJava;
 import io.micronaut.starter.feature.aws.template.ciawsregionconditionKotlin;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
 import io.micronaut.starter.feature.config.Configuration;
-import io.micronaut.starter.feature.graalvm.GraalVM;
 import jakarta.inject.Singleton;
-
-import static io.micronaut.starter.feature.aws.AwsV2Sdk.APACHE_CLIENT_DEPENDENCY;
-import static io.micronaut.starter.feature.aws.AwsV2Sdk.NETTY_NIO_CLIENT_DEPENDENCY;
-import static io.micronaut.starter.feature.aws.AwsV2Sdk.URL_CONNECTION_CLIENT;
 
 @Singleton
 public class DynamoDb implements AwsFeature {
@@ -68,11 +63,8 @@ public class DynamoDb implements AwsFeature {
                 .artifactId(ARTIFACTID_DYNAMODB)
                 .compile();
 
-        if (generatorContext.isFeaturePresent(GraalVM.class)) {
-            dynamoDbDependency.exclude(APACHE_CLIENT_DEPENDENCY).exclude(NETTY_NIO_CLIENT_DEPENDENCY);
-            generatorContext.addDependency(URL_CONNECTION_CLIENT);
-        }
-        generatorContext.addDependency(dynamoDbDependency);
+        AwsSdkDependenciesUtils.dependencies(generatorContext, dynamoDbDependency)
+                .forEach(generatorContext::addDependency);
 
         String repositoryFile = generatorContext.getSourcePath("/{packagePath}/DynamoRepository");
         generatorContext.addTemplate("dynamoRepository", repositoryFile,

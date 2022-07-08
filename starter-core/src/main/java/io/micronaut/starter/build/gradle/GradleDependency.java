@@ -22,7 +22,6 @@ import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -104,6 +103,7 @@ public class GradleDependency extends DependencyCoordinate {
         if (isPom() && isKotlinDSL) {
             snippet += ")";
         }
+
         if (isNotEmpty(getExclusions())) {
             snippet += " {\n";
             final String mapAccessor = isKotlinDSL ? " = " : ": ";
