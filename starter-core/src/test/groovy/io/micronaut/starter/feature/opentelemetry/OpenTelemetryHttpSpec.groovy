@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.opentelemetry
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -74,5 +75,13 @@ class OpenTelemetryHttpSpec extends ApplicationContextSpec implements CommandOut
     """)
         where:
         language << Language.values().toList()
+    }
+
+    void 'test otel.exclusions configuration'() {
+        when:
+        GeneratorContext commandContext = buildGeneratorContext(['tracing-opentelemetry-http', 'management'])
+
+        then:
+        commandContext.configuration.get('otel.exclusions') == ['/health']
     }
 }
