@@ -39,7 +39,10 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class DynamoDb implements AwsFeature {
+
     public static final String ARTIFACTID_DYNAMODB = "dynamodb";
+    public static final String NAME = "dynamodb";
+
     private final AwsV2Sdk awsV2Sdk;
 
     public DynamoDb(AwsV2Sdk awsV2Sdk) {
@@ -55,10 +58,13 @@ public class DynamoDb implements AwsFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
+        Dependency.Builder dynamoDbDependency = Dependency.builder()
                 .groupId(GROUP_ID_AWS_SDK_V2)
                 .artifactId(ARTIFACTID_DYNAMODB)
-                .compile());
+                .compile();
+
+        AwsSdkDependenciesUtils.dependencies(generatorContext, dynamoDbDependency)
+                .forEach(generatorContext::addDependency);
 
         String repositoryFile = generatorContext.getSourcePath("/{packagePath}/DynamoRepository");
         generatorContext.addTemplate("dynamoRepository", repositoryFile,
@@ -91,7 +97,7 @@ public class DynamoDb implements AwsFeature {
     @Override
     @NonNull
     public String getName() {
-        return "dynamodb";
+        return NAME;
     }
 
     @Override
