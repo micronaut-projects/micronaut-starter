@@ -6,6 +6,7 @@ import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.ContextFixture
 import io.micronaut.starter.fixture.ProjectFixture
+import io.micronaut.starter.options.Language
 import spock.lang.AutoCleanup
 import spock.lang.Shared
 import spock.lang.Specification
@@ -25,6 +26,16 @@ abstract class ApplicationContextSpec extends Specification implements ProjectFi
         beanContext.streamOfType(Feature)
                 .filter(it -> it.getName() == featureName)
                 .findFirst()
+    }
+
+    protected void assertAnnotationProcessorInGradleTemplate(String template, String mavenCoordinate, Language language) {
+        if (language == Language.JAVA) {
+            assert template.contains('annotationProcessor("' + mavenCoordinate +'")')
+        } else if (language == Language.GROOVY) {
+            assert template.contains('compileOnly("' + mavenCoordinate + '")')
+        } else if (language == Language.KOTLIN) {
+            assert template.contains('kapt("' + mavenCoordinate + '")')
+        }
     }
 
     protected static Optional<SemanticVersion> parsePropertySemanticVersion(String template, String propertyName) {
