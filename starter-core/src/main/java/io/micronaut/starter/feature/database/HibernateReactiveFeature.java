@@ -19,6 +19,8 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 
+import java.util.Optional;
+
 public abstract class HibernateReactiveFeature extends TestContainersFeature implements JpaFeature {
 
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
@@ -37,9 +39,13 @@ public abstract class HibernateReactiveFeature extends TestContainersFeature imp
                         Hbm2ddlAuto.UPDATE.toString());
 
         generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL, dbFeature.getJdbcUrl());
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME, dbFeature.getDefaultUser());
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD, dbFeature.getDefaultPassword());
+        Optional<MigrationFeature> migrationFeature = generatorContext.getFeatures().getFeature(MigrationFeature.class);
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL,
+                migrationFeature.map(f -> "${datasources.default.url}").orElse(dbFeature.getJdbcUrl()));
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME,
+                migrationFeature.map(f -> "${datasources.default.username}").orElse(dbFeature.getDefaultUser()));
+        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
+                migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
     }
 
     public String getUrlKey() {

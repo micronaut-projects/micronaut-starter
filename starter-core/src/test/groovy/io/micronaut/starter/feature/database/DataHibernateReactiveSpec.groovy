@@ -275,16 +275,14 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
 
         then:
         ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration."datasources.default.url" ==~ "jdbc:$jdbcContains:.*"
         ctx.configuration.containsKey("datasources.default.username")
         ctx.configuration.containsKey("datasources.default.password")
         !ctx.configuration.containsKey("datasources.default.dialect")
         ctx.configuration."jpa.default.reactive" == true
-        with(ctx.configuration."jpa.default.properties.hibernate.connection.url") {
-            it.startsWith("jdbc:")
-            it.contains(jdbcContains)
-        }
-        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.username")
-        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
+        ctx.configuration."jpa.default.properties.hibernate.connection.url" == '${datasources.default.url}'
+        ctx.configuration."jpa.default.properties.hibernate.connection.username" == '${datasources.default.username}'
+        ctx.configuration."jpa.default.properties.hibernate.connection.password" == '${datasources.default.password}'
 
         where:
         db              | jdbcContains | migration
