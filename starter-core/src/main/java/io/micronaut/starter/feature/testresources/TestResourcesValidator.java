@@ -17,8 +17,6 @@ package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.test.AssertJ;
-import io.micronaut.starter.feature.test.Junit;
 import io.micronaut.starter.feature.validation.FeatureValidator;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
@@ -27,6 +25,7 @@ import java.util.Set;
 
 @Singleton
 public class TestResourcesValidator  implements FeatureValidator {
+
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(f -> f instanceof TestResources) && !options.getBuildTool().isGradle()) {

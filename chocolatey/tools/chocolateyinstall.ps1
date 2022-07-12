@@ -1,10 +1,10 @@
-$version = '3.5.1'
+$version = '3.5.2'
 
 $packageArgs = @{
   packageName   = $env:ChocolateyPackageName
   unzipLocation = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
   url           = "https://github.com/micronaut-projects/micronaut-starter/releases/download/v$version/mn-win-amd64-v$version.zip"
-  checksum      = 'B9634072B08DE9A6EA72F876A17CD6BC06E23D32BE75448D1646BA121C8788D7'
+  checksum      = '57696BBF4B12E26D0CE883066DFB68E519C2D131D0BBA2EFF279B578F7E5B676'
   checksumType  = 'sha256'
 }
 

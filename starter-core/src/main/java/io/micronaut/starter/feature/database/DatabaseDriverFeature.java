@@ -17,19 +17,26 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.database.r2dbc.R2dbcFeature;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
+
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature {
+public abstract class DatabaseDriverFeature extends EaseTestingFeature implements OneOfFeature, DatabaseDriverFeatureDependencies {
 
     private final JdbcFeature jdbcFeature;
 
@@ -57,10 +64,17 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         super.processSelectedFeatures(featureContext);
-        if (!(featureContext.isPresent(JdbcFeature.class) || featureContext.isPresent(R2dbcFeature.class))
-                && jdbcFeature != null) {
+        if (shouldAddJdbcFeature(featureContext)) {
             featureContext.addFeature(jdbcFeature);
         }
+    }
+
+    private boolean shouldAddJdbcFeature(FeatureContext featureContext) {
+        return !featureContext.isPresent(JdbcFeature.class)
+                && !featureContext.isPresent(R2dbcFeature.class)
+                && !featureContext.isPresent(DataHibernateReactive.class)
+                && !featureContext.isPresent(HibernateReactiveJpa.class)
+                && jdbcFeature != null;
     }
 
     @Override
@@ -91,4 +105,25 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
         return Collections.emptyMap();
     }
 
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        parseDependencies(generatorContext).forEach(generatorContext::addDependency);
+    }
+
+    @NonNull
+    protected List<Dependency.Builder> parseDependencies(GeneratorContext generatorContext) {
+        List<Dependency.Builder> dependencies = new ArrayList<>();
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            getR2DbcDependency().ifPresent(dependencies::add);
+            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                return dependencies;
+            }
+        }
+        if (generatorContext.getFeatures().hasFeature(DataHibernateReactive.class) || generatorContext.getFeatures().hasFeature(HibernateReactiveJpa.class)) {
+            getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
+        } else {
+            getJavaClientDependency().ifPresent(dependencies::add);
+        }
+        return dependencies;
+    }
 }

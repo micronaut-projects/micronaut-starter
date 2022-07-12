@@ -34,6 +34,11 @@ import java.util.Map;
 @Singleton
 public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_ORACLECLOUD_ATP = Dependency.builder()
+            .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
+            .artifactId("micronaut-oraclecloud-atp")
+            .compile();
+
     private final OracleCloudSdk oracleCloudSdkFeature;
 
     public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature,
@@ -56,6 +61,7 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Provides integration with Oracle Cloud Autonomous Database";
     }
@@ -139,10 +145,6 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(OracleCloudSdk.ORACLE_CLOUD_GROUP)
-                .artifactId("micronaut-oraclecloud-atp")
-                .build());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_ORACLECLOUD_ATP);
     }
 }

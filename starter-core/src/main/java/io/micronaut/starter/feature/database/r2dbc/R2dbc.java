@@ -60,6 +60,7 @@ public class R2dbc implements R2dbcFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "R2DBC - Reactive Database Connectivity";
     }

@@ -30,6 +30,7 @@ import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleR
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
 import io.micronaut.starter.feature.logging.SimpleLogging;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
@@ -37,6 +38,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class OracleRawFunction extends OracleFunction {
     public static final String FEATURE_NAME_ORACLE_RAW_FUNCTION = "oracle-function";
+
     private final OracleFunction httpFunction;
 
     public OracleRawFunction(SimpleLogging simpleLogging, OracleFunction httpFunction) {
@@ -83,6 +85,14 @@ public class OracleRawFunction extends OracleFunction {
                     generatorContext.addTemplate("function", new RockerTemplate(
                             sourceFile,
                             oracleRawFunctionJava.template(project)));
+            }
+
+            if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+                generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+                generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
+                generatorContext.getBuildProperties().put("exec.mainClass", "com.fnproject.fn.runtime.EntryPoint");
+                generatorContext.getBuildProperties().put("jib.docker.image", "[REGION].ocir.io/[TENANCY]/[REPO]/${project.artifactId}");
+                generatorContext.getBuildProperties().put("function.entrypoint", project.getPackageName() + ".Function::handleRequest");
             }
 
             applyTestTemplate(generatorContext, project, "Function");
