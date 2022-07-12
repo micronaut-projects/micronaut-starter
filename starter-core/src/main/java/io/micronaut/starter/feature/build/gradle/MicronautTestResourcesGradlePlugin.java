@@ -19,14 +19,17 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 
 public class MicronautTestResourcesGradlePlugin {
+
     @NonNull
     public static Builder builder() {
         return new Builder();
     }
 
     public static final class Builder {
+
         public static final String MICRONAUT_GRADLE_PLUGIN_TEST_RESOURCES_ID = "io.micronaut.test-resources";
         public static final String ARTIFACT_ID = "micronaut-test-resources-plugin";
+
         public GradlePlugin build() {
             return GradlePlugin.builder()
                     .id(MICRONAUT_GRADLE_PLUGIN_TEST_RESOURCES_ID)

@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.ci.workflows;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
@@ -37,6 +38,7 @@ public abstract class CIWorkflowFeature  implements Feature {
         return Category.CICD;
     }
 
+    @NonNull
     public abstract String getWorkflowFileName(GeneratorContext generatorContext);
 
 }

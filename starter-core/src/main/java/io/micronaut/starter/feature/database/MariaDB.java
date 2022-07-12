@@ -16,12 +16,8 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.database.r2dbc.R2dbc;
-
-import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
@@ -29,7 +25,19 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class MariaDB extends DatabaseDriverFeature {
+public class MariaDB extends MySQLCompatibleFeature {
+
+    public static final String NAME = "mariadb";
+
+    private static final Dependency.Builder DEPENDENCY_R2DBC_MARIADB = Dependency.builder()
+            .groupId("org.mariadb")
+                    .artifactId("r2dbc-mariadb")
+                    .runtime();
+
+    private static final Dependency.Builder DEPENDENCY_MARIADB_JAVA_CLIENT = Dependency.builder()
+            .groupId("org.mariadb.jdbc")
+            .artifactId("mariadb-java-client")
+            .runtime();
 
     public MariaDB(JdbcFeature jdbcFeature,
                    TestContainers testContainers,
@@ -40,7 +48,7 @@ public class MariaDB extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "mariadb";
+        return NAME;
     }
 
     @Override
@@ -49,6 +57,7 @@ public class MariaDB extends DatabaseDriverFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds the MariaDB driver and default config";
     }
@@ -95,20 +104,14 @@ public class MariaDB extends DatabaseDriverFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.isFeaturePresent(R2dbc.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("org.mariadb")
-                    .artifactId("r2dbc-mariadb")
-                    .runtime());
-            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                return;
-            }
-        }
+    @NonNull
+    public Optional<Dependency.Builder> getR2DbcDependency() {
+        return Optional.of(DEPENDENCY_R2DBC_MARIADB);
+    }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("org.mariadb.jdbc")
-                .artifactId("mariadb-java-client")
-                .runtime());
+    @Override
+    @NonNull
+    public Optional<Dependency.Builder> getJavaClientDependency() {
+        return Optional.of(DEPENDENCY_MARIADB_JAVA_CLIENT);
     }
 }

@@ -21,6 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.other.HibernateValidator;
 import io.micronaut.starter.options.Language;
 
@@ -86,7 +87,8 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
         applyDefaultConfig(generatorContext, dbFeature, config);
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
-        config.put("hibernate.hbm2ddl.auto", "update");
+        config.put("hibernate.hbm2ddl.auto", generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
+                        Hbm2ddlAuto.UPDATE.toString());
         config.put("hibernate.cache.queries", false);
         config.put("hibernate.cache.use_second_level_cache", false);
         config.put("hibernate.cache.use_query_cache", false);

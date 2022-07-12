@@ -22,27 +22,40 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.maven.Profile;
 import io.micronaut.starter.feature.build.maven.Property;
 import io.micronaut.starter.feature.graalvm.GraalVM;
+import io.micronaut.starter.options.BuildTool;
+
+import java.util.Optional;
 
 public abstract class GcpFeature implements Feature {
+    private static final Dependency.Builder DEPENDENCY_NATIVE_IMAGE_SUPPORT = Dependency.builder()
+            .groupId("com.google.cloud")
+            .artifactId("native-image-support");
+
+    private static final Profile PROFILE_GRAALVM = Profile.builder()
+            .id("graalVM")
+            .activationProperty(Property.builder().name("packaging").value("native-image").build())
+            .dependency(DEPENDENCY_NATIVE_IMAGE_SUPPORT.build())
+            .build();
+
     @Override
     public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
-            if (generatorContext.getBuildTool().isGradle()) {
-                generatorContext.addDependency(googleCloudNativeImageSupport().nativeImageCompileOnly());
-            } else {
-                generatorContext.addProfile(Profile.builder()
-                        .id("graalVM")
-                        .activationProperty(Property.builder().name("packaging").value("native-image").build())
-                        .dependency(googleCloudNativeImageSupport().build())
-                        .build());
-            }
-        }
+        getGraalVMDependencyIfNecessary(generatorContext).ifPresent(generatorContext::addDependency);
+        getGraalVMProfileIfNecessary(generatorContext).ifPresent(generatorContext::addProfile);
     }
 
     @NonNull
-    private Dependency.Builder googleCloudNativeImageSupport() {
-        return Dependency.builder()
-                .groupId("com.google.cloud")
-                .artifactId("native-image-support");
+    public static Optional<Dependency> getGraalVMDependencyIfNecessary(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class) && generatorContext.getBuildTool().isGradle()) {
+            return Optional.of(DEPENDENCY_NATIVE_IMAGE_SUPPORT.nativeImageCompileOnly().build());
+        }
+        return Optional.empty();
+    }
+
+    @NonNull
+    public static Optional<Profile> getGraalVMProfileIfNecessary(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class) && generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            return Optional.of(PROFILE_GRAALVM);
+        }
+        return Optional.empty();
     }
 }

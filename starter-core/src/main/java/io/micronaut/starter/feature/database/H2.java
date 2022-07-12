@@ -16,18 +16,27 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.context.annotation.Primary;
-import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.database.r2dbc.R2dbc;
-
-import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
 
 @Singleton
 @Primary
 public class H2 extends DatabaseDriverFeature {
+    private static final Dependency.Builder DEPENDENCY_H2 = Dependency.builder()
+            .groupId("com.h2database")
+            .artifactId("h2")
+            .runtime();
+
+    private static final Dependency.Builder DEPENDENCY_R2DBC_H2 = Dependency.builder()
+            .groupId("io.r2dbc")
+            .artifactId("r2dbc-h2")
+            .runtime();
 
     @Override
+    @NonNull
     public String getName() {
         return "h2";
     }
@@ -38,6 +47,7 @@ public class H2 extends DatabaseDriverFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds the H2 driver and default config";
     }
@@ -78,20 +88,14 @@ public class H2 extends DatabaseDriverFeature {
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.isFeaturePresent(R2dbc.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.r2dbc")
-                    .artifactId("r2dbc-h2")
-                    .runtime());
-            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                return;
-            }
-        }
+    @NonNull
+    public Optional<Dependency.Builder> getR2DbcDependency() {
+        return Optional.of(DEPENDENCY_R2DBC_H2);
+    }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.h2database")
-                .artifactId("h2")
-                .runtime());
+    @Override
+    @NonNull
+    public Optional<Dependency.Builder> getJavaClientDependency() {
+        return Optional.of(DEPENDENCY_H2);
     }
 }

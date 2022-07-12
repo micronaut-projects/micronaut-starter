@@ -1,0 +1,42 @@
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+String projectName,
+JdkVersion jdkVersion,
+BuildTool buildTool
+)
+
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto@jdkVersion.majorVersion()
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+      - echo Build started on `date`
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - mvn verify
+} else if (buildTool.isGradle()) {
+      - ./gradlew build
+}
+  post_build:
+    commands:
+      - echo Build completed on `date`
+@if (buildTool.isGradle()) {
+      - rm -f  /root/.gradle/caches/modules-2/modules-2.lock
+      - rm -fr /root/.gradle/caches/*/plugin-resolution/
+}
+artifacts:
+  files:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+    - '@projectName-0.1.jar'
+  base-directory: 'target'
+} else if (buildTool.isGradle()) {
+    - '@projectName-0.1-all.jar'
+  base-directory: 'build/libs'
+}

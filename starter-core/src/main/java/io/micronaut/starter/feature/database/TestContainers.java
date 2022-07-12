@@ -35,9 +35,9 @@ import java.util.Optional;
 @Singleton
 public class TestContainers implements Feature {
 
-    private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
-
     public static final String NAME = "testcontainers";
+
+    private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
     @NonNull
     @Override
@@ -81,6 +81,14 @@ public class TestContainers implements Feature {
                 });
                 artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
                         generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
+            });
+            generatorContext.getFeature(HibernateReactiveFeature.class).ifPresent(hibernateReactiveFeature -> {
+                urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
+                    Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
+                    testConfig.put(hibernateReactiveFeature.getUrlKey(), url);
+                });
+                artifactIdForDriverFeature(driverFeature)
+                        .ifPresent(dependencyArtifactId -> generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
             });
         });
         testContainerArtifactIdByTestFramework(generatorContext.getTestFramework()).ifPresent(testArtifactId -> {
