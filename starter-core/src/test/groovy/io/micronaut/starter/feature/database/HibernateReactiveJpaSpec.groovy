@@ -84,8 +84,8 @@ class HibernateReactiveJpaSpec extends ApplicationContextSpec {
         !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains($/implementation("$HibernateReactiveFeature.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
-//        template.contains('testImplementation("org.testcontainers:testcontainers")')
-//        template.contains($/testImplementation("org.testcontainers:$container")/$)
+        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
         where:
         db              | client                                    | container
