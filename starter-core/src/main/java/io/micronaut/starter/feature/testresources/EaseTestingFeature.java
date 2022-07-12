@@ -36,14 +36,8 @@ public abstract class EaseTestingFeature implements Feature  {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (featureContext.getBuildTool().isGradle()) {
-            if (!featureContext.isPresent(TestResources.class) && testResources != null) {
-                featureContext.addFeature(testResources);
-            }
-        } else {
-            if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
-                featureContext.addFeature(testContainers);
-            }
+        if (!featureContext.isPresent(TestResources.class) && testResources != null) {
+            featureContext.addFeature(testResources);
         }
     }
 }

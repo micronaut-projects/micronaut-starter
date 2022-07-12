@@ -4,6 +4,7 @@ import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -23,16 +24,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         readme.contains("https://docs.mongodb.com")
 
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
-
-        if (buildTool == BuildTool.MAVEN && language == Language.GROOVY) {
-            assert build.contains('testImplementation("org.testcontainers:spock")')
-        } else if (buildTool == BuildTool.MAVEN) {
-            assert build.contains('testImplementation("org.testcontainers:junit-jupiter")')
-        }
-        if (buildTool == BuildTool.MAVEN) {
-            assert build.contains('testImplementation("org.testcontainers:mongodb")')
-            assert build.contains('testImplementation("org.testcontainers:testcontainers")')
-        }
 
         if (language == Language.KOTLIN) {
             assert build.contains('kapt("io.micronaut.data:micronaut-data-document-processor")')
@@ -68,11 +59,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
         def readme = output["README.md"]
         def project = new XmlParser().parseText(output['pom.xml'])
-        def expectedTestcontainersArtifacts = [
-                language == Language.GROOVY ? 'spock' : 'junit-jupiter',
-                'mongodb',
-                'testcontainers'
-        ].sort()
 
         then:
         readme
@@ -89,10 +75,13 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
             groupId.text() == 'org.mongodb'
         }
 
+        project.get('properties')[TestResources.MICRONAUT_TEST_RESOURCES_ENABLED].text() == "true"
+
         def testContainersDependencies = project.dependencies.dependency.findAll { it.groupId.text() == 'org.testcontainers' }
-        testContainersDependencies.size() == 3
-        testContainersDependencies.scope*.text().unique() == ['test']
-        testContainersDependencies.artifactId*.text().sort() == expectedTestcontainersArtifacts
+        testContainersDependencies.size() == 0
+
+        def testResourcesDependency = project.dependencies.dependency.findAll { it.groupId.text() == 'io.micronaut.testresources' }.first()
+        testResourcesDependency.scope.text() == 'test'
 
         validatePlugins(language, project)
 

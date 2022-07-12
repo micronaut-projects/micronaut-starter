@@ -92,7 +92,7 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         semanticVersionOptional.isPresent()
     }
 
-    void "test config for #buildTool for feature #features"(BuildTool buildTool,
+    void "test config for #buildTool for features #features"(BuildTool buildTool,
                                       String dialect,
                                       List<String> features) {
         given:
@@ -102,7 +102,7 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         GeneratorContext ctx = buildGeneratorContext(features, options)
 
         then:
-        if (buildTool == BuildTool.MAVEN) {
+        if (features.size() == 1) {
             assert ctx.configuration.containsKey("datasources.default.url")
         }
         ctx.configuration.get("datasources.default.dialect") == dialect

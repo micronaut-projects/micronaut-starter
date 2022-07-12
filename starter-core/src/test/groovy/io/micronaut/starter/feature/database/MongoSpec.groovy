@@ -57,9 +57,9 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
             scope.text() == 'compile'
             groupId.text() == 'io.micronaut.mongodb'
         }
-        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-test-resources-client" }) {
             scope.text() == 'test'
-            groupId.text() == 'org.testcontainers'
+            groupId.text() == 'io.micronaut.testresources'
         }
     }
 
@@ -93,9 +93,9 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
             scope.text() == 'compile'
             groupId.text() == 'io.micronaut.mongodb'
         }
-        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-test-resources-client" }) {
             scope.text() == 'test'
-            groupId.text() == 'org.testcontainers'
+            groupId.text() == 'io.micronaut.testresources'
         }
     }
 

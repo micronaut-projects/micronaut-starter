@@ -6,7 +6,6 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
 
 import java.util.stream.Collectors
@@ -115,7 +114,7 @@ class TestContainersSpec extends ApplicationContextSpec {
     void "testframework dependency is present for gradle for feature #feature and spock framework"() {
         when:
         def template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([feature, TestContainers.NAME])
+                .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.SPOCK)
                 .render()
 
@@ -130,7 +129,7 @@ class TestContainersSpec extends ApplicationContextSpec {
 
         when:
         def template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([feature, TestContainers.NAME])
+                .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
@@ -345,7 +344,7 @@ class TestContainersSpec extends ApplicationContextSpec {
     void "testframework dependency is present for maven for feature #feature and spock framework"() {
         when:
         def template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([feature])
+                .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.SPOCK)
                 .render()
 
@@ -366,7 +365,7 @@ class TestContainersSpec extends ApplicationContextSpec {
 
         when:
         def template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([feature])
+                .features([TestContainers.NAME, feature])
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
@@ -407,7 +406,7 @@ class TestContainersSpec extends ApplicationContextSpec {
 
     void "test all non embedded drivers apply the test containers feature for Maven"() {
         when:
-        Features features = getFeatures([driverFeature.getName()],
+        Features features = getFeatures([TestContainers.NAME, driverFeature.getName()],
                 null,
                 null,
                 BuildTool.MAVEN)

@@ -117,7 +117,7 @@ class DataJpaSpec extends ApplicationContextSpec {
         GeneratorContext ctx = buildGeneratorContext(features, options)
 
         then:
-        if (buildTool == BuildTool.MAVEN) {
+        if (features.size() == 1) {
             assert ctx.configuration.containsKey("datasources.default.url")
         }
         ctx.configuration.containsKey("jpa.default.properties.hibernate.hbm2ddl.auto")

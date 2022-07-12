@@ -50,7 +50,7 @@ class MongoGormSpec extends ApplicationContextSpec implements CommandOutputFixtu
     void "test testcontainers dependencies are present for gradle"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["mongo-gorm", "testcontainers"])
+                .features([TestContainers.NAME, 'mongo-gorm'])
                 .language(Language.GROOVY)
                 .render()
 
@@ -65,7 +65,7 @@ class MongoGormSpec extends ApplicationContextSpec implements CommandOutputFixtu
     void "test dependencies are present for maven"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(['mongo-gorm'])
+                .features([TestContainers.NAME, 'mongo-gorm'])
                 .language(Language.GROOVY)
                 .render()
 
