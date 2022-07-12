@@ -165,9 +165,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         GeneratorContext ctx = buildGeneratorContext([DataR2dbc.NAME, driver], options)
 
         expect:
-        if (buildTool == BuildTool.MAVEN) {
-            assert ctx.configuration.containsKey("r2dbc.datasources.default.url")
-        }
+        ctx.configuration.containsKey("r2dbc.datasources.default.url")
         ctx.configuration.get("r2dbc.datasources.default.dialect") == dialect
 
         where:
