@@ -20,16 +20,13 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
-
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.options.BuildTool.MAVEN;
 
 @Singleton
 public class KoTest implements TestFeature {
-    private static final String ARTIFACT_ID_KOTEST5 = "micronaut-test-kotest5";
-    private static final String KOTEST5_VERSION = "5.3.1";
-    private static final String MOCKK_VERSION = "1.12.4";
+    private static final String ARTIFACT_ID_MICRONAUT_KOTEST5 = "micronaut-test-kotest5";
     private static final String KOTLINX_VERSION = "1.6.2";
 
     @Override
@@ -45,34 +42,31 @@ public class KoTest implements TestFeature {
                         classLoader.getResource("kotest/ProjectConfig.kt")));
 
         if (generatorContext.getBuildTool() == MAVEN) {
-            // FIXME Maven tests fail without this due to older, incompatible version
-            //  I think this can be removed after everything else is updated to Kotest5 and removes Kotest4
-            generatorContext.addDependency(new Dependency.Builder().groupId("org.jetbrains.kotlinx")
+            // TODO Maven tests fail without this due to older, incompatible version
+            //  but I think it can be removed after everything else updates to Kotest5 and removes Kotest4
+            generatorContext.addDependency(new Dependency.Builder()
+                    .groupId("org.jetbrains.kotlinx")
                     .artifactId("kotlinx-coroutines-core-jvm")
                     .version(KOTLINX_VERSION)
                     .test());
+
+            // for Gradle, these are exposed by the micronaut-gradle-plugin
+            generatorContext.addDependency(new Dependency.Builder()
+                    .groupId("io.mockk")
+                    .artifactId("mockk")
+                    .test());
+            generatorContext.addDependency(MicronautDependencyUtils.testDependency()
+                    .artifactId(ARTIFACT_ID_MICRONAUT_KOTEST5)
+                    .test());
+            generatorContext.addDependency(new Dependency.Builder()
+                    .groupId("io.kotest")
+                    .artifactId("kotest-assertions-core-jvm")
+                    .test());
+            generatorContext.addDependency(new Dependency.Builder()
+                    .groupId("io.kotest")
+                    .artifactId("kotest-runner-junit5-jvm")
+                    .testRuntime());
         }
-        // FIXME these dependencies upgrade the same ones exposed by the `micronaut-gradle-plugin` for testRuntime("kotest")
-        //  once micronaut-gradle-plugin is updated so that these Kotest 5 dependencies are exposed instead
-        //  (currently the Kotest4 versions are exposed to projects using micronaut-test)
-        //  the following dependencies should be moved up into the buildTool == MAVEN conditional block
-        //  since only the maven POM will need them thereafter
-        //  also switch to managed versions
-        generatorContext.addDependency(new Dependency.Builder().groupId("io.mockk")
-                .artifactId("mockk")
-                .version(MOCKK_VERSION)
-                .test());
-        generatorContext.addDependency(MicronautDependencyUtils.testDependency()
-                .artifactId(ARTIFACT_ID_KOTEST5)
-                .test());
-        generatorContext.addDependency(new Dependency.Builder().groupId("io.kotest")
-                .artifactId("kotest-assertions-core-jvm")
-                .version(KOTEST5_VERSION)
-                .test());
-        generatorContext.addDependency(new Dependency.Builder().groupId("io.kotest")
-                .artifactId("kotest-runner-junit5-jvm")
-                .version(KOTEST5_VERSION)
-                .testRuntime());
     }
 
     @Override
