@@ -15,16 +15,25 @@
  */
 package io.micronaut.starter.feature.messaging.mqtt;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Mqtt extends AbstractMqttFeature implements SharedTestResourceFeature {
+public class Mqtt extends EaseTestingFeature implements MqttFeature, SharedTestResourceFeature {
 
     public static final String NAME = "mqtt";
 
+    public Mqtt(TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
+    }
+
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -37,7 +46,7 @@ public class Mqtt extends AbstractMqttFeature implements SharedTestResourceFeatu
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
+        MqttFeature.super.apply(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.mqtt")
                 .artifactId("micronaut-mqttv5")

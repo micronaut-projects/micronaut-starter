@@ -15,7 +15,10 @@
  */
 package io.micronaut.starter.feature.messaging.mqtt;
 
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 
 /**
  * Sub interface for mqtt features.
@@ -24,4 +27,27 @@ import io.micronaut.starter.feature.messaging.MessagingFeature;
  * @since 2.2.0
  */
 public interface MqttFeature extends MessagingFeature {
+
+    @Override
+    default String getDescription() {
+        return "Adds support for MQTT messaging";
+    }
+
+    @Override
+    default String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-mqtt/latest/guide/index.html";
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
+    }
+
+    @Override
+    default void apply(GeneratorContext generatorContext) {
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            generatorContext.getConfiguration().put("mqtt.client.server-uri", "tcp://localhost:1883");
+        }
+        generatorContext.getConfiguration().put("mqtt.client.client-id", "${random.uuid}");
+    }
 }

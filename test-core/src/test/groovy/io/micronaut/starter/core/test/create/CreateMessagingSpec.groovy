@@ -39,7 +39,7 @@ class CreateMessagingSpec extends CommandSpec {
         where:
         [lang, buildTool, feature] << LanguageBuildCombinations.combinations(
                 beanContext.streamOfType(MessagingFeature.class)
-                        .filter({ f -> !['jms-sqs', 'jms-aq'].contains(f.name)} )
+                        .filter({ f -> !['jms-sqs', 'jms-aq'].contains(f.name) && f.name == 'mqtt' } )
                         .map({  f -> f.getName() })
                         .collect(Collectors.toList()))
     }

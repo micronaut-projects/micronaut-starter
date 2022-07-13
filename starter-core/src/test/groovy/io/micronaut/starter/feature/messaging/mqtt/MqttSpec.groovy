@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.messaging.mqtt
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 
@@ -33,6 +34,7 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
+        template.contains('id("io.micronaut.test-resources") version') == (dependency == 'mqttv5')
         template.contains('sharedServer = true') == (dependency == 'mqttv5')
 
         where:
@@ -54,6 +56,7 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains("<$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>true</$TestResources.MICRONAUT_TEST_RESOURCES_ENABLED>") == (dependency == 'mqttv5')
         template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
           <configuration>
             <shared>true</shared>
@@ -70,7 +73,7 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
         GeneratorContext ctx = buildGeneratorContext([feature])
 
         then:
-        ctx.configuration.containsKey('mqtt.client.server-uri')
+        ctx.configuration.containsKey('mqtt.client.server-uri') == (feature == MqttV3.NAME)
         ctx.configuration.containsKey('mqtt.client.client-id')
 
         where:
