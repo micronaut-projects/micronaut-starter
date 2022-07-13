@@ -80,6 +80,6 @@ class KoTestSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains("testRuntime(\"kotest5\")")
+        template.contains('testRuntime("kotest5")')
     }
 }
