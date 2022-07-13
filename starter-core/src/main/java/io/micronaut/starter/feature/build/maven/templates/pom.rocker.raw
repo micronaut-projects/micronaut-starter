@@ -6,6 +6,7 @@
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.util.VersionInfo
@@ -192,8 +193,11 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot")) {
+@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot") || features.isFeaturePresent(SharedTestResourceFeature.class)) {
           <configuration>
+@if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
+            <shared>true</shared>
+}
 @if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
 @if (features.contains("springloaded")) {

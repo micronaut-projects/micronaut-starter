@@ -17,7 +17,6 @@ package io.micronaut.starter.feature.messaging.mqtt;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
