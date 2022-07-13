@@ -56,6 +56,7 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka-streams")')
+        template.contains('sharedServer = true')
     }
 
     void "test dependencies are present for maven"() {

@@ -50,6 +50,7 @@ public class MicronautApplicationGradlePlugin {
         private BuildTool buildTool;
         private boolean incremental;
         private  String packageName;
+        private boolean sharedTestResources;
 
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
@@ -124,12 +125,17 @@ public class MicronautApplicationGradlePlugin {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules)))
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)))
                     .build();
         }
 
         public Builder dsl(GradleDsl gradleDsl) {
             this.dsl = gradleDsl;
+            return this;
+        }
+
+        public Builder withSharedTestResources() {
+            this.sharedTestResources = true;
             return this;
         }
     }

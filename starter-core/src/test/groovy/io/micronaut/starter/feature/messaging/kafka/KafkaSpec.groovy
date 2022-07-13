@@ -26,6 +26,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
+        template.contains('sharedServer = true')
     }
 
     void "test dependencies are present for maven"() {

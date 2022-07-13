@@ -29,6 +29,7 @@ import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
 import jakarta.inject.Singleton;
 
@@ -86,6 +87,9 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
             databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
                     .map(dbType -> getModuleName(generatorContext, dbType))
                     .ifPresent(builder::addAdditionalTestResourceModules);
+        }
+        if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
+            builder = builder.withSharedTestResources();
         }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");

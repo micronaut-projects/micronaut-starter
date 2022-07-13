@@ -22,6 +22,7 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
@@ -30,7 +31,7 @@ import jakarta.inject.Singleton;
 import java.util.Set;
 
 @Singleton
-public class Kafka extends EaseTestingFeature implements DefaultFeature, MessagingFeature {
+public class Kafka extends EaseTestingFeature implements DefaultFeature, MessagingFeature, SharedTestResourceFeature {
 
     public static final String NAME = "kafka";
 

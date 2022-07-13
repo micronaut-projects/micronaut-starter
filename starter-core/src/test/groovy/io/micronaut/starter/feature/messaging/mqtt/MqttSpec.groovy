@@ -33,6 +33,7 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
+        template.contains('sharedServer = true') == (dependency == 'mqttv5')
 
         where:
         feature  | dependency

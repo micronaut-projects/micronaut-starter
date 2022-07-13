@@ -7,7 +7,7 @@
     List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
     String runtime, String testRuntime,
     String aotVersion, boolean incremental, String packageName,
-    List<String> additionalTestResourceModules
+    List<String> additionalTestResourceModules, boolean sharedTestResources
 )
 micronaut {
 @if(runtime != null) {
@@ -22,10 +22,20 @@ micronaut {
         annotations("@(packageName).*")
     }
 }
-@if (additionalTestResourceModules != null) {
+@if (additionalTestResourceModules != null || sharedTestResources) {
     testResources {
-        @for (String module : additionalTestResourceModules) {
+        @if(additionalTestResourceModules != null) {
+            @for (String module : additionalTestResourceModules) {
         additionalModules.add(@module)
+            }
+        }
+        @if(sharedTestResources) {
+            @if (dsl == GradleDsl.KOTLIN) {
+        sharedServer.set(true)
+            }
+            @if (dsl == GradleDsl.GROOVY) {
+        sharedServer = true
+            }
         }
     }
 }
