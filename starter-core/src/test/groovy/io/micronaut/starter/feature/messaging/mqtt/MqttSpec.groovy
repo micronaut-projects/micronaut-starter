@@ -34,10 +34,6 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         template.contains('implementation("io.micronaut.mqtt:micronaut-' + dependency + '")')
         template.contains('sharedServer = true') == (dependency == 'mqttv5')
-        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
-                            |  <configuration>
-                            |    <shared>true</shared>
-                            |</configuration>'''.stripMargin()) == (dependency == 'mqttv5')
 
         where:
         feature  | dependency
@@ -58,6 +54,11 @@ class MqttSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
+          <configuration>
+            <shared>true</shared>
+          </configuration>''') == (dependency == 'mqttv5')
+
         where:
         feature  | dependency
         "mqtt"   | "mqttv5"

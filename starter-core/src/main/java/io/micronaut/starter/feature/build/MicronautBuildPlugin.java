@@ -99,7 +99,7 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     }
 
     private String getModuleName(GeneratorContext generatorContext, DbType dbType) {
-        return generatorContext.isFeaturePresent(R2dbc.class) ? dbType.getGradleR2dbcTestResourcesModuleName() : dbType.getGradleJdbcTestResourceModuleName();
+        return generatorContext.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName();
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
