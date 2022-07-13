@@ -73,7 +73,7 @@ public class TestResources implements Feature {
                     .test();
 
             // TODO: Remove when it's in the BOM
-            clientDependency = clientDependency.version("1.0.0-M2");
+            clientDependency = clientDependency.version("1.0.0");
 
             generatorContext.addDependency(clientDependency);
         }
