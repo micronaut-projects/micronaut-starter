@@ -2,7 +2,13 @@
 @import io.micronaut.starter.feature.build.gradle.Dockerfile
 @import io.micronaut.starter.options.BuildTool
 @import io.micronaut.starter.build.gradle.GradleDsl
-@args(GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative, List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages, String runtime, String testRuntime, String aotVersion, boolean incremental, String packageName)
+@args(
+    GradleDsl dsl, BuildTool build, Dockerfile dockerfile, Dockerfile dockerfileNative,
+    List<String> dockerBuilderImages, List<String> dockerBuilderNativeImages,
+    String runtime, String testRuntime,
+    String aotVersion, boolean incremental, String packageName,
+    List<String> additionalTestResourceModules
+)
 micronaut {
 @if(runtime != null) {
     runtime("@(runtime)")
@@ -14,6 +20,13 @@ micronaut {
     processing {
         incremental(true)
         annotations("@(packageName).*")
+    }
+}
+@if (additionalTestResourceModules != null) {
+    testResources {
+        @for (String module : additionalTestResourceModules) {
+        additionalModules.add("@module")
+        }
     }
 }
 @if(aotVersion != null) {

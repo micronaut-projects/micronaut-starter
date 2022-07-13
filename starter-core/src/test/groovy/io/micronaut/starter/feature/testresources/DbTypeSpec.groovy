@@ -6,6 +6,6 @@ class DbTypeSpec extends Specification {
 
     void "toString() returns lowercase"() {
         expect:
-        "mariadb" == DbType.MariaDB.toString();
+        "mariadb" == DbType.MARIADB.toString();
     }
 }

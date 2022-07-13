@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
@@ -83,6 +84,12 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.SQLSERVER);
     }
 
     @Override

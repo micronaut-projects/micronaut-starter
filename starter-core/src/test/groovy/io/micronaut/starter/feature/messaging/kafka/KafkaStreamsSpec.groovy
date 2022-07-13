@@ -86,6 +86,6 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         GeneratorContext ctx = buildGeneratorContext(['kafka-streams'])
 
         then:
-        ctx.configuration.containsKey('kafka.bootstrap.servers')
+        !ctx.configuration.containsKey('kafka.bootstrap.servers')
     }
 }

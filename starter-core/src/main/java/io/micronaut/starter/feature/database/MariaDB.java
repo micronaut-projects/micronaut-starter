@@ -100,7 +100,7 @@ public class MariaDB extends MySQLCompatibleFeature {
     @Override
     @NonNull
     public Optional<DbType> getDbType() {
-        return Optional.of(DbType.MariaDB);
+        return Optional.of(DbType.MARIADB);
     }
 
     @Override

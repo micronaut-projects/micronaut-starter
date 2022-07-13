@@ -48,6 +48,6 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         GeneratorContext ctx = buildGeneratorContext(['kafka'])
 
         then:
-        ctx.configuration.containsKey('kafka.bootstrap.servers')
+        !ctx.configuration.containsKey('kafka.bootstrap.servers')
     }
 }

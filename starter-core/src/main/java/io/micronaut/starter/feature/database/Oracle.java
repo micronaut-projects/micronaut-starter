@@ -85,9 +85,10 @@ public class Oracle extends DatabaseDriverFeature {
         return "oracle.jdbc.OracleDriver";
     }
 
+    @NonNull
     @Override
     public Optional<DbType> getDbType() {
-        return Optional.of(DbType.OracleXE);
+        return Optional.of(DbType.ORACLEXE);
     }
 
     @Override

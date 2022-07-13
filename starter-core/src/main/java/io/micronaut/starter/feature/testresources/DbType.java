@@ -15,15 +15,32 @@
  */
 package io.micronaut.starter.feature.testresources;
 
+import io.micronaut.testresources.buildtools.KnownModules;
+
 public enum DbType {
 
-    MariaDB("mariadb"),
-    OracleXE("oracle");
+    MARIADB("mariadb", KnownModules.JDBC_MARIADB, KnownModules.R2DBC_MARIADB),
+    MYSQL("mysql", KnownModules.JDBC_MYSQL, KnownModules.R2DBC_MYSQL),
+    POSTGRESQL("postgresql", KnownModules.JDBC_POSTGRESQL, KnownModules.R2DBC_POSTGRESQL),
+    SQLSERVER("mssql", KnownModules.JDBC_MSSQL, KnownModules.R2DBC_MSSQL),
+    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE);
 
     private final String name;
+    private final String jdbcTestResourcesModuleName;
+    private final String r2dbcTestResourcesModuleName;
 
-    DbType(String name) {
+    DbType(String name, String jdbcTestResourcesModuleName, String r2dbcTestResourcesModuleName) {
         this.name = name;
+        this.jdbcTestResourcesModuleName = jdbcTestResourcesModuleName;
+        this.r2dbcTestResourcesModuleName = r2dbcTestResourcesModuleName;
+    }
+
+    public String getJdbcTestResourcesModuleName() {
+        return jdbcTestResourcesModuleName;
+    }
+
+    public String getR2dbcTestResourcesModuleName() {
+        return r2dbcTestResourcesModuleName;
     }
 
     @Override

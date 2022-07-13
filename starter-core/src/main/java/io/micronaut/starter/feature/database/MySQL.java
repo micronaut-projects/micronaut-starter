@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
@@ -74,6 +75,12 @@ public class MySQL extends MySQLCompatibleFeature {
     @Override
     public String getDriverClass() {
         return "com.mysql.cj.jdbc.Driver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.MYSQL);
     }
 
     @Override
