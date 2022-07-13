@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.messaging.mqtt;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.testresources.TestResources;
 
 public abstract class AbstractMqttFeature implements MqttFeature {
 
@@ -37,7 +38,9 @@ public abstract class AbstractMqttFeature implements MqttFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("mqtt.client.server-uri", "tcp://localhost:1883");
-        generatorContext.getConfiguration().put("mqtt.client.client-id", "${random.uuid}");
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            generatorContext.getConfiguration().put("mqtt.client.server-uri", "tcp://localhost:1883");
+            generatorContext.getConfiguration().put("mqtt.client.client-id", "${random.uuid}");
+        }
     }
 }

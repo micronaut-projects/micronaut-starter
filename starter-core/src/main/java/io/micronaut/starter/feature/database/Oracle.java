@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
@@ -82,6 +83,11 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "oracle.jdbc.OracleDriver";
+    }
+
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.OracleXE);
     }
 
     @Override

@@ -20,16 +20,23 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
 
 @Singleton
-public class Kafka implements DefaultFeature, MessagingFeature {
+public class Kafka extends EaseTestingFeature implements DefaultFeature, MessagingFeature {
 
     public static final String NAME = "kafka";
+
+    public Kafka(TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
+    }
 
     @Override
     public String getName() {
@@ -48,7 +55,6 @@ public class Kafka implements DefaultFeature, MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("kafka.bootstrap.servers", "localhost:9092");
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.kafka")
                 .artifactId("micronaut-kafka")

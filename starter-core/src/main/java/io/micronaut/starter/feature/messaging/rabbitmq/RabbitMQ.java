@@ -19,6 +19,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -43,7 +44,9 @@ public class RabbitMQ implements MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put ("rabbitmq.uri", "amqp://localhost:5672");
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            generatorContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
+        }
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.rabbitmq")
                 .artifactId("micronaut-rabbitmq")

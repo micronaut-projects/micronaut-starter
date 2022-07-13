@@ -15,14 +15,19 @@
  */
 package io.micronaut.starter.feature.testresources;
 
-import java.util.Locale;
-
 public enum DbType {
 
-    MariaDB;
+    MariaDB("mariadb"),
+    OracleXE("oracle");
+
+    private final String name;
+
+    DbType(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
-        return this.name().toLowerCase(Locale.ROOT);
+        return name;
     }
 }
