@@ -67,10 +67,15 @@ public class TestResources implements Feature {
             BuildProperties buildProperties = generatorContext.getBuildProperties();
             buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
 
-            generatorContext.addDependency(Dependency.builder()
+            Dependency.Builder clientDependency = Dependency.builder()
                     .groupId("io.micronaut.testresources")
                     .artifactId("micronaut-test-resources-client")
-                    .test());
+                    .test();
+
+            // TODO: Remove when it's in the BOM
+            clientDependency = clientDependency.version("1.0.0-M2");
+
+            generatorContext.addDependency(clientDependency);
         }
     }
 
