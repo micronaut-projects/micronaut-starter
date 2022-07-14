@@ -115,7 +115,7 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
