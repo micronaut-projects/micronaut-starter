@@ -111,7 +111,7 @@ public class GradleDependency extends DependencyCoordinate {
             for (DependencyCoordinate exclusion : getExclusions()) {
                 exclusionBuilder
                         .append("      exclude(group").append(mapAccessor).append("\"").append(exclusion.getGroupId())
-                        .append("\", name").append(mapAccessor).append("\"").append(exclusion.getArtifactId()).append("\")\n");
+                        .append("\", module").append(mapAccessor).append("\"").append(exclusion.getArtifactId()).append("\")\n");
             }
             snippet += exclusionBuilder.toString();
             snippet += "    }";
