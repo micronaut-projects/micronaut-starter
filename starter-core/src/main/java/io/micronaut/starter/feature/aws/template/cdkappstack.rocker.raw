@@ -143,12 +143,7 @@ public class AppStack extends Stack {
                 .handler(function)
                 .build();
 }
-@if (features.contains("aws-lambda-scheduled-event")) {
-        Rule rule = Rule.Builder.create(this, "micronaut-function-rule")
-                .schedule(Schedule.rate(Duration.minutes(1)))
-                .build();
-        rule.addTarget(LambdaFunction.Builder.create(function).build());
-}
+
         CfnOutput.Builder.create(this, "ApiUrl")
                 .exportName("ApiUrl")
 @if (features.contains("amazon-api-gateway")) {
@@ -158,6 +153,12 @@ public class AppStack extends Stack {
                 .value(functionUrl.getUrl())
 }
                 .build();
+}
+@if (features.contains("aws-lambda-scheduled-event")) {
+        Rule rule = Rule.Builder.create(this, "micronaut-function-rule")
+                .schedule(Schedule.rate(Duration.minutes(1)))
+                .build();
+        rule.addTarget(LambdaFunction.Builder.create(function).build());
 }
     }
 

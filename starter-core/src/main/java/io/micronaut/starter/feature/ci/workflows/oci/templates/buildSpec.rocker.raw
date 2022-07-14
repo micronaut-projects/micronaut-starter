@@ -1,0 +1,57 @@
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+String projectName,
+JdkVersion jdkVersion,
+BuildTool buildTool
+)
+
+version: 0.1
+component: build
+timeoutInSeconds: 1000
+shell: bash
+
+steps:
+  - type: Command
+    name: "Setup JDK"
+    timeoutInSeconds: 40
+    command: |
+      @if (jdkVersion.majorVersion() == 8) {
+      PKG_NAME=java-1.8.0-openjdk
+      } else if(jdkVersion.majorVersion() == 11) {
+      PKG_NAME=java-11-openjdk
+      } else if(jdkVersion.majorVersion() == 17) {
+      PKG_NAME=java-17-openjdk
+      }
+      yum -y install $PKG_NAME
+      JAVA_TO_SELECT=$(alternatives --display java | grep "family $PKG_NAME" | cut -d' ' -f1)
+      alternatives --set java $JAVA_TO_SELECT
+  - type: Command
+    name: "Build an application"
+    command: |
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw verify
+    } else if (buildTool.isGradle()) {
+      ./gradlew build
+    }
+  - type: Command
+    name: "Build a docker image"
+    command: |
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+      ./mvnw package -Dpackaging=docker
+    } else if (buildTool.isGradle()) {
+      ./gradlew dockerBuild
+    }
+
+outputArtifacts:
+  - name: jar
+    type: BINARY
+    @if (buildTool.equals(BuildTool.MAVEN)) {
+    location: target/@projectName-0.1.jar
+    } else if (buildTool.isGradle()) {
+    location: build/libs/@projectName-0.1-all.jar
+    }
+  - name: build-service-demo
+    type: DOCKER_IMAGE
+    location: @projectName

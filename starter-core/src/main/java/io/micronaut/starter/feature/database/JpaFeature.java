@@ -21,5 +21,10 @@ import io.micronaut.starter.feature.Feature;
  * Marker interface for JPA features, such as DataJpa and HibernateJpa.
  */
 public interface JpaFeature extends Feature {
-
+    String JPA_HIBERNATE_PROPERTIES = "jpa.default.properties.hibernate";
+    String JPA_HIBERNATE_PROPERTIES_HBM2DDL = JPA_HIBERNATE_PROPERTIES + ".hbm2ddl.auto";
+    String JPA_HIBERNATE_PROPERTIES_CONNECTION = JPA_HIBERNATE_PROPERTIES + ".connection";
+    String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL = JPA_HIBERNATE_PROPERTIES_CONNECTION + ".url";
+    String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME = JPA_HIBERNATE_PROPERTIES_CONNECTION + ".username";
+    String JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD = JPA_HIBERNATE_PROPERTIES_CONNECTION + ".password";
 }

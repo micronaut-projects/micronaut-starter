@@ -1,7 +1,16 @@
+@args (
+boolean workerPresent
+)
+
 def ctx = context(scriptScope())
 
 contribute(ctx) {
     property(name: 'ctx', type: 'io.micronaut.context.DefaultApplicationContext')
+@if (workerPresent) {
+    property(name: 'emailDigestDistributedJobGenerateEmailsForDigest', type: 'com.agorapulse.worker.console.JobAccessor')
+    property(name: 'emailDigestDistributedJobSendEmail', type: 'com.agorapulse.worker.console.JobAccessor')
+    property(name: 'emailDigestSimpleJob', type: 'com.agorapulse.worker.console.JobAccessor')
+}
     property(name: 'request', type: 'io.micronaut.http.server.netty.NettyHttpRequest')
     property(name: 'user', type: 'com.agorapulse.micronaut.console.User')
 }

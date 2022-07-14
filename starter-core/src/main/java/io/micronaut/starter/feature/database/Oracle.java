@@ -16,18 +16,34 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-
-import io.micronaut.starter.feature.database.r2dbc.R2dbc;
-import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
+
+import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP;
 
 @Singleton
 public class Oracle extends DatabaseDriverFeature {
 
     public static final String NAME = "oracle";
+    public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
+
+    private static final Dependency.Builder DEPENDENCY_ORACLE_R2DBC = Dependency.builder()
+            .groupId("com.oracle.database.r2dbc")
+            .artifactId("oracle-r2dbc")
+            .runtime();
+
+    private static final Dependency.Builder DEPENDENCY_VERTX_ORACLE_CLIENT = Dependency.builder()
+            .groupId(IO_VERTX_DEPENDENCY_GROUP)
+            .artifactId(VERTX_ORACLE_CLIENT)
+            .compile();
+
+    private static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
+            .groupId("com.oracle.database.jdbc")
+                .artifactId("ojdbc8")
+                .runtime();
 
     public Oracle(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
@@ -45,6 +61,7 @@ public class Oracle extends DatabaseDriverFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds the Oracle driver and default config";
     }
@@ -80,26 +97,25 @@ public class Oracle extends DatabaseDriverFeature {
     }
 
     @Override
-    public boolean embedded() {
-        return false;
+    @NonNull
+    public Optional<Dependency.Builder> getR2DbcDependency() {
+        return Optional.of(DEPENDENCY_ORACLE_R2DBC);
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.isFeaturePresent(R2dbc.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("com.oracle.database.r2dbc")
-                    .artifactId("oracle-r2dbc")
-                    .runtime());
-            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                return;
-            }
-        }
-
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.oracle.database.jdbc")
-                .artifactId("ojdbc8")
-                .runtime());
+    @NonNull
+    public Optional<Dependency.Builder> getHibernateReactiveJavaClientDependency() {
+        return Optional.of(DEPENDENCY_VERTX_ORACLE_CLIENT);
     }
 
+    @Override
+    @NonNull
+    public Optional<Dependency.Builder> getJavaClientDependency() {
+        return Optional.of(DEPENDENCY_OJDBC8);
+    }
+
+    @Override
+    public boolean embedded() {
+        return false;
+    }
 }
