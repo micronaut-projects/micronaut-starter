@@ -47,7 +47,6 @@ public class MongoSync extends MongoFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb");
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.mongodb")
                 .artifactId("micronaut-mongo-sync")
