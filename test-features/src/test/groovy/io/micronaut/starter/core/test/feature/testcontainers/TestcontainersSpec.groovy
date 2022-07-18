@@ -1,8 +1,5 @@
 package io.micronaut.starter.core.test.feature.testcontainers
 
-import io.micronaut.starter.core.test.feature.testcontainers.book
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
-import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
@@ -11,14 +8,11 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
-import io.micronaut.starter.template.Writable
 import io.micronaut.starter.test.CommandSpec
 import io.micronaut.starter.util.VersionInfo
-import io.vavr.collection.Stream
 import spock.lang.Retry
 import spock.lang.Unroll
 
-import java.nio.charset.StandardCharsets
 import java.util.stream.Collectors
 
 @Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
@@ -43,9 +37,6 @@ class TestcontainersSpec extends CommandSpec {
         fsoh.write("src/main/java/example/micronaut/Book.java", new RockerWritable(book.template()))
         fsoh.write("src/main/test/example/micronaut/BookRepositoryTest.java", new RockerWritable(bookRepositoryTest.template()))
 
-        if (driverFeature instanceof SQLServer) {
-            fsoh.write("src/testResources/resources/container-license-acceptance.txt") {it.write("mcr.microsoft.com/mssql/server:2017-CU12".getBytes(StandardCharsets.UTF_8)) }
-        }
         String output = null
         if (driverFeature.getName() == "oracle" || driverFeature.getName() == "oracle-cloud-atp") {
             output = "BUILD SUCCESS"
@@ -62,7 +53,7 @@ class TestcontainersSpec extends CommandSpec {
 
         where:
         [buildTool, driverFeature] << [
-                Stream.of(BuildTool.values()).filter(b -> b == BuildTool.MAVEN).collect(Collectors.toList()),
+                BuildTool.values().toList(),
                 beanContext.streamOfType(DatabaseDriverFeature)
                         .filter({ f ->  !f.embedded() })
                         .filter({ f -> f instanceof SQLServer})
