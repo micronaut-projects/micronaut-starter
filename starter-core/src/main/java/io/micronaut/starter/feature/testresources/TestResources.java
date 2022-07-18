@@ -72,9 +72,6 @@ public class TestResources implements Feature {
                     .artifactId("micronaut-test-resources-client")
                     .test();
 
-            // TODO: Remove when it's in the BOM
-            clientDependency = clientDependency.version("1.0.0");
-
             generatorContext.addDependency(clientDependency);
         }
     }
