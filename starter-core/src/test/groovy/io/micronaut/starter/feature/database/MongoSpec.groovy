@@ -105,7 +105,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         with(ctx.getConfiguration()) {
-            get("mongodb.uri") == 'mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb'
+            !get("mongodb.uri")
             get('micronaut.data.mongodb.driver-type') == driverType
         }
 
