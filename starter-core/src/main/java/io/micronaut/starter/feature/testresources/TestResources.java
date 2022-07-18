@@ -74,8 +74,6 @@ public class TestResources implements Feature {
 
             // TODO: Remove when it's in the BOM
             clientDependency = clientDependency.version("1.0.0");
-            // TODO: Remove workaround for https://github.com/micronaut-projects/micronaut-core/pull/7676
-            buildProperties.put("micronaut.test.resources.version", "1.0.0");
 
             generatorContext.addDependency(clientDependency);
         }
