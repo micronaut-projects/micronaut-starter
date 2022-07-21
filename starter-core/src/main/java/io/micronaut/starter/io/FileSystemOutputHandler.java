@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 
 public class FileSystemOutputHandler implements OutputHandler {
 
@@ -85,14 +87,19 @@ public class FileSystemOutputHandler implements OutputHandler {
     }
 
     public File write(String path, Writable contents) throws IOException {
+        return write(path, contents, false);
+    }
+
+    public File write(String path, Writable contents, boolean append) throws IOException {
         if ('/' != File.separatorChar) {
             path = path.replace('/', File.separatorChar);
         }
         File targetFile = new File(applicationDirectory, path);
         targetFile.getParentFile().mkdirs();
-        targetFile.createNewFile();
-
-        try (OutputStream os = Files.newOutputStream(targetFile.toPath())) {
+        if (!append) {
+            targetFile.createNewFile();
+        }
+        try (OutputStream os = Files.newOutputStream(targetFile.toPath(), append ? StandardOpenOption.APPEND : StandardOpenOption.CREATE)) {
             contents.write(os);
         }
         return targetFile;

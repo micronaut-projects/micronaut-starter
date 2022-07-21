@@ -116,7 +116,7 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-test-resources-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
