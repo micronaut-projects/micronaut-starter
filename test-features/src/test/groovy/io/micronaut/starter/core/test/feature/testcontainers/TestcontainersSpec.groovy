@@ -13,6 +13,11 @@ import io.micronaut.starter.util.VersionInfo
 import spock.lang.Retry
 import spock.lang.Unroll
 
+// Required so Groovy recognizes these as a class
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepository
+import io.micronaut.starter.core.test.feature.testcontainers.book
+import io.micronaut.starter.core.test.feature.testcontainers.bookRepositoryTest
+
 import java.util.stream.Collectors
 
 @Retry // sometimes CI gets connection failure/reset resolving dependencies from Maven central
