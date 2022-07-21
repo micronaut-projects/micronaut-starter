@@ -30,6 +30,10 @@ import java.util.Map;
 
 @Singleton
 public class R2dbc implements R2dbcFeature {
+    private static final Dependency.Builder DEPENDENCY_MICRONAUT_R2DBC_CORE = Dependency.builder()
+            .groupId("io.micronaut.r2dbc")
+            .artifactId("micronaut-r2dbc-core")
+            .compile();
 
     private static final String PREFIX = "r2dbc.datasources.default.";
     private static final String URL_KEY = PREFIX + "url";
@@ -54,6 +58,7 @@ public class R2dbc implements R2dbcFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "R2DBC - Reactive Database Connectivity";
     }
@@ -97,10 +102,7 @@ public class R2dbc implements R2dbcFeature {
             generatorContext.getConfiguration().putAll(rdbcConfig);
         });
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut.r2dbc")
-                    .artifactId("micronaut-r2dbc-core")
-                    .compile());
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_R2DBC_CORE);
         }
     }
 

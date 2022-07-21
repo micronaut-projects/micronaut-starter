@@ -10,8 +10,18 @@
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+        <repository>
+            <id>gradle-plugins</id>
+            <url>https://plugins.gradle.org/m2</url>
+        </repository>
     </repositories>
     <dependencies>
+        <dependency>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-instrumentation-bom-alpha</artifactId>
+            <version>1.14.0-alpha</version>
+            <type>pom</type>
+        </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
@@ -20,7 +30,7 @@
         <dependency>
             <groupId>com.agorapulse</groupId>
             <artifactId>gru-micronaut</artifactId>
-            <version>1.0.3</version>
+            <version>1.2.2</version>
         </dependency>
         <dependency>
             <groupId>com.agorapulse</groupId>
@@ -40,7 +50,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
-            <version>3.8.1</version>
+            <version>3.10.3</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
@@ -105,7 +115,7 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
@@ -125,7 +135,7 @@
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby</artifactId>
-            <version>9.3.3.0</version>
+            <version>9.3.6.0</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
@@ -195,7 +205,7 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>1.11.0</version>
+            <version>1.12.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>

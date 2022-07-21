@@ -16,16 +16,35 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-import io.micronaut.starter.feature.database.r2dbc.R2dbc;
-
-import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
+
+import java.util.Optional;
+
+import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VERTX_DEPENDENCY_GROUP;
 
 @Singleton
 public class SQLServer extends DatabaseDriverFeature {
+
+    public static final String NAME = "sqlserver";
+
+    public static final String VERTX_MSSQL_CLIENT = "vertx-mssql-client";
+
+    private static final Dependency.Builder DEPENDENCY_VERTX_MSSQL_CLIENT = Dependency.builder()
+            .groupId(IO_VERTX_DEPENDENCY_GROUP)
+            .artifactId(VERTX_MSSQL_CLIENT)
+            .compile();
+
+    private static final Dependency.Builder DEPENDENCY_MSSQL_JDBC = Dependency.builder()
+            .groupId("com.microsoft.sqlserver")
+            .artifactId("mssql-jdbc")
+            .runtime();
+
+    private static final Dependency.Builder DEPENDENCY_MSSQL_R2DBC = Dependency.builder()
+            .groupId("io.r2dbc")
+            .artifactId("r2dbc-mssql")
+            .runtime();
 
     public SQLServer(JdbcFeature jdbcFeature, TestContainers testContainers) {
         super(jdbcFeature, testContainers);
@@ -34,7 +53,7 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "sqlserver";
+        return NAME;
     }
 
     @Override
@@ -43,6 +62,7 @@ public class SQLServer extends DatabaseDriverFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds the SQL Server driver and default config";
     }
@@ -78,25 +98,25 @@ public class SQLServer extends DatabaseDriverFeature {
     }
 
     @Override
-    public boolean embedded() {
-        return false;
+    @NonNull
+    public Optional<Dependency.Builder> getR2DbcDependency() {
+        return Optional.of(DEPENDENCY_MSSQL_R2DBC);
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.isFeaturePresent(R2dbc.class)) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.r2dbc")
-                    .artifactId("r2dbc-mssql")
-                    .runtime());
-            if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
-                return;
-            }
-        }
+    @NonNull
+    public Optional<Dependency.Builder> getHibernateReactiveJavaClientDependency() {
+        return Optional.of(DEPENDENCY_VERTX_MSSQL_CLIENT);
+    }
 
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.microsoft.sqlserver")
-                .artifactId("mssql-jdbc")
-                .runtime());
+    @Override
+    @NonNull
+    public Optional<Dependency.Builder> getJavaClientDependency() {
+        return Optional.of(DEPENDENCY_MSSQL_JDBC);
+    }
+
+    @Override
+    public boolean embedded() {
+        return false;
     }
 }

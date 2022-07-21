@@ -17,7 +17,6 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
