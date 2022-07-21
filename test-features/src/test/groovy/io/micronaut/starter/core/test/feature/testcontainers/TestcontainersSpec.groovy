@@ -61,7 +61,6 @@ class TestcontainersSpec extends CommandSpec {
                 BuildTool.values().toList(),
                 beanContext.streamOfType(DatabaseDriverFeature)
                         .filter({ f ->  !f.embedded() })
-                        .filter({ f -> f instanceof SQLServer})
                         .collect(Collectors.toList())
         ].combinations()
     }
