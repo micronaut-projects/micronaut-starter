@@ -74,11 +74,6 @@ public class DataR2dbc implements R2dbcFeature, DataFeature {
     }
 
     @Override
-    public boolean isPreview() {
-        return true;
-    }
-
-    @Override
     public String getTitle() {
         return "Micronaut Data R2DBC";
     }

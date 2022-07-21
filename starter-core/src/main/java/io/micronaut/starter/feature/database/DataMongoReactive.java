@@ -33,18 +33,18 @@ public class DataMongoReactive extends DataMongoFeature {
     @NonNull
     @Override
     public String getName() {
-        return "data-mongodb-async";
+        return "data-mongodb-reactive";
     }
 
     @NonNull
     @Override
     public String getDescription() {
-        return "Adds support for defining asynchronous data repositories for MongoDB";
+        return "Adds support for defining reactive data repositories for MongoDB";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Data MongoDB Async";
+        return "Micronaut Data MongoDB Reactive";
     }
 
     @NonNull
