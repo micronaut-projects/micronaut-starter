@@ -72,9 +72,12 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
     private boolean shouldAddJdbcFeature(FeatureContext featureContext) {
         return !featureContext.isPresent(JdbcFeature.class)
                 && !featureContext.isPresent(R2dbcFeature.class)
-                && !featureContext.isPresent(DataHibernateReactive.class)
-                && !featureContext.isPresent(HibernateReactiveJpa.class)
+                && !hasHibernateReactiveWithoutMigration(featureContext)
                 && jdbcFeature != null;
+    }
+
+    private boolean hasHibernateReactiveWithoutMigration(FeatureContext featureContext) {
+        return featureContext.isPresent(HibernateReactiveFeature.class) && !featureContext.isPresent(MigrationFeature.class);
     }
 
     @Override
@@ -121,6 +124,9 @@ public abstract class DatabaseDriverFeature extends EaseTestingFeature implement
         }
         if (generatorContext.getFeatures().hasFeature(DataHibernateReactive.class) || generatorContext.getFeatures().hasFeature(HibernateReactiveJpa.class)) {
             getHibernateReactiveJavaClientDependency().ifPresent(dependencies::add);
+            if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                getJavaClientDependency().ifPresent(dependencies::add);
+            }
         } else {
             getJavaClientDependency().ifPresent(dependencies::add);
         }

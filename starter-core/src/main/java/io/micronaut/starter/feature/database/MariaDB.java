@@ -28,16 +28,15 @@ import java.util.Optional;
 public class MariaDB extends MySQLCompatibleFeature {
 
     public static final String NAME = "mariadb";
+    public static final Dependency.Builder DEPENDENCY_MARIADB_JAVA_CLIENT = Dependency.builder()
+            .groupId("org.mariadb.jdbc")
+            .artifactId("mariadb-java-client")
+            .runtime();
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_MARIADB = Dependency.builder()
             .groupId("org.mariadb")
                     .artifactId("r2dbc-mariadb")
                     .runtime();
-
-    private static final Dependency.Builder DEPENDENCY_MARIADB_JAVA_CLIENT = Dependency.builder()
-            .groupId("org.mariadb.jdbc")
-            .artifactId("mariadb-java-client")
-            .runtime();
 
     public MariaDB(JdbcFeature jdbcFeature,
                    TestContainers testContainers,

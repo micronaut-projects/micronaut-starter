@@ -10,6 +10,10 @@
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
         </repository>
+        <repository>
+            <id>gradle-plugins</id>
+            <url>https://plugins.gradle.org/m2</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -46,7 +50,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
-            <version>3.8.1</version>
+            <version>3.10.3</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
@@ -111,7 +115,7 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>

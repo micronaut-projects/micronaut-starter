@@ -31,6 +31,10 @@ public class Oracle extends DatabaseDriverFeature {
 
     public static final String NAME = "oracle";
     public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
+    public static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
+            .groupId("com.oracle.database.jdbc")
+            .artifactId("ojdbc8")
+            .runtime();
 
     private static final Dependency.Builder DEPENDENCY_ORACLE_R2DBC = Dependency.builder()
             .groupId("com.oracle.database.r2dbc")
@@ -41,11 +45,6 @@ public class Oracle extends DatabaseDriverFeature {
             .groupId(IO_VERTX_DEPENDENCY_GROUP)
             .artifactId(VERTX_ORACLE_CLIENT)
             .compile();
-
-    private static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
-            .groupId("com.oracle.database.jdbc")
-                .artifactId("ojdbc8")
-                .runtime();
 
     public Oracle(JdbcFeature jdbcFeature,
                   TestContainers testContainers,
