@@ -30,15 +30,15 @@ public class PostgreSQL extends DatabaseDriverFeature {
     public static final String NAME = "postgres";
 
     public static final String VERTX_PG_CLIENT = "vertx-pg-client";
+    public static final Dependency.Builder DEPENDENCY_POSTGRESQL = Dependency.builder()
+            .groupId("org.postgresql")
+            .artifactId("postgresql")
+            .runtime();
+
     private static final Dependency.Builder DEPENDENCY_R2DBC_POSTGRESQL = Dependency.builder()
             .groupId("org.postgresql")
             .artifactId("r2dbc-postgresql")
             .runtime();
-
-    private static final Dependency.Builder DEPENDENCY_POSTGRESQL = Dependency.builder()
-            .groupId("org.postgresql")
-                    .artifactId("postgresql")
-                    .runtime();
 
     private static final Dependency.Builder DEPENDENCY_VERTX_PG_CLIENT = Dependency.builder()
             .groupId(IO_VERTX_DEPENDENCY_GROUP)

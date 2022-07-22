@@ -22,9 +22,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Liquibase implements MigrationFeature {
 
+    public static final String NAME = "liquibase";
+
     @Override
     public String getName() {
-        return "liquibase";
+        return NAME;
     }
 
     @Override
