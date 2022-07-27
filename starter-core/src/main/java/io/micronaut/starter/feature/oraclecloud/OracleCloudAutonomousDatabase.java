@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
@@ -40,8 +41,11 @@ public class OracleCloudAutonomousDatabase extends DatabaseDriverFeature {
 
     private final OracleCloudSdk oracleCloudSdkFeature;
 
-    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature, TestContainers testContainers, OracleCloudSdk oracleCloudSdkFeature) {
-        super(jdbcFeature, testContainers);
+    public OracleCloudAutonomousDatabase(JdbcFeature jdbcFeature,
+                                         TestContainers testContainers,
+                                         TestResources testResources,
+                                         OracleCloudSdk oracleCloudSdkFeature) {
+        super(jdbcFeature, testContainers, testResources);
         this.oracleCloudSdkFeature = oracleCloudSdkFeature;
     }
 

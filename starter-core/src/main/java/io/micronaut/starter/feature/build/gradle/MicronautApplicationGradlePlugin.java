@@ -22,6 +22,7 @@ import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.feature.build.gradle.templates.micronautGradle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MicronautApplicationGradlePlugin {
@@ -45,9 +46,11 @@ public class MicronautApplicationGradlePlugin {
         private Dockerfile dockerfile;
         private List<String> dockerBuildImages;
         private List<String> dockerBuildNativeImages;
+        private List<String> additionalTestResourceModules;
         private BuildTool buildTool;
         private boolean incremental;
         private  String packageName;
+        private boolean sharedTestResources;
 
         public Builder buildTool(BuildTool buildTool) {
             this.buildTool = buildTool;
@@ -110,16 +113,29 @@ public class MicronautApplicationGradlePlugin {
             return this;
         }
 
+        public Builder addAdditionalTestResourceModules(String... modules) {
+            if (additionalTestResourceModules == null) {
+                additionalTestResourceModules = new ArrayList<>();
+            }
+            additionalTestResourceModules.addAll(Arrays.asList(modules));
+            return this;
+        }
+
         public GradlePlugin build() {
             return GradlePlugin.builder()
                     .id(id)
                     .lookupArtifactId(ARTIFACT_ID)
-                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName)))
+                    .extension(new RockerWritable(micronautGradle.template(dsl, buildTool, dockerfile, dockerfileNative, dockerBuildImages, dockerBuildNativeImages, runtime, testRuntime, aotVersion, incremental, packageName, additionalTestResourceModules, sharedTestResources)))
                     .build();
         }
 
         public Builder dsl(GradleDsl gradleDsl) {
             this.dsl = gradleDsl;
+            return this;
+        }
+
+        public Builder withSharedTestResources() {
+            this.sharedTestResources = true;
             return this;
         }
     }

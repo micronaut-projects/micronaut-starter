@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.reactor.Reactor;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -35,8 +36,8 @@ public class HibernateReactiveJpa extends HibernateReactiveFeature {
 
     private final Reactor reactiveFeature;
 
-    HibernateReactiveJpa(Reactor reactiveFeature, TestContainers testContainers) {
-        super(testContainers);
+    HibernateReactiveJpa(Reactor reactiveFeature, TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
         this.reactiveFeature = reactiveFeature;
     }
 

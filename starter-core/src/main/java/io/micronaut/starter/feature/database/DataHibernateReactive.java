@@ -20,6 +20,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -33,8 +34,8 @@ public class DataHibernateReactive extends HibernateReactiveFeature implements D
 
     private final Data data;
 
-    public DataHibernateReactive(Data data, TestContainers testContainers) {
-        super(testContainers);
+    public DataHibernateReactive(Data data, TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
         this.data = data;
     }
 

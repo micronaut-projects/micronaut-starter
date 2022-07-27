@@ -25,7 +25,12 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
+import io.micronaut.starter.feature.database.Data;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -77,11 +82,24 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         if (testRuntimeOptional.isPresent()) {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
+        Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
+        if (!generatorContext.getFeatures().hasFeature(Data.class) && databaseDriverFeature.isPresent()) {
+            databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
+                    .map(dbType -> getModuleName(generatorContext, dbType))
+                    .ifPresent(builder::addAdditionalTestResourceModules);
+        }
+        if (generatorContext.getFeatures().isFeaturePresent(SharedTestResourceFeature.class)) {
+            builder = builder.withSharedTestResources();
+        }
         if (generatorContext.getFeatures().contains(MicronautAot.FEATURE_NAME_AOT)) {
             Coordinate coordinate = generatorContext.resolveCoordinate("micronaut-aot-core");
             builder.aot(coordinate.getVersion());
         }
         return builder.id(id);
+    }
+
+    private String getModuleName(GeneratorContext generatorContext, DbType dbType) {
+        return generatorContext.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName();
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {

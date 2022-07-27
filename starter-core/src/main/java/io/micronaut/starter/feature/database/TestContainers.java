@@ -35,12 +35,14 @@ import java.util.Optional;
 @Singleton
 public class TestContainers implements Feature {
 
+    public static final String NAME = "testcontainers";
+
     private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
     @NonNull
     @Override
     public String getName() {
-        return "testcontainers";
+        return NAME;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class TestContainers implements Feature {
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(driverFeature -> {
             generatorContext.getFeature(R2dbc.class).ifPresent(driverConfiguration -> {
                 if (driverFeature instanceof SQLServer) {
-                    generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
+                    generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04"));
                 }
                 r2dbcUrlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
@@ -70,7 +72,7 @@ public class TestContainers implements Feature {
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
                 String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
                 if (driverFeature instanceof SQLServer) {
-                    generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU4-ubuntu-16.04"));
+                    generatorContext.addTemplate("sqlserverEula", new StringTemplate("src/test/resources/container-license-acceptance.txt", "mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04"));
                 }
                 urlForDatabaseDriverFeature(driverFeature).ifPresent(url -> {
                     Configuration testConfig = generatorContext.getConfiguration("test", ApplicationConfiguration.testConfig());
@@ -143,7 +145,7 @@ public class TestContainers implements Feature {
         } else if (driverFeature instanceof MariaDB) {
             return Optional.of("r2dbc:tc:mariadb:///db?TC_IMAGE_TAG=10");
         } else if (driverFeature instanceof SQLServer) {
-            return Optional.of("r2dbc:tc:sqlserver:///db?TC_IMAGE_TAG=2019-CU4-ubuntu-16.04");
+            return Optional.of("r2dbc:tc:sqlserver:///db?TC_IMAGE_TAG=2019-CU16-GDR1-ubuntu-20.04");
         }
         return Optional.empty();
     }
@@ -160,7 +162,7 @@ public class TestContainers implements Feature {
             return Optional.of("jdbc:tc:mariadb:10:///db");
 
         } else if (driverFeature instanceof SQLServer) {
-            return Optional.of("jdbc:tc:sqlserver:2019-CU4-ubuntu-16.04://databaseName=tempdb");
+            return Optional.of("jdbc:tc:sqlserver:2019-CU16-GDR1-ubuntu-20.04://databaseName=tempdb");
         } else if (driverFeature instanceof Oracle) {
             return Optional.of("jdbc:tc:oracle:thin:@/xe");
         }

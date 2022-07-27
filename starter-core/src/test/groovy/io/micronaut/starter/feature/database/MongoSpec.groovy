@@ -42,7 +42,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-sync")')
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        !template.contains('testImplementation("org.testcontainers:mongodb")')
     }
 
     void "test mongo sync dependencies are present for maven"() {
@@ -57,9 +57,9 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
             scope.text() == 'compile'
             groupId.text() == 'io.micronaut.mongodb'
         }
-        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-test-resources-client" }) {
             scope.text() == 'test'
-            groupId.text() == 'org.testcontainers'
+            groupId.text() == 'io.micronaut.testresources'
         }
     }
 
@@ -78,7 +78,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
                 .render()
         then:
         template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
-        template.contains('testImplementation("org.testcontainers:mongodb")')
+        !template.contains('testImplementation("org.testcontainers:mongodb")')
     }
 
     void "test dependencies are present for maven"() {
@@ -93,9 +93,9 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
             scope.text() == 'compile'
             groupId.text() == 'io.micronaut.mongodb'
         }
-        with(project.dependencies.dependency.find { it.artifactId.text() == "mongodb" }) {
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-test-resources-client" }) {
             scope.text() == 'test'
-            groupId.text() == 'org.testcontainers'
+            groupId.text() == 'io.micronaut.testresources'
         }
     }
 
@@ -105,7 +105,7 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         with(ctx.getConfiguration()) {
-            get("mongodb.uri") == 'mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb'
+            !get("mongodb.uri")
             get('micronaut.data.mongodb.driver-type') == driverType
         }
 

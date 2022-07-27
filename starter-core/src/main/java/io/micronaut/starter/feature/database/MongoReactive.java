@@ -19,12 +19,14 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class MongoReactive extends MongoFeature {
-    public MongoReactive(TestContainers testContainers) {
-        super(testContainers);
+    public MongoReactive(TestContainers testContainers,
+                         TestResources testResources) {
+        super(testContainers, testResources);
     }
 
     @Override
@@ -44,7 +46,6 @@ public class MongoReactive extends MongoFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put("mongodb.uri", "mongodb://${MONGO_HOST:localhost}:${MONGO_PORT:27017}/mydb");
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.mongodb")
                 .artifactId("micronaut-mongo-reactive")

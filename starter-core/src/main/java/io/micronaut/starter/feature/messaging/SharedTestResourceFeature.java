@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2021 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.messaging;
 
-import io.micronaut.starter.feature.testresources.EaseTestingFeature;
-import io.micronaut.starter.feature.testresources.TestResources;
+import io.micronaut.starter.feature.Feature;
 
-public abstract class MongoFeature extends EaseTestingFeature {
-
-    protected MongoFeature(TestContainers testContainers,
-                           TestResources testResources) {
-        super(testContainers, testResources);
-    }
+public interface SharedTestResourceFeature extends Feature {
 }

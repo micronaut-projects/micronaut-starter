@@ -25,9 +25,11 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Flyway implements MigrationFeature {
 
+    public static final String NAME = "flyway";
+
     @Override
     public String getName() {
-        return "flyway";
+        return NAME;
     }
 
     @Override

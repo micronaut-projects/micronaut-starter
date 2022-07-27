@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 /**
@@ -26,25 +27,27 @@ public class DataMongoReactive extends DataMongoFeature {
 
     private static final String ASYNC_MONGODB_ARTIFACT = "mongodb-driver-reactivestreams";
 
-    public DataMongoReactive(Data data, TestContainers testContainers) {
-        super(data, testContainers);
+    public DataMongoReactive(Data data,
+                             TestContainers testContainers,
+                             TestResources testResources) {
+        super(data, testContainers, testResources);
     }
 
     @NonNull
     @Override
     public String getName() {
-        return "data-mongodb-async";
+        return "data-mongodb-reactive";
     }
 
     @NonNull
     @Override
     public String getDescription() {
-        return "Adds support for defining asynchronous data repositories for MongoDB";
+        return "Adds support for defining reactive data repositories for MongoDB";
     }
 
     @Override
     public String getTitle() {
-        return "Micronaut Data MongoDB Async";
+        return "Micronaut Data MongoDB Reactive";
     }
 
     @NonNull

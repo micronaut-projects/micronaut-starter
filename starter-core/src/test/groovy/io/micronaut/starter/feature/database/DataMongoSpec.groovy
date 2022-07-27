@@ -4,6 +4,7 @@ import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.testresources.TestResources
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -24,14 +25,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         build.contains('implementation("io.micronaut.data:micronaut-data-mongodb')
 
-        if (language == Language.GROOVY) {
-            assert build.contains('testImplementation("org.testcontainers:spock")')
-        } else {
-            assert build.contains('testImplementation("org.testcontainers:junit-jupiter")')
-        }
-        build.contains('testImplementation("org.testcontainers:mongodb")')
-        build.contains('testImplementation("org.testcontainers:testcontainers")')
-
         if (language == Language.KOTLIN) {
             assert build.contains('kapt("io.micronaut.data:micronaut-data-document-processor")')
         } else if (language == Language.JAVA) {
@@ -46,19 +39,19 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !build.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor')
 
         where:
-        feature              | gradleConfiguration | driver                           | language        | buildTool
-        'data-mongodb'       | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.JAVA   | BuildTool.GRADLE
-        'data-mongodb'       | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.KOTLIN | BuildTool.GRADLE
-        'data-mongodb'       | 'implementation'    | 'mongodb-driver-sync'            | Language.GROOVY | BuildTool.GRADLE
-        'data-mongodb-async' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.JAVA   | BuildTool.GRADLE
-        'data-mongodb-async' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.KOTLIN | BuildTool.GRADLE
-        'data-mongodb-async' | 'implementation'    | 'mongodb-driver-reactivestreams' | Language.GROOVY | BuildTool.GRADLE
-        'data-mongodb'       | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.JAVA   | BuildTool.GRADLE_KOTLIN
-        'data-mongodb'       | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.KOTLIN | BuildTool.GRADLE_KOTLIN
-        'data-mongodb'       | 'implementation'    | 'mongodb-driver-sync'            | Language.GROOVY | BuildTool.GRADLE_KOTLIN
-        'data-mongodb-async' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.JAVA   | BuildTool.GRADLE_KOTLIN
-        'data-mongodb-async' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.KOTLIN | BuildTool.GRADLE_KOTLIN
-        'data-mongodb-async' | 'implementation'    | 'mongodb-driver-reactivestreams' | Language.GROOVY | BuildTool.GRADLE_KOTLIN
+        feature                 | gradleConfiguration | driver                           | language        | buildTool
+        'data-mongodb'          | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.JAVA   | BuildTool.GRADLE
+        'data-mongodb'          | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.KOTLIN | BuildTool.GRADLE
+        'data-mongodb'          | 'implementation'    | 'mongodb-driver-sync'            | Language.GROOVY | BuildTool.GRADLE
+        'data-mongodb-reactive' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.JAVA   | BuildTool.GRADLE
+        'data-mongodb-reactive' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.KOTLIN | BuildTool.GRADLE
+        'data-mongodb-reactive' | 'implementation'    | 'mongodb-driver-reactivestreams' | Language.GROOVY | BuildTool.GRADLE
+        'data-mongodb'          | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.JAVA   | BuildTool.GRADLE_KOTLIN
+        'data-mongodb'          | 'runtimeOnly'       | 'mongodb-driver-sync'            | Language.KOTLIN | BuildTool.GRADLE_KOTLIN
+        'data-mongodb'          | 'implementation'    | 'mongodb-driver-sync'            | Language.GROOVY | BuildTool.GRADLE_KOTLIN
+        'data-mongodb-reactive' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.JAVA   | BuildTool.GRADLE_KOTLIN
+        'data-mongodb-reactive' | 'runtimeOnly'       | 'mongodb-driver-reactivestreams' | Language.KOTLIN | BuildTool.GRADLE_KOTLIN
+        'data-mongodb-reactive' | 'implementation'    | 'mongodb-driver-reactivestreams' | Language.GROOVY | BuildTool.GRADLE_KOTLIN
     }
 
     void "test adding #feature results in the correct build for a Maven app in #language"() {
@@ -66,11 +59,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def output = generate(ApplicationType.DEFAULT, new Options(language, BuildTool.MAVEN), [feature])
         def readme = output["README.md"]
         def project = new XmlParser().parseText(output['pom.xml'])
-        def expectedTestcontainersArtifacts = [
-                language == Language.GROOVY ? 'spock' : 'junit-jupiter',
-                'mongodb',
-                'testcontainers'
-        ].sort()
 
         then:
         readme
@@ -87,21 +75,24 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
             groupId.text() == 'org.mongodb'
         }
 
+        project.get('properties')[TestResources.MICRONAUT_TEST_RESOURCES_ENABLED].text() == "true"
+
         def testContainersDependencies = project.dependencies.dependency.findAll { it.groupId.text() == 'org.testcontainers' }
-        testContainersDependencies.size() == 3
-        testContainersDependencies.scope*.text().unique() == ['test']
-        testContainersDependencies.artifactId*.text().sort() == expectedTestcontainersArtifacts
+        testContainersDependencies.size() == 0
+
+        def testResourcesDependency = project.dependencies.dependency.findAll { it.groupId.text() == 'io.micronaut.testresources' }.first()
+        testResourcesDependency.scope.text() == 'test'
 
         validatePlugins(language, project)
 
         where:
-        feature              | driver                           | language
-        'data-mongodb'       | 'mongodb-driver-sync'            | Language.JAVA
-        'data-mongodb'       | 'mongodb-driver-sync'            | Language.KOTLIN
-        'data-mongodb'       | 'mongodb-driver-sync'            | Language.GROOVY
-        'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.JAVA
-        'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.KOTLIN
-        'data-mongodb-async' | 'mongodb-driver-reactivestreams' | Language.GROOVY
+        feature                 | driver                           | language
+        'data-mongodb'          | 'mongodb-driver-sync'            | Language.JAVA
+        'data-mongodb'          | 'mongodb-driver-sync'            | Language.KOTLIN
+        'data-mongodb'          | 'mongodb-driver-sync'            | Language.GROOVY
+        'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.JAVA
+        'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.KOTLIN
+        'data-mongodb-reactive' | 'mongodb-driver-reactivestreams' | Language.GROOVY
     }
 
     private boolean validatePlugins(Language language, project) {
@@ -141,11 +132,11 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         build.contains('testImplementation("org.testcontainers:mongodb")')
 
         where:
-        feature              | buildTool
-        'data-mongodb'       | BuildTool.GRADLE
-        'data-mongodb'       | BuildTool.GRADLE_KOTLIN
-        'data-mongodb-async' | BuildTool.GRADLE
-        'data-mongodb-async' | BuildTool.GRADLE_KOTLIN
+        feature                 | buildTool
+        'data-mongodb'          | BuildTool.GRADLE
+        'data-mongodb'          | BuildTool.GRADLE_KOTLIN
+        'data-mongodb-reactive' | BuildTool.GRADLE
+        'data-mongodb-reactive' | BuildTool.GRADLE_KOTLIN
     }
 
     void "adding testcontainers to a #feature feature maven app adds a testcontainers-mongo dependency"() {
@@ -160,11 +151,11 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        feature              | buildTool
-        'data-mongodb'       | BuildTool.GRADLE
-        'data-mongodb'       | BuildTool.GRADLE_KOTLIN
-        'data-mongodb-async' | BuildTool.GRADLE
-        'data-mongodb-async' | BuildTool.GRADLE_KOTLIN
+        feature                 | buildTool
+        'data-mongodb'          | BuildTool.GRADLE
+        'data-mongodb'          | BuildTool.GRADLE_KOTLIN
+        'data-mongodb-reactive' | BuildTool.GRADLE
+        'data-mongodb-reactive' | BuildTool.GRADLE_KOTLIN
     }
 
     void "test config for #feature"() {
@@ -177,6 +168,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         where:
-        feature << ['data-mongodb', 'data-mongodb-async']
+        feature << ['data-mongodb', 'data-mongodb-reactive']
     }
 }

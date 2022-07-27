@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -30,23 +32,25 @@ public class PostgreSQL extends DatabaseDriverFeature {
     public static final String NAME = "postgres";
 
     public static final String VERTX_PG_CLIENT = "vertx-pg-client";
+    public static final Dependency.Builder DEPENDENCY_POSTGRESQL = Dependency.builder()
+            .groupId("org.postgresql")
+            .artifactId("postgresql")
+            .runtime();
+
     private static final Dependency.Builder DEPENDENCY_R2DBC_POSTGRESQL = Dependency.builder()
             .groupId("org.postgresql")
             .artifactId("r2dbc-postgresql")
             .runtime();
-
-    private static final Dependency.Builder DEPENDENCY_POSTGRESQL = Dependency.builder()
-            .groupId("org.postgresql")
-                    .artifactId("postgresql")
-                    .runtime();
 
     private static final Dependency.Builder DEPENDENCY_VERTX_PG_CLIENT = Dependency.builder()
             .groupId(IO_VERTX_DEPENDENCY_GROUP)
             .artifactId(VERTX_PG_CLIENT)
             .compile();
 
-    public PostgreSQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public PostgreSQL(JdbcFeature jdbcFeature,
+                      TestContainers testContainers,
+                      TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override
@@ -80,6 +84,12 @@ public class PostgreSQL extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "org.postgresql.Driver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.POSTGRESQL);
     }
 
     @Override
