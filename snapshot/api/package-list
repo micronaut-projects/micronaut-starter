@@ -187,6 +187,7 @@ io.micronaut.starter.feature.spring
 io.micronaut.starter.feature.stackdriver
 io.micronaut.starter.feature.test
 io.micronaut.starter.feature.test.template
+io.micronaut.starter.feature.testresources
 io.micronaut.starter.feature.tracing
 io.micronaut.starter.feature.validation
 io.micronaut.starter.feature.vertx

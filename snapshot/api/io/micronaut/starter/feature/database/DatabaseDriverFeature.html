@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":6,"i6":6,"i7":6,"i8":10,"i9":6,"i10":6,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":10,"i6":6,"i7":6,"i8":6,"i9":10,"i10":6,"i11":6,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -98,7 +98,12 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../../io/micronaut/starter/feature/testresources/EaseTestingFeature.html" title="class in io.micronaut.starter.feature.testresources">io.micronaut.starter.feature.testresources.EaseTestingFeature</a></li>
+<li>
+<ul class="inheritance">
 <li>io.micronaut.starter.feature.database.DatabaseDriverFeature</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -116,7 +121,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public abstract class <span class="typeNameLabel">DatabaseDriverFeature</span>
-extends java.lang.Object
+extends <a href="../../../../../io/micronaut/starter/feature/testresources/EaseTestingFeature.html" title="class in io.micronaut.starter.feature.testresources">EaseTestingFeature</a>
 implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.html" title="interface in io.micronaut.starter.feature">OneOfFeature</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeatureDependencies.html" title="interface in io.micronaut.starter.feature.database">DatabaseDriverFeatureDependencies</a></pre>
 </li>
 </ul>
@@ -154,8 +159,9 @@ implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.htm
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#DatabaseDriverFeature--">DatabaseDriverFeature</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#DatabaseDriverFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-">DatabaseDriverFeature</a></span>(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
-                     <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#DatabaseDriverFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-io.micronaut.starter.feature.testresources.TestResources-">DatabaseDriverFeature</a></span>(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
+                     <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers,
+                     <a href="../../../../../io/micronaut/starter/feature/testresources/TestResources.html" title="class in io.micronaut.starter.feature.testresources">TestResources</a>&nbsp;testResources)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -197,41 +203,45 @@ implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.htm
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDataDialect--">getDataDialect</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>abstract java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.Optional&lt;<a href="../../../../../io/micronaut/starter/feature/testresources/DbType.html" title="enum in io.micronaut.starter.feature.testresources">DbType</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDbType--">getDbType</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>abstract java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>abstract java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Class&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getFeatureClass--">getFeatureClass</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>abstract java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getJdbcUrl--">getJdbcUrl</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>abstract java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getR2dbcUrl--">getR2dbcUrl</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected java.util.List&lt;<a href="../../../../../io/micronaut/starter/build/dependencies/Dependency.Builder.html" title="class in io.micronaut.starter.build.dependencies">Dependency.Builder</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#parseDependencies-io.micronaut.starter.application.generator.GeneratorContext-">parseDependencies</a></span>(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -290,14 +300,15 @@ implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.htm
 <pre>public&nbsp;DatabaseDriverFeature()</pre>
 </li>
 </ul>
-<a name="DatabaseDriverFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-">
+<a name="DatabaseDriverFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-io.micronaut.starter.feature.testresources.TestResources-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DatabaseDriverFeature</h4>
 <pre>public&nbsp;DatabaseDriverFeature(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
-                             <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers)</pre>
+                             <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers,
+                             <a href="../../../../../io/micronaut/starter/feature/testresources/TestResources.html" title="class in io.micronaut.starter.feature.testresources">TestResources</a>&nbsp;testResources)</pre>
 </li>
 </ul>
 </li>
@@ -361,6 +372,8 @@ implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.htm
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/testresources/EaseTestingFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/testresources/EaseTestingFeature.html" title="class in io.micronaut.starter.feature.testresources">EaseTestingFeature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>featureContext</code> - The feature context</dd>
 </dl>
@@ -442,6 +455,16 @@ implements <a href="../../../../../io/micronaut/starter/feature/OneOfFeature.htm
 <li class="blockList">
 <h4>getDataDialect</h4>
 <pre>public abstract&nbsp;java.lang.String&nbsp;getDataDialect()</pre>
+</li>
+</ul>
+<a name="getDbType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDbType</h4>
+<pre>@NonNull
+public&nbsp;java.util.Optional&lt;<a href="../../../../../io/micronaut/starter/feature/testresources/DbType.html" title="enum in io.micronaut.starter.feature.testresources">DbType</a>&gt;&nbsp;getDbType()</pre>
 </li>
 </ul>
 <a name="getAdditionalConfig--">

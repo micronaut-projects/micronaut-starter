@@ -98,10 +98,15 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../../io/micronaut/starter/feature/testresources/EaseTestingFeature.html" title="class in io.micronaut.starter.feature.testresources">io.micronaut.starter.feature.testresources.EaseTestingFeature</a></li>
+<li>
+<ul class="inheritance">
 <li><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="class in io.micronaut.starter.feature.database">io.micronaut.starter.feature.database.DatabaseDriverFeature</a></li>
 <li>
 <ul class="inheritance">
 <li>io.micronaut.starter.feature.database.MySQLCompatibleFeature</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -167,8 +172,9 @@ extends <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDr
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/MySQLCompatibleFeature.html#MySQLCompatibleFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-">MySQLCompatibleFeature</a></span>(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
-                      <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/MySQLCompatibleFeature.html#MySQLCompatibleFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-io.micronaut.starter.feature.testresources.TestResources-">MySQLCompatibleFeature</a></span>(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
+                      <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers,
+                      <a href="../../../../../io/micronaut/starter/feature/testresources/TestResources.html" title="class in io.micronaut.starter.feature.testresources">TestResources</a>&nbsp;testResources)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -195,7 +201,7 @@ extends <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDr
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;io.micronaut.starter.feature.database.<a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="class in io.micronaut.starter.feature.database">DatabaseDriverFeature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#embedded--">embedded</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getAdditionalConfig--">getAdditionalConfig</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getCategory--">getCategory</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDataDialect--">getDataDialect</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getJdbcUrl--">getJdbcUrl</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getR2dbcUrl--">getR2dbcUrl</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#parseDependencies-io.micronaut.starter.application.generator.GeneratorContext-">parseDependencies</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#embedded--">embedded</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getAdditionalConfig--">getAdditionalConfig</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getCategory--">getCategory</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDataDialect--">getDataDialect</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDbType--">getDbType</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultPassword--">getDefaultPassword</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDefaultUser--">getDefaultUser</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getDriverClass--">getDriverClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getJdbcUrl--">getJdbcUrl</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#getR2dbcUrl--">getR2dbcUrl</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#parseDependencies-io.micronaut.starter.application.generator.GeneratorContext-">parseDependencies</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a>, <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -260,14 +266,15 @@ extends <a href="../../../../../io/micronaut/starter/feature/database/DatabaseDr
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="MySQLCompatibleFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-">
+<a name="MySQLCompatibleFeature-io.micronaut.starter.feature.database.jdbc.JdbcFeature-io.micronaut.starter.feature.database.TestContainers-io.micronaut.starter.feature.testresources.TestResources-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>MySQLCompatibleFeature</h4>
 <pre>public&nbsp;MySQLCompatibleFeature(<a href="../../../../../io/micronaut/starter/feature/database/jdbc/JdbcFeature.html" title="class in io.micronaut.starter.feature.database.jdbc">JdbcFeature</a>&nbsp;jdbcFeature,
-                              <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers)</pre>
+                              <a href="../../../../../io/micronaut/starter/feature/database/TestContainers.html" title="class in io.micronaut.starter.feature.database">TestContainers</a>&nbsp;testContainers,
+                              <a href="../../../../../io/micronaut/starter/feature/testresources/TestResources.html" title="class in io.micronaut.starter.feature.testresources">TestResources</a>&nbsp;testResources)</pre>
 </li>
 </ul>
 </li>
