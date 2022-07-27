@@ -20,13 +20,15 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 
 /**
  * Base class for our data-mongo features.
  */
-public abstract class DataMongoFeature extends TestContainersFeature implements DataFeature {
+public abstract class DataMongoFeature extends EaseTestingFeature implements DataFeature {
 
     private static final String MONGODB_GROUP = "org.mongodb";
     private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
@@ -39,8 +41,8 @@ public abstract class DataMongoFeature extends TestContainersFeature implements 
 
     private final Data data;
 
-    protected DataMongoFeature(Data data, TestContainers testContainers) {
-        super(testContainers);
+    protected DataMongoFeature(Data data, TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
         this.data = data;
     }
 

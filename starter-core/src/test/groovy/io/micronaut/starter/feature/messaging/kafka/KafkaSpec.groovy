@@ -26,6 +26,7 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
+        template.contains('sharedServer = true')
     }
 
     void "test dependencies are present for maven"() {
@@ -41,6 +42,10 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
+          <configuration>
+            <shared>true</shared>
+          </configuration>''')
     }
 
     void "test config"() {
@@ -48,6 +53,6 @@ class KafkaSpec extends ApplicationContextSpec implements CommandOutputFixture {
         GeneratorContext ctx = buildGeneratorContext(['kafka'])
 
         then:
-        ctx.configuration.containsKey('kafka.bootstrap.servers')
+        !ctx.configuration.containsKey('kafka.bootstrap.servers')
     }
 }

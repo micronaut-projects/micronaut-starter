@@ -18,12 +18,14 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 
 public final class MicronautDependencyUtils {
+
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
     public static final String GROUP_ID_MICRONAUT_TEST = "io.micronaut.test";
+    public static final String GROUP_ID_MICRONAUT_R2DBC = "io.micronaut.r2dbc";
     public static final String GROUP_ID_MICRONAUT_DATA = "io.micronaut.data";
     public static final String GROUP_ID_MICRONAUT_SQL = "io.micronaut.sql";
 
@@ -47,15 +49,22 @@ public final class MicronautDependencyUtils {
         return micronautDependency(GROUP_ID_MICRONAUT_SECURITY);
     }
 
+    @NonNull
     public static Dependency.Builder testDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_TEST);
+    }
+
+    @NonNull
+    public static Dependency.Builder r2dbcDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_R2DBC);
     }
 
     @NonNull
     public static Dependency.Builder tracingDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_TRACING);
     }
-    
+
+    @NonNull
     public static Dependency.Builder dataDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_DATA);
     }

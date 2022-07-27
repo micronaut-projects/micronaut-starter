@@ -18,12 +18,15 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
 @Singleton
 public class MySQL extends MySQLCompatibleFeature {
+
     public static final String NAME = "mysql";
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_MYSQL = Dependency.builder()
@@ -36,8 +39,10 @@ public class MySQL extends MySQLCompatibleFeature {
             .artifactId("mysql-connector-java")
             .runtime();
 
-    public MySQL(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public MySQL(JdbcFeature jdbcFeature,
+                 TestContainers testContainers,
+                 TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override
@@ -70,6 +75,12 @@ public class MySQL extends MySQLCompatibleFeature {
     @Override
     public String getDriverClass() {
         return "com.mysql.cj.jdbc.Driver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.MYSQL);
     }
 
     @Override

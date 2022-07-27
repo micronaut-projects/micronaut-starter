@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 /**
@@ -28,8 +29,8 @@ public class DataMongo extends DataMongoFeature {
 
     private static final String SYNC_MONGODB_ARTIFACT = "mongodb-driver-sync";
 
-    public DataMongo(Data data, TestContainers testContainers) {
-        super(data, testContainers);
+    public DataMongo(Data data, TestContainers testContainers, TestResources testResources) {
+        super(data, testContainers, testResources);
     }
 
     @NonNull

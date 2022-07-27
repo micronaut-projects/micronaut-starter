@@ -56,6 +56,7 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         then:
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka")')
         template.contains('implementation("io.micronaut.kafka:micronaut-kafka-streams")')
+        template.contains('sharedServer = true')
     }
 
     void "test dependencies are present for maven"() {
@@ -79,6 +80,10 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
+          <configuration>
+            <shared>true</shared>
+          </configuration>''')
     }
 
     void "test config"() {
@@ -86,6 +91,6 @@ class KafkaStreamsSpec extends ApplicationContextSpec implements CommandOutputFi
         GeneratorContext ctx = buildGeneratorContext(['kafka-streams'])
 
         then:
-        ctx.configuration.containsKey('kafka.bootstrap.servers')
+        !ctx.configuration.containsKey('kafka.bootstrap.servers')
     }
 }

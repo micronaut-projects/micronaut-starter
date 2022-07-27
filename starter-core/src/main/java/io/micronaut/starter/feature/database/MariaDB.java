@@ -18,12 +18,15 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
 
 @Singleton
 public class MariaDB extends MySQLCompatibleFeature {
+
     public static final String NAME = "mariadb";
     public static final Dependency.Builder DEPENDENCY_MARIADB_JAVA_CLIENT = Dependency.builder()
             .groupId("org.mariadb.jdbc")
@@ -35,8 +38,10 @@ public class MariaDB extends MySQLCompatibleFeature {
                     .artifactId("r2dbc-mariadb")
                     .runtime();
 
-    public MariaDB(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public MariaDB(JdbcFeature jdbcFeature,
+                   TestContainers testContainers,
+                   TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override
@@ -89,6 +94,12 @@ public class MariaDB extends MySQLCompatibleFeature {
     @Override
     public boolean embedded() {
         return false;
+    }
+
+    @Override
+    @NonNull
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.MARIADB);
     }
 
     @Override

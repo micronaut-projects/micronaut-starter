@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Options
 import spock.lang.Shared
 import spock.lang.Unroll
 
@@ -158,21 +159,34 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void "test config #driver and #dialect"() {
+    void "test config #driver and #dialect adn build #buildTool"(BuildTool buildTool) {
         given:
-        GeneratorContext ctx = buildGeneratorContext(['data-r2dbc', driver])
+        Options options = new Options(null, null, buildTool)
+        GeneratorContext ctx = buildGeneratorContext([DataR2dbc.NAME, driver], options)
 
         expect:
         ctx.configuration.containsKey("r2dbc.datasources.default.url")
         ctx.configuration.get("r2dbc.datasources.default.dialect") == dialect
 
         where:
-        driver      | dialect
-        "h2"        | "H2"
-        "postgres"  | "POSTGRES"
-        "mysql"     | "MYSQL"
-        "mariadb"   | "MYSQL"
-        "sqlserver" | "SQL_SERVER"
-        "oracle"    | "ORACLE"
+        buildTool               | driver      | dialect
+        BuildTool.MAVEN         | "h2"        | "H2"
+        BuildTool.GRADLE_KOTLIN | "h2"        | "H2"
+        BuildTool.GRADLE        | "h2"        | "H2"
+        BuildTool.MAVEN         | "postgres"  | "POSTGRES"
+        BuildTool.GRADLE_KOTLIN | "postgres"  | "POSTGRES"
+        BuildTool.GRADLE        | "postgres"  | "POSTGRES"
+        BuildTool.MAVEN         | "mysql"     | "MYSQL"
+        BuildTool.MAVEN         | "mysql"     | "MYSQL"
+        BuildTool.GRADLE        | "mysql"     | "MYSQL"
+        BuildTool.MAVEN         | "mariadb"   | "MYSQL"
+        BuildTool.MAVEN         | "mariadb"   | "MYSQL"
+        BuildTool.GRADLE        | "mariadb"   | "MYSQL"
+        BuildTool.MAVEN         | "sqlserver" | "SQL_SERVER"
+        BuildTool.MAVEN         | "sqlserver" | "SQL_SERVER"
+        BuildTool.GRADLE        | "sqlserver" | "SQL_SERVER"
+        BuildTool.MAVEN         | "oracle"    | "ORACLE"
+        BuildTool.MAVEN         | "oracle"    | "ORACLE"
+        BuildTool.GRADLE        | "oracle"    | "ORACLE"
     }
 }

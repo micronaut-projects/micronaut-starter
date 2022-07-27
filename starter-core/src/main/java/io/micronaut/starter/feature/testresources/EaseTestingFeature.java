@@ -13,26 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.testresources;
 
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.database.TestContainers;
 
-public abstract class TestContainersFeature implements Feature  {
+public abstract class EaseTestingFeature implements Feature  {
+    private final TestResources testResources;
     private final TestContainers testContainers;
 
-    protected TestContainersFeature() {
+    protected EaseTestingFeature() {
         this.testContainers = null;
+        this.testResources = null;
     }
 
-    protected TestContainersFeature(TestContainers testContainers) {
+    protected EaseTestingFeature(TestContainers testContainers,
+                                 TestResources testResources) {
         this.testContainers = testContainers;
+        this.testResources = testResources;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(TestContainers.class) && testContainers != null) {
-            featureContext.addFeature(testContainers);
+        if (!featureContext.isPresent(TestResources.class) && testResources != null) {
+            featureContext.addFeature(testResources);
         }
     }
 }

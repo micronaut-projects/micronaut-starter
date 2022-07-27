@@ -6,9 +6,13 @@
 @import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.feature.database.Data
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.r2dbc.R2dbc
 
 @args (
 ApplicationType applicationType,
@@ -192,8 +196,31 @@ MavenBuild mavenBuild
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
-@if (features.contains("springloaded") || features.contains("jrebel") || features.contains("oracle-function") || features.contains("micronaut-aot")) {
+@if (features.contains("springloaded")
+     || features.contains("jrebel")
+     || features.contains("oracle-function")
+     || features.contains("micronaut-aot")
+     || features.isFeaturePresent(SharedTestResourceFeature.class)
+     || (features.isFeaturePresent(DatabaseDriverFeature.class) && !features.isFeaturePresent(Data.class))) {
           <configuration>
+@if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
+            <shared>true</shared>
+}
+@if (features.isFeaturePresent(DatabaseDriverFeature.class) && !features.isFeaturePresent(Data.class)) {
+@with? (String resourceName = features
+    .getFeature(DatabaseDriverFeature.class)
+    .flatMap(DatabaseDriverFeature::getDbType)
+    .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
+    .orElse(null)) {
+            <classpathInference>false</classpathInference>
+            <testResourcesDependencies>
+              <dependency>
+                <groupId>io.micronaut.testresources</groupId>
+                <artifactId>micronaut-test-resources-@resourceName</artifactId>
+              </dependency>
+            </testResourcesDependencies>
+}
+}
 @if (features.contains("springloaded") || features.contains("jrebel")) {
             <jvmArguments>
 @if (features.contains("springloaded")) {

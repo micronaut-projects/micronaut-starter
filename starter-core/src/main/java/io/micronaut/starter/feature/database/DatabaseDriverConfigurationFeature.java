@@ -15,10 +15,14 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.testresources.TestResources;
 
 import java.util.Map;
 import java.util.Optional;
+
+import static io.micronaut.starter.feature.database.jdbc.JdbcFeature.PROPERTY_DATASOURCES_DEFAULT_DB_TYPE;
 
 /**
  * A feature that configures a datasource with a driver
@@ -33,11 +37,14 @@ public interface DatabaseDriverConfigurationFeature extends Feature {
 
     String getPasswordKey();
 
-    default void applyDefaultConfig(DatabaseDriverFeature dbFeature, Map<String, Object> config) {
-        Optional.ofNullable(dbFeature.getJdbcUrl()).ifPresent(url -> config.put(getUrlKey(), url));
+    default void applyDefaultConfig(GeneratorContext generatorContext, DatabaseDriverFeature dbFeature, Map<String, Object> config) {
+        if (!generatorContext.getFeatures().hasFeature(TestResources.class)) {
+            Optional.ofNullable(dbFeature.getJdbcUrl()).ifPresent(url -> config.put(getUrlKey(), url));
+            Optional.ofNullable(dbFeature.getDefaultUser()).ifPresent(user -> config.put(getUsernameKey(), user));
+            Optional.ofNullable(dbFeature.getDefaultPassword()).ifPresent(pass -> config.put(getPasswordKey(), pass));
+        }
         Optional.ofNullable(dbFeature.getDriverClass()).ifPresent(driver -> config.put(getDriverKey(), driver));
-        Optional.ofNullable(dbFeature.getDefaultUser()).ifPresent(user -> config.put(getUsernameKey(), user));
-        Optional.ofNullable(dbFeature.getDefaultPassword()).ifPresent(pass -> config.put(getPasswordKey(), pass));
+        dbFeature.getDbType().ifPresent(dbType -> config.put(PROPERTY_DATASOURCES_DEFAULT_DB_TYPE, dbType.toString()));
         final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig();
         if (!additionalConfig.isEmpty()) {
             config.putAll(additionalConfig);

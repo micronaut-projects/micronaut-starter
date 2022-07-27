@@ -18,17 +18,19 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 
 import java.util.Optional;
 
-public abstract class HibernateReactiveFeature extends TestContainersFeature implements JpaFeature {
+public abstract class HibernateReactiveFeature extends EaseTestingFeature implements JpaFeature {
 
     public static final String JPA_DEFAULT_REACTIVE = "jpa.default.reactive";
 
     public static final String IO_VERTX_DEPENDENCY_GROUP = "io.vertx";
 
-    HibernateReactiveFeature(TestContainers testContainers) {
-        super(testContainers);
+    HibernateReactiveFeature(TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
     }
 
     @Override

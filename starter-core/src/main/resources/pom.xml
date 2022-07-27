@@ -118,6 +118,11 @@
             <version>3.5.1</version>
         </dependency>
         <dependency>
+            <groupId>io.micronaut.gradle</groupId>
+            <artifactId>micronaut-test-resources-plugin</artifactId>
+            <version>3.5.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-functions-gradle-plugin</artifactId>
             <version>1.8.2</version>

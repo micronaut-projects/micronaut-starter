@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -44,10 +46,12 @@ public class Oracle extends DatabaseDriverFeature {
             .artifactId(VERTX_ORACLE_CLIENT)
             .compile();
 
-    public Oracle(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public Oracle(JdbcFeature jdbcFeature,
+                  TestContainers testContainers,
+                  TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
-
+    
     @Override
     @NonNull
     public String getName() {
@@ -78,6 +82,12 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "oracle.jdbc.OracleDriver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.ORACLEXE);
     }
 
     @Override

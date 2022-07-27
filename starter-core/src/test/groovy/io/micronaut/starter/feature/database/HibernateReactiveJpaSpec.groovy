@@ -94,14 +94,15 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 .render()
 
         then:
+        template.contains('id("io.micronaut.test-resources") version')
         !template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
         !template.contains('implementation("io.micronaut.data:micronaut-data-hibernate-reactive")')
         template.contains('implementation("io.micronaut.sql:micronaut-hibernate-reactive")')
         !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
         template.contains($/implementation("$HibernateReactiveFeature.IO_VERTX_DEPENDENCY_GROUP:$client")/$)
 
-        template.contains('testImplementation("org.testcontainers:testcontainers")')
-        template.contains($/testImplementation("org.testcontainers:$container")/$)
+        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
         where:
         db              | client                                    | container
@@ -128,8 +129,8 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         template.contains($/runtimeOnly("$migrationDriver.groupId:$migrationDriver.artifactId")/$)
         template.contains('runtimeOnly("org.flywaydb:flyway-mysql")') == (migration == Flyway.NAME && db in [MySQL.NAME, MariaDB.NAME])
 
-        template.contains('testImplementation("org.testcontainers:testcontainers")')
-        template.contains($/testImplementation("org.testcontainers:$container")/$)
+        !template.contains('testImplementation("org.testcontainers:testcontainers")')
+        !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
         where:
         db              | client                                    | container     | migration      | migrationDriver
@@ -278,27 +279,27 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         GeneratorContext ctx = buildGeneratorContext([HibernateReactiveJpa.NAME, db, migration])
 
         then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration."datasources.default.url" ==~ "jdbc:$jdbcContains:.*"
-        ctx.configuration.containsKey("datasources.default.username")
-        ctx.configuration.containsKey("datasources.default.password")
+        !ctx.configuration.containsKey("datasources.default.url")
+        !ctx.configuration.containsKey("datasources.default.username")
+        !ctx.configuration.containsKey("datasources.default.password")
         !ctx.configuration.containsKey("datasources.default.dialect")
+        ctx.configuration."datasources.default.db-type" == type
         ctx.configuration."jpa.default.reactive" == true
         ctx.configuration."jpa.default.properties.hibernate.connection.url" == '${datasources.default.url}'
         ctx.configuration."jpa.default.properties.hibernate.connection.username" == '${datasources.default.username}'
         ctx.configuration."jpa.default.properties.hibernate.connection.password" == '${datasources.default.password}'
 
         where:
-        db              | jdbcContains | migration
+        db              | type         | migration
         MySQL.NAME      | 'mysql'      | Flyway.NAME
         MariaDB.NAME    | 'mariadb'    | Flyway.NAME
         PostgreSQL.NAME | 'postgresql' | Flyway.NAME
         Oracle.NAME     | 'oracle'     | Flyway.NAME
-        SQLServer.NAME  | 'sqlserver'  | Flyway.NAME
+        SQLServer.NAME  | 'mssql'      | Flyway.NAME
         MySQL.NAME      | 'mysql'      | Liquibase.NAME
         MariaDB.NAME    | 'mariadb'    | Liquibase.NAME
         PostgreSQL.NAME | 'postgresql' | Liquibase.NAME
         Oracle.NAME     | 'oracle'     | Liquibase.NAME
-        SQLServer.NAME  | 'sqlserver'  | Liquibase.NAME
+        SQLServer.NAME  | 'mssql'      | Liquibase.NAME
     }
 }
