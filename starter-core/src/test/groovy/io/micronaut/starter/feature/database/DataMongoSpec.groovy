@@ -80,9 +80,6 @@ class DataMongoSpec extends ApplicationContextSpec implements CommandOutputFixtu
         def testContainersDependencies = project.dependencies.dependency.findAll { it.groupId.text() == 'org.testcontainers' }
         testContainersDependencies.size() == 0
 
-        def testResourcesDependency = project.dependencies.dependency.findAll { it.groupId.text() == 'io.micronaut.testresources' }.first()
-        testResourcesDependency.scope.text() == 'test'
-
         validatePlugins(language, project)
 
         where:
