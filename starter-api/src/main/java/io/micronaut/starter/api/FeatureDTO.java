@@ -41,6 +41,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
     private final String category;
     private final boolean preview;
     private final boolean community;
+    private final String tags;
 
     /**
      * Default constructor.
@@ -55,6 +56,7 @@ public class FeatureDTO extends Linkable implements Named, Described {
         this.category = feature.getCategory();
         this.preview = feature.isPreview();
         this.community = feature.isCommunity();
+        this.tags = feature.getTags();
     }
 
     /**
@@ -65,13 +67,14 @@ public class FeatureDTO extends Linkable implements Named, Described {
      * @param category The category
      */
     @Creator
-    public FeatureDTO(String name, String title, String description, String category) {
+    public FeatureDTO(String name, String title, String description, String category, String tags) {
         this.name = name;
         this.title = title;
         this.description = description;
         this.category = category;
         this.preview = false;
         this.community = false;
+        this.tags = tags;
     }
 
     /**
@@ -121,4 +124,13 @@ public class FeatureDTO extends Linkable implements Named, Described {
     public boolean isCommunity() {
         return community;
     }
+
+    /**
+     * @return String of comma separated tags used for searching
+     */
+    @Schema(description = "String of comma separated tags used for searching")
+    public String getTags() {
+        return tags;
+    }
+
 }

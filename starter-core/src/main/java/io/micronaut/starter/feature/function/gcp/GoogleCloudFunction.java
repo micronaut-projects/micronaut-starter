@@ -111,4 +111,8 @@ public class GoogleCloudFunction extends AbstractGoogleCloudFunction {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions";
     }
 
+    @Override
+    public String getTags() {
+        return "gcp";
+    }
 }
