@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
@@ -30,10 +31,11 @@ import java.util.Map;
 
 @Singleton
 public class R2dbc implements R2dbcFeature {
-    private static final Dependency.Builder DEPENDENCY_MICRONAUT_R2DBC_CORE = Dependency.builder()
-            .groupId("io.micronaut.r2dbc")
+
+    private static final Dependency DEPENDENCY_MICRONAUT_R2DBC_CORE = MicronautDependencyUtils.r2dbcDependency()
             .artifactId("micronaut-r2dbc-core")
-            .compile();
+            .compile()
+            .build();
 
     private static final String PREFIX = "r2dbc.datasources.default.";
     private static final String URL_KEY = PREFIX + "url";

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 
 import java.util.Optional;
 
@@ -27,14 +28,15 @@ import static io.micronaut.starter.feature.database.DataHibernateReactive.IO_VER
  * Marker interface for classes compatible with MySQL such as {@link MySQL} or {@link MariaDB}.
  */
 public abstract class MySQLCompatibleFeature extends DatabaseDriverFeature {
+
     public static final String VERTX_MYSQL_CLIENT = "vertx-mysql-client";
     private static final Dependency.Builder DEPENDENCY_VERTX_MYSQL_CLIENT = Dependency.builder()
             .groupId(IO_VERTX_DEPENDENCY_GROUP)
             .artifactId(VERTX_MYSQL_CLIENT)
             .compile();
 
-    public MySQLCompatibleFeature(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public MySQLCompatibleFeature(JdbcFeature jdbcFeature, TestContainers testContainers, TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override

@@ -15,15 +15,17 @@
  */
 package io.micronaut.starter.feature.messaging.mqtt;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MqttV3 extends AbstractMqttFeature implements MqttFeature {
+public class MqttV3 implements MqttFeature {
 
     public static final String NAME = "mqttv3";
 
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -36,7 +38,7 @@ public class MqttV3 extends AbstractMqttFeature implements MqttFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        super.apply(generatorContext);
+        MqttFeature.super.apply(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.mqtt")
                 .artifactId("micronaut-mqttv3")

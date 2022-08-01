@@ -63,7 +63,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     ocid: ''
     walletPassword: ''
 """)
-        config.contains("""
+        !config.contains("""
     username: ''
     password: ''
 """)
@@ -104,7 +104,7 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
     ocid: ''
     walletPassword: ''
 """)
-        config.contains("""
+        !config.contains("""
     username: ''
     password: ''
 """)

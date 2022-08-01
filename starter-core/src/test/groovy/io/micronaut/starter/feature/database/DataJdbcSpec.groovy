@@ -8,6 +8,7 @@ import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
 class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixture {
@@ -91,48 +92,41 @@ class DataJdbcSpec extends ApplicationContextSpec  implements CommandOutputFixtu
         semanticVersionOptional.isPresent()
     }
 
-    void "test config"() {
-        when:
-        GeneratorContext ctx = buildGeneratorContext(['data-jdbc'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "H2"
+    void "test config for #buildTool for features #features"(BuildTool buildTool,
+                                      String dialect,
+                                      List<String> features) {
+        given:
+        Options options = new Options(null, null, buildTool)
 
         when:
-        ctx = buildGeneratorContext(['data-jdbc', 'postgres'])
+        GeneratorContext ctx = buildGeneratorContext(features, options)
 
         then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "POSTGRES"
+        if (features.size() == 1) {
+            assert ctx.configuration.containsKey("datasources.default.url")
+        }
+        ctx.configuration.get("datasources.default.dialect") == dialect
 
-        when:
-        ctx = buildGeneratorContext(['data-jdbc', 'mysql'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
-
-        when:
-        ctx = buildGeneratorContext(['data-jdbc', 'mariadb'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
-
-        when:
-        ctx = buildGeneratorContext(['data-jdbc', 'oracle'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "ORACLE"
-
-        when:
-        ctx = buildGeneratorContext(['data-jdbc', 'sqlserver'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+        where:
+        buildTool               | dialect       | features
+        BuildTool.GRADLE        | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
+        BuildTool.GRADLE_KOTLIN | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
+        BuildTool.MAVEN         | 'SQL_SERVER'  | ['data-jdbc', 'sqlserver']
+        BuildTool.GRADLE        | 'ORACLE'      | ['data-jdbc', 'oracle']
+        BuildTool.GRADLE_KOTLIN | 'ORACLE'      | ['data-jdbc', 'oracle']
+        BuildTool.MAVEN         | 'ORACLE'      | ['data-jdbc', 'oracle']
+        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mariadb']
+        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mariadb']
+        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mariadb']
+        BuildTool.GRADLE        | 'MYSQL'       | ['data-jdbc', 'mysql']
+        BuildTool.GRADLE_KOTLIN | 'MYSQL'       | ['data-jdbc', 'mysql']
+        BuildTool.MAVEN         | 'MYSQL'       | ['data-jdbc', 'mysql']
+        BuildTool.GRADLE        | 'POSTGRES'    | ['data-jdbc', 'postgres']
+        BuildTool.GRADLE_KOTLIN | 'POSTGRES'    | ['data-jdbc', 'postgres']
+        BuildTool.MAVEN         | 'POSTGRES'    | ['data-jdbc', 'postgres']
+        BuildTool.GRADLE        | 'H2'          | ['data-jdbc']
+        BuildTool.GRADLE_KOTLIN | 'H2'          | ['data-jdbc']
+        BuildTool.MAVEN         | 'H2'          | ['data-jdbc']
     }
 
     void "test render config"() {

@@ -26,6 +26,7 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
 
         then:
         template.contains('implementation("io.micronaut.rabbitmq:micronaut-rabbitmq")')
+        template.contains('sharedServer = true')
     }
 
     void "test dependencies are present for maven"() {
@@ -42,6 +43,10 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
       <scope>compile</scope>
     </dependency>
 """)
+        template.contains('''<artifactId>micronaut-maven-plugin</artifactId>
+          <configuration>
+            <shared>true</shared>
+          </configuration>''')
     }
 
     void "test config"() {
@@ -49,6 +54,6 @@ class RabbitMQSpec extends ApplicationContextSpec implements CommandOutputFixtur
         GeneratorContext ctx = buildGeneratorContext(['rabbitmq'])
 
         then:
-        ctx.configuration.containsKey('rabbitmq.uri')
+        !ctx.configuration.containsKey('rabbitmq.uri')
     }
 }

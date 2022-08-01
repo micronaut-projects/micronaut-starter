@@ -20,21 +20,26 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryGroovy;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryJava;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleFactoryKotlin;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerGroovy;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerJava;
 import io.micronaut.starter.feature.messaging.kafka.templates.exampleListenerKotlin;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class KafkaStreams implements MessagingFeature {
+public class KafkaStreams extends EaseTestingFeature implements MessagingFeature, SharedTestResourceFeature {
 
     private final Kafka kafka;
 
-    public KafkaStreams(Kafka kafka) {
+    public KafkaStreams(TestContainers testContainers, TestResources testResources, Kafka kafka) {
+        super(testContainers, testResources);
         this.kafka = kafka;
     }
 

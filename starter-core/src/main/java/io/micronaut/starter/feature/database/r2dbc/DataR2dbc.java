@@ -24,17 +24,21 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
-
 import jakarta.inject.Singleton;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
 public class DataR2dbc implements R2dbcFeature, DataFeature {
+
+    public static final String NAME = "data-r2dbc";
+
     private static final Dependency DEPENDENCY_MICRONAUT_DATA_R2DBC = MicronautDependencyUtils.dataDependency()
             .artifactId("micronaut-data-r2dbc")
             .compile()
             .build();
+
     private final Data data;
     private final R2dbc r2dbc;
 
@@ -70,12 +74,7 @@ public class DataR2dbc implements R2dbcFeature, DataFeature {
     @NonNull
     @Override
     public String getName() {
-        return "data-r2dbc";
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
+        return NAME;
     }
 
     @Override

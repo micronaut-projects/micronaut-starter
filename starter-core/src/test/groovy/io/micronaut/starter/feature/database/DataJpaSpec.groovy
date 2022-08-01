@@ -7,6 +7,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Issue
 
 class DataJpaSpec extends ApplicationContextSpec {
@@ -108,49 +109,40 @@ class DataJpaSpec extends ApplicationContextSpec {
 ''')
     }
 
-    void "test config"() {
+    void "test config for #features and #buildTool"(List<String> features, String dialect, BuildTool buildTool) {
+        given:
+        Options options = new Options(null, null, buildTool)
+
         when:
-        GeneratorContext ctx = buildGeneratorContext(['data-jpa'])
+        GeneratorContext ctx = buildGeneratorContext(features, options)
 
         then:
-        ctx.configuration.containsKey("datasources.default.url")
+        if (features.size() == 1) {
+            assert ctx.configuration.containsKey("datasources.default.url")
+        }
         ctx.configuration.containsKey("jpa.default.properties.hibernate.hbm2ddl.auto")
-        ctx.configuration.get("datasources.default.dialect") == "H2"
+        ctx.configuration.get("datasources.default.dialect") == dialect
 
-        when:
-        ctx = buildGeneratorContext(['data-jpa', 'postgres'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "POSTGRES"
-
-        when:
-        ctx = buildGeneratorContext(['data-jpa', 'mysql'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
-
-        when:
-        ctx = buildGeneratorContext(['data-jpa', 'mariadb'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "MYSQL"
-
-        when:
-        ctx = buildGeneratorContext(['data-jpa', 'oracle'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "ORACLE"
-
-        when:
-        ctx = buildGeneratorContext(['data-jpa', 'sqlserver'])
-
-        then:
-        ctx.configuration.containsKey("datasources.default.url")
-        ctx.configuration.get("datasources.default.dialect") == "SQL_SERVER"
+        where:
+        buildTool                 | features                  | dialect
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa']              | "H2"
+        BuildTool.GRADLE          | ['data-jpa']              | "H2"
+        BuildTool.MAVEN           | ['data-jpa']              | "H2"
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa', 'postgres']  | "POSTGRES"
+        BuildTool.GRADLE          | ['data-jpa', 'postgres']  | "POSTGRES"
+        BuildTool.MAVEN           | ['data-jpa', 'postgres']  | "POSTGRES"
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa', 'mysql']     | "MYSQL"
+        BuildTool.GRADLE          | ['data-jpa', 'mysql']     | "MYSQL"
+        BuildTool.MAVEN           | ['data-jpa', 'mysql']     | "MYSQL"
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa', 'mariadb']   | "MYSQL"
+        BuildTool.GRADLE          | ['data-jpa', 'mariadb']   | "MYSQL"
+        BuildTool.MAVEN           | ['data-jpa', 'mariadb']   | "MYSQL"
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa', 'oracle']    | "ORACLE"
+        BuildTool.GRADLE          | ['data-jpa', 'oracle']    | "ORACLE"
+        BuildTool.MAVEN           | ['data-jpa', 'oracle']    | "ORACLE"
+        BuildTool.GRADLE_KOTLIN   | ['data-jpa', 'sqlserver'] | "SQL_SERVER"
+        BuildTool.GRADLE          | ['data-jpa', 'sqlserver'] | "SQL_SERVER"
+        BuildTool.MAVEN           | ['data-jpa', 'sqlserver'] | "SQL_SERVER"
     }
 
     @Issue("https://github.com/micronaut-projects/micronaut-starter/issues/686")

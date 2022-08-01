@@ -84,7 +84,7 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
     public void apply(GeneratorContext generatorContext) {
         Map<String, Object> config = generatorContext.getConfiguration();
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        applyDefaultConfig(dbFeature, config);
+        applyDefaultConfig(generatorContext, dbFeature, config);
         config.put("dataSource.pooled", true);
         config.put("dataSource.jmxExport", true);
         config.put("hibernate.hbm2ddl.auto", generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :

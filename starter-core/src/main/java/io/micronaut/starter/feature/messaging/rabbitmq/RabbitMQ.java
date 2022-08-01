@@ -18,13 +18,21 @@ package io.micronaut.starter.feature.messaging.rabbitmq;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.database.TestContainers;
 import io.micronaut.starter.feature.messaging.MessagingFeature;
+import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
+import io.micronaut.starter.feature.testresources.EaseTestingFeature;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class RabbitMQ implements MessagingFeature {
+public class RabbitMQ extends EaseTestingFeature implements MessagingFeature, SharedTestResourceFeature {
 
     public static final String NAME = "rabbitmq";
+
+    public RabbitMQ(TestContainers testContainers, TestResources testResources) {
+        super(testContainers, testResources);
+    }
 
     @Override
     public String getName() {
@@ -43,7 +51,9 @@ public class RabbitMQ implements MessagingFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put ("rabbitmq.uri", "amqp://localhost:5672");
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            generatorContext.getConfiguration().put("rabbitmq.uri", "amqp://localhost:5672");
+        }
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.rabbitmq")
                 .artifactId("micronaut-rabbitmq")

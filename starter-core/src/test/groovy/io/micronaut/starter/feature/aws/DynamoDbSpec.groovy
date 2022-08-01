@@ -46,8 +46,8 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         then:
         template.contains('implementation("io.micronaut.aws:micronaut-aws-sdk-v2")')
         template.contains("""    implementation("software.amazon.awssdk:dynamodb") {
-                            |      exclude(group$mapNotation "software.amazon.awssdk", name$mapNotation "apache-client")
-                            |      exclude(group$mapNotation "software.amazon.awssdk", name$mapNotation "netty-nio-client")
+                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "apache-client")
+                            |      exclude(group$mapNotation "software.amazon.awssdk", module$mapNotation "netty-nio-client")
                             |    }""".stripMargin())
         template.contains('implementation("software.amazon.awssdk:url-connection-client")')
 

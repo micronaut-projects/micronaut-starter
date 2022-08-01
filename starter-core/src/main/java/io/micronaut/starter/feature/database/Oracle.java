@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -29,6 +31,10 @@ public class Oracle extends DatabaseDriverFeature {
 
     public static final String NAME = "oracle";
     public static final String VERTX_ORACLE_CLIENT = "vertx-oracle-client";
+    public static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
+            .groupId("com.oracle.database.jdbc")
+            .artifactId("ojdbc8")
+            .runtime();
 
     private static final Dependency.Builder DEPENDENCY_ORACLE_R2DBC = Dependency.builder()
             .groupId("com.oracle.database.r2dbc")
@@ -40,15 +46,12 @@ public class Oracle extends DatabaseDriverFeature {
             .artifactId(VERTX_ORACLE_CLIENT)
             .compile();
 
-    private static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
-            .groupId("com.oracle.database.jdbc")
-                .artifactId("ojdbc8")
-                .runtime();
-
-    public Oracle(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public Oracle(JdbcFeature jdbcFeature,
+                  TestContainers testContainers,
+                  TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
-
+    
     @Override
     @NonNull
     public String getName() {
@@ -79,6 +82,12 @@ public class Oracle extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "oracle.jdbc.OracleDriver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.ORACLEXE);
     }
 
     @Override

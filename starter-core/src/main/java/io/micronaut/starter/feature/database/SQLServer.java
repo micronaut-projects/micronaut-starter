@@ -18,6 +18,8 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
+import io.micronaut.starter.feature.testresources.DbType;
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -30,24 +32,25 @@ public class SQLServer extends DatabaseDriverFeature {
     public static final String NAME = "sqlserver";
 
     public static final String VERTX_MSSQL_CLIENT = "vertx-mssql-client";
+    public static final Dependency.Builder DEPENDENCY_MSSQL_JDBC = Dependency.builder()
+            .groupId("com.microsoft.sqlserver")
+            .artifactId("mssql-jdbc")
+            .runtime();
 
     private static final Dependency.Builder DEPENDENCY_VERTX_MSSQL_CLIENT = Dependency.builder()
             .groupId(IO_VERTX_DEPENDENCY_GROUP)
             .artifactId(VERTX_MSSQL_CLIENT)
             .compile();
 
-    private static final Dependency.Builder DEPENDENCY_MSSQL_JDBC = Dependency.builder()
-            .groupId("com.microsoft.sqlserver")
-            .artifactId("mssql-jdbc")
-            .runtime();
-
     private static final Dependency.Builder DEPENDENCY_MSSQL_R2DBC = Dependency.builder()
             .groupId("io.r2dbc")
             .artifactId("r2dbc-mssql")
             .runtime();
 
-    public SQLServer(JdbcFeature jdbcFeature, TestContainers testContainers) {
-        super(jdbcFeature, testContainers);
+    public SQLServer(JdbcFeature jdbcFeature,
+                     TestContainers testContainers,
+                     TestResources testResources) {
+        super(jdbcFeature, testContainers, testResources);
     }
 
     @Override
@@ -80,6 +83,12 @@ public class SQLServer extends DatabaseDriverFeature {
     @Override
     public String getDriverClass() {
         return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    }
+
+    @NonNull
+    @Override
+    public Optional<DbType> getDbType() {
+        return Optional.of(DbType.SQLSERVER);
     }
 
     @Override

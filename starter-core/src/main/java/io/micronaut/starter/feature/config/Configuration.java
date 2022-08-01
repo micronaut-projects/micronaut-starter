@@ -196,7 +196,7 @@ public class Configuration extends LinkedHashMap<String, Object> {
     }
 
     public void addCommaSeparatedValue(String key, String value) {
-        if(containsNested(key)) {
+        if (containsNested(key)) {
             addNested(key, getNested(key) + "," + value);
         } else {
             addNested(key, value);
