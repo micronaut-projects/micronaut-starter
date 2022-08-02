@@ -157,13 +157,6 @@ MavenBuild mavenBuild
     @if (features.contains("mockito")) {
 @dependency.template("org.mockito", "mockito-core", "test", null, false, null)
     }
-} else if (features.testFramework().isKotlinTestFramework()) {
-@dependency.template("io.mockk", "mockk", "test", "1.9.3", false, null)
-@if (features.testFramework().isKoTest()) {
-@dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null, false, null)
-@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.2.5", false, null)
-@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.2.5", false, null)
-}
 } else if (features.testFramework().isSpock()) {
 @if (!features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-inject-groovy", "test", null, false, null)

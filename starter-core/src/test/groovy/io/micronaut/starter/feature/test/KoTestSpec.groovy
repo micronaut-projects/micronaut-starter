@@ -35,4 +35,51 @@ class KoTestSpec extends ApplicationContextSpec {
 ''')
 
     }
+    void 'test maven configure unit tests for Kotest5'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .testFramework(TestFramework.KOTEST)
+                .render()
+
+        then:
+        template.contains('''
+    <dependency>
+      <groupId>io.kotest</groupId>
+      <artifactId>kotest-assertions-core-jvm</artifactId>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.kotest</groupId>
+      <artifactId>kotest-runner-junit5-jvm</artifactId>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.micronaut.test</groupId>
+      <artifactId>micronaut-test-kotest5</artifactId>
+      <scope>test</scope>
+    </dependency>
+''')
+        template.contains('''
+    <dependency>
+      <groupId>io.mockk</groupId>
+      <artifactId>mockk</artifactId>
+      <scope>test</scope>
+    </dependency>
+''')
+
+    }
+
+    void 'test gradle configure unit tests for Kotest5'() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .testFramework(TestFramework.KOTEST)
+                .render()
+
+        then:
+        template.contains('testRuntime("kotest5")')
+    }
 }

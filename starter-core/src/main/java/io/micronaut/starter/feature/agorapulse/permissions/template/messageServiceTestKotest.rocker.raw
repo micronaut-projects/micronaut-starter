@@ -16,7 +16,7 @@ import io.micronaut.security.authentication.Authentication
 import io.micronaut.security.utils.DefaultSecurityService
 import io.micronaut.security.utils.SecurityService
 import io.micronaut.test.annotation.MockBean
-import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import io.mockk.every
 import io.mockk.mockk
 import java.util.Optional
