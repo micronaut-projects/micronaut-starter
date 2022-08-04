@@ -1,7 +1,5 @@
 name: Release
-on:
-  release:
-    types: [published]
+on: workflow_dispatch
 jobs:
   build:
     name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
