@@ -1,5 +1,7 @@
 name: Release
-on: workflow_dispatch
+on:
+  release:
+    types: [published]
 jobs:
   build:
     name: Release artifacts to Bintray, Maven Central & SDKMAN, and publish documentation
@@ -41,16 +43,16 @@ jobs:
 #          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
 #          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
 #        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
-#      - name: Upload CLI Zip
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ github.event.release.upload_url }}
-#          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-#          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
-#          asset_content_type: application/zip
+      - name: Upload CLI Zip
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: starter-cli/build/distributions/micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+          asset_name: micronaut-cli-${{ steps.release_version.outputs.release_version }}.zip
+          asset_content_type: application/zip
       - name: Publish to Github Pages
         if: success()
         uses: micronaut-projects/github-pages-deploy-action@master
