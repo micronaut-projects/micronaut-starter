@@ -148,8 +148,8 @@ public class AppStack extends Stack {
                 .build();
 }
 
-        CfnOutput.Builder.create(this, "ApiUrl")
-                .exportName("ApiUrl")
+        CfnOutput.Builder.create(this, "MnTestApiUrl")
+                .exportName("MnTestApiUrl")
 @if (features.contains("amazon-api-gateway")) {
                 .value(api.getUrl())
 }
