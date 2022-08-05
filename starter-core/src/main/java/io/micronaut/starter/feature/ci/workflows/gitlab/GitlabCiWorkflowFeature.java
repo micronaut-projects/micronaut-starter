@@ -18,8 +18,8 @@ package io.micronaut.starter.feature.ci.workflows.gitlab;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.ci.workflows.CIWorkflowFeature;
-import io.micronaut.starter.feature.ci.workflows.gitlab.templates.gitlabciGradle;
-import io.micronaut.starter.feature.ci.workflows.gitlab.templates.gitlabciMaven;
+import io.micronaut.starter.feature.ci.workflows.gitlab.templates.gitlabci;
+import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import jakarta.inject.Singleton;
@@ -55,19 +55,13 @@ public class GitlabCiWorkflowFeature extends CIWorkflowFeature {
     }
 
     private Template workflowRockerTemplate(GeneratorContext generatorContext) {
-        switch (generatorContext.getBuildTool()) {
-            case GRADLE:
-            case GRADLE_KOTLIN:
-                return new RockerTemplate(WORKFLOW_FILE_NAME, gitlabciGradle.template()
-                );
-            case MAVEN:
-                return new RockerTemplate(WORKFLOW_FILE_NAME, gitlabciMaven.template(
-                        generatorContext.getJdkVersion())
-                );
-            default:
-                throw new IllegalArgumentException("Unexpected constant for BuildTool enum");
-        }
-
+        return new RockerTemplate(WORKFLOW_FILE_NAME,
+                gitlabci.template(
+                        generatorContext.getProject().getName(),
+                        generatorContext.getBuildTool(),
+                        generatorContext.getJdkVersion(),
+                        generatorContext.getFeatures().hasFeature(GraalVM.class))
+        );
     }
 
     @Override
