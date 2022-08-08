@@ -210,7 +210,7 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>1.12.0</version>
+            <version>1.14.1</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
