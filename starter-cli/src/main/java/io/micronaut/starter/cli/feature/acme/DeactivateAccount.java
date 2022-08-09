@@ -49,6 +49,7 @@ import static picocli.CommandLine.Help.Visibility.ALWAYS;
 )
 @Prototype
 public final class DeactivateAccount extends CodeGenCommand {
+
     @ReflectiveAccess
     @Option(names = {"-n", "--key-name"}, showDefaultValue = ALWAYS, description = "Name of the key to be used")
     String keyName;
@@ -65,7 +66,9 @@ public final class DeactivateAccount extends CodeGenCommand {
         super(config);
     }
 
-    public DeactivateAccount(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public DeactivateAccount(CodeGenConfig config,
+                             ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                             ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

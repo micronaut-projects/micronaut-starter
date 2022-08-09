@@ -52,7 +52,9 @@ public class CreateTestCommand extends CodeGenCommand {
         super(config);
     }
 
-    public CreateTestCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateTestCommand(CodeGenConfig config,
+                             ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                             ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -68,7 +70,8 @@ public class CreateTestCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         final String path = "/{packagePath}/{className}";
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(
+                spock.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
                 kotlinJunit.template(project),

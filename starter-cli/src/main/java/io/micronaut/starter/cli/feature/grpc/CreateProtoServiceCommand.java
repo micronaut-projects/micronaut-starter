@@ -47,7 +47,9 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
         super(config);
     }
 
-    public CreateProtoServiceCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateProtoServiceCommand(CodeGenConfig config,
+                                     ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                     ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -84,5 +86,4 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
         return 0;
     }
-
 }

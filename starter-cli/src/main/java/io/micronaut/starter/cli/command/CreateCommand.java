@@ -77,10 +77,10 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     private final ApplicationType applicationType;
     private final ProjectGenerator projectGenerator;
 
-    public CreateCommand(AvailableFeatures availableFeatures,
-                         ContextFactory contextFactory,
-                         ApplicationType applicationType,
-                         ProjectGenerator projectGenerator) {
+    protected CreateCommand(AvailableFeatures availableFeatures,
+                            ContextFactory contextFactory,
+                            ApplicationType applicationType,
+                            ProjectGenerator projectGenerator) {
         this.availableFeatures = availableFeatures;
         this.contextFactory = contextFactory;
         this.applicationType = applicationType;
@@ -110,7 +110,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         try {
             project = NameUtils.parse(name);
         } catch (IllegalArgumentException e) {
-            throw new ParameterException(this.spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
+            throw new ParameterException(spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
         }
 
         OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
@@ -132,10 +132,6 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     }
 
     private JdkVersion getJdkVersion() {
-        if (javaVersion == null) {
-            return VersionInfo.getJavaVersion();
-        } else {
-            return JdkVersion.valueOf(javaVersion);
-        }
+        return javaVersion == null ? VersionInfo.getJavaVersion() : JdkVersion.valueOf(javaVersion);
     }
 }

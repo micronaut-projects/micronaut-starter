@@ -66,14 +66,14 @@ public class FeatureContext {
     }
 
     public void processSelectedFeatures() {
-        this.features.addAll(0, selectedFeatures);
-        this.features.sort(Comparator.comparingInt(Feature::getOrder));
-        this.iterator = this.features.listIterator();
+        features.addAll(0, selectedFeatures);
+        features.sort(Comparator.comparingInt(Feature::getOrder));
+        iterator = features.listIterator();
         while (iterator.hasNext()) {
             Feature feature = iterator.next();
             feature.processSelectedFeatures(this);
         }
-        this.iterator = null;
+        iterator = null;
     }
 
     public void exclude(FeaturePredicate exclusion) {

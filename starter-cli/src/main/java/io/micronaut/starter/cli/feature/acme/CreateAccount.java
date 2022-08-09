@@ -54,7 +54,9 @@ public final class CreateAccount extends CreateKeyPair {
         super(config);
     }
 
-    public CreateAccount(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateAccount(CodeGenConfig config,
+                         ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                         ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

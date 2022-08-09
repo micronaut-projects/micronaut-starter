@@ -48,7 +48,9 @@ public class CreateClientCommand extends CodeGenCommand {
         super(config);
     }
 
-    public CreateClientCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateClientCommand(CodeGenConfig config,
+                               ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                               ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

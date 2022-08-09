@@ -50,7 +50,9 @@ public class CreateWebsocketClientCommand extends CodeGenCommand {
         super(config);
     }
 
-    public CreateWebsocketClientCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateWebsocketClientCommand(CodeGenConfig config,
+                                        ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                        ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

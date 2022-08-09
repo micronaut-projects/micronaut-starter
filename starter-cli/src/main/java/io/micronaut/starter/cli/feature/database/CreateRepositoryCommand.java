@@ -59,7 +59,8 @@ public class CreateRepositoryCommand extends CodeGenCommand {
     private final List<DatabaseDriverFeature> driverFeatures;
 
     @Inject
-    public CreateRepositoryCommand(@Parameter CodeGenConfig config, List<DatabaseDriverFeature> driverFeatures) {
+    public CreateRepositoryCommand(@Parameter CodeGenConfig config,
+                                   List<DatabaseDriverFeature> driverFeatures) {
         super(config);
         this.driverFeatures = driverFeatures;
     }

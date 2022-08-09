@@ -47,6 +47,7 @@ import static io.micronaut.starter.options.Language.KOTLIN;
 @Command(name = "create-jms-producer", description = "Creates a producer class for JMS")
 @Prototype
 public class CreateJmsProducer extends CodeGenCommand {
+
     @ReflectiveAccess
     @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
     String producerName;
@@ -57,8 +58,8 @@ public class CreateJmsProducer extends CodeGenCommand {
     }
 
     public CreateJmsProducer(CodeGenConfig config,
-                               ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                               ConsoleOutput consoleOutput) {
+                             ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                             ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

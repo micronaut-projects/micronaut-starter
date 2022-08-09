@@ -34,7 +34,7 @@ import static io.micronaut.core.annotation.TypeHint.AccessType.ALL_DECLARED_FIEL
 }, accessType = {ALL_DECLARED_CONSTRUCTORS, ALL_DECLARED_FIELDS})
 class MicronautFactory implements CommandLine.IFactory {
 
-    private final CommandLine.IFactory defaultFactory;
+    private final CommandLine.IFactory defaultFactory = CommandLine.defaultFactory();
     private final BeanContext beanContext;
 
     public MicronautFactory() {
@@ -43,16 +43,11 @@ class MicronautFactory implements CommandLine.IFactory {
 
     public MicronautFactory(BeanContext beanContext) {
         this.beanContext = beanContext;
-        defaultFactory = CommandLine.defaultFactory();
     }
 
     @Override
     public <K> K create(Class<K> cls) throws Exception {
         Optional<K> bean = beanContext.findOrInstantiateBean(cls);
-        if (bean.isPresent()) {
-            return bean.get();
-        } else {
-            return defaultFactory.create(cls);
-        }
+        return bean.isPresent() ? bean.get() : defaultFactory.create(cls);
     }
 }

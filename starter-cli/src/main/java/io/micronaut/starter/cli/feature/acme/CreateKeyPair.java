@@ -41,9 +41,7 @@ import static picocli.CommandLine.Help.Visibility.ALWAYS;
  * Alternative to using this is using openssl :
  * `openssl genrsa -out /tmp/mydomain.com-key.pem 4096`
  */
-@Command(name = "create-key",
-        description = "Creates an keypair for use with ACME integration"
-)
+@Command(name = "create-key", description = "Creates an keypair for use with ACME integration")
 @Prototype
 public class CreateKeyPair extends CodeGenCommand {
 
@@ -63,7 +61,9 @@ public class CreateKeyPair extends CodeGenCommand {
         super(config);
     }
 
-    public CreateKeyPair(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateKeyPair(CodeGenConfig config,
+                         ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                         ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -118,21 +118,21 @@ public class CreateKeyPair extends CodeGenCommand {
         if (keypairFile.exists() && !overwrite) {
             out("Key already exists and can be found here : " + keypairFile + ". If you want to overwrite it use the -f/--force flag.");
             return KeyPairUtils.readKeyPair(new FileReader(keypairFile));
-        } else {
-            if (verbose()) {
-                out("Creating key....");
-            }
-            KeyPair domainKey = KeyPairUtils.createKeyPair(keySize);
-
-            if (verbose()) {
-                out("Writing key to " + keypairFile + "....");
-            }
-            FileWriter fileWriter = new FileWriter(keypairFile);
-            KeyPairUtils.writeKeyPair(domainKey, fileWriter);
-
-            out("Key creation complete. It can be found here " + keypairFile + ".");
-            return domainKey;
         }
+
+        if (verbose()) {
+            out("Creating key....");
+        }
+        KeyPair domainKey = KeyPairUtils.createKeyPair(keySize);
+
+        if (verbose()) {
+            out("Writing key to " + keypairFile + "....");
+        }
+        FileWriter fileWriter = new FileWriter(keypairFile);
+        KeyPairUtils.writeKeyPair(domainKey, fileWriter);
+
+        out("Key creation complete. It can be found here " + keypairFile + ".");
+        return domainKey;
     }
 }
 

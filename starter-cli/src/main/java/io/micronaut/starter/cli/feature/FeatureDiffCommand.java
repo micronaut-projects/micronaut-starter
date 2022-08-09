@@ -44,7 +44,9 @@ public class FeatureDiffCommand extends CodeGenCommand {
     private final FeatureDiffer featureDiffer;
 
     @Inject
-    public FeatureDiffCommand(@Parameter CodeGenConfig config, ProjectGenerator projectGenerator, FeatureDiffer featureDiffer) {
+    public FeatureDiffCommand(@Parameter CodeGenConfig config,
+                              ProjectGenerator projectGenerator,
+                              FeatureDiffer featureDiffer) {
         super(config);
         this.projectGenerator = projectGenerator;
         this.featureDiffer = featureDiffer;
@@ -61,8 +63,6 @@ public class FeatureDiffCommand extends CodeGenCommand {
         Project project = NameUtils.parse(config.getDefaultPackage() + "." + appName);
         Options options = new Options(config.getSourceLanguage(), config.getTestFramework(), config.getBuildTool());
         ApplicationType applicationType = config.getApplicationType();
-        List<String> features = this.features;
-        ProjectGenerator projectGenerator = this.projectGenerator;
         featureDiffer.produceDiff(
                 projectGenerator,
                 project,

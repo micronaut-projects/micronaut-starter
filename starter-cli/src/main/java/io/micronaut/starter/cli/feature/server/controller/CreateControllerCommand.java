@@ -108,10 +108,10 @@ public class CreateControllerCommand extends CodeGenCommand {
             }
         }
 
-        renderResult = null;
         String path = "/{packagePath}/{className}Controller";
         path = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(
+                spock.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
                 kotlinJunit.template(project),

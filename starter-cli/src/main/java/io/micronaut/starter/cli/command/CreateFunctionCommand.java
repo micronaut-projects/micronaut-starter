@@ -36,7 +36,9 @@ public class CreateFunctionCommand extends CreateCommand {
     public static final String NAME = "create-function-app";
 
     @ReflectiveAccess
-    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",",
+            description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}",
+            completionCandidates = FunctionAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
     public CreateFunctionCommand(FunctionAvailableFeatures availableFeatures,
@@ -50,5 +52,4 @@ public class CreateFunctionCommand extends CreateCommand {
     protected List<String> getSelectedFeatures() {
         return features;
     }
-
 }

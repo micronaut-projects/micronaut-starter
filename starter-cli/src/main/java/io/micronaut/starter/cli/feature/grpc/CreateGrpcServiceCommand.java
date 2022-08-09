@@ -55,7 +55,9 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
         super(config);
     }
 
-    public CreateGrpcServiceCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateGrpcServiceCommand(CodeGenConfig config,
+                                    ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                    ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -122,7 +124,8 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
      * Creates the {@link CreateProtoServiceCommand}.
      * @return The {@link CreateProtoServiceCommand}.
      */
-    protected @NonNull CreateProtoServiceCommand getCreateProtoServiceCommand() {
+    @NonNull
+    protected CreateProtoServiceCommand getCreateProtoServiceCommand() {
         return getCommand(CreateProtoServiceCommand.class);
     }
 }

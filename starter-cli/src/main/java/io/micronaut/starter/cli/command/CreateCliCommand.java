@@ -50,5 +50,4 @@ public class CreateCliCommand extends CreateCommand {
     protected List<String> getSelectedFeatures() {
         return features;
     }
-
 }

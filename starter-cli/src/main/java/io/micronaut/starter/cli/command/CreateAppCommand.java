@@ -35,7 +35,9 @@ public class CreateAppCommand extends CreateCommand {
 
     public static final String NAME = "create-app";
 
-    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = DefaultAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",",
+            description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}",
+            completionCandidates = DefaultAvailableFeatures.class)
     @ReflectiveAccess
     List<String> features = new ArrayList<>();
 

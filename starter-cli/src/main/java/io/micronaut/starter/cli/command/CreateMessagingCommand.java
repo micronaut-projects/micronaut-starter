@@ -36,7 +36,9 @@ public class CreateMessagingCommand extends CreateCommand {
     public static final String NAME = "create-messaging-app";
 
     @ReflectiveAccess
-    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",",
+            description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}",
+            completionCandidates = MessagingAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
     public CreateMessagingCommand(MessagingAvailableFeatures createMessagingFeatures,

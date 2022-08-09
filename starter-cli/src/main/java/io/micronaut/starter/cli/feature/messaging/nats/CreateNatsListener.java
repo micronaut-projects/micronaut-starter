@@ -53,8 +53,8 @@ public class CreateNatsListener extends CodeGenCommand {
     }
 
     public CreateNatsListener(CodeGenConfig config,
-                          ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                          ConsoleOutput consoleOutput) {
+                              ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                              ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

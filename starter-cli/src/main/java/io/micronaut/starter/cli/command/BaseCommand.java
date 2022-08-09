@@ -75,15 +75,16 @@ public class BaseCommand implements ConsoleOutput {
         io.micronaut.context.condition.OperatingSystem operatingSystem = io.micronaut.context.condition.OperatingSystem.getCurrent();
         if (operatingSystem.isMacOs()) {
             return MACOS;
-        } else if (operatingSystem.isLinux()) {
-            return LINUX;
-        } else if (operatingSystem.isWindows()) {
-            return WINDOWS;
-        } else if (operatingSystem.isSolaris()) {
-            return SOLARIS;
-        } else {
-            return null;
         }
+        if (operatingSystem.isLinux()) {
+            return LINUX;
+        }
+        if (operatingSystem.isWindows()) {
+            return WINDOWS;
+        }
+        if (operatingSystem.isSolaris()) {
+            return SOLARIS;
+        }
+        return null;
     }
-
 }
