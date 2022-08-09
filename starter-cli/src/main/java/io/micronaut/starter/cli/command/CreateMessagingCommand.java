@@ -18,29 +18,31 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.MessagingAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = CreateMessagingCommand.NAME, description = "Creates a messaging application")
+import static io.micronaut.starter.application.ApplicationType.MESSAGING;
+
+@Command(name = CreateMessagingCommand.NAME, description = "Creates a messaging application")
 @Prototype
 public class CreateMessagingCommand extends CreateCommand {
 
     public static final String NAME = "create-messaging-app";
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = MessagingAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
     public CreateMessagingCommand(MessagingAvailableFeatures createMessagingFeatures,
                                   ContextFactory contextFactory,
                                   ProjectGenerator projectGenerator) {
-        super(createMessagingFeatures, contextFactory, ApplicationType.MESSAGING, projectGenerator);
+        super(createMessagingFeatures, contextFactory, MESSAGING, projectGenerator);
     }
 
     @NonNull

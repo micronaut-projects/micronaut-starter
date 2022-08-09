@@ -18,29 +18,31 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.DefaultAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = CreateAppCommand.NAME, description = "Creates an application")
+import static io.micronaut.starter.application.ApplicationType.DEFAULT;
+
+@Command(name = CreateAppCommand.NAME, description = "Creates an application")
 @Prototype
 public class CreateAppCommand extends CreateCommand {
 
     public static final String NAME = "create-app";
 
-    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = DefaultAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = DefaultAvailableFeatures.class)
     @ReflectiveAccess
     List<String> features = new ArrayList<>();
 
     public CreateAppCommand(DefaultAvailableFeatures availableFeatures,
                             ContextFactory contextFactory,
                             ProjectGenerator projectGenerator) {
-        super(availableFeatures, contextFactory, ApplicationType.DEFAULT, projectGenerator);
+        super(availableFeatures, contextFactory, DEFAULT, projectGenerator);
     }
 
     @NonNull

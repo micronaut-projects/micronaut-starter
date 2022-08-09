@@ -18,29 +18,31 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.CliAvailableFeatures;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = CreateCliCommand.NAME, description = "Creates a CLI application")
+import static io.micronaut.starter.application.ApplicationType.CLI;
+
+@Command(name = CreateCliCommand.NAME, description = "Creates a CLI application")
 @Prototype
 public class CreateCliCommand extends CreateCommand {
 
     public static final String NAME = "create-cli-app";
 
-    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CliAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CliAvailableFeatures.class)
     @ReflectiveAccess
     List<String> features = new ArrayList<>();
 
     public CreateCliCommand(CliAvailableFeatures availableFeatures,
                             ContextFactory contextFactory,
                             ProjectGenerator projectGenerator) {
-        super(availableFeatures, contextFactory, ApplicationType.CLI, projectGenerator);
+        super(availableFeatures, contextFactory, CLI, projectGenerator);
     }
 
     @NonNull

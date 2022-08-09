@@ -32,7 +32,9 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import io.micronaut.starter.util.VersionInfo;
-import picocli.CommandLine;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Parameters;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,31 +46,31 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
-    @CommandLine.Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
+    @Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
     String name;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
+    @Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
     Language lang;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
+    @Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
     TestFramework test;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
+    @Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
     BuildTool build;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
+    @Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
     boolean inplace;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
+    @Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
     boolean listFeatures;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
+    @Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
     Integer javaVersion;
 
     private final ContextFactory contextFactory;
@@ -108,7 +110,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         try {
             project = NameUtils.parse(name);
         } catch (IllegalArgumentException e) {
-            throw new CommandLine.ParameterException(this.spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
+            throw new ParameterException(this.spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
         }
 
         OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);

@@ -25,21 +25,25 @@ import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-job", description = "Creates a job with scheduled method")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-job", description = "Creates a job with scheduled method")
 @Prototype
 public class CreateJobCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "JOB-NAME", description = "The name of the job class to create")
+    @Parameters(paramLabel = "JOB-NAME", description = "The name of the job class to create")
     String jobName;
 
     @Inject
@@ -68,11 +72,11 @@ public class CreateJobCommand extends CodeGenCommand {
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaJob.template(project);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyJob.template(project);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinJob.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

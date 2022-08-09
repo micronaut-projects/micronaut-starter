@@ -19,7 +19,6 @@ import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -29,16 +28,19 @@ import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-proto-service", description = "Creates a protobuf file for the given ame")
+import static io.micronaut.starter.application.ApplicationType.GRPC;
+
+@Command(name = "create-proto-service", description = "Creates a protobuf file for the given ame")
 @Prototype
 public class CreateProtoServiceCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
+    @Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
     String serviceName;
 
     public CreateProtoServiceCommand(@Parameter CodeGenConfig config) {
@@ -59,7 +61,7 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getApplicationType() == ApplicationType.GRPC;
+        return config.getApplicationType() == GRPC;
     }
 
     @Override
@@ -82,5 +84,5 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
         return 0;
     }
-    
+
 }

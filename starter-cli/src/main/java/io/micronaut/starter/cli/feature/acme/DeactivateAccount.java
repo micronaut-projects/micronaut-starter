@@ -29,32 +29,36 @@ import org.shredzone.acme4j.Login;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
 import org.shredzone.acme4j.util.KeyPairUtils;
-import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.KeyPair;
 
+import static picocli.CommandLine.Help.Visibility.ALWAYS;
+
 /**
  * Allows for deactivating of an existing Acme account on the given acme server.
  */
-@CommandLine.Command(name = "deactivate-acme-account",
+@Command(name = "deactivate-acme-account",
         description = "Deactivates an existing ACME account",
         usageHelpWidth = 95
 )
 @Prototype
 public final class DeactivateAccount extends CodeGenCommand {
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-n", "--key-name"}, showDefaultValue = CommandLine.Help.Visibility.ALWAYS, description = "Name of the key to be used")
+    @Option(names = {"-n", "--key-name"}, showDefaultValue = ALWAYS, description = "Name of the key to be used")
     String keyName;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-k", "--key-dir"}, showDefaultValue = CommandLine.Help.Visibility.ALWAYS, defaultValue = "src/main/resources", description = "Directory to find the key to be used for this account.")
+    @Option(names = {"-k", "--key-dir"}, showDefaultValue = ALWAYS, defaultValue = "src/main/resources", description = "Directory to find the key to be used for this account.")
     String keyDir;
 
     @ReflectiveAccess
-    @CommandLine.ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
+    @ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
     AcmeServerOption acmeServerOption;
 
     public DeactivateAccount(@Parameter CodeGenConfig config) {

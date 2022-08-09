@@ -25,18 +25,22 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.groovyListener;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.javaListener;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.listener.kotlinListener;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
-@CommandLine.Command(name = "create-kafka-listener", description = "Creates a listener class for Kafka")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-kafka-listener", description = "Creates a listener class for Kafka")
 @Prototype
 public class CreateKafkaListener extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
+    @Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
     String listenerName;
 
     public CreateKafkaListener(@Parameter CodeGenConfig config) {
@@ -58,11 +62,11 @@ public class CreateKafkaListener extends CodeGenCommand {
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaListener.template(project);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyListener.template(project);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinListener.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

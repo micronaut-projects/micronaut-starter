@@ -22,13 +22,16 @@ import picocli.CommandLine;
 
 import java.util.Optional;
 
+import static io.micronaut.core.annotation.TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS;
+import static io.micronaut.core.annotation.TypeHint.AccessType.ALL_DECLARED_FIELDS;
+
 /**
  * Picocli factory implementation that uses a Micronaut BeanContext to obtain bean instances.
  */
 @TypeHint(typeNames = {
     "picocli.CommandLine$AutoHelpMixin",
     "picocli.CommandLine$Model$CommandSpec"
-}, accessType = {TypeHint.AccessType.ALL_DECLARED_CONSTRUCTORS, TypeHint.AccessType.ALL_DECLARED_FIELDS})
+}, accessType = {ALL_DECLARED_CONSTRUCTORS, ALL_DECLARED_FIELDS})
 class MicronautFactory implements CommandLine.IFactory {
 
     private final CommandLine.IFactory defaultFactory;

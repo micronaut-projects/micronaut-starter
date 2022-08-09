@@ -25,15 +25,22 @@ import io.micronaut.starter.feature.BaseAvailableFeatures;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.*;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.JdkVersion;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
+import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import org.fusesource.jansi.AnsiConsole;
-import org.jline.reader.*;
+import org.jline.reader.EndOfFileException;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +49,9 @@ import java.util.concurrent.Callable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@CommandLine.Command(name = CreateBuilderCommand.NAME, description = "A guided walk-through to create an application")
+import static picocli.CommandLine.Help.Ansi.AUTO;
+
+@Command(name = CreateBuilderCommand.NAME, description = "A guided walk-through to create an application")
 @Prototype
 public class CreateBuilderCommand extends BaseCommand implements Callable<Integer> {
 
@@ -56,7 +65,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
                                 List<Feature> features) {
         this.projectGenerator = projectGenerator;
         this.features = features;
-        this.prompt = CommandLine.Help.Ansi.AUTO.string("@|blue > |@");
+        this.prompt = AUTO.string("@|blue > |@");
     }
 
     @Override
@@ -115,7 +124,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
                                                 LineReader reader) throws UserInterruptException, EndOfFileException {
         T[] types = enumClass.getEnumConstants();
         for (T type: types) {
-            out(CommandLine.Help.Ansi.AUTO.string("@|blue " + (type == defaultOption ? "*" : " ") + (type.ordinal() + 1) + ")|@ " + titleFunc.apply(type)));
+            out(AUTO.string("@|blue " + (type == defaultOption ? "*" : " ") + (type.ordinal() + 1) + ")|@ " + titleFunc.apply(type)));
         }
         int option = getOption(reader, types.length);
         out("");

@@ -26,7 +26,9 @@ import org.shredzone.acme4j.Account;
 import org.shredzone.acme4j.AccountBuilder;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
-import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -34,18 +36,18 @@ import java.security.KeyPair;
 /**
  * Allows for creating a new account on the given acme server. Keypair can either be passed in or given as parameters.
  */
-@CommandLine.Command(name = "create-acme-account",
+@Command(name = "create-acme-account",
         description = "Creates a new account on the given ACME server",
         usageHelpWidth = 95
 )
 @Prototype
 public final class CreateAccount extends CreateKeyPair {
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
+    @Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
     String email;
 
     @ReflectiveAccess
-    @CommandLine.ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
+    @ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
     AcmeServerOption acmeServerOption;
 
     public CreateAccount(@Parameter CodeGenConfig config) {

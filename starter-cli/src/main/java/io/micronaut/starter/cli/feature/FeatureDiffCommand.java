@@ -26,17 +26,18 @@ import io.micronaut.starter.diff.FeatureDiffer;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
+@Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
 public class FeatureDiffCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
+    @Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
     List<String> features = new ArrayList<>();
 
     private final ProjectGenerator projectGenerator;

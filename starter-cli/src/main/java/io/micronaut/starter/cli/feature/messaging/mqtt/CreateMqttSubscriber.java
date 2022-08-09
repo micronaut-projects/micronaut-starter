@@ -28,21 +28,25 @@ import io.micronaut.starter.cli.feature.messaging.mqtt.template.listener.javaLis
 import io.micronaut.starter.cli.feature.messaging.mqtt.template.listener.kotlinListener;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-mqtt-subscriber", description = "Creates a subscriber class for MQTT")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-mqtt-subscriber", description = "Creates a subscriber class for MQTT")
 @Prototype
 public class CreateMqttSubscriber extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "SUBSCRIBER", description = "The name of the subscriber to create")
+    @Parameters(paramLabel = "SUBSCRIBER", description = "The name of the subscriber to create")
     String listenerName;
 
     @Inject
@@ -71,11 +75,11 @@ public class CreateMqttSubscriber extends CodeGenCommand {
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaListener.template(project);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyListener.template(project);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinListener.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

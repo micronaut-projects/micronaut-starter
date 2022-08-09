@@ -18,29 +18,31 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.GrpcAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = CreateGrpcCommand.NAME, description = "Creates a gRPC application")
+import static io.micronaut.starter.application.ApplicationType.GRPC;
+
+@Command(name = CreateGrpcCommand.NAME, description = "Creates a gRPC application")
 @Prototype
 public class CreateGrpcCommand extends CreateCommand {
 
     public static final String NAME = "create-grpc-app";
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = GrpcAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = GrpcAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
     public CreateGrpcCommand(GrpcAvailableFeatures availableFeatures,
                              ContextFactory contextFactory,
                              ProjectGenerator projectGenerator) {
-        super(availableFeatures, contextFactory, ApplicationType.GRPC, projectGenerator);
+        super(availableFeatures, contextFactory, GRPC, projectGenerator);
     }
 
     @NonNull

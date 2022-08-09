@@ -28,21 +28,25 @@ import io.micronaut.starter.cli.feature.messaging.mqtt.template.producer.javaPro
 import io.micronaut.starter.cli.feature.messaging.mqtt.template.producer.kotlinProducer;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-mqtt-publisher", description = "Creates a publisher class for MQTT")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-mqtt-publisher", description = "Creates a publisher class for MQTT")
 @Prototype
 public class CreateMqttPublisher extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "PUBLISHER", description = "The name of the publisher to create")
+    @Parameters(paramLabel = "PUBLISHER", description = "The name of the publisher to create")
     String publisherName;
 
     @Inject
@@ -78,11 +82,11 @@ public class CreateMqttPublisher extends CodeGenCommand {
             version = "v3";
         }
 
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaProducer.template(project, version);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyProducer.template(project, version);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinProducer.template(project, version);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

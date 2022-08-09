@@ -31,6 +31,8 @@ import picocli.shell.jline3.PicocliJLineCompleter;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+import static picocli.CommandLine.Help.Ansi.AUTO;
+
 public class InteractiveShell {
 
     private final CommandLine commandLine;
@@ -57,7 +59,7 @@ public class InteractiveShell {
                     .variable(LineReader.LIST_MAX, 50)   // max tab completion candidates
                     .build();
 
-            String prompt = CommandLine.Help.Ansi.AUTO.string("@|blue mn>|@ ");
+            String prompt = AUTO.string("@|blue mn>|@ ");
             String rightPrompt = null;
 
             // start the shell and process input until the user quits with Ctl-D

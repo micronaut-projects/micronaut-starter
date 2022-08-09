@@ -24,7 +24,8 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import org.shredzone.acme4j.util.KeyPairUtils;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,7 +33,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.security.KeyPair;
 
-import static picocli.CommandLine.Help.Visibility;
+import static picocli.CommandLine.Help.Visibility.ALWAYS;
 
 /**
  * Allows for generating a keypair in a given location with a given size.
@@ -40,22 +41,22 @@ import static picocli.CommandLine.Help.Visibility;
  * Alternative to using this is using openssl :
  * `openssl genrsa -out /tmp/mydomain.com-key.pem 4096`
  */
-@CommandLine.Command(name = "create-key",
+@Command(name = "create-key",
         description = "Creates an keypair for use with ACME integration"
 )
 @Prototype
 public class CreateKeyPair extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-k", "--key-dir"}, showDefaultValue = Visibility.ALWAYS, defaultValue = "src/main/resources", description = "Custom location on disk to put the key to be used with this account.")
+    @Option(names = {"-k", "--key-dir"}, showDefaultValue = ALWAYS, defaultValue = "src/main/resources", description = "Custom location on disk to put the key to be used with this account.")
     String keyDir;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-n", "--key-name"}, required = true, description = "Name of the key to be created")
+    @Option(names = {"-n", "--key-name"}, required = true, description = "Name of the key to be created")
     String keyName;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-s", "--key-size"}, showDefaultValue = Visibility.ALWAYS, defaultValue = "4096", description = "Size of the key to be generated")
+    @Option(names = {"-s", "--key-size"}, showDefaultValue = ALWAYS, defaultValue = "4096", description = "Size of the key to be generated")
     int keySize;
 
     public CreateKeyPair(@Parameter CodeGenConfig config) {

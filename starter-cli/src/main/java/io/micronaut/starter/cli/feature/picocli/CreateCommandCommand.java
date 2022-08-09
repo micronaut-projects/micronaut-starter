@@ -19,7 +19,6 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -36,16 +35,21 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
+import static io.micronaut.starter.application.ApplicationType.CLI;
 import static io.micronaut.starter.feature.picocli.test.PicocliTestFeature.PATH;
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
 
-@CommandLine.Command(name = "create-command", description = "Creates a CLI command")
+@Command(name = "create-command", description = "Creates a CLI command")
 @Prototype
 public class CreateCommandCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
+    @Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
     String name;
 
     private final PicocliJavaApplication javaApplication;
@@ -73,7 +77,7 @@ public class CreateCommandCommand extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getApplicationType() == ApplicationType.CLI;
+        return config.getApplicationType() == CLI;
     }
 
     @Override
@@ -83,11 +87,11 @@ public class CreateCommandCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             renderResult = templateRenderer.render(javaApplication.getTemplate(project), overwrite);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             renderResult = templateRenderer.render(groovyApplication.getTemplate(project), overwrite);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             renderResult = templateRenderer.render(kotlinApplication.getTemplate(project), overwrite);
         }
 

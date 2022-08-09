@@ -18,29 +18,31 @@ package io.micronaut.starter.cli.command;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.ContextFactory;
 import io.micronaut.starter.application.FunctionAvailableFeatures;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = CreateFunctionCommand.NAME, description = "Creates a Cloud Function")
+import static io.micronaut.starter.application.ApplicationType.FUNCTION;
+
+@Command(name = CreateFunctionCommand.NAME, description = "Creates a Cloud Function")
 @Prototype
 public class CreateFunctionCommand extends CreateCommand {
 
     public static final String NAME = "create-function-app";
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)
+    @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = FunctionAvailableFeatures.class)
     List<String> features = new ArrayList<>();
 
     public CreateFunctionCommand(FunctionAvailableFeatures availableFeatures,
                                  ContextFactory contextFactory,
                                  ProjectGenerator projectGenerator) {
-        super(availableFeatures, contextFactory, ApplicationType.FUNCTION, projectGenerator);
+        super(availableFeatures, contextFactory, FUNCTION, projectGenerator);
     }
 
     @NonNull
