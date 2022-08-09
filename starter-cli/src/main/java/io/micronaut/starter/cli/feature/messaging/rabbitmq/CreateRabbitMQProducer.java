@@ -41,7 +41,7 @@ public class CreateRabbitMQProducer extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    protected String producerName;
 
     public CreateRabbitMQProducer(@Parameter CodeGenConfig config) {
         super(config);

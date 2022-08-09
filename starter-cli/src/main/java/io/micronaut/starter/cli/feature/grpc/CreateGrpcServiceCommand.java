@@ -49,7 +49,7 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
-    String serviceName;
+    protected String serviceName;
 
     public CreateGrpcServiceCommand(@Parameter CodeGenConfig config) {
         super(config);

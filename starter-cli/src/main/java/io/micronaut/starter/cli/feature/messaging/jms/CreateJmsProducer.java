@@ -50,7 +50,7 @@ public class CreateJmsProducer extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    protected String producerName;
 
     @Inject
     public CreateJmsProducer(@Parameter CodeGenConfig config) {

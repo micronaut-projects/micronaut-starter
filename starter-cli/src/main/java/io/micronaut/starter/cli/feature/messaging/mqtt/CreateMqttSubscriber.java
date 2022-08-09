@@ -47,7 +47,7 @@ public class CreateMqttSubscriber extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "SUBSCRIBER", description = "The name of the subscriber to create")
-    String listenerName;
+    protected String listenerName;
 
     @Inject
     public CreateMqttSubscriber(@Parameter CodeGenConfig config) {

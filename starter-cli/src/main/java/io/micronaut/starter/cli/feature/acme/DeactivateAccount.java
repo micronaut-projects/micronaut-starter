@@ -48,19 +48,19 @@ import static picocli.CommandLine.Help.Visibility.ALWAYS;
         usageHelpWidth = 95
 )
 @Prototype
-public final class DeactivateAccount extends CodeGenCommand {
+public class DeactivateAccount extends CodeGenCommand {
 
     @ReflectiveAccess
     @Option(names = {"-n", "--key-name"}, showDefaultValue = ALWAYS, description = "Name of the key to be used")
-    String keyName;
+    protected String keyName;
 
     @ReflectiveAccess
     @Option(names = {"-k", "--key-dir"}, showDefaultValue = ALWAYS, defaultValue = "src/main/resources", description = "Directory to find the key to be used for this account.")
-    String keyDir;
+    protected String keyDir;
 
     @ReflectiveAccess
     @ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
-    AcmeServerOption acmeServerOption;
+    protected AcmeServerOption acmeServerOption;
 
     public DeactivateAccount(@Parameter CodeGenConfig config) {
         super(config);

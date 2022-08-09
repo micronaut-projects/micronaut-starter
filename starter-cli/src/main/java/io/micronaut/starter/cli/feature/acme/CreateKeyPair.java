@@ -47,15 +47,15 @@ public class CreateKeyPair extends CodeGenCommand {
 
     @ReflectiveAccess
     @Option(names = {"-k", "--key-dir"}, showDefaultValue = ALWAYS, defaultValue = "src/main/resources", description = "Custom location on disk to put the key to be used with this account.")
-    String keyDir;
+    protected String keyDir;
 
     @ReflectiveAccess
     @Option(names = {"-n", "--key-name"}, required = true, description = "Name of the key to be created")
-    String keyName;
+    protected String keyName;
 
     @ReflectiveAccess
     @Option(names = {"-s", "--key-size"}, showDefaultValue = ALWAYS, defaultValue = "4096", description = "Size of the key to be generated")
-    int keySize;
+    protected int keySize;
 
     public CreateKeyPair(@Parameter CodeGenConfig config) {
         super(config);

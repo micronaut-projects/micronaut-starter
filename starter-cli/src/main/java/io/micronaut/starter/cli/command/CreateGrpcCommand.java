@@ -39,7 +39,7 @@ public class CreateGrpcCommand extends CreateCommand {
     @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",",
             description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}",
             completionCandidates = GrpcAvailableFeatures.class)
-    List<String> features = new ArrayList<>();
+    protected List<String> features = new ArrayList<>();
 
     public CreateGrpcCommand(GrpcAvailableFeatures availableFeatures,
                              ContextFactory contextFactory,

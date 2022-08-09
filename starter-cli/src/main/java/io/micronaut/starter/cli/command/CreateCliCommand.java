@@ -37,7 +37,7 @@ public class CreateCliCommand extends CreateCommand {
 
     @Option(names = {"-f", "--features"}, paramLabel = "FEATURE", split = ",", description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = CliAvailableFeatures.class)
     @ReflectiveAccess
-    List<String> features = new ArrayList<>();
+    protected List<String> features = new ArrayList<>();
 
     public CreateCliCommand(CliAvailableFeatures availableFeatures,
                             ContextFactory contextFactory,

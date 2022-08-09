@@ -22,7 +22,7 @@ import java.io.OutputStream;
 
 public class RockerWritable implements Writable {
 
-    private final RockerModel model;
+    protected final RockerModel model;
 
     public RockerWritable(RockerModel model) {
         this.model = model;

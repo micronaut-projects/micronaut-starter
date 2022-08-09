@@ -39,9 +39,9 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
     @Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
     protected boolean overwrite;
 
-    private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
-    private final ConsoleOutput consoleOutput;
-    private BeanContext beanContext;
+    protected final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
+    protected final ConsoleOutput consoleOutput;
+    protected BeanContext beanContext;
 
     public CodeGenCommand(CodeGenConfig config) {
         this.config = config;

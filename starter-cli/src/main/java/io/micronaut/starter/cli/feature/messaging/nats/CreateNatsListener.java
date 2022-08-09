@@ -46,7 +46,7 @@ public class CreateNatsListener extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
-    String listenerName;
+    protected String listenerName;
 
     public CreateNatsListener(@Parameter CodeGenConfig config) {
         super(config);

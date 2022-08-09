@@ -112,6 +112,18 @@ public class FeatureContext {
         return options;
     }
 
+    public ApplicationType getApplicationType() {
+        return applicationType;
+    }
+
+    public OperatingSystem getOperatingSystem() {
+        return operatingSystem;
+    }
+
+    public Set<Feature> getSelectedFeatures() {
+        return Collections.unmodifiableSet(selectedFeatures);
+    }
+
     /**
      * Adds a feature to be applied. The added feature is processed immediately.
      *
@@ -126,18 +138,10 @@ public class FeatureContext {
         feature.processSelectedFeatures(this);
     }
 
-    public ApplicationType getApplicationType() {
-        return applicationType;
-    }
-
     public boolean isPresent(Class<? extends Feature> feature) {
         return features.stream()
                 .filter(f -> exclusions.stream().noneMatch(e -> e.test(f)))
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
-    }
-
-    public OperatingSystem getOperatingSystem() {
-        return operatingSystem;
     }
 }

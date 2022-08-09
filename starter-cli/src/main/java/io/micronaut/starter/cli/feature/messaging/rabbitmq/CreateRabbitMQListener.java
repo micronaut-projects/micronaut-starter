@@ -41,7 +41,7 @@ public class CreateRabbitMQListener extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
-    String listenerName;
+    protected String listenerName;
 
     public CreateRabbitMQListener(@Parameter CodeGenConfig config) {
         super(config);

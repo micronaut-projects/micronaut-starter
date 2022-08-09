@@ -41,7 +41,7 @@ public class CreateKafkaListener extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "LISTENER", description = "The name of the listener to create")
-    String listenerName;
+    protected String listenerName;
 
     public CreateKafkaListener(@Parameter CodeGenConfig config) {
         super(config);

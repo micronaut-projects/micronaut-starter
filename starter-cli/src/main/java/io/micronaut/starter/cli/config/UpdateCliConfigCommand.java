@@ -32,6 +32,7 @@ import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -45,14 +46,16 @@ import static io.micronaut.starter.application.ApplicationType.MESSAGING;
 @Prototype
 public class UpdateCliConfigCommand extends CodeGenCommand {
 
-    private static final Map<ApplicationType, String> COMMANDS = new LinkedHashMap<>(ApplicationType.values().length);
+    protected static final Map<ApplicationType, String> COMMANDS;
 
     static {
-        COMMANDS.put(DEFAULT, "create-app");
-        COMMANDS.put(CLI, "create-cli-app");
-        COMMANDS.put(FUNCTION, "create-function-app");
-        COMMANDS.put(GRPC, "create-grpc-app");
-        COMMANDS.put(MESSAGING, "create-messaging-app");
+        Map<ApplicationType, String> commands = new LinkedHashMap<>(ApplicationType.values().length);
+        commands.put(DEFAULT, "create-app");
+        commands.put(CLI, "create-cli-app");
+        commands.put(FUNCTION, "create-function-app");
+        commands.put(GRPC, "create-grpc-app");
+        commands.put(MESSAGING, "create-messaging-app");
+        COMMANDS = Collections.unmodifiableMap(commands);
     }
 
     @Inject

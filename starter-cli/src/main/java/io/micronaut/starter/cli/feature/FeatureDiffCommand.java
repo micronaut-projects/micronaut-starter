@@ -38,7 +38,7 @@ public class FeatureDiffCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
-    List<String> features = new ArrayList<>();
+    protected List<String> features = new ArrayList<>();
 
     private final ProjectGenerator projectGenerator;
     private final FeatureDiffer featureDiffer;

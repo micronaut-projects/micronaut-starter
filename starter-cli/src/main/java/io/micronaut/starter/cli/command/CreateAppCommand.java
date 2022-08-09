@@ -39,7 +39,7 @@ public class CreateAppCommand extends CreateCommand {
             description = "The features to use. Possible values: ${COMPLETION-CANDIDATES}",
             completionCandidates = DefaultAvailableFeatures.class)
     @ReflectiveAccess
-    List<String> features = new ArrayList<>();
+    protected List<String> features = new ArrayList<>();
 
     public CreateAppCommand(DefaultAvailableFeatures availableFeatures,
                             ContextFactory contextFactory,

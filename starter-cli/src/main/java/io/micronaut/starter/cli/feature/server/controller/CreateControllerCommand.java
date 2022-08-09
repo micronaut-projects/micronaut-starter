@@ -55,7 +55,7 @@ public class CreateControllerCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "CONTROLLER-NAME", description = "The name of the controller to create")
-    String controllerName;
+    protected String controllerName;
 
     private final List<Feature> features;
 

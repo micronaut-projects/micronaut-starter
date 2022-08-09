@@ -41,7 +41,7 @@ public class CreateClientCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "CLIENT-NAME", description = "The name of the client to create")
-    String clientName;
+    protected String clientName;
 
     @Inject
     public CreateClientCommand(@Parameter CodeGenConfig config) {

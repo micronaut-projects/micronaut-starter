@@ -47,35 +47,35 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
 
     @ReflectiveAccess
     @Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
-    String name;
+    protected String name;
 
     @ReflectiveAccess
     @Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
-    Language lang;
+    protected Language lang;
 
     @ReflectiveAccess
     @Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
-    TestFramework test;
+    protected TestFramework test;
 
     @ReflectiveAccess
     @Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
-    BuildTool build;
+    protected BuildTool build;
 
     @ReflectiveAccess
     @Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
-    boolean inplace;
+    protected boolean inplace;
 
     @ReflectiveAccess
     @Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
-    boolean listFeatures;
+    protected boolean listFeatures;
 
     @ReflectiveAccess
     @Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
-    Integer javaVersion;
+    protected Integer javaVersion;
 
-    private final ContextFactory contextFactory;
-    private final ApplicationType applicationType;
-    private final ProjectGenerator projectGenerator;
+    protected final ContextFactory contextFactory;
+    protected final ApplicationType applicationType;
+    protected final ProjectGenerator projectGenerator;
 
     protected CreateCommand(AvailableFeatures availableFeatures,
                             ContextFactory contextFactory,
@@ -131,7 +131,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }
 
-    private JdkVersion getJdkVersion() {
+    protected JdkVersion getJdkVersion() {
         return javaVersion == null ? VersionInfo.getJavaVersion() : JdkVersion.valueOf(javaVersion);
     }
 }

@@ -47,7 +47,7 @@ public class CreateMqttPublisher extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "PUBLISHER", description = "The name of the publisher to create")
-    String publisherName;
+    protected String publisherName;
 
     @Inject
     public CreateMqttPublisher(@Parameter CodeGenConfig config) {

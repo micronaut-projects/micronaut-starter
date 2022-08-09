@@ -44,7 +44,7 @@ public class CreateBeanCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "BEAN-NAME", description = "The name of the bean class to create")
-    String beanName;
+    protected String beanName;
 
     @Inject
     public CreateBeanCommand(@Parameter CodeGenConfig config) {

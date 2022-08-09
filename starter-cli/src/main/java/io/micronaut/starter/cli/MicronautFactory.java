@@ -32,7 +32,7 @@ import static io.micronaut.core.annotation.TypeHint.AccessType.ALL_DECLARED_FIEL
     "picocli.CommandLine$AutoHelpMixin",
     "picocli.CommandLine$Model$CommandSpec"
 }, accessType = {ALL_DECLARED_CONSTRUCTORS, ALL_DECLARED_FIELDS})
-class MicronautFactory implements CommandLine.IFactory {
+public class MicronautFactory implements CommandLine.IFactory {
 
     private final CommandLine.IFactory defaultFactory = CommandLine.defaultFactory();
     private final BeanContext beanContext;

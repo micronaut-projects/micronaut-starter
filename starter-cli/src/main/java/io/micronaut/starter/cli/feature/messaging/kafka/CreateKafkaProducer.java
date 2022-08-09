@@ -41,7 +41,7 @@ public class CreateKafkaProducer extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    protected String producerName;
 
     public CreateKafkaProducer(@Parameter CodeGenConfig config) {
         super(config);

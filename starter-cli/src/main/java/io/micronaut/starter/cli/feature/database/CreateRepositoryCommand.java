@@ -46,15 +46,15 @@ import static io.micronaut.starter.options.Language.KOTLIN;
 @Prototype
 public class CreateRepositoryCommand extends CodeGenCommand {
 
-    private static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
+    protected static final List<String> VALID_NO_PKG_ID_TYPES = Arrays.asList("Integer", "Long", "String");
 
     @ReflectiveAccess
     @Parameters(index = "0", paramLabel = "REPOSITORY-NAME", description = "The name of the repository to create")
-    String repositoryName;
+    protected String repositoryName;
 
     @ReflectiveAccess
     @Option(names = {"-i", "--idType"}, description = "Specify custom id type [Integer, Long, String] or full package name [ie. com.corp.Book] - Defaults to Long")
-    String idType = "Long";
+    protected String idType = "Long";
 
     private final List<DatabaseDriverFeature> driverFeatures;
 

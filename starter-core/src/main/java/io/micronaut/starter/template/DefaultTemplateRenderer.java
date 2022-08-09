@@ -18,6 +18,7 @@ package io.micronaut.starter.template;
 import io.micronaut.starter.io.OutputHandler;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -46,6 +47,14 @@ public class DefaultTemplateRenderer implements TemplateRenderer {
         } catch (IOException e) {
             return RenderResult.error(path, e);
         }
+    }
+
+    public OutputHandler getOutputHandler() {
+        return outputHandler;
+    }
+
+    public Map<String, String> getReplacements() {
+        return Collections.unmodifiableMap(replacements);
     }
 
     protected String replaceVariables(String path, Map<String, String> replacements) {

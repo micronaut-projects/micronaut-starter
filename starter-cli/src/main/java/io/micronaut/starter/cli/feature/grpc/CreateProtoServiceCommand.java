@@ -41,7 +41,7 @@ public class CreateProtoServiceCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
-    String serviceName;
+    protected String serviceName;
 
     public CreateProtoServiceCommand(@Parameter CodeGenConfig config) {
         super(config);

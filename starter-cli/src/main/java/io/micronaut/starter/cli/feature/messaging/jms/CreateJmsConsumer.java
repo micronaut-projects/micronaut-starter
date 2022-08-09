@@ -50,7 +50,7 @@ public class CreateJmsConsumer extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "CONSUMER", description = "The name of the consumer to create")
-    String consumerName;
+    protected String consumerName;
 
     @Inject
     public CreateJmsConsumer(@Parameter CodeGenConfig config) {

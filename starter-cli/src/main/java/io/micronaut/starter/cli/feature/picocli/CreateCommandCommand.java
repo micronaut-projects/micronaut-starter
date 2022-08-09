@@ -50,14 +50,14 @@ public class CreateCommandCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "COMMAND-NAME", description = "The name of the command class to create")
-    String name;
+    protected String name;
 
-    private final PicocliJavaApplication javaApplication;
-    private final PicocliGroovyApplication groovyApplication;
-    private final PicocliKotlinApplication kotlinApplication;
-    private final PicocliJunit junit;
-    private final PicocliSpock spock;
-    private final PicocliKoTest koTest;
+    protected final PicocliJavaApplication javaApplication;
+    protected final PicocliGroovyApplication groovyApplication;
+    protected final PicocliKotlinApplication kotlinApplication;
+    protected final PicocliJunit junit;
+    protected final PicocliSpock spock;
+    protected final PicocliKoTest koTest;
 
     public CreateCommandCommand(@Parameter CodeGenConfig config,
                                 PicocliJavaApplication javaApplication,
@@ -138,7 +138,7 @@ public class CreateCommandCommand extends CodeGenCommand {
 
     public abstract static class CustomTestRockerModelProvider extends AbstractTestRockerModelProvider {
 
-        private final JunitRockerModelProvider junitRockerModelProvider;
+        protected final JunitRockerModelProvider junitRockerModelProvider;
 
         public CustomTestRockerModelProvider(Project project,
                                              JunitRockerModelProvider junitRockerModelProvider) {

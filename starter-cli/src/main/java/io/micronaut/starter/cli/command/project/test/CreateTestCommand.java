@@ -46,7 +46,7 @@ public class CreateTestCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "TEST-NAME", description = "The name of the test class to create")
-    String testName;
+    protected String testName;
 
     public CreateTestCommand(@Parameter CodeGenConfig config) {
         super(config);

@@ -312,9 +312,9 @@ public class GeneratorContext implements DependencyContext {
         return getTestFramework().getSourcePath(path, getLanguage());
     }
 
-    RockerModel parseModel(RockerModel javaTemplate,
-                           RockerModel kotlinTemplate,
-                           RockerModel groovyTemplate) {
+    protected RockerModel parseModel(RockerModel javaTemplate,
+                                     RockerModel kotlinTemplate,
+                                     RockerModel groovyTemplate) {
         switch (getLanguage()) {
             case GROOVY:
                 return groovyTemplate;
@@ -365,7 +365,7 @@ public class GeneratorContext implements DependencyContext {
     public Collection<Dependency> getDependencies() {
         return dependencyContext.getDependencies();
     }
-    
+
     public Set<BuildPlugin> getBuildPlugins() {
         return buildPlugins;
     }
@@ -378,7 +378,7 @@ public class GeneratorContext implements DependencyContext {
                 .distinct()
                 .collect(Collectors.toList());
     }
-  
+
     public void addProfile(@NonNull Profile profile) {
         Optional<Profile> optionalProfile = profiles.stream().filter(it -> it.getId().equals(profile.getId())).findFirst();
         if (optionalProfile.isPresent()) {

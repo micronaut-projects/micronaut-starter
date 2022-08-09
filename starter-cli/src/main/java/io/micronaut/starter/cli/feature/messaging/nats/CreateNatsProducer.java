@@ -46,7 +46,7 @@ public class CreateNatsProducer extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    protected String producerName;
 
     public CreateNatsProducer(@Parameter CodeGenConfig config) {
         super(config);

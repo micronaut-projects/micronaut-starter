@@ -41,14 +41,15 @@ import java.security.KeyPair;
         usageHelpWidth = 95
 )
 @Prototype
-public final class CreateAccount extends CreateKeyPair {
+public class CreateAccount extends CreateKeyPair {
+
     @ReflectiveAccess
     @Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
-    String email;
+    protected String email;
 
     @ReflectiveAccess
     @ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
-    AcmeServerOption acmeServerOption;
+    protected AcmeServerOption acmeServerOption;
 
     public CreateAccount(@Parameter CodeGenConfig config) {
         super(config);

@@ -44,7 +44,7 @@ public class CreateJobCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "JOB-NAME", description = "The name of the job class to create")
-    String jobName;
+    protected String jobName;
 
     @Inject
     public CreateJobCommand(@Parameter CodeGenConfig config) {

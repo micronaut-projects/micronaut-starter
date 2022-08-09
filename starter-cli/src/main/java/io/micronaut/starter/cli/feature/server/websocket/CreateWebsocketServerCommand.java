@@ -46,7 +46,7 @@ public class CreateWebsocketServerCommand extends CodeGenCommand {
 
     @ReflectiveAccess
     @Parameters(paramLabel = "SERVER-NAME", description = "The name of the server to create")
-    String serverName;
+    protected String serverName;
 
     private final List<Feature> features;
 
