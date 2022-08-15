@@ -24,8 +24,8 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
-
 import jakarta.inject.Singleton;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -38,6 +38,7 @@ public class R2dbc implements R2dbcFeature {
             .build();
 
     private static final String PREFIX = "r2dbc.datasources.default.";
+    private static final String DB_TYPE_KEY = PREFIX + "db-type";
     private static final String URL_KEY = PREFIX + "url";
     private static final String USERNAME_KEY = PREFIX + "username";
     private static final String PASSWORD_KEY = PREFIX + "password";
@@ -98,6 +99,7 @@ public class R2dbc implements R2dbcFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
             Map<String, Object> rdbcConfig = new LinkedHashMap<>();
+            dbFeature.getDbType().ifPresent(dbtype -> rdbcConfig.put(DB_TYPE_KEY, dbtype.toString()));
             rdbcConfig.put(getUrlKey(), dbFeature.getR2dbcUrl());
             rdbcConfig.put(USERNAME_KEY, dbFeature.getDefaultUser());
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
