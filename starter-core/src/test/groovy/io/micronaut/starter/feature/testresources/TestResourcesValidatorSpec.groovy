@@ -22,7 +22,7 @@ class TestResourcesValidatorSpec extends ApplicationContextSpec implements Comma
     @Unroll
     void "test r2dbc with no DatabaseDriverFeature and test-resources"() {
         when:
-        generate(["mongo-sync", 'r2dbc', 'test-resources'])
+        generate(['r2dbc', 'test-resources'])
 
         then:
         def e = thrown IllegalArgumentException
