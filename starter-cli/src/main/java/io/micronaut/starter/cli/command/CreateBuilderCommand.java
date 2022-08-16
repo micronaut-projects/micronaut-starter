@@ -57,10 +57,9 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
 
     public static final String NAME = "create";
 
-    protected static final String PROMPT = AUTO.string("@|blue > |@");
-
     private final ProjectGenerator projectGenerator;
     private final List<Feature> features;
+    private final String prompt = AUTO.string("@|blue > |@");
 
     public CreateBuilderCommand(ProjectGenerator projectGenerator,
                                 List<Feature> features) {
@@ -101,7 +100,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
     protected int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {
         String line;
         while (true) {
-            line = reader.readLine(PROMPT);
+            line = reader.readLine(prompt);
             try {
                 if (line == null || line.isEmpty()) {
                     return -1;
@@ -195,7 +194,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
 
         out("Enter any features to apply. Use tab for autocomplete and separate by a space.");
         while (true) {
-            String featuresLine = featuresReader.readLine(PROMPT);
+            String featuresLine = featuresReader.readLine(prompt);
             if (StringUtils.trimToNull(featuresLine) == null) {
                 out("");
                 return new ArrayList<>();
@@ -220,7 +219,7 @@ public class CreateBuilderCommand extends BaseCommand implements Callable<Intege
         out("Enter a name for the project.");
         while (true) {
             try {
-                String name = reader.readLine(PROMPT);
+                String name = reader.readLine(prompt);
                 Project project = NameUtils.parse(name);
                 out("");
                 return project;
