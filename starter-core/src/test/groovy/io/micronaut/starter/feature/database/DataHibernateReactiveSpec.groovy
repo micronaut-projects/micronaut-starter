@@ -11,6 +11,7 @@ import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import spock.lang.Issue
 import spock.lang.Requires
+import groovy.xml.XmlSlurper
 
 @Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
@@ -233,15 +234,18 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
                 .jdkVersion(JdkVersion.JDK_11)
                 .language(Language.KOTLIN)
                 .render()
+        def xml = new XmlSlurper().parseText(template)
+        def kotlinMavenPlugin = xml.build.plugins.plugin.find { it.artifactId.text() == 'kotlin-maven-plugin' }
 
         then:
-        //src/main
-        template.contains('''
-          <compilerPlugins>
-            <plugin>jpa</plugin>
-            <plugin>all-open</plugin>
-          </compilerPlugins>
-''')
+        kotlinMavenPlugin.configuration.compilerPlugins.plugin*.text() == ['jpa', 'all-open']
+
+        and: 'jpa plugin requires kotlin-maven-noarg dependency'
+        with(kotlinMavenPlugin.dependencies.dependency) {
+            it.groupId.every { it.text() == 'org.jetbrains.kotlin' }
+            it.artifactId*.text() == [ 'kotlin-maven-allopen', 'kotlin-maven-noarg' ]
+            it.version.every { it.text() == '${kotlinVersion}' }
+        }
     }
 
     void "test config for #db"() {
