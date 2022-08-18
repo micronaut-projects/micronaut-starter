@@ -28,25 +28,34 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@CommandLine.Command(name = "update-cli-config", description = "Replaces the CLI configuration with the updated format")
+import static io.micronaut.starter.application.ApplicationType.CLI;
+import static io.micronaut.starter.application.ApplicationType.DEFAULT;
+import static io.micronaut.starter.application.ApplicationType.FUNCTION;
+import static io.micronaut.starter.application.ApplicationType.GRPC;
+import static io.micronaut.starter.application.ApplicationType.MESSAGING;
+
+@Command(name = "update-cli-config", description = "Replaces the CLI configuration with the updated format")
 @Prototype
 public class UpdateCliConfigCommand extends CodeGenCommand {
 
-    private static final Map<ApplicationType, String> COMMANDS = new LinkedHashMap<>(ApplicationType.values().length);
+    protected static final Map<ApplicationType, String> COMMANDS;
 
     static {
-        COMMANDS.put(ApplicationType.DEFAULT, "create-app");
-        COMMANDS.put(ApplicationType.CLI, "create-cli-app");
-        COMMANDS.put(ApplicationType.FUNCTION, "create-function-app");
-        COMMANDS.put(ApplicationType.GRPC, "create-grpc-app");
-        COMMANDS.put(ApplicationType.MESSAGING, "create-messaging-app");
+        Map<ApplicationType, String> commands = new LinkedHashMap<>(ApplicationType.values().length);
+        commands.put(DEFAULT, "create-app");
+        commands.put(CLI, "create-cli-app");
+        commands.put(FUNCTION, "create-function-app");
+        commands.put(GRPC, "create-grpc-app");
+        commands.put(MESSAGING, "create-messaging-app");
+        COMMANDS = Collections.unmodifiableMap(commands);
     }
 
     @Inject

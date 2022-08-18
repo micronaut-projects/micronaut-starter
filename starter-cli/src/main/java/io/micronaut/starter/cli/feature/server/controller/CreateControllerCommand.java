@@ -35,23 +35,27 @@ import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 import java.util.List;
 
-@CommandLine.Command(name = "create-controller", description = "Creates a controller and associated test")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-controller", description = "Creates a controller and associated test")
 public class CreateControllerCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "CONTROLLER-NAME", description = "The name of the controller to create")
-    String controllerName;
+    @Parameters(paramLabel = "CONTROLLER-NAME", description = "The name of the controller to create")
+    protected String controllerName;
 
     private final List<Feature> features;
 
@@ -86,12 +90,12 @@ public class CreateControllerCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
-            renderResult = templateRenderer.render(new RockerTemplate(Language.JAVA.getSrcDir() + "/{packagePath}/{className}Controller." + Language.JAVA.getExtension(), javaController.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
-            renderResult = templateRenderer.render(new RockerTemplate(Language.GROOVY.getSrcDir() + "/{packagePath}/{className}Controller." + Language.GROOVY.getExtension(), groovyController.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
-            renderResult = templateRenderer.render(new RockerTemplate(Language.KOTLIN.getSrcDir() + "/{packagePath}/{className}Controller." + Language.KOTLIN.getExtension(), kotlinController.template(project)), overwrite);
+        if (config.getSourceLanguage() == JAVA) {
+            renderResult = templateRenderer.render(new RockerTemplate(JAVA.getSrcDir() + "/{packagePath}/{className}Controller." + JAVA.getExtension(), javaController.template(project)), overwrite);
+        } else if (config.getSourceLanguage() == GROOVY) {
+            renderResult = templateRenderer.render(new RockerTemplate(GROOVY.getSrcDir() + "/{packagePath}/{className}Controller." + GROOVY.getExtension(), groovyController.template(project)), overwrite);
+        } else if (config.getSourceLanguage() == KOTLIN) {
+            renderResult = templateRenderer.render(new RockerTemplate(KOTLIN.getSrcDir() + "/{packagePath}/{className}Controller." + KOTLIN.getExtension(), kotlinController.template(project)), overwrite);
         }
 
         if (renderResult != null) {
@@ -104,10 +108,10 @@ public class CreateControllerCommand extends CodeGenCommand {
             }
         }
 
-        renderResult = null;
         String path = "/{packagePath}/{className}Controller";
         path = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(
+                spock.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
                 kotlinJunit.template(project),

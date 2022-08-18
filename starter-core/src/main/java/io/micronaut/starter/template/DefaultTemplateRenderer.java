@@ -18,11 +18,14 @@ package io.micronaut.starter.template;
 import io.micronaut.starter.io.OutputHandler;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DefaultTemplateRenderer implements TemplateRenderer {
+
+    protected static final Pattern VARIABLES_PATTERN = Pattern.compile("\\{(.+?)}");
 
     private final Map<String, String> replacements;
     private final OutputHandler outputHandler;
@@ -46,9 +49,16 @@ public class DefaultTemplateRenderer implements TemplateRenderer {
         }
     }
 
+    public OutputHandler getOutputHandler() {
+        return outputHandler;
+    }
+
+    public Map<String, String> getReplacements() {
+        return Collections.unmodifiableMap(replacements);
+    }
+
     protected String replaceVariables(String path, Map<String, String> replacements) {
-        Pattern pattern = Pattern.compile("\\{(.+?)\\}");
-        Matcher matcher = pattern.matcher(path);
+        Matcher matcher = VARIABLES_PATTERN.matcher(path);
         StringBuilder builder = new StringBuilder();
         int i = 0;
         while (matcher.find()) {
