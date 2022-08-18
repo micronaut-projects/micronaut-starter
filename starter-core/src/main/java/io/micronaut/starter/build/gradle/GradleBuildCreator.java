@@ -40,9 +40,17 @@ public class GradleBuildCreator {
                 .map(GradlePlugin.class::cast)
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
-        return new GradleBuild(gradleDsl, GradleDependency.listOf(generatorContext), gradlePlugins,
-                GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                        repositories));
+        return new GradleBuild(gradleDsl,
+                GradleDependency.listOf(generatorContext),
+                gradlePlugins,
+                getRepositories(generatorContext, repositories));
+    }
+
+    @NonNull
+    protected List<GradleRepository> getRepositories(@NonNull GeneratorContext generatorContext,
+                                                     List<Repository> repositories) {
+        return GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl()
+                .orElse(GradleDsl.GROOVY), repositories);
     }
 
 }
