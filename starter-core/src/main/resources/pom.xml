@@ -215,7 +215,7 @@
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>4.24.0</version>
+            <version>4.32.0</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>
