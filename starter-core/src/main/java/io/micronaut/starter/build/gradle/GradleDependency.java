@@ -25,6 +25,7 @@ import io.micronaut.starter.build.dependencies.DependencyCoordinate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static io.micronaut.core.util.CollectionUtils.isNotEmpty;
@@ -98,8 +99,10 @@ public class GradleDependency extends DependencyCoordinate {
             }
             snippet += platformPrefix + "platform";
         }
-        snippet += "(\"" + getGroupId() + ':' + getArtifactId() +
-                (getVersion() != null ? (':' + getVersion()) : "") + "\")";
+        snippet += "(";
+        snippet += versionCatalogue().orElse("\"" + getGroupId() + ':' + getArtifactId() +
+                (getVersion() != null ? (':' + getVersion()) : "") + "\"");
+        snippet += ")";
         if (isPom() && isKotlinDSL) {
             snippet += ")";
         }
@@ -117,6 +120,14 @@ public class GradleDependency extends DependencyCoordinate {
             snippet += "    }";
         }
         return snippet;
+    }
+
+    @NonNull
+    Optional<String> versionCatalogue() {
+        if (!getGroupId().startsWith("io.micronaut")) {
+            return Optional.empty();
+        }
+        return Optional.of("mn." + getArtifactId().replace("-", "."));
     }
 
     @NonNull
