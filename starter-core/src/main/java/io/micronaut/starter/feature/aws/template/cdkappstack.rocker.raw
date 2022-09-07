@@ -48,6 +48,9 @@ import software.amazon.awscdk.services.lambda.FunctionUrlOptions;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
 import software.amazon.awscdk.services.lambda.Tracing;
+@if (functionId != null) {
+import software.amazon.awscdk.services.logs.RetentionDays;
+}
 import software.constructs.Construct;
 import java.util.HashMap;
 import java.util.Map;
@@ -131,6 +134,7 @@ public class AppStack extends Stack {
                 .timeout(Duration.seconds(10))
                 .memorySize(512)
                 .tracing(Tracing.ACTIVE)
+                .logRetention(RetentionDays.ONE_WEEK)
                 .build();
 }
 @if (features.contains("dynamodb")) {
