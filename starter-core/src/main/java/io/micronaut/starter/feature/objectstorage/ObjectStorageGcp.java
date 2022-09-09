@@ -32,4 +32,9 @@ public class ObjectStorageGcp implements ObjectStorageFeature {
     public String getCloudProvider() {
         return "GCP";
     }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://cloud.google.com/storage";
+    }
 }

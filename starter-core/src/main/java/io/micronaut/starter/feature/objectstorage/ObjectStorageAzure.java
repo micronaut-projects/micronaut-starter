@@ -32,4 +32,9 @@ public class ObjectStorageAzure implements ObjectStorageFeature {
     public String getCloudProvider() {
         return "Azure";
     }
+
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://azure.microsoft.com/en-gb/services/storage/blobs/";
+    }
 }

@@ -48,4 +48,8 @@ public class ObjectStorageOracleCloud implements ObjectStorageFeature {
         }
     }
 
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://www.oracle.com/cloud/storage/object-storage/";
+    }
 }

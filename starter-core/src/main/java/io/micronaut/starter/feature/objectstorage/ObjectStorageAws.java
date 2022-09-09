@@ -48,4 +48,8 @@ public class ObjectStorageAws implements ObjectStorageFeature {
         }
     }
 
+    @Override
+    public String getThirdPartyDocumentation() {
+        return "https://aws.amazon.com/s3/";
+    }
 }
