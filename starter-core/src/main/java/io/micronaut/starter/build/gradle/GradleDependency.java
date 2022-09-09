@@ -100,7 +100,7 @@ public class GradleDependency extends DependencyCoordinate {
             snippet += platformPrefix + "platform";
         }
         snippet += "(";
-        snippet += versionCatalogue().orElse("\"" + getGroupId() + ':' + getArtifactId() +
+        snippet += versionCatalog().orElse("\"" + getGroupId() + ':' + getArtifactId() +
                 (getVersion() != null ? (':' + getVersion()) : "") + "\"");
         snippet += ")";
         if (isPom() && isKotlinDSL) {
@@ -123,7 +123,7 @@ public class GradleDependency extends DependencyCoordinate {
     }
 
     @NonNull
-    Optional<String> versionCatalogue() {
+    public Optional<String> versionCatalog() {
         if (!getGroupId().startsWith("io.micronaut")) {
             return Optional.empty();
         }
