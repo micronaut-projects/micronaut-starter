@@ -2,6 +2,7 @@ package io.micronaut.starter.build.dependencies
 
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.build.gradle.GradleDependency
+import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
@@ -57,10 +58,10 @@ class GradleDependencyComparatorSpec extends Specification {
     }
 
     private static String str(GradleDependency dependency) {
-        "${dependency.getConfiguration().toString()}(\"${dependency.groupId}:${dependency.artifactId}\")"
+        "${dependency.getConfiguration().toString()}(${dependency.mavenCoordinate()})"
     }
 
     private static GradleDependency dep(Dependency.Builder dependency, GeneratorContext ctx) {
-        new GradleDependency(dependency.build(), ctx)
+        new GradleDependency(dependency.build(), ctx, Gradle.DEFAULT_USER_VERSION_CATALOGUE)
     }
 }

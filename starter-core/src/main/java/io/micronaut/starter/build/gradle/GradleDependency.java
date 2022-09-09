@@ -49,8 +49,11 @@ public class GradleDependency extends DependencyCoordinate {
     @NonNull
     private final GradleConfiguration gradleConfiguration;
 
+    private final boolean useVersionCatalogue;
+
     public GradleDependency(@NonNull Dependency dependency,
-                            @NonNull GeneratorContext generatorContext) {
+                            @NonNull GeneratorContext generatorContext,
+                            boolean useVersionCatalogue) {
         super(dependency);
         gradleConfiguration = GradleConfiguration.of(
                 dependency.getScope(),
@@ -59,6 +62,7 @@ public class GradleDependency extends DependencyCoordinate {
         ).orElseThrow(() ->
                 new IllegalArgumentException(String.format("Cannot map the dependency scope: [%s] to a Gradle specific scope", dependency.getScope())));
         isKotlinDSL = generatorContext.getBuildTool().getGradleDsl().filter(f -> f == GradleDsl.KOTLIN).isPresent();
+        this.useVersionCatalogue = useVersionCatalogue;
     }
 
     @NonNull
@@ -100,8 +104,7 @@ public class GradleDependency extends DependencyCoordinate {
             snippet += platformPrefix + "platform";
         }
         snippet += "(";
-        snippet += versionCatalog().orElse("\"" + getGroupId() + ':' + getArtifactId() +
-                (getVersion() != null ? (':' + getVersion()) : "") + "\"");
+        snippet += useVersionCatalogue ? versionCatalog().orElseGet(this::mavenCoordinate)  : mavenCoordinate();
         snippet += ")";
         if (isPom() && isKotlinDSL) {
             snippet += ")";
@@ -122,6 +125,16 @@ public class GradleDependency extends DependencyCoordinate {
         return snippet;
     }
 
+    /**
+     *
+     * @return Maven Coordinate surrounded by double quotes
+     */
+    @NonNull
+    public String mavenCoordinate() {
+        return "\"" + getGroupId() + ':' + getArtifactId() +
+                (getVersion() != null ? (':' + getVersion()) : "") + "\"";
+    }
+
     @NonNull
     public Optional<String> versionCatalog() {
         if (!getGroupId().startsWith("io.micronaut")) {
@@ -131,15 +144,15 @@ public class GradleDependency extends DependencyCoordinate {
     }
 
     @NonNull
-    public static List<GradleDependency> listOf(GeneratorContext generatorContext) {
-        return listOf(generatorContext, generatorContext);
+    public static List<GradleDependency> listOf(GeneratorContext generatorContext, boolean useVersionCatalogue) {
+        return listOf(generatorContext, generatorContext, useVersionCatalogue);
     }
 
     @NonNull
-    public static List<GradleDependency> listOf(DependencyContext dependencyContext, GeneratorContext generatorContext) {
+    public static List<GradleDependency> listOf(DependencyContext dependencyContext, GeneratorContext generatorContext, boolean useVersionCatalogue) {
         return dependencyContext.getDependencies()
                 .stream()
-                .map(dep -> new GradleDependency(dep, generatorContext))
+                .map(dep -> new GradleDependency(dep, generatorContext, useVersionCatalogue))
                 .sorted(GradleDependency.COMPARATOR)
                 .collect(Collectors.toList());
     }

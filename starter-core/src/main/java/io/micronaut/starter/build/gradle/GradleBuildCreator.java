@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class GradleBuildCreator {
 
     @NonNull
-    public GradleBuild create(@NonNull GeneratorContext generatorContext, List<Repository> repositories) {
+    public GradleBuild create(@NonNull GeneratorContext generatorContext, List<Repository> repositories, boolean useVersionCatalogue) {
         GradleDsl gradleDsl = generatorContext
                 .getBuildTool()
                 .getGradleDsl()
@@ -41,7 +41,7 @@ public class GradleBuildCreator {
                 .sorted(OrderUtil.COMPARATOR)
                 .collect(Collectors.toList());
         return new GradleBuild(gradleDsl,
-                GradleDependency.listOf(generatorContext),
+                GradleDependency.listOf(generatorContext, useVersionCatalogue),
                 gradlePlugins,
                 getRepositories(generatorContext, repositories));
     }

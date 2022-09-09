@@ -225,10 +225,18 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .build());
         plugins.add(GradlePlugin.builder().id("java").build());
         return new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                GradleDependency.listOf(dependencyContext, generatorContext),
+                GradleDependency.listOf(dependencyContext, generatorContext, useVersionCatalog()),
                 plugins,
                 GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
                         micronautRepositories()));
+    }
+
+    /**
+     *
+     * @return Whether the build should use Micronaut Gradle Version Catalog.
+     */
+    public boolean useVersionCatalog() {
+        return false;
     }
 
     @Override
