@@ -45,6 +45,15 @@ class GradleDependencyComparatorSpec extends Specification {
         "${str(dependencies[9])}" == 'testImplementation("org.testcontainers:junit-jupiter")'
         "${str(dependencies[10])}" == 'testImplementation("org.testcontainers:mysql")'
         "${str(dependencies[11])}" == 'testImplementation("org.testcontainers:testcontainers")'
+
+        and: 'versionCatalog() testing'
+        dependencies[0].versionCatalog().get() == 'mn.micronaut.openapi'
+        dependencies[1].versionCatalog().get() == 'mn.micronaut.http.client'
+        dependencies[2].versionCatalog().get() == 'mn.micronaut.runtime'
+        dependencies[3].versionCatalog().get() == 'mn.micronaut.validation'
+        dependencies[4].versionCatalog().get() == 'mn.micronaut.jdbc.hikari'
+        and: 'for dependencies whose group id is not io.micronaut returns empty Optional.'
+        !dependencies[5].versionCatalog().isPresent()
     }
 
     private static String str(GradleDependency dependency) {
