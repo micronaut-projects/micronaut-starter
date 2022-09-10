@@ -16,6 +16,8 @@
 package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.StringUtils;
+import io.micronaut.starter.feature.function.Cloud;
 import jakarta.inject.Singleton;
 
 /**
@@ -30,7 +32,12 @@ public class ObjectStorageAzure implements ObjectStorageFeature {
     @Override
     @NonNull
     public String getCloudProvider() {
-        return "Azure";
+        return StringUtils.capitalize(getCloud().name().toLowerCase());
+    }
+
+    @Override
+    public Cloud getCloud() {
+        return Cloud.AZURE;
     }
 
     @Override

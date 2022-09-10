@@ -22,6 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.CloudFeature;
 
 /**
  * Base class for Object Storage features.
@@ -29,7 +30,7 @@ import io.micronaut.starter.feature.Feature;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
-public interface ObjectStorageFeature extends Feature {
+public interface ObjectStorageFeature extends Feature, CloudFeature {
 
     @Override
     default boolean supports(ApplicationType applicationType) {

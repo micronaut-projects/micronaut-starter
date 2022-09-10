@@ -4,6 +4,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.function.Cloud
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -19,6 +20,7 @@ class ObjectStorageOracleCloudSpec extends ApplicationContextSpec implements Com
         feature.title == "Object Storage - Oracle Cloud"
         feature.description == "Micronaut Object Storage provides a uniform API to create, read and delete objects in the major cloud providers. This feature adds the Oracle Cloud implementation"
         feature.category == Category.CLOUD
+        feature.cloud == Cloud.ORACLE
         for (ApplicationType applicationType : ApplicationType.values()) {
             assert feature.supports(applicationType)
         }
