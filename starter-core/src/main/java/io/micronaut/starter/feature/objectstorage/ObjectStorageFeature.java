@@ -22,6 +22,7 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.OneOfFeature;
 import io.micronaut.starter.feature.function.CloudFeature;
 
 /**
@@ -30,7 +31,7 @@ import io.micronaut.starter.feature.function.CloudFeature;
  * @author Álvaro Sánchez-Mariscal
  * @since 3.7.0
  */
-public interface ObjectStorageFeature extends Feature, CloudFeature {
+public interface ObjectStorageFeature extends Feature, CloudFeature, OneOfFeature {
 
     @Override
     default boolean supports(ApplicationType applicationType) {
@@ -45,6 +46,11 @@ public interface ObjectStorageFeature extends Feature, CloudFeature {
     @Override
     default String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-object-storage/latest/guide/";
+    }
+    
+    @Override
+    default Class<?> getFeatureClass() {
+        return ObjectStorageFeature.class;
     }
 
     @Override

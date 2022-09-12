@@ -26,6 +26,18 @@ class ObjectStorageAwsSpec extends ApplicationContextSpec implements CommandOutp
         }
     }
 
+    void "ObjecStorageFeature is OneOfFeature"() {
+        when:
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .language(Language.JAVA)
+                .features(["object-storage-aws", "object-storage-gcp"])
+                .render()
+
+        then:
+        IllegalArgumentException e = thrown()
+        e.message.contains('There can only be one of the following features selected: [object-storage-gcp, object-storage-aws]')
+    }
+
     void 'test #buildTool object-storage-aws feature for language=#language'(Language language, BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
