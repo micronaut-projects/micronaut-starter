@@ -30,7 +30,7 @@ import java.util.function.Function;
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
 
-    private static final String EXTENSION = "yml";
+    public static final String EXTENSION = "yml";
 
     @Override
     public String getName() {
