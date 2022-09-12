@@ -21,6 +21,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -39,22 +40,29 @@ public class YamlTemplate extends DefaultTemplate {
         this.config = transform(config);
     }
 
+    public Map<String, Object> getConfig() {
+        return Collections.unmodifiableMap(config);
+    }
+
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        DumperOptions options = new DumperOptions();
-        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-        options.setPrettyFlow(true);
-
         if (!config.isEmpty()) {
-            Yaml yaml = new Yaml(options);
+            Yaml yaml = new Yaml(createOptions());
             yaml.dump(config, new OutputStreamWriter(outputStream));
         } else {
             outputStream.write("# Place application configuration here".getBytes());
         }
     }
 
+    protected DumperOptions createOptions() {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setPrettyFlow(true);
+        return options;
+    }
+
     @SuppressWarnings("unchecked")
-    private Map<String, Object> transform(Map<String, Object> config) {
+    protected Map<String, Object> transform(Map<String, Object> config) {
         Map<String, Object> transformed = new LinkedHashMap<>();
         for (Map.Entry<String, Object> entry: config.entrySet()) {
             Map<String, Object> finalMap = transformed;
