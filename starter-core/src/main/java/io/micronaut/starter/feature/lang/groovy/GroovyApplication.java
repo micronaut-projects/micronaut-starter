@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.groovy;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
@@ -54,22 +55,38 @@ public class GroovyApplication implements GroovyApplicationFeature {
         GroovyApplicationFeature.super.apply(generatorContext);
 
         if (shouldGenerateApplicationFile(generatorContext)) {
-            String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-
-            generatorContext.addTemplate("application", new RockerTemplate(getPath(),
-                    application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment)));
-            TestFramework testFramework = generatorContext.getTestFramework();
-            String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            Project project = generatorContext.getProject();
-            TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
-                    groovyJunit.template(project),
-                    groovyJunit.template(project),
-                    groovyJunit.template(project),
-                    koTest.template(project));
-            generatorContext.addTemplate("applicationTest",
-                    new RockerTemplate(testSourcePath, provider.findModel(generatorContext.getLanguage(), testFramework))
-            );
+            addApplication(generatorContext);
+            addApplicationTest(generatorContext);
         }
+    }
+
+    protected void addApplicationTest(GeneratorContext generatorContext) {
+        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
+        generatorContext.addTemplate("applicationTest",
+                new RockerTemplate(testSourcePath, applicationTest(generatorContext))
+        );
+    }
+
+    protected void addApplication(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("application", new RockerTemplate(getPath(),
+                application(generatorContext)));
+
+    }
+
+    protected RockerModel applicationTest(GeneratorContext generatorContext) {
+        TestFramework testFramework = generatorContext.getTestFramework();
+        Project project = generatorContext.getProject();
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+                groovyJunit.template(project),
+                groovyJunit.template(project),
+                groovyJunit.template(project),
+                koTest.template(project));
+        return provider.findModel(generatorContext.getLanguage(), testFramework);
+    }
+
+    protected RockerModel application(GeneratorContext generatorContext) {
+        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
