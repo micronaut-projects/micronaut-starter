@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -39,7 +40,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -48,12 +49,14 @@ import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Gradle implements BuildFeature {
-    private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
-    private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
+    protected static final GradlePlugin GROOVY_GRADLE_PLUGIN = GradlePlugin.builder().id("groovy").build();
 
-    private final KotlinBuildPlugins kotlinBuildPlugins;
-    private final GradleBuildCreator dependencyResolver;
-    private final MicronautBuildPlugin micronautBuildPlugin;
+    protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
+    protected static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
+
+    protected final KotlinBuildPlugins kotlinBuildPlugins;
+    protected final GradleBuildCreator dependencyResolver;
+    protected final MicronautBuildPlugin micronautBuildPlugin;
 
     public Gradle(GradleBuildCreator dependencyResolver,
                   MicronautBuildPlugin micronautBuildPlugin,
@@ -64,6 +67,7 @@ public class Gradle implements BuildFeature {
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "gradle";
     }
@@ -78,36 +82,42 @@ public class Gradle implements BuildFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        addGradleInitFiles(generatorContext);
+        extraPlugins(generatorContext).forEach(generatorContext::addBuildPlugin);
+        GradleBuild build = createBuild(generatorContext);
+        addBuildFile(generatorContext, build);
+        addGitignore(generatorContext);
+        addGradleProperties(generatorContext);
+        addSettingsFile(generatorContext, build);
+    }
 
-        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
-        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
-        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
-        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
+    protected GradleBuild createBuild(GeneratorContext generatorContext) {
+        return dependencyResolver.create(generatorContext, micronautRepositories());
+    }
 
-        if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
-        }
+    protected void addBuildFile(GeneratorContext generatorContext, GradleBuild build) {
+        generatorContext.addTemplate("build", new RockerTemplate(generatorContext.getBuildTool().getBuildFileName(), buildFile(generatorContext, build)));
+    }
 
-        BuildTool buildTool = generatorContext.getBuildTool();
-        GradleBuild build = dependencyResolver.create(generatorContext, micronautRepositories());
-
-        generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
+    protected RockerModel buildFile(GeneratorContext generatorContext, GradleBuild build) {
+        return buildGradle.template(
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 generatorContext.getFeatures(),
                 build
-        )));
+        );
+    }
 
-        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore.template()));
-        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(gradleProperties(generatorContext))));
+    protected void addGitignore(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore(generatorContext)));
+    }
 
-        String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
-        generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
+    protected RockerModel gitignore(GeneratorContext generatorContext) {
+        return gitignore.template();
     }
 
     @NonNull
-    private static List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
+    protected static List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
         return generatorContext.getBuildProperties().getProperties().stream()
                 .filter(p -> p.getKey() == null || !p.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)) // It is set via the DSL
                 .collect(Collectors.toList());
@@ -119,4 +129,27 @@ public class Gradle implements BuildFeature {
                                Set<Feature> selectedFeatures) {
         return options.getBuildTool().isGradle();
     }
+
+    protected void addGradleProperties(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(gradleProperties(generatorContext))));
+    }
+
+    protected void addSettingsFile(GeneratorContext generatorContext, GradleBuild build) {
+        String settingsFile =  generatorContext.getBuildTool() == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
+        generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
+    }
+
+    protected List<GradlePlugin> extraPlugins(GeneratorContext generatorContext) {
+        return (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) ?
+                Collections.singletonList(GROOVY_GRADLE_PLUGIN) : Collections.emptyList();
+    }
+
+    protected void addGradleInitFiles(GeneratorContext generatorContext) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
+        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
+        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
+    }
 }
+
