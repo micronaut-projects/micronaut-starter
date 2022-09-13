@@ -22,6 +22,11 @@ import software.amazon.awscdk.services.dynamodb.Table;
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 }
+@if (features.contains("amazon-api-gateway-http")) {
+import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
+import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration;
+import static software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion.VERSION_1_0;
+}
 @if (features.contains("aws-lambda-scheduled-event")) {
 import software.amazon.awscdk.services.events.Rule;
 import software.amazon.awscdk.services.events.Schedule;
@@ -151,10 +156,18 @@ public class AppStack extends Stack {
                 .handler(function)
                 .build();
 }
+@if (features.contains("amazon-api-gateway-http")) {
+        HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", function)
+                .payloadFormatVersion(VERSION_1_0)
+                .build();
+        HttpApi api = HttpApi.Builder.create(this, "micronaut-function-api")
+                .defaultIntegration(integration)
+                .build();
+}
 
         CfnOutput.Builder.create(this, "MnTestApiUrl")
                 .exportName("MnTestApiUrl")
-@if (features.contains("amazon-api-gateway")) {
+@if (features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http")) {
                 .value(api.getUrl())
 }
 @if (features.contains("aws-lambda-function-url")) {

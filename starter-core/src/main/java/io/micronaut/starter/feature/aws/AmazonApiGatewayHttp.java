@@ -21,10 +21,10 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiFeature {
-    public static final String NAME = "amazon-api-gateway";
+public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements AwsApiFeature {
+    public static final String NAME = "amazon-api-gateway-http";
 
-    public AmazonApiGateway(AwsLambda awsLambda) {
+    public AmazonApiGatewayHttp(AwsLambda awsLambda) {
         super(awsLambda);
     }
 
@@ -36,13 +36,13 @@ public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiF
 
     @Override
     public String getTitle() {
-        return "Amazon API Gateway";
+        return "Amazon API Gateway HTTP";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "This features combines with the CDK to define an API Gateway REST API";
+        return "This features combines with the CDK to define an API Gateway HTTP API";
     }
 
     @Override

@@ -36,6 +36,7 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.testlambda;
@@ -118,8 +119,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
-
-
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),
@@ -128,7 +127,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
                         generatorContext.getFeatures().hasFeature(AwsLambda.class) ? "micronaut-function" : null,
-                        generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ? "micronaut-function-api" : null,
+                        generatorContext.getFeatures().getFeature(AwsApiFeature.class).map(Feature::getName).orElse(null),
                         "0.1",
                         handler,
                         generatorContext.getFeatures().hasGraalvm(),
@@ -150,7 +149,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         return generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
     }
 
-    private void populateDependencies() {
+    private void populateDependencies(GeneratorContext generatorContext) {
         dependencyContext.addDependency(bomDependency().compile());
         dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
@@ -164,6 +163,15 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .groupId("org.junit.jupiter")
                 .artifactId("junit-jupiter-engine")
                 .test());
+        generatorContext.getFeatures().getFeature(AmazonApiGatewayHttp.class).ifPresent(feature -> {
+            dependencyContext.addDependency(Dependency.builder()
+                    .lookupArtifactId("apigatewayv2-alpha")
+                    .compile());
+            dependencyContext.addDependency(Dependency.builder()
+                    .lookupArtifactId("apigatewayv2-integrations-alpha")
+                    .compile());
+
+        });
     }
 
     private Dependency.Builder bomDependency() {
@@ -174,7 +182,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {
-        populateDependencies();
+        populateDependencies(generatorContext);
         RockerModel rockerModel = null;
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
