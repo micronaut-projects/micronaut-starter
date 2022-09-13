@@ -50,6 +50,7 @@ import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Gradle implements BuildFeature {
+    public static final boolean DEFAULT_USER_VERSION_CATALOGUE = false;
     protected static final GradlePlugin GROOVY_GRADLE_PLUGIN = GradlePlugin.builder().id("groovy").build();
 
     protected static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
@@ -113,7 +114,7 @@ public class Gradle implements BuildFeature {
     }
 
     protected GradleBuild createBuild(GeneratorContext generatorContext) {
-        return dependencyResolver.create(generatorContext, micronautRepositories());
+        return dependencyResolver.create(generatorContext, micronautRepositories(), Gradle.DEFAULT_USER_VERSION_CATALOGUE);
     }
 
     protected void addBuildFile(GeneratorContext generatorContext, GradleBuild build) {
