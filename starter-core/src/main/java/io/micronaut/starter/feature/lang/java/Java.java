@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
@@ -26,25 +27,32 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Singleton
 public class Java implements LanguageFeature {
 
-    private final List<JavaApplicationFeature> applicationFeatures;
+    protected final List<JavaApplicationFeature> applicationFeatures;
 
     public Java(List<JavaApplicationFeature> applicationFeatures) {
         this.applicationFeatures = applicationFeatures;
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "java";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        processSelectedFeatures(featureContext, feature -> true);
+    }
+
+    protected void processSelectedFeatures(FeatureContext featureContext, Predicate<Feature> featureFilter) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
+                    .filter(featureFilter)
                     .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
