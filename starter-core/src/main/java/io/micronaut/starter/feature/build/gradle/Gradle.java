@@ -48,9 +48,10 @@ import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Gradle implements BuildFeature {
+    public static final boolean DEFAULT_USER_VERSION_CATALOGUE = false;
+
     private static final String WRAPPER_JAR = "gradle/wrapper/gradle-wrapper.jar";
     private static final String WRAPPER_PROPS = "gradle/wrapper/gradle-wrapper.properties";
-
     private final KotlinBuildPlugins kotlinBuildPlugins;
     private final GradleBuildCreator dependencyResolver;
     private final MicronautBuildPlugin micronautBuildPlugin;
@@ -83,14 +84,14 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
         generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
         generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
-        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), DEFAULT_USER_VERSION_CATALOGUE));
 
         if (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder().id("groovy").build());
         }
 
         BuildTool buildTool = generatorContext.getBuildTool();
-        GradleBuild build = dependencyResolver.create(generatorContext, micronautRepositories());
+        GradleBuild build = dependencyResolver.create(generatorContext, micronautRepositories(), useVersionCatalog());
 
         generatorContext.addTemplate("build", new RockerTemplate(buildTool.getBuildFileName(), buildGradle.template(
                 generatorContext.getApplicationType(),
@@ -104,6 +105,14 @@ public class Gradle implements BuildFeature {
 
         String settingsFile = buildTool == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
+    }
+
+    /**
+     *
+     * @return Whether the build should use Micronaut Gradle Version Catalog.
+     */
+    public boolean useVersionCatalog() {
+        return DEFAULT_USER_VERSION_CATALOGUE;
     }
 
     @NonNull
