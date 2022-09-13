@@ -179,7 +179,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
         } else if (generatorContext.getBuildTool().isGradle()) {
-            rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME);
+            rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME, null, null);
         }
         return Optional.ofNullable(rockerModel);
     }

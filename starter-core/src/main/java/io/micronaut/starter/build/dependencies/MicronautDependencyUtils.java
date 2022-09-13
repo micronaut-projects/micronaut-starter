@@ -31,6 +31,8 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
 
+    public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
+
     @NonNull
     public static Dependency.Builder coreDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT);
@@ -79,6 +81,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder kotlinDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KOTLIN);
+    }
+    
+    @NonNull
+    public static Dependency.Builder groovyDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GROOVY);
     }
 
     @NonNull
