@@ -108,9 +108,14 @@ public class MavenBuildCreator {
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
-                MavenRepository.listOf(micronautRepositories()),
+                getRepositories(),
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles());
+    }
+
+    @NonNull
+    protected List<MavenRepository> getRepositories() {
+        return MavenRepository.listOf(micronautRepositories());
     }
 }

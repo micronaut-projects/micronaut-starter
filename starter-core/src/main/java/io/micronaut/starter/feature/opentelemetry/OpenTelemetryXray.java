@@ -76,7 +76,7 @@ public class OpenTelemetryXray extends AbstractOpenTelemetry {
             generatorContext.addDependency(OPEN_TELEMETRY_BOM_ALPHA);
             generatorContext.addDependency(OPEN_TELEMETRY_INSTRUMENTATION_AWS_SDK);
         }
-        generatorContext.getConfiguration().put("otel.traces.propagator", "tracecontext, baggage, xray");
+        generatorContext.getConfiguration().addCommaSeparatedValue("otel.traces.propagator", "tracecontext, baggage, xray");
     }
 
     @Override

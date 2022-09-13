@@ -35,23 +35,26 @@ import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-test", description = "Creates a simple test for the project's testing framework")
+@Command(name = "create-test", description = "Creates a simple test for the project's testing framework")
 @Prototype
 public class CreateTestCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "TEST-NAME", description = "The name of the test class to create")
-    String testName;
+    @Parameters(paramLabel = "TEST-NAME", description = "The name of the test class to create")
+    protected String testName;
 
     public CreateTestCommand(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateTestCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateTestCommand(CodeGenConfig config,
+                             ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                             ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -67,7 +70,8 @@ public class CreateTestCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         final String path = "/{packagePath}/{className}";
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(
+                spock.template(project),
                 javaJunit.template(project),
                 groovyJunit.template(project),
                 kotlinJunit.template(project),

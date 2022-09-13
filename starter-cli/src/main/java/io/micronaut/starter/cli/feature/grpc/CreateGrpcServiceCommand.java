@@ -21,7 +21,6 @@ import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.core.util.functional.ThrowingSupplier;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
@@ -34,23 +33,31 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-grpc-service", description = "Creates a gRPC service with proto file and associated test")
+import static io.micronaut.starter.application.ApplicationType.GRPC;
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-grpc-service", description = "Creates a gRPC service with proto file and associated test")
 @Prototype
 public class CreateGrpcServiceCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
-    String serviceName;
+    @Parameters(paramLabel = "SERVICE-NAME", description = "The name of the service to create")
+    protected String serviceName;
 
     public CreateGrpcServiceCommand(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateGrpcServiceCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateGrpcServiceCommand(CodeGenConfig config,
+                                    ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                                    ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -64,7 +71,7 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
     @Override
     public boolean applies() {
-        return config.getApplicationType() == ApplicationType.GRPC;
+        return config.getApplicationType() == GRPC;
     }
 
     @Override
@@ -91,11 +98,11 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
 
         path = sourceLanguage.getSourcePath(path);
         RockerModel rockerModel = null;
-        if (sourceLanguage == Language.JAVA) {
+        if (sourceLanguage == JAVA) {
             rockerModel = javaService.template(project);
-        } else if (sourceLanguage == Language.GROOVY) {
+        } else if (sourceLanguage == GROOVY) {
             rockerModel = groovyService.template(project);
-        } else if (sourceLanguage == Language.KOTLIN) {
+        } else if (sourceLanguage == KOTLIN) {
             rockerModel = kotlinService.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);
@@ -117,7 +124,8 @@ public class CreateGrpcServiceCommand extends CodeGenCommand {
      * Creates the {@link CreateProtoServiceCommand}.
      * @return The {@link CreateProtoServiceCommand}.
      */
-    protected @NonNull CreateProtoServiceCommand getCreateProtoServiceCommand() {
+    @NonNull
+    protected CreateProtoServiceCommand getCreateProtoServiceCommand() {
         return getCommand(CreateProtoServiceCommand.class);
     }
 }

@@ -20,38 +20,46 @@ import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.cli.CommonOptionsMixin;
 import io.micronaut.starter.io.ConsoleOutput;
-import picocli.CommandLine;
+import picocli.CommandLine.Mixin;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Spec;
+
+import static io.micronaut.starter.application.OperatingSystem.LINUX;
+import static io.micronaut.starter.application.OperatingSystem.MACOS;
+import static io.micronaut.starter.application.OperatingSystem.SOLARIS;
+import static io.micronaut.starter.application.OperatingSystem.WINDOWS;
+import static picocli.CommandLine.Help.Ansi.AUTO;
 
 public class BaseCommand implements ConsoleOutput {
 
-    @CommandLine.Spec
+    @Spec
     @ReflectiveAccess
-    protected CommandLine.Model.CommandSpec spec;
+    protected CommandSpec spec;
 
-    @CommandLine.Mixin
+    @Mixin
     @ReflectiveAccess
     protected CommonOptionsMixin commonOptions = new CommonOptionsMixin();
 
     public void out(String message) {
-        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string(message));
+        spec.commandLine().getOut().println(AUTO.string(message));
     }
 
     public void err(String message) {
-        spec.commandLine().getErr().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red | Error|@ " + message));
+        spec.commandLine().getErr().println(AUTO.string("@|bold,red | Error|@ " + message));
     }
 
     public void warning(String message) {
-        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red | Warning|@ " + message));
+        spec.commandLine().getOut().println(AUTO.string("@|bold,red | Warning|@ " + message));
     }
 
     @Override
     public void green(String message) {
-        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,green " + message + "|@"));
+        spec.commandLine().getOut().println(AUTO.string("@|bold,green " + message + "|@"));
     }
 
     @Override
     public void red(String message) {
-        spec.commandLine().getOut().println(CommandLine.Help.Ansi.AUTO.string("@|bold,red " + message + "|@"));
+        spec.commandLine().getOut().println(AUTO.string("@|bold,red " + message + "|@"));
     }
 
     public boolean showStacktrace() {
@@ -66,16 +74,17 @@ public class BaseCommand implements ConsoleOutput {
     public OperatingSystem getOperatingSystem() {
         io.micronaut.context.condition.OperatingSystem operatingSystem = io.micronaut.context.condition.OperatingSystem.getCurrent();
         if (operatingSystem.isMacOs()) {
-            return OperatingSystem.MACOS;
-        } else if (operatingSystem.isLinux()) {
-            return OperatingSystem.LINUX;
-        } else if (operatingSystem.isWindows()) {
-            return OperatingSystem.WINDOWS;
-        } else if (operatingSystem.isSolaris()) {
-            return OperatingSystem.SOLARIS;
-        } else {
-            return null;
+            return MACOS;
         }
+        if (operatingSystem.isLinux()) {
+            return LINUX;
+        }
+        if (operatingSystem.isWindows()) {
+            return WINDOWS;
+        }
+        if (operatingSystem.isSolaris()) {
+            return SOLARIS;
+        }
+        return null;
     }
-
 }

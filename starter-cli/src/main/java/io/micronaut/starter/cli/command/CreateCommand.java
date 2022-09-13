@@ -32,7 +32,9 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.util.NameUtils;
 import io.micronaut.starter.util.VersionInfo;
-import picocli.CommandLine;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Parameters;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,41 +46,41 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     protected final AvailableFeatures availableFeatures;
 
     @ReflectiveAccess
-    @CommandLine.Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
-    String name;
+    @Parameters(arity = "0..1", paramLabel = "NAME", description = "The name of the application to create.")
+    protected String name;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
-    Language lang;
+    @Option(names = {"-l", "--lang"}, paramLabel = "LANG", description = "Which language to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = LanguageCandidates.class, converter = LanguageConverter.class)
+    protected Language lang;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
-    TestFramework test;
+    @Option(names = {"-t", "--test"}, paramLabel = "TEST", description = "Which test framework to use. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = TestFrameworkCandidates.class, converter = TestFrameworkConverter.class)
+    protected TestFramework test;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
-    BuildTool build;
+    @Option(names = {"-b", "--build"}, paramLabel = "BUILD-TOOL", description = "Which build tool to configure. Possible values: ${COMPLETION-CANDIDATES}.", completionCandidates = BuildToolCandidates.class, converter = BuildToolConverter.class)
+    protected BuildTool build;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
-    boolean inplace;
+    @Option(names = {"-i", "--inplace"}, description = "Create a service using the current directory")
+    protected boolean inplace;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
-    boolean listFeatures;
+    @Option(names = {"--list-features"}, description = "Output the available features and their descriptions")
+    protected boolean listFeatures;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
-    Integer javaVersion;
+    @Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
+    protected Integer javaVersion;
 
-    private final ContextFactory contextFactory;
-    private final ApplicationType applicationType;
-    private final ProjectGenerator projectGenerator;
+    protected final ContextFactory contextFactory;
+    protected final ApplicationType applicationType;
+    protected final ProjectGenerator projectGenerator;
 
-    public CreateCommand(AvailableFeatures availableFeatures,
-                         ContextFactory contextFactory,
-                         ApplicationType applicationType,
-                         ProjectGenerator projectGenerator) {
+    protected CreateCommand(AvailableFeatures availableFeatures,
+                            ContextFactory contextFactory,
+                            ApplicationType applicationType,
+                            ProjectGenerator projectGenerator) {
         this.availableFeatures = availableFeatures;
         this.contextFactory = contextFactory;
         this.applicationType = applicationType;
@@ -108,7 +110,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         try {
             project = NameUtils.parse(name);
         } catch (IllegalArgumentException e) {
-            throw new CommandLine.ParameterException(this.spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
+            throw new ParameterException(spec.commandLine(), StringUtils.isEmpty(name) ? "Specify an application name or use --inplace to create an application in the current directory" : e.getMessage());
         }
 
         OutputHandler outputHandler = new FileSystemOutputHandler(project, inplace, this);
@@ -129,11 +131,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
         projectGenerator.generate(applicationType, project, options, getOperatingSystem(), getSelectedFeatures(), outputHandler, this);
     }
 
-    private JdkVersion getJdkVersion() {
-        if (javaVersion == null) {
-            return VersionInfo.getJavaVersion();
-        } else {
-            return JdkVersion.valueOf(javaVersion);
-        }
+    protected JdkVersion getJdkVersion() {
+        return javaVersion == null ? VersionInfo.getJavaVersion() : JdkVersion.valueOf(javaVersion);
     }
 }

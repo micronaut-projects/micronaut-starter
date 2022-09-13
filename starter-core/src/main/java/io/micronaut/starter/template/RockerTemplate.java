@@ -57,4 +57,7 @@ public class RockerTemplate extends DefaultTemplate {
         return executable;
     }
 
+    public RockerWritable getWritable() {
+        return writable;
+    }
 }

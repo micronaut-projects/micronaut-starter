@@ -20,6 +20,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
+import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.BuildFeature;
 import io.micronaut.starter.feature.build.gitignore;
@@ -30,11 +31,15 @@ import io.micronaut.starter.template.BinaryTemplate;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
+
+import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Maven implements BuildFeature {
@@ -76,7 +81,10 @@ public class Maven implements BuildFeature {
 
         Collection<String> moduleNames = generatorContext.getModuleNames();
         if (moduleNames.size() > 1) {
-            generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(generatorContext.getProject(), moduleNames)));
+            List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
+                    MavenRepository.listOf(micronautRepositories()) :
+                    null;
+            generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
         }
 
     }

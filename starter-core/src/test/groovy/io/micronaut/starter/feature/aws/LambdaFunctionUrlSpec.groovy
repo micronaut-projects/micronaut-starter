@@ -4,6 +4,9 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Subject
 
 class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -31,5 +34,17 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
     void "aws-lambda-function-url supports function application type"() {
         expect:
         lambdaFunctionUrl.supports(ApplicationType.FUNCTION)
+    }
+
+    void 'Function AppStack log retention is included for #buildTool'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [LambdaFunctionUrl.NAME])
+
+        then:
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
+
+        where:
+        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
     }
 }
