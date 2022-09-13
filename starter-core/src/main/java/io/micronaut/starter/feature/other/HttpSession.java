@@ -19,7 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.redis.RedisLettuce;
@@ -70,8 +70,7 @@ public class HttpSession implements Feature  {
         if (generatorContext.isFeaturePresent(RedisLettuce.class)) {
             configuration.put("micronaut.session.http.redis.enabled", true);
         }
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
+        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-session")
                 .compile());
     }
