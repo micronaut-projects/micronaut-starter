@@ -40,6 +40,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -91,6 +92,26 @@ public class Gradle implements BuildFeature {
         addSettingsFile(generatorContext, build);
     }
 
+    @Override
+    public boolean shouldApply(ApplicationType applicationType,
+                               Options options,
+                               Set<Feature> selectedFeatures) {
+        return options.getBuildTool().isGradle();
+    }
+
+    protected void addGradleInitFiles(GeneratorContext generatorContext) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
+        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
+        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
+        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
+    }
+
+    protected List<GradlePlugin> extraPlugins(GeneratorContext generatorContext) {
+        return (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) ?
+                Collections.singletonList(GROOVY_GRADLE_PLUGIN) : Collections.emptyList();
+    }
+
     protected GradleBuild createBuild(GeneratorContext generatorContext) {
         return dependencyResolver.create(generatorContext, micronautRepositories());
     }
@@ -112,8 +133,13 @@ public class Gradle implements BuildFeature {
         generatorContext.addTemplate("gitignore", new RockerTemplate(Template.ROOT, ".gitignore", gitignore(generatorContext)));
     }
 
+    @SuppressWarnings("java:S1172") // Unused parameter for extensibility
     protected RockerModel gitignore(GeneratorContext generatorContext) {
         return gitignore.template();
+    }
+
+    protected void addGradleProperties(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(gradleProperties(generatorContext))));
     }
 
     @NonNull
@@ -123,33 +149,9 @@ public class Gradle implements BuildFeature {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public boolean shouldApply(ApplicationType applicationType,
-                               Options options,
-                               Set<Feature> selectedFeatures) {
-        return options.getBuildTool().isGradle();
-    }
-
-    protected void addGradleProperties(GeneratorContext generatorContext) {
-        generatorContext.addTemplate("projectProperties", new RockerTemplate(Template.ROOT, "gradle.properties", gradleProperties.template(gradleProperties(generatorContext))));
-    }
-
     protected void addSettingsFile(GeneratorContext generatorContext, GradleBuild build) {
-        String settingsFile =  generatorContext.getBuildTool() == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
+        String settingsFile = generatorContext.getBuildTool() == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
-    }
-
-    protected List<GradlePlugin> extraPlugins(GeneratorContext generatorContext) {
-        return (generatorContext.getFeatures().language().isGroovy() || generatorContext.getFeatures().testFramework().isSpock()) ?
-                Collections.singletonList(GROOVY_GRADLE_PLUGIN) : Collections.emptyList();
-    }
-
-    protected void addGradleInitFiles(GeneratorContext generatorContext) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        generatorContext.addTemplate("gradleWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(WRAPPER_JAR)));
-        generatorContext.addTemplate("gradleWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(WRAPPER_PROPS)));
-        generatorContext.addTemplate("gradleWrapper", new URLTemplate(Template.ROOT, "gradlew", classLoader.getResource("gradle/gradlew"), true));
-        generatorContext.addTemplate("gradleWrapperBat", new URLTemplate(Template.ROOT, "gradlew.bat", classLoader.getResource("gradle/gradlew.bat"), false));
     }
 }
 
