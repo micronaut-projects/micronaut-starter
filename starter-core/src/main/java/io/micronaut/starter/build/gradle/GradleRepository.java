@@ -17,6 +17,7 @@ package io.micronaut.starter.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.build.MavenCentral;
+import io.micronaut.starter.build.MavenLocal;
 import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.template.Writable;
 
@@ -57,6 +58,9 @@ public class GradleRepository implements Writable  {
                 .map(it -> {
                     if (it instanceof MavenCentral) {
                         return new GradleMavenCentral(gradleDsl, it.getUrl());
+                    }
+                    if (it instanceof MavenLocal) {
+                        return new GradleMavenLocal(gradleDsl, it.getUrl());
                     }
                     return new GradleRepository(gradleDsl, it.getUrl());
                 }).collect(Collectors.toList());
