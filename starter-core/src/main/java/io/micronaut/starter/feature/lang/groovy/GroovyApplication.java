@@ -60,17 +60,26 @@ public class GroovyApplication implements GroovyApplicationFeature {
         }
     }
 
-    protected void addApplicationTest(GeneratorContext generatorContext) {
-        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-        generatorContext.addTemplate("applicationTest",
-                new RockerTemplate(testSourcePath, applicationTest(generatorContext))
-        );
+    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+                || !generatorContext.getFeatures().hasFunctionFeature();
+    }
+
+    protected RockerModel application(GeneratorContext generatorContext) {
+        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
     }
 
     protected void addApplication(GeneratorContext generatorContext) {
         generatorContext.addTemplate("application", new RockerTemplate(getPath(),
                 application(generatorContext)));
+    }
 
+    protected void addApplicationTest(GeneratorContext generatorContext) {
+        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
+        generatorContext.addTemplate("applicationTest",
+                new RockerTemplate(testSourcePath, applicationTest(generatorContext))
+        );
     }
 
     protected RockerModel applicationTest(GeneratorContext generatorContext) {
@@ -82,16 +91,6 @@ public class GroovyApplication implements GroovyApplicationFeature {
                 groovyJunit.template(project),
                 koTest.template(project));
         return provider.findModel(generatorContext.getLanguage(), testFramework);
-    }
-
-    protected RockerModel application(GeneratorContext generatorContext) {
-        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
-    }
-
-    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
-                || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {

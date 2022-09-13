@@ -61,6 +61,11 @@ public class KotlinApplication implements KotlinApplicationFeature {
         }
     }
 
+    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+                || !generatorContext.getFeatures().hasFunctionFeature();
+    }
+
     protected void addApplication(GeneratorContext generatorContext) {
         generatorContext.addTemplate("application", new RockerTemplate(getPath(), application(generatorContext)));
     }
@@ -87,11 +92,6 @@ public class KotlinApplication implements KotlinApplicationFeature {
                 kotlinJunit.template(project),
                 koTest.template(project));
         return provider.findModel(generatorContext.getLanguage(), testFramework);
-    }
-
-    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
-                || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {

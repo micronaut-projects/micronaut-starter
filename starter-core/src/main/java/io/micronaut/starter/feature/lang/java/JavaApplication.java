@@ -59,6 +59,11 @@ public class JavaApplication implements JavaApplicationFeature  {
         }
     }
 
+    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
+        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
+                || !generatorContext.getFeatures().hasFunctionFeature();
+    }
+
     protected void addApplication(GeneratorContext generatorContext) {
         generatorContext.addTemplate("application", new RockerTemplate(getPath(),
                 application(generatorContext)));
@@ -84,11 +89,6 @@ public class JavaApplication implements JavaApplicationFeature  {
                 javaJunit.template(project),
                 koTest.template(project));
         return provider.findModel(generatorContext.getLanguage(), testFramework);
-    }
-
-    protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
-        return generatorContext.getApplicationType() == ApplicationType.DEFAULT
-                || !generatorContext.getFeatures().hasFunctionFeature();
     }
 
     protected String getPath() {
