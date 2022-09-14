@@ -36,19 +36,18 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
-import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
-import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
-import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
+import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
+import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
-import io.micronaut.starter.feature.build.maven.templates.genericPom;
+import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
+import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.options.BuildTool;
@@ -127,7 +126,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
                         generatorContext.getFeatures().hasFeature(AwsLambda.class) ? "micronaut-function" : null,
-                        generatorContext.getFeatures().getFeature(AwsApiFeature.class).map(Feature::getName).orElse(null),
+                        generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ? "micronaut-function-api" : null,
                         "0.1",
                         handler,
                         generatorContext.getFeatures().hasGraalvm(),
@@ -163,7 +162,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .groupId("org.junit.jupiter")
                 .artifactId("junit-jupiter-engine")
                 .test());
-        generatorContext.getFeatures().getFeature(AmazonApiGatewayHttp.class).ifPresent(feature -> {
+        if (generatorContext.getFeatures().hasFeature(AmazonApiGatewayHttp.class)) {
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-alpha")
                     .compile());
@@ -171,7 +170,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                     .lookupArtifactId("apigatewayv2-integrations-alpha")
                     .compile());
 
-        });
+        }
     }
 
     private Dependency.Builder bomDependency() {

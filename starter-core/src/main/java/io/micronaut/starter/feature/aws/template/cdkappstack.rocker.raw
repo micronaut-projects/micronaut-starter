@@ -160,7 +160,7 @@ public class AppStack extends Stack {
         HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", function)
                 .payloadFormatVersion(VERSION_1_0)
                 .build();
-        HttpApi api = HttpApi.Builder.create(this, "micronaut-function-api")
+        HttpApi api = HttpApi.Builder.create(this, "@(apiId)")
                 .defaultIntegration(integration)
                 .build();
 }
