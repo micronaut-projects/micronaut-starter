@@ -32,11 +32,11 @@ import jakarta.inject.Singleton;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Singleton
 public class Groovy implements LanguageFeature {
-
-    private final List<GroovyApplicationFeature> applicationFeatures;
+    protected final List<GroovyApplicationFeature> applicationFeatures;
     protected static final Dependency DEPENDENCY_MICRONAUT_GROOVY_RUNTIME = MicronautDependencyUtils.groovyDependency()
             .artifactId("micronaut-runtime-groovy")
             .compile()
@@ -53,8 +53,13 @@ public class Groovy implements LanguageFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        processSelectedFeatured(featureContext, feature -> true);
+    }
+
+    protected void processSelectedFeatured(FeatureContext featureContext, Predicate<Feature> filter) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
+                    .filter(filter)
                     .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
