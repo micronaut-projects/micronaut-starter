@@ -68,7 +68,7 @@ public class Crac implements Feature {
 
     @Override
     public String getCategory() {
-        return Category.OTHER;
+        return Category.PACKAGING;
     }
 
     @Override
