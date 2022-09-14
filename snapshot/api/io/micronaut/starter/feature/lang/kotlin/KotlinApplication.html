@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,6 +166,22 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/K
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#addApplication-io.micronaut.starter.application.generator.GeneratorContext-">addApplication</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#addApplicationTest-io.micronaut.starter.application.generator.GeneratorContext-">addApplicationTest</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#application-io.micronaut.starter.application.generator.GeneratorContext-">application</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected com.fizzed.rocker.RockerModel</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#applicationTest-io.micronaut.starter.application.generator.GeneratorContext-">applicationTest</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>
 <div class="block">If this method is called for a given feature that means the feature was explicitly selected,
@@ -173,25 +189,25 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/K
  or added explicitly by another feature through <a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html#addFeature-io.micronaut.starter.feature.Feature-"><code>FeatureContext.addFeature(Feature)</code></a>.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#getPath--">getPath</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#mainClassName-io.micronaut.starter.application.generator.GeneratorContext-">mainClassName</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#shouldGenerateApplicationFile-io.micronaut.starter.application.generator.GeneratorContext-">shouldGenerateApplicationFile</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/kotlin/KotlinApplication.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType)</code>
 <div class="block">This method must be implemented to ensure it is only selectable for the desired
@@ -285,7 +301,8 @@ public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../../io/mi
 <ul class="blockList">
 <li class="blockList">
 <h4>getName</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getName()</pre>
+<pre>@NonNull
+public&nbsp;java.lang.String&nbsp;getName()</pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getName--">Feature</a></code></span></div>
 <div class="block">The name of the feature. It must be unique.</div>
 <dl>
@@ -353,6 +370,42 @@ public&nbsp;java.lang.String&nbsp;mainClassName(<a href="../../../../../../io/mi
 <li class="blockList">
 <h4>shouldGenerateApplicationFile</h4>
 <pre>protected&nbsp;boolean&nbsp;shouldGenerateApplicationFile(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+</li>
+</ul>
+<a name="addApplication-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addApplication</h4>
+<pre>protected&nbsp;void&nbsp;addApplication(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+</li>
+</ul>
+<a name="application-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>application</h4>
+<pre>protected&nbsp;com.fizzed.rocker.RockerModel&nbsp;application(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+</li>
+</ul>
+<a name="addApplicationTest-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addApplicationTest</h4>
+<pre>protected&nbsp;void&nbsp;addApplicationTest(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+</li>
+</ul>
+<a name="applicationTest-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>applicationTest</h4>
+<pre>protected&nbsp;com.fizzed.rocker.RockerModel&nbsp;applicationTest(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
 </li>
 </ul>
 <a name="getPath--">
