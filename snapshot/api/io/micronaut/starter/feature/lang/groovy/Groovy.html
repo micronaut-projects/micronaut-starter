@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -134,6 +134,10 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/groovy/GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#applicationFeatures">applicationFeatures</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected static <a href="../../../../../../io/micronaut/starter/build/dependencies/Dependency.html" title="class in io.micronaut.starter.build.dependencies">Dependency</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#DEPENDENCY_MICRONAUT_GROOVY_RUNTIME">DEPENDENCY_MICRONAUT_GROOVY_RUNTIME</a></span></code>&nbsp;</td>
 </tr>
@@ -196,13 +200,18 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#isGroovy--">isGroovy</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#processSelectedFeatured-io.micronaut.starter.feature.FeatureContext-java.util.function.Predicate-">processSelectedFeatured</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext,
+                       java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;filter)</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/lang/groovy/Groovy.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
@@ -253,6 +262,15 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="applicationFeatures">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>applicationFeatures</h4>
+<pre>protected final&nbsp;java.util.List&lt;<a href="../../../../../../io/micronaut/starter/feature/lang/groovy/GroovyApplicationFeature.html" title="interface in io.micronaut.starter.feature.lang.groovy">GroovyApplicationFeature</a>&gt; applicationFeatures</pre>
+</li>
+</ul>
 <a name="DEPENDENCY_MICRONAUT_GROOVY_RUNTIME">
 <!--   -->
 </a>
@@ -329,6 +347,16 @@ implements <a href="../../../../../../io/micronaut/starter/feature/lang/Language
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>featureContext</code> - The feature context</dd>
 </dl>
+</li>
+</ul>
+<a name="processSelectedFeatured-io.micronaut.starter.feature.FeatureContext-java.util.function.Predicate-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>processSelectedFeatured</h4>
+<pre>protected&nbsp;void&nbsp;processSelectedFeatured(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext,
+                                       java.util.function.Predicate&lt;<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>&gt;&nbsp;filter)</pre>
 </li>
 </ul>
 <a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
