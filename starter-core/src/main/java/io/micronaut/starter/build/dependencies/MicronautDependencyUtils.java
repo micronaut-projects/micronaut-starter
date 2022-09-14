@@ -21,6 +21,7 @@ public final class MicronautDependencyUtils {
 
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
+    public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
@@ -82,7 +83,7 @@ public final class MicronautDependencyUtils {
     public static Dependency.Builder kotlinDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_KOTLIN);
     }
-    
+
     @NonNull
     public static Dependency.Builder groovyDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_GROOVY);
@@ -92,5 +93,9 @@ public final class MicronautDependencyUtils {
     private static Dependency.Builder micronautDependency(@NonNull String groupId) {
         return Dependency.builder()
                 .groupId(groupId);
+    }
+
+    public static Dependency.Builder cracDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
     }
 }
