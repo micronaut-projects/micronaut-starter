@@ -4,6 +4,56 @@ EXIT_STATUS=0
 rm -rf starter-cli/temp
 
 ############
+# | BUILD  | TYPE | RUNTIME | FEATURES
+# | GRADLE  | APP  | JAVA    | aws-lambda,aws-cdk,amazon-api-gateway-http
+############
+
+./gradlew micronaut-cli:run --args="create-app -b gradle -f \"aws-lambda,aws-cdk,amazon-api-gateway-http\" temp" || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+cd starter-cli/temp
+
+./test-lambda.sh  || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  echo "❌ FAILED | GRADLE  | APP  | JAVA | aws-lambda,aws-cdk,amazon-api-gateway-http"
+  exit $EXIT_STATUS
+fi
+
+cd infra
+cdk destroy -f
+cd ../../..
+rm -rf starter-cli/temp
+
+############
+# | BUILD  | TYPE | RUNTIME | FEATURES
+# | MAVEN  | APP  | JAVA    | aws-lambda,aws-cdk,amazon-api-gateway-http
+############
+
+./gradlew micronaut-cli:run --args="create-app -b maven -f \"aws-lambda,aws-cdk,amazon-api-gateway-http\" temp" || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+cd starter-cli/temp
+
+./test-lambda.sh  || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  echo "❌ FAILED | MAVEN  | APP  | JAVA | aws-lambda,aws-cdk,amazon-api-gateway-http"
+  exit $EXIT_STATUS
+fi
+
+cd infra
+cdk destroy -f
+cd ../../..
+rm -rf starter-cli/temp
+
+############
 # | BUILD  | TYPE     | RUNTIME | FEATURES
 # | GRADLE | FUNCTION | JAVA    | aws-lambda,aws-cdk,aws-lambda-function-url
 ############
