@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
-            <version>1.14.1</version>
+            <version>1.15.2</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby</artifactId>
-            <version>9.3.6.0</version>
+            <version>9.3.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
