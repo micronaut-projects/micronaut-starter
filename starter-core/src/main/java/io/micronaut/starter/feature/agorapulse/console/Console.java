@@ -43,8 +43,8 @@ import java.util.UUID;
 @Singleton
 public class Console implements AgoraPulseFeature {
 
-    private static final String ARTIFACT_ID = "micronaut-console";
-    private static final String SSRF_HEADER_NAME = "X-Console-Verify";
+    protected static final String ARTIFACT_ID = "micronaut-console";
+    protected static final String SSRF_HEADER_NAME = "X-Console-Verify";
 
     @Override
     @NonNull
@@ -86,7 +86,7 @@ public class Console implements AgoraPulseFeature {
         addConfiguration(generatorContext, secret);
     }
 
-    private void addDependency(GeneratorContext generatorContext) {
+    protected void addDependency(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
                 .lookupArtifactId(ARTIFACT_ID)
                 .developmentOnly());
@@ -98,7 +98,7 @@ public class Console implements AgoraPulseFeature {
         }
     }
 
-    private void addGroovyDependency(GeneratorContext generatorContext) {
+    protected void addGroovyDependency(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
@@ -109,7 +109,7 @@ public class Console implements AgoraPulseFeature {
         generatorContext.addDependency(groovy);
     }
 
-    private void addKotlinScriptingDependency(GeneratorContext generatorContext) {
+    protected void addKotlinScriptingDependency(GeneratorContext generatorContext) {
         Coordinate coordinate = generatorContext.resolveCoordinate("kotlin-bom");
         generatorContext.getBuildProperties().put("kotlinVersion", coordinate.getVersion());
         Dependency.Builder kotlin = Dependency.builder()
@@ -121,25 +121,25 @@ public class Console implements AgoraPulseFeature {
         generatorContext.addDependency(kotlin.artifactId("kotlin-scripting-jsr223").developmentOnly());
     }
 
-    private void addExampleCode(GeneratorContext generatorContext, String secret) {
+    protected void addExampleCode(GeneratorContext generatorContext, String secret) {
         addDslFile(generatorContext);
         addHttpFile(generatorContext, secret);
     }
 
-    private void addDslFile(GeneratorContext generatorContext) {
+    protected void addDslFile(GeneratorContext generatorContext) {
         dslFile(generatorContext).ifPresent(rockerModel -> {
             generatorContext.addTemplate("consoleGroovyDsl", new RockerTemplate("src/test/resources/console.gdsl", rockerModel));
         });
     }
 
-    private void addHttpFile(GeneratorContext generatorContext, String secret) {
+    protected void addHttpFile(GeneratorContext generatorContext, String secret) {
         httpFile(generatorContext, secret).ifPresent(rockerModel -> generatorContext.
                 addTemplate("consoleHttpFile", new RockerTemplate("src/test/resources/console.http", rockerModel))
         );
     }
 
     @NonNull
-    private Optional<RockerModel> dslFile(GeneratorContext generatorContext) {
+    protected Optional<RockerModel> dslFile(GeneratorContext generatorContext) {
         if (generatorContext.getLanguage() == Language.KOTLIN) {
             return Optional.empty();
         }
@@ -148,7 +148,7 @@ public class Console implements AgoraPulseFeature {
     }
 
     @NonNull
-    private Optional<RockerModel> httpFile(GeneratorContext generatorContext, String secret) {
+    protected Optional<RockerModel> httpFile(GeneratorContext generatorContext, String secret) {
         if (generatorContext.getLanguage() == Language.KOTLIN) {
             return Optional.of(consoleKotlinHttp.template(SSRF_HEADER_NAME, secret));
         }
@@ -156,7 +156,7 @@ public class Console implements AgoraPulseFeature {
         return Optional.of(consoleGroovyHttp.template(SSRF_HEADER_NAME, secret));
     }
 
-    private void addConfiguration(GeneratorContext generatorContext, String secret) {
+    protected void addConfiguration(GeneratorContext generatorContext, String secret) {
         Map<String, Object> settings = new LinkedHashMap<>();
         settings.put("enabled", true);
         settings.put("addresses", Arrays.asList("/127.0.0.1", "/0:0:0:0:0:0:0:1"));
