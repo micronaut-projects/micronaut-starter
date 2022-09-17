@@ -15,7 +15,12 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 
@@ -23,10 +28,37 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class KoTest implements TestFeature {
+    protected static final String ARTIFACT_ID_MICRONAUT_TEST_KOTEST = "micronaut-test-kotest";
+
+    protected static final Dependency DEPENDENCY_MICRONAUT_TEST_KOTEST = MicronautDependencyUtils
+            .testDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_TEST_KOTEST)
+            .test()
+            .build();
+    protected static final String ARTIFACT_ID_KOTEST_RUNNER_JUNIT_5_JVM = "kotest-runner-junit5-jvm";
+
+    protected static final String ARTIFACT_ID_KOTEST_ASSERTIONS_CORE_JVM = "kotest-assertions-core-jvm";
+
+    protected final Mockk mockk;
+
+    public KoTest(Mockk mockk) {
+        this.mockk = mockk;
+    }
 
     @Override
+    @NonNull
     public String getName() {
         return "kotest";
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        if (
+                !featureContext.isPresent(Mockk.class)
+                && featureContext.getBuildTool() == BuildTool.MAVEN
+        ) {
+            featureContext.addFeature(mockk);
+        }
     }
 
     @Override
@@ -35,6 +67,17 @@ public class KoTest implements TestFeature {
         generatorContext.addTemplate("koTestConfig",
                 new URLTemplate("src/test/kotlin/io/kotest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotest/ProjectConfig.kt")));
+
+        // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_KOTEST);
+            generatorContext.addDependency(Dependency.builder()
+                    .lookupArtifactId(ARTIFACT_ID_KOTEST_RUNNER_JUNIT_5_JVM)
+                    .test());
+            generatorContext.addDependency(Dependency.builder()
+                    .lookupArtifactId(ARTIFACT_ID_KOTEST_ASSERTIONS_CORE_JVM)
+                    .test());
+        }
     }
 
     @Override

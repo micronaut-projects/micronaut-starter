@@ -18,8 +18,8 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
 
     void 'test readme.md with feature mockito contains links to 3rd party docs'() {
         when:
-        def output = generate(['mockito'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['mockito'])
+        String readme = output["README.md"]
 
         then:
         readme
@@ -32,7 +32,7 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test gradle mockito feature for language=#language'() {
+    void 'test gradle mockito feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
@@ -48,7 +48,7 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test gradle mockito feature fails for language=#language when test framework is not Junit'() {
+    void 'test gradle mockito feature fails for language=#language when test framework is not Junit'(Language language, TestFramework testfw) {
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
@@ -71,7 +71,7 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test maven mockito feature for language=#language'() {
+    void 'test maven mockito feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
