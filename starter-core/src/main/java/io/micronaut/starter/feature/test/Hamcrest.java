@@ -24,8 +24,6 @@ import io.micronaut.starter.feature.Feature;
 
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.feature.test.Mockito.DEPENDENCY_MOCKITO_CORE;
-
 @Singleton
 public class Hamcrest  implements Feature {
     public static final String GROUP_ID_HAMCREST = "org.hamcrest";

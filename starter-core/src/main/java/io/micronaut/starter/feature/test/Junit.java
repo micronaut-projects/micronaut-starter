@@ -24,8 +24,6 @@ import io.micronaut.starter.options.TestFramework;
 
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.feature.test.Mockito.DEPENDENCY_MOCKITO_CORE;
-
 @Singleton
 public class Junit implements TestFeature {
     protected static final String GROUP_ID_JUNIT_JUPITER = "org.junit.jupiter";
