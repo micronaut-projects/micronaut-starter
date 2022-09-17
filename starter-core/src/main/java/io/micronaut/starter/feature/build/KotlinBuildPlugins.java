@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradlePlugin;
@@ -32,6 +33,7 @@ public class KotlinBuildPlugins implements Feature {
     public static final int ORDER = -10;
 
     @Override
+    @NonNull
     public String getName() {
         return "kotlin-build";
     }

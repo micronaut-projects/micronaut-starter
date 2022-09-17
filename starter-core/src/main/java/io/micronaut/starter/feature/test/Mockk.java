@@ -18,10 +18,8 @@ package io.micronaut.starter.feature.test;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.feature.MinJdkFeature;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.options.BuildTool;
-import io.micronaut.starter.options.JdkVersion;
 import jakarta.inject.Singleton;
 
 @Singleton
