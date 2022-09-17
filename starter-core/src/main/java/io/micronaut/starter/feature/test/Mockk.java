@@ -16,14 +16,21 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.DefaultFeature;
+import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
+import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
+import java.util.Set;
+
 @Singleton
-public class Mockk implements MockingFeature, KotlinSpecificFeature {
+public class Mockk implements MockingFeature, KotlinSpecificFeature, DefaultFeature {
     public static final String ARTIFACT_ID_MOCKK = "mockk";
     public static final String NAME_MOCKK = "mockk";
     public static final String GROUP_ID_IO_MOCKK = "io.mockk";
@@ -52,12 +59,25 @@ public class Mockk implements MockingFeature, KotlinSpecificFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()
                     .groupId(GROUP_ID_IO_MOCKK)
                     .artifactId(ARTIFACT_ID_MOCKK)
                     .test());
         }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
+        return options.getBuildTool() == BuildTool.MAVEN &&
+                options.getLanguage() == Language.KOTLIN &&
+                options.getTestFramework().isKotlinTestFramework();
     }
 }
 

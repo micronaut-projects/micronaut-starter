@@ -52,16 +52,6 @@ public class KoTest implements TestFeature {
     }
 
     @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (
-                !featureContext.isPresent(Mockk.class)
-                && featureContext.getBuildTool() == BuildTool.MAVEN
-        ) {
-            featureContext.addFeature(mockk);
-        }
-    }
-
-    @Override
     public void doApply(GeneratorContext generatorContext) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         generatorContext.addTemplate("koTestConfig",
