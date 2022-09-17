@@ -22,7 +22,7 @@ import io.micronaut.starter.options.JdkVersion;
  * A feature that only works with a minimum JDK.
  *
  * @author Sergio del Amo
- * @since 2.0.0
+ * @since 3.7.0
  */
 public interface MinJdkFeature extends Feature {
 
