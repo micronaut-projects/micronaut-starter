@@ -23,14 +23,14 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.GroovySpecificFeature;
 import io.micronaut.starter.options.Language;
 
 import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
+public class MultitenancyGorm implements GroovySpecificFeature {
 
     private final Multitenancy multitenancy;
 
@@ -101,11 +101,6 @@ public class MultitenancyGorm implements Feature, LanguageSpecificFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.GROOVY;
     }
 
     @Override
