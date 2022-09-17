@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePredicate;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.feature.kotlin.templates.applicationKotlin;
 import io.micronaut.starter.feature.kotlin.templates.homeRouteKotlin;
 import io.micronaut.starter.feature.kotlin.templates.jacksonFeatureKotlin;
@@ -39,7 +39,7 @@ import jakarta.inject.Singleton;
 import java.util.Optional;
 
 @Singleton
-public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, LanguageSpecificFeature {
+public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, KotlinSpecificFeature {
 
     @Override
     public boolean supports(ApplicationType applicationType) {
@@ -82,11 +82,6 @@ public class Ktor implements KotlinApplicationFeature, ThirdPartyServerFeature, 
     @Override
     public String getCategory() {
         return Category.SERVER;
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.KOTLIN;
     }
 
     @Override

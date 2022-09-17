@@ -21,7 +21,7 @@ import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.feature.FeaturePredicate;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.KotlinSpecificFeature;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.Config4kTemplate;
 import io.micronaut.starter.template.Template;
@@ -31,7 +31,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @Singleton
-public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
+public class Config4k implements ConfigurationFeature, KotlinSpecificFeature {
 
     private static final String EXTENSION = "conf";
 
@@ -78,11 +78,6 @@ public class Config4k implements ConfigurationFeature, LanguageSpecificFeature {
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.KOTLIN;
     }
 
     @Override
