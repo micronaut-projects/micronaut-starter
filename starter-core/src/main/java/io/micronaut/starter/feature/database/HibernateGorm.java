@@ -20,16 +20,15 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
+import io.micronaut.starter.feature.GroovySpecificFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.other.HibernateValidator;
-import io.micronaut.starter.options.Language;
 
 import jakarta.inject.Singleton;
 import java.util.Map;
 
 @Singleton
-public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverConfigurationFeature {
+public class HibernateGorm implements GroovySpecificFeature, DatabaseDriverConfigurationFeature {
 
     private static final String PREFIX = "dataSource.";
     private static final String URL_KEY = PREFIX + "url";
@@ -63,11 +62,6 @@ public class HibernateGorm implements LanguageSpecificFeature, DatabaseDriverCon
     @Override
     public String getDescription() {
         return "Adds support for Hibernate using GORM";
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.GROOVY;
     }
 
     @Override
