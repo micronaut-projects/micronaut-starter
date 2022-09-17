@@ -15,15 +15,23 @@
  */
 package io.micronaut.starter.feature.test;
 
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Mockito implements Feature {
+public class Mockito implements MockingFeature {
+    public static final String GROUP_ID_MOCKITO = "org.mockito";
+    public static final String ARTIFACT_ID_MOCKITO_CORE = "mockito-core";
+    public static final Dependency DEPENDENCY_MOCKITO_CORE = Dependency.builder()
+            .groupId(GROUP_ID_MOCKITO)
+            .artifactId(ARTIFACT_ID_MOCKITO_CORE)
+            .test()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return "mockito";
     }
@@ -34,22 +42,18 @@ public class Mockito implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Mockito test mocking framework for JUnit";
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    @Override
-    public String getCategory() {
-        return Category.DEV_TOOLS;
-    }
-
-    @Override
     public String getThirdPartyDocumentation() {
         return "https://site.mockito.org";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MOCKITO_CORE);
     }
 }
