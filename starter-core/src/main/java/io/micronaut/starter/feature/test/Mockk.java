@@ -61,8 +61,7 @@ public class Mockk implements MockingFeature, DefaultFeature {
         // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()
-                    .groupId(GROUP_ID_IO_MOCKK)
-                    .artifactId(ARTIFACT_ID_MOCKK)
+                    .lookupArtifactId(ARTIFACT_ID_MOCKK)
                     .test());
         }
     }
