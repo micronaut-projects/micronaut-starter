@@ -15,16 +15,17 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Hamcrest  implements Feature {
+public class Hamcrest  implements JunitCompanionFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "hamcrest";
     }
@@ -35,6 +36,7 @@ public class Hamcrest  implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Hamcrest matchers for JUnit";
     }

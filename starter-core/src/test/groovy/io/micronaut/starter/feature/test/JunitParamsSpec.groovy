@@ -11,54 +11,54 @@ import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class JunitParamsSpec extends ApplicationContextSpec implements CommandOutputFixture {
     @Shared
     @Subject
-    Mockito mockito = beanContext.getBean(Mockito)
+    JunitParams junitParams = beanContext.getBean(JunitParams)
 
-    void 'test readme.md with feature mockito contains links to 3rd party docs'() {
+    void 'test readme.md with feature junit-params contains links to 3rd party docs'() {
         when:
-        def output = generate(['mockito'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(['junit-params'])
+        String readme = output["README.md"]
 
         then:
         readme
-        readme.contains("https://site.mockito.org")
+        readme.contains("https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests")
     }
 
-    void "test mockito belongs to Dev Tools category"() {
+    void "test junit-params belongs to Dev Tools category"() {
         expect:
-        Category.DEV_TOOLS == mockito.category
+        Category.DEV_TOOLS == junitParams.category
     }
 
     @Unroll
-    void 'test gradle mockito feature for language=#language'() {
+    void 'test gradle junit-params feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['mockito'])
+                .features(['junit-params'])
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
         then:
-        template.contains('testImplementation("org.mockito:mockito-core")')
+        template.contains('testImplementation("org.junit.jupiter:junit-jupiter-params:')
 
         where:
         language << Language.values().toList()
     }
 
     @Unroll
-    void 'test gradle mockito feature fails for language=#language when test framework is not Junit'() {
+    void 'test gradle junit-params feature fails for language=#language when test framework is not Junit'(Language language, TestFramework testfw) {
         when:
         new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['mockito'])
+                .features(['junit-params'])
                 .testFramework(testfw)
                 .render()
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message.startsWith("mockito requires JUnit.")
+        e.message.startsWith("junit-params requires JUnit.")
 
         where:
         language        | testfw
@@ -71,21 +71,19 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test maven mockito feature for language=#language'() {
+    void 'test maven junit-params feature for language=#language'(Language language) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['mockito'])
+                .features(['junit-params'])
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
         then:
         template.contains("""
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-params</artifactId>
 """)
 
         where:

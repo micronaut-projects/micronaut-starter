@@ -17,6 +17,11 @@
     </repositories>
     <dependencies>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.9.0</version>
+        </dependency>
+        <dependency>
             <groupId>io.opentelemetry.instrumentation</groupId>
             <artifactId>opentelemetry-instrumentation-bom-alpha</artifactId>
             <version>1.14.0-alpha</version>

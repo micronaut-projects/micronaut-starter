@@ -15,15 +15,16 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Mockito implements Feature {
+public class Mockito implements JunitCompanionFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "mockito";
     }
@@ -34,6 +35,7 @@ public class Mockito implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Mockito test mocking framework for JUnit";
     }

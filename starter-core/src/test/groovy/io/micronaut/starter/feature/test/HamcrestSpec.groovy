@@ -58,7 +58,7 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message.startsWith("Hamcrest requires JUnit.")
+        e.message.startsWith("hamcrest requires JUnit.")
 
         where:
         language        | testfw
@@ -81,7 +81,7 @@ class HamcrestSpec  extends ApplicationContextSpec implements CommandOutputFixtu
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message.startsWith("Hamcrest requires JUnit.")
+        e.message.startsWith("hamcrest requires JUnit.")
 
         where:
         language        | testfw
