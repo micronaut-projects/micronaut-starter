@@ -31,7 +31,7 @@ public class MicroStreamRest implements MicroStreamFeature {
 
     private final MicroStream microStream;
 
-    MicroStreamRest(MicroStream microStream) {
+    public MicroStreamRest(MicroStream microStream) {
         this.microStream = microStream;
     }
 
