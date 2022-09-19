@@ -151,12 +151,6 @@ MavenBuild mavenBuild
 @dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null, false, null)
 @dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null, false, null)
 @dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null, false, null)
-    @if (features.contains("hamcrest")) {
-@dependency.template("org.hamcrest", "hamcrest", "test", null, false, null)
-    }
-    @if (features.contains("mockito")) {
-@dependency.template("org.mockito", "mockito-core", "test", null, false, null)
-    }
 } else if (features.testFramework().isKotlinTestFramework()) {
 @dependency.template("io.mockk", "mockk", "test", "1.9.3", false, null)
 @if (features.testFramework().isKoTest()) {

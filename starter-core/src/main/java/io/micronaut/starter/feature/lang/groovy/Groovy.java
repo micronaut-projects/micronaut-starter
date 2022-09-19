@@ -36,11 +36,11 @@ import java.util.function.Predicate;
 
 @Singleton
 public class Groovy implements LanguageFeature {
-    protected final List<GroovyApplicationFeature> applicationFeatures;
     protected static final Dependency DEPENDENCY_MICRONAUT_GROOVY_RUNTIME = MicronautDependencyUtils.groovyDependency()
             .artifactId("micronaut-runtime-groovy")
             .compile()
             .build();
+    protected final List<GroovyApplicationFeature> applicationFeatures;
 
     public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
         this.applicationFeatures = applicationFeatures;
