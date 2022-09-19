@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 original authors
+ * Copyright 2017-2022 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,44 +20,31 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.options.Language;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Awaitility implements Feature {
-
-    private static final String AWAITILITY_ARTIFACT_ID = "awaitility";
-    private static final String AWAITILITY_GROOVY_ARTIFACT_ID = "awaitility-groovy";
-    private static final String AWAITILITY_KOTLIN_ARTIFACT_ID = "awaitility-kotlin";
+public class JunitParams implements JunitCompanionFeature {
 
     @Override
     @NonNull
     public String getName() {
-        return "awaitility";
+        return "junit-params";
     }
 
     @Override
     public String getTitle() {
-        return "Awaitility Framework";
+        return "JUnit Params";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "Awaitility is a framework for testing asynchronous code";
+        return "Provides easy parameterization of test methods in JUnit tests.";
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return true;
-    }
-
-    @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId(getArtifactForLanguage(generatorContext.getLanguage()))
-                .test());
     }
 
     @Override
@@ -67,15 +54,19 @@ public class Awaitility implements Feature {
 
     @Override
     public String getThirdPartyDocumentation() {
-        return "https://github.com/awaitility/awaitility";
+        return "https://junit.org/junit5/docs/current/user-guide/#writing-tests-parameterized-tests";
     }
 
-    private String getArtifactForLanguage(Language language) {
-        switch (language) {
-            case JAVA: return AWAITILITY_ARTIFACT_ID;
-            case GROOVY: return AWAITILITY_GROOVY_ARTIFACT_ID;
-            case KOTLIN: return AWAITILITY_KOTLIN_ARTIFACT_ID;
-            default: throw new IllegalArgumentException("Unsupported language " + language);
-        }
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        addDependency(generatorContext);
+    }
+
+    protected void addDependency(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId("org.junit.jupiter")
+                .artifactId("junit-jupiter-params")
+                .test()
+        );
     }
 }

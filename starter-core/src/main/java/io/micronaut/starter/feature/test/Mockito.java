@@ -21,7 +21,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Mockito implements MockingFeature {
+public class Mockito implements MockingFeature,  JunitCompanionFeature {
     public static final String GROUP_ID_MOCKITO = "org.mockito";
     public static final String ARTIFACT_ID_MOCKITO_CORE = "mockito-core";
     public static final Dependency DEPENDENCY_MOCKITO_CORE = Dependency.builder()

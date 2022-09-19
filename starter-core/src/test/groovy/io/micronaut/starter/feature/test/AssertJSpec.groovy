@@ -58,7 +58,7 @@ class AssertJSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message.startsWith("AssertJ requires JUnit.")
+        e.message.startsWith("assertj requires JUnit.")
 
         where:
         language        | testfw
