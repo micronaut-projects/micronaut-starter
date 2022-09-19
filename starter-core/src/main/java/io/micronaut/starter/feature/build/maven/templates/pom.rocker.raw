@@ -147,14 +147,6 @@ MavenBuild mavenBuild
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
 }
-@if (features.testFramework().isJunit()) {
-    @if (features.contains("hamcrest")) {
-@dependency.template("org.hamcrest", "hamcrest", "test", null, false, null)
-    }
-    @if (features.contains("mockito")) {
-@dependency.template("org.mockito", "mockito-core", "test", null, false, null)
-    }
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false, null)
 }
