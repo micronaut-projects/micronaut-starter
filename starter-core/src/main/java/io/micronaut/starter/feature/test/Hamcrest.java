@@ -17,17 +17,27 @@ package io.micronaut.starter.feature.test;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Hamcrest  implements JunitCompanionFeature {
+public class Hamcrest  implements Feature {
+    public static final String GROUP_ID_HAMCREST = "org.hamcrest";
+    public static final String FEATURE_HAMCREST = "hamcrest";
+    public static final String ARTIFACT_ID_HAMCREST = "hamcrest";
+    public static final Dependency DEPENDENCY_HAMCREST = Dependency.builder()
+            .groupId(GROUP_ID_HAMCREST)
+            .artifactId(ARTIFACT_ID_HAMCREST)
+            .test()
+            .build();
 
     @Override
     @NonNull
     public String getName() {
-        return "hamcrest";
+        return FEATURE_HAMCREST;
     }
 
     @Override
@@ -54,5 +64,10 @@ public class Hamcrest  implements JunitCompanionFeature {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://hamcrest.org/JavaHamcrest/";
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Hamcrest.DEPENDENCY_HAMCREST);
     }
 }
