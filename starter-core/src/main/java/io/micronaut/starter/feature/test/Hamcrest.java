@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Hamcrest  implements Feature {
+public class Hamcrest  implements JunitCompanionFeature {
     public static final String GROUP_ID_HAMCREST = "org.hamcrest";
     public static final String FEATURE_HAMCREST = "hamcrest";
     public static final String ARTIFACT_ID_HAMCREST = "hamcrest";

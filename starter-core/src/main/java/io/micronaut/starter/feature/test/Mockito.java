@@ -19,11 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import jakarta.inject.Singleton;
-import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.feature.Category;
-import jakarta.inject.Singleton;
 
-@Singleton
 @Singleton
 public class Mockito implements MockingFeature,  JunitCompanionFeature {
     public static final String GROUP_ID_MOCKITO = "org.mockito";
