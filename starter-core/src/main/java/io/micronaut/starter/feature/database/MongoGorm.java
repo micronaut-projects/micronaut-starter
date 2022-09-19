@@ -21,13 +21,11 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.LanguageSpecificFeature;
-import io.micronaut.starter.options.Language;
-
+import io.micronaut.starter.feature.GroovySpecificFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MongoGorm implements LanguageSpecificFeature {
+public class MongoGorm implements GroovySpecificFeature {
 
     private final MongoReactive mongoReactive;
 
@@ -53,11 +51,6 @@ public class MongoGorm implements LanguageSpecificFeature {
     @Override
     public String getDescription() {
         return "Configures GORM for MongoDB for Groovy applications";
-    }
-
-    @Override
-    public Language getRequiredLanguage() {
-        return Language.GROOVY;
     }
 
     @Override
