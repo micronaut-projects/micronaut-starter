@@ -24,12 +24,12 @@ import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class CamundaExternalWorker implements NovatecFeature {
+public class ExternalWorker implements CamundaCommunityFeature {
 
     @NonNull
     @Override
     public String getCommunityFeatureName() {
-        return "camunda-external-worker";
+        return "external-worker";
     }
 
     @Override

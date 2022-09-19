@@ -18,11 +18,11 @@ package io.micronaut.starter.feature.camunda;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.CommunityFeature;
 
-public interface NovatecFeature extends CommunityFeature {
+public interface CamundaCommunityFeature extends CommunityFeature {
 
     @Override
     @NonNull
     default String getCommunityContributor() {
-        return "Novatec";
+        return "Camunda";
     }
 }

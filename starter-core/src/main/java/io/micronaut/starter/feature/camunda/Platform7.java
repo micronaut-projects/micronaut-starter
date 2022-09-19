@@ -27,12 +27,12 @@ import io.micronaut.starter.feature.test.AssertJ;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Camunda implements NovatecFeature {
+public class Platform7 implements CamundaCommunityFeature {
 
     private final AssertJ assertJ;
     private final DatabaseDriverFeature defaultDbFeature;
 
-    public Camunda(DatabaseDriverFeature defaultDbFeature, AssertJ assertJ) {
+    public Platform7(DatabaseDriverFeature defaultDbFeature, AssertJ assertJ) {
         this.defaultDbFeature = defaultDbFeature;
         this.assertJ = assertJ;
     }
@@ -40,7 +40,7 @@ public class Camunda implements NovatecFeature {
     @NonNull
     @Override
     public String getCommunityFeatureName() {
-        return "camunda";
+        return "platform7";
     }
 
     @Override
