@@ -64,7 +64,8 @@ public class JunitParams implements JunitCompanionFeature {
 
     protected void addDependency(GeneratorContext generatorContext) {
         generatorContext.addDependency(Dependency.builder()
-                .lookupArtifactId("junit-jupiter-params")
+                .groupId("org.junit.jupiter")
+                .artifactId("junit-jupiter-params")
                 .test()
         );
     }
