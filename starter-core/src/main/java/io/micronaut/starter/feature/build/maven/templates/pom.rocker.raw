@@ -147,34 +147,6 @@ MavenBuild mavenBuild
 @if (!features.contains("http-client")) {
 @dependency.template("io.micronaut", "micronaut-http-client", "test", null, false, null)
 }
-@if (features.testFramework().isJunit()) {
-@dependency.template("org.junit.jupiter", "junit-jupiter-api", "test", null, false, null)
-@dependency.template("org.junit.jupiter", "junit-jupiter-engine", "test", null, false, null)
-@dependency.template("io.micronaut.test", "micronaut-test-junit5", "test", null, false, null)
-} else if (features.testFramework().isKotlinTestFramework()) {
-@dependency.template("io.mockk", "mockk", "test", "1.9.3", false, null)
-@if (features.testFramework().isKoTest()) {
-@dependency.template("io.micronaut.test", "micronaut-test-kotest", "test", null, false, null)
-@dependency.template("io.kotest", "kotest-runner-junit5-jvm", "test", "4.2.5", false, null)
-@dependency.template("io.kotest", "kotest-assertions-core-jvm", "test", "4.2.5", false, null)
-}
-} else if (features.testFramework().isSpock()) {
-@if (!features.language().isGroovy()) {
-@dependency.template("io.micronaut", "micronaut-inject-groovy", "test", null, false, null)
-}
-    <dependency>
-      <groupId>org.spockframework</groupId>
-      <artifactId>spock-core</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.groovy</groupId>
-          <artifactId>groovy-all</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-@dependency.template("io.micronaut.test", "micronaut-test-spock", "test", null, false, null)
-}
 @if (features.contains("neo4j-bolt")) {
 @dependency.template("org.neo4j.test", "neo4j-harness", "test", null, false, null)
 }
