@@ -22,11 +22,11 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class Platform7Spec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature novatec-camunda contains links to micronaut docs'() {
+    void 'test readme.md with feature camunda-platform7 contains links to micronaut docs'() {
         when:
-        def output = generate(['novatec-camunda'])
+        def output = generate(['camunda-platform7'])
         def readme = output["README.md"]
 
         then:
@@ -36,11 +36,11 @@ class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test gradle novatec-camunda feature for language=#language'() {
+    void 'test gradle camunda-platform7 feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['novatec-camunda'])
+                .features(['camunda-platform7'])
                 .render()
 
         then:
@@ -54,11 +54,11 @@ class CamundaSpec extends ApplicationContextSpec implements CommandOutputFixture
     }
 
     @Unroll
-    void 'test maven novatec-camunda feature for language=#language'() {
+    void 'test maven camunda-platform7 feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['novatec-camunda'])
+                .features(['camunda-platform7'])
                 .render()
 
         then:

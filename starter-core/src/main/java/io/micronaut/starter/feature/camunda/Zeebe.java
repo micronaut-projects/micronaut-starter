@@ -24,7 +24,7 @@ import io.micronaut.starter.feature.Category;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Zeebe implements NovatecFeature {
+public class Zeebe implements CamundaCommunityFeature {
 
     @NonNull
     @Override

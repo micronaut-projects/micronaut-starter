@@ -31,13 +31,13 @@ class FeatureControllerSpec extends Specification {
 
         then:
         communityFeatures.name.sort() == [
-                'novatec-camunda',
-                'novatec-camunda-external-worker',
+                'camunda-platform7',
+                'camunda-external-worker',
                 'agorapulse-gru-http',
                 'agorapulse-micronaut-console',
                 'agorapulse-micronaut-permissions',
                 'agorapulse-micronaut-worker',
-                'novatec-zeebe',
+                'camunda-zeebe',
         ].sort()
     }
 

@@ -23,11 +23,11 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import spock.lang.Unroll
 
-class CamundaExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
+class ExternalWorkerSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature novatec-camunda-external-worker contains links to micronaut docs'() {
+    void 'test readme.md with feature camunda-external-worker contains links to micronaut docs'() {
         when:
-        def output = generate(['novatec-camunda-external-worker'])
+        def output = generate(['camunda-external-worker'])
         def readme = output["README.md"]
 
         then:
@@ -36,11 +36,11 @@ class CamundaExternalWorkerSpec extends ApplicationContextSpec implements Comman
     }
 
     @Unroll
-    void 'test gradle novatec-camunda-external-worker feature for language=#language'() {
+    void 'test gradle camunda-external-worker feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['novatec-camunda-external-worker'])
+                .features(['camunda-external-worker'])
                 .render()
 
         then:
@@ -51,11 +51,11 @@ class CamundaExternalWorkerSpec extends ApplicationContextSpec implements Comman
     }
 
     @Unroll
-    void 'test maven novatec-camunda-external-worker feature for language=#language'() {
+    void 'test maven camunda-external-worker feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['novatec-camunda-external-worker'])
+                .features(['camunda-external-worker'])
                 .render()
 
         then:
@@ -68,9 +68,9 @@ class CamundaExternalWorkerSpec extends ApplicationContextSpec implements Comman
         language << Language.values().toList()
     }
 
-    void 'test novatec-camunda-external-worker configuration'() {
+    void 'test camunda-external-worker configuration'() {
         when:
-        GeneratorContext commandContext = buildGeneratorContext(['novatec-camunda-external-worker'])
+        GeneratorContext commandContext = buildGeneratorContext(['camunda-external-worker'])
 
         then:
         commandContext.configuration.get('camunda.external-client.base-url'.toString()) == "http://localhost:8080/engine-rest"

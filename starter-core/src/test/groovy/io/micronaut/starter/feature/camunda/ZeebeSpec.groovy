@@ -24,9 +24,9 @@ import spock.lang.Unroll
 
 class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature novatec-zeebe contains links to micronaut docs'() {
+    void 'test readme.md with feature camunda-zeebe contains links to micronaut docs'() {
         when:
-        def output = generate(['novatec-zeebe'])
+        def output = generate(['camunda-zeebe'])
         def readme = output["README.md"]
 
         then:
@@ -35,11 +35,11 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test gradle novatec-zeebe feature for language=#language'() {
+    void 'test gradle camunda-zeebe feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['novatec-zeebe'])
+                .features(['camunda-zeebe'])
                 .render()
 
         then:
@@ -50,11 +50,11 @@ class ZeebeSpec extends ApplicationContextSpec implements CommandOutputFixture {
     }
 
     @Unroll
-    void 'test maven novatec-zeebe feature for language=#language'() {
+    void 'test maven camunda-zeebe feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['novatec-zeebe'])
+                .features(['camunda-zeebe'])
                 .render()
 
         then:
