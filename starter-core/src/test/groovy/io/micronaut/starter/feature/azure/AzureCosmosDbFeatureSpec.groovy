@@ -48,12 +48,12 @@ class AzureCosmosDbFeatureSpec extends ApplicationContextSpec implements Command
 
     void "test azure-cosmos-db feature configuration"() {
         when:
-        def ctx = buildGeneratorContext([feature.name])
+        def config = buildGeneratorContext([feature.name]).configuration
         then:
-        ctx.configuration.containsKey("azure.cosmos.endpoint")
-        ctx.configuration.containsKey("azure.cosmos.key")
-        ctx.configuration.containsKey("azure.cosmos.default-gateway-mode")
-        ctx.configuration.containsKey("azure.cosmos.consistency-level")
-        ctx.configuration.containsKey("azure.cosmos.endpoint-discovery-enabled")
+        config.containsKey("azure.cosmos.endpoint")
+        config.containsKey("azure.cosmos.key")
+        config.containsKey("azure.cosmos.default-gateway-mode")
+        config.containsKey("azure.cosmos.consistency-level")
+        config.containsKey("azure.cosmos.endpoint-discovery-enabled")
     }
 }
