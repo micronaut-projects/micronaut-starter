@@ -210,7 +210,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.2</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -275,12 +275,12 @@
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>apigatewayv2-alpha</artifactId>
-            <version>2.39.1-alpha.0</version>
+            <version>2.42.1-alpha.0</version>
         </dependency>
         <dependency>
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>apigatewayv2-integrations-alpha</artifactId>
-            <version>2.39.1-alpha.0</version>
+            <version>2.42.1-alpha.0</version>
         </dependency>
     </dependencies>
 </project>
