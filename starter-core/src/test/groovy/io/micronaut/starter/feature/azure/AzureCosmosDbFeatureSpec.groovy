@@ -46,6 +46,16 @@ class AzureCosmosDbFeatureSpec extends ApplicationContextSpec implements Command
         }
     }
 
+    void "test gradle azure-cosmos-db feature adds dependency"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["azure-cosmos-db"])
+                .render()
+
+        then:
+        template.contains('implementation("io.micronaut.azure:micronaut-azure-cosmos")')
+    }
+
     void "test azure-cosmos-db feature configuration"() {
         when:
         def config = buildGeneratorContext([feature.name]).configuration
