@@ -1,0 +1,35 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.slack.api.methods.MethodsClient
+import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder
+import com.slack.api.methods.response.chat.ChatPostMessageResponse
+import jakarta.inject.Singleton
+
+@@Singleton
+class MessageSender(private val methods: MethodsClient) {
+
+    fun sendMessage(message: String): ChatPostMessageResponse? {
+        val generalChannel = methods.conversationsList { b -> b }
+            .channels
+            .stream()
+            .filter { it.isGeneral }
+            .findAny()
+
+        if (generalChannel.isPresent) {
+            return methods.chatPostMessage { m: ChatPostMessageRequestBuilder ->
+                m.text(message).channel(generalChannel.get().id)
+            }
+        }
+
+        return null
+    }
+
+}
