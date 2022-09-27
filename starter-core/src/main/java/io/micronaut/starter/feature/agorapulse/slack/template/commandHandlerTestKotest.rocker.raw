@@ -1,0 +1,47 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String commandName
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.slack.api.app_backend.SlackSignature
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+import io.micronaut.context.annotation.Property
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.test.extensions.kotest.annotation.MicronautTest
+
+private const val TEST_SIGNING_SECRET = "s3cr3t"
+private val SIGNATURE_GENERATOR = SlackSignature.Generator(TEST_SIGNING_SECRET)
+
+@@MicronautTest
+@@Property(name = "slack.signing-secret", value = TEST_SIGNING_SECRET)
+@@Property(name = "slack.bot-token", value = "")
+class CommandHandlerTest(
+    @@Client("/") private val client: HttpClient
+) : StringSpec({
+    "check command handled" {
+        val response = client
+            .toBlocking()
+            .exchange(slackEventRequest("command=/$commandName&text=hello"), String::class.java)
+            .body()
+
+        response shouldBe "{\"text\":\"Got message: Hello\"}"
+    }
+})
+
+private fun slackEventRequest(requestBody: String): HttpRequest<String> {
+    val timestamp = "${System.currentTimeMillis() / 1000}"
+    val signature = SIGNATURE_GENERATOR.generate(timestamp, requestBody)
+    return HttpRequest.POST("/slack/events", requestBody)
+        .header(SlackSignature.HeaderNames.X_SLACK_REQUEST_TIMESTAMP, timestamp)
+        .header(SlackSignature.HeaderNames.X_SLACK_SIGNATURE, signature)
+        .header("Content-Type", "application/json")
+}

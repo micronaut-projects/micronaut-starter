@@ -18,21 +18,18 @@ package io.micronaut.starter.feature.agorapulse.slack;
 import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderGroovy;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderJava;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderKotlin;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderSpecGroovy;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestJava;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotest;
-import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.*;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
+import io.micronaut.starter.template.RockerTemplate;
+import io.micronaut.starter.util.NameUtils;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -122,6 +119,21 @@ public class Slack implements AgoraPulseFeature {
         senderTestModel(generatorContext).ifPresent(rockerModel ->
                 addTest(generatorContext, "MessageSender", rockerModel, "messageSenderTest")
         );
+
+
+        String commandName = generatorContext.getProject().getPackageName().replace(".", "-");
+
+
+        handlerModel(generatorContext, commandName).ifPresent(rockerModel ->
+                addMain(generatorContext, "CommandHandler", rockerModel, "commandHandler")
+        );
+
+        handlerTestModel(generatorContext, commandName).ifPresent(rockerModel ->
+                addTest(generatorContext, "CommandHandler", rockerModel, "commandHandlerTest")
+        );
+
+        RockerModel manifestModel = slackManifest.template(generatorContext.getProject(), commandName);
+        generatorContext.addTemplate("SlackManifest", new RockerTemplate("slack-manifest.yml", manifestModel));
     }
 
     @NonNull
@@ -142,6 +154,27 @@ public class Slack implements AgoraPulseFeature {
                 messageSenderSpecGroovy.template(generatorContext.getProject()),
                 messageSenderTestKotlin.template(generatorContext.getProject()),
                 messageSenderTestKotest.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> handlerModel(GeneratorContext generatorContext, String commandName) {
+        return mainModel(
+                generatorContext,
+                commandHandlerJava.template(generatorContext.getProject(), commandName),
+                commandHandlerGroovy.template(generatorContext.getProject(), commandName),
+                commandHandlerKotlin.template(generatorContext.getProject(), commandName)
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> handlerTestModel(GeneratorContext generatorContext, String commandName) {
+        return testModel(
+                generatorContext,
+                commandHandlerTestJava.template(generatorContext.getProject(), commandName),
+                commandHandlerSpecGroovy.template(generatorContext.getProject(), commandName),
+                commandHandlerTestKotlin.template(generatorContext.getProject(), commandName),
+                commandHandlerTestKotest.template(generatorContext.getProject(), commandName)
         );
     }
 

@@ -1,0 +1,55 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String commandName
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import com.slack.api.app_backend.SlackSignature
+import io.micronaut.context.annotation.Property
+import io.micronaut.http.HttpRequest
+import io.micronaut.http.client.HttpClient
+import io.micronaut.http.client.annotation.Client
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import spock.lang.Specification
+
+import static com.slack.api.app_backend.SlackSignature.HeaderNames.X_SLACK_REQUEST_TIMESTAMP
+import static com.slack.api.app_backend.SlackSignature.HeaderNames.X_SLACK_SIGNATURE
+
+@@MicronautTest
+@@Property(name = 'slack.signing-secret', value = TEST_SIGNING_SECRET)
+@@Property(name = 'slack.bot-token', value = '')
+class CommandHandlerSpec extends Specification {
+
+    public static final String TEST_SIGNING_SECRET = 's3cr3t'
+    public static final SlackSignature.Generator SIGNATURE_GENERATOR = new SlackSignature.Generator(TEST_SIGNING_SECRET)
+
+    @@Inject
+    @@Client('/')
+    HttpClient client
+
+    void 'check command handled'() {
+        when:
+        String response = client.toBlocking().exchange(slackEventRequest('command=/@commandName&text=hello'), String).body()
+
+        then:
+        response == '{"text":"Got message: Hello"}'
+    }
+
+    private static HttpRequest<String> slackEventRequest(String requestBody) {
+        String timestamp = System.currentTimeMillis().intdiv(1000)
+        String signature = SIGNATURE_GENERATOR.generate(timestamp, requestBody)
+
+        return HttpRequest.POST('/slack/events', requestBody)
+                          .header(X_SLACK_REQUEST_TIMESTAMP, timestamp)
+                          .header(X_SLACK_SIGNATURE, signature)
+                          .header('Content-Type', 'application/json')
+    }
+
+}

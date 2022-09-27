@@ -1,0 +1,35 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String commandName
+)
+
+display_information:
+  name: @project.getNaturalName()
+features:
+  bot_user:
+    display_name: @project.getNaturalName()
+    always_online: false
+  slash_commands:
+    - command: /@commandName
+      # npm install -g localtunnel
+      # lt -p 8080 -s @commandName
+      url: https://@commandName.loca.lt/slack/events
+      description: @project.getNaturalName()
+      usage_hint: hello
+      should_escape: false
+oauth_config:
+  scopes:
+    bot:
+      - commands
+      - channels:read
+      - chat:write
+      - chat:write.public
+settings:
+  interactivity:
+    is_enabled: true
+    request_url: https://@commandName.loca.lt/slack/events
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false
