@@ -1,8 +1,6 @@
 @import io.micronaut.starter.application.Project
 
-@args (
-Project project
-)
+@args (Project project, boolean transactional)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
@@ -12,7 +10,11 @@ import io.micronaut.runtime.EmbeddedApplication
 import io.micronaut.test.extensions.kotest.annotation.MicronautTest
 import io.kotest.core.spec.style.StringSpec
 
+@if(transactional) {
 @@MicronautTest
+} else {
+@@MicronautTest(transactional = false)
+}
 class @project.getClassName()Test(private val application: EmbeddedApplication<*>): StringSpec({
 
     "test the server is running" {

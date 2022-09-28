@@ -24,13 +24,14 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
-public class DataR2dbc implements R2dbcFeature, DataFeature {
+public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSupported {
 
     public static final String NAME = "data-r2dbc";
 
