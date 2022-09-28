@@ -123,27 +123,27 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
 
     @Override
     protected RockerModel javaJUnitTemplate(Project project) {
-        return javaJunit.template(project);
+        return javaJunit.template(project, true);
     }
 
     @Override
     protected RockerModel kotlinJUnitTemplate(Project project) {
-        return kotlinJunit.template(project);
+        return kotlinJunit.template(project, true);
     }
 
     @Override
     protected RockerModel groovyJUnitTemplate(Project project) {
-        return groovyJunit.template(project);
+        return groovyJunit.template(project, true);
     }
 
     @Override
     protected RockerModel koTestTemplate(Project project) {
-        return koTest.template(project);
+        return koTest.template(project, true);
     }
 
     @Override
     public RockerModel spockTemplate(Project project) {
-        return spock.template(project);
+        return spock.template(project, true);
     }
 
     @Override
