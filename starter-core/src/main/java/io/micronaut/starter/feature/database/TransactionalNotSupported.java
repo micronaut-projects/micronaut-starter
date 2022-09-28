@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.database;
 
 /**
- * Market interface for features which don't support transactional.
+ * Marker interface for features which don't support transactional.
  */
 public interface TransactionalNotSupported {
 }
