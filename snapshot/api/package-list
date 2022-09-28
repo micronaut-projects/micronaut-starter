@@ -93,7 +93,6 @@ io.micronaut.starter.feature.ci.workflows.oci.templates
 io.micronaut.starter.feature.coherence
 io.micronaut.starter.feature.config
 io.micronaut.starter.feature.consul
-io.micronaut.starter.feature.crac
 io.micronaut.starter.feature.database
 io.micronaut.starter.feature.database.jdbc
 io.micronaut.starter.feature.database.r2dbc
@@ -162,7 +161,6 @@ io.micronaut.starter.feature.microstream
 io.micronaut.starter.feature.migration
 io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
-io.micronaut.starter.feature.objectstorage
 io.micronaut.starter.feature.opentelemetry
 io.micronaut.starter.feature.oraclecloud
 io.micronaut.starter.feature.other
