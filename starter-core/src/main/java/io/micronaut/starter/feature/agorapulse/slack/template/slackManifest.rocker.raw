@@ -2,7 +2,7 @@
 
 @args (
 Project project,
-String commandName
+String subdomain
 )
 
 display_information:
@@ -12,10 +12,10 @@ features:
     display_name: @project.getNaturalName()
     always_online: false
   slash_commands:
-    - command: /@commandName
+    - command: /@project.getName()
       # npm install -g localtunnel
-      # lt -p 8080 -s @commandName
-      url: https://@commandName.loca.lt/slack/events
+      # lt -p 8080 -s @subdomain
+      url: https://@(subdomain).loca.lt/slack/events
       description: @project.getNaturalName()
       usage_hint: hello
       should_escape: false
@@ -29,7 +29,7 @@ oauth_config:
 settings:
   interactivity:
     is_enabled: true
-    request_url: https://@commandName.loca.lt/slack/events
+    request_url: https://@(subdomain).loca.lt/slack/events
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false

@@ -1,8 +1,7 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project,
-String commandName
+Project project
 )
 
 @if (project.getPackageName() != null) {
@@ -30,7 +29,7 @@ class CommandHandlerTest(
     "check command handled" {
         val response = client
             .toBlocking()
-            .exchange(slackEventRequest("command=/$commandName&text=hello"), String::class.java)
+            .exchange(slackEventRequest("command=/@project.getName()&text=hello"), String::class.java)
             .body()
 
         response shouldBe "{\"text\":\"Got message: Hello\"}"

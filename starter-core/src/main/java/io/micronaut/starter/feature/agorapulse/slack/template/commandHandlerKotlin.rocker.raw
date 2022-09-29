@@ -1,8 +1,7 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project,
-String commandName
+Project project
 )
 
 @if (project.getPackageName() != null) {
@@ -20,7 +19,7 @@ import jakarta.inject.Singleton
 class CommandHandler : MicronautSlashCommandHandler {
 
     override fun getCommandId(): String {
-        return "/@commandName"
+        return "/@project.getName()"
     }
 
     override fun apply(

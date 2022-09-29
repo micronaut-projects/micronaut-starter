@@ -1,8 +1,7 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project,
-String commandName
+Project project
 )
 
 @if (project.getPackageName() != null) {
@@ -23,7 +22,7 @@ import static com.slack.api.app_backend.SlackSignature.HeaderNames.X_SLACK_REQUE
 import static com.slack.api.app_backend.SlackSignature.HeaderNames.X_SLACK_SIGNATURE
 
 @@MicronautTest
-@@Property(name = 'slack.signing-secret', value = TEST_SIGNING_SECRET)
+@@Property(name = 'slack.signing-secret', value = CommandHandlerSpec.TEST_SIGNING_SECRET)
 @@Property(name = 'slack.bot-token', value = '')
 class CommandHandlerSpec extends Specification {
 
@@ -36,7 +35,7 @@ class CommandHandlerSpec extends Specification {
 
     void 'check command handled'() {
         when:
-        String response = client.toBlocking().exchange(slackEventRequest('command=/@commandName&text=hello'), String).body()
+        String response = client.toBlocking().exchange(slackEventRequest('command=/@project.getName()&text=hello'), String).body()
 
         then:
         response == '{"text":"Got message: Hello"}'

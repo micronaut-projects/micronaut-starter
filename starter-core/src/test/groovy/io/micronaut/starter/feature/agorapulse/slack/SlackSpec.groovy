@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.agorapulse.slack
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -24,7 +25,7 @@ class SlackSpec extends ApplicationContextSpec {
         feature.thirdPartyDocumentation
 
         and: 'is in the CLIENT category'
-        feature.category == "Client"
+        feature.category == 'Client'
 
         and:
         feature.community
@@ -33,7 +34,7 @@ class SlackSpec extends ApplicationContextSpec {
         assert feature.supports(ApplicationType.DEFAULT)
     }
 
-    @Unroll("#buildTool with feature micronaut-slack adds dependency #groupId:#artifactId for #language")
+    @Unroll('#buildTool with feature micronaut-slack adds dependency #groupId:#artifactId for #language')
     void "verify micronaut-slack feature dependencies"(Language language, BuildTool buildTool, String groupId, String artifactId) {
         given:
         List<String> features = ['agorapulse-micronaut-slack']
@@ -46,7 +47,7 @@ class SlackSpec extends ApplicationContextSpec {
                 .render()
 
         then:
-        if (buildTool.isGradle()) {
+        if (buildTool.gradle) {
             assert template.contains("implementation(\"$coordinate")
         } else if (buildTool == BuildTool.MAVEN) {
             assert template.contains("<artifactId>$artifactId</artifactId>")
@@ -64,6 +65,14 @@ class SlackSpec extends ApplicationContextSpec {
         Language.KOTLIN | BuildTool.GRADLE          | 'com.agorapulse'          | 'micronaut-slack-http'
         Language.KOTLIN | BuildTool.GRADLE_KOTLIN   | 'com.agorapulse'          | 'micronaut-slack-http'
         Language.KOTLIN | BuildTool.MAVEN           | 'com.agorapulse'          | 'micronaut-slack-http'
+    }
+
+    void 'verify micronaut-slack configuration'() {
+        when:
+            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack'])
+        then:
+        commandContext.configuration.get('slack.bot-token')
+        commandContext.configuration.get('slack.bot-token').toString().startsWith('xoxb-')
     }
 
 }
