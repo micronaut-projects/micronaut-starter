@@ -44,10 +44,11 @@ import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static java.util.Collections.singletonMap;
 
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addMain;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTest;
@@ -120,7 +121,13 @@ public class Slack implements AgoraPulseFeature {
     }
 
     private void addConfiguration(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().addNested(singletonMap("slack", singletonMap("bot-token", "xoxb-" + UUID.randomUUID())));
+        Map<String, String> slack = new LinkedHashMap<>(1);
+        slack.put("bot-token", "xoxb-" + UUID.randomUUID());
+
+        Map<String, Object> nested = new LinkedHashMap<>(1);
+        nested.put("slack", slack);
+
+        generatorContext.getConfiguration().addNested(nested);
     }
 
     private void addExampleCode(GeneratorContext generatorContext) {
