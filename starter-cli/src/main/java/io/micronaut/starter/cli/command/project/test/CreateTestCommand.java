@@ -71,11 +71,11 @@ public class CreateTestCommand extends CodeGenCommand {
 
         final String path = "/{packagePath}/{className}";
         TestRockerModelProvider provider = new DefaultTestRockerModelProvider(
-                spock.template(project),
-                javaJunit.template(project),
-                groovyJunit.template(project),
-                kotlinJunit.template(project),
-                koTest.template(project));
+                spock.template(project, true),
+                javaJunit.template(project, true),
+                groovyJunit.template(project, true),
+                kotlinJunit.template(project, true),
+                koTest.template(project, true));
 
         RockerModel rockerModel = provider.findModel(config.getSourceLanguage(), config.getTestFramework());
         String testPath = config.getTestFramework().getSourcePath(path, config.getSourceLanguage());

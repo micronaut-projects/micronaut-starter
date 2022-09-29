@@ -35,11 +35,6 @@ public class MicroStreamCache implements MicroStreamFeature {
     }
 
     @Override
-    public boolean isPreview() {
-        return true;
-    }
-
-    @Override
     public String getTitle() {
         return "MicroStream Cache";
     }
