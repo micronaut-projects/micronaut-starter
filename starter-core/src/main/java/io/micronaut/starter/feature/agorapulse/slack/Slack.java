@@ -24,7 +24,21 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
-import io.micronaut.starter.feature.agorapulse.slack.template.*;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerSpecGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestKotest;
+import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderSpecGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotest;
+import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.slackManifest;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -75,7 +89,7 @@ public class Slack implements AgoraPulseFeature {
     @Override
     @Nullable
     public String getDescription() {
-        return "Micronaut Permissions is a lightweight library to declare object level permissions in Micronaut";
+        return "Micronaut Slack is idiomatic alternative to Bolt Micronaut library for Slack integration into the Micronaut.";
     }
 
     @Override
