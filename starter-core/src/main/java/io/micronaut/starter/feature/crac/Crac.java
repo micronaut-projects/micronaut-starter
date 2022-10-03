@@ -22,17 +22,18 @@ import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.database.jdbc.Hikari;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Crac implements Feature {
 
-    public static final String FEATURE_NAME_GRAALVM = "crac";
+    public static final String NAME = "crac";
 
     @Override
     @NonNull
     public String getName() {
-        return FEATURE_NAME_GRAALVM;
+        return NAME;
     }
 
     @Override
@@ -79,6 +80,9 @@ public class Crac implements Feature {
                     .id("io.micronaut.crac")
                     .lookupArtifactId("micronaut-crac-plugin")
                     .build());
+        }
+        if (generatorContext.isFeaturePresent(Hikari.class)) {
+            generatorContext.getConfiguration().addNested("datasources.default.allow-pool-suspension", true);
         }
     }
 }
