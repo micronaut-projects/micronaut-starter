@@ -144,4 +144,10 @@ public class FeatureContext {
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
     }
+
+    public void addFeatureIfNotPresent(Class<? extends Feature> featureClass, Feature feature) {
+        if (!isPresent(featureClass)) {
+            addFeature(feature);
+        }
+    }
 }

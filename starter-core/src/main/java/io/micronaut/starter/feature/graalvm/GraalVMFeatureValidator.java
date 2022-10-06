@@ -39,7 +39,7 @@ public class GraalVMFeatureValidator implements FeatureValidator {
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
         if (features.stream().anyMatch(f -> f instanceof GraalVM || f instanceof GraalVMDockerRegistryWorkflow)) {
-            if (options.getLanguage() == Language.GROOVY) {
+            if (!supports(options.getLanguage())) {
                 throw new IllegalArgumentException("GraalVM is not supported in Groovy applications");
             }
 
@@ -52,5 +52,9 @@ public class GraalVMFeatureValidator implements FeatureValidator {
                 throw new IllegalArgumentException("Maven, CDK and GraalVM are not yet supporteds");
             }
         }
+    }
+
+    public boolean supports(Language language) {
+        return language != Language.GROOVY;
     }
 }

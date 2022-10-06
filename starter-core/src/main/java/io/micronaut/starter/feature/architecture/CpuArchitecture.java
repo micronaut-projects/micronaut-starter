@@ -13,35 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.architecture;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.function.awslambda.AwsLambda;
-import jakarta.inject.Singleton;
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.OneOfFeature;
 
-@Singleton
-public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature implements LambdaTrigger {
-    public static final String NAME = "aws-lambda-scheduled-event";
-
-    public AwsLambdaScheduledEvent(AwsLambda awsLambda) {
-        super(awsLambda);
-    }
-    
+public interface CpuArchitecture extends OneOfFeature {
     @Override
-    @NonNull
-    public String getName() {
-        return NAME;
+    default Class<?> getFeatureClass() {
+        return CpuArchitecture.class;
     }
 
     @Override
-    @NonNull
-    public String getTitle() {
-        return "AWS Lambda Scheduled Event";
+    default String getCategory() {
+        return Category.CLOUD;
     }
 
     @Override
-    @NonNull
-    public String getDescription() {
-        return "Creates a function handler that subscribes to a scheduled event.";
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
+
+    @NonNull
+    Architecture getCpuArchitecture();
 }

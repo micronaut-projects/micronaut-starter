@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.architecture;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.aws.Cdk;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiFeature {
-    public static final String NAME = "amazon-api-gateway";
-
-    public AmazonApiGateway(AwsLambda awsLambda) {
-        super(awsLambda);
-    }
+public class X86 implements CpuArchitecture {
+    public static final String NAME = "x86";
 
     @Override
     @NonNull
@@ -36,23 +32,17 @@ public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiF
 
     @Override
     public String getTitle() {
-        return "Amazon API Gateway REST API";
+        return "x86 CPU Architecture";
     }
 
     @Override
     @NonNull
     public String getDescription() {
-        return "This features combines with the CDK to define an API Gateway REST API";
+        return "It can be used in combination with '" + Cdk.NAME + "' and " + AwsLambda.FEATURE_NAME_AWS_LAMBDA + " to generate infrastructure for the Lambda CPU architecture";
     }
 
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://aws.amazon.com/api-gateway/";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT ||
-               applicationType == ApplicationType.FUNCTION;
+    @NonNull
+    public Architecture getCpuArchitecture() {
+        return Architecture.X86;
     }
 }

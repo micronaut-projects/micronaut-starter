@@ -13,7 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.cli.command;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+/**
+ * @author Sergio del Amo
+ * @since 3.8.0
+ */
+public enum YesOrNo {
+    YES,
+    NO;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
 }

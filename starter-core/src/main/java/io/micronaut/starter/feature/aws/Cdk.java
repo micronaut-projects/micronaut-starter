@@ -35,7 +35,9 @@ import io.micronaut.starter.build.maven.MavenCombineAttribute;
 import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
+import io.micronaut.starter.feature.architecture.Architecture;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
@@ -118,11 +120,15 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
+        Architecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
+                .map(CpuArchitecture::getCpuArchitecture)
+                .orElse(Architecture.X86);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),
                         generatorContext.getBuildTool(),
                         generatorContext.getApplicationType(),
+                        architecture,
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
                         generatorContext.getFeatures().hasFeature(AwsLambda.class) ? "micronaut-function" : null,

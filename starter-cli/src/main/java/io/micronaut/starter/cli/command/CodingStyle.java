@@ -13,7 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.cli.command;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+public enum CodingStyle {
+
+    CONTROLLERS("With @Controller classes, routes with methods annotated wtih @Get ..."),
+    HANDLER("Functional style with Handler class with input and output");
+
+    private String description;
+
+    CodingStyle(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }
