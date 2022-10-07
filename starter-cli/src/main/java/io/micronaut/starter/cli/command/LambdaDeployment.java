@@ -21,7 +21,7 @@ package io.micronaut.starter.cli.command;
  * @since 3.8.0
  */
 public enum LambdaDeployment {
-    FAT_JAR("FAT JAR running in the managed Java Runtime."),
+    FAT_JAR("Fat JAR running in the managed Java runtime"),
     NATIVE_EXECUTABLE("Native executable built with GraalVM Native Image running in Custom Runtime. Faster Cold Start");
 
     private final String description;
