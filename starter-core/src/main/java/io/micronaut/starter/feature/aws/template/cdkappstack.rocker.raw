@@ -144,7 +144,7 @@ public class AppStack extends Stack {
                 .logRetention(RetentionDays.ONE_WEEK)
 @if (architecture == Architecture.ARM) {
                 .architecture(Architecture.ARM_64)
-} else {
+} else if (architecture == Architecture.X86) {
                 .architecture(Architecture.X86_64)
 }
                 .build();
