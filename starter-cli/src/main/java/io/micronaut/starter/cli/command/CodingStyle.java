@@ -18,7 +18,7 @@ package io.micronaut.starter.cli.command;
 public enum CodingStyle {
 
     CONTROLLERS("With @Controller classes, routes with methods annotated with @Get ..."),
-    HANDLER("Functional style with Handler class with input and output");
+    HANDLER("Functional style with a Handler class with input and output");
 
     private String description;
 
