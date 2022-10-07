@@ -213,7 +213,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         out("Choose your Lambda Architecture. (enter for Java ARM)");
         return getEnumOption(
                 Architecture.class,
-                a -> a.toString() +  (a == Architecture.ARM ? " Better performance and 20% cheaper" : ""),
+                a -> a.toString() +  (a == Architecture.ARM ? " Better performance and lower-priced" : ""),
                 Architecture.ARM,
                 reader);
     }
