@@ -2,8 +2,10 @@
 @import io.micronaut.starter.application.ApplicationType;
 @import io.micronaut.starter.options.BuildTool;
 @import io.micronaut.starter.feature.Features;
-@import io.micronaut.starter.feature.architecture.Architecture;
-@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, Architecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
+@import io.micronaut.starter.feature.architecture.CpuArchitecture;
+@import io.micronaut.starter.feature.architecture.X86;
+@import io.micronaut.starter.feature.architecture.Arm;
+@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
 
 package @project.getPackageName();
 
@@ -142,9 +144,9 @@ public class AppStack extends Stack {
                 .memorySize(512)
                 .tracing(Tracing.ACTIVE)
                 .logRetention(RetentionDays.ONE_WEEK)
-@if (architecture == Architecture.ARM) {
+@if (architecture instanceof Arm) {
                 .architecture(Architecture.ARM_64)
-} else if (architecture == Architecture.X86) {
+} else if (architecture instanceof X86) {
                 .architecture(Architecture.X86_64)
 }
                 .build();

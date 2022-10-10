@@ -15,7 +15,6 @@
  */
 package io.micronaut.starter.feature.architecture;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
@@ -35,7 +34,4 @@ public interface CpuArchitecture extends OneOfFeature {
     default boolean supports(ApplicationType applicationType) {
         return true;
     }
-
-    @NonNull
-    Architecture getCpuArchitecture();
 }

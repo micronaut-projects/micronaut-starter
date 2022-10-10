@@ -21,9 +21,10 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.ProjectGenerator;
-import io.micronaut.starter.feature.architecture.Architecture;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
+import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AmazonApiGateway;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.Cdk;
@@ -126,10 +127,13 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
             applicationFeatures.add(GraalVM.FEATURE_NAME_GRAALVM);
         }
 
-        Architecture architecture = getArchitecture(reader);
-        if (architecture == Architecture.ARM) {
-            applicationFeatures.add(Arm.NAME);
-        }
+        getArchitecture(reader).ifPresent(architecture -> {
+            if (architecture instanceof Arm) {
+                applicationFeatures.add(Arm.NAME);
+            } else if (architecture instanceof X86) {
+                applicationFeatures.add(X86.NAME);
+            }
+        });
 
         getCdk(reader).ifPresent(f -> applicationFeatures.add(f.getName()));
 
@@ -209,13 +213,23 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
                 reader);
     }
 
-    protected Architecture getArchitecture(LineReader reader) {
+    protected Optional<Feature> getArchitecture(LineReader reader) {
+        List<Feature> cpuArchitecturesFeatures = features.stream()
+                .filter(CpuArchitecture.class::isInstance)
+                .collect(Collectors.toList());
         out("Choose your Lambda Architecture. (enter for Java ARM)");
-        return getEnumOption(
-                Architecture.class,
-                a -> a.toString() +  (a == Architecture.ARM ? " Better performance and lower-priced" : ""),
-                Architecture.ARM,
+        String option = getListOption(
+                cpuArchitecturesFeatures.stream()
+                        .map(Feature::getName)
+                        .sorted()
+                        .collect(Collectors.toList()),
+                o -> o,
+                Arm.NAME,
                 reader);
+        return cpuArchitecturesFeatures
+                .stream()
+                .filter(f -> f.getName().equals(option))
+                .findFirst();
     }
 
     protected Language getLanguage(LambdaDeployment deployment, LineReader reader) {

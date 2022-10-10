@@ -123,14 +123,6 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
         }
     }
 
-    protected <T extends Enum<T>> T getEnumOption(Class<T> enumClass,
-                                                  Function<T, String> titleFunc,
-                                                  T defaultOption,
-                                                  LineReader reader) throws UserInterruptException, EndOfFileException {
-        T[] types = enumClass.getEnumConstants();
-        return getEnumOption(types, titleFunc, defaultOption, reader);
-    }
-
     protected <T extends Enum<T>> T getEnumOption(T[] types,
                                                   Function<T, String> titleFunc,
                                                   T defaultOption,
@@ -146,6 +138,31 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
         }
         int choice = option - 1;
         return types[choice];
+    }
+
+    protected String getListOption(List<String> types,
+                                   Function<String, String> titleFunc,
+                                   String defaultOption,
+                                   LineReader reader) throws UserInterruptException, EndOfFileException {
+        for (int i = 0; i < types.size(); i++) {
+            String type = types.get(i);
+            out(AUTO.string("@|blue " + (type.equals(defaultOption) ? "*" : " ") + (i + 1) + ")|@ " + titleFunc.apply(type)));
+        }
+        int option = getOption(reader, types.size());
+        out("");
+        if (option == -1) {
+            return defaultOption;
+        }
+        int choice = option - 1;
+        return types.get(choice);
+    }
+
+    protected <T extends Enum<T>> T getEnumOption(Class<T> enumClass,
+                                                  Function<T, String> titleFunc,
+                                                  T defaultOption,
+                                                  LineReader reader) throws UserInterruptException, EndOfFileException {
+        T[] types = enumClass.getEnumConstants();
+        return getEnumOption(types, titleFunc, defaultOption, reader);
     }
 
     protected Feature getFeatureOption(List<Feature> features,

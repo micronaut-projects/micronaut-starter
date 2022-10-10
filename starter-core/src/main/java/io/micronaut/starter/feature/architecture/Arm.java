@@ -40,9 +40,4 @@ public class Arm implements CpuArchitecture {
     public String getDescription() {
         return "It can be used in combination with '" + Cdk.NAME + "' and " + AwsLambda.FEATURE_NAME_AWS_LAMBDA + " to generate infrastructure for the Lambda CPU architecture";
     }
-
-    @NonNull
-    public Architecture getCpuArchitecture() {
-        return Architecture.ARM;
-    }
 }

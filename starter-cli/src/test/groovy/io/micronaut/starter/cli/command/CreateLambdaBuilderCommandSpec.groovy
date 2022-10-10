@@ -153,7 +153,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
                 "1",  // Junit
                 "1",  // Gradle Groovy DSL
                 "1",  // Java 11
-        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway','aws-cdk','aws-lambda'] as Set<String>
+        ]       | ApplicationType.DEFAULT | ['amazon-api-gateway', 'x86', 'aws-cdk','aws-lambda'] as Set<String>
         [
                 "1", // with Controller
                 "1", // Amazon Api Gateway

@@ -26,7 +26,6 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
         expect:
         arm instanceof CpuArchitecture
         arm instanceof OneOfFeature
-        Architecture.ARM == arm.cpuArchitecture
     }
 
     void "arm supports every application type"(ApplicationType applicationType) {

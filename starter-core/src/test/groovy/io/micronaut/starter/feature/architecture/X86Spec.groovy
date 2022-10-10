@@ -26,7 +26,6 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         expect:
         x86 instanceof CpuArchitecture
         x86 instanceof OneOfFeature
-        Architecture.X86 == x86.cpuArchitecture
     }
 
     void "x86 supports every application type"(ApplicationType applicationType) {
