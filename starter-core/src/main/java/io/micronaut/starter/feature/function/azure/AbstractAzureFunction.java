@@ -74,13 +74,17 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         return "Adds support for writing functions to deploy to Microsoft Azure";
     }
 
+    private void loadTemplates(GeneratorContext generatorContext) {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));
+        generatorContext.addTemplate("local.settings.json", new URLTemplate("local.settings.json", classLoader.getResource("functions/azure/local.settings.json")));
+    }
+
     @Override
     public void apply(GeneratorContext generatorContext) {
         super.apply(generatorContext);
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         ApplicationType type = generatorContext.getApplicationType();
-        generatorContext.addTemplate("host.json", new URLTemplate("host.json", classLoader.getResource("functions/azure/host.json")));
-        generatorContext.addTemplate("local.settings.json", new URLTemplate("local.settings.json", classLoader.getResource("functions/azure/local.settings.json")));
+        loadTemplates(generatorContext);
         Project project = generatorContext.getProject();
         BuildTool buildTool = generatorContext.getBuildTool();
         if (buildTool.isGradle()) {
