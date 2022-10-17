@@ -154,5 +154,10 @@ public class Gradle implements BuildFeature {
         String settingsFile = generatorContext.getBuildTool() == BuildTool.GRADLE ? "settings.gradle" : "settings.gradle.kts";
         generatorContext.addTemplate("gradleSettings", new RockerTemplate(Template.ROOT, settingsFile, settingsGradle.template(generatorContext.getProject(), build, generatorContext.getModuleNames())));
     }
+
+    @Override
+    public boolean isGradle() {
+        return true;
+    }
 }
 
