@@ -21,6 +21,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.build.BuildFeature;
+import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
@@ -73,9 +76,30 @@ public class Mockk implements MockingFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.MAVEN &&
-                options.getLanguage() == Language.KOTLIN &&
-                options.getTestFramework().isKotlinTestFramework();
+        return (
+                options.getBuildTool() != null ?
+                        options.getBuildTool() == BuildTool.MAVEN :
+                        selectedFeatures.stream()
+                                .filter(BuildFeature.class::isInstance)
+                                .anyMatch(f -> ((BuildFeature) f).isMaven())
+        ) && (
+                options.getLanguage() != null ?
+                        options.getLanguage() == Language.KOTLIN :
+                        selectedFeatures.stream()
+                                .filter(LanguageFeature.class::isInstance)
+                                .anyMatch(f -> ((LanguageFeature) f).isKotlin())
+
+        ) && (
+                options.getTestFramework() != null ?
+                        options.getTestFramework().isKotlinTestFramework() :
+                        selectedFeatures.stream()
+                                .filter(TestFeature.class::isInstance)
+                                .anyMatch(f -> ((TestFeature) f).isKotlinTestFramework()));
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOW.getOrder();
     }
 }
 

@@ -30,7 +30,7 @@ class ContextFactorySpec extends Specification {
         contextFactory.createFeatureContext(availableFeatures,
                 [],
                 ApplicationType.DEFAULT,
-                new Options(Language.KOTLIN, null, BuildTool.GRADLE, JdkVersion.JDK_17),
+                new Options(Language.KOTLIN, null, BuildTool.MAVEN, JdkVersion.JDK_17),
                 null
         )
         then:
