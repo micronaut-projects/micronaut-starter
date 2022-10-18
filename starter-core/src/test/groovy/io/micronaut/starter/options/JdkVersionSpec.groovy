@@ -14,7 +14,14 @@ class JdkVersionSpec extends Specification {
         JdkVersion.valueOf(3)
 
         then:
-        def ex = thrown(IllegalArgumentException)
+        IllegalArgumentException ex = thrown()
         ex.message == "Unsupported JDK version: 3. Supported values are [8, 11, 17]"
+    }
+
+    void "greaterThanOrEqual"() {
+        expect:
+        JdkVersion.JDK_11.greaterThanEqual(JdkVersion.JDK_11)
+        JdkVersion.JDK_17.greaterThanEqual(JdkVersion.JDK_11)
+        !JdkVersion.JDK_8.greaterThanEqual(JdkVersion.JDK_11)
     }
 }

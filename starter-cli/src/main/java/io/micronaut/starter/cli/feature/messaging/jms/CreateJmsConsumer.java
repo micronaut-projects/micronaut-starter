@@ -31,22 +31,26 @@ import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic;
 import io.micronaut.starter.feature.messaging.jms.SQS;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-jms-consumer", description = "Creates a consumer class for JMS")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-jms-consumer", description = "Creates a consumer class for JMS")
 @Prototype
 public class CreateJmsConsumer extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "CONSUMER", description = "The name of the consumer to create")
-    String consumerName;
+    @Parameters(paramLabel = "CONSUMER", description = "The name of the consumer to create")
+    protected String consumerName;
 
     @Inject
     public CreateJmsConsumer(@Parameter CodeGenConfig config) {
@@ -86,11 +90,11 @@ public class CreateJmsConsumer extends CodeGenCommand {
             configClass = "io.micronaut.jms.sqs.configuration.SqsConfiguration";
         }
 
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaListener.template(project, configClass);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyListener.template(project, configClass);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinListener.template(project, configClass);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

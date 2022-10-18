@@ -36,7 +36,7 @@ public class HibernateReactiveJpa extends HibernateReactiveFeature {
 
     private final Reactor reactiveFeature;
 
-    HibernateReactiveJpa(Reactor reactiveFeature, TestContainers testContainers, TestResources testResources) {
+    public HibernateReactiveJpa(Reactor reactiveFeature, TestContainers testContainers, TestResources testResources) {
         super(testContainers, testResources);
         this.reactiveFeature = reactiveFeature;
     }

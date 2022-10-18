@@ -25,19 +25,23 @@ import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.producer.groovyProducer;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.producer.javaProducer;
 import io.micronaut.starter.cli.feature.messaging.kafka.template.producer.kotlinProducer;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
 
-@CommandLine.Command(name = "create-kafka-producer", description = "Creates a producer interface for Kafka")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-kafka-producer", description = "Creates a producer interface for Kafka")
 @Prototype
 public class CreateKafkaProducer extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
+    protected String producerName;
 
     public CreateKafkaProducer(@Parameter CodeGenConfig config) {
         super(config);
@@ -58,11 +62,11 @@ public class CreateKafkaProducer extends CodeGenCommand {
         String path = "/{packagePath}/{className}";
         path = config.getSourceLanguage().getSourcePath(path);
         RockerModel rockerModel = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaProducer.template(project);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyProducer.template(project);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinProducer.template(project);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

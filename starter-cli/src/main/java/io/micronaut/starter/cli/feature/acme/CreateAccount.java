@@ -26,7 +26,9 @@ import org.shredzone.acme4j.Account;
 import org.shredzone.acme4j.AccountBuilder;
 import org.shredzone.acme4j.Session;
 import org.shredzone.acme4j.exception.AcmeException;
-import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.IOException;
 import java.security.KeyPair;
@@ -34,25 +36,28 @@ import java.security.KeyPair;
 /**
  * Allows for creating a new account on the given acme server. Keypair can either be passed in or given as parameters.
  */
-@CommandLine.Command(name = "create-acme-account",
+@Command(name = "create-acme-account",
         description = "Creates a new account on the given ACME server",
         usageHelpWidth = 95
 )
 @Prototype
-public final class CreateAccount extends CreateKeyPair {
-    @ReflectiveAccess
-    @CommandLine.Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
-    String email;
+public class CreateAccount extends CreateKeyPair {
 
     @ReflectiveAccess
-    @CommandLine.ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
-    AcmeServerOption acmeServerOption;
+    @Option(names = {"-e", "--email"}, required = true, description = "Email address to create account with.")
+    protected String email;
+
+    @ReflectiveAccess
+    @ArgGroup(multiplicity = "1", heading = "ACME server URL%n")
+    protected AcmeServerOption acmeServerOption;
 
     public CreateAccount(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateAccount(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateAccount(CodeGenConfig config,
+                         ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                         ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 

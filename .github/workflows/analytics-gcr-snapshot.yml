@@ -2,7 +2,7 @@ name: Snapshot Analytics to GCR
 on:
   push:
     branches:
-      - 3.6.x
+      - 3.8.x
 jobs:
   deploy:
     name: Deploy job

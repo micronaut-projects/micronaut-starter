@@ -38,16 +38,16 @@ import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
-import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
-import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
-import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
+import io.micronaut.starter.feature.aws.template.cdkhelp;
 import io.micronaut.starter.feature.aws.template.cdkjson;
 import io.micronaut.starter.feature.aws.template.cdkmain;
+import io.micronaut.starter.feature.aws.template.testlambda;
 import io.micronaut.starter.feature.build.gradle.templates.genericBuildGradle;
-import io.micronaut.starter.feature.build.maven.templates.genericPom;
+import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
+import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.options.BuildTool;
@@ -118,8 +118,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
-
-
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),
@@ -150,7 +148,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         return generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
     }
 
-    private void populateDependencies() {
+    private void populateDependencies(GeneratorContext generatorContext) {
         dependencyContext.addDependency(bomDependency().compile());
         dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
                 .artifactId("micronaut-aws-cdk")
@@ -164,6 +162,15 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .groupId("org.junit.jupiter")
                 .artifactId("junit-jupiter-engine")
                 .test());
+        if (generatorContext.getFeatures().hasFeature(AmazonApiGatewayHttp.class)) {
+            dependencyContext.addDependency(Dependency.builder()
+                    .lookupArtifactId("apigatewayv2-alpha")
+                    .compile());
+            dependencyContext.addDependency(Dependency.builder()
+                    .lookupArtifactId("apigatewayv2-integrations-alpha")
+                    .compile());
+
+        }
     }
 
     private Dependency.Builder bomDependency() {
@@ -174,12 +181,12 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     }
 
     private Optional<RockerModel> buildRockerModel(GeneratorContext generatorContext) {
-        populateDependencies();
+        populateDependencies(generatorContext);
         RockerModel rockerModel = null;
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             rockerModel = genericPom.template(generatorContext.getProject(), infrastructureMavenBuild(generatorContext));
         } else if (generatorContext.getBuildTool().isGradle()) {
-            rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME);
+            rockerModel = genericBuildGradle.template(generatorContext.getProject(), infrastructureGradleBuild(generatorContext), MAIN_CLASS_NAME, null, null);
         }
         return Optional.ofNullable(rockerModel);
     }
@@ -225,10 +232,18 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .build());
         plugins.add(GradlePlugin.builder().id("java").build());
         return new GradleBuild(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                GradleDependency.listOf(dependencyContext, generatorContext),
+                GradleDependency.listOf(dependencyContext, generatorContext, useVersionCatalog()),
                 plugins,
                 GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
                         micronautRepositories()));
+    }
+
+    /**
+     *
+     * @return Whether the build should use Micronaut Gradle Version Catalog.
+     */
+    public boolean useVersionCatalog() {
+        return false;
     }
 
     @Override

@@ -2,7 +2,7 @@ name: Snapshot to GCR
 on:
   push:
     branches:
-      - 3.6.x
+      - 3.8.x
 jobs:
   deploy:
     name: Deploy job
@@ -19,7 +19,7 @@ jobs:
           PREDICTIVE_TEST_SELECTION: "${{ github.event_name == 'pull_request' && 'true' || 'false' }}"
       - name: Build Docker image
         run: |
-          docker build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot -f DockerfileCloudRun
+          ./gradlew starter-web-netty:dockerBuildNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
@@ -28,7 +28,8 @@ jobs:
       - name: Configure Docker to use Google Cloud Platform
         run: "gcloud auth configure-docker --quiet"
       - name: Push image to Google Cloud Container Registry
-        run: docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot
+        run: |
+          ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_SNAPSHOT_APP_NAME }}:snapshot"
       - name: Deploy to Cloud Run
         run: |
           gcloud components install beta --quiet

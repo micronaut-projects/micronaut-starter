@@ -40,7 +40,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.test.github.WorkflowSpec
 import io.micronaut.starter.util.NameUtils
-import org.apache.commons.io.IOUtils
 import spock.lang.Requires
 import spock.lang.Shared
 import spock.lang.Unroll
@@ -73,10 +72,7 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
             .fingerprint(System.getenv(AbstractOracleFunctionsWorkflow.OCI_FINGERPRINT))
             .tenantId(System.getenv(AbstractOracleFunctionsWorkflow.OCI_TENANCY_OCID))
             .privateKeySupplier({
-                IOUtils.toInputStream(
-                        convertPrivateKeyOnelinerToMultiline(System.getenv(OracleFunctionsJavaWorkflow.OCI_KEY_FILE)),
-                        StandardCharsets.UTF_8
-                )
+                new ByteArrayInputStream(convertPrivateKeyOnelinerToMultiline(System.getenv(OracleFunctionsJavaWorkflow.OCI_KEY_FILE)).getBytes(StandardCharsets.UTF_8))
             }).build()
 
     static List<String> envVariables() {
@@ -386,6 +382,6 @@ class OracleFunctionsWorkflowSpec extends WorkflowSpec {
         final InvokeFunctionResponse invokeFunctionResponse = fnInvokeClient.invokeFunction(invokeFunctionRequest)
 
         // Handle the response.
-        return IOUtils.toString(invokeFunctionResponse.getInputStream(), StandardCharsets.UTF_8)
+        invokeFunctionResponse.getInputStream().text
     }
 }

@@ -11,9 +11,19 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
 import spock.lang.Issue
+import spock.lang.Shared
 import spock.lang.Unroll
 
 class GradleSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Shared
+    Gradle gradle = beanContext.getBean(Gradle)
+
+    void "gradle is a BuildFeature"() {
+        expect:
+        gradle.isGradle()
+        !gradle.isMaven()
+    }
 
     void "test settings.gradle"() {
         GradleBuild gradleBuild = new GradleBuild()

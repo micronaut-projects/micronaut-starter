@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.test
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 
 class KoTestSpec extends ApplicationContextSpec {
@@ -39,6 +40,7 @@ class KoTestSpec extends ApplicationContextSpec {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .testFramework(TestFramework.KOTEST)
+                .language(Language.KOTLIN)
                 .render()
 
         then:

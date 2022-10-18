@@ -6,6 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import spock.lang.Unroll
 
 class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -241,5 +242,14 @@ class MicroStreamSpec extends BeanContextSpec implements CommandOutputFixture {
         !commandContext.configuration.keySet().any { it.startsWith('microstream.rest.') }
         commandContext.configuration.'microstream.cache.my-cache.key-type' == 'java.lang.Integer'
         commandContext.configuration.'microstream.cache.my-cache.value-type' == 'java.lang.String'
+    }
+
+    @Unroll
+    void 'test feature is not preview for #microStreamFeature.name'(MicroStreamFeature microStreamFeature) {
+        expect:
+        !microStreamFeature.isPreview()
+
+        where:
+        microStreamFeature << beanContext.getBeansOfType(MicroStreamFeature).iterator()
     }
 }

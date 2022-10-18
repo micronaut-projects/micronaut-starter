@@ -1,8 +1,6 @@
 @import io.micronaut.starter.application.Project
 
-@args (
-Project project
-)
+@args (Project project, boolean transactional)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
@@ -16,7 +14,11 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
+@if(transactional) {
 @@MicronautTest
+} else {
+@@MicronautTest(transactional = false)
+}
 class @project.getClassName()ControllerTest(private val embeddedServer: EmbeddedServer) {
 
     @@Test

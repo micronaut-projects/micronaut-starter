@@ -31,21 +31,34 @@ import picocli.shell.jline3.PicocliJLineCompleter;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+import static picocli.CommandLine.Help.Ansi.AUTO;
+
 public class InteractiveShell {
+
+    private static final String DEFAULT_PROMPT = "@|blue mn>|@ ";
 
     private final CommandLine commandLine;
     private final Consumer<String[]> executor;
     private final BiFunction<Throwable, CommandLine, Integer> onError;
+    private final String prompt;
 
-    InteractiveShell(CommandLine commandLine,
-                     Consumer<String[]> executor,
-                     BiFunction<Throwable, CommandLine, Integer> onError) {
+    public InteractiveShell(CommandLine commandLine,
+                            Consumer<String[]> executor,
+                            BiFunction<Throwable, CommandLine, Integer> onError) {
+        this(commandLine, executor, onError, DEFAULT_PROMPT);
+    }
+
+    public InteractiveShell(CommandLine commandLine,
+                            Consumer<String[]> executor,
+                            BiFunction<Throwable, CommandLine, Integer> onError,
+                            String prompt) {
         this.commandLine = commandLine;
         this.executor = executor;
         this.onError = onError;
+        this.prompt = prompt;
     }
 
-    void start() {
+    public void start() {
         AnsiConsole.systemInstall();
         try {
             PicocliJLineCompleter picocliCommands = new PicocliJLineCompleter(commandLine.getCommandSpec());
@@ -57,14 +70,14 @@ public class InteractiveShell {
                     .variable(LineReader.LIST_MAX, 50)   // max tab completion candidates
                     .build();
 
-            String prompt = CommandLine.Help.Ansi.AUTO.string("@|blue mn>|@ ");
+            String ansiPrompt = AUTO.string(prompt);
             String rightPrompt = null;
 
             // start the shell and process input until the user quits with Ctl-D
             String line;
             while (true) {
                 try {
-                    line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
+                    line = reader.readLine(ansiPrompt, rightPrompt, (MaskingCallback) null, null);
                     if (line.matches("^\\s*#.*")) {
                         continue;
                     }

@@ -31,21 +31,26 @@ import io.micronaut.starter.feature.messaging.jms.ActiveMqClassic;
 import io.micronaut.starter.feature.messaging.jms.SQS;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-jms-producer", description = "Creates a producer class for JMS")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-jms-producer", description = "Creates a producer class for JMS")
 @Prototype
 public class CreateJmsProducer extends CodeGenCommand {
+
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
-    String producerName;
+    @Parameters(paramLabel = "PRODUCER", description = "The name of the producer to create")
+    protected String producerName;
 
     @Inject
     public CreateJmsProducer(@Parameter CodeGenConfig config) {
@@ -53,8 +58,8 @@ public class CreateJmsProducer extends CodeGenCommand {
     }
 
     public CreateJmsProducer(CodeGenConfig config,
-                               ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
-                               ConsoleOutput consoleOutput) {
+                             ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                             ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -85,11 +90,11 @@ public class CreateJmsProducer extends CodeGenCommand {
             configClass = "io.micronaut.jms.sqs.configuration.SqsConfiguration";
         }
 
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             rockerModel = javaProducer.template(project, configClass);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             rockerModel = groovyProducer.template(project, configClass);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             rockerModel = kotlinProducer.template(project, configClass);
         }
         renderResult = templateRenderer.render(new RockerTemplate(path, rockerModel), overwrite);

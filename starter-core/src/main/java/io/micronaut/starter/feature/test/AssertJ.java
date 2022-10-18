@@ -15,18 +15,18 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AssertJ implements Feature {
+public class AssertJ implements JunitCompanionFeature {
 
     @Override
+    @NonNull
     public String getName() {
         return "assertj";
     }
@@ -37,6 +37,7 @@ public class AssertJ implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "AssertJ fluent assertions framework";
     }

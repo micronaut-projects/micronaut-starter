@@ -37,7 +37,7 @@ class OpenTelemetryXraySpec extends ApplicationContextSpec implements CommandOut
 
         then:
         ctx.configuration.containsKey('otel.traces.propagator')
-        "tracecontext, baggage, xray" == ctx.configuration.get('otel.traces.propagator')
+        "tracecontext, baggage, xray" == ctx.configuration.otel.traces.propagator
     }
 
     @Unroll

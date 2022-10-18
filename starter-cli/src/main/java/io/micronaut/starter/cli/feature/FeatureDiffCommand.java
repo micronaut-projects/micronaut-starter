@@ -26,24 +26,27 @@ import io.micronaut.starter.diff.FeatureDiffer;
 import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.util.NameUtils;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandLine.Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
+@Command(name = "feature-diff", description = "Produces the diff of an original project with an original project with additional features.")
 public class FeatureDiffCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
-    List<String> features = new ArrayList<>();
+    @Option(names = {"--features"}, paramLabel = "FEATURE", split = ",", description = "The additional features")
+    protected List<String> features = new ArrayList<>();
 
     private final ProjectGenerator projectGenerator;
     private final FeatureDiffer featureDiffer;
 
     @Inject
-    public FeatureDiffCommand(@Parameter CodeGenConfig config, ProjectGenerator projectGenerator, FeatureDiffer featureDiffer) {
+    public FeatureDiffCommand(@Parameter CodeGenConfig config,
+                              ProjectGenerator projectGenerator,
+                              FeatureDiffer featureDiffer) {
         super(config);
         this.projectGenerator = projectGenerator;
         this.featureDiffer = featureDiffer;
@@ -60,8 +63,6 @@ public class FeatureDiffCommand extends CodeGenCommand {
         Project project = NameUtils.parse(config.getDefaultPackage() + "." + appName);
         Options options = new Options(config.getSourceLanguage(), config.getTestFramework(), config.getBuildTool());
         ApplicationType applicationType = config.getApplicationType();
-        List<String> features = this.features;
-        ProjectGenerator projectGenerator = this.projectGenerator;
         featureDiffer.produceDiff(
                 projectGenerator,
                 project,

@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.lang.groovy;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -31,11 +32,15 @@ import jakarta.inject.Singleton;
 
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Singleton
 public class Groovy implements LanguageFeature {
-
-    private final List<GroovyApplicationFeature> applicationFeatures;
+    protected static final Dependency DEPENDENCY_MICRONAUT_GROOVY_RUNTIME = MicronautDependencyUtils.groovyDependency()
+            .artifactId("micronaut-runtime-groovy")
+            .compile()
+            .build();
+    protected final List<GroovyApplicationFeature> applicationFeatures;
 
     public Groovy(List<GroovyApplicationFeature> applicationFeatures, Spock spock) {
         this.applicationFeatures = applicationFeatures;
@@ -48,8 +53,13 @@ public class Groovy implements LanguageFeature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        processSelectedFeatured(featureContext, feature -> true);
+    }
+
+    protected void processSelectedFeatured(FeatureContext featureContext, Predicate<Feature> filter) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
+                    .filter(filter)
                     .filter(f -> f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
@@ -61,10 +71,7 @@ public class Groovy implements LanguageFeature {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.groovy")
-                .artifactId("micronaut-runtime-groovy")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_GROOVY_RUNTIME);
     }
 
     @Override

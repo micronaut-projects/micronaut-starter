@@ -30,6 +30,10 @@ public class BuildProperties {
         }
     }
 
+    public void remove(String key) {
+        propertyMap.remove(key);
+    }
+
     public void put(String key, String value) {
         propertyMap.put(key, new Property() {
             @Override

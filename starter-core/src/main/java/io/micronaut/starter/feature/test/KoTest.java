@@ -15,21 +15,42 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.URLTemplate;
 import jakarta.inject.Singleton;
 
-import static io.micronaut.starter.options.BuildTool.MAVEN;
-
 @Singleton
 public class KoTest implements TestFeature {
-    private static final String ARTIFACT_ID_MICRONAUT_KOTEST5 = "micronaut-test-kotest5";
-    private static final String KOTLINX_VERSION = "1.6.2";
+    protected static final String ARTIFACT_ID_MICRONAUT_KOTEST5 = "micronaut-test-kotest5";
+
+    protected static final Dependency DEPENDENCY_MICRONAUT_TEST_KOTEST = MicronautDependencyUtils
+            .testDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_KOTEST5)
+            .test()
+            .build();
+    protected static final String ARTIFACT_ID_KOTEST_RUNNER_JUNIT_5_JVM = "kotest-runner-junit5-jvm";
+    protected static final String ARTIFACT_ID_KOTEST_ASSERTIONS_CORE_JVM = "kotest-assertions-core-jvm";
+
+    private static final String GROUP_ID_KOTEST = "io.kotest";
+
+    private static final Dependency DEPENDENCY_KOTEST_RUNNER_JUNIT_5_JVM = Dependency.builder()
+            .artifactId(ARTIFACT_ID_KOTEST_RUNNER_JUNIT_5_JVM)
+                    .groupId(GROUP_ID_KOTEST)
+                    .test()
+                    .build();
+    private static final Dependency DEPENDENCY_KOTEST_ASSERTIONS_CORE_JVM = Dependency.builder()
+            .groupId(GROUP_ID_KOTEST)
+            .artifactId(ARTIFACT_ID_KOTEST_ASSERTIONS_CORE_JVM)
+            .test()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return "kotest";
     }
@@ -40,32 +61,11 @@ public class KoTest implements TestFeature {
         generatorContext.addTemplate("koTestConfig",
                 new URLTemplate("src/test/kotlin/io/kotest/provided/ProjectConfig.kt",
                         classLoader.getResource("kotest/ProjectConfig.kt")));
-
-        if (generatorContext.getBuildTool() == MAVEN) {
-            // TODO Maven tests fail without this due to older, incompatible version
-            //  but I think it can be removed after everything else updates to Kotest5 and removes Kotest4
-            generatorContext.addDependency(new Dependency.Builder()
-                    .groupId("org.jetbrains.kotlinx")
-                    .artifactId("kotlinx-coroutines-core-jvm")
-                    .version(KOTLINX_VERSION)
-                    .test());
-
-            // for Gradle, these are exposed by the micronaut-gradle-plugin
-            generatorContext.addDependency(new Dependency.Builder()
-                    .groupId("io.mockk")
-                    .artifactId("mockk")
-                    .test());
-            generatorContext.addDependency(MicronautDependencyUtils.testDependency()
-                    .artifactId(ARTIFACT_ID_MICRONAUT_KOTEST5)
-                    .test());
-            generatorContext.addDependency(new Dependency.Builder()
-                    .groupId("io.kotest")
-                    .artifactId("kotest-assertions-core-jvm")
-                    .test());
-            generatorContext.addDependency(new Dependency.Builder()
-                    .groupId("io.kotest")
-                    .artifactId("kotest-runner-junit5-jvm")
-                    .testRuntime());
+        // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_KOTEST);
+            generatorContext.addDependency(DEPENDENCY_KOTEST_RUNNER_JUNIT_5_JVM);
+            generatorContext.addDependency(DEPENDENCY_KOTEST_ASSERTIONS_CORE_JVM);
         }
     }
 

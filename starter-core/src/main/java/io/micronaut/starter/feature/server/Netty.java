@@ -18,7 +18,7 @@ package io.micronaut.starter.feature.server;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
-import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.FunctionFeature;
@@ -55,8 +55,7 @@ public class Netty extends AbstractMicronautServerFeature implements DefaultFeat
     @Override
     public void doApply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(Dependency.builder()
-                    .groupId("io.micronaut")
+            generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
                     .artifactId("micronaut-http-server-netty")
                     .compile());
         }

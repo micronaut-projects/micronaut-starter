@@ -58,7 +58,7 @@ class MockitoSpec extends ApplicationContextSpec implements CommandOutputFixture
 
         then:
         def e = thrown(IllegalArgumentException)
-        e.message.startsWith("Mockito requires JUnit.")
+        e.message.startsWith("mockito requires JUnit.")
 
         where:
         language        | testfw

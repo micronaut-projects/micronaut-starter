@@ -55,12 +55,12 @@
         <dependency>
             <groupId>io.micronaut.build.internal</groupId>
             <artifactId>micronaut-gradle-plugins</artifactId>
-            <version>5.3.10</version>
+            <version>5.3.14</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
-            <version>1.14.1</version>
+            <version>1.15.2</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
@@ -75,22 +75,22 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
-            <version>7.17.0</version>
+            <version>7.18.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-bpm-feature</artifactId>
-            <version>2.8.0</version>
+            <version>2.10.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-camunda-external-client-feature</artifactId>
-            <version>2.7.1</version>
+            <version>2.9.0</version>
         </dependency>
         <dependency>
             <groupId>info.novatec</groupId>
             <artifactId>micronaut-zeebe-client-feature</artifactId>
-            <version>1.8.0</version>
+            <version>1.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -115,12 +115,17 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.5.1</version>
+            <version>3.6.2</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-test-resources-plugin</artifactId>
-            <version>3.5.1</version>
+            <version>3.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.gradle</groupId>
+            <artifactId>micronaut-crac-plugin</artifactId>
+            <version>3.6.2</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
@@ -135,12 +140,12 @@
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
-            <version>2.5.3</version>
+            <version>2.5.5</version>
         </dependency>
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby</artifactId>
-            <version>9.3.6.0</version>
+            <version>9.3.8.0</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
@@ -150,7 +155,7 @@
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure-functions-maven-plugin</artifactId>
-            <version>1.19.0</version>
+            <version>1.21.0</version>
         </dependency>
         <dependency>
             <groupId>org.asciidoctor</groupId>
@@ -190,12 +195,12 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.2</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.18.0</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -210,12 +215,12 @@
         <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-micronaut</artifactId>
-            <version>1.12.0</version>
+            <version>1.15.1</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite.maven</groupId>
             <artifactId>rewrite-maven-plugin</artifactId>
-            <version>4.24.0</version>
+            <version>4.34.2</version>
         </dependency>
         <dependency>
             <groupId>org.openrewrite</groupId>
@@ -230,7 +235,7 @@
         <dependency>
             <groupId>gg.jte</groupId>
             <artifactId>jte-maven-plugin</artifactId>
-            <version>2.0.3</version>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>jakarta.json.bind</groupId>
@@ -251,6 +256,16 @@
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility-kotlin</artifactId>
             <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>apigatewayv2-alpha</artifactId>
+            <version>2.42.1-alpha.0</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>apigatewayv2-integrations-alpha</artifactId>
+            <version>2.44.0-alpha.0</version>
         </dependency>
     </dependencies>
 </project>

@@ -1,7 +1,13 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.template.WritableUtils
+@import io.micronaut.starter.template.Writable
+@import io.micronaut.starter.build.maven.MavenRepository
 @import java.util.Collection
-@args (Project project, Collection<String> moduleNames)
+@import java.util.List
+@import java.util.stream.Collectors
+
+@args (List<MavenRepository> maybeRepositories, Project project, Collection<String> moduleNames)
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -11,7 +17,11 @@
         <artifactId>micronaut-parent</artifactId>
         <version>@VersionInfo.getMicronautVersion()</version>
     </parent>
-
+@if (maybeRepositories != null) {
+    <repositories>
+@WritableUtils.renderWritableList(maybeRepositories.stream().map(Writable.class::cast).collect(Collectors.toList()), 8)
+    </repositories>
+}
     <artifactId>@(project.getName())-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <groupId>@project.getPackageName()</groupId>

@@ -1,8 +1,6 @@
 @import io.micronaut.starter.application.Project
 
-@args (
-Project project
-)
+@args (Project project, boolean transactional)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
@@ -17,7 +15,11 @@ import io.micronaut.test.extensions.kotest5.annotation.MicronautTest
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
+@if(transactional) {
 @@MicronautTest
+} else {
+@@MicronautTest(transactional = false)
+}
 class @project.getClassName()ControllerTest(ctx: ApplicationContext): StringSpec({
 
     "test the server is running" {
