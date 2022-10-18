@@ -30,6 +30,8 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 @Singleton
 public class Mockk implements MockingFeature, DefaultFeature {
@@ -81,11 +83,18 @@ public class Mockk implements MockingFeature, DefaultFeature {
                 && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
     }
 
-    private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures, Supplier<T> supplier, Predicate<T> nonNull, Class<U> nullFeature, Predicate<U> nullFeatureTest) {
+    private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures,
+                                                   Supplier<T> supplier,
+                                                   Predicate<T> nonNull,
+                                                   Class<U> nullFeature,
+                                                   Predicate<U> nullFeatureTest) {
         T suppliedValue = supplier.get();
         return suppliedValue != null 
                 ? nonNull.test(suppliedValue)
-                : selectedFeatures.stream().filter(nullFeature::isInstance).map(nullFeature::cast).anyMatch(nullFeatureTest);
+                : selectedFeatures.stream()
+                    .filter(nullFeature::isInstance)
+                    .map(nullFeature::cast)
+                    .anyMatch(nullFeatureTest);
     }
 
     @Override
