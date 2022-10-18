@@ -103,7 +103,7 @@ public class Console implements AgoraPulseFeature {
             generatorContext.getBuildProperties().put("groovyVersion", VersionInfo.getDependencyVersion("groovy").getValue());
         }
         Dependency.Builder groovy = Dependency.builder()
-                .groupId("org.codehaus.groovy")
+                .groupId("org.apache.groovy")
                 .artifactId("groovy")
                 .developmentOnly();
         generatorContext.addDependency(groovy);

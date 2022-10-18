@@ -4,9 +4,9 @@ plugins {
 
 dependencies {
     implementation("org.apache.tuweni:tuweni-crypto:1.1.0")
-    implementation("org.codehaus.groovy:groovy:$groovyVersion")
+    implementation("org.apache.groovy:groovy:$groovyVersion")
     implementation("org.spockframework:spock-core:$spockVersion") {
-        exclude group: "org.codehaus.groovy", module: "groovy-all"
+        exclude group: "org.apache.groovy", module: "groovy-all"
     }
     implementation project(":starter-core")
 }

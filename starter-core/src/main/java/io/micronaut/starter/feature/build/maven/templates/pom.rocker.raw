@@ -82,7 +82,7 @@ MavenBuild mavenBuild
   <dependencies>
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut", "micronaut-inject-groovy", "provided", null, false, null)
-@dependency.template("org.codehaus.groovy", "groovy", "compile", "${groovyVersion}", false, null)
+@dependency.template("org.apache.groovy", "groovy", "compile", "${groovyVersion}", false, null)
 @for (processor : mavenBuild.getAnnotationProcessors()) {
 @dependency.template(processor.getGroupId(), processor.getArtifactId(), "provided", null, false, null)
 }
@@ -167,7 +167,7 @@ MavenBuild mavenBuild
       <scope>test</scope>
       <exclusions>
         <exclusion>
-          <groupId>org.codehaus.groovy</groupId>
+          <groupId>org.apache.groovy</groupId>
           <artifactId>groovy-all</artifactId>
         </exclusion>
       </exclusions>
