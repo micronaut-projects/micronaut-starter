@@ -38,12 +38,6 @@ public class KoTest implements TestFeature {
 
     protected static final String ARTIFACT_ID_KOTEST_ASSERTIONS_CORE_JVM = "kotest-assertions-core-jvm";
 
-    protected final Mockk mockk;
-
-    public KoTest(Mockk mockk) {
-        this.mockk = mockk;
-    }
-
     @Override
     @NonNull
     public String getName() {
