@@ -118,4 +118,9 @@ public class Maven implements BuildFeature {
                                Set<Feature> selectedFeatures) {
         return options.getBuildTool() == BuildTool.MAVEN;
     }
+
+    @Override
+    public boolean isMaven() {
+        return true;
+    }
 }

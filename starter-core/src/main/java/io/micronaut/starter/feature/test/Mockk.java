@@ -21,12 +21,17 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeaturePhase;
+import io.micronaut.starter.feature.build.BuildFeature;
+import io.micronaut.starter.feature.lang.LanguageFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 @Singleton
 public class Mockk implements MockingFeature, DefaultFeature {
@@ -73,9 +78,28 @@ public class Mockk implements MockingFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return options.getBuildTool() == BuildTool.MAVEN &&
-                options.getLanguage() == Language.KOTLIN &&
-                options.getTestFramework().isKotlinTestFramework();
+        return isValid(selectedFeatures, options::getBuildTool, t -> t == BuildTool.MAVEN, BuildFeature.class, BuildFeature::isMaven)
+                && isValid(selectedFeatures, options::getLanguage, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
+                && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
+    }
+
+    private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures,
+                                                   Supplier<T> supplier,
+                                                   Predicate<T> nonNull,
+                                                   Class<U> nullFeature,
+                                                   Predicate<U> nullFeatureTest) {
+        T suppliedValue = supplier.get();
+        return suppliedValue != null 
+                ? nonNull.test(suppliedValue)
+                : selectedFeatures.stream()
+                    .filter(nullFeature::isInstance)
+                    .map(nullFeature::cast)
+                    .anyMatch(nullFeatureTest);
+    }
+
+    @Override
+    public int getOrder() {
+        return FeaturePhase.LOW.getOrder();
     }
 }
 
