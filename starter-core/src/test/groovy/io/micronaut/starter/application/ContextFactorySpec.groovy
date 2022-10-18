@@ -1,8 +1,8 @@
 package io.micronaut.starter.application
 
 import io.micronaut.context.ApplicationContext
-import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Replaces
+import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.feature.AvailableFeatures
 import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.feature.FeatureContext
@@ -51,7 +51,7 @@ class ContextFactorySpec extends Specification {
                 .anyMatch(f -> f.name == Mockk.NAME_MOCKK)
     }
 
-    @Property(name = 'spec.name', value = 'ContextFactorySpec')
+    @Requires(property = 'spec.name', value = 'ContextFactorySpec')
     @Replaces(Junit.class)
     @Singleton
     static class JunitReplacement extends Junit {
@@ -62,7 +62,7 @@ class ContextFactorySpec extends Specification {
         }
     }
 
-    @Property(name = 'spec.name', value = 'ContextFactorySpec')
+    @Requires(property = 'spec.name', value = 'ContextFactorySpec')
     @Replaces(KoTest.class)
     @Singleton
     static class KoTestReplacement extends KoTest {
