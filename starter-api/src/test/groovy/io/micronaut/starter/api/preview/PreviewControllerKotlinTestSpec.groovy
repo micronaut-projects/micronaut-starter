@@ -2,6 +2,7 @@ package io.micronaut.starter.api.preview
 
 import io.micronaut.context.annotation.Primary
 import io.micronaut.context.annotation.Requires
+import io.micronaut.core.annotation.Nullable
 import io.micronaut.http.HttpRequest
 import io.micronaut.starter.api.EmbeddedServerSpecification
 import io.micronaut.starter.application.ApplicationType
@@ -14,7 +15,6 @@ import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.OutputHandler
 import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-import org.jetbrains.annotations.Nullable
 
 import jakarta.inject.Singleton
 
