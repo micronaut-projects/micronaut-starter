@@ -76,25 +76,16 @@ public class Mockk implements MockingFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return (
-                options.getBuildTool() != null ?
-                        options.getBuildTool() == BuildTool.MAVEN :
-                        selectedFeatures.stream()
-                                .filter(BuildFeature.class::isInstance)
-                                .anyMatch(f -> ((BuildFeature) f).isMaven())
-        ) && (
-                options.getLanguage() != null ?
-                        options.getLanguage() == Language.KOTLIN :
-                        selectedFeatures.stream()
-                                .filter(LanguageFeature.class::isInstance)
-                                .anyMatch(f -> ((LanguageFeature) f).isKotlin())
+        return isValid(selectedFeatures, options::getBuildTool, t -> t == BuildTool.MAVEN, BuildFeature.class, BuildFeature::isMaven)
+                && isValid(selectedFeatures, options::getLanguage, t -> t == Language.KOTLIN, LanguageFeature.class, LanguageFeature::isKotlin)
+                && isValid(selectedFeatures, options::getTestFramework, t -> t.isKotlinTestFramework(), TestFeature.class, TestFeature::isKotlinTestFramework);
+    }
 
-        ) && (
-                options.getTestFramework() != null ?
-                        options.getTestFramework().isKotlinTestFramework() :
-                        selectedFeatures.stream()
-                                .filter(TestFeature.class::isInstance)
-                                .anyMatch(f -> ((TestFeature) f).isKotlinTestFramework()));
+    private <T, U extends Feature> boolean isValid(Set<Feature> selectedFeatures, Supplier<T> supplier, Predicate<T> nonNull, Class<U> nullFeature, Predicate<U> nullFeatureTest) {
+        T suppliedValue = supplier.get();
+        return suppliedValue != null 
+                ? nonNull.test(suppliedValue)
+                : selectedFeatures.stream().filter(nullFeature::isInstance).map(nullFeature::cast).anyMatch(nullFeatureTest);
     }
 
     @Override
