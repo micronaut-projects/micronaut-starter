@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -83,11 +84,12 @@ public class JavaApplication implements JavaApplicationFeature  {
     protected RockerModel applicationTest(GeneratorContext generatorContext) {
         TestFramework testFramework = generatorContext.getTestFramework();
         Project project = generatorContext.getProject();
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
-                javaJunit.template(project),
-                javaJunit.template(project),
-                javaJunit.template(project),
-                koTest.template(project));
+        boolean transactional = !generatorContext.getFeatures().hasFeature(TransactionalNotSupported.class);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project, transactional),
+                javaJunit.template(project, transactional),
+                javaJunit.template(project, transactional),
+                javaJunit.template(project, transactional),
+                koTest.template(project, transactional));
         return provider.findModel(generatorContext.getLanguage(), testFramework);
     }
 

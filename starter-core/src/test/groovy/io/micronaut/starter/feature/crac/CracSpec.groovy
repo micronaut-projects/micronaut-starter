@@ -4,6 +4,8 @@ import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.database.jdbc.Hikari
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -66,5 +68,22 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
             scope.text() == 'compile'
             groupId.text() == 'io.micronaut.crac'
         }
+    }
+
+    void "test crac without hikari feature doesn't add configuration"() {
+        when:
+        GeneratorContext ctx = buildGeneratorContext([Crac.NAME])
+
+        then:
+        !ctx.configuration.containsKey("datasources.default.allow-pool-suspension")
+    }
+
+    void "test crac and hikari feature adds configuration"() {
+        when:
+        GeneratorContext ctx = buildGeneratorContext([Crac.NAME, Hikari.NAME])
+
+        then:
+        ctx.configuration.containsKey("datasources.default.allow-pool-suspension")
+        ctx.configuration."datasources.default.allow-pool-suspension" == true
     }
 }

@@ -1,8 +1,6 @@
 @import io.micronaut.starter.application.Project
 
-@args (
-Project project
-)
+@args (Project project, boolean transactional)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName();
@@ -16,7 +14,11 @@ import org.junit.jupiter.api.Assertions;
 
 import jakarta.inject.Inject;
 
+@if(transactional) {
 @@MicronautTest
+} else {
+@@MicronautTest(transactional = false)
+}
 class @project.getClassName()Test {
 
     @@Inject

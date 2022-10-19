@@ -23,7 +23,7 @@ import jakarta.inject.Singleton;
  * Add support for Micronaut Data MongoDB Reactive.
  */
 @Singleton
-public class DataMongoReactive extends DataMongoFeature {
+public class DataMongoReactive extends DataMongoFeature implements TransactionalNotSupported {
 
     private static final String ASYNC_MONGODB_ARTIFACT = "mongodb-driver-reactivestreams";
 

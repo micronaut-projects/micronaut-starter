@@ -26,13 +26,15 @@ import jakarta.inject.Singleton;
 @Primary
 public class Hikari extends JdbcFeature {
 
+    public static final String NAME = "jdbc-hikari";
+
     public Hikari(DatabaseDriverFeature dbFeature) {
         super(dbFeature);
     }
 
     @Override
     public String getName() {
-        return "jdbc-hikari";
+        return NAME;
     }
 
     @Override
