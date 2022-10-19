@@ -22,6 +22,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Substitution;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.BuildTool;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,17 +63,20 @@ public interface SerializationFeature extends JsonFeature {
         dependencyList.add(serdeProcessor());
         dependencyList.add(serdeModule(generatorContext));
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            dependencyList.add(micronautRuntimeDependency());
+            dependencyList.add(micronautRuntimeDependency(generatorContext));
         }
         return dependencyList;
     }
 
     @NonNull
-    default Dependency.Builder micronautRuntimeDependency() {
-        return MicronautDependencyUtils.coreDependency()
+    default Dependency.Builder micronautRuntimeDependency(@NonNull GeneratorContext generatorContext) {
+        Dependency.Builder runtime = MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-runtime")
-                .compile()
-                .exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
+                .compile();
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            runtime.exclude(DEPENDENCY_MICRONAUT_JACKSON_DATABIND);
+        }
+        return runtime;
     }
 
     @NonNull
