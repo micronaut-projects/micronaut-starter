@@ -45,6 +45,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -123,6 +124,7 @@ public class Slack implements AgoraPulseFeature {
     private void addConfiguration(GeneratorContext generatorContext) {
         Map<String, String> slack = new LinkedHashMap<>(1);
         slack.put("bot-token", "xoxb-" + UUID.randomUUID());
+        slack.put("verification-token", UUID.randomUUID().toString());
 
         Map<String, Object> nested = new LinkedHashMap<>(1);
         nested.put("slack", slack);
@@ -158,7 +160,7 @@ public class Slack implements AgoraPulseFeature {
             subdomain = subdomain + "-" + generatorContext.getProject().getName();
         }
 
-        RockerModel manifestModel = slackManifest.template(generatorContext.getProject(), subdomain);
+        RockerModel manifestModel = slackManifest.template(generatorContext.getProject(), subdomain.toLowerCase(Locale.ROOT));
         generatorContext.addTemplate("SlackManifest", new RockerTemplate("slack-manifest.yml", manifestModel));
     }
 
