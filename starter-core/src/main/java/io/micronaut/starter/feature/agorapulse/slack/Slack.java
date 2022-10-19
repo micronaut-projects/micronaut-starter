@@ -124,7 +124,7 @@ public class Slack implements AgoraPulseFeature {
     private void addConfiguration(GeneratorContext generatorContext) {
         Map<String, String> slack = new LinkedHashMap<>(1);
         slack.put("bot-token", "xoxb-" + UUID.randomUUID());
-        slack.put("verification-token", UUID.randomUUID().toString());
+        slack.put("signing-secret", UUID.randomUUID().toString());
 
         Map<String, Object> nested = new LinkedHashMap<>(1);
         nested.put("slack", slack);
