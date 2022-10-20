@@ -5,7 +5,6 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
-import spock.lang.Unroll
 
 class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixture {
 
@@ -33,13 +32,12 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         appType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
     }
 
-    @Unroll
-    void 'test gradle oracle cloud function feature for language=#language'() {
+    void 'test gradle oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-                ['oracle-function']
+                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         def readme = output["README.md"]
         def funcYaml = output["func.yml"]
@@ -48,17 +46,17 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
         readme
         funcYaml
 
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
-        output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
+        output["${language.srcDir}/example/micronaut/FooController.${language.extension}".toString()]
                 .contains("class FooController {")
-        output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output["${language.testSrcDir}/example/micronaut/FooControllerTest.${language.extension}".toString()]
                 .contains("class FooControllerTest")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
     void "runtime for gradle and oracle-function"() {
@@ -75,18 +73,14 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
 
         where:
         language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
     }
 
-    @Unroll
-    void 'test maven oracle cloud function feature for language=#language'() {
+    void 'test maven oracle cloud function feature for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['oracle-function']
+                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
         def readme = output["README.md"]
@@ -104,31 +98,32 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
       <scope>runtime</scope>
     </dependency>''')
 
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
-        output["${language.srcDir}/example/micronaut/FooController.${extension}".toString()]
+        output["${language.srcDir}/example/micronaut/FooController.${language.extension}".toString()]
                 .contains("class FooController {")
-        output["${language.testSrcDir}/example/micronaut/FooControllerTest.${extension}".toString()]
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output["${language.testSrcDir}/example/micronaut/FooControllerTest.${language.extension}".toString()]
                 .contains("class FooControllerTest")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
-    @Unroll
-    void 'test maven oracle cloud function app for language=#language'() {
+    void 'test maven oracle cloud function app for language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.FUNCTION,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_11),
-                ['oracle-function']
+                ['oracle-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
 
         then:
+        !output.containsKey("${language.srcDir}/example/micronaut/FooController.${language.extension}")
+
         build.contains('<micronaut.runtime>oracle_function</micronaut.runtime>')
         build.contains('<jib.docker.tag>${project.version}</jib.docker.tag>')
         build.contains('<exec.mainClass>com.fnproject.fn.runtime.EntryPoint</exec.mainClass>')
@@ -179,9 +174,6 @@ class OracleFunctionSpec extends BeanContextSpec  implements CommandOutputFixtur
     </dependency>''')
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 }

@@ -1,7 +1,8 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project
+Project project,
+boolean useSerde
 )
 
 @if (project.getPackageName() != null) {
@@ -15,7 +16,11 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.MediaType
+@if (useSerde) {
+import io.micronaut.serde.annotation.Serdeable
+} else {
 import io.micronaut.core.annotation.Introspected
+}
 import groovy.transform.TupleConstructor
 
 @@Controller("/@project.getPropertyName()")
@@ -34,12 +39,20 @@ class @project.getClassName()Controller {
 }
 
 @@TupleConstructor
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 class SampleInputMessage{
     String name
 }
 
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 class SampleReturnMessage{
     String returnMessage
 }
