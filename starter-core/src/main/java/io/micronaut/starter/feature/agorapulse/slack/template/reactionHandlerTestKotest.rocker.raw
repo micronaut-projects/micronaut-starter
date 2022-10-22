@@ -1,0 +1,41 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.slack.api.app_backend.events.payload.ReactionAddedPayload
+import com.slack.api.bolt.context.builtin.EventContext
+import com.slack.api.model.event.ReactionAddedEvent
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+class ReactionHandlerTest : StringSpec({
+
+    "check reaction handled" {
+        val handler = ReactionHandler(mockClient())
+
+        val item = ReactionAddedEvent.Item()
+        item.channel = "C123456"
+
+        val event = ReactionAddedEvent()
+        event.item = item
+        event.user = "U123456"
+        event.reaction = "thumbsup"
+
+        val payload = ReactionAddedPayload()
+        payload.event = event
+
+        val context = EventContext()
+        context.channelId = "C123456"
+
+        handler.apply(payload, context)
+
+        lastMessage().text shouldBe "Thank you, <@@U123456> for your :thumbsup:"
+    }
+
+})

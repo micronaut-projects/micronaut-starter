@@ -45,6 +45,10 @@ import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilK
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGroovy;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerSpecGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTestJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTestKotest;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTestKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.slackManifest;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
@@ -150,7 +154,11 @@ public class Slack implements AgoraPulseFeature {
         );
 
         reactionModel(generatorContext).ifPresent(rockerModel ->
-                addMain(generatorContext, "ReactionHandler", rockerModel, "messageHandler")
+                addMain(generatorContext, "ReactionHandler", rockerModel, "reactionHandler")
+        );
+
+        reactionTestModel(generatorContext).ifPresent(rockerModel ->
+                addTest(generatorContext, "ReactionHandler", rockerModel, "reactionHandlerTest")
         );
 
         handlerModel(generatorContext).ifPresent(rockerModel ->
@@ -207,6 +215,17 @@ public class Slack implements AgoraPulseFeature {
                 reactionHandlerJava.template(generatorContext.getProject()),
                 reactionHandlerGroovy.template(generatorContext.getProject()),
                 reactionHandlerKotlin.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> reactionTestModel(GeneratorContext generatorContext) {
+        return testModel(
+                generatorContext,
+                reactionHandlerTestJava.template(generatorContext.getProject()),
+                reactionHandlerSpecGroovy.template(generatorContext.getProject()),
+                reactionHandlerTestKotlin.template(generatorContext.getProject()),
+                reactionHandlerTestKotest.template(generatorContext.getProject())
         );
     }
 
