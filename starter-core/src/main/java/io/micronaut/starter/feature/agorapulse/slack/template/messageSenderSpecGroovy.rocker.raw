@@ -9,23 +9,16 @@ package @project.getPackageName()
 
 }
 
-import com.slack.api.RequestConfigurator
-import com.slack.api.methods.MethodsClient
-import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.slack.api.methods.response.chat.ChatPostMessageResponse
-import com.slack.api.methods.response.conversations.ConversationsListResponse
-import com.slack.api.model.Conversation
-import com.slack.api.model.Message
 import spock.lang.Specification
 
 class MessageSenderSpec extends Specification {
 
-    public static final String GENERAL_CHANNEL_ID = 'C123456'
     public static final String MESSAGE = 'Hello'
 
     void 'check message sent'() {
         given:
-        MessageSender sender = new MessageSender(mockClient())
+        MessageSender sender = new MessageSender(MethodsClientUtil.mockClient())
 
         when:
         Optional<ChatPostMessageResponse> optionalResponse = sender.sendMessage(MESSAGE)
@@ -37,31 +30,8 @@ class MessageSenderSpec extends Specification {
         ChatPostMessageResponse response = optionalResponse.get()
 
         then:
-        response.channel == GENERAL_CHANNEL_ID
+        response.channel == MethodsClientUtil.GENERAL_CHANNEL_ID
         response.message.text == MESSAGE
-    }
-
-    private MethodsClient mockClient() {
-        return Mock(MethodsClient) {
-            conversationsList(_ as RequestConfigurator) >> new ConversationsListResponse(channels: [
-                    new Conversation(id: 'C654321'),
-                    new Conversation(id: GENERAL_CHANNEL_ID, general: true),
-            ])
-
-            chatPostMessage(_ as RequestConfigurator) >> { RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder> configurator
-                ->
-                ChatPostMessageRequest.ChatPostMessageRequestBuilder requestBuilder = ChatPostMessageRequest.builder()
-                configurator.configure(requestBuilder)
-                ChatPostMessageRequest request = requestBuilder.build()
-
-                ChatPostMessageResponse chatResponse = new ChatPostMessageResponse(
-                        channel: request.channel,
-                        message: new Message(text: request.text)
-                )
-
-                return chatResponse
-            }
-        }
     }
 
 }

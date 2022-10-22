@@ -5,7 +5,7 @@ Project project
 )
 
 @if (project.getPackageName() != null) {
-package @project.getPackageName();
+package @project.getPackageName()
 }
 
 import com.slack.api.methods.MethodsClient

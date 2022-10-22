@@ -69,7 +69,7 @@ class SlackSpec extends ApplicationContextSpec {
 
     void 'verify micronaut-slack configuration'() {
         when:
-            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack'])
+        GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack'])
         then:
         commandContext.configuration.get('slack.bot-token')
         commandContext.configuration.get('slack.bot-token').toString().startsWith('xoxb-')

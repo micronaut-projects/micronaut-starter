@@ -1,0 +1,79 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.slack.api.RequestConfigurator
+import com.slack.api.methods.MethodsClient
+import com.slack.api.methods.request.chat.ChatPostMessageRequest
+import com.slack.api.methods.request.conversations.ConversationsListRequest
+import com.slack.api.methods.response.chat.ChatPostMessageResponse
+import com.slack.api.methods.response.conversations.ConversationsListResponse
+import com.slack.api.model.Conversation
+import com.slack.api.model.Message
+import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
+import org.mockito.invocation.InvocationOnMock
+
+const val GENERAL_CHANNEL_ID = "C123456"
+
+private val lastMessage = ThreadLocal<Message>()
+
+fun lastMessage(): Message {
+    return lastMessage.get();
+}
+
+fun mockClient(): MethodsClient {
+    val client = Mockito.mock(MethodsClient::class.java)
+
+    Mockito.`when`(client.conversationsList(ArgumentMatchers.any<RequestConfigurator<ConversationsListRequest.ConversationsListRequestBuilder>>()))
+        .thenReturn(createConversationsResponse())
+
+    Mockito.`when`(client.chatPostMessage(ArgumentMatchers.any<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>()))
+        .thenAnswer(::sendMessage)
+
+    return client
+}
+
+private fun sendMessage(invocation: InvocationOnMock): ChatPostMessageResponse {
+    val configurator =
+        invocation.getArgument<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>(0)
+
+    val requestBuilder = ChatPostMessageRequest.builder()
+    configurator.configure(requestBuilder)
+
+    val request = requestBuilder.build()
+
+    val chatResponse = ChatPostMessageResponse()
+    chatResponse.channel = request.channel
+
+    val chatMessage = Message()
+
+    chatMessage.text = request.text
+    chatResponse.message = chatMessage
+
+    lastMessage.set(chatMessage)
+
+    return chatResponse
+}
+
+private fun createConversationsResponse(): ConversationsListResponse {
+    val generalChannelId = GENERAL_CHANNEL_ID
+
+    val someChannel = Conversation()
+    someChannel.id = "C654321"
+
+    val generalChannel = Conversation()
+    generalChannel.id = generalChannelId
+    generalChannel.isGeneral = true
+
+    val response = ConversationsListResponse()
+    response.channels = listOf(someChannel, generalChannel)
+
+    return response
+}

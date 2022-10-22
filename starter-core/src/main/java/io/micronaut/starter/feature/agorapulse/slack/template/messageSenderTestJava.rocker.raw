@@ -8,35 +8,23 @@ Project project
 package @project.getPackageName();
 }
 
-import com.slack.api.RequestConfigurator;
-import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
-import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
-import com.slack.api.methods.response.conversations.ConversationsListResponse;
-import com.slack.api.model.Conversation;
-import com.slack.api.model.Message;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class MessageSenderTest {
 
     private static final String MESSAGE = "Hello";
-    private static final String GENERAL_CHANNEL_ID = "C123456";
 
     @@Test
     void testMessageSentToGeneralChannel() throws SlackApiException, IOException {
-        final MessageSender sender = new MessageSender(mockClient());
+        final MessageSender sender = new MessageSender(MethodsClientUtil.mockClient());
 
         Optional<ChatPostMessageResponse> optionalResponse = sender.sendMessage(MESSAGE);
 
@@ -44,41 +32,8 @@ class MessageSenderTest {
 
         ChatPostMessageResponse response = optionalResponse.get();
 
-        assertEquals(GENERAL_CHANNEL_ID, response.getChannel());
+        assertEquals(MethodsClientUtil.GENERAL_CHANNEL_ID, response.getChannel());
         assertEquals(MESSAGE, response.getMessage().getText());
-    }
-
-    private static MethodsClient mockClient() throws IOException, SlackApiException {
-        final MethodsClient client = mock(MethodsClient.class);
-        when(client.conversationsList(any(RequestConfigurator.class))).thenReturn(createConversationsResponse());
-        when(client.chatPostMessage(any(RequestConfigurator.class))).thenAnswer(MessageSenderTest::sendMessage);
-        return client;
-    }
-
-    private static ConversationsListResponse createConversationsResponse() {
-        final Conversation someChannel = new Conversation();
-        someChannel.setId("C654321");
-
-        final Conversation generalChannel = new Conversation();
-        generalChannel.setId(GENERAL_CHANNEL_ID);
-        generalChannel.setGeneral(true);
-
-        final ConversationsListResponse response = new ConversationsListResponse();
-        response.setChannels(Arrays.asList(someChannel, generalChannel));
-        return response;
-    }
-
-    private static Object sendMessage(InvocationOnMock invocation) {
-        RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder> configurator = invocation.getArgument(0);
-        ChatPostMessageRequest.ChatPostMessageRequestBuilder requestBuilder = ChatPostMessageRequest.builder();
-        configurator.configure(requestBuilder);
-        ChatPostMessageRequest request = requestBuilder.build();
-        ChatPostMessageResponse chatResponse = new ChatPostMessageResponse();
-        chatResponse.setChannel(request.getChannel());
-        Message chatMessage = new Message();
-        chatMessage.setText(request.getText());
-        chatResponse.setMessage(chatMessage);
-        return chatResponse;
     }
 
 }

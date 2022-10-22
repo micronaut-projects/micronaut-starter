@@ -8,21 +8,10 @@ Project project
 package @project.getPackageName()
 }
 
-import com.slack.api.RequestConfigurator
-import com.slack.api.methods.MethodsClient
-import com.slack.api.methods.request.chat.ChatPostMessageRequest
-import com.slack.api.methods.request.conversations.ConversationsListRequest
-import com.slack.api.methods.response.chat.ChatPostMessageResponse
-import com.slack.api.methods.response.conversations.ConversationsListResponse
-import com.slack.api.model.Conversation
-import com.slack.api.model.Message
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
 
 private const val MESSAGE = "Hello"
-private const val GENERAL_CHANNEL_ID = "C123456"
 
 class MessageSenderTest : StringSpec({
     "check post message" {
@@ -34,49 +23,3 @@ class MessageSenderTest : StringSpec({
         response?.message?.text shouldBe MESSAGE
     }
 })
-
-private fun mockClient(): MethodsClient {
-    val client: MethodsClient = mockk()
-
-    every {
-        client.conversationsList(any<RequestConfigurator<ConversationsListRequest.ConversationsListRequestBuilder>>())
-    } returns(createConversationsResponse())
-
-    every {
-        client.chatPostMessage(any<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>())
-    } answers { sendMessage(firstArg()) }
-
-    return client
-}
-
-private fun sendMessage(configurator: RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>): ChatPostMessageResponse {
-    val requestBuilder = ChatPostMessageRequest.builder()
-    configurator.configure(requestBuilder)
-
-    val request = requestBuilder.build()
-
-    val chatResponse = ChatPostMessageResponse()
-    chatResponse.channel = request.channel
-
-    val chatMessage = Message()
-
-    chatMessage.text = request.text
-    chatResponse.message = chatMessage
-    return chatResponse
-}
-
-private fun createConversationsResponse(): ConversationsListResponse {
-    val generalChannelId = GENERAL_CHANNEL_ID
-
-    val someChannel = Conversation()
-    someChannel.id = "C654321"
-
-    val generalChannel = Conversation()
-    generalChannel.id = generalChannelId
-    generalChannel.isGeneral = true
-
-    val response = ConversationsListResponse()
-    response.channels = listOf(someChannel, generalChannel)
-
-    return response
-}

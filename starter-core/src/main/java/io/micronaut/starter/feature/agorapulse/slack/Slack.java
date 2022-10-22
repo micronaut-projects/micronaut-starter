@@ -38,6 +38,13 @@ import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderSpecG
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotest;
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderTestKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilKotest;
+import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.slackManifest;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
@@ -53,6 +60,7 @@ import java.util.UUID;
 
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addMain;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTest;
+import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.addTestUtil;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.mainModel;
 import static io.micronaut.starter.feature.agorapulse.AgoraPulseFeature.testModel;
 
@@ -141,6 +149,9 @@ public class Slack implements AgoraPulseFeature {
                 addTest(generatorContext, "MessageSender", rockerModel, "messageSenderTest")
         );
 
+        reactionModel(generatorContext).ifPresent(rockerModel ->
+                addMain(generatorContext, "ReactionHandler", rockerModel, "messageHandler")
+        );
 
         handlerModel(generatorContext).ifPresent(rockerModel ->
                 addMain(generatorContext, "CommandHandler", rockerModel, "commandHandler")
@@ -148,6 +159,10 @@ public class Slack implements AgoraPulseFeature {
 
         handlerTestModel(generatorContext).ifPresent(rockerModel ->
                 addTest(generatorContext, "CommandHandler", rockerModel, "commandHandlerTest")
+        );
+
+        methodsClientUtilModel(generatorContext).ifPresent(rockerModel ->
+                addTestUtil(generatorContext, "MethodsClientUtil", rockerModel, "methodsClientUtil")
         );
 
         addSlackManifest(generatorContext);
@@ -182,6 +197,27 @@ public class Slack implements AgoraPulseFeature {
                 messageSenderSpecGroovy.template(generatorContext.getProject()),
                 messageSenderTestKotlin.template(generatorContext.getProject()),
                 messageSenderTestKotest.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> reactionModel(GeneratorContext generatorContext) {
+        return mainModel(
+                generatorContext,
+                reactionHandlerJava.template(generatorContext.getProject()),
+                reactionHandlerGroovy.template(generatorContext.getProject()),
+                reactionHandlerKotlin.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> methodsClientUtilModel(GeneratorContext generatorContext) {
+        return testModel(
+                generatorContext,
+                methodsClientUtilJava.template(generatorContext.getProject()),
+                methodsClientUtilGroovy.template(generatorContext.getProject()),
+                methodsClientUtilKotlin.template(generatorContext.getProject()),
+                methodsClientUtilKotest.template(generatorContext.getProject())
         );
     }
 

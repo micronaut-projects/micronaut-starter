@@ -21,12 +21,19 @@ features:
       should_escape: false
 oauth_config:
   scopes:
+    user:
+      - reactions:read
     bot:
       - commands
       - channels:read
       - chat:write
       - chat:write.public
 settings:
+  event_subscriptions:
+    request_url: https://@(subdomain).loca.lt/slack/events
+    user_events:
+      - reaction_added
+      - reaction_removed
   interactivity:
     is_enabled: true
     request_url: https://@(subdomain).loca.lt/slack/events

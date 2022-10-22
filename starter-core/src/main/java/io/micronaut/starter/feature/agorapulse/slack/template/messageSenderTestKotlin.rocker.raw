@@ -8,24 +8,10 @@ Project project
 package @project.getPackageName()
 }
 
-import com.slack.api.RequestConfigurator
-import com.slack.api.methods.MethodsClient
-import com.slack.api.methods.request.chat.ChatPostMessageRequest
-import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder
-import com.slack.api.methods.request.conversations.ConversationsListRequest.ConversationsListRequestBuilder
-import com.slack.api.methods.response.chat.ChatPostMessageResponse
-import com.slack.api.methods.response.conversations.ConversationsListResponse
-import com.slack.api.model.Conversation
-import com.slack.api.model.Message
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
-import org.mockito.invocation.InvocationOnMock
 
 private const val MESSAGE = "Hello"
-private const val GENERAL_CHANNEL_ID = "C123456"
 
 internal class MessageSenderTest {
 
@@ -39,49 +25,4 @@ internal class MessageSenderTest {
         assertEquals(MESSAGE, response?.message?.text)
     }
 
-    private fun mockClient(): MethodsClient {
-        val client = mock(MethodsClient::class.java)
-
-        `when`(client.conversationsList(any<RequestConfigurator<ConversationsListRequestBuilder>>()))
-            .thenReturn(createConversationsResponse())
-
-        `when`(client.chatPostMessage(any<RequestConfigurator<ChatPostMessageRequestBuilder>>()))
-            .thenAnswer(::sendMessage)
-
-        return client
-    }
-
-    private fun sendMessage(invocation: InvocationOnMock): ChatPostMessageResponse {
-        val configurator = invocation.getArgument<RequestConfigurator<ChatPostMessageRequestBuilder>>(0)
-
-        val requestBuilder = ChatPostMessageRequest.builder()
-        configurator.configure(requestBuilder)
-
-        val request = requestBuilder.build()
-
-        val chatResponse = ChatPostMessageResponse()
-        chatResponse.channel = request.channel
-
-        val chatMessage = Message()
-
-        chatMessage.text = request.text
-        chatResponse.message = chatMessage
-        return chatResponse
-    }
-
-    private fun createConversationsResponse(): ConversationsListResponse {
-        val generalChannelId = GENERAL_CHANNEL_ID
-
-        val someChannel = Conversation()
-        someChannel.id = "C654321"
-
-        val generalChannel = Conversation()
-        generalChannel.id = generalChannelId
-        generalChannel.isGeneral = true
-
-        val response = ConversationsListResponse()
-        response.channels = listOf(someChannel, generalChannel)
-
-        return response
-    }
 }
