@@ -1,0 +1,55 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+
+}
+
+import com.agorapulse.gru.Gru
+import com.agorapulse.gru.TestDefinitionBuilder
+import com.agorapulse.slack.SlackFactory
+import com.slack.api.methods.MethodsClient
+import com.slack.api.model.Message
+import io.micronaut.context.annotation.Bean
+import io.micronaut.context.annotation.Property
+import io.micronaut.context.annotation.Replaces
+import io.micronaut.test.extensions.spock.annotation.MicronautTest
+import jakarta.inject.Inject
+import jakarta.inject.Singleton
+import spock.lang.Shared
+import spock.lang.Specification
+
+import java.util.concurrent.atomic.AtomicReference
+
+@@MicronautTest
+@@Property(name = 'slack.signing-secret', value = GruSlackUtil.TEST_SIGNING_SECRET)
+@@Property(name = 'slack.bot-token', value = '')
+class ReactionHandlerGruSpec extends Specification {
+
+    @@Shared static AtomicReference<Message> lastMessage = new AtomicReference<>()
+
+    @@Inject
+    Gru gru
+
+    @@Bean
+    @@Singleton
+    @@Replaces(value = MethodsClient, factory = SlackFactory)
+    MethodsClient methodsClient() {
+        return MethodsClientUtil.mockClient { Message message -> lastMessage.set(message) }
+    }
+
+    void 'verify event'() {
+        when:
+        gru.verify { TestDefinitionBuilder test ->
+            GruSlackUtil.slackEvent(ReactionHandlerGruSpec, test, 'event.json')
+        }
+
+        then:
+        lastMessage.get().text == 'Thank you, <@@U01V15Y3QPL> for your :eyes:'
+    }
+
+}

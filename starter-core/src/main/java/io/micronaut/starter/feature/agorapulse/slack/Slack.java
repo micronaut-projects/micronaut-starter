@@ -24,6 +24,7 @@ import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.agorapulse.AgoraPulseFeature;
+import io.micronaut.starter.feature.agorapulse.gru.GruHttp;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerGroovy;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerKotlin;
@@ -31,6 +32,10 @@ import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerSpec
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestKotest;
 import io.micronaut.starter.feature.agorapulse.slack.template.commandHandlerTestKotlin;
+import io.micronaut.starter.feature.agorapulse.slack.template.eventJson;
+import io.micronaut.starter.feature.agorapulse.slack.template.gruSlackUtilGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.gruSlackUtilJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.gruSlackUtilKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderGroovy;
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.messageSenderKotlin;
@@ -43,6 +48,10 @@ import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilJ
 import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilKotest;
 import io.micronaut.starter.feature.agorapulse.slack.template.methodsClientUtilKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGruSpecGroovy;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGruTestJava;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGruTestKotest;
+import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerGruTestKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerJava;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerSpecGroovy;
@@ -174,6 +183,19 @@ public class Slack implements AgoraPulseFeature {
         );
 
         addSlackManifest(generatorContext);
+
+        if (generatorContext.isFeaturePresent(GruHttp.class)) {
+
+            gruSlackUtilModel(generatorContext).ifPresent(rockerModel ->
+                    addTestUtil(generatorContext, "GruSlackUtil", rockerModel, "gruSlackUtil")
+            );
+
+            reactionTestGruModel(generatorContext).ifPresent(rockerModel ->
+                    addTest(generatorContext, "ReactionHandlerGru", rockerModel, "reactionHandlerGruTest")
+            );
+
+            addGruTestFixture(generatorContext, "ReactionHandlerGru");
+        }
     }
 
     private void addSlackManifest(GeneratorContext generatorContext) {
@@ -259,6 +281,33 @@ public class Slack implements AgoraPulseFeature {
                 commandHandlerTestKotlin.template(generatorContext.getProject()),
                 commandHandlerTestKotest.template(generatorContext.getProject())
         );
+    }
+
+    private Optional<RockerModel> gruSlackUtilModel(GeneratorContext generatorContext) {
+        return testModel(
+                generatorContext,
+                gruSlackUtilJava.template(generatorContext.getProject()),
+                gruSlackUtilGroovy.template(generatorContext.getProject()),
+                gruSlackUtilKotlin.template(generatorContext.getProject()),
+                gruSlackUtilKotlin.template(generatorContext.getProject())
+        );
+    }
+
+    @NonNull
+    private Optional<RockerModel> reactionTestGruModel(GeneratorContext generatorContext) {
+        return testModel(
+                generatorContext,
+                reactionHandlerGruTestJava.template(generatorContext.getProject()),
+                reactionHandlerGruSpecGroovy.template(generatorContext.getProject()),
+                reactionHandlerGruTestKotlin.template(generatorContext.getProject()),
+                reactionHandlerGruTestKotest.template(generatorContext.getProject())
+        );
+    }
+
+    private void addGruTestFixture(GeneratorContext generatorContext, String className) {
+        String suffix = generatorContext.getTestFramework().getTestFrameworkSuffixWithoutTrailingDot();
+        generatorContext.addTemplate("eventJson",
+                new RockerTemplate("src/test/resources/{packagePath}/" + className + suffix + "/event.json", eventJson.template()));
     }
 
 }

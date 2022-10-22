@@ -20,35 +20,41 @@ class SlackSpec extends CommandSpec {
     }
 
     @Unroll
-    void "test maven agorapulse-micronaut-slack with #language, #testFramework and #applicationType"(
+    void "test maven agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType"(
             Language language,
             TestFramework testFramework,
+            List<String> features,
             ApplicationType applicationType
     ) {
         when:
-        generateProject(language, BuildTool.MAVEN, ['agorapulse-micronaut-slack'], applicationType, testFramework)
+        generateProject(language, BuildTool.MAVEN, features, applicationType, testFramework)
         String output = executeMaven('compile test')
 
         then:
         output?.contains('BUILD SUCCESS')
 
         where:
-        [language, testFramework, applicationType] << [
+        [language, testFramework, features, applicationType] << [
                 Language.values(),
                 TestFramework.values(),
+                [
+                        ['agorapulse-micronaut-slack'],
+                        ['agorapulse-micronaut-slack', 'agorapulse-gru-http']
+                ],
                 [ApplicationType.DEFAULT],
         ].combinations()
     }
 
     @Unroll
-    void "test gradle agorapulse-micronaut-slack with #language, #testFramework and #applicationType using #buildTool"(
+    void "test gradle agorapulse-micronaut-slack with #language, #testFramework, #features and #applicationType using #buildTool"(
             BuildTool buildTool,
             Language language,
             TestFramework testFramework,
+            List<String> features,
             ApplicationType applicationType
     ) {
         when:
-        generateProject(language, buildTool, ['agorapulse-micronaut-slack'], applicationType, testFramework)
+        generateProject(language, buildTool, features, applicationType, testFramework)
 
         then:
         Files.exists(Paths.get(dir.path, 'slack-manifest.yml'))
@@ -60,10 +66,14 @@ class SlackSpec extends CommandSpec {
         result?.output?.contains('BUILD SUCCESS')
 
         where:
-        [buildTool, language, testFramework, applicationType] << [
+        [buildTool, language, testFramework, features, applicationType] << [
                 [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN],
                 Language.values(),
                 TestFramework.values(),
+                [
+                        ['agorapulse-micronaut-slack'],
+                        ['agorapulse-micronaut-slack', 'agorapulse-gru-http']
+                ],
                 [ApplicationType.DEFAULT],
         ].combinations()
     }
