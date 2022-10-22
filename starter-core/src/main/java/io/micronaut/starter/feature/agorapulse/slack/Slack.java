@@ -59,6 +59,9 @@ import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTes
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTestKotest;
 import io.micronaut.starter.feature.agorapulse.slack.template.reactionHandlerTestKotlin;
 import io.micronaut.starter.feature.agorapulse.slack.template.slackManifest;
+import io.micronaut.starter.feature.cache.Caffeine;
+import io.micronaut.starter.feature.cache.EHCache;
+import io.micronaut.starter.feature.redis.RedisLettuce;
 import io.micronaut.starter.feature.test.Mockito;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.template.RockerTemplate;
@@ -151,6 +154,18 @@ public class Slack implements AgoraPulseFeature {
         nested.put("slack", slack);
 
         generatorContext.getConfiguration().addNested(nested);
+
+        if (generatorContext.getFeatures().hasFeature(Caffeine.class)) {
+            generatorContext.getConfiguration().addCommaSeparatedValue("micronaut.caches.slack-events.expire-after-write", "10m");
+        }
+
+        if (generatorContext.getFeatures().hasFeature(RedisLettuce.class)) {
+            generatorContext.getConfiguration().addCommaSeparatedValue("redis.caches.slack-events.expire-after-write", "10m");
+        }
+
+        if (generatorContext.getFeatures().hasFeature(EHCache.class)) {
+            generatorContext.getConfiguration().addCommaSeparatedValue("ehcache.caches.slack-events.enabled", "true");
+        }
     }
 
     private void addExampleCode(GeneratorContext generatorContext) {

@@ -75,4 +75,25 @@ class SlackSpec extends ApplicationContextSpec {
         commandContext.configuration.get('slack.bot-token').toString().startsWith('xoxb-')
     }
 
+    void 'verify micronaut-slack configuration with caffeine'() {
+        when:
+            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'cache-caffeine'])
+        then:
+            commandContext.configuration.get('micronaut.caches.slack-events.expire-after-write') == '10m'
+    }
+
+    void 'verify micronaut-slack configuration with redis'() {
+        when:
+            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'redis-lettuce'])
+        then:
+            commandContext.configuration.get('redis.caches.slack-events.expire-after-write') == '10m'
+    }
+
+    void 'verify micronaut-slack configuration with ehcache'() {
+        when:
+            GeneratorContext commandContext = buildGeneratorContext(['agorapulse-micronaut-slack', 'cache-ehcache'])
+        then:
+            commandContext.configuration.get('ehcache.caches.slack-events.enabled') == 'true'
+    }
+
 }
