@@ -17,18 +17,18 @@ import com.slack.api.model.Conversation
 import com.slack.api.model.Message
 import groovy.transform.CompileDynamic
 
+import java.util.function.Consumer
+
 @@CompileDynamic
 class MethodsClientUtil {
 
     public static final String GENERAL_CHANNEL_ID = 'C123456'
 
-    private static final ThreadLocal<Message> LAST_MESSAGE = new ThreadLocal<>()
-
-    static Message getLastMessage() {
-        return LAST_MESSAGE.get()
+    static MethodsClient mockClient() {
+        return mockClient { }
     }
 
-    static MethodsClient mockClient() {
+    static MethodsClient mockClient(Consumer<Message> messageConsumer) {
         return [
                 conversationsList: {
                     return new ConversationsListResponse(channels: [
@@ -44,7 +44,7 @@ class MethodsClientUtil {
 
                     Message message = new Message(text: request.text)
 
-                    LAST_MESSAGE.set(message)
+                    messageConsumer.accept(message)
 
                     ChatPostMessageResponse chatResponse = new ChatPostMessageResponse(
                             channel: request.channel,

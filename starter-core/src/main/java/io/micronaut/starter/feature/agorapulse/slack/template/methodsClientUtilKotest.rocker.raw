@@ -18,16 +18,15 @@ import com.slack.api.model.Conversation
 import com.slack.api.model.Message
 import io.mockk.every
 import io.mockk.mockk
+import java.util.function.Consumer
 
 const val GENERAL_CHANNEL_ID = "C123456"
 
-private val lastMessage = ThreadLocal<Message>()
-
-fun lastMessage(): Message {
-    return lastMessage.get()
+fun mockClient(): MethodsClient {
+    return mockClient { }
 }
 
-fun mockClient(): MethodsClient {
+fun mockClient(messageConsumer: Consumer<Message>): MethodsClient {
     val client: MethodsClient = mockk()
 
     every {
@@ -36,12 +35,15 @@ fun mockClient(): MethodsClient {
 
     every {
         client.chatPostMessage(any<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>())
-    } answers { sendMessage(firstArg()) }
+    } answers { sendMessage(firstArg(), messageConsumer) }
 
     return client
 }
 
-private fun sendMessage(configurator: RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>): ChatPostMessageResponse {
+private fun sendMessage(
+    configurator: RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>,
+    messageConsumer: Consumer<Message>
+): ChatPostMessageResponse {
     val requestBuilder = ChatPostMessageRequest.builder()
     configurator.configure(requestBuilder)
 
@@ -55,7 +57,7 @@ private fun sendMessage(configurator: RequestConfigurator<ChatPostMessageRequest
     chatMessage.text = request.text
     chatResponse.message = chatMessage
 
-    lastMessage.set(chatMessage)
+    messageConsumer.accept(chatMessage)
 
     return chatResponse
 }

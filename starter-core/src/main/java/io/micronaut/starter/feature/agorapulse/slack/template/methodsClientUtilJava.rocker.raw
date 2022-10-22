@@ -20,6 +20,7 @@ import org.mockito.invocation.InvocationOnMock;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -29,18 +30,16 @@ public class MethodsClientUtil {
 
     public static final String GENERAL_CHANNEL_ID = "C123456";
 
-    private static final ThreadLocal<Message> LAST_MESSAGE = new ThreadLocal<>();
-
-    public static Message getLastMessage() {
-        return LAST_MESSAGE.get();
+    public static MethodsClient mockClient() {
+        return mockClient(m -> { });
     }
 
-    public static MethodsClient mockClient() {
+    public static MethodsClient mockClient(Consumer<Message> messageConsumer) {
         final MethodsClient client = mock(MethodsClient.class);
 
         try {
             when(client.conversationsList(any(RequestConfigurator.class))).thenReturn(createConversationsResponse());
-            when(client.chatPostMessage(any(RequestConfigurator.class))).thenAnswer(MethodsClientUtil::sendMessage);
+            when(client.chatPostMessage(any(RequestConfigurator.class))).thenAnswer(invocation -> sendMessage(invocation, messageConsumer));
         } catch (IOException | SlackApiException e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +60,7 @@ public class MethodsClientUtil {
         return response;
     }
 
-    private static Object sendMessage(InvocationOnMock invocation) {
+    private static Object sendMessage(InvocationOnMock invocation, Consumer<Message> messageConsumer) {
         RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder> configurator = invocation.getArgument(0);
         ChatPostMessageRequest.ChatPostMessageRequestBuilder requestBuilder = ChatPostMessageRequest.builder();
         configurator.configure(requestBuilder);
@@ -72,7 +71,7 @@ public class MethodsClientUtil {
         chatMessage.setText(request.getText());
         chatResponse.setMessage(chatMessage);
 
-        LAST_MESSAGE.set(chatMessage);
+        messageConsumer.accept(chatMessage);
 
         return chatResponse;
     }

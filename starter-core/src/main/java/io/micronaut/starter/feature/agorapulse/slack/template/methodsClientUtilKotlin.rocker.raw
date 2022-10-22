@@ -19,28 +19,27 @@ import com.slack.api.model.Message
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
+import java.util.function.Consumer
 
 const val GENERAL_CHANNEL_ID = "C123456"
 
-private val lastMessage = ThreadLocal<Message>()
-
-fun lastMessage(): Message {
-    return lastMessage.get();
+fun mockClient(): MethodsClient {
+    return mockClient { }
 }
 
-fun mockClient(): MethodsClient {
+fun mockClient(messageConsumer: Consumer<Message>): MethodsClient {
     val client = Mockito.mock(MethodsClient::class.java)
 
     Mockito.`when`(client.conversationsList(ArgumentMatchers.any<RequestConfigurator<ConversationsListRequest.ConversationsListRequestBuilder>>()))
         .thenReturn(createConversationsResponse())
 
     Mockito.`when`(client.chatPostMessage(ArgumentMatchers.any<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>()))
-        .thenAnswer(::sendMessage)
+        .thenAnswer { sendMessage(it, messageConsumer) }
 
     return client
 }
 
-private fun sendMessage(invocation: InvocationOnMock): ChatPostMessageResponse {
+private fun sendMessage(invocation: InvocationOnMock, messageConsumer: Consumer<Message>): ChatPostMessageResponse {
     val configurator =
         invocation.getArgument<RequestConfigurator<ChatPostMessageRequest.ChatPostMessageRequestBuilder>>(0)
 
@@ -57,7 +56,7 @@ private fun sendMessage(invocation: InvocationOnMock): ChatPostMessageResponse {
     chatMessage.text = request.text
     chatResponse.message = chatMessage
 
-    lastMessage.set(chatMessage)
+    messageConsumer.accept(chatMessage)
 
     return chatResponse
 }
