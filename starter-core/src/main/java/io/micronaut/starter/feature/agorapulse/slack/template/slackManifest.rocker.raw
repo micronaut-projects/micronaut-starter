@@ -5,6 +5,7 @@ Project project,
 String subdomain
 )
 
+# visit https://api.slack.com/apps to create new application
 display_information:
   name: @project.getNaturalName()
 features:
