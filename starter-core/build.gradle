@@ -49,6 +49,3 @@ nohttp {
     source.exclude "**/multimodule.rocker.raw"
 }
 
-repositories {
-    mavenCentral()
-}
