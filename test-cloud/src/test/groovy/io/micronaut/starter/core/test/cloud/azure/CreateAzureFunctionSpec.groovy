@@ -8,7 +8,6 @@ import io.micronaut.starter.test.ApplicationTypeCombinations
 import io.micronaut.starter.test.CommandSpec
 import spock.lang.Requires
 import spock.lang.Retry
-import spock.lang.Unroll
 import spock.util.environment.Jvm
 
 @Retry // can fail on CI due to port binding race condition, so retry
@@ -20,7 +19,6 @@ class CreateAzureFunctionSpec extends CommandSpec {
         "test-azure-function"
     }
 
-    @Unroll
     void 'create-#applicationType with features azure-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                 Language lang,
                                                                                                                 BuildTool build,
@@ -37,5 +35,30 @@ class CreateAzureFunctionSpec extends CommandSpec {
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT, ApplicationType.FUNCTION], Language.values() as List<Language>, [BuildTool.GRADLE, BuildTool.MAVEN])
+    }
+
+    void 'default application with features azure-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
+            Language lang,
+            String serializationFeature,
+            BuildTool build,
+            TestFramework testFramework
+    ) {
+        given:
+        List<String> features = ['azure-function'] + serializationFeature
+        generateProject(lang, build, features, ApplicationType.DEFAULT, testFramework)
+
+        when:
+        String output = executeBuild(build, "test")
+
+        then:
+        output.contains("BUILD SUCCESS")
+
+        where:
+        [lang, serializationFeature, build, testFramework] << [
+                Language.values(),
+                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
+                [BuildTool.GRADLE, BuildTool.MAVEN],
+                TestFramework.values()
+        ].combinations()
     }
 }
