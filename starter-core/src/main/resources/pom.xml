@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.agorapulse</groupId>
             <artifactId>gru-micronaut</artifactId>
-            <version>1.2.2</version>
+            <version>1.2.5</version>
         </dependency>
         <dependency>
             <groupId>com.agorapulse</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.agorapulse</groupId>
             <artifactId>micronaut-worker</artifactId>
-            <version>1.2.1-micronaut-3.0</version>
+            <version>1.2.2-micronaut-3.0</version>
         </dependency>
         <dependency>
             <groupId>com.agorapulse</groupId>          
