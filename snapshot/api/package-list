@@ -74,6 +74,7 @@ io.micronaut.starter.feature.awslambdacustomruntime
 io.micronaut.starter.feature.awslambdacustomruntime.templates
 io.micronaut.starter.feature.awsparameterstore
 io.micronaut.starter.feature.awssecretsmanager
+io.micronaut.starter.feature.azure
 io.micronaut.starter.feature.build
 io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.gradle.templates
