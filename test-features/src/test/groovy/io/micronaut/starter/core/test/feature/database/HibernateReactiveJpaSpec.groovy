@@ -4,6 +4,7 @@ import io.micronaut.starter.feature.database.HibernateReactiveJpa
 import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.Oracle
+import io.micronaut.starter.feature.database.PostgreSQL
 import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.FileSystemOutputHandler
@@ -41,13 +42,7 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        db << [
-                MySQL.NAME,
-                MariaDB.NAME,
-//                PostgreSQL.NAME, // TODO: Reinstate Postgres test once the vert.x driver missing dependency is sorted out
-                Oracle.NAME,
-                SQLServer.NAME,
-        ]
+        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
     }
 
     void "test gradle hibernate-reactive-jpa with java and #db"(String db) {
@@ -68,12 +63,6 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         result?.output?.contains("BUILD SUCCESS")
 
         where:
-        db << [
-                MySQL.NAME,
-                MariaDB.NAME,
-//                PostgreSQL.NAME, // TODO: Reinstate Postgres test once the vert.x driver missing dependency is sorted out
-                Oracle.NAME,
-                SQLServer.NAME,
-        ]
+        db << [MySQL.NAME, MariaDB.NAME, PostgreSQL.NAME, Oracle.NAME, SQLServer.NAME]
     }
 }

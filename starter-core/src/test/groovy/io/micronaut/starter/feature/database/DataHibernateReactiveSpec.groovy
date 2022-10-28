@@ -105,6 +105,9 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         !template.contains('testImplementation("org.testcontainers:testcontainers")')
         !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
+        and: "postgres needs another dependency with vert.x"
+        template.contains('implementation("com.ongres.scram:client:') == (db == PostgreSQL.NAME)
+
         and: 'the driver and correct module are included for test-resources'
         !template.contains($/runtimeOnly("$driver.groupId:$driver.artifactId")/$)
         template.contains($/testResourcesService("$driver.groupId:$driver.artifactId")/$)
@@ -138,6 +141,9 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
 
         !template.contains('testImplementation("org.testcontainers:testcontainers")')
         !template.contains($/testImplementation("org.testcontainers:$container")/$)
+
+        and: "postgres needs another dependency with vert.x"
+        template.contains('implementation("com.ongres.scram:client:') == (db == PostgreSQL.NAME)
 
         and: 'the correct module is included for test-resources'
         !template.contains($/testResourcesService("$migrationDriver.groupId:$migrationDriver.artifactId")/$)
@@ -186,6 +192,9 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         containsVertXDriver(template, client)
         !containsJdbcDriver(template, migrationDriver)
 
+        and: "postgres needs another dependency with vert.x"
+        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
+
         and: 'test resources module is correct, and driver is added to the plugin dependencies'
         with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
             it.artifactId.text() == "micronaut-test-resources-$testResourcesModule"
@@ -227,6 +236,9 @@ class DataHibernateReactiveSpec extends BaseHibernateReactiveSpec {
         containsVertXDriver(template, client)
         containsMigrationLibrary(template, migration)
         containsJdbcDriver(template, migrationDriver)
+
+        and: "postgres needs another dependency with vert.x"
+        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
 
         and: 'test resources module is correct, and driver is not added to the plugin dependencies'
         with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {

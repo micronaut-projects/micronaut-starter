@@ -16,8 +16,10 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.migration.MigrationFeature;
+import io.micronaut.starter.feature.testresources.DbType;
 import io.micronaut.starter.feature.testresources.EaseTestingFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 
@@ -36,6 +38,12 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
     @Override
     public void apply(GeneratorContext generatorContext) {
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+
+        if (dbFeature instanceof PostgreSQL) {
+            generatorContext.addDependency(Dependency.builder()
+                    .lookupArtifactId("client")
+                    .compile());
+        }
         generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
                 generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
                         Hbm2ddlAuto.UPDATE.toString());
