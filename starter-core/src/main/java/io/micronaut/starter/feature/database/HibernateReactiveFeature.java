@@ -41,13 +41,19 @@ public abstract class HibernateReactiveFeature extends EaseTestingFeature implem
                         Hbm2ddlAuto.UPDATE.toString());
 
         generatorContext.getConfiguration().put(JPA_DEFAULT_REACTIVE, true);
-        Optional<MigrationFeature> migrationFeature = generatorContext.getFeatures().getFeature(MigrationFeature.class);
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL,
-                migrationFeature.map(f -> "${datasources.default.url}").orElse(dbFeature.getJdbcUrl()));
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME,
-                migrationFeature.map(f -> "${datasources.default.username}").orElse(dbFeature.getDefaultUser()));
-        generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
-                migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
+            Optional<MigrationFeature> migrationFeature = generatorContext.getFeatures().getFeature(MigrationFeature.class);
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_URL,
+                    migrationFeature.map(f -> "${datasources.default.url}").orElse(dbFeature.getJdbcUrl()));
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_USERNAME,
+                    migrationFeature.map(f -> "${datasources.default.username}").orElse(dbFeature.getDefaultUser()));
+            generatorContext.getConfiguration().put(JPA_DEFAULT_PROPERTIES_HIBERNATE_CONNECTION_PASSWORD,
+                    migrationFeature.map(f -> "${datasources.default.password}").orElse(dbFeature.getDefaultPassword()));
+        } else {
+            dbFeature.getDbType().ifPresent(type ->
+                    generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_CONNECTION + ".db-type", type.toString())
+            );
+        }
     }
 
     public String getUrlKey() {

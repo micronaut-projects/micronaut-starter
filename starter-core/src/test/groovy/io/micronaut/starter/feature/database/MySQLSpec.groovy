@@ -19,6 +19,12 @@ class MySQLSpec extends ApplicationContextSpec {
         then:
         template.contains('runtimeOnly("mysql:mysql-connector-java")')
 
+        and:
+        template.contains("""
+    testResources {
+        additionalModules.add("jdbc-mysql")
+    }""")
+
         where:
         language << Language.values().toList()
     }
@@ -40,6 +46,15 @@ class MySQLSpec extends ApplicationContextSpec {
     </dependency>
 """)
 
+        and:
+        template.contains("""
+            <testResourcesDependencies>
+              <dependency>
+                <groupId>io.micronaut.testresources</groupId>
+                <artifactId>micronaut-test-resources-jdbc-mysql</artifactId>
+              </dependency>
+            </testResourcesDependencies>
+""")
         where:
         language << Language.values().toList()
     }
