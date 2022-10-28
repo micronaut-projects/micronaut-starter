@@ -13,7 +13,9 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
+import spock.lang.Requires
 
+@Requires({ jvm.current.isJava11Compatible() })
 class DataHibernateReactiveSpec extends CommandSpec {
 
     @Override
