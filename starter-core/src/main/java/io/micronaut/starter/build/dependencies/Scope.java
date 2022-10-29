@@ -27,6 +27,7 @@ public class Scope {
     public static final Scope COMPILE = new Scope(Source.MAIN, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
     public static final Scope DEVELOPMENT_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.DEVELOPMENT));
     public static final Scope COMPILE_ONLY = new Scope(Source.MAIN, Collections.singletonList(Phase.COMPILATION));
+    public static final Scope TEST_RESOURCES_SERVICE = new Scope(Source.MAIN, Collections.singletonList(Phase.TEST_RESOURCES_SERVICE));
     public static final Scope RUNTIME = new Scope(Source.MAIN, Collections.singletonList(Phase.RUNTIME));
     public static final Scope TEST = new Scope(Source.TEST, Arrays.asList(Phase.COMPILATION, Phase.RUNTIME));
     public static final Scope TEST_ANNOTATION_PROCESSOR = new Scope(Source.TEST, Collections.singletonList(Phase.ANNOTATION_PROCESSING));
