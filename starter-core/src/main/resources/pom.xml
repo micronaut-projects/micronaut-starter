@@ -130,17 +130,17 @@
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-gradle-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.6.3</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-test-resources-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.6.3</version>
         </dependency>
         <dependency>
             <groupId>io.micronaut.gradle</groupId>
             <artifactId>micronaut-crac-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.6.3</version>
         </dependency>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
