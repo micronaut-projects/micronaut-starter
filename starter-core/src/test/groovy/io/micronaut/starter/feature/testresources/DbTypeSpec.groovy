@@ -9,11 +9,11 @@ class DbTypeSpec extends Specification {
         toString == dbtype.toString()
 
         where:
-        toString    | dbtype
-        'postgresql'| DbType.POSTGRESQL
-        'mysql'     | DbType.MYSQL
-        'mariadb'   | DbType.MARIADB
-        'mssql'     | DbType.SQLSERVER
-        'oracle'    | DbType.ORACLEXE
+        toString   | dbtype
+        'postgres' | DbType.POSTGRESQL
+        'mysql'    | DbType.MYSQL
+        'mariadb'  | DbType.MARIADB
+        'mssql'    | DbType.SQLSERVER
+        'oracle'   | DbType.ORACLEXE
     }
 }

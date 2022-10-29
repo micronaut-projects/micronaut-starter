@@ -38,7 +38,8 @@ public enum GradleConfiguration implements Ordered {
     TEST_COMPILE_ONLY("testCompileOnly", 10),
     TEST_RUNTIME_ONLY("testRuntimeOnly", 11),
     DEVELOPMENT_ONLY("developmentOnly", 12),
-    OPENREWRITE("rewrite", 13);
+    OPENREWRITE("rewrite", 13),
+    TEST_RESOURCES_SERVICE("testResourcesService", 14);
 
     private final String configurationName;
     private final int order;
@@ -99,6 +100,9 @@ public enum GradleConfiguration implements Ordered {
                 }
                 if (scope.getPhases().contains(Phase.DEVELOPMENT)) {
                     return Optional.of(GradleConfiguration.DEVELOPMENT_ONLY);
+                }
+                if (scope.getPhases().contains(Phase.TEST_RESOURCES_SERVICE)) {
+                    return Optional.of(GradleConfiguration.TEST_RESOURCES_SERVICE);
                 }
                 break;
             case TEST:

@@ -1,7 +1,8 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project
+Project project,
+boolean useSerde
 )
 
 @if (project.getPackageName() != null) {
@@ -15,7 +16,12 @@ import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Produces
 import io.micronaut.http.MediaType
+@if (useSerde) {
+import io.micronaut.serde.annotation.Serdeable
+} else {
 import io.micronaut.core.annotation.Introspected
+}
+
 
 @@Controller("/@project.getPropertyName()")
 class @project.getClassName()Controller {
@@ -32,8 +38,16 @@ class @project.getClassName()Controller {
     }
 }
 
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 data class SampleInputMessage(val name: String)
 
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 data class SampleReturnMessage(val returnMessage: String)

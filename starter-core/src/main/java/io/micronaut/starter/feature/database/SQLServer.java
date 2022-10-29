@@ -35,7 +35,8 @@ public class SQLServer extends DatabaseDriverFeature {
     public static final Dependency.Builder DEPENDENCY_MSSQL_JDBC = Dependency.builder()
             .groupId("com.microsoft.sqlserver")
             .artifactId("mssql-jdbc")
-            .runtime();
+            .runtime()
+            .template();
 
     private static final Dependency.Builder DEPENDENCY_VERTX_MSSQL_CLIENT = Dependency.builder()
             .groupId(IO_VERTX_DEPENDENCY_GROUP)
