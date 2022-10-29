@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
 import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.HibernateReactiveFeature;
 import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
@@ -83,7 +84,8 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
             builder = builder.testRuntime(testRuntimeOptional.get());
         }
         Optional<DatabaseDriverFeature> databaseDriverFeature = generatorContext.getFeatures().getFeature(DatabaseDriverFeature.class);
-        if (!generatorContext.getFeatures().hasFeature(Data.class) && databaseDriverFeature.isPresent()) {
+        if ((!generatorContext.getFeatures().hasFeature(Data.class) || generatorContext.isFeaturePresent(HibernateReactiveFeature.class))
+                && databaseDriverFeature.isPresent()) {
             databaseDriverFeature.flatMap(DatabaseDriverFeature::getDbType)
                     .map(dbType -> getModuleName(generatorContext, dbType))
                     .ifPresent(builder::addAdditionalTestResourceModules);
@@ -99,14 +101,20 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     }
 
     private String getModuleName(GeneratorContext generatorContext, DbType dbType) {
-        return generatorContext.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName();
+        if (generatorContext.isFeaturePresent(R2dbc.class)) {
+            return dbType.getR2dbcTestResourcesModuleName();
+        } else if (generatorContext.isFeaturePresent(HibernateReactiveFeature.class)) {
+            return dbType.getHibernateReactiveTestResourcesModuleName();
+        } else {
+            return dbType.getJdbcTestResourcesModuleName();
+        }
     }
 
     protected MicronautApplicationGradlePlugin.Builder micronautGradleApplicationPluginBuilder(GeneratorContext generatorContext) {
         MicronautApplicationGradlePlugin.Builder builder = micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.APPLICATION);
         if (generatorContext.getFeatures().contains(AwsLambda.FEATURE_NAME_AWS_LAMBDA) && (
                 (generatorContext.getApplicationType() == ApplicationType.FUNCTION && generatorContext.getFeatures().contains(FEATURE_NAME_GRAALVM)) ||
-                (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
+                        (generatorContext.getApplicationType() == ApplicationType.DEFAULT))) {
             builder = builder.dockerNative(Dockerfile.builder().arg("-XX:MaximumHeapSizePercent=80")
                     .arg("-Dio.netty.allocator.numDirectArenas=0")
                     .arg("-Dio.netty.noPreferDirect=true")

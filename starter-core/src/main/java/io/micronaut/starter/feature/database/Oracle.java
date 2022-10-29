@@ -34,7 +34,8 @@ public class Oracle extends DatabaseDriverFeature {
     public static final Dependency.Builder DEPENDENCY_OJDBC8 = Dependency.builder()
             .groupId("com.oracle.database.jdbc")
             .artifactId("ojdbc8")
-            .runtime();
+            .runtime()
+            .template();
 
     private static final Dependency.Builder DEPENDENCY_ORACLE_R2DBC = Dependency.builder()
             .groupId("com.oracle.database.r2dbc")

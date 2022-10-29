@@ -134,46 +134,43 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     @Unroll
-    void 'test sources generated for azure function feature gradle and language=#language'(Language language,
-                                                                                           String extension,
-                                                                                           String srcDir,
-                                                                                           String testSrcDir) {
+    void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function']
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         def readme = output["README.md"]
 
         then:
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
-        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
-        output.get("$srcDir/example/micronaut/Function.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/FooController.$language.extension".toString())
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output.get("$language.srcDir/example/micronaut/Function.$language.extension".toString())
                 .contains(" AzureHttpFunction")
-        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
+        output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
+        output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
                 .contains("HttpRequestMessageBuilder")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
     @Unroll
-    void 'test azure function feature for language=#language - maven'() {
+    void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
-                ['azure-function']
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
         def readme = output["README.md"]
@@ -183,21 +180,21 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('<artifactId>azure-functions-java-library</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
         !build.contains("<artifactId>maven-shade-plugin</artifactId>")
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
-        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/FooController.$language.extension".toString())
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
+        output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
+        output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
               .contains("HttpRequestMessageBuilder")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 }

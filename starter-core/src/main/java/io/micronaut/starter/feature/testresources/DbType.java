@@ -20,20 +20,22 @@ import io.micronaut.testresources.buildtools.KnownModules;
 
 public enum DbType {
 
-    MARIADB("mariadb", KnownModules.JDBC_MARIADB, KnownModules.R2DBC_MARIADB),
-    MYSQL("mysql", KnownModules.JDBC_MYSQL, KnownModules.R2DBC_MYSQL),
-    POSTGRESQL("postgresql", KnownModules.JDBC_POSTGRESQL, KnownModules.R2DBC_POSTGRESQL),
-    SQLSERVER("mssql", KnownModules.JDBC_MSSQL, KnownModules.R2DBC_MSSQL),
-    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE);
+    MARIADB("mariadb", KnownModules.JDBC_MARIADB, KnownModules.R2DBC_MARIADB, KnownModules.HIBERNATE_REACTIVE_MARIADB),
+    MYSQL("mysql", KnownModules.JDBC_MYSQL, KnownModules.R2DBC_MYSQL, KnownModules.HIBERNATE_REACTIVE_MYSQL),
+    POSTGRESQL("postgres", KnownModules.JDBC_POSTGRESQL, KnownModules.R2DBC_POSTGRESQL, KnownModules.HIBERNATE_REACTIVE_POSTGRESQL),
+    SQLSERVER("mssql", KnownModules.JDBC_MSSQL, KnownModules.R2DBC_MSSQL, KnownModules.HIBERNATE_REACTIVE_MSSQL),
+    ORACLEXE("oracle", KnownModules.JDBC_ORACLE_XE, KnownModules.R2DBC_ORACLE_XE, KnownModules.HIBERNATE_REACTIVE_ORACLE_XE);
 
     private final String name;
     private final String jdbcTestResourcesModuleName;
     private final String r2dbcTestResourcesModuleName;
+    private final String hibernateReactiveTestResourcesModuleName;
 
-    DbType(String name, String jdbcTestResourcesModuleName, String r2dbcTestResourcesModuleName) {
+    DbType(String name, String jdbcTestResourcesModuleName, String r2dbcTestResourcesModuleName, String hibernateReactiveTestResourcesModuleName) {
         this.name = name;
         this.jdbcTestResourcesModuleName = jdbcTestResourcesModuleName;
         this.r2dbcTestResourcesModuleName = r2dbcTestResourcesModuleName;
+        this.hibernateReactiveTestResourcesModuleName = hibernateReactiveTestResourcesModuleName;
     }
 
     @NonNull
@@ -44,6 +46,11 @@ public enum DbType {
     @NonNull
     public String getR2dbcTestResourcesModuleName() {
         return r2dbcTestResourcesModuleName;
+    }
+
+    @NonNull
+    public String getHibernateReactiveTestResourcesModuleName() {
+        return hibernateReactiveTestResourcesModuleName;
     }
 
     @Override

@@ -35,7 +35,8 @@ public class PostgreSQL extends DatabaseDriverFeature {
     public static final Dependency.Builder DEPENDENCY_POSTGRESQL = Dependency.builder()
             .groupId("org.postgresql")
             .artifactId("postgresql")
-            .runtime();
+            .runtime()
+            .template();
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_POSTGRESQL = Dependency.builder()
             .groupId("org.postgresql")

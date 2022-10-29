@@ -1,7 +1,8 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Project project
+Project project,
+boolean useSerde
 )
 
 @if (project.getPackageName() != null) {
@@ -12,7 +13,12 @@ package @project.getPackageName();
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.MediaType;
+@if (useSerde) {
+import io.micronaut.serde.annotation.Serdeable;
+} else {
 import io.micronaut.core.annotation.Introspected;
+}
+
 
 @@Controller("/@project.getPropertyName()")
 public class @project.getClassName()Controller {
@@ -31,7 +37,11 @@ public class @project.getClassName()Controller {
     }
 }
 
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 class SampleInputMessage{
     private String name;
 
@@ -50,7 +60,11 @@ class SampleInputMessage{
     }
 }
 
+@if (useSerde) {
+@@Serdeable
+} else {
 @@Introspected
+}
 class SampleReturnMessage{
     private String returnMessage;
     public String getReturnMessage() {

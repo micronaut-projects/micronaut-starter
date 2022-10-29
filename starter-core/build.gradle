@@ -20,7 +20,7 @@ dependencies {
     api "io.micronaut:micronaut-http-client"
     api "io.github.java-diff-utils:java-diff-utils:4.10"
     api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
-    implementation "org.yaml:snakeyaml:1.30"
+    implementation 'org.yaml:snakeyaml:1.33'
     implementation 'com.typesafe:config:1.4.1'
     implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:1.0.0'
     implementation 'org.apache.commons:commons-compress:1.21'
@@ -48,3 +48,4 @@ nohttp {
     source.exclude "**/genericPom.rocker.raw"
     source.exclude "**/multimodule.rocker.raw"
 }
+

@@ -15,12 +15,14 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.OperatingSystem;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.logging.template.logback;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.RockerTemplate;
@@ -31,7 +33,14 @@ import java.util.Set;
 @Singleton
 public class Logback implements LoggingFeature, DefaultFeature {
 
+    private static final Dependency LOGBACK_CLASSIC = Dependency.builder()
+            .groupId("ch.qos.logback")
+            .artifactId("logback-classic")
+            .runtime()
+            .build();
+
     @Override
+    @NonNull
     public String getName() {
         return "logback";
     }
@@ -42,6 +51,7 @@ public class Logback implements LoggingFeature, DefaultFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds Logback Logging";
     }
@@ -53,16 +63,20 @@ public class Logback implements LoggingFeature, DefaultFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        OperatingSystem operatingSystem = generatorContext.getOperatingSystem();
-        boolean jansi = false;
-        if (operatingSystem != OperatingSystem.WINDOWS) {
-            jansi = true;
+        addConfig(generatorContext);
+        generatorContext.addDependency(LOGBACK_CLASSIC);
+    }
+
+    protected void addConfig(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml",
+                logback.template(useJansi(generatorContext))));
+    }
+
+    protected boolean useJansi(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getOperatingSystem() == OperatingSystem.WINDOWS) {
+            return false;
         }
-        generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/logback.xml", logback.template(jansi)));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("ch.qos.logback")
-                .artifactId("logback-classic")
-                .runtime());
+        return !generatorContext.getFeatures().hasFeature(AwsLambda.class);
     }
 
     @Override
