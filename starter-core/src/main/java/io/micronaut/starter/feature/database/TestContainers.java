@@ -37,7 +37,7 @@ public class TestContainers implements Feature {
 
     public static final String NAME = "testcontainers";
 
-    private static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
+    public static final String TESTCONTAINERS_GROUP_ID = "org.testcontainers";
 
     @NonNull
     @Override

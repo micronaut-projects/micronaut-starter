@@ -8,6 +8,15 @@ import spock.lang.Unroll
 class JsonFeatureSpec extends ApplicationContextSpec {
 
     @Unroll
+    void "test selected Json feature is no longer preview: #feature.name"(SerializationFeature feature) {
+        expect:
+        !feature.isPreview()
+
+        where:
+        feature << beanContext.getBeansOfType(SerializationFeature).iterator()
+    }
+
+    @Unroll
     void "test selected JSON feature for Gradle: #feature"(String feature, String coordinate) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
@@ -22,36 +31,40 @@ class JsonFeatureSpec extends ApplicationContextSpec {
         'io.micronaut:micronaut-jackson-databind' | 'jackson-databind'
     }
 
-    @Unroll
-    void "test selected JSON feature for Gradle: #feature"(String module,
-                                                           String feature,
-                                                           String substitutiontarget1,
-                                                           String substitutionreplacement1,
-                                                           String substitutiontarget2,
-                                                           String substitutionreplacement2) {
+    void "test selected JSON feature for Gradle: #feature with test-resources #hasTestResources"(String module,
+                                                                                                 String feature,
+                                                                                                 String substitutiontarget1,
+                                                                                                 String substitutionreplacement1,
+                                                                                                 String substitutiontarget2,
+                                                                                                 String substitutionreplacement2) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features([feature])
+                .features([feature] + (hasTestResources ? ['test-resources'] : []))
                 .render()
 
         then:
         template.contains("implementation(\"$module")
         template.contains('annotationProcessor("io.micronaut.serde:micronaut-serde-processor")')
-        template.contains('substitute(module("io.micronaut:micronaut-jackson-databind"))')
-        template.contains("substitute(module(\"$substitutiontarget1")
-        template.contains(".using(module(\"$substitutionreplacement1")
+
+        and: "If we do not have test resources included, we should have the substitution"
+        !hasTestResources == template.contains('substitute(module("io.micronaut:micronaut-jackson-databind"))')
+        !hasTestResources == template.contains("substitute(module(\"$substitutiontarget1")
+        !hasTestResources == template.contains(".using(module(\"$substitutionreplacement1")
         if (substitutiontarget2 != null) {
-            assert template.contains("substitute(module(\"$substitutiontarget2")
+            assert !hasTestResources == template.contains("substitute(module(\"$substitutiontarget2")
         }
         if (substitutionreplacement2 != null) {
-            assert template.contains(".using(module(\"$substitutionreplacement2")
+            assert !hasTestResources == template.contains(".using(module(\"$substitutionreplacement2")
         }
 
         where:
-        module                                       | feature                 | substitutiontarget1                       | substitutionreplacement1                     | substitutiontarget2                   | substitutionreplacement2
-        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-jackson' | null                                  | null
-        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'io.micronaut:micronaut-jackson-databind' | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-jsonp'
-        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-bson'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-bson'
+        module                                       | feature                 | substitutiontarget1                       | substitutionreplacement1                     | substitutiontarget2                   | substitutionreplacement2                   | hasTestResources
+        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-jackson' | null                                  | null                                       | false
+        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'io.micronaut:micronaut-jackson-databind' | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-jsonp' | false
+        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-bson'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-bson'  | false
+        'io.micronaut.serde:micronaut-serde-jackson' | 'serialization-jackson' | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-jackson' | null                                  | null                                       | true
+        'io.micronaut.serde:micronaut-serde-jsonp'   | 'serialization-jsonp'   | 'io.micronaut:micronaut-jackson-databind' | 'jakarta.json.bind:jakarta.json.bind-api'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-jsonp' | true
+        'io.micronaut.serde:micronaut-serde-bson'    | 'serialization-bson'    | 'io.micronaut:micronaut-jackson-databind' | 'io.micronaut.serde:micronaut-serde-bson'    | 'io.micronaut:micronaut-jackson-core' | 'io.micronaut.serde:micronaut-serde-bson'  | true
     }
 
     @Unroll
@@ -70,16 +83,26 @@ class JsonFeatureSpec extends ApplicationContextSpec {
     }
 
     @Unroll
-    void "test selected JSON feature for Maven: #feature"(String artifactId, String feature) {
+    void "test selected JSON feature for Maven: #feature with test-resources #hasTestResources"(String artifactId, String feature) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features([feature])
+                .features([feature] + (hasTestResources ? ['test-resources'] : []))
                 .render()
 
         then:
         template.contains("<artifactId>$artifactId</artifactId>")
         template.contains('<artifactId>micronaut-serde-processor</artifactId>')
-        template.contains("""\
+
+        and: "runtime is included and doesn't exclude jackson if test-resources is selected"
+        if (hasTestResources) {
+            assert template.contains("""\
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-runtime</artifactId>
+      <scope>compile</scope>
+    </dependency>""")
+        } else {
+            assert template.contains("""\
     <dependency>
       <groupId>io.micronaut</groupId>
       <artifactId>micronaut-runtime</artifactId>
@@ -91,6 +114,7 @@ class JsonFeatureSpec extends ApplicationContextSpec {
           </exclusion>
         </exclusions>
     </dependency>""")
+        }
         template.contains("""
     <dependency>
       <groupId>io.micronaut.serde</groupId>
@@ -105,9 +129,12 @@ class JsonFeatureSpec extends ApplicationContextSpec {
       <artifactId>jakarta.json.bind-api</artifactId>""")
         }
         where:
-        artifactId                | feature
-        'micronaut-serde-jackson' | 'serialization-jackson'
-        'micronaut-serde-jsonp'   | 'serialization-jsonp'
-        'micronaut-serde-bson'    | 'serialization-bson'
+        artifactId                | feature                 | hasTestResources
+        'micronaut-serde-jackson' | 'serialization-jackson' | false
+        'micronaut-serde-jsonp'   | 'serialization-jsonp'   | false
+        'micronaut-serde-bson'    | 'serialization-bson'    | false
+        'micronaut-serde-jackson' | 'serialization-jackson' | true
+        'micronaut-serde-jsonp'   | 'serialization-jsonp'   | true
+        'micronaut-serde-bson'    | 'serialization-bson'    | true
     }
 }

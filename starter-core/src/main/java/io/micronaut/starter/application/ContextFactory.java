@@ -16,6 +16,7 @@
 package io.micronaut.starter.application;
 
 import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver;
 import io.micronaut.starter.feature.AvailableFeatures;
@@ -67,6 +68,7 @@ public class ContextFactory {
 
         availableFeatures.getAllFeatures()
                 .filter(DefaultFeature.class::isInstance)
+                .sorted(OrderUtil.COMPARATOR.reversed())
                 .filter(f -> ((DefaultFeature) f).shouldApply(applicationType, newOptions, features))
                 .forEach(features::add);
 

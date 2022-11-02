@@ -16,7 +16,6 @@ class CreateOracleFunctionSpec extends CommandSpec{
         "test-oraclefunction"
     }
 
-    @Unroll
     void 'create-#applicationType with features oracle-function #lang and #build and test framework: #testFramework'(ApplicationType applicationType,
                                                                                                                            Language lang,
                                                                                                                            BuildTool build,
@@ -33,5 +32,30 @@ class CreateOracleFunctionSpec extends CommandSpec{
 
         where:
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations([ApplicationType.DEFAULT], [Language.GROOVY, Language.JAVA, Language.KOTLIN], [BuildTool.GRADLE])
+    }
+
+    void 'default application with features oracle-function, #serializationFeature, #lang and #build and test framework: #testFramework'(
+            Language lang,
+            String serializationFeature,
+            BuildTool build,
+            TestFramework testFramework
+    ) {
+        given:
+        List<String> features = ['oracle-function'] + serializationFeature
+        generateProject(lang, build, features, ApplicationType.DEFAULT, testFramework)
+
+        when:
+        String output = executeBuild(build, "test")
+
+        then:
+        output.contains("BUILD SUCCESS")
+
+        where:
+        [lang, serializationFeature, build, testFramework] << [
+                Language.values(),
+                ['serialization-jackson', 'serialization-bson', 'serialization-jsonp'],
+                BuildTool.values(),
+                TestFramework.values()
+        ].combinations()
     }
 }
