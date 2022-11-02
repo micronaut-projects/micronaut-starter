@@ -64,7 +64,7 @@ import java.util.stream.Stream;
 @Prototype
 public class CreateLambdaBuilderCommand extends BuilderCommand {
 
-    public static final String NAME = "create-lambda";
+    public static final String NAME = "create-aws-lambda";
 
     private final ProjectGenerator projectGenerator;
     private final List<Feature> features;
