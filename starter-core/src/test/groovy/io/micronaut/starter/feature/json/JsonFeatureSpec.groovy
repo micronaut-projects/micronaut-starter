@@ -8,6 +8,15 @@ import spock.lang.Unroll
 class JsonFeatureSpec extends ApplicationContextSpec {
 
     @Unroll
+    void "test selected Json feature is no longer preview: #feature.name"(SerializationFeature feature) {
+        expect:
+        !feature.isPreview()
+
+        where:
+        feature << beanContext.getBeansOfType(SerializationFeature).iterator()
+    }
+
+    @Unroll
     void "test selected JSON feature for Gradle: #feature"(String feature, String coordinate) {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
