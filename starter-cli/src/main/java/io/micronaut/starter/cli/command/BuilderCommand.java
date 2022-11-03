@@ -16,6 +16,7 @@
 package io.micronaut.starter.cli.command;
 
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.core.util.SupplierUtil;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.feature.AvailableFeatures;
@@ -39,6 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static picocli.CommandLine.Help.Ansi.AUTO;
@@ -49,7 +51,8 @@ import static picocli.CommandLine.Help.Ansi.AUTO;
  * @since 3.8.0
  */
 public abstract class BuilderCommand extends BaseCommand implements Callable<Integer> {
-    public static final String PROMPT = AUTO.string("@|blue > |@");
+    // Wrapped in a memoized Supplier, so it's not created at build time
+    public static final Supplier<String> PROMPT = SupplierUtil.memoized(() -> AUTO.string("@|blue > |@"));
 
     protected List<String> getFeatures(ApplicationType applicationType, Terminal terminal, List<Feature> features) {
         AvailableFeatures availableFeatures = new BaseAvailableFeatures(features, applicationType);
@@ -62,7 +65,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
                 .build();
         out("Enter any features to apply. Use tab for autocomplete and separate by a space.");
         while (true) {
-            String featuresLine = featuresReader.readLine(PROMPT);
+            String featuresLine = featuresReader.readLine(PROMPT.get());
             if (StringUtils.trimToNull(featuresLine) == null) {
                 out("");
                 return new ArrayList<>();
@@ -106,7 +109,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
     protected int getOption(LineReader reader, int max) throws UserInterruptException, EndOfFileException {
         String line;
         while (true) {
-            line = reader.readLine(PROMPT);
+            line = reader.readLine(PROMPT.get());
             try {
                 if (line == null || line.isEmpty()) {
                     return -1;
@@ -186,7 +189,7 @@ public abstract class BuilderCommand extends BaseCommand implements Callable<Int
         out("Enter a name for the project.");
         while (true) {
             try {
-                String name = reader.readLine(PROMPT);
+                String name = reader.readLine(PROMPT.get());
                 Project project = NameUtils.parse(name);
                 out("");
                 return project;
