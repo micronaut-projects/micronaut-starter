@@ -85,7 +85,7 @@ class CreateLambdaBuilderCommandSpec extends Specification {
 
         when:
         def reader = Stub(LineReader) {
-            readLine(BuilderCommand.PROMPT) >>> answers
+            readLine(BuilderCommand.PROMPT.get()) >>> answers
 
         }
         GenerateOptions options = command.createGenerateOptions(reader)
