@@ -18,6 +18,7 @@ dependencies {
     api "io.micronaut:micronaut-inject"
     api "io.micronaut:micronaut-http"
     api "io.micronaut:micronaut-http-client"
+    api "io.micronaut:micronaut-jackson-databind"
     api "io.github.java-diff-utils:java-diff-utils:4.10"
     api "org.eclipse.jgit:org.eclipse.jgit:5.11.1.202105131744-r"
     implementation 'org.yaml:snakeyaml:1.33'
