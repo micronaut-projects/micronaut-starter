@@ -2,7 +2,10 @@
 @import io.micronaut.starter.application.ApplicationType;
 @import io.micronaut.starter.options.BuildTool;
 @import io.micronaut.starter.feature.Features;
-@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
+@import io.micronaut.starter.feature.architecture.CpuArchitecture;
+@import io.micronaut.starter.feature.architecture.X86;
+@import io.micronaut.starter.feature.architecture.Arm;
+@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
 
 package @project.getPackageName();
 
@@ -14,6 +17,7 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
+import software.amazon.awscdk.services.lambda.Architecture;
 @if (features.contains("dynamodb")) {
 import software.amazon.awscdk.services.dynamodb.Attribute;
 import software.amazon.awscdk.services.dynamodb.AttributeType;
@@ -140,6 +144,11 @@ public class AppStack extends Stack {
                 .memorySize(512)
                 .tracing(Tracing.ACTIVE)
                 .logRetention(RetentionDays.ONE_WEEK)
+@if (architecture instanceof Arm) {
+                .architecture(Architecture.ARM_64)
+} else if (architecture instanceof X86) {
+                .architecture(Architecture.X86_64)
+}
                 .build();
 }
 @if (features.contains("dynamodb")) {

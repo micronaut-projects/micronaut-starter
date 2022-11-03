@@ -36,6 +36,8 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.architecture.Arm;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
@@ -56,6 +58,7 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.util.VersionInfo;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.ArrayList;
@@ -71,9 +74,18 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
+    private final Arm arm;
     private final DependencyContext dependencyContext;
 
+    @Deprecated
     public Cdk(CoordinateResolver coordinateResolver) {
+        this(coordinateResolver, new Arm());
+    }
+
+    @Inject
+    public Cdk(CoordinateResolver coordinateResolver,
+               Arm arm) {
+        this.arm = arm;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
     }
 
@@ -118,11 +130,14 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
+        CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
+                .orElse(arm);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),
                         generatorContext.getBuildTool(),
                         generatorContext.getApplicationType(),
+                        architecture,
                         Template.DEFAULT_MODULE,
                         generatorContext.getBuildTool().isGradle() ? "build/libs" : "target",
                         generatorContext.getFeatures().hasFeature(AwsLambda.class) ? "micronaut-function" : null,

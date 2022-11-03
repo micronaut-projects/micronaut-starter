@@ -15,5 +15,10 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+/**
+ * Marker interface for features corresponding to Lambda Triggers.
+ * @author Sergio del Amo
+ * @since 3.8.0
+ */
+public interface LambdaTrigger {
 }

@@ -13,7 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.cli.command;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+/**
+ * Lambda Deployments.
+ * @author Sergio del Amo
+ * @since 3.8.0
+ */
+public enum LambdaDeployment {
+    FAT_JAR("Fat JAR running in the managed Java runtime"),
+    NATIVE_EXECUTABLE("Native executable built with GraalVM Native Image running in a custom runtime. Faster cold start");
+
+    private final String description;
+
+    LambdaDeployment(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

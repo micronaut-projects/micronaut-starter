@@ -13,7 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.architecture;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
+import io.micronaut.starter.feature.OneOfFeature;
+
+public interface CpuArchitecture extends OneOfFeature {
+    @Override
+    default Class<?> getFeatureClass() {
+        return CpuArchitecture.class;
+    }
+
+    @Override
+    default String getCategory() {
+        return Category.CLOUD;
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return true;
+    }
 }

@@ -19,6 +19,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
     void 'amazon-api-gateway feature is an instance of AwsApiFeature'() {
         expect:
         amazonApiGateway instanceof AwsApiFeature
+        amazonApiGateway instanceof LambdaTrigger
     }
 
     void "amazon-api-gateway does not support #applicationType application type"(ApplicationType applicationType) {

@@ -22,6 +22,7 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
     void 'amazon-api-gateway-http feature is an instance of AwsApiFeature'() {
         expect:
         amazonApiGatewayHttp instanceof AwsApiFeature
+        amazonApiGatewayHttp instanceof LambdaTrigger
     }
 
     void "amazon-api-gateway-http does not support #applicationType application type"(ApplicationType applicationType) {
