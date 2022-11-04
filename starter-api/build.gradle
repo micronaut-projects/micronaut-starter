@@ -22,6 +22,7 @@ dependencies {
     implementation "io.projectreactor:reactor-core"
 
     testCompileOnly "io.micronaut:micronaut-inject-groovy"
+    testCompileOnly "org.jetbrains:annotations:23.0.0"
     testImplementation "io.micronaut:micronaut-http-server-netty"
     testImplementation "io.micronaut:micronaut-http-client"
     testImplementation "io.micronaut.test:micronaut-test-spock"
