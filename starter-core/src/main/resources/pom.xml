@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-gradle-plugin</artifactId>
-            <version>3.10.3</version>
+            <version>3.11.3</version>
         </dependency>
         <dependency>
             <groupId>com.ongres.scram</groupId>
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.gradle</groupId>
             <artifactId>gradle-enterprise-maven-extension</artifactId>
-            <version>1.15.2</version>
+            <version>1.15.5</version>
         </dependency>
         <dependency>
             <groupId>com.gradle</groupId>
