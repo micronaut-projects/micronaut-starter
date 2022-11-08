@@ -12,7 +12,9 @@ dependencies {
     implementation "com.fizzed:rocker-compiler:1.3.0"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.11.0"
     implementation "io.sdkman:gradle-sdkvendor-plugin:2.0.0"
-    implementation "org.asciidoctor:asciidoctor-gradle-jvm:2.4.0"
+    implementation("org.asciidoctor:asciidoctor-gradle-jvm:2.4.0") {
+        exclude group: 'org.ysb33r.gradle'
+    } 
     implementation "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
 }
 

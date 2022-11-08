@@ -12,7 +12,6 @@ pluginManagement {
 buildscript {
     configurations.classpath {
         exclude group: 'org.xhtmlrenderer'
-        exclude group: 'org.ysb33r.gradle'
     }
 }
 
