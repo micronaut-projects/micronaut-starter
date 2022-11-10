@@ -68,6 +68,10 @@ public class SpringDataJdbc extends SpringFeature {
                 .artifactId("micronaut-data-spring")
                 .compile());
         generatorContext.addDependency(Dependency.builder()
+                .groupId("io.micronaut.data")
+                .artifactId("micronaut-data-tx-hibernate")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
                 .groupId("org.springframework")
                 .artifactId("spring-jdbc")
                 .compile());
