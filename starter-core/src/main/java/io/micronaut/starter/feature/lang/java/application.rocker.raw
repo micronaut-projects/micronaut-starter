@@ -3,6 +3,7 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import java.util.stream.Collectors
+@import io.micronaut.starter.feature.crac.Crac
 
 @args (Project project, Features features, String defaultEnvironment)
 
@@ -86,10 +87,18 @@ public class Application {
         @@Override
         public void configure(@@NonNull ApplicationContextBuilder builder) {
             builder.defaultEnvironments("@(defaultEnvironment)");
+@if (features.contains(Crac.NAME)) {
+            builder.eagerInitSingletons(true);
+}
         }
     }
 }
     public static void main(String[] args) {
-        Micronaut.run(Application.class, args);
+        Micronaut.build(args)
+            .mainClass(Application.class)
+@if (features.contains(Crac.NAME)) {
+            .eagerInitSingletons(true)
+}
+            .start();
     }
 }

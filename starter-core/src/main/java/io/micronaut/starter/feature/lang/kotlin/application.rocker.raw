@@ -3,6 +3,7 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import java.util.stream.Collectors
+@import io.micronaut.starter.feature.crac.Crac
 
 @args (Project project, Features features, String defaultEnvironment)
 
@@ -14,7 +15,7 @@ import io.micronaut.context.ApplicationContextConfigurer
 import io.micronaut.context.annotation.ContextConfigurer
 }
 
-import io.micronaut.runtime.Micronaut.*
+import io.micronaut.runtime.Micronaut
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
 @if (features.contains("dekorate-kubernetes")) {
 import io.dekorate.kubernetes.annotation.KubernetesApplication
@@ -92,11 +93,18 @@ object Dekorate {
 class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
 	override fun configure(builder: ApplicationContextBuilder) {
 		builder.defaultEnvironments("@(defaultEnvironment)");
+@if (features.contains(Crac.NAME)) {
+        builder.eagerInitSingletons(true);
+}
 	}
 }
 
 }
 fun main(args: Array<String>) {
-	run(*args)
+    Micronaut.build(*args)
+@if (features.contains(Crac.NAME)) {
+        .eagerInitSingletons(true)
+}
+        .start()
 }
 

@@ -46,7 +46,9 @@ import io.micronaut.runtime.Micronaut;
 
 public class Application {
     public static void main(String[] args) {
-        Micronaut.run(Application.class, args);
+        Micronaut.build(args)
+            .mainClass(Application.class)
+            .start();
     }
 }
 """.trim())
@@ -73,7 +75,9 @@ import io.swagger.v3.oas.annotations.info.*;
 )
 public class Application {
     public static void main(String[] args) {
-        Micronaut.run(Application.class, args);
+        Micronaut.build(args)
+            .mainClass(Application.class)
+            .start();
     }
 }
 """.trim())
@@ -103,7 +107,9 @@ import io.dekorate.kubernetes.annotation.Probe;
 )
 public class Application {
     public static void main(String[] args) {
-        Micronaut.run(Application.class, args);
+        Micronaut.build(args)
+            .mainClass(Application.class)
+            .start();
     }
 }
 """.trim())
