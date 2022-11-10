@@ -184,7 +184,7 @@ MavenBuild mavenBuild
     .flatMap(DatabaseDriverFeature::getDbType)
     .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : features.isFeaturePresent(HibernateReactiveFeature.class) ? dbType.getHibernateReactiveTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
     .orElse(null)) {
-            <classpathInference>false</classpathInference>
+            <classpathInference>true</classpathInference>
             <testResourcesDependencies>
               <dependency>
                 <groupId>io.micronaut.testresources</groupId>
