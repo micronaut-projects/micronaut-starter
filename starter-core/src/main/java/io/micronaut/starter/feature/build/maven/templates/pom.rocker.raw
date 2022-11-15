@@ -17,6 +17,7 @@
 @import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
 @import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
 @import io.micronaut.starter.feature.migration.MigrationFeature
+@import io.micronaut.starter.feature.testresources.TestResources
 @import io.micronaut.starter.options.JdkVersion
 @import io.micronaut.starter.util.VersionInfo
 
@@ -172,13 +173,14 @@ MavenBuild mavenBuild
      || features.contains("jrebel")
      || features.contains("oracle-function")
      || features.contains("micronaut-aot")
+     || features.isFeaturePresent(TestResources.class)
      || features.isFeaturePresent(SharedTestResourceFeature.class)
      || (features.isFeaturePresent(DatabaseDriverFeature.class) && (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class)))) {
           <configuration>
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
             <shared>true</shared>
 }
-@if (features.isFeaturePresent(DatabaseDriverFeature.class) && (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class))) {
+@if (features.isFeaturePresent(TestResources.class) && features.isFeaturePresent(DatabaseDriverFeature.class) && (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class))) {
 @with? (String resourceName = features
     .getFeature(DatabaseDriverFeature.class)
     .flatMap(DatabaseDriverFeature::getDbType)
