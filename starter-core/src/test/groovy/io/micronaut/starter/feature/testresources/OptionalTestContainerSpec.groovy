@@ -16,7 +16,9 @@ import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.feature.messaging.mqtt.Mqtt
 import io.micronaut.starter.feature.messaging.rabbitmq.RabbitMQ
+import spock.lang.Requires
 
+@Requires({ jvm.current.isJava11Compatible() })
 class OptionalTestContainerSpec extends ApplicationContextSpec {
 
     private final static TEST_RESOURCE_FEATURES = [
