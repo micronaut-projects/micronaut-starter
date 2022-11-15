@@ -26,6 +26,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class DataJpa implements JpaFeature, DataFeature {
 
+    public static final String NAME = "data-jpa";
     private final Data data;
     private final JdbcFeature jdbcFeature;
 
@@ -36,7 +37,7 @@ public class DataJpa implements JpaFeature, DataFeature {
 
     @Override
     public String getName() {
-        return "data-jpa";
+        return NAME;
     }
 
     @Override

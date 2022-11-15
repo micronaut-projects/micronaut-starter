@@ -28,6 +28,7 @@ import jakarta.inject.Singleton;
 public class DataMongo extends DataMongoFeature {
 
     private static final String SYNC_MONGODB_ARTIFACT = "mongodb-driver-sync";
+    public static final String NAME = "data-mongodb";
 
     public DataMongo(Data data, TestContainers testContainers, TestResources testResources) {
         super(data, testContainers, testResources);
@@ -36,7 +37,7 @@ public class DataMongo extends DataMongoFeature {
     @NonNull
     @Override
     public String getName() {
-        return "data-mongodb";
+        return NAME;
     }
 
     @NonNull
