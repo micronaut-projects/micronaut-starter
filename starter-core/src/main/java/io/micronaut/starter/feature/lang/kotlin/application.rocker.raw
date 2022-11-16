@@ -90,8 +90,8 @@ object Dekorate {
 
 @@ContextConfigurer
 class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
-	override fun configure(builder: ApplicationContextBuilder) {
-		builder.defaultEnvironments("@(defaultEnvironment)");
+    override fun configure(builder: ApplicationContextBuilder) {
+        builder.defaultEnvironments("@(defaultEnvironment)");
 @if (eagerInitSingleton) {
         builder.eagerInitSingletons(true);
 }
