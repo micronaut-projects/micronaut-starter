@@ -166,7 +166,7 @@ class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture
 ''')
     }
 
-    void 'feature data-jdbc contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {
+    void 'feature data-jpa contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {
         when:
         def output = generate(features)
         def appConfig = output["src/main/resources/application.yml"]
