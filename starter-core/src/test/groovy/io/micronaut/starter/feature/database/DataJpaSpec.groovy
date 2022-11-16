@@ -5,12 +5,14 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Issue
 
-class DataJpaSpec extends ApplicationContextSpec {
+class DataJpaSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test data jpa features"() {
         when:
@@ -111,7 +113,7 @@ class DataJpaSpec extends ApplicationContextSpec {
 
     void "test config for #features and #buildTool"(List<String> features, String dialect, BuildTool buildTool) {
         given:
-        Options options = new Options(null, null, buildTool)
+        Options options = new Options(null, TestFramework.DEFAULT_OPTION, buildTool)
 
         when:
         GeneratorContext ctx = buildGeneratorContext(features, options)
@@ -120,8 +122,9 @@ class DataJpaSpec extends ApplicationContextSpec {
         if (features.size() == 1) {
             assert ctx.configuration.containsKey("datasources.default.url")
         }
-        ctx.configuration.containsKey("jpa.default.properties.hibernate.hbm2ddl.auto")
+        ctx.configuration.get("jpa.default.properties.hibernate.hbm2ddl.auto") == Hbm2ddlAuto.UPDATE.toString()
         ctx.configuration.get("datasources.default.dialect") == dialect
+        !ctx.configuration.containsKey("datasources.default.schema-generate")
 
         where:
         buildTool                 | features                  | dialect
@@ -161,5 +164,27 @@ class DataJpaSpec extends ApplicationContextSpec {
       <scope>provided</scope>
     </dependency>
 ''')
+    }
+
+    void 'feature data-jdbc contains correct hbm2ddl.auto values'(List<String> features, String prod, String test) {
+        when:
+        def output = generate(features)
+        def appConfig = output["src/main/resources/application.yml"]
+        def testConfig = output["src/test/resources/application-test.yml"]
+
+        then:
+        appConfig
+        appConfig.contains(prod)
+        !appConfig.contains("schema-generate")
+        testConfig
+        testConfig.contains(test)
+        !testConfig.contains("schema-generate")
+
+        where:
+        features                  | prod            | test
+        ['data-jpa']              | 'auto: update'  | 'auto: create-drop'
+        ['data-jpa', 'flyway']    | "auto: none"    | 'auto: none'
+        ['data-jpa', 'liquibase'] | "auto: none"    | 'auto: none'
+
     }
 }
