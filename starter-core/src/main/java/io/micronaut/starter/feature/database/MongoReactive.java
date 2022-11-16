@@ -24,6 +24,9 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class MongoReactive extends MongoFeature {
+
+    public static final String NAME = "mongo-reactive";
+
     public MongoReactive(TestContainers testContainers,
                          TestResources testResources) {
         super(testContainers, testResources);
@@ -31,7 +34,7 @@ public class MongoReactive extends MongoFeature {
 
     @Override
     public String getName() {
-        return "mongo-reactive";
+        return NAME;
     }
 
     @Override
