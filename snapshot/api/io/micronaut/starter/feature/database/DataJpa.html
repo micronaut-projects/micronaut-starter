@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,20 +200,24 @@ implements <a href="../../../../../io/micronaut/starter/feature/database/JpaFeat
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.Object&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DataJpa.html#getDatasourceConfig-io.micronaut.starter.feature.database.DatabaseDriverFeature-">getDatasourceConfig</a></span>(<a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="class in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&nbsp;driverFeature)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DataJpa.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DataJpa.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DataJpa.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../io/micronaut/starter/feature/database/DataJpa.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
@@ -233,7 +237,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/database/JpaFeat
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.database.<a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></h3>
-<code><a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getCategory--">getCategory</a>, <a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getDatasourceConfig-io.micronaut.starter.feature.database.DatabaseDriverFeature-">getDatasourceConfig</a>, <a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
+<code><a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getCategory--">getCategory</a>, <a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getFeatureClass--">getFeatureClass</a>, <a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#supports-io.micronaut.starter.application.ApplicationType-">supports</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.Feature">
@@ -378,7 +382,7 @@ implements <a href="../../../../../io/micronaut/starter/feature/database/JpaFeat
 <a name="apply-io.micronaut.starter.application.generator.GeneratorContext-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>apply</h4>
 <pre>public&nbsp;void&nbsp;apply(<a href="../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
@@ -397,6 +401,19 @@ implements <a href="../../../../../io/micronaut/starter/feature/database/JpaFeat
 <dd><code><a href="../../../../../io/micronaut/starter/feature/Feature.html#apply-io.micronaut.starter.application.generator.GeneratorContext-">apply</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>generatorContext</code> - THe generator context</dd>
+</dl>
+</li>
+</ul>
+<a name="getDatasourceConfig-io.micronaut.starter.feature.database.DatabaseDriverFeature-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDatasourceConfig</h4>
+<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.lang.Object&gt;&nbsp;getDatasourceConfig(<a href="../../../../../io/micronaut/starter/feature/database/DatabaseDriverFeature.html" title="class in io.micronaut.starter.feature.database">DatabaseDriverFeature</a>&nbsp;driverFeature)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html#getDatasourceConfig-io.micronaut.starter.feature.database.DatabaseDriverFeature-">getDatasourceConfig</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../io/micronaut/starter/feature/database/DataFeature.html" title="interface in io.micronaut.starter.feature.database">DataFeature</a></code></dd>
 </dl>
 </li>
 </ul>
