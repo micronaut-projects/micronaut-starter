@@ -22,6 +22,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.kotlinJunit;
@@ -73,7 +74,7 @@ public class KotlinApplication implements KotlinApplicationFeature {
 
     protected RockerModel application(GeneratorContext generatorContext) {
         String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
+        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment, generatorContext.getFeatures().isFeaturePresent(RequireEagerSingletonInitializationFeature.class));
     }
 
     protected void addApplicationTest(GeneratorContext generatorContext) {

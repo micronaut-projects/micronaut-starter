@@ -3,9 +3,8 @@
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
 @import java.util.stream.Collectors
-@import io.micronaut.starter.feature.crac.Crac
 
-@args (Project project, Features features, String defaultEnvironment)
+@args (Project project, Features features, String defaultEnvironment, boolean eagerInitSingleton)
 
 package @project.getPackageName()
 
@@ -93,7 +92,7 @@ object Dekorate {
 class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
 	override fun configure(builder: ApplicationContextBuilder) {
 		builder.defaultEnvironments("@(defaultEnvironment)");
-@if (features.contains(Crac.NAME)) {
+@if (eagerInitSingleton) {
         builder.eagerInitSingletons(true);
 }
 	}
@@ -102,7 +101,7 @@ class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
 }
 fun main(args: Array<String>) {
     Micronaut.build(*args)
-@if (features.contains(Crac.NAME)) {
+@if (eagerInitSingleton) {
         .eagerInitSingletons(true)
 }
         .start()

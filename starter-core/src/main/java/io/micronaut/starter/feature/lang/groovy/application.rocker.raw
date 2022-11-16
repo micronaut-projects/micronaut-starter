@@ -1,8 +1,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.crac.Crac
 
-@args (Project project, Features features, String defaultEnvironment)
+@args (Project project, Features features, String defaultEnvironment, boolean eagerInitSingleton)
 
 package @project.getPackageName()
 
@@ -36,7 +35,7 @@ class Application {
         @@Override
         public void configure(@@NonNull ApplicationContextBuilder builder) {
             builder.defaultEnvironments("@(defaultEnvironment)")
-@if (features.contains(Crac.NAME)) {
+@if (eagerInitSingleton) {
             builder.eagerInitSingletons(true)
 }
         }
@@ -45,7 +44,7 @@ class Application {
     static void main(String[] args) {
         Micronaut.build(args)
             .mainClass(Application.class)
-@if (features.contains(Crac.NAME)) {
+@if (eagerInitSingleton) {
             .eagerInitSingletons(true)
 }
             .start()

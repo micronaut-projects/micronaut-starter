@@ -34,7 +34,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
     }
 
     void "test java application"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), null)
+        String applicationJava = application.template(buildProject(), getFeatures([]), null, false)
         .render()
         .toString()
 
@@ -54,8 +54,30 @@ public class Application {
 """.trim())
     }
 
+    void "test java application with eagerInit"() {
+        String applicationJava = application.template(buildProject(), getFeatures([]), null, true)
+                .render()
+                .toString()
+
+        expect:
+        applicationJava.contains("""
+package example.micronaut;
+
+import io.micronaut.runtime.Micronaut;
+
+public class Application {
+    public static void main(String[] args) {
+        Micronaut.build(args)
+            .mainClass(Application.class)
+            .eagerInitSingletons(true)
+            .start();
+    }
+}
+""".trim())
+    }
+
     void "test java application with openapi"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), null)
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), null, false)
                 .render()
                 .toString()
 
@@ -84,7 +106,7 @@ public class Application {
     }
 
     void "test java application with dekorate-kubernetes"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), null)
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), null, false)
                 .render()
                 .toString()
 
