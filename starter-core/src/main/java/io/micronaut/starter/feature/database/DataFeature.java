@@ -22,7 +22,7 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.Map;
 
 public interface DataFeature extends OneOfFeature {
@@ -39,10 +39,11 @@ public interface DataFeature extends OneOfFeature {
     }
 
     default Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
-        Map<String, Object> conf = new LinkedHashMap<>();
-        conf.put("datasources.default.schema-generate", "CREATE_DROP");
-        conf.put("datasources.default.dialect", driverFeature.getDataDialect());
-        return conf;
+//        Map<String, Object> conf = new LinkedHashMap<>();
+//        conf.put("datasources.default.schema-generate", "CREATE_DROP");
+//        conf.put("datasources.default.dialect", driverFeature.getDataDialect());
+//        return conf;
+        return Collections.singletonMap("datasources.default.dialect", driverFeature.getDataDialect());
     }
 
     @Override

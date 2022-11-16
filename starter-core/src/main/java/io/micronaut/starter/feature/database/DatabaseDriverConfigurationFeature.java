@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.database;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import io.micronaut.starter.feature.testresources.TestResources;
 
 import java.util.Map;
@@ -45,6 +46,13 @@ public interface DatabaseDriverConfigurationFeature extends Feature {
         }
         Optional.ofNullable(dbFeature.getDriverClass()).ifPresent(driver -> config.put(getDriverKey(), driver));
         dbFeature.getDbType().ifPresent(dbType -> config.put(PROPERTY_DATASOURCES_DEFAULT_DB_TYPE, dbType.toString()));
+
+        generatorContext.getFeatures().getFeature(MigrationFeature.class).ifPresentOrElse(
+                migrationFeature -> config.putAll(migrationFeature.getAdditionalConfig()),
+                () -> generatorContext.getFeatures().getFeature(DataFeature.class).ifPresent(f ->
+                        // apply only if not using a migration feature (flyway, liquibase)
+                        config.put("datasources.default.schema-generate", "CREATE_DROP")));
+
         final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig();
         if (!additionalConfig.isEmpty()) {
             config.putAll(additionalConfig);

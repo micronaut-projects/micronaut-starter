@@ -110,6 +110,8 @@ class OracleCloudAutonomousDatabaseSpec extends ApplicationContextSpec implement
 """)
         config.contains("""
     schema-generate: CREATE_DROP
+""")
+        config.contains("""
     dialect: ORACLE
 """)
     }
