@@ -47,11 +47,15 @@ public interface DatabaseDriverConfigurationFeature extends Feature {
         Optional.ofNullable(dbFeature.getDriverClass()).ifPresent(driver -> config.put(getDriverKey(), driver));
         dbFeature.getDbType().ifPresent(dbType -> config.put(PROPERTY_DATASOURCES_DEFAULT_DB_TYPE, dbType.toString()));
 
-        generatorContext.getFeatures().getFeature(MigrationFeature.class).ifPresentOrElse(
-                migrationFeature -> config.putAll(migrationFeature.getAdditionalConfig()),
-                () -> generatorContext.getFeatures().getFeature(DataFeature.class).ifPresent(f ->
+        // FIXME this is broken and needs to be reconsidered
+        Optional<MigrationFeature> migrationFeature = generatorContext.getFeatures().getFeature(MigrationFeature.class);
+        if (migrationFeature.isPresent()) {
+            config.putAll(migrationFeature.get().getAdditionalConfig());
+        } else {
+            generatorContext.getFeatures().getFeature(DataFeature.class).ifPresent(f ->
                         // apply only if not using a migration feature (flyway, liquibase)
-                        config.put("datasources.default.schema-generate", "CREATE_DROP")));
+                        config.put("datasources.default.schema-generate", "CREATE_DROP"));
+        }
 
         final Map<String, Object> additionalConfig = dbFeature.getAdditionalConfig();
         if (!additionalConfig.isEmpty()) {
