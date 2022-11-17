@@ -18,9 +18,14 @@ package io.micronaut.starter.feature.database;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.config.ApplicationConfiguration;
+import io.micronaut.starter.feature.config.Configuration;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
+
+import java.util.Collections;
+import java.util.Map;
 
 @Singleton
 public class DataJpa implements JpaFeature, DataFeature {
@@ -66,9 +71,20 @@ public class DataJpa implements JpaFeature, DataFeature {
                 .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
         generatorContext.getConfiguration().addNested(getDatasourceConfig(dbFeature));
-        generatorContext.getConfiguration().put(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
+        generatorContext.getConfiguration().addNested(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
                 generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
                         Hbm2ddlAuto.UPDATE.toString());
 
+        Configuration testConfig = ApplicationConfiguration.testConfig();
+        generatorContext.addConfiguration(testConfig);
+        testConfig.addNested(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
+                generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
+                        Hbm2ddlAuto.CREATE_DROP.toString());
     }
+
+    @Override
+    public Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
+        return Collections.singletonMap("datasources.default.dialect", driverFeature.getDataDialect());
+    }
+
 }
