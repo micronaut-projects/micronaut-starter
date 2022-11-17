@@ -73,8 +73,17 @@ public class KotlinApplication implements KotlinApplicationFeature {
     }
 
     protected RockerModel application(GeneratorContext generatorContext) {
-        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment, generatorContext.getFeatures().isFeaturePresent(RequireEagerSingletonInitializationFeature.class));
+        String defaultEnvironment = getDefaultEnvironment(generatorContext);
+        boolean eagerInitSingleton = generatorContext.getFeatures().isFeaturePresent(RequireEagerSingletonInitializationFeature.class);
+        return application.template(
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                new KotlinApplicationRenderingContext(defaultEnvironment, eagerInitSingleton)
+        );
+    }
+
+    private static String getDefaultEnvironment(GeneratorContext generatorContext) {
+        return generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
     }
 
     protected void addApplicationTest(GeneratorContext generatorContext) {

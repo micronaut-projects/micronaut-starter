@@ -2,6 +2,7 @@ package io.micronaut.starter.feature.lang
 
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.lang.java.JavaApplicationRenderingContext
 import io.micronaut.starter.feature.lang.java.application
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -34,7 +35,7 @@ class JavaApplicationSpec extends BeanContextSpec implements CommandOutputFixtur
     }
 
     void "test java application"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), null, false)
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, false))
         .render()
         .toString()
 
@@ -45,17 +46,16 @@ package example.micronaut;
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
+
     public static void main(String[] args) {
-        Micronaut.build(args)
-            .mainClass(Application.class)
-            .start();
+        Micronaut.run(Application.class, args);
     }
 }
 """.trim())
     }
 
-    void "test java application with eagerInit"() {
-        String applicationJava = application.template(buildProject(), getFeatures([]), null, true)
+    void "test java application with default environment"() {
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", false))
                 .render()
                 .toString()
 
@@ -63,21 +63,93 @@ public class Application {
         applicationJava.contains("""
 package example.micronaut;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
 import io.micronaut.runtime.Micronaut;
 
 public class Application {
+
+    @ContextConfigurer
+    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+        @Override
+        public void configure(@NonNull ApplicationContextBuilder builder) {
+            builder.defaultEnvironments("env");
+        }
+    }
     public static void main(String[] args) {
-        Micronaut.build(args)
-            .mainClass(Application.class)
-            .eagerInitSingletons(true)
-            .start();
+        Micronaut.run(Application.class, args);
+    }
+}
+""".trim())
+    }
+
+    void "test java application with default environment and eagerInit"() {
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext("env", true))
+                .render()
+                .toString()
+
+        expect:
+        applicationJava.contains("""
+package example.micronaut;
+
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.runtime.Micronaut;
+
+public class Application {
+
+    @ContextConfigurer
+    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+        @Override
+        public void configure(@NonNull ApplicationContextBuilder builder) {
+            builder.defaultEnvironments("env");
+            builder.eagerInitSingletons(true);
+        }
+    }
+    public static void main(String[] args) {
+        Micronaut.run(Application.class, args);
+    }
+}
+""".trim())
+    }
+
+    void "test java application with eagerInit"() {
+        String applicationJava = application.template(buildProject(), getFeatures([]), new JavaApplicationRenderingContext(null, true))
+                .render()
+                .toString()
+
+        expect:
+        applicationJava.contains("""
+package example.micronaut;
+
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.context.ApplicationContextBuilder;
+import io.micronaut.context.ApplicationContextConfigurer;
+import io.micronaut.context.annotation.ContextConfigurer;
+import io.micronaut.runtime.Micronaut;
+
+public class Application {
+
+    @ContextConfigurer
+    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+        @Override
+        public void configure(@NonNull ApplicationContextBuilder builder) {
+            builder.eagerInitSingletons(true);
+        }
+    }
+    public static void main(String[] args) {
+        Micronaut.run(Application.class, args);
     }
 }
 """.trim())
     }
 
     void "test java application with openapi"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), null, false)
+        String applicationJava = application.template(buildProject(), getFeatures(["openapi"]), new JavaApplicationRenderingContext(null, false))
                 .render()
                 .toString()
 
@@ -96,17 +168,16 @@ import io.swagger.v3.oas.annotations.info.*;
     )
 )
 public class Application {
+
     public static void main(String[] args) {
-        Micronaut.build(args)
-            .mainClass(Application.class)
-            .start();
+        Micronaut.run(Application.class, args);
     }
 }
 """.trim())
     }
 
     void "test java application with dekorate-kubernetes"() {
-        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), null, false)
+        String applicationJava = application.template(buildProject(), getFeatures(["dekorate-kubernetes"]), new JavaApplicationRenderingContext(null, false))
                 .render()
                 .toString()
 
@@ -128,10 +199,9 @@ import io.dekorate.kubernetes.annotation.Probe;
     readinessProbe = @Probe(httpActionPath = "/health/readiness", initialDelaySeconds = 5, timeoutSeconds = 3, failureThreshold = 10)
 )
 public class Application {
+
     public static void main(String[] args) {
-        Micronaut.build(args)
-            .mainClass(Application.class)
-            .start();
+        Micronaut.run(Application.class, args);
     }
 }
 """.trim())

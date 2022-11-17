@@ -1,0 +1,14 @@
+@args (String defaultEnvironment, boolean eagerInitSingleton)
+
+    @@ContextConfigurer
+    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+        @@Override
+        public void configure(@@NonNull ApplicationContextBuilder builder) {
+@if (defaultEnvironment != null) {
+            builder.defaultEnvironments("@(defaultEnvironment)");
+}
+@if (eagerInitSingleton) {
+            builder.eagerInitSingletons(true);
+}
+        }
+    }

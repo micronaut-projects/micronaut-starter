@@ -2,13 +2,14 @@
 @import io.micronaut.starter.feature.Feature
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+@import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors
 
-@args (Project project, Features features, String defaultEnvironment, boolean eagerInitSingleton)
+@args (Project project, Features features, ApplicationRenderingContext context)
 
 package @project.getPackageName();
 
-@if (defaultEnvironment != null) {
+@if (context.isRequired()) {
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
@@ -80,24 +81,9 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
 @@HalkyonComponent(name = "@project.getName()")
 }
 public class Application {
-@if (defaultEnvironment != null) {
-    @@ContextConfigurer
-    public static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
-        @@Override
-        public void configure(@@NonNull ApplicationContextBuilder builder) {
-            builder.defaultEnvironments("@(defaultEnvironment)");
-@if (eagerInitSingleton) {
-            builder.eagerInitSingletons(true);
-}
-        }
-    }
-}
+
+@with? (maybeContextConfig = context.getContextConfigurer()) { @maybeContextConfig }
     public static void main(String[] args) {
-        Micronaut.build(args)
-            .mainClass(Application.class)
-@if (eagerInitSingleton) {
-            .eagerInitSingletons(true)
-}
-            .start();
+        Micronaut.run(Application.class, args);
     }
 }

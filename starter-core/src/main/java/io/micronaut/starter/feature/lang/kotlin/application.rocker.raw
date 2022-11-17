@@ -2,19 +2,20 @@
 @import io.micronaut.starter.feature.Feature
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+@import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors
 
-@args (Project project, Features features, String defaultEnvironment, boolean eagerInitSingleton)
+@args (Project project, Features features, ApplicationRenderingContext context)
 
 package @project.getPackageName()
 
-@if (defaultEnvironment != null) {
+@if (context.isRequired()) {
 import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.context.ApplicationContextConfigurer
 import io.micronaut.context.annotation.ContextConfigurer
 }
 
-import io.micronaut.runtime.Micronaut
+import io.micronaut.runtime.Micronaut.run
 @if(features.getFeatures().stream().anyMatch(f -> f instanceof AbstractDekoratePlatformFeature)) {
 @if (features.contains("dekorate-kubernetes")) {
 import io.dekorate.kubernetes.annotation.KubernetesApplication
@@ -85,25 +86,8 @@ object Dekorate {
 }
 }
 
-
-@if (defaultEnvironment != null) {
-
-@@ContextConfigurer
-class DefaultEnvironmentConfigurer: ApplicationContextConfigurer {
-    override fun configure(builder: ApplicationContextBuilder) {
-        builder.defaultEnvironments("@(defaultEnvironment)");
-@if (eagerInitSingleton) {
-        builder.eagerInitSingletons(true);
-}
-	}
-}
-
-}
+@with? (maybeContextConfig = context.getContextConfigurer()) { @maybeContextConfig }
 fun main(args: Array<String>) {
-    Micronaut.build(*args)
-@if (eagerInitSingleton) {
-        .eagerInitSingletons(true)
-}
-        .start()
+	run(*args)
 }
 
