@@ -19,9 +19,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
-import java.util.Collections;
-import java.util.Map;
-
 public interface MigrationFeature extends OneOfFeature {
 
     @Override
@@ -37,9 +34,5 @@ public interface MigrationFeature extends OneOfFeature {
     @Override
     default String getCategory() {
         return Category.DATABASE;
-    }
-
-    default Map<String, Object> getAdditionalConfig() {
-        return Collections.emptyMap();
     }
 }

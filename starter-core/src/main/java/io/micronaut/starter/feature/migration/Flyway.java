@@ -22,9 +22,6 @@ import io.micronaut.starter.feature.database.MySQL;
 import io.micronaut.starter.feature.database.SQLServer;
 import jakarta.inject.Singleton;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 @Singleton
 public class Flyway implements MigrationFeature {
 
@@ -73,13 +70,7 @@ public class Flyway implements MigrationFeature {
                     .artifactId("flyway-sqlserver")
                     .runtime());
         }
-    }
-
-    @Override
-    public Map<String, Object> getAdditionalConfig() {
-        Map<String, Object> config = new LinkedHashMap<>(2);
-        config.put("flyway.datasources.default.enabled", true);
-        return config;
+        generatorContext.getConfiguration().addNested("flyway.datasources.default.enabled", true);
     }
 }
 

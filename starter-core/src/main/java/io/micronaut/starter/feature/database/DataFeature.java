@@ -22,10 +22,12 @@ import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.OneOfFeature;
 
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public interface DataFeature extends OneOfFeature {
+
+    String SCHEMA_GENERATE_KEY = "datasources.default.schema-generate";
 
     Dependency.Builder DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
             .artifactId("micronaut-data-processor")
@@ -39,11 +41,10 @@ public interface DataFeature extends OneOfFeature {
     }
 
     default Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
-//        Map<String, Object> conf = new LinkedHashMap<>();
-//        conf.put("datasources.default.schema-generate", "CREATE_DROP");
-//        conf.put("datasources.default.dialect", driverFeature.getDataDialect());
-//        return conf;
-        return Collections.singletonMap("datasources.default.dialect", driverFeature.getDataDialect());
+        Map<String, Object> conf = new LinkedHashMap<>();
+        conf.put(SCHEMA_GENERATE_KEY, "CREATE_DROP");
+        conf.put("datasources.default.dialect", driverFeature.getDataDialect());
+        return conf;
     }
 
     @Override

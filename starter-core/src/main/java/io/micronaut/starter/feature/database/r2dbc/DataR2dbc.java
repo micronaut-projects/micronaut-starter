@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
@@ -61,7 +62,12 @@ public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSup
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
+
+        Map<String, Object> datasourceConfig = getDatasourceConfig(dbFeature);
+        if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
+            datasourceConfig.remove("r2dbc.datasources.default.schema-generate");
+        }
+        generatorContext.getConfiguration().addNested(datasourceConfig);
     }
 
     @Override
