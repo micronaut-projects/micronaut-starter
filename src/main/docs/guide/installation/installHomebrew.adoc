@@ -2,14 +2,17 @@ In order to install Micronaut, run following command:
 
 [source,bash]
 ----
-$ brew install micronaut
+$ brew install --cask micronaut-projects/tap/micronaut
 ----
 
 You can find more information about Homebrew usage on their https://brew.sh/[homepage].
 
 You should now be able to run the Micronaut CLI.
 
-TIP: On macOS you may get a warning message saying that `“mn” cannot be opened because the developer cannot be verified.`. To resolve it, click the Apple menu, and select*System Settings*. Then browse to *Privacy & Security*, and scroll down to the *Security* section. There should be a warning that `"mn" was blocked`, with an *Allow Anyway* button. Clicking this button will fix the issue.
+TIP: On macOS you may get a warning message saying that `“mn” cannot be opened because the developer cannot be verified.`.
+To resolve it, click the Apple menu, and select *System Settings*. Then browse to *Privacy & Security*, and scroll down
+to the *Security* section. There should be a warning that `"mn" was blocked`, with an *Allow Anyway* button.
+Clicking this button will fix the issue.
 
 See the [Homebrew documentation](https://docs.brew.sh/FAQ#why-cant-i-open-a-mac-app-from-an-unidentified-developer) for more details about this.
 
