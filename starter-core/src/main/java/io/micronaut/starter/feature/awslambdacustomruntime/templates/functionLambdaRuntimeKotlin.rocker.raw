@@ -28,15 +28,15 @@ class FunctionLambdaRuntime : AbstractMicronautLambdaRuntime<APIGatewayProxyRequ
 {
 
 @if (features.contains("aws-lambda-scheduled-event")) {
-    override fun createRequestHandler(vararg args: String?): RequestHandler<ScheduledEvent, Void>? {
+    override fun createRequestHandler(vararg args: String?): RequestHandler<ScheduledEvent, Void?> {
         return FunctionRequestHandler()
     }
 } else if (features.contains("aws-lambda-s3-event-notification")) {
-    override fun createRequestHandler(vararg args: String?): RequestHandler<S3EventNotification, Void>? {
+    override fun createRequestHandler(vararg args: String?): RequestHandler<S3EventNotification, Void?> {
         return FunctionRequestHandler()
     }
 } else {
-    override fun createRequestHandler(vararg args: String?): RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent>? {
+    override fun createRequestHandler(vararg args: String?): RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
         return FunctionRequestHandler()
     }
 }
