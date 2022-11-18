@@ -14,7 +14,7 @@ To resolve it, click the Apple menu, and select *System Settings*. Then browse t
 to the *Security* section. There should be a warning that `"mn" was blocked`, with an *Allow Anyway* button.
 Clicking this button will fix the issue.
 
-See the [Homebrew documentation](https://docs.brew.sh/FAQ#why-cant-i-open-a-mac-app-from-an-unidentified-developer) for more details about this.
+See the https://docs.brew.sh/FAQ#why-cant-i-open-a-mac-app-from-an-unidentified-developer[Homebrew documentation] for more details about this.
 
 [source,bash]
 ----
