@@ -70,7 +70,7 @@ public class DataJpa implements JpaFeature, DataFeature {
                 .artifactId("micronaut-data-hibernate-jpa")
                 .compile());
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().addNested(getDatasourceConfig(dbFeature));
+        generatorContext.getConfiguration().addNested(getDatasourceConfig(generatorContext, dbFeature));
         generatorContext.getConfiguration().addNested(JPA_HIBERNATE_PROPERTIES_HBM2DDL,
                 generatorContext.getFeatures().hasFeature(MigrationFeature.class) ? Hbm2ddlAuto.NONE.toString() :
                         Hbm2ddlAuto.UPDATE.toString());
@@ -83,7 +83,7 @@ public class DataJpa implements JpaFeature, DataFeature {
     }
 
     @Override
-    public Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
+    public Map<String, Object> getDatasourceConfig(GeneratorContext generatorContext, DatabaseDriverFeature driverFeature) {
         return Collections.singletonMap("datasources.default.dialect", driverFeature.getDataDialect());
     }
 

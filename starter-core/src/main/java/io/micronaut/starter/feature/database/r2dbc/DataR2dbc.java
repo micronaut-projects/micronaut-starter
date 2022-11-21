@@ -61,19 +61,17 @@ public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSup
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
 
-        Map<String, Object> datasourceConfig = getDatasourceConfig(dbFeature);
-        if (generatorContext.isFeaturePresent(MigrationFeature.class)) {
-            datasourceConfig.remove("r2dbc.datasources.default.schema-generate");
-        }
-        generatorContext.getConfiguration().addNested(datasourceConfig);
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().addNested(getDatasourceConfig(generatorContext, dbFeature));
     }
 
     @Override
-    public Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
+    public Map<String, Object> getDatasourceConfig(GeneratorContext generatorContext, DatabaseDriverFeature driverFeature) {
         Map<String, Object> conf = new LinkedHashMap<>();
-        conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
+        if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+            conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
+        }
         conf.put("r2dbc.datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
     }
