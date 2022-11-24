@@ -19,7 +19,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -64,8 +63,9 @@ public class DataJdbc implements DataFeature {
                 .groupId("io.micronaut.data")
                 .artifactId("micronaut-data-jdbc")
                 .compile());
+
         DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().addNested(getDatasourceConfig(dbFeature));
+        generatorContext.getConfiguration().addNested(getDatasourceConfig(generatorContext, dbFeature));
     }
 
     @Override

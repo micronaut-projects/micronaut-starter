@@ -70,6 +70,7 @@ public class Flyway implements MigrationFeature {
                     .artifactId("flyway-sqlserver")
                     .runtime());
         }
+        generatorContext.getConfiguration().addNested("flyway.datasources.default.enabled", true);
     }
 }
 
