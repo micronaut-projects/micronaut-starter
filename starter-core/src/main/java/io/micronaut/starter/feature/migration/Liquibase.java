@@ -55,7 +55,7 @@ public class Liquibase implements MigrationFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate("src/main/resources/db/liquibase-changelog.xml",
                         liquibaseChangelog.template()));
-        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/01-schema.xml",
+        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
                         liquibaseSchema.template()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.liquibase")

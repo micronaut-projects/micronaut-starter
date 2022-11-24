@@ -22,7 +22,7 @@ class LiquibaseSpec extends ApplicationContextSpec  implements CommandOutputFixt
         when:
         def output = generate(['liquibase'])
         def changelog = output["src/main/resources/db/liquibase-changelog.xml"]
-        def schema = output["src/main/resources/db/01-schema.xml"]
+        def schema = output["src/main/resources/db/changelog/01-schema.xml"]
         def config = output["src/main/resources/application.yml"]
 
         then:
