@@ -16,26 +16,17 @@
 package io.micronaut.starter.feature.test;
 
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
-import io.micronaut.starter.options.Options;
 
-import jakarta.inject.Singleton;
-import java.util.Set;
-
-@Singleton
-public class AssertJValidator implements FeatureValidator {
+public interface MockingFeature extends Feature {
     @Override
-    public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof AssertJ)) {
-            if (features.stream().noneMatch(f -> (f instanceof Junit))) {
-                throw new IllegalArgumentException("AssertJ requires JUnit.");
-            }
-        }
+    default boolean supports(ApplicationType applicationType) {
+        return true;
     }
 
     @Override
-    public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-
+    default String getCategory() {
+        return Category.DEV_TOOLS;
     }
 }

@@ -31,7 +31,8 @@ public class MariaDB extends MySQLCompatibleFeature {
     public static final Dependency.Builder DEPENDENCY_MARIADB_JAVA_CLIENT = Dependency.builder()
             .groupId("org.mariadb.jdbc")
             .artifactId("mariadb-java-client")
-            .runtime();
+            .runtime()
+            .template();
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_MARIADB = Dependency.builder()
             .groupId("org.mariadb")

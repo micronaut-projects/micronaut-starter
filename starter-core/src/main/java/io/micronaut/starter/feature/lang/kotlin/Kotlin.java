@@ -15,10 +15,12 @@
  */
 package io.micronaut.starter.feature.lang.kotlin;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
@@ -29,25 +31,36 @@ import io.micronaut.starter.options.Options;
 import jakarta.inject.Singleton;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 @Singleton
 public class Kotlin implements LanguageFeature {
+    protected static final Dependency DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME = MicronautDependencyUtils.kotlinDependency()
+            .artifactId("micronaut-kotlin-runtime")
+            .compile()
+            .build();
 
-    private final List<KotlinApplicationFeature> applicationFeatures;
+    protected final List<KotlinApplicationFeature> applicationFeatures;
 
     public Kotlin(List<KotlinApplicationFeature> applicationFeatures) {
         this.applicationFeatures = applicationFeatures;
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "kotlin";
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        processSelectedFeatures(featureContext, kotlinApplicationFeature -> true);
+    }
+
+    protected void processSelectedFeatures(FeatureContext featureContext, Predicate<Feature> filter) {
         if (!featureContext.isPresent(ApplicationFeature.class)) {
             applicationFeatures.stream()
+                    .filter(filter)
                     .filter(f -> !f.isVisible() && f.supports(featureContext.getApplicationType()))
                     .findFirst()
                     .ifPresent(featureContext::addFeature);
@@ -56,20 +69,24 @@ public class Kotlin implements LanguageFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        addKotlinVersionProperty(generatorContext);
+        addDependencies(generatorContext);
+    }
+
+    protected void addKotlinVersionProperty(GeneratorContext generatorContext) {
         Coordinate coordinate = generatorContext.resolveCoordinate("kotlin-bom");
         generatorContext.getBuildProperties().put("kotlinVersion", coordinate.getVersion());
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
         Dependency.Builder kotlin = Dependency.builder()
                 .groupId("org.jetbrains.kotlin")
                 .compile()
                 .version("${kotlinVersion}")
                 .template();
-
         generatorContext.addDependency(kotlin.artifactId("kotlin-stdlib-jdk8"));
         generatorContext.addDependency(kotlin.artifactId("kotlin-reflect"));
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.kotlin")
-                .artifactId("micronaut-kotlin-runtime")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_KOTLIN_RUNTIME);
     }
 
     @Override

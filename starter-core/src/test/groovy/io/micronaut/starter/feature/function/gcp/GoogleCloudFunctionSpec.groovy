@@ -20,9 +20,9 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     void 'test readme.md with feature google-cloud-function contains links to docs'() {
         when:
         def output = generate(
-            ApplicationType.DEFAULT,
-            new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
-            ['google-cloud-function']
+                ApplicationType.DEFAULT,
+                new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                ['google-cloud-function']
         )
         def readme = output["README.md"]
 
@@ -150,9 +150,9 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
     void 'test Google Cloud does not support JDK < 11'() {
         when:
         generate(
-            ApplicationType.DEFAULT,
-            new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-            ['google-cloud-function']
+                ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
+                ['google-cloud-function']
         )
 
         then:
@@ -161,6 +161,22 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
         where:
         jdkVersion << [JdkVersion.JDK_8]
+    }
+
+    void 'test Google Cloud Function with #serialization is unsupported'() {
+        when:
+        generate(
+                ApplicationType.DEFAULT,
+                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
+                ['google-cloud-function',serialization]
+        )
+
+        then:
+        def e = thrown(IllegalArgumentException)
+        e.message == 'Google Cloud Function does not currently support micronaut-serialization.'
+
+        where:
+        serialization << ['serialization-jackson', 'serialization-bson', 'serialization-jsonp']
     }
 
     void 'test Google Cloud Function with graalvm is unsupported'() {

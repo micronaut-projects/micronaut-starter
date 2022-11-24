@@ -23,28 +23,34 @@ import io.micronaut.starter.cli.CodeGenConfig;
 import io.micronaut.starter.cli.command.CodeGenCommand;
 import io.micronaut.starter.io.ConsoleOutput;
 import io.micronaut.starter.io.OutputHandler;
-import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RenderResult;
 import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.TemplateRenderer;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 
-@CommandLine.Command(name = "create-client", description = "Creates a client interface")
+import static io.micronaut.starter.options.Language.GROOVY;
+import static io.micronaut.starter.options.Language.JAVA;
+import static io.micronaut.starter.options.Language.KOTLIN;
+
+@Command(name = "create-client", description = "Creates a client interface")
 public class CreateClientCommand extends CodeGenCommand {
 
     @ReflectiveAccess
-    @CommandLine.Parameters(paramLabel = "CLIENT-NAME", description = "The name of the client to create")
-    String clientName;
+    @Parameters(paramLabel = "CLIENT-NAME", description = "The name of the client to create")
+    protected String clientName;
 
     @Inject
     public CreateClientCommand(@Parameter CodeGenConfig config) {
         super(config);
     }
 
-    public CreateClientCommand(CodeGenConfig config, ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier, ConsoleOutput consoleOutput) {
+    public CreateClientCommand(CodeGenConfig config,
+                               ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier,
+                               ConsoleOutput consoleOutput) {
         super(config, outputHandlerSupplier, consoleOutput);
     }
 
@@ -61,11 +67,11 @@ public class CreateClientCommand extends CodeGenCommand {
         TemplateRenderer templateRenderer = getTemplateRenderer(project);
 
         RenderResult renderResult = null;
-        if (config.getSourceLanguage() == Language.JAVA) {
+        if (config.getSourceLanguage() == JAVA) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/java/{packagePath}/{className}Client.java", javaClient.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.GROOVY) {
+        } else if (config.getSourceLanguage() == GROOVY) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/groovy/{packagePath}/{className}Client.groovy", groovyClient.template(project)), overwrite);
-        } else if (config.getSourceLanguage() == Language.KOTLIN) {
+        } else if (config.getSourceLanguage() == KOTLIN) {
             renderResult = templateRenderer.render(new RockerTemplate("src/main/kotlin/{packagePath}/{className}Client.kt", kotlinClient.template(project)), overwrite);
         }
 

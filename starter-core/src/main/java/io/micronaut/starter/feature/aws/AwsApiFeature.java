@@ -15,5 +15,5 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature {
+public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
 }

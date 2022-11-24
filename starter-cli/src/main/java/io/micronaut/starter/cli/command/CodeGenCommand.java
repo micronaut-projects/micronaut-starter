@@ -25,9 +25,9 @@ import io.micronaut.starter.io.FileSystemOutputHandler;
 import io.micronaut.starter.io.OutputHandler;
 import io.micronaut.starter.template.TemplateRenderer;
 import io.micronaut.starter.util.NameUtils;
-import picocli.CommandLine;
-
 import jakarta.inject.Inject;
+import picocli.CommandLine.Option;
+
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
@@ -36,12 +36,12 @@ public abstract class CodeGenCommand extends BaseCommand implements Callable<Int
     protected final CodeGenConfig config;
 
     @ReflectiveAccess
-    @CommandLine.Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
+    @Option(names = {"-f", "--force"}, description = "Whether to overwrite existing files")
     protected boolean overwrite;
 
-    private final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
-    private final ConsoleOutput consoleOutput;
-    private BeanContext beanContext;
+    protected final ThrowingSupplier<OutputHandler, IOException> outputHandlerSupplier;
+    protected final ConsoleOutput consoleOutput;
+    protected BeanContext beanContext;
 
     public CodeGenCommand(CodeGenConfig config) {
         this.config = config;

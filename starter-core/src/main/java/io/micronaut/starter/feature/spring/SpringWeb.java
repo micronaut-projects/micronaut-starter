@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.spring;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.server.MicronautServerDependent;
 import jakarta.inject.Singleton;
 
@@ -62,8 +63,7 @@ public class SpringWeb extends SpringFeature implements MicronautServerDependent
                 .groupId("org.springframework.boot")
                 .artifactId("spring-boot-starter-web")
                 .compile());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut")
+        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-http-server")
                 .compile());
         generatorContext.addDependency(Dependency.builder()

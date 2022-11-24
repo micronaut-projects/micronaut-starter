@@ -15,27 +15,59 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.TestFramework;
 
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Junit implements TestFeature {
+    protected static final String GROUP_ID_JUNIT_JUPITER = "org.junit.jupiter";
+    protected static final String ARTIFACT_ID_JUNIT_JUPITER_API = "junit-jupiter-api";
+    protected static final String ARTIFACT_ID_JUNIT_JUPITER_ENGINE = "junit-jupiter-engine";
+
+    protected static final String ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5 = "micronaut-test-junit5";
+
+    protected static final Dependency DEPENDENCY_JUNIT_JUPITER_API = Dependency.builder()
+            .groupId(GROUP_ID_JUNIT_JUPITER)
+            .artifactId(ARTIFACT_ID_JUNIT_JUPITER_API)
+            .test()
+            .build();
+
+    protected static final Dependency DEPENDENCY_JUNIT_JUPITER_ENGINE = Dependency.builder()
+            .groupId(GROUP_ID_JUNIT_JUPITER)
+            .artifactId(ARTIFACT_ID_JUNIT_JUPITER_ENGINE)
+            .test()
+            .build();
+
+    protected static final Dependency DEPENDENCY_MICRONAUT_TEST_JUNIT5 = MicronautDependencyUtils
+            .testDependency()
+            .artifactId(ARTIFACT_ID_MICRONAUT_TEST_JUNIT_5)
+            .test()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return "junit";
     }
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        // no-op
+        // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            generatorContext.addDependency(DEPENDENCY_JUNIT_JUPITER_API);
+            generatorContext.addDependency(DEPENDENCY_JUNIT_JUPITER_ENGINE);
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_JUNIT5);
+        }
     }
 
     @Override
     public TestFramework getTestFramework() {
         return TestFramework.JUNIT;
     }
-
 }

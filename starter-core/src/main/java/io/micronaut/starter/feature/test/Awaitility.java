@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -31,6 +32,7 @@ public class Awaitility implements Feature {
     private static final String AWAITILITY_KOTLIN_ARTIFACT_ID = "awaitility-kotlin";
 
     @Override
+    @NonNull
     public String getName() {
         return "awaitility";
     }
@@ -41,6 +43,7 @@ public class Awaitility implements Feature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Awaitility is a framework for testing asynchronous code";
     }

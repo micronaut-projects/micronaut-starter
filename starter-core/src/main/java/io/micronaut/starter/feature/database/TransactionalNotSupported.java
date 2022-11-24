@@ -13,16 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.camunda;
+package io.micronaut.starter.feature.database;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.CommunityFeature;
-
-public interface NovatecFeature extends CommunityFeature {
-
-    @Override
-    @NonNull
-    default String getCommunityContributor() {
-        return "Novatec";
-    }
+/**
+ * Marker interface for features which don't support transactional.
+ */
+public interface TransactionalNotSupported {
 }

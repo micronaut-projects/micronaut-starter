@@ -15,11 +15,13 @@
  */
 package io.micronaut.starter.feature.lang.java;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.test.template.javaJunit;
 import io.micronaut.starter.feature.test.template.koTest;
 import io.micronaut.starter.feature.test.template.spock;
@@ -53,28 +55,42 @@ public class JavaApplication implements JavaApplicationFeature  {
     public void apply(GeneratorContext generatorContext) {
         JavaApplicationFeature.super.apply(generatorContext);
         if (shouldGenerateApplicationFile(generatorContext)) {
-            String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-
-            generatorContext.addTemplate("application", new RockerTemplate(getPath(),
-                    application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment)));
-            TestFramework testFramework = generatorContext.getTestFramework();
-            String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
-            Project project = generatorContext.getProject();
-            TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project),
-                    javaJunit.template(project),
-                    javaJunit.template(project),
-                    javaJunit.template(project),
-                    koTest.template(project));
-            generatorContext.addTemplate("applicationTest",
-                    new RockerTemplate(testSourcePath,
-                            provider.findModel(generatorContext.getLanguage(), testFramework))
-            );
+            addApplication(generatorContext);
+            addApplicationTest(generatorContext);
         }
     }
 
     protected boolean shouldGenerateApplicationFile(GeneratorContext generatorContext) {
         return generatorContext.getApplicationType() == ApplicationType.DEFAULT
                 || !generatorContext.getFeatures().hasFunctionFeature();
+    }
+
+    protected void addApplication(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("application", new RockerTemplate(getPath(),
+                application(generatorContext)));
+    }
+
+    protected RockerModel application(GeneratorContext generatorContext) {
+        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
+        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
+    }
+
+    protected void addApplicationTest(GeneratorContext generatorContext) {
+        String testSourcePath = generatorContext.getTestSourcePath("/{packagePath}/{className}");
+        generatorContext.addTemplate("applicationTest",
+                new RockerTemplate(testSourcePath, applicationTest(generatorContext)));
+    }
+
+    protected RockerModel applicationTest(GeneratorContext generatorContext) {
+        TestFramework testFramework = generatorContext.getTestFramework();
+        Project project = generatorContext.getProject();
+        boolean transactional = !generatorContext.getFeatures().hasFeature(TransactionalNotSupported.class);
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spock.template(project, transactional),
+                javaJunit.template(project, transactional),
+                javaJunit.template(project, transactional),
+                javaJunit.template(project, transactional),
+                koTest.template(project, transactional));
+        return provider.findModel(generatorContext.getLanguage(), testFramework);
     }
 
     protected String getPath() {

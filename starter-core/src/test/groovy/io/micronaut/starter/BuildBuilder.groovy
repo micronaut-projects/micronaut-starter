@@ -12,6 +12,7 @@ import io.micronaut.starter.build.gradle.GradleBuildCreator
 import io.micronaut.starter.build.maven.MavenBuild
 import io.micronaut.starter.build.maven.MavenBuildCreator
 import io.micronaut.starter.feature.Features
+import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.feature.build.gradle.templates.buildGradle
 import io.micronaut.starter.feature.build.maven.templates.pom
 import io.micronaut.starter.fixture.ContextFixture
@@ -125,7 +126,7 @@ class BuildBuilder implements ProjectFixture, ContextFixture {
 
     GradleBuild gradleBuild(Options options, Features features, Project project, ApplicationType type) {
         GeneratorContext ctx = createGeneratorContextAndApplyFeatures(options, features, project, type)
-        getGradleDependencyResolver().create(ctx, micronautRepositories())
+        getGradleDependencyResolver().create(ctx, micronautRepositories(), Gradle.DEFAULT_USER_VERSION_CATALOGUE)
     }
 
     GeneratorContext createGeneratorContextAndApplyFeatures(Options options, Features features, Project project, ApplicationType type) {

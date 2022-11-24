@@ -15,22 +15,60 @@
  */
 package io.micronaut.starter.feature.test;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+import io.micronaut.starter.options.BuildTool;
+import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestFramework;
 
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Spock implements TestFeature {
+    protected static final String GROUP_ID_SPOCKFRAMEWORK = "org.spockframework";
+    protected static final String ARTIFACT_ID_SPOCK_CORE = "spock-core";
+    protected static final String GROUP_ID_CODEHAUS_GROOVY = "org.codehaus.groovy";
+    protected static final String ARTIFACT_ID_GROOVY_ALL = "groovy-all";
+    protected static final Dependency DEPENDENCY_MICRONAUT_INJECT_GROOVY = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-inject-groovy")
+            .test()
+            .build();
+
+    protected static final Dependency DEPENDENCY_MICRONAUT_TEST_SPOCK = MicronautDependencyUtils
+            .testDependency()
+            .artifactId("micronaut-test-spock")
+            .test()
+            .build();
+
+    protected static final Dependency DEPENDENCY_SPOCK_CORE_EXCLUDING_GROOVY_ALL = Dependency.builder()
+            .groupId(GROUP_ID_SPOCKFRAMEWORK)
+            .artifactId(ARTIFACT_ID_SPOCK_CORE)
+            .exclude(Dependency.builder()
+                    .groupId(GROUP_ID_CODEHAUS_GROOVY)
+                    .artifactId(ARTIFACT_ID_GROOVY_ALL)
+                    .build())
+            .test()
+            .build();
 
     @Override
+    @NonNull
     public String getName() {
         return "spock";
     }
 
     @Override
     public void doApply(GeneratorContext generatorContext) {
-        // no-op
+        // Only for Maven, these dependencies are applied by the Micronaut Gradle Plugin
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            if (generatorContext.getLanguage() != Language.GROOVY) {
+                generatorContext.addDependency(DEPENDENCY_MICRONAUT_INJECT_GROOVY);
+            }
+            generatorContext.addDependency(DEPENDENCY_SPOCK_CORE_EXCLUDING_GROOVY_ALL);
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_TEST_SPOCK);
+        }
     }
 
     @Override

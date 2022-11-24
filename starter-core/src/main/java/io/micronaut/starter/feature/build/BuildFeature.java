@@ -36,4 +36,11 @@ public interface BuildFeature extends DefaultFeature {
         return true;
     }
 
+    default boolean isGradle() {
+        return false;
+    }
+
+    default boolean isMaven() {
+        return false;
+    }
 }

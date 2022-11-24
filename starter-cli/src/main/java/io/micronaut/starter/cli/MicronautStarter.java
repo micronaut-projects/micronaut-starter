@@ -20,15 +20,31 @@ import io.micronaut.context.BeanContext;
 import io.micronaut.context.annotation.Prototype;
 import io.micronaut.core.annotation.TypeHint;
 import io.micronaut.inject.BeanDefinition;
-import io.micronaut.starter.cli.command.*;
+import io.micronaut.starter.cli.command.BaseCommand;
+import io.micronaut.starter.cli.command.BuildToolCandidates;
+import io.micronaut.starter.cli.command.BuildToolConverter;
+import io.micronaut.starter.cli.command.CodeGenCommand;
+import io.micronaut.starter.cli.command.CreateAppCommand;
+import io.micronaut.starter.cli.command.CreateBuilderCommand;
+import io.micronaut.starter.cli.command.CreateCliCommand;
+import io.micronaut.starter.cli.command.CreateFunctionCommand;
+import io.micronaut.starter.cli.command.CreateGrpcCommand;
+import io.micronaut.starter.cli.command.CreateLambdaBuilderCommand;
+import io.micronaut.starter.cli.command.CreateMessagingCommand;
+import io.micronaut.starter.cli.command.LanguageCandidates;
+import io.micronaut.starter.cli.command.LanguageConverter;
+import io.micronaut.starter.cli.command.TestFrameworkCandidates;
+import io.micronaut.starter.cli.command.TestFrameworkConverter;
 import io.micronaut.starter.cli.feature.acme.AcmeServerOption;
 import io.micronaut.starter.io.ConsoleOutput;
 import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.ParameterException;
 
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
 
-@CommandLine.Command(name = "mn", description = {
+@Command(name = "mn", description = {
             "Micronaut CLI command line interface for generating projects and services.",
             "Application generation commands are:",
             "",
@@ -48,7 +64,8 @@ import java.util.function.BiFunction;
                 CreateFunctionCommand.class,
                 CreateGrpcCommand.class,
                 CreateMessagingCommand.class,
-                CreateBuilderCommand.class
+                CreateBuilderCommand.class,
+                CreateLambdaBuilderCommand.class
         })
 @Prototype
 @TypeHint({
@@ -121,6 +138,6 @@ public class MicronautStarter extends BaseCommand implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        throw new CommandLine.ParameterException(spec.commandLine(), "No command specified");
+        throw new ParameterException(spec.commandLine(), "No command specified");
     }
 }

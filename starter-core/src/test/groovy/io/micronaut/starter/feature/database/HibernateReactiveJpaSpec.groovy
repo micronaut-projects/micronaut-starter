@@ -6,10 +6,12 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
+import io.micronaut.starter.feature.testresources.DbType
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
+import groovy.xml.XmlSlurper
 
 @Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
@@ -104,13 +106,21 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains('testImplementation("org.testcontainers:testcontainers")')
         !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
+        and: "postgres needs another dependency with vert.x"
+        template.contains('implementation("com.ongres.scram:client:') == (db == PostgreSQL.NAME)
+
+        and: 'the driver and correct module are included for test-resources'
+        !template.contains($/runtimeOnly("$driver.groupId:$driver.artifactId")/$)
+        template.contains($/testResourcesService("$driver.groupId:$driver.artifactId")/$)
+        template.contains($/additionalModules.add("$testResourcesModule")/$)
+
         where:
-        db              | client                                    | container
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver'
+        db              | client                                    | container     | testResourcesModule                                        | driver
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
     void "test dependencies are present for gradle with #db (#client) and #migration"() {
@@ -132,18 +142,25 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !template.contains('testImplementation("org.testcontainers:testcontainers")')
         !template.contains($/testImplementation("org.testcontainers:$container")/$)
 
+        and: "postgres needs another dependency with vert.x"
+        template.contains('implementation("com.ongres.scram:client:') == (db == PostgreSQL.NAME)
+
+        and: 'the correct module is included for test-resources'
+        !template.contains($/testResourcesService("$migrationDriver.groupId:$migrationDriver.artifactId")/$)
+        template.contains($/additionalModules.add("$testResourcesModule")/$)
+
         where:
-        db              | client                                    | container     | migration      | migrationDriver
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Liquibase.NAME | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Liquibase.NAME | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Liquibase.NAME | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Liquibase.NAME | Oracle.DEPENDENCY_OJDBC8.build()
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Liquibase.NAME | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Flyway.NAME    | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Flyway.NAME    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Flyway.NAME    | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Flyway.NAME    | Oracle.DEPENDENCY_OJDBC8.build()
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Flyway.NAME    | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
+        db              | client                                    | container     | migration      | testResourcesModule                                        | migrationDriver
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Liquibase.NAME | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Liquibase.NAME | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Liquibase.NAME | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Liquibase.NAME | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mysql'       | Flyway.NAME    | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | 'mariadb'     | Flyway.NAME    | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | 'postgresql'  | Flyway.NAME    | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | 'oracle-xe'   | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | 'mssqlserver' | Flyway.NAME    | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
     void "test kotlin jpa plugin is present for gradle kotlin project"() {
@@ -164,9 +181,10 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 .features([HibernateReactiveJpa.NAME, db])
                 .jdkVersion(JdkVersion.JDK_11)
                 .render()
+        def parsed = new XmlSlurper().parseText(template)
+        def micronautPlugin = parsed.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
 
         then:
-        //src/main
         !containsDataProcessor(template)
         !containsDataHibernateJpa(template)
         !containsDataHibernateReactive(template)
@@ -174,6 +192,17 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !containsHikariDependency(template)
         containsVertXDriver(template, client)
         !containsJdbcDriver(template, migrationDriver)
+
+        and: "postgres needs another dependency with vert.x"
+        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
+
+        and: 'test resources module is correct, and driver is added to the plugin dependencies'
+        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
+            it.artifactId.text() == "micronaut-test-resources-$testResourcesModule"
+        }
+        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == migrationDriver.groupId }) {
+            it.artifactId.text() == migrationDriver.artifactId
+        }
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
@@ -183,12 +212,12 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !semanticVersionOptional.isPresent()
 
         where:
-        db              | client                                    | migrationDriver
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Oracle.DEPENDENCY_OJDBC8.build()
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
+        db              | client                                    | testResourcesModule                                        | migrationDriver
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
     void "test dependencies are present for maven with #db (#client) and #migration"() {
@@ -197,9 +226,10 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 .features([HibernateReactiveJpa.NAME, db, migration])
                 .jdkVersion(JdkVersion.JDK_11)
                 .render()
+        def parsed = new XmlSlurper().parseText(template)
+        def micronautPlugin = parsed.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
 
         then:
-        //src/main
         !containsDataProcessor(template)
         !containsDataHibernateJpa(template)
         !containsDataHibernateReactive(template)
@@ -209,6 +239,15 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         containsMigrationLibrary(template, migration)
         containsJdbcDriver(template, migrationDriver)
 
+        and: "postgres needs another dependency with vert.x"
+        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
+
+        and: 'test resources module is correct, and driver is not added to the plugin dependencies'
+        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
+            it.artifactId.text() == "micronaut-test-resources-$testResourcesModule"
+        }
+        !micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == migrationDriver.groupId }
+
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
 
@@ -217,17 +256,17 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !semanticVersionOptional.isPresent()
 
         where:
-        db              | client                                    | migration      | migrationDriver
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Liquibase.NAME | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Liquibase.NAME | Oracle.DEPENDENCY_OJDBC8.build()
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Liquibase.NAME | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
-        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
-        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
-        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Flyway.NAME    | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
-        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Flyway.NAME    | Oracle.DEPENDENCY_OJDBC8.build()
-        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Flyway.NAME    | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
+        db              | client                                    | migration      | testResourcesModule                                        | migrationDriver
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Liquibase.NAME | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Liquibase.NAME | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Liquibase.NAME | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Liquibase.NAME | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
+        MySQL.NAME      | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | DbType.MYSQL.hibernateReactiveTestResourcesModuleName      | MySQL.DEPENDENCY_MYSQL_CONNECTOR_JAVA.build()
+        MariaDB.NAME    | MySQLCompatibleFeature.VERTX_MYSQL_CLIENT | Flyway.NAME    | DbType.MARIADB.hibernateReactiveTestResourcesModuleName    | MariaDB.DEPENDENCY_MARIADB_JAVA_CLIENT.build()
+        PostgreSQL.NAME | PostgreSQL.VERTX_PG_CLIENT                | Flyway.NAME    | DbType.POSTGRESQL.hibernateReactiveTestResourcesModuleName | PostgreSQL.DEPENDENCY_POSTGRESQL.build()
+        Oracle.NAME     | Oracle.VERTX_ORACLE_CLIENT                | Flyway.NAME    | DbType.ORACLEXE.hibernateReactiveTestResourcesModuleName   | Oracle.DEPENDENCY_OJDBC8.build()
+        SQLServer.NAME  | SQLServer.VERTX_MSSQL_CLIENT              | Flyway.NAME    | DbType.SQLSERVER.hibernateReactiveTestResourcesModuleName  | SQLServer.DEPENDENCY_MSSQL_JDBC.build()
     }
 
     void "test kotlin jpa plugin is present for maven kotlin project"() {
@@ -258,20 +297,18 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !ctx.configuration.containsKey("datasources.default.password")
         !ctx.configuration.containsKey("datasources.default.dialect")
         ctx.configuration."jpa.default.reactive" == true
-        with(ctx.configuration."jpa.default.properties.hibernate.connection.url") {
-            it.startsWith("jdbc:")
-            it.contains(jdbcContains)
-        }
-        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.username")
-        ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
+        ctx.configuration."jpa.default.properties.hibernate.connection.db-type" == dbType
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.url")
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.username")
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
 
         where:
-        db              | jdbcContains
+        db              | dbType
         MySQL.NAME      | 'mysql'
         MariaDB.NAME    | 'mariadb'
-        PostgreSQL.NAME | 'postgresql'
+        PostgreSQL.NAME | 'postgres'
         Oracle.NAME     | 'oracle'
-        SQLServer.NAME  | 'sqlserver'
+        SQLServer.NAME  | 'mssql'
     }
 
     void "test config for #db with #migration"() {
@@ -285,21 +322,22 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !ctx.configuration.containsKey("datasources.default.dialect")
         ctx.configuration."datasources.default.db-type" == type
         ctx.configuration."jpa.default.reactive" == true
-        ctx.configuration."jpa.default.properties.hibernate.connection.url" == '${datasources.default.url}'
-        ctx.configuration."jpa.default.properties.hibernate.connection.username" == '${datasources.default.username}'
-        ctx.configuration."jpa.default.properties.hibernate.connection.password" == '${datasources.default.password}'
+        ctx.configuration."jpa.default.properties.hibernate.connection.db-type" == type
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.url")
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.username")
+        !ctx.configuration.containsKey("jpa.default.properties.hibernate.connection.password")
 
         where:
-        db              | type         | migration
-        MySQL.NAME      | 'mysql'      | Flyway.NAME
-        MariaDB.NAME    | 'mariadb'    | Flyway.NAME
-        PostgreSQL.NAME | 'postgresql' | Flyway.NAME
-        Oracle.NAME     | 'oracle'     | Flyway.NAME
-        SQLServer.NAME  | 'mssql'      | Flyway.NAME
-        MySQL.NAME      | 'mysql'      | Liquibase.NAME
-        MariaDB.NAME    | 'mariadb'    | Liquibase.NAME
-        PostgreSQL.NAME | 'postgresql' | Liquibase.NAME
-        Oracle.NAME     | 'oracle'     | Liquibase.NAME
-        SQLServer.NAME  | 'mssql'      | Liquibase.NAME
+        db              | type       | migration
+        MySQL.NAME      | 'mysql'    | Flyway.NAME
+        MariaDB.NAME    | 'mariadb'  | Flyway.NAME
+        PostgreSQL.NAME | 'postgres' | Flyway.NAME
+        Oracle.NAME     | 'oracle'   | Flyway.NAME
+        SQLServer.NAME  | 'mssql'    | Flyway.NAME
+        MySQL.NAME      | 'mysql'    | Liquibase.NAME
+        MariaDB.NAME    | 'mariadb'  | Liquibase.NAME
+        PostgreSQL.NAME | 'postgres' | Liquibase.NAME
+        Oracle.NAME     | 'oracle'   | Liquibase.NAME
+        SQLServer.NAME  | 'mssql'    | Liquibase.NAME
     }
 }

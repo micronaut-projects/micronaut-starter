@@ -24,7 +24,7 @@ application {
 }
 
 tasks.named('dockerfileNative') {
-    baseImage("ghcr.io/graalvm/native-image:ol7-java11-22.2.0")
+    baseImage("ghcr.io/graalvm/native-image:ol7-java11-22.3.0")
 }
 
 tasks.named("dockerBuildNative") {

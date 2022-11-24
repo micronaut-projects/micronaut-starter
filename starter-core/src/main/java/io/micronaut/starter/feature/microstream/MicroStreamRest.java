@@ -31,7 +31,7 @@ public class MicroStreamRest implements MicroStreamFeature {
 
     private final MicroStream microStream;
 
-    MicroStreamRest(MicroStream microStream) {
+    public MicroStreamRest(MicroStream microStream) {
         this.microStream = microStream;
     }
 
@@ -39,11 +39,6 @@ public class MicroStreamRest implements MicroStreamFeature {
     @NonNull
     public String getName() {
         return NAME;
-    }
-
-    @Override
-    public boolean isPreview() {
-        return true;
     }
 
     @Override

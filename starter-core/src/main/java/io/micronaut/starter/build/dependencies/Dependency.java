@@ -254,6 +254,10 @@ public final class Dependency {
             return scope(Scope.TEST_RUNTIME);
         }
 
+        public Builder testResourcesService() {
+            return scope(Scope.TEST_RESOURCES_SERVICE);
+        }
+
         public Builder nativeImageCompileOnly() {
             return scope(Scope.NATIVE_IMAGE_COMPILE_ONLY);
         }

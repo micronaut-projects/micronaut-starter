@@ -28,6 +28,10 @@ public class RockerWritable implements Writable {
         this.model = model;
     }
 
+    public RockerModel getModel() {
+        return model;
+    }
+
     @Override
     public void write(OutputStream outputStream) {
         model.render((contentType, charsetName) ->

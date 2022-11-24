@@ -22,6 +22,7 @@ import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.dependencies.Phase;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.build.dependencies.Source;
@@ -64,19 +65,16 @@ public class MavenBuildCreator {
             }
         }
 
-        Coordinate injectJava = Dependency.builder()
-                .groupId("io.micronaut")
+        Coordinate injectJava = MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-inject-java")
                 .versionProperty("micronaut.version")
                 .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
                 .buildCoordinate(true);
-        Coordinate validation = Dependency.builder()
-                .groupId("io.micronaut")
+        Coordinate validation = MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-validation")
                 .versionProperty("micronaut.version")
                 .buildCoordinate(true);
-        Coordinate mnGraal = Dependency.builder()
-                .groupId("io.micronaut")
+        Coordinate mnGraal = MicronautDependencyUtils.coreDependency()
                 .artifactId("micronaut-graal")
                 .versionProperty("micronaut.version")
                 .buildCoordinate(true);
@@ -108,9 +106,14 @@ public class MavenBuildCreator {
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
-                MavenRepository.listOf(micronautRepositories()),
+                getRepositories(),
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles());
+    }
+
+    @NonNull
+    protected List<MavenRepository> getRepositories() {
+        return MavenRepository.listOf(micronautRepositories());
     }
 }

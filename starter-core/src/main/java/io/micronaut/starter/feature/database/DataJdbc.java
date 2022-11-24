@@ -25,6 +25,7 @@ import jakarta.inject.Singleton;
 @Singleton
 public class DataJdbc implements DataFeature {
 
+    public static final String NAME = "data-jdbc";
     private final Data data;
     private final JdbcFeature jdbcFeature;
 
@@ -35,7 +36,7 @@ public class DataJdbc implements DataFeature {
 
     @Override
     public String getName() {
-        return "data-jdbc";
+        return NAME;
     }
 
     @Override

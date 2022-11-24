@@ -13,23 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.test;
+package io.micronaut.starter.feature.validation;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.validation.FeatureValidator;
+import io.micronaut.starter.feature.MinJdkFeature;
+import io.micronaut.starter.options.JdkVersion;
 import io.micronaut.starter.options.Options;
-
 import jakarta.inject.Singleton;
+
 import java.util.Set;
 
 @Singleton
-public class MockitoValidator implements FeatureValidator {
+public class MinJdkFeatureValidator implements FeatureValidator {
+
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof Mockito)) {
-            if (features.stream().noneMatch(f -> (f instanceof Junit))) {
-                throw new IllegalArgumentException("Mockito requires JUnit.");
+        JdkVersion jdk = options.getJavaVersion();
+        for (Feature f : features) {
+            if (f instanceof MinJdkFeature) {
+                JdkVersion min = ((MinJdkFeature) f).minJdk();
+                if (!jdk.greaterThanEqual(min)) {
+                    throw new IllegalArgumentException(String.format("The selected feature %s requires at latest Java %d", f.getName(), min.majorVersion()));
+                }
             }
         }
     }

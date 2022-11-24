@@ -1,8 +1,6 @@
 @import io.micronaut.starter.application.Project
 
-@args (
-Project project
-)
+@args (Project project, boolean transactional)
 
 @if (project.getPackageName() != null) {
 package @project.getPackageName()
@@ -21,7 +19,11 @@ import spock.lang.Shared
 
 import jakarta.inject.Inject
 
+@if(transactional) {
 @@MicronautTest
+} else {
+@@MicronautTest(transactional = false)
+}
 class @project.getClassName()ControllerSpec extends Specification {
 
     @@Shared @@Inject

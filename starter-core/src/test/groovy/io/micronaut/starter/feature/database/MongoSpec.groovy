@@ -106,6 +106,8 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         ['mongo-reactive']                               | null
         ['mongo-sync']                                   | null
         ['mongo-reactive', 'mongo-sync']                 | null
+        ['data-mongodb', 'test-resources']               | null
+        ['data-mongodb-reactive', 'test-resources']      | null
 
         features = featureList.dropRight(1).join(", ") + (featureList.size() > 1 ? " and " : '') + featureList.last()
     }
