@@ -72,7 +72,7 @@ import io.micronaut.runtime.Micronaut;
 public class Application {
 
     @ContextConfigurer
-    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+    public static class Configurer implements ApplicationContextConfigurer {
         @Override
         public void configure(@NonNull ApplicationContextBuilder builder) {
             builder.defaultEnvironments("env");
@@ -103,7 +103,7 @@ import io.micronaut.runtime.Micronaut;
 public class Application {
 
     @ContextConfigurer
-    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+    public static class Configurer implements ApplicationContextConfigurer {
         @Override
         public void configure(@NonNull ApplicationContextBuilder builder) {
             builder.defaultEnvironments("env");
@@ -135,7 +135,7 @@ import io.micronaut.runtime.Micronaut;
 public class Application {
 
     @ContextConfigurer
-    public static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+    public static class Configurer implements ApplicationContextConfigurer {
         @Override
         public void configure(@NonNull ApplicationContextBuilder builder) {
             builder.eagerInitSingletons(true);
