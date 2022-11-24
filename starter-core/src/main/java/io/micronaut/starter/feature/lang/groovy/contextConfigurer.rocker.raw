@@ -1,7 +1,7 @@
 @args (String defaultEnvironment, boolean eagerInitSingleton)
 
     @@ContextConfigurer
-    static class CustomApplicationContextConfigurer implements ApplicationContextConfigurer {
+    static class Configurer implements ApplicationContextConfigurer {
         @@Override
         public void configure(@@NonNull ApplicationContextBuilder builder) {
 @if (defaultEnvironment != null) {
