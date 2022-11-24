@@ -1,0 +1,35 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.google.events.cloud.storage.v1.StorageObjectData
+
+import io.cloudevents.CloudEventContext
+import io.micronaut.gcp.function.cloudevents.GoogleCloudEventsFunction
+import io.micronaut.core.annotation.*
+
+import jakarta.inject.*
+
+class Function : GoogleCloudEventsFunction<StorageObjectData>() {
+    @@Inject
+    lateinit var storageService: StorageService
+
+    override fun accept(@@NonNull context: CloudEventContext,
+                        @@Nullable data: StorageObjectData) {
+        storageService.handleFileEvent(data)
+    }
+}
+
+@@Singleton
+class StorageService {
+
+    fun handleFileEvent(data: StorageObjectData) {
+        // handle the storage object
+    }
+}
