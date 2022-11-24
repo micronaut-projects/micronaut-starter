@@ -31,6 +31,11 @@ import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
 import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration;
 import static software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion.VERSION_1_0;
 }
+@if (features.contains("aws-alexa")) {
+import software.amazon.awscdk.services.iam.ServicePrincipal;
+import software.amazon.awscdk.services.lambda.Permission;
+}
+
 @if (features.contains("aws-lambda-scheduled-event")) {
 import software.amazon.awscdk.services.events.Rule;
 import software.amazon.awscdk.services.events.Schedule;
@@ -150,6 +155,12 @@ public class AppStack extends Stack {
                 .architecture(Architecture.X86_64)
 }
                 .build();
+}
+@if (features.contains("aws-alexa")) {
+        function.addPermission("alexa-skills-kit-trigger", Permission.builder()
+                .principal(new ServicePrincipal("alexa-appkit.amazon.com"))
+                .eventSourceToken("Replace-With-SKILL-ID")
+                .build());
 }
 @if (features.contains("dynamodb")) {
         table.grantReadWriteData(function);

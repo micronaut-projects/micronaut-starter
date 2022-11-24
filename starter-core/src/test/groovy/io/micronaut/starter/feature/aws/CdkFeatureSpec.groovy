@@ -5,6 +5,7 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.Category
+import io.micronaut.starter.feature.awsalexa.AwsAlexa
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -52,6 +53,27 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         then:
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.logs.RetentionDays;')
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
+
+        where:
+        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+    }
+
+    void 'Function AppStack with Alexa Skills is included for #buildTool'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [Cdk.NAME,AwsAlexa.NAME])
+
+        then:
+        // aws-lambda is automatic, but if that assumption changes might need to fix cdkappstack rocker file
+        output.'micronaut-cli.yml'.contains('aws-lambda')
+
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.iam.ServicePrincipal;')
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Permission;')
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains("""
+        function.addPermission("alexa-skills-kit-trigger", Permission.builder()
+                .principal(new ServicePrincipal("alexa-appkit.amazon.com"))
+                .eventSourceToken("Replace-With-SKILL-ID")
+                .build());
+""")
 
         where:
         buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
