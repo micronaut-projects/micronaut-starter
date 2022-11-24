@@ -1,0 +1,13 @@
+@args (String defaultEnvironment, boolean eagerInitSingleton)
+
+@@ContextConfigurer
+class Configurer: ApplicationContextConfigurer {
+    override fun configure(builder: ApplicationContextBuilder) {
+@if (defaultEnvironment != null) {
+        builder.defaultEnvironments("@(defaultEnvironment)");
+}
+@if (eagerInitSingleton) {
+        builder.eagerInitSingletons(true);
+}
+	}
+}

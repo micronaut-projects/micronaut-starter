@@ -21,12 +21,12 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.jdbc.Hikari;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Crac implements Feature {
+public class Crac implements RequireEagerSingletonInitializationFeature {
 
     public static final String NAME = "crac";
 
