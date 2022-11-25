@@ -90,6 +90,8 @@ io.micronaut.starter.feature.ci.workflows.gcp
 io.micronaut.starter.feature.ci.workflows.gcp.templates
 io.micronaut.starter.feature.ci.workflows.github
 io.micronaut.starter.feature.ci.workflows.github.templates
+io.micronaut.starter.feature.ci.workflows.gitlab
+io.micronaut.starter.feature.ci.workflows.gitlab.templates
 io.micronaut.starter.feature.ci.workflows.oci
 io.micronaut.starter.feature.ci.workflows.oci.templates
 io.micronaut.starter.feature.coherence
