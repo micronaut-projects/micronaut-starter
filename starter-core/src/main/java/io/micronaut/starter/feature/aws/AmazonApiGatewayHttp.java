@@ -17,6 +17,8 @@ package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
@@ -46,13 +48,25 @@ public class AmazonApiGatewayHttp extends AwsLambdaRelatedFeature implements Aws
     }
 
     @Override
+    public String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway";
+    }
+
+    @Override
     public String getThirdPartyDocumentation() {
-        return "https://aws.amazon.com/api-gateway/";
+        return "https://docs.aws.amazon.com/apigateway/";
     }
 
     @Override
     public boolean supports(ApplicationType applicationType) {
         return applicationType == ApplicationType.DEFAULT ||
                applicationType == ApplicationType.FUNCTION;
+    }
+
+    @Override
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MicronautDependencyUtils.awsDependency()
+                .artifactId("micronaut-aws-apigateway")
+                .compile());
     }
 }

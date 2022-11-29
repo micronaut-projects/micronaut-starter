@@ -36,10 +36,10 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.architecture.Arm;
-import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
+import io.micronaut.starter.feature.architecture.Arm;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
 import io.micronaut.starter.feature.aws.template.cdkhelp;
@@ -178,13 +178,20 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .artifactId("junit-jupiter-engine")
                 .test());
         if (generatorContext.getFeatures().hasFeature(AmazonApiGatewayHttp.class)) {
+            dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
+                    .artifactId("micronaut-aws-apigateway")
+                    .compile());
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-alpha")
                     .compile());
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-integrations-alpha")
                     .compile());
-
+        }
+        if (generatorContext.getFeatures().hasFeature(AmazonApiGateway.class)) {
+            dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
+                    .artifactId("micronaut-aws-apigateway")
+                    .compile());
         }
     }
 
