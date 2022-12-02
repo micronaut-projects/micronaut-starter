@@ -1,5 +1,6 @@
 package io.micronaut.starter.core.test.feature.database
 
+import io.micronaut.core.io.Writable
 import io.micronaut.starter.feature.database.HibernateReactiveJpa
 import io.micronaut.starter.feature.database.MariaDB
 import io.micronaut.starter.feature.database.MySQL
@@ -11,6 +12,7 @@ import io.micronaut.starter.io.FileSystemOutputHandler
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
 import io.micronaut.starter.template.RockerWritable
+import io.micronaut.starter.template.StringTemplate
 import io.micronaut.starter.test.CommandSpec
 import org.gradle.testkit.runner.BuildResult
 import io.micronaut.starter.core.test.feature.database.templates.book
@@ -18,6 +20,8 @@ import spock.lang.Requires
 
 @Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends CommandSpec {
+
+    private static final ORACLE_BUILD_MEMORY = "-Xmx1g"
 
     @Override
     String getTempDirectoryPrefix() {
@@ -34,6 +38,9 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         if (db == SQLServer.NAME) {
             new File(dir, "src/test/resources/").mkdirs()
             fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
+        } else if (db == Oracle.NAME) {
+            // Give the maven build some more memory
+            fsoh.write(".mvn/jvm.config", new StringTemplate(null, "$ORACLE_BUILD_MEMORY\n"))
         }
 
         String output = executeMaven("compile test")
@@ -55,6 +62,9 @@ class HibernateReactiveJpaSpec extends CommandSpec {
         if (db == SQLServer.NAME) {
             new File(dir, "src/test/resources/").mkdirs()
             fsoh.write("src/test/resources/application-test.yml", { OutputStream output -> output.write("\ntest-resources.containers.mssql.accept-license: true".bytes) })
+        } else if (db == Oracle.NAME) {
+            // Give the gradle build some more memory
+            fsoh.write("gradle.properties", new StringTemplate(null, "\norg.gradle.jvmargs=$ORACLE_BUILD_MEMORY\n"), true)
         }
 
         BuildResult result = executeGradle("test")
