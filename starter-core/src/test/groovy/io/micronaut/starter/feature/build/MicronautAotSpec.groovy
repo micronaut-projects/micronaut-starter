@@ -18,7 +18,7 @@ import static io.micronaut.starter.options.BuildTool.MAVEN
 
 class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    private static final String GRADLE_PLUGIN_VERSION = '3.6.5'
+    private static final String GRADLE_PLUGIN_VERSION = '3.6.6'
     private static final String AOT_PLUGIN = 'id("io.micronaut.aot") version "' + GRADLE_PLUGIN_VERSION + '"'
     private static final String APP_PLUGIN = 'id("io.micronaut.application") version "' + GRADLE_PLUGIN_VERSION + '"'
 
