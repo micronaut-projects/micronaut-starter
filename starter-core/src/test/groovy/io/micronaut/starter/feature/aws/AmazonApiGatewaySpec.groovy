@@ -39,7 +39,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         amazonApiGateway.supports(ApplicationType.DEFAULT)
     }
 
-    void 'amazon-api-gateway feature with Cdk has dependency in infra and doc links'() {
+    void 'amazon-api-gateway feature with Cdk has doc links'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
                 [Cdk.NAME, AmazonApiGateway.NAME])
@@ -49,7 +49,7 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
         output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
     }
 
-    void 'amazon-api-gateway feature without Cdk has dependency in project and doc links'() {
+    void 'amazon-api-gateway feature without Cdk has doc links'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
                 [AmazonApiGateway.NAME])
