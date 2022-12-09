@@ -45,7 +45,6 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
                 [Cdk.NAME, AmazonApiGateway.NAME])
 
         then:
-        output."$Cdk.INFRA_MODULE/build.gradle".contains($/implementation("io.micronaut.aws:micronaut-aws-apigateway/$)
         output."README.md".contains($/https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway/$)
         output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
     }
@@ -56,9 +55,18 @@ class AmazonApiGatewaySpec extends ApplicationContextSpec implements CommandOutp
                 [AmazonApiGateway.NAME])
 
         then:
-        output."build.gradle".contains($/implementation("io.micronaut.aws:micronaut-aws-apigateway/$)
         output."README.md".contains($/https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway/$)
         output."README.md".contains($/https://docs.aws.amazon.com/apigateway/$)
 
+    }
+
+    void 'amazon-api-gateway feature is a OneOfFeature with amazon-api-gateway-http'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
+                [AmazonApiGateway.NAME, AmazonApiGatewayHttp.NAME])
+
+        then:
+        def ex = thrown IllegalArgumentException
+        ex.message.contains('There can only be one of the following features selected: [')
     }
 }

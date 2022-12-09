@@ -47,7 +47,6 @@ class AmazonApiGatewayHttpSpec extends ApplicationContextSpec implements Command
         then:
         output."$Cdk.INFRA_MODULE/build.gradle".contains($/implementation("software.amazon.awscdk:apigatewayv2-alpha/$)
         output."$Cdk.INFRA_MODULE/build.gradle".contains($/implementation("software.amazon.awscdk:apigatewayv2-integrations-alpha/$)
-        output."$Cdk.INFRA_MODULE/build.gradle".contains($/implementation("io.micronaut.aws:micronaut-aws-apigateway/$)
 
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi/$)
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration/$)

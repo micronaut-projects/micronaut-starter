@@ -178,19 +178,11 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 .artifactId("junit-jupiter-engine")
                 .test());
         if (generatorContext.getFeatures().hasFeature(AmazonApiGatewayHttp.class)) {
-            dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
-                    .artifactId("micronaut-aws-apigateway")
-                    .compile());
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-alpha")
                     .compile());
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-integrations-alpha")
-                    .compile());
-        }
-        if (generatorContext.getFeatures().hasFeature(AmazonApiGateway.class)) {
-            dependencyContext.addDependency(MicronautDependencyUtils.awsDependency()
-                    .artifactId("micronaut-aws-apigateway")
                     .compile());
         }
     }
