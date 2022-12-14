@@ -72,6 +72,7 @@ class JdbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         then:
         ctx.configuration.containsKey("datasources.default.url")
+        ctx.configuration.containsKey("datasources.default.driver-class-name")
 
         where:
         jdbcFeature << beanContext.getBeansOfType(JdbcFeature)*.name
