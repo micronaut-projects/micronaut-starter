@@ -36,10 +36,10 @@ import io.micronaut.starter.build.maven.MavenDependency;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.build.maven.MavenRepository;
 import io.micronaut.starter.feature.Category;
-import io.micronaut.starter.feature.architecture.Arm;
-import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
+import io.micronaut.starter.feature.architecture.Arm;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
 import io.micronaut.starter.feature.aws.template.cdkhelp;
@@ -184,7 +184,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
             dependencyContext.addDependency(Dependency.builder()
                     .lookupArtifactId("apigatewayv2-integrations-alpha")
                     .compile());
-
         }
     }
 

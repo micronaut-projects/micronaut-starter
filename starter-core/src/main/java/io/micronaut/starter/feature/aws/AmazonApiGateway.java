@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.aws;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
@@ -43,16 +42,5 @@ public class AmazonApiGateway extends AwsLambdaRelatedFeature implements AwsApiF
     @NonNull
     public String getDescription() {
         return "This features combines with the CDK to define an API Gateway REST API";
-    }
-
-    @Override
-    public String getThirdPartyDocumentation() {
-        return "https://aws.amazon.com/api-gateway/";
-    }
-
-    @Override
-    public boolean supports(ApplicationType applicationType) {
-        return applicationType == ApplicationType.DEFAULT ||
-               applicationType == ApplicationType.FUNCTION;
     }
 }
