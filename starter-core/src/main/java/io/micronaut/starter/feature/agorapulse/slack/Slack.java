@@ -115,7 +115,7 @@ public class Slack implements AgoraPulseFeature {
     @Override
     @Nullable
     public String getDescription() {
-        return "Micronaut Slack is idiomatic alternative to Bolt Micronaut library for Slack integration into the Micronaut.";
+        return "Micronaut Slack is idiomatic alternative to Bolt Micronaut library for Slack integration into the Micronaut Framework.";
     }
 
     @Override
