@@ -26,7 +26,6 @@ public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
             .compile()
             .build();
 
-
     @Override
     default String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway";
