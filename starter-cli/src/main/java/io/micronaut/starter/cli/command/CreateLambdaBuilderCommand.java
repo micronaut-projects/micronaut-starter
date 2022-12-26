@@ -217,14 +217,15 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         List<Feature> cpuArchitecturesFeatures = features.stream()
                 .filter(CpuArchitecture.class::isInstance)
                 .collect(Collectors.toList());
-        out("Choose your Lambda Architecture. (enter for Java ARM)");
+        String defaultCpuArchitecture = X86.NAME;
+        out("Choose your Lambda Architecture. (enter for " + defaultCpuArchitecture + ")");
         String option = getListOption(
                 cpuArchitecturesFeatures.stream()
                         .map(Feature::getName)
                         .sorted()
                         .collect(Collectors.toList()),
                 o -> o,
-                Arm.NAME,
+                defaultCpuArchitecture,
                 reader);
         return cpuArchitecturesFeatures
                 .stream()

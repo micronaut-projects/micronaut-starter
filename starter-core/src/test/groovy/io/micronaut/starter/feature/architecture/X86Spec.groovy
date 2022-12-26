@@ -45,13 +45,12 @@ class X86Spec extends ApplicationContextSpec implements CommandOutputFixture {
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.X86_64)/$)
 
-        when:
+        when: 'x86 is the default'
         output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
                 [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
 
         then:
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
-        output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.ARM_64)/$)
-
+        output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.X86_64)/$)
     }
 }

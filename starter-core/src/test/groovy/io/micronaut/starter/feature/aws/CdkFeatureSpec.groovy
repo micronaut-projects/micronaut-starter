@@ -58,6 +58,19 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
     }
 
+    void 'architecture defaults to X86 for  #buildTool'() {
+        when:
+        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [Cdk.NAME])
+
+        then:
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.architecture(Architecture.X86_64)')
+        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
+
+        where:
+        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+    }
+
+
     void 'Function AppStack with Alexa Skills is included for #buildTool'() {
         when:
         def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool), [Cdk.NAME,AwsAlexa.NAME])
