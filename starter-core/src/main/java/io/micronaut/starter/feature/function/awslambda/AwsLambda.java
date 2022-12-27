@@ -28,6 +28,7 @@ import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
+import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
@@ -67,7 +68,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
 
     private final ShadePlugin shadePlugin;
     private final AwsLambdaCustomRuntime customRuntime;
-    private final Arm arm;
+    private final CpuArchitecture defaultCpuArchitecture;
 
     @Deprecated
     public AwsLambda(ShadePlugin shadePlugin,
@@ -75,19 +76,28 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
         this(shadePlugin, customRuntime, new Arm());
     }
 
-    @Inject
+    @Deprecated
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      Arm arm) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
-        this.arm = arm;
+        this.defaultCpuArchitecture = arm;
+    }
+
+    @Inject
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86) {
+        this.shadePlugin = shadePlugin;
+        this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = x86;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
         featureContext.addFeatureIfNotPresent(ShadePlugin.class, shadePlugin);
-        featureContext.addFeatureIfNotPresent(CpuArchitecture.class, arm);
+        featureContext.addFeatureIfNotPresent(CpuArchitecture.class, defaultCpuArchitecture);
         if (featureContext.isPresent(GraalVM.class) &&
                 (
                         featureContext.getBuildTool() == BuildTool.MAVEN ||

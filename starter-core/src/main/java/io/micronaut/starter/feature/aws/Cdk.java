@@ -40,6 +40,7 @@ import io.micronaut.starter.feature.InfrastructureAsCodeFeature;
 import io.micronaut.starter.feature.MultiProjectFeature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
+import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.template.cdkappstack;
 import io.micronaut.starter.feature.aws.template.cdkappstacktest;
 import io.micronaut.starter.feature.aws.template.cdkhelp;
@@ -74,18 +75,25 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
     public static final String NAME = "aws-cdk";
     private static final String MAIN_CLASS_NAME = "Main";
-    private final Arm arm;
+    private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
 
     @Deprecated
     public Cdk(CoordinateResolver coordinateResolver) {
-        this(coordinateResolver, new Arm());
+        this(coordinateResolver, new X86());
+    }
+
+    @Deprecated
+    public Cdk(CoordinateResolver coordinateResolver,
+               Arm arm) {
+        this.defaultCpuArchitecture = arm;
+        this.dependencyContext = new DependencyContextImpl(coordinateResolver);
     }
 
     @Inject
     public Cdk(CoordinateResolver coordinateResolver,
-               Arm arm) {
-        this.arm = arm;
+               X86 x86) {
+        this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
     }
 
@@ -131,7 +139,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 cdkappstacktest.template(generatorContext.getProject(), handler)));
 
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
-                .orElse(arm);
+                .orElse(defaultCpuArchitecture);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
                 cdkappstack.template(generatorContext.getFeatures(),
                         generatorContext.getProject(),

@@ -44,14 +44,5 @@ class ArmSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
         output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.ARM_64)/$)
-
-        when:
-        output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, BuildTool.GRADLE),
-                [Cdk.NAME, AwsLambda.FEATURE_NAME_AWS_LAMBDA])
-
-        then:
-        output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/import software.amazon.awscdk.services.lambda.Architecture/$)
-        output."$Cdk.INFRA_MODULE/src/main/java/example/micronaut/AppStack.java".contains($/.architecture(Architecture.ARM_64)/$)
-
     }
 }
