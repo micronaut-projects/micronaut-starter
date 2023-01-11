@@ -87,9 +87,5 @@ public class LocalStack implements Feature {
                 .groupId(TESTCONTAINERS_GROUP_ID)
                 .artifactId("localstack")
                 .test());
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("com.amazonaws")
-                .artifactId("aws-java-sdk-core")
-                .test());
     }
 }

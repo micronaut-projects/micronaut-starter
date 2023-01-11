@@ -44,7 +44,6 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
         then:
         template.contains('testImplementation("org.testcontainers:testcontainers")')
         template.contains('testImplementation("org.testcontainers:localstack")')
-        template.contains('testImplementation("com.amazonaws:aws-java-sdk-core")')
 
         where:
         language << Language.values().toList()
@@ -71,13 +70,6 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>localstack</artifactId>
-      <scope>test</scope>
-    </dependency>
-""")
-        template.contains("""
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-core</artifactId>
       <scope>test</scope>
     </dependency>
 """)
