@@ -23,6 +23,7 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.TestContainers;
+import io.micronaut.starter.feature.messaging.jms.SQS;
 import jakarta.inject.Singleton;
 
 import static io.micronaut.starter.feature.database.TestContainers.TESTCONTAINERS_GROUP_ID;
@@ -87,5 +88,12 @@ public class LocalStack implements Feature {
                 .groupId(TESTCONTAINERS_GROUP_ID)
                 .artifactId("localstack")
                 .test());
+        // SQS pulls this in transitively so this is not required
+        if (!generatorContext.isFeaturePresent(SQS.class)) {
+            generatorContext.addDependency(Dependency.builder()
+                    .groupId("com.amazonaws")
+                    .artifactId("aws-java-sdk-core")
+                    .test());
+        }
     }
 }

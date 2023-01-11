@@ -9,7 +9,6 @@ import io.micronaut.starter.options.Language
 import io.micronaut.starter.options.TestFramework
 import spock.lang.Shared
 import spock.lang.Subject
-import spock.lang.Unroll
 
 class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -32,29 +31,28 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
         Category.DEV_TOOLS == localStack.category
     }
 
-    @Unroll
     void 'test gradle localstack feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .language(language)
-                .features(['localstack'])
+                .features(['localstack'] + (hasSqs ? ['jms-sqs'] : []))
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
         then:
         template.contains('testImplementation("org.testcontainers:testcontainers")')
         template.contains('testImplementation("org.testcontainers:localstack")')
+        template.contains('testImplementation("com.amazonaws:aws-java-sdk-core")') == !hasSqs
 
         where:
-        language << Language.values().toList()
+        [language, hasSqs] << [Language.values().toList(), [true, false]].combinations()
     }
 
-    @Unroll
     void 'test maven localstack feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .language(language)
-                .features(['localstack'])
+                .features(['localstack'] + (hasSqs ? ['jms-sqs'] : []))
                 .testFramework(TestFramework.JUNIT)
                 .render()
 
@@ -73,9 +71,16 @@ class LocalStackSpec extends ApplicationContextSpec implements CommandOutputFixt
       <scope>test</scope>
     </dependency>
 """)
+        template.contains("""
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+""") == !hasSqs
 
         where:
-        language << Language.values().toList()
+        [language, hasSqs] << [Language.values().toList(), [true, false]].combinations()
     }
 
 }
