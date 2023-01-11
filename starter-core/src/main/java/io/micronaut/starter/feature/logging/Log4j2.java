@@ -15,18 +15,22 @@
  */
 package io.micronaut.starter.feature.logging;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.logging.template.log4j2;
 import io.micronaut.starter.template.RockerTemplate;
-
+import io.micronaut.starter.util.VersionInfo;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class Log4j2 implements LoggingFeature {
 
+    private final String GROUP_ID = "org.apache.logging.log4j";
+
     @Override
+    @NonNull
     public String getName() {
         return "log4j2";
     }
@@ -37,16 +41,36 @@ public class Log4j2 implements LoggingFeature {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds Log4j 2 Logging";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-core").compile());
-        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-api").runtime());
-        generatorContext.addDependency(Dependency.builder().lookupArtifactId("log4j-slf4j-impl").runtime());
+        populateDependencies(generatorContext);
         generatorContext.addTemplate("loggingConfig", new RockerTemplate("src/main/resources/log4j2.xml", log4j2.template(generatorContext.getProject())));
+    }
+
+    private void populateDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(GROUP_ID)
+                .artifactId("log4j-bom")
+                .version(VersionInfo.getBomVersion("log4j"))
+                .pom()
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(GROUP_ID)
+                .artifactId("log4j-api")
+                .compile());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(GROUP_ID)
+                .artifactId("log4j-core")
+                .runtime());
+        generatorContext.addDependency(Dependency.builder()
+                .groupId(GROUP_ID)
+                .artifactId("log4j-slf4j-impl")
+                .runtime());
     }
 
     @Override

@@ -15,9 +15,10 @@ class Log4j2Spec extends ApplicationContextSpec {
                 .render()
 
         then:
-        template.contains('implementation("org.apache.logging.log4j:log4j-core')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-api')
-        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl')
+        template.contains('implementation platform("org.apache.logging.log4j:log4j-bom:')
+        template.contains('implementation("org.apache.logging.log4j:log4j-api")')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-core")')
+        template.contains('runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl")')
     }
 
     void "org.apache.logging.log4j dependencies are present for log4j2 feature and build maven"() {
@@ -30,16 +31,23 @@ class Log4j2Spec extends ApplicationContextSpec {
         Pattern.compile("""
     <dependency>
       <groupId>org\\.apache\\.logging\\.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
+      <artifactId>log4j-bom</artifactId>
       <version>.*?</version>
-      <scope>compile</scope>
+      <type>pom</type>
+      <scope>import</scope>
     </dependency>
 """).matcher(template).find()
         Pattern.compile("""
     <dependency>
       <groupId>org\\.apache\\.logging\\.log4j</groupId>
       <artifactId>log4j-api</artifactId>
-      <version>.*?</version>
+      <scope>compile</scope>
+    </dependency>
+""").matcher(template).find()
+        Pattern.compile("""
+    <dependency>
+      <groupId>org\\.apache\\.logging\\.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
       <scope>runtime</scope>
     </dependency>
 """).matcher(template).find()
@@ -47,7 +55,6 @@ class Log4j2Spec extends ApplicationContextSpec {
     <dependency>
       <groupId>org\\.apache\\.logging\\.log4j</groupId>
       <artifactId>log4j-slf4j-impl</artifactId>
-      <version>.*?</version>
       <scope>runtime</scope>
     </dependency>
 """).matcher(template).find()
