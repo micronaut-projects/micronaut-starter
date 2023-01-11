@@ -29,7 +29,7 @@ class DataR2dbcSpec extends CommandSpec {
     @Unroll
     void "test gradle data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, ["data-r2dbc"])
+        generateProject(language, BuildTool.GRADLE, ["data-r2dbc", "mysql"])
         BuildResult result = executeGradle("test")
 
         then:
