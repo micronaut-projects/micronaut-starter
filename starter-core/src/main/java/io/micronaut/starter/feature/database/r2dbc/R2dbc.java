@@ -107,7 +107,7 @@ public class R2dbc implements R2dbcFeature {
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
             generatorContext.getConfiguration().putAll(rdbcConfig);
         } else {
-            dbFeature.getDbType().ifPresent(type -> generatorContext.getConfiguration().put("r2dbc.datasources.default.db-type", type.toString()));
+            dbFeature.getDbType().ifPresent(type -> generatorContext.getConfiguration().addNested("r2dbc.datasources.default.db-type", type.toString()));
         }
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_R2DBC_CORE);
