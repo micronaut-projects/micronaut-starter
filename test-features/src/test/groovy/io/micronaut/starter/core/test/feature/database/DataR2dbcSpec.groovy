@@ -16,7 +16,7 @@ class DataR2dbcSpec extends CommandSpec {
     @Unroll
     void "test maven data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, ["data-r2dbc"])
+        generateProject(language, BuildTool.MAVEN, ["data-r2dbc", "mysql"])
         String output = executeMaven("compile test")
 
         then:
