@@ -19,7 +19,6 @@ import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Options
 import spock.lang.Shared
-import spock.lang.Unroll
 
 class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
@@ -305,7 +304,6 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         featureClassName = db.simpleName
     }
 
-    @Unroll
     void "test config #driver and build #buildTool"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
         given:
         Options options = new Options(null, null, buildTool)

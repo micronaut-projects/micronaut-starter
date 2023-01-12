@@ -1,7 +1,9 @@
 package io.micronaut.starter.feature.database.r2dbc
 
+import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.H2
 import io.micronaut.starter.feature.database.MariaDB
@@ -12,25 +14,9 @@ import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import spock.lang.Unroll
+import io.micronaut.starter.options.Options
 
 class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
-
-    @Unroll
-    void "test gradle r2dbc feature #driver"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["r2dbc", driver])
-                .render()
-        driver = getDriverName(driver)
-
-        then:
-        template.contains("implementation(\"io.micronaut.r2dbc:micronaut-r2dbc-core\")")
-        template.contains(":$driver")
-
-        where:
-        driver << (beanContext.getBeansOfType(DatabaseDriverFeature)*.name) - "oracle-cloud-atp"
-    }
 
     void "test dependencies are present for gradle with #featureClassName"(Class<DatabaseDriverFeature> db) {
         when:
@@ -66,47 +52,107 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         isNotH2 = db != H2
     }
 
-    @Unroll
-    void "test maven r2dbc feature #driver"() {
+    void "test maven r2dbc feature #featureClassName"(Class<DatabaseDriverFeature> driver) {
         when:
+        def feature = beanContext.getBean(driver)
+
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .features(["r2dbc", driver])
+                .features(["r2dbc", driver.NAME])
                 .render()
-        driver = getDriverName(driver)
+
+        def project = new XmlParser().parseText(template)
+
         JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
+        def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.r2dbc</groupId>
-      <artifactId>micronaut-r2dbc-core</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        !template.contains("""
-    <dependency>
-      <groupId>io.micronaut.sql</groupId>
-      <artifactId>micronaut-jdbc-hikari</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        template.contains("<artifactId>$driver</artifactId>")
+
+        with(project.dependencies.dependency.find { it.artifactId.text() == 'micronaut-r2dbc-core' }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.r2dbc'
+        }
+
+        !project.dependencies.dependency.find { it.artifactId.text() == 'micronaut-jdbc-hikari' }
+
+        with(project.dependencies.dependency.find { it.artifactId.text() == r2dbcDriverDependency.artifactId }) {
+            scope.text() == 'runtime'
+            groupId.text() == r2dbcDriverDependency.groupId
+        }
 
         where:
-        driver << (beanContext.getBeansOfType(DatabaseDriverFeature)*.name) - "oracle-cloud-atp"
+        driver << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
+        featureClassName = driver.simpleName
+
     }
 
-    def getDriverName(name) {
-        if (name == 'sqlserver') {
-            return "r2dbc-mssql"
+    void "test dependencies are present for maven and #featureClassName"(Class<DatabaseDriverFeature> db) {
+        when:
+        def feature = beanContext.getBean(db)
+        JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
+
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features([R2dbc.NAME, db.NAME])
+                .render()
+        def project = new XmlParser().parseText(template)
+        def micronautPlugin = project.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
+        def testResourcesModuleName = feature.dbType.get().r2dbcTestResourcesModuleName
+        def jdbcDriverDependency = feature.javaClientDependency.get().build()
+        def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
+
+        then:
+        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
+            def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
+            !artifacts.contains("io.micronaut.data:micronaut-data-processor")
         }
-        if (name == 'postgres') {
-            return "r2dbc-postgresql"
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-r2dbc" }
+        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-r2dbc-core" }) {
+            scope.text() == 'compile'
+            groupId.text() == 'io.micronaut.r2dbc'
         }
-        if (name == 'oracle') {
-            return "oracle-r2dbc"
+        with(project.dependencies.dependency.find { it.artifactId.text() == r2dbcDriverDependency.artifactId }) {
+            scope.text() == 'runtime'
+            groupId.text() == r2dbcDriverDependency.groupId
         }
-        return "r2dbc-$name"
+        !project.dependencies.dependency.find { it.artifactId.text() == "h2" }
+
+        jdbcFeature.name == 'jdbc-hikari'
+        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
+
+        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
+            it.artifactId.text() == "micronaut-test-resources-$testResourcesModuleName"
+        }
+        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == jdbcDriverDependency.groupId }) {
+            it.artifactId.text() == jdbcDriverDependency.artifactId
+        }
+
+        where:
+        db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
+        featureClassName = db.simpleName
+    }
+
+    void "test config #driver and build #buildTool"(BuildTool buildTool, Class<DatabaseDriverFeature> featureClass) {
+        given:
+        Options options = new Options(null, null, buildTool)
+        GeneratorContext ctx = buildGeneratorContext([R2dbc.NAME, featureClass.NAME], options)
+        def feature = ctx.getRequiredFeature(featureClass)
+
+        expect: 'the URL is only applied for H2, as otherwise test-resources will provide it'
+        ctx.configuration.containsKey("r2dbc.datasources.default.url") == isH2
+
+        and: 'dialect is not set'
+        !ctx.configuration.containsKey("r2dbc.datasources.default.dialect")
+
+        and: 'db-type should be set for non-h2 databases'
+        if (isH2) {
+            assert ctx.configuration.get("r2dbc.datasources.default.db-type") == null
+        } else {
+            assert ctx.configuration.get("r2dbc.datasources.default.db-type") == feature.dbType.get().toString()
+        }
+
+        where:
+        [buildTool, featureClass] << [BuildTool.values(), [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]].combinations()
+        driver = featureClass.simpleName
+        isH2 = featureClass == H2
     }
 }
