@@ -20,8 +20,6 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.testresources.EaseTestingFeature;
-import io.micronaut.starter.feature.testresources.TestResources;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
@@ -33,7 +31,7 @@ import java.util.Map;
  * Add support for Micronaut Data Azure Cosmos.
  */
 @Singleton
-public class DataAzureCosmosFeature extends EaseTestingFeature implements DataFeature {
+public class DataAzureCosmosFeature implements DataFeature {
 
     private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
     private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
@@ -47,8 +45,7 @@ public class DataAzureCosmosFeature extends EaseTestingFeature implements DataFe
 
     private final Data data;
 
-    protected DataAzureCosmosFeature(Data data, TestContainers testContainers, TestResources testResources) {
-        super(testContainers, testResources);
+    protected DataAzureCosmosFeature(Data data) {
         this.data = data;
     }
 
@@ -112,7 +109,6 @@ public class DataAzureCosmosFeature extends EaseTestingFeature implements DataFe
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        super.processSelectedFeatures(featureContext);
         featureContext.addFeature(data);
     }
 
