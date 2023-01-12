@@ -3,6 +3,12 @@ package io.micronaut.starter.feature.database.r2dbc
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
+import io.micronaut.starter.feature.database.H2
+import io.micronaut.starter.feature.database.MariaDB
+import io.micronaut.starter.feature.database.MySQL
+import io.micronaut.starter.feature.database.Oracle
+import io.micronaut.starter.feature.database.PostgreSQL
+import io.micronaut.starter.feature.database.SQLServer
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -24,6 +30,40 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
         where:
         driver << (beanContext.getBeansOfType(DatabaseDriverFeature)*.name) - "oracle-cloud-atp"
+    }
+
+    void "test dependencies are present for gradle with #featureClassName"(Class<DatabaseDriverFeature> db) {
+        when:
+        def feature = beanContext.getBean(db)
+
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([R2dbc.NAME, feature.name])
+                .render()
+
+        def jdbcDriver = renderDependency(feature.javaClientDependency.get().build())
+        def r2dbcDriver = renderDependency(feature.r2DbcDependency.get().build())
+
+        then: 'test-resources is applied for all but H2'
+        template.contains('id("io.micronaut.test-resources") version') == isNotH2
+
+        and: 'the data processor is not applied'
+        !template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
+        !template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
+        template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
+
+        and: 'the r2dbc driver is applied'
+        template.contains($/runtimeOnly("$r2dbcDriver")/$)
+
+        and: 'for test resources, the JDBC driver is applied to the test-resources service unless it is H2'
+        template.contains($/testResourcesService("$jdbcDriver")/$) == isNotH2
+
+        and: 'the jdbc driver is not applied'
+        !template.contains($/runtimeOnly("$jdbcDriver")/$)
+
+        where:
+        db << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
+        featureClassName = db.simpleName
+        isNotH2 = db != H2
     }
 
     @Unroll
