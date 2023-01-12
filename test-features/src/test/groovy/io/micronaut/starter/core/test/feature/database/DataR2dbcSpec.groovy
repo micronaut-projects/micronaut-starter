@@ -1,5 +1,6 @@
 package io.micronaut.starter.core.test.feature.database
 
+import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.r2dbc.DataR2dbc
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -15,7 +16,7 @@ class DataR2dbcSpec extends CommandSpec {
 
     void "test maven data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.MAVEN, [DataR2dbc.NAME])
+        generateProject(language, BuildTool.MAVEN, [DataR2dbc.NAME, MySQL.NAME])
         String output = executeMaven("compile test")
 
         then:
@@ -27,7 +28,7 @@ class DataR2dbcSpec extends CommandSpec {
 
     void "test gradle data-r2dbc with #language"(Language language) {
         when:
-        generateProject(language, BuildTool.GRADLE, [DataR2dbc.NAME])
+        generateProject(language, BuildTool.GRADLE, [DataR2dbc.NAME, MySQL.NAME])
         BuildResult result = executeGradle("test")
 
         then:
