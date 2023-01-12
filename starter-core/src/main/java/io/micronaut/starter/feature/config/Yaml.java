@@ -15,9 +15,13 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.Template;
@@ -33,6 +37,7 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     public static final String EXTENSION = "yml";
 
     @Override
+    @NonNull
     public String getName() {
         return "yaml";
     }
@@ -45,6 +50,36 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        // As a config feature, we're processed last, after the build tools.
+        // Add the `org.yaml:snakeyaml` dependency before that.
+        featureContext.addFeature(new Feature() {
+            @Override
+            @NonNull
+            public String getName() {
+                return "yaml-build";
+            }
+
+            @Override
+            public boolean supports(ApplicationType applicationType) {
+                return true;
+            }
+
+            @Override
+            public void apply(GeneratorContext generatorContext) {
+                generatorContext.addDependency(Dependency.builder()
+                        .groupId("org.yaml")
+                        .artifactId("snakeyaml")
+                        .runtime());
+                generatorContext.addDependency(Dependency.builder()
+                        .groupId("org.yaml")
+                        .artifactId("snakeyaml")
+                        .testRuntime());
+            }
+        });
     }
 
     @Override

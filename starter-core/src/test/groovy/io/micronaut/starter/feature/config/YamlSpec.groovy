@@ -56,4 +56,13 @@ abc: 456
 abc: 789
 '''
     }
+
+    void "test dependency added for yaml feature"() {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options())
+
+        then:
+        output["build.gradle"].contains('runtimeOnly("org.yaml:snakeyaml"')
+        output["build.gradle"].contains('testRuntimeOnly("org.yaml:snakeyaml"')
+    }
 }
