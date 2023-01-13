@@ -26,13 +26,14 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class Log4j2 implements LoggingFeature {
+    public static final String NAME = "log4j2";
 
     private final String GROUP_ID = "org.apache.logging.log4j";
 
     @Override
     @NonNull
     public String getName() {
-        return "log4j2";
+        return NAME;
     }
 
     @Override
