@@ -1,9 +1,10 @@
 package io.micronaut.starter.feature.database.r2dbc
 
-import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.database.DatabaseDriverFeature
 import io.micronaut.starter.feature.database.H2
 import io.micronaut.starter.feature.database.MariaDB
@@ -59,8 +60,7 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(["r2dbc", driver.NAME])
                 .render()
-
-        def project = new XmlParser().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
         def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
@@ -68,17 +68,9 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         then:
         jdbcFeature.name == 'jdbc-hikari'
 
-        with(project.dependencies.dependency.find { it.artifactId.text() == 'micronaut-r2dbc-core' }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.r2dbc'
-        }
-
-        !project.dependencies.dependency.find { it.artifactId.text() == 'micronaut-jdbc-hikari' }
-
-        with(project.dependencies.dependency.find { it.artifactId.text() == r2dbcDriverDependency.artifactId }) {
-            scope.text() == 'runtime'
-            groupId.text() == r2dbcDriverDependency.groupId
-        }
+        verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core', 'compile' )
+        !verifier.hasDependency('micronaut-jdbc-hikari')
+        verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, 'runtime')
 
         where:
         driver << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
@@ -91,40 +83,26 @@ class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
         def feature = beanContext.getBean(db)
         JdbcFeature jdbcFeature = beanContext.getBean(JdbcFeature)
 
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features([R2dbc.NAME, db.NAME])
                 .render()
-        def project = new XmlParser().parseText(template)
-        def micronautPlugin = project.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
         def testResourcesModuleName = feature.dbType.get().r2dbcTestResourcesModuleName
         def jdbcDriverDependency = feature.javaClientDependency.get().build()
         def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
 
         then:
-        with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
-            def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
-            !artifacts.contains("io.micronaut.data:micronaut-data-processor")
-        }
-        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-data-r2dbc" }
-        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-r2dbc-core" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.r2dbc'
-        }
-        with(project.dependencies.dependency.find { it.artifactId.text() == r2dbcDriverDependency.artifactId }) {
-            scope.text() == 'runtime'
-            groupId.text() == r2dbcDriverDependency.groupId
-        }
-        !project.dependencies.dependency.find { it.artifactId.text() == "h2" }
+        !verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-processor")
+        !verifier.hasDependency( "micronaut-data-r2dbc")
+        verifier.hasDependency('io.micronaut.r2dbc', "micronaut-r2dbc-core", 'compile')
+        verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, 'runtime')
+        !verifier.hasDependency("h2")
 
         jdbcFeature.name == 'jdbc-hikari'
-        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
-
-        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
-            it.artifactId.text() == "micronaut-test-resources-$testResourcesModuleName"
-        }
-        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == jdbcDriverDependency.groupId }) {
-            it.artifactId.text() == jdbcDriverDependency.artifactId
-        }
+        !verifier.hasDependency("micronaut-jdbc-hikari")
+        verifier.hasTestResourceDependency("micronaut-test-resources-$testResourcesModuleName")
+        verifier.hasTestResourceDependency(jdbcDriverDependency.groupId, jdbcDriverDependency.artifactId)
 
         where:
         db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
