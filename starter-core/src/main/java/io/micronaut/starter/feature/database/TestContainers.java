@@ -68,6 +68,10 @@ public class TestContainers implements Feature {
                     testConfig.put(driverConfiguration.getUrlKey(), url);
                 });
                 generatorContext.addDependency(testContainerTestDependency("r2dbc"));
+                // TestContainers requires the database module, a jdbc driver AND the r2dbc module: see https://www.testcontainers.org/modules/databases/r2dbc/
+                driverFeature.getJavaClientDependency().ifPresent(d -> generatorContext.addDependency(d.testRuntime()));
+                artifactIdForDriverFeature(driverFeature).ifPresent(dependencyArtifactId ->
+                        generatorContext.addDependency(testContainerTestDependency(dependencyArtifactId)));
             });
             generatorContext.getFeature(DatabaseDriverConfigurationFeature.class).ifPresent(driverConfiguration -> {
                 String driver = "org.testcontainers.jdbc.ContainerDatabaseDriver";
