@@ -52,7 +52,7 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasTestResourceDependency(String groupId, String artifactId) {
-        hasDependency(groupId, artifactId, "testResourcesService")
+        hasDependency(groupId, artifactId, Scope.TEST_RESOURCES_SERVICE)
     }
 
     @Override
