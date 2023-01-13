@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.application.OperatingSystem
 import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.application.generator.ProjectGenerator
+import io.micronaut.starter.build.dependencies.Dependency
 import io.micronaut.starter.io.ConsoleOutput
 import io.micronaut.starter.io.MapOutputHandler
 import io.micronaut.starter.io.OutputHandler
@@ -58,5 +59,9 @@ trait CommandOutputFixture {
                 handler,
                 generatorContext)
         handler.getProject()
+    }
+
+    String renderDependency(Dependency dependency) {
+        return "${dependency.groupId}:${dependency.artifactId}${dependency.version == null ? '' : ":${dependency.version}"}"
     }
 }
