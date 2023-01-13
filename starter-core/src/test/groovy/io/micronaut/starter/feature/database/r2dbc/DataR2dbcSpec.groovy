@@ -81,15 +81,16 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(["data-r2dbc"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
-        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
-        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
-        template.contains("runtimeOnly(\"io.r2dbc:r2dbc-h2\")")
-        !template.contains("""runtimeOnly("com.h2database:h2")""")
-        !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
+        !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
+        verifier.hasDependency('io.r2dbc', 'r2dbc-h2', Scope.RUNTIME)
+        !verifier.hasDependency('com.h2database', 'h2', Scope.RUNTIME)
+        !verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
     }
 
     void "test dependencies are present for gradle with TestContainers and #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -98,26 +99,27 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([DataR2dbc.NAME, feature.name, TestContainers.NAME])
                 .render()
-        def jdbcDriver = renderDependency(feature.javaClientDependency.get().build())
-        def r2dbcDriver = renderDependency(feature.r2DbcDependency.get().build())
+        def jdbcDriver = feature.javaClientDependency.get().build()
+        def r2dbcDriver = feature.r2DbcDependency.get().build()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
-        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
-        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
-        !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
+        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
+        !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
+        !verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
 
         and: 'we have the r2dbc driver for runtime and the jdbc driver for TestContainers to check the container is up under test'
-        template.contains($/runtimeOnly("${r2dbcDriver}")/$)
-        template.contains($/testRuntimeOnly("${jdbcDriver}")/$)
+        verifier.hasDependency(r2dbcDriver.groupId, r2dbcDriver.artifactId, Scope.RUNTIME)
+        verifier.hasDependency(jdbcDriver.groupId, jdbcDriver.artifactId, Scope.TEST_RUNTIME)
 
         and: 'has the required TestContainers dependencies'
-        template.contains('testImplementation("org.testcontainers:r2dbc")')
-        template.contains('testImplementation("org.testcontainers:testcontainers")')
+        verifier.hasDependency('org.testcontainers', 'r2dbc', Scope.TEST)
+        verifier.hasDependency('org.testcontainers', 'testcontainers', Scope.TEST)
 
         and: 'the db dependency as required by TestContainers for all but H2 obviously'
-        isH2 || template.contains($/testImplementation("org.testcontainers:${TestContainers.artifactIdForDriverFeature(feature).get()}")/$)
+        isH2 || verifier.hasDependency('org.testcontainers', TestContainers.artifactIdForDriverFeature(feature).get(), Scope.TEST)
 
         where:
         db << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
@@ -132,31 +134,32 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features([DataR2dbc.NAME, feature.name])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
 
-        def jdbcDriver = renderDependency(feature.javaClientDependency.get().build())
-        def r2dbcDriver = renderDependency(feature.r2DbcDependency.get().build())
+        def jdbcDriver = feature.javaClientDependency.get().build()
+        def r2dbcDriver = feature.r2DbcDependency.get().build()
 
         then: 'test-resources is applied for all but H2'
-        template.contains('id("io.micronaut.test-resources") version') == isNotH2
+        isH2 || template.contains('id("io.micronaut.test-resources") version')
 
         and: 'the processor and correct version of micronaut-data-r2dbc is applied'
-        template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
-        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
-        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
+        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
+        !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
 
         and: 'the r2dbc driver is applied'
-        template.contains($/runtimeOnly("$r2dbcDriver")/$)
+        verifier.hasDependency(r2dbcDriver.groupId, r2dbcDriver.artifactId, Scope.RUNTIME)
 
         and: 'for test resources, the JDBC driver is applied to the test-resources service unless it is H2'
-        template.contains($/testResourcesService("$jdbcDriver")/$) == isNotH2
+        isH2 || verifier.hasDependency(jdbcDriver.groupId, jdbcDriver.artifactId, Scope.TEST_RESOURCES_SERVICE)
 
         and: 'the jdbc driver is not applied'
-        !template.contains($/runtimeOnly("$jdbcDriver")/$)
+        !verifier.hasDependency(jdbcDriver.artifactId, jdbcDriver.groupId, Scope.RUNTIME)
 
         where:
         db << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
         featureClassName = db.simpleName
-        isNotH2 = db != H2
+        isH2 = db == H2
     }
 
     void "test migration dependencies are present for #buildTool and H2"(BuildTool buildTool) {
@@ -185,17 +188,18 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(["data-r2dbc", feature.name, "flyway"])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.GRADLE, template)
         def jdbcDriverDependency = feature.javaClientDependency.get().build()
         def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
 
         then:
         jdbcFeature.name == 'jdbc-hikari'
-        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
-        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
-        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
-        template.contains($/runtimeOnly("${renderDependency(r2dbcDriverDependency)}")/$)
-        template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
-        template.contains($/runtimeOnly("${renderDependency(jdbcDriverDependency)}")/$)
+        verifier.hasAnnotationProcessor('io.micronaut.data', 'micronaut-data-processor')
+        verifier.hasDependency('io.micronaut.data', 'micronaut-data-r2dbc')
+        !verifier.hasDependency('io.micronaut.r2dbc', 'micronaut-r2dbc-core')
+        verifier.hasDependency(r2dbcDriverDependency.groupId, r2dbcDriverDependency.artifactId, Scope.RUNTIME)
+        verifier.hasDependency('io.micronaut.sql', 'micronaut-jdbc-hikari')
+        verifier.hasDependency(jdbcDriverDependency.groupId, jdbcDriverDependency.artifactId, Scope.RUNTIME)
 
         where:
         db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
