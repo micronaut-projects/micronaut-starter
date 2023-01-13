@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -212,14 +212,20 @@ implements <a href="../../../../../../io/micronaut/starter/feature/database/r2db
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#getOrder--">getOrder</a></span>()</code>
+<div class="block">The order of a feature controls the order in which it applies.</div>
+</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#getThirdPartyDocumentation--">getThirdPartyDocumentation</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/database/r2dbc/DataR2dbc.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
@@ -246,7 +252,7 @@ implements <a href="../../../../../../io/micronaut/starter/feature/database/r2db
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isCommunity--">isCommunity</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isPreview--">isPreview</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
+<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#isCommunity--">isCommunity</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isPreview--">isPreview</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html#isVisible--">isVisible</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.core.naming.Described">
@@ -329,6 +335,28 @@ implements <a href="../../../../../../io/micronaut/starter/feature/database/r2db
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>featureContext</code> - The feature context</dd>
+</dl>
+</li>
+</ul>
+<a name="getOrder--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOrder</h4>
+<pre>public&nbsp;int&nbsp;getOrder()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">Feature</a></code></span></div>
+<div class="block">The order of a feature controls the order in which it applies. The
+ order of a feature is important to ensure that any previous work done
+ by other features that may be required is done. See <a href="../../../../../../io/micronaut/starter/feature/FeaturePhase.html" title="enum in io.micronaut.starter.feature"><code>FeaturePhase</code></a>
+ for a list of phases to choose from.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>getOrder</code>&nbsp;in interface&nbsp;<code>io.micronaut.core.order.Ordered</code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getOrder--">getOrder</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The order of the feature</dd>
 </dl>
 </li>
 </ul>
