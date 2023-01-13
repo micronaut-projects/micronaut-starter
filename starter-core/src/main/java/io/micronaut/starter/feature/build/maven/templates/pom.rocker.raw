@@ -175,12 +175,19 @@ MavenBuild mavenBuild
      || features.contains("micronaut-aot")
      || features.isFeaturePresent(TestResources.class)
      || features.isFeaturePresent(SharedTestResourceFeature.class)
-     || (features.isFeaturePresent(DatabaseDriverFeature.class) && (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class)))) {
+     || (features.isFeaturePresent(DatabaseDriverFeature.class)
+          && (!features.isFeaturePresent(Data.class)
+               || features.isFeaturePresent(HibernateReactiveFeature.class)
+               || features.isFeaturePresent(R2dbc.class)))
+) {
           <configuration>
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
             <shared>true</shared>
 }
-@if (features.isFeaturePresent(TestResources.class) && features.isFeaturePresent(DatabaseDriverFeature.class) && (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class))) {
+@if (features.isFeaturePresent(TestResources.class) &&
+    features.isFeaturePresent(DatabaseDriverFeature.class) &&
+     (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+){
 @with? (String resourceName = features
     .getFeature(DatabaseDriverFeature.class)
     .flatMap(DatabaseDriverFeature::getDbType)
@@ -191,7 +198,10 @@ MavenBuild mavenBuild
                 <groupId>io.micronaut.testresources</groupId>
                 <artifactId>micronaut-test-resources-@resourceName</artifactId>
               </dependency>
-@if (features.isFeaturePresent(HibernateReactiveFeature.class) && features.isFeaturePresent(DatabaseDriverFeature.class) && !features.isFeaturePresent(MigrationFeature.class)) {
+@if ((features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+     && features.isFeaturePresent(DatabaseDriverFeature.class)
+     && !features.isFeaturePresent(MigrationFeature.class)
+) {
 @with? (Dependency driver = features.getFeature(DatabaseDriverFeature.class)
                                                       .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
                                                       .map(Dependency.Builder::build)
