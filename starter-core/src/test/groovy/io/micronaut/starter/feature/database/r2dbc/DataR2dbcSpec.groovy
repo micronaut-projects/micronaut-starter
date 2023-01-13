@@ -13,8 +13,10 @@ import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.Oracle
 import io.micronaut.starter.feature.database.PostgreSQL
 import io.micronaut.starter.feature.database.SQLServer
+import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
 import io.micronaut.starter.feature.migration.Flyway
+import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Options
@@ -48,6 +50,17 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !features.contains("jdbc-hikari")
     }
 
+    void "check validator with TestContainers and #migrator"() {
+        when:
+        generate([DataR2dbc.NAME, migrator, TestContainers.NAME])
+
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        migrator << [Flyway.NAME, Liquibase.NAME]
+    }
+
     void "test data r2dbc features with migration"() {
         when:
         Features features = getFeatures(['data-r2dbc', 'flyway'])
@@ -58,7 +71,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         features.contains("h2")
         features.contains("r2dbc")
         features.contains("data-r2dbc")
-        !features.contains("jdbc-hikari")
+        features.contains("jdbc-hikari")
     }
 
     void "test dependencies are present for gradle"() {
@@ -75,6 +88,39 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         template.contains("runtimeOnly(\"io.r2dbc:r2dbc-h2\")")
         !template.contains("""runtimeOnly("com.h2database:h2")""")
         !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+    }
+
+    void "test dependencies are present for gradle with TestContainers and #featureClassName"(Class<DatabaseDriverFeature> db) {
+        when:
+        def feature = beanContext.getBean(db)
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features([DataR2dbc.NAME, feature.name, TestContainers.NAME])
+                .render()
+        def jdbcDriver = renderDependency(feature.javaClientDependency.get().build())
+        def r2dbcDriver = renderDependency(feature.r2DbcDependency.get().build())
+
+        then:
+        jdbcFeature.name == 'jdbc-hikari'
+        template.contains('annotationProcessor("io.micronaut.data:micronaut-data-processor")')
+        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
+        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
+        !template.contains('implementation("io.micronaut.sql:micronaut-jdbc-hikari")')
+
+        and: 'we have the r2dbc driver for runtime and the jdbc driver for TestContainers to check the container is up under test'
+        template.contains($/runtimeOnly("${r2dbcDriver}")/$)
+        template.contains($/testRuntimeOnly("${jdbcDriver}")/$)
+
+        and: 'has the required TestContainers dependencies'
+        template.contains('testImplementation("org.testcontainers:r2dbc")')
+        template.contains('testImplementation("org.testcontainers:testcontainers")')
+
+        and: 'the db dependency as required by TestContainers for all but H2 obviously'
+        isH2 || template.contains($/testImplementation("org.testcontainers:${TestContainers.artifactIdForDriverFeature(feature).get()}")/$)
+
+        where:
+        db << [H2, PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
+        featureClassName = db.simpleName
+        isH2 = db == H2
     }
 
     void "test dependencies are present for gradle with #featureClassName"(Class<DatabaseDriverFeature> db) {
@@ -111,7 +157,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         isNotH2 = db != H2
     }
 
-    void "test migration dependencies are present for gradle"() {
+    void "test migration dependencies are present for gradle and H2"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(["data-r2dbc", "flyway"])
@@ -124,7 +170,30 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
         template.contains("runtimeOnly(\"io.r2dbc:r2dbc-h2\")")
         template.contains("""runtimeOnly("com.h2database:h2")""")
-        !template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+        template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+    }
+
+    void "test migration dependencies are present for gradle and #featureClassName"(Class<DatabaseDriverFeature> db) {
+        when:
+        def feature = beanContext.getBean(db)
+        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(["data-r2dbc", feature.name, "flyway"])
+                .render()
+        def jdbcDriverDependency = feature.javaClientDependency.get().build()
+        def r2dbcDriverDependency = feature.r2DbcDependency.get().build()
+
+        then:
+        jdbcFeature.name == 'jdbc-hikari'
+        template.contains("annotationProcessor(\"io.micronaut.data:micronaut-data-processor\")")
+        template.contains('implementation("io.micronaut.data:micronaut-data-r2dbc")')
+        !template.contains('implementation("io.micronaut.r2dbc:micronaut-r2dbc-core")')
+        template.contains($/runtimeOnly("${renderDependency(r2dbcDriverDependency)}")/$)
+        template.contains("implementation(\"io.micronaut.sql:micronaut-jdbc-hikari\")")
+        template.contains($/runtimeOnly("${renderDependency(jdbcDriverDependency)}")/$)
+
+        where:
+        db << [PostgreSQL, MySQL, MariaDB, Oracle, SQLServer]
+        featureClassName = db.simpleName
     }
 
     void "test dependencies are present for maven and H2"() {
@@ -240,7 +309,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         }
 
         jdbcFeature.name == 'jdbc-hikari'
-        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
+        project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
@@ -281,16 +350,19 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
             scope.text() == 'runtime'
             groupId.text() == jdbcDriverDependency.groupId
         }
-
         with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
             it.artifactId.text() == "micronaut-test-resources-$testResourcesModuleName"
         }
 
-        and: 'We do not add the jdbc driver to the test resources dependencies as its already a dependency'
-        !micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == jdbcDriverDependency.groupId }
+        and: 'The JDBC driver is added as a runtime dependency for migration'
+        with(project.dependencies.dependency.find { it.groupId.text() == jdbcDriverDependency.groupId }) {
+            it.artifactId.text() == jdbcDriverDependency.artifactId
+            it.scope.text() == 'runtime'
+        }
 
+        and: 'The hikari pool is added for the migration'
         jdbcFeature.name == 'jdbc-hikari'
-        !project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
+        project.dependencies.dependency.find { it.artifactId.text() == "micronaut-jdbc-hikari" }
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")

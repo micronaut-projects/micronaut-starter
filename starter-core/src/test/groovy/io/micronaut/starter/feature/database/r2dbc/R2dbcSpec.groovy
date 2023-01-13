@@ -11,12 +11,26 @@ import io.micronaut.starter.feature.database.MySQL
 import io.micronaut.starter.feature.database.Oracle
 import io.micronaut.starter.feature.database.PostgreSQL
 import io.micronaut.starter.feature.database.SQLServer
+import io.micronaut.starter.feature.database.TestContainers
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature
+import io.micronaut.starter.feature.migration.Flyway
+import io.micronaut.starter.feature.migration.Liquibase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Options
 
 class R2dbcSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    void "check validator with TestContainers and #migrator"() {
+        when:
+        generate([R2dbc.NAME, migrator, TestContainers.NAME])
+
+        then:
+        thrown(IllegalArgumentException)
+
+        where:
+        migrator << [Flyway.NAME, Liquibase.NAME]
+    }
 
     void "test dependencies are present for gradle with #featureClassName"(Class<DatabaseDriverFeature> db) {
         when:

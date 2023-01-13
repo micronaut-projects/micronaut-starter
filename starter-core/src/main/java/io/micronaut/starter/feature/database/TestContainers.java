@@ -125,7 +125,7 @@ public class TestContainers implements Feature {
     }
 
     @NonNull
-    private static Optional<String> artifactIdForDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
+    public static Optional<String> artifactIdForDriverFeature(@NonNull DatabaseDriverFeature driverFeature) {
         if (driverFeature instanceof MySQL) {
             return Optional.of("mysql");
         } else if (driverFeature instanceof PostgreSQL) {
