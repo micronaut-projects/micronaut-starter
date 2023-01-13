@@ -34,20 +34,18 @@ public class R2dbcFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePostProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (containsR2dbcFeature(features) && hasMigrationFeature(features) && hasTestContainersFeature(features)) {
+        if (hasSubclassOf(features, R2dbcFeature.class) &&
+                hasSubclassOf(features, MigrationFeature.class) &&
+                hasInstance(features, TestContainers.class)) {
             throw new IllegalArgumentException("Testcontainers is not supported with R2DBC and Migration. Please remove the TestContainers feature to use Test Resources instead.");
         }
     }
 
-    private static boolean hasTestContainersFeature(Set<Feature> features) {
-        return features.stream().anyMatch(TestContainers.class::isInstance);
+    private static boolean hasInstance(Set<Feature> features, Class<? extends Feature> featureClass) {
+        return features.stream().anyMatch(featureClass::isInstance);
     }
 
-    private static boolean hasMigrationFeature(Set<Feature> features) {
-        return features.stream().anyMatch(f -> MigrationFeature.class.isAssignableFrom(f.getClass()));
-    }
-
-    private static boolean containsR2dbcFeature(Set<Feature> features) {
-        return features.stream().anyMatch(f -> R2dbcFeature.class.isAssignableFrom(f.getClass()));
+    private static boolean hasSubclassOf(Set<Feature> features, Class<? extends Feature> featureClass) {
+        return features.stream().anyMatch(f -> featureClass.isAssignableFrom(f.getClass()));
     }
 }
