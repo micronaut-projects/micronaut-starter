@@ -16,32 +16,38 @@
 package io.micronaut.starter.feature.database;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-import io.micronaut.starter.build.dependencies.Priority;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.config.NestedConfiguration;
 import io.micronaut.starter.options.BuildTool;
 import jakarta.inject.Singleton;
 
+import java.util.Arrays;
 import java.util.Base64;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Add support for Micronaut Data Azure Cosmos.
  */
 @Singleton
-public class DataAzureCosmosFeature implements DataFeature {
+public class DataAzureCosmosFeature implements DataDocumentFeature {
+    private static final String NAME = "data-azure-cosmos";
 
-    private static final String MICRONAUT_DATA_GROUP = "io.micronaut.data";
-    private static final String MICRONAUT_DATA_VERSION = "micronaut.data.version";
-    private static final String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
-    private static final String MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT = "micronaut-data-document-processor";
     private static final String MICRONAUT_DATA_AZURE_COSMOS_DATA_ARTIFACT = "micronaut-data-azure-cosmos";
+    private static final Dependency DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA = MicronautDependencyUtils.dataDependency()
+            .artifactId(MICRONAUT_DATA_AZURE_COSMOS_DATA_ARTIFACT)
+            .versionProperty(MICRONAUT_DATA_VERSION)
+            .compile()
+            .build();
 
     // These are just placeholder values for user to replace
     private static final String DEFAULT_ENDPOINT = "https://some-host/some-db";
     private static final String DEFAULT_KEY = "some-key";
+    private static final String CONFIGURATION_PREFIX_AZURE_COSMOS = "azure.cosmos";
 
     private final Data data;
 
@@ -52,7 +58,7 @@ public class DataAzureCosmosFeature implements DataFeature {
     @NonNull
     @Override
     public String getName() {
-        return "data-azure-cosmos";
+        return NAME;
     }
 
     @NonNull
@@ -69,37 +75,34 @@ public class DataAzureCosmosFeature implements DataFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         // TODO: Add test resources/containers support
+        generatorContext.getConfiguration().addNested(getConfiguration(generatorContext));
+        getDependencies(generatorContext).forEach(generatorContext::addDependency);
+    }
 
-        Map<String, Object> properties = new HashMap<>(5);
-        properties.put("consistency-level", "SESSION");
-        properties.put("endpoint", DEFAULT_ENDPOINT);
-        properties.put("key", Base64.getEncoder().encodeToString(DEFAULT_KEY.getBytes()));
-        properties.put("default-gateway-mode", true);
-        properties.put("endpoint-discovery-enabled", false);
-        Map<String, Object> databaseProperties = new HashMap<>(2);
-        databaseProperties.put("database-name", "myDb");
-        databaseProperties.put("update-policy", "NONE");
-        properties.put("database", databaseProperties);
-        generatorContext.getConfiguration().addNested("azure.cosmos", properties);
+    protected NestedConfiguration getConfiguration(GeneratorContext generatorContext) {
+        Map<String, Object> databaseProperties = CollectionUtils.mapOf(
+                "database-name", "myDb",
+                "update-policy", "NONE");
+        return new NestedConfiguration(
+                CONFIGURATION_PREFIX_AZURE_COSMOS,
+                CollectionUtils.mapOf(
+                "consistency-level", "SESSION",
+                "endpoint", DEFAULT_ENDPOINT,
+                "key", Base64.getEncoder().encodeToString(DEFAULT_KEY.getBytes()),
+                "default-gateway-mode", true,
+                "endpoint-discovery-enabled", false,
+                "database", databaseProperties));
+    }
 
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            generatorContext.addDependency(Dependency.builder()
-                    .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-                    .annotationProcessor(true)
-                    .groupId(MICRONAUT_DATA_GROUP)
-                    .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
-                    .versionProperty(MICRONAUT_DATA_VERSION));
-        }
-        generatorContext.addDependency(Dependency.builder()
-                .annotationProcessor()
-                .groupId(MICRONAUT_DATA_GROUP)
-                .artifactId(MICRONAUT_DATA_DOCUMENT_PROCESSOR_ARTIFACT)
-                .versionProperty(MICRONAUT_DATA_VERSION));
-        generatorContext.addDependency(Dependency.builder()
-                .compile()
-                .groupId(MICRONAUT_DATA_GROUP)
-                .artifactId(MICRONAUT_DATA_AZURE_COSMOS_DATA_ARTIFACT)
-                .versionProperty(MICRONAUT_DATA_VERSION));
+    protected List<Dependency> getDependencies(GeneratorContext generatorContext) {
+        return (generatorContext.getBuildTool() == BuildTool.MAVEN) ?
+                Arrays.asList(
+                        DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
+                        DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA,
+                        DEPENDENCY_MICRONAUT_DATA_PROCESSOR) :
+                Arrays.asList(
+                        DEPENDENCY_MICRONAUT_DATA_DOCUMENT_PROCESSOR,
+                        DEPENDENCY_MICRONAUT_DATA_AZURE_COSMOS_DATA);
     }
 
     @Override

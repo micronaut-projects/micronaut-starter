@@ -8,9 +8,11 @@ import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import spock.lang.Shared
+import spock.lang.Subject
 
 class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    @Subject
     @Shared
     DataAzureCosmosFeature feature = beanContext.getBean(DataAzureCosmosFeature)
 
