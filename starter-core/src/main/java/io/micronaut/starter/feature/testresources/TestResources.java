@@ -27,6 +27,7 @@ import io.micronaut.starter.feature.build.gradle.MicronautTestResourcesGradlePlu
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeatureDependencies;
 import io.micronaut.starter.feature.database.HibernateReactiveFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
@@ -67,7 +68,7 @@ public class TestResources implements Feature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(MicronautTestResourcesGradlePlugin.builder().build());
-            if (generatorContext.isFeaturePresent(HibernateReactiveFeature.class)
+            if (isReactive(generatorContext)
                     && generatorContext.isFeaturePresent(DatabaseDriverFeature.class)
                     && !generatorContext.isFeaturePresent(MigrationFeature.class)) {
                 generatorContext.getFeature(DatabaseDriverFeature.class)
@@ -79,6 +80,10 @@ public class TestResources implements Feature {
             BuildProperties buildProperties = generatorContext.getBuildProperties();
             buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
         }
+    }
+
+    private boolean isReactive(GeneratorContext generatorContext) {
+        return generatorContext.isFeaturePresent(HibernateReactiveFeature.class) || generatorContext.isFeaturePresent(R2dbc.class);
     }
 
     @Override
