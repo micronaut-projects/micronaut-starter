@@ -3,12 +3,14 @@ package io.micronaut.starter.feature.config
 import io.micronaut.context.annotation.Replaces
 import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.BeanContextSpec
-import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.BuildTool
 import jakarta.inject.Singleton
-import spock.lang.Shared
-import spock.lang.Subject
+import spock.lang.Unroll
 
 class VisibleYamlAddsDependenciesSpec extends BeanContextSpec implements CommandOutputFixture {
 
@@ -16,10 +18,6 @@ class VisibleYamlAddsDependenciesSpec extends BeanContextSpec implements Command
     Map<String, String> getProperties() {
         Collections.singletonMap("spec.name", "VisibleYamlAddsDependenciesSpec")
     }
-
-    @Shared
-    @Subject
-    VisibleYaml yaml = beanContext.getBean(VisibleYaml)
 
     @Requires(property = "spec.name", value = "VisibleYamlAddsDependenciesSpec")
     @Singleton
@@ -31,12 +29,19 @@ class VisibleYamlAddsDependenciesSpec extends BeanContextSpec implements Command
         }
     }
 
-    void "test dependency added for yaml feature"() {
+    @Unroll
+    void "test dependency added for yaml feature"(BuildTool buildTool) {
         when:
-        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options())
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([Yaml.NAME])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        output["build.gradle"].contains('runtimeOnly("org.yaml:snakeyaml"')
-        output["build.gradle"].contains('testRuntimeOnly("org.yaml:snakeyaml"')
+        verifier.hasDependency("org.yaml", "snakeyaml", Scope.RUNTIME)
+        verifier.hasDependency("org.yaml", "snakeyaml", Scope.TEST_RUNTIME)
+
+        where:
+        buildTool << BuildTool.values()
     }
 }

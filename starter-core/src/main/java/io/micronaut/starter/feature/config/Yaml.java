@@ -34,7 +34,7 @@ import java.util.function.Function;
 
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
-
+    public static final String NAME = "yaml";
     private static final String EXTENSION = "yml";
     private static final String YAML_GROUP_ID = "org.yaml";
     private static final String SNAKEYAML_ARTIFACT_ID = "snakeyaml";
@@ -42,7 +42,7 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
     @Override
     @NonNull
     public String getName() {
-        return "yaml";
+        return NAME;
     }
 
     @Override
@@ -80,8 +80,8 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
 
                 private void addDependencies(GeneratorContext generatorContext) {
                     Arrays.asList(
-                            snakeYamlDependency().runtime().build(),
-                            snakeYamlDependency().testRuntime().build()
+                            snakeYamlDependency().runtime(),
+                            snakeYamlDependency().testRuntime()
                     ).forEach(generatorContext::addDependency);
                 }
             });
