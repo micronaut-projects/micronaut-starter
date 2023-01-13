@@ -3,6 +3,8 @@ package io.micronaut.starter.feature.database
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.feature.migration.Flyway
 import io.micronaut.starter.feature.migration.Liquibase
@@ -11,7 +13,6 @@ import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
 import spock.lang.Requires
-import groovy.xml.XmlSlurper
 
 @Requires({ jvm.current.isJava11Compatible() })
 class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
@@ -181,8 +182,7 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
                 .features([HibernateReactiveJpa.NAME, db])
                 .jdkVersion(JdkVersion.JDK_11)
                 .render()
-        def parsed = new XmlSlurper().parseText(template)
-        def micronautPlugin = parsed.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(BuildTool.MAVEN, template)
 
         then:
         !containsDataProcessor(template)
@@ -194,15 +194,11 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         !containsJdbcDriver(template, migrationDriver)
 
         and: "postgres needs another dependency with vert.x"
-        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
+        db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
 
         and: 'test resources module is correct, and driver is added to the plugin dependencies'
-        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
-            it.artifactId.text() == "micronaut-test-resources-$testResourcesModule"
-        }
-        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == migrationDriver.groupId }) {
-            it.artifactId.text() == migrationDriver.artifactId
-        }
+        verifier.hasTestResourceDependency("micronaut-test-resources-$testResourcesModule")
+        verifier.hasTestResourceDependency(migrationDriver.groupId, migrationDriver.artifactId)
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
@@ -222,12 +218,12 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
 
     void "test dependencies are present for maven with #db (#client) and #migration"() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features([HibernateReactiveJpa.NAME, db, migration])
                 .jdkVersion(JdkVersion.JDK_11)
                 .render()
-        def parsed = new XmlSlurper().parseText(template)
-        def micronautPlugin = parsed.build.plugins.plugin.find { it.artifactId.text() == 'micronaut-maven-plugin' }
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
         !containsDataProcessor(template)
@@ -240,13 +236,11 @@ class HibernateReactiveJpaSpec extends BaseHibernateReactiveSpec {
         containsJdbcDriver(template, migrationDriver)
 
         and: "postgres needs another dependency with vert.x"
-        (db != PostgreSQL.NAME) || (parsed.dependencies.dependency.find { it.groupId.text() == 'com.ongres.scram' }?.artifactId?.text() == "client")
+        db != PostgreSQL.NAME || verifier.hasDependency('com.ongres.scram', "client")
 
         and: 'test resources module is correct, and driver is not added to the plugin dependencies'
-        with(micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == "io.micronaut.testresources" }) {
-            it.artifactId.text() == "micronaut-test-resources-$testResourcesModule"
-        }
-        !micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == migrationDriver.groupId }
+        verifier.hasTestResourceDependency("io.micronaut.testresources", "micronaut-test-resources-$testResourcesModule")
+        !verifier.hasTestResourceDependencyWithGroupId(migrationDriver.groupId)
 
         when:
         Optional<SemanticVersion> semanticVersionOptional = parsePropertySemanticVersion(template, "micronaut.data.version")
