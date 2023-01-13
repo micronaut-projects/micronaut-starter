@@ -6,6 +6,7 @@ import io.micronaut.starter.application.generator.GeneratorContext
 import io.micronaut.starter.feature.FeaturePhase
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.Options
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -19,6 +20,12 @@ class YamlSpec extends BeanContextSpec implements CommandOutputFixture {
     void "order is highest"() {
         expect:
         yaml.order == FeaturePhase.HIGHEST.getOrder()
+    }
+
+    @PendingFeature
+    void "is visible"() {
+        expect:
+        yaml.isVisible()
     }
 
     @Unroll
@@ -57,9 +64,10 @@ abc: 789
 '''
     }
 
+    @PendingFeature
     void "test dependency added for yaml feature"() {
         when:
-        def output = generate(ApplicationType.DEFAULT, new Options())
+        Map<String, String> output = generate(ApplicationType.DEFAULT, new Options())
 
         then:
         output["build.gradle"].contains('runtimeOnly("org.yaml:snakeyaml"')

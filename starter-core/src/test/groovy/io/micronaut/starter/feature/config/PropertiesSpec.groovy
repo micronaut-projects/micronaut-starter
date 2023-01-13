@@ -14,17 +14,17 @@ class PropertiesSpec extends BeanContextSpec implements CommandOutputFixture {
 
     @Shared
     @Subject
-    Properties properties = beanContext.getBean(Properties)
+    Properties props = beanContext.getBean(Properties)
 
     void "order is highest"() {
         expect:
-        properties.order == FeaturePhase.HIGHEST.getOrder()
+        props.order == FeaturePhase.HIGHEST.getOrder()
     }
 
     @Unroll
     void "properties supports #description application type"(ApplicationType applicationType, String description) {
         expect:
-        properties.supports(applicationType)
+        props.supports(applicationType)
 
         where:
         applicationType << ApplicationType.values()
