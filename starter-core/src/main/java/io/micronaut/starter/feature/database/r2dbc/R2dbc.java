@@ -25,12 +25,15 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 
+import io.micronaut.starter.feature.testresources.TestResources;
 import jakarta.inject.Singleton;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Singleton
 public class R2dbc implements R2dbcFeature {
+
+    public static final String NAME = "r2dbc";
 
     private static final Dependency DEPENDENCY_MICRONAUT_R2DBC_CORE = MicronautDependencyUtils.r2dbcDependency()
             .artifactId("micronaut-r2dbc-core")
@@ -51,7 +54,7 @@ public class R2dbc implements R2dbcFeature {
     @NonNull
     @Override
     public String getName() {
-        return "r2dbc";
+        return NAME;
     }
 
     @Override
@@ -96,13 +99,16 @@ public class R2dbc implements R2dbcFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getFeature(DatabaseDriverFeature.class).ifPresent(dbFeature -> {
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+        if (!generatorContext.isFeaturePresent(TestResources.class)) {
             Map<String, Object> rdbcConfig = new LinkedHashMap<>();
             rdbcConfig.put(getUrlKey(), dbFeature.getR2dbcUrl());
             rdbcConfig.put(USERNAME_KEY, dbFeature.getDefaultUser());
             rdbcConfig.put(PASSWORD_KEY, dbFeature.getDefaultPassword());
             generatorContext.getConfiguration().putAll(rdbcConfig);
-        });
+        } else {
+            dbFeature.getDbType().ifPresent(type -> generatorContext.getConfiguration().addNested("r2dbc.datasources.default.db-type", type.toString()));
+        }
         if (!generatorContext.isFeaturePresent(DataR2dbc.class)) {
             generatorContext.addDependency(DEPENDENCY_MICRONAUT_R2DBC_CORE);
         }

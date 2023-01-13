@@ -25,6 +25,9 @@ import java.util.Optional;
 @Singleton
 @Primary
 public class H2 extends DatabaseDriverFeature {
+
+    public static final String NAME = "h2";
+
     private static final Dependency.Builder DEPENDENCY_H2 = Dependency.builder()
             .groupId("com.h2database")
             .artifactId("h2")
@@ -38,7 +41,7 @@ public class H2 extends DatabaseDriverFeature {
     @Override
     @NonNull
     public String getName() {
-        return "h2";
+        return NAME;
     }
 
     @Override
