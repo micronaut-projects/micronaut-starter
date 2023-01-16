@@ -32,6 +32,12 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
     public static final String GRADLE_ENTERPRISE_PLUGIN_ID = "com.gradle.enterprise";
     public static final String GRADLE_ENTERPRISE_ARTIFACT_ID = "gradle-enterprise-gradle-plugin";
 
+    private final MavenGradleEnterprise mavenGradleEnterprise;
+
+    public GradleEnterprise(MavenGradleEnterprise mavenGradleEnterprise) {
+        this.mavenGradleEnterprise = mavenGradleEnterprise;
+    }
+
     @Override
     @NonNull
     public String getName() {
@@ -59,7 +65,10 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
                     .lookupArtifactId(GRADLE_ENTERPRISE_ARTIFACT_ID)
                     .settingsExtension(new RockerWritable(gradleEnterprise.template(this)))
                     .build());
+        } else {
+            mavenGradleEnterprise.applyMaven(generatorContext, this);
         }
+
     }
 
     @Override

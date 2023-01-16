@@ -12,8 +12,8 @@ gradleEnterprise {
 @if (config.getTermsOfServiceUrl() != null) {
          termsOfServiceUrl = "@(config.getTermsOfServiceUrl())"
 }
-@if (config.getServer() == null && config.getTermsOfServiceAgree() != null) {
-         termsOfServiceAgree = "@(config.getTermsOfServiceAgree())"
+@if (config.getServer() == null && config.getTermsOfServiceAgree()) {
+         termsOfServiceAgree = "yes"
 }
     }
 }

@@ -34,7 +34,7 @@ public interface GradleEnterpriseConfiguration {
     }
 
     @Nullable
-    default String getTermsOfServiceAgree() {
-        return "yes";
+    default Boolean getTermsOfServiceAgree() {
+        return true;
     }
 }

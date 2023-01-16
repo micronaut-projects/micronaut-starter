@@ -1,19 +1,26 @@
-@args(String server)
-<gradleEnterprise>
+@import io.micronaut.starter.feature.build.gradle.GradleEnterpriseConfiguration
+@args (GradleEnterpriseConfiguration config)
+<gradleEnterprise xmlns="https://www.gradle.com/gradle-enterprise-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="https://www.gradle.com/gradle-enterprise-maven https://www.gradle.com/schema/gradle-enterprise-maven.xsd">
+@if (config.getServer() != null) {
     <server>
-        <url>@server</url>
+        <url>@(config.getServer())</url>
+        @if (config.allowTrustedServer() != null && config.allowTrustedServer()) {
+            <allowUntrusted>true</allowUntrusted>
+        }
     </server>
+}
     <buildScan>
+    @if (config.getServer() == null && (config.getTermsOfServiceUrl() != null || config.getTermsOfServiceAgree() != null)) {
+        <termsOfService>
+        @if (config.getTermsOfServiceUrl() != null) {
+            <url>@(config.getTermsOfServiceUrl())</url>
+        }
+        @if (config.getTermsOfServiceAgree() != null && config.getTermsOfServiceAgree()) {
+            <accept>true</accept>
+        }
+        </termsOfService>
+    }
         <publish>ALWAYS</publish>
     </buildScan>
-    <buildCache>
-        <remote>
-            <server>
-                <credentials>
-                    <username>${env.GRADLE_ENTERPRISE_CACHE_USERNAME}</username>
-                    <password>${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}</password>
-                </credentials>
-            </server>
-        </remote>
-    </buildCache>
 </gradleEnterprise>
