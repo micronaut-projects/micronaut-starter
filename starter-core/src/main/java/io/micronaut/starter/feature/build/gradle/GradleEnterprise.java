@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.build.gradle;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
@@ -23,20 +24,22 @@ import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.gradle.templates.gradleEnterprise;
+import io.micronaut.starter.feature.build.maven.templates.extensions;
+import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Singleton;
 
 @Singleton
 public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration {
-
     public static final String GRADLE_ENTERPRISE_PLUGIN_ID = "com.gradle.enterprise";
     public static final String GRADLE_ENTERPRISE_ARTIFACT_ID = "gradle-enterprise-gradle-plugin";
-
-    private final MavenGradleEnterprise mavenGradleEnterprise;
-
-    public GradleEnterprise(MavenGradleEnterprise mavenGradleEnterprise) {
-        this.mavenGradleEnterprise = mavenGradleEnterprise;
-    }
+    private static final String SLASH = "/";
+    private static final String MAVEN_FOLDER = ".mvn";
+    private static final String EXTENSIONS_XML = "extensions.xml";
+    private static final String GRADLE_ENTERPRISE_XML = "gradle-enterprise.xml";
+    private static final String DOT = ".";
+    private static final String ARTIFACT_ID_GRADLE_ENTERPRISE_MAVEN_EXTENSION = "gradle-enterprise-maven-extension";
+    private static final String ARTIFACT_ID_COMMON_CUSTOM_USER_DATA_MAVEN_EXTENSION = "common-custom-user-data-maven-extension";
 
     @Override
     @NonNull
@@ -59,16 +62,36 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(GradlePlugin.builder()
-                    .gradleFile(GradleFile.SETTINGS)
-                    .id(GRADLE_ENTERPRISE_PLUGIN_ID)
-                    .lookupArtifactId(GRADLE_ENTERPRISE_ARTIFACT_ID)
-                    .settingsExtension(new RockerWritable(gradleEnterprise.template(this)))
-                    .build());
+            generatorContext.addBuildPlugin(gradlePlugin(this));
         } else {
-            mavenGradleEnterprise.applyMaven(generatorContext, this);
+            applyMaven(generatorContext, this);
         }
+    }
 
+    protected GradlePlugin gradlePlugin(GradleEnterpriseConfiguration configuration) {
+        return GradlePlugin.builder()
+                .gradleFile(GradleFile.SETTINGS)
+                .id(GRADLE_ENTERPRISE_PLUGIN_ID)
+                .lookupArtifactId(GRADLE_ENTERPRISE_ARTIFACT_ID)
+                .settingsExtension(new RockerWritable(gradleEnterprise.template(configuration)))
+                .build();
+    }
+
+    protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
+        addMavenTemplate(generatorContext, EXTENSIONS_XML, extensionsRockerModel(generatorContext));
+        addMavenTemplate(generatorContext, GRADLE_ENTERPRISE_XML, io.micronaut.starter.feature.build.maven.templates.gradleEnterprise.template(server));
+    }
+
+    protected void addMavenTemplate(GeneratorContext generatorContext, String name, RockerModel rockerModel) {
+        String templateName = name.contains(DOT) ? name.substring(0, name.indexOf(DOT)) : name;
+        String path = String.join(SLASH, MAVEN_FOLDER, name);
+        generatorContext.addTemplate(templateName, new RockerTemplate(path, rockerModel));
+    }
+
+    private static RockerModel extensionsRockerModel(GeneratorContext generatorContext) {
+        return extensions.template(
+                generatorContext.resolveCoordinate(ARTIFACT_ID_GRADLE_ENTERPRISE_MAVEN_EXTENSION).getVersion(),
+                generatorContext.resolveCoordinate(ARTIFACT_ID_COMMON_CUSTOM_USER_DATA_MAVEN_EXTENSION).getVersion());
     }
 
     @Override

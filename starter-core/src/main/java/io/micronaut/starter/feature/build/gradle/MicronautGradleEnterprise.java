@@ -16,27 +16,19 @@
 package io.micronaut.starter.feature.build.gradle;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradlePlugin;
-import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.maven.templates.customData;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class MicronautGradleEnterprise implements Feature, GradleEnterpriseConfiguration {
+public class MicronautGradleEnterprise extends GradleEnterprise {
     public static final String NAME = "micronaut-gradle-enterprise";
     private static final String SERVER = "https://ge.micronaut.io";
     private static final String GE_CUSTOM_USER_DATA_GROOVY = "gradle-enterprise-custom-user-data.groovy";
     private static final String ARTIFACT_ID_MICRONAUT_GRADLE_PLUGINS = "micronaut-gradle-plugins";
     private static final String GRADLE_PLUGIN_ID_MICRONAUT_GRADLE_ENTERPRISE = "io.micronaut.build.internal.gradle-enterprise";
-
-    private final MavenGradleEnterprise mavenGradleEnterprise;
-
-    public MicronautGradleEnterprise(MavenGradleEnterprise mavenGradleEnterprise) {
-        this.mavenGradleEnterprise = mavenGradleEnterprise;
-    }
 
     @Override
     @NonNull
@@ -60,26 +52,18 @@ public class MicronautGradleEnterprise implements Feature, GradleEnterpriseConfi
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool().isGradle()) {
-            applyGradle(generatorContext);
-        }  else {
-            mavenGradleEnterprise.applyMaven(generatorContext, this);
-            mavenGradleEnterprise.addMavenTemplate(generatorContext, GE_CUSTOM_USER_DATA_GROOVY, customData.template());
-        }
+    protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
+        super.applyMaven(generatorContext, this);
+        addMavenTemplate(generatorContext, GE_CUSTOM_USER_DATA_GROOVY, customData.template());
     }
 
     @Override
-    public boolean supports(ApplicationType applicationType) {
-        return true;
-    }
-
-    private void applyGradle(GeneratorContext generatorContext) {
-        generatorContext.addBuildPlugin(GradlePlugin.builder()
+    protected GradlePlugin gradlePlugin(GradleEnterpriseConfiguration configuration) {
+        return GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(GRADLE_PLUGIN_ID_MICRONAUT_GRADLE_ENTERPRISE)
                 .lookupArtifactId(ARTIFACT_ID_MICRONAUT_GRADLE_PLUGINS)
                 .requiresSettingsPluginsManagement()
-                .build());
+                .build();
     }
 }
