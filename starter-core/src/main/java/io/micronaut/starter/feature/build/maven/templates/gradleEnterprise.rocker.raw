@@ -11,12 +11,12 @@
     </server>
 }
     <buildScan>
-    @if (config.getServer() == null && (config.getTermsOfServiceUrl() != null || config.getTermsOfServiceAgree() != null)) {
+    @if (config.getServer() == null && (config.getTermsOfServiceUrl() != null || config.aggreeWithTermsOfService() != null)) {
         <termsOfService>
         @if (config.getTermsOfServiceUrl() != null) {
             <url>@(config.getTermsOfServiceUrl())</url>
         }
-        @if (config.getTermsOfServiceAgree() != null && config.getTermsOfServiceAgree()) {
+        @if (config.aggreeWithTermsOfService() != null && config.aggreeWithTermsOfService()) {
             <accept>true</accept>
         }
         </termsOfService>
