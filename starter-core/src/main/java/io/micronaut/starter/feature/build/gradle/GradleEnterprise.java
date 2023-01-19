@@ -33,10 +33,10 @@ import jakarta.inject.Singleton;
 public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration {
     public static final String GRADLE_ENTERPRISE_PLUGIN_ID = "com.gradle.enterprise";
     public static final String GRADLE_ENTERPRISE_ARTIFACT_ID = "gradle-enterprise-gradle-plugin";
+    protected static final String EXTENSIONS_XML = "extensions.xml";
+    protected static final String GRADLE_ENTERPRISE_XML = "gradle-enterprise.xml";
     private static final String SLASH = "/";
     private static final String MAVEN_FOLDER = ".mvn";
-    private static final String EXTENSIONS_XML = "extensions.xml";
-    private static final String GRADLE_ENTERPRISE_XML = "gradle-enterprise.xml";
     private static final String DOT = ".";
     private static final String ARTIFACT_ID_GRADLE_ENTERPRISE_MAVEN_EXTENSION = "gradle-enterprise-maven-extension";
     private static final String ARTIFACT_ID_COMMON_CUSTOM_USER_DATA_MAVEN_EXTENSION = "common-custom-user-data-maven-extension";
@@ -79,7 +79,7 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
 
     protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
         addMavenTemplate(generatorContext, EXTENSIONS_XML, extensionsRockerModel(generatorContext));
-        addMavenTemplate(generatorContext, GRADLE_ENTERPRISE_XML, io.micronaut.starter.feature.build.maven.templates.gradleEnterprise.template(server));
+        addMavenTemplate(generatorContext, GRADLE_ENTERPRISE_XML, io.micronaut.starter.feature.build.maven.templates.gradleEnterprise.template(server, false));
     }
 
     protected void addMavenTemplate(GeneratorContext generatorContext, String name, RockerModel rockerModel) {
@@ -88,7 +88,7 @@ public class GradleEnterprise implements Feature, GradleEnterpriseConfiguration 
         generatorContext.addTemplate(templateName, new RockerTemplate(path, rockerModel));
     }
 
-    private static RockerModel extensionsRockerModel(GeneratorContext generatorContext) {
+    protected static RockerModel extensionsRockerModel(GeneratorContext generatorContext) {
         return extensions.template(
                 generatorContext.resolveCoordinate(ARTIFACT_ID_GRADLE_ENTERPRISE_MAVEN_EXTENSION).getVersion(),
                 generatorContext.resolveCoordinate(ARTIFACT_ID_COMMON_CUSTOM_USER_DATA_MAVEN_EXTENSION).getVersion());
