@@ -31,7 +31,8 @@ public class H2 extends DatabaseDriverFeature {
     private static final Dependency.Builder DEPENDENCY_H2 = Dependency.builder()
             .groupId("com.h2database")
             .artifactId("h2")
-            .runtime();
+            .runtime()
+            .template();
 
     private static final Dependency.Builder DEPENDENCY_R2DBC_H2 = Dependency.builder()
             .groupId("io.r2dbc")

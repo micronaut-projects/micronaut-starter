@@ -52,7 +52,7 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
 
     @Override
     boolean hasTestResourceDependency(String groupId, String artifactId) {
-        throw new UnsupportedOperationException("not yet implemented");
+        hasDependency(groupId, artifactId, Scope.TEST_RESOURCES_SERVICE)
     }
 
     @Override
