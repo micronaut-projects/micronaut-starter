@@ -38,9 +38,9 @@ oci:
   vault:
     config:
       enabled: true
-      vaults:
-        compartment-ocid: ''
-        ocid: ''
+    vaults:
+      compartment-ocid: ''
+      ocid: ''
 ''')
     }
 
