@@ -64,6 +64,7 @@ io.micronaut.starter.feature.agorapulse.permissions
 io.micronaut.starter.feature.agorapulse.permissions.template
 io.micronaut.starter.feature.agorapulse.worker
 io.micronaut.starter.feature.agorapulse.worker.template
+io.micronaut.starter.feature.architecture
 io.micronaut.starter.feature.asciidoctor
 io.micronaut.starter.feature.asciidoctor.template
 io.micronaut.starter.feature.aws
@@ -74,6 +75,7 @@ io.micronaut.starter.feature.awslambdacustomruntime
 io.micronaut.starter.feature.awslambdacustomruntime.templates
 io.micronaut.starter.feature.awsparameterstore
 io.micronaut.starter.feature.awssecretsmanager
+io.micronaut.starter.feature.azure
 io.micronaut.starter.feature.build
 io.micronaut.starter.feature.build.gradle
 io.micronaut.starter.feature.build.gradle.templates
@@ -88,6 +90,8 @@ io.micronaut.starter.feature.ci.workflows.gcp
 io.micronaut.starter.feature.ci.workflows.gcp.templates
 io.micronaut.starter.feature.ci.workflows.github
 io.micronaut.starter.feature.ci.workflows.github.templates
+io.micronaut.starter.feature.ci.workflows.gitlab
+io.micronaut.starter.feature.ci.workflows.gitlab.templates
 io.micronaut.starter.feature.ci.workflows.oci
 io.micronaut.starter.feature.ci.workflows.oci.templates
 io.micronaut.starter.feature.coherence
@@ -160,6 +164,7 @@ io.micronaut.starter.feature.messaging.rabbitmq
 io.micronaut.starter.feature.micrometer
 io.micronaut.starter.feature.microstream
 io.micronaut.starter.feature.migration
+io.micronaut.starter.feature.migration.template
 io.micronaut.starter.feature.multitenancy
 io.micronaut.starter.feature.netflix
 io.micronaut.starter.feature.objectstorage
