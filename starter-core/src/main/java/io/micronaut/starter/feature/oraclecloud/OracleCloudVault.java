@@ -67,6 +67,6 @@ public class OracleCloudVault implements DistributedConfigFeature {
         Map<String, String> map = new HashMap<>();
         map.put("ocid", "");
         map.put("compartment-ocid", "");
-        bootstrapConfiguration.put("oci.vault.config.vaults", map);
+        bootstrapConfiguration.put("oci.vault.vaults", map);
     }
 }
