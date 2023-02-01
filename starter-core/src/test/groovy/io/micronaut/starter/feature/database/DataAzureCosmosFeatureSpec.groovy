@@ -70,8 +70,8 @@ class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements Comma
         when:
         def config = buildGeneratorContext([feature.name]).configuration
         then:
-        config.containsKey("azure.cosmos.endpoint")
-        config.containsKey("azure.cosmos.key")
+        !config.containsKey("azure.cosmos.endpoint")
+        !config.containsKey("azure.cosmos.key")
         config.containsKey("azure.cosmos.default-gateway-mode")
         config.containsKey("azure.cosmos.consistency-level")
         config.containsKey("azure.cosmos.endpoint-discovery-enabled")

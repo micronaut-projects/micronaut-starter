@@ -44,9 +44,6 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
             .compile()
             .build();
 
-    // These are just placeholder values for user to replace
-    private static final String DEFAULT_ENDPOINT = "https://some-host/some-db";
-    private static final String DEFAULT_KEY = "some-key";
     private static final String CONFIGURATION_PREFIX_AZURE_COSMOS = "azure.cosmos";
 
     private final Data data;
@@ -87,8 +84,6 @@ public class DataAzureCosmosFeature implements DataDocumentFeature {
                 CONFIGURATION_PREFIX_AZURE_COSMOS,
                 CollectionUtils.mapOf(
                 "consistency-level", "SESSION",
-                "endpoint", DEFAULT_ENDPOINT,
-                "key", Base64.getEncoder().encodeToString(DEFAULT_KEY.getBytes()),
                 "default-gateway-mode", true,
                 "endpoint-discovery-enabled", false,
                 "database", databaseProperties));
