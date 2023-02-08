@@ -1,9 +1,12 @@
 package io.micronaut.starter.feature.database
 
-import groovy.xml.XmlParser
+
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.dependencies.Scope
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Features
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -47,16 +50,14 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void "test mongo sync dependencies are present for maven"() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['mongo-sync'])
                 .render()
-        def project = new XmlParser().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-mongo-sync" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.mongodb'
-        }
+        verifier.hasDependency('io.micronaut.mongodb', "micronaut-mongo-sync", 'compile')
     }
 
     void "test mongo reactive features"() {
@@ -67,28 +68,19 @@ class MongoSpec extends ApplicationContextSpec implements CommandOutputFixture {
         features.contains("mongo-reactive")
     }
 
-    void "test dependencies are present for gradle"() {
+    void "test dependencies are present for #buildTool"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["mongo-reactive"])
-                .render()
-        then:
-        template.contains('implementation("io.micronaut.mongodb:micronaut-mongo-reactive")')
-        !template.contains('testImplementation("org.testcontainers:mongodb")')
-    }
-
-    void "test dependencies are present for maven"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['mongo-reactive'])
                 .render()
-        def project = new XmlParser().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        with(project.dependencies.dependency.find { it.artifactId.text() == "micronaut-mongo-reactive" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.mongodb'
-        }
+        verifier.hasDependency('io.micronaut.mongodb', "micronaut-mongo-reactive", Scope.COMPILE)
+        !verifier.hasDependency('org.testcontainers', "mongodb")
+
+        where:
+        buildTool << BuildTool.values()
     }
 
     void "test config for #features"() {

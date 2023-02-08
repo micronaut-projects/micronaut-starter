@@ -58,6 +58,11 @@ public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSup
     }
 
     @Override
+    public int getOrder() {
+        return r2dbc.getOrder() - 1;
+    }
+
+    @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
         generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);

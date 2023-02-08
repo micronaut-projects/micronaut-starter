@@ -3,6 +3,8 @@ package io.micronaut.starter.feature.other
 import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -62,25 +64,23 @@ class ProjectLombokSpec extends ApplicationContextSpec implements CommandOutputF
 
     void 'test maven lombok feature'() {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        BuildTool buildTool = BuildTool.MAVEN
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(['lombok'])
                 .render()
-        def project = new XmlParser().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
+        verifier.hasAnnotationProcessor("org.projectlombok", "lombok")
+        verifier.hasAnnotationProcessor("io.micronaut", "micronaut-inject-java")
+
+        Node project = new XmlParser().parseText(template)
         with(project.build.plugins.plugin.find { it.artifactId.text() == "maven-compiler-plugin" }) {
             def artifacts = configuration.annotationProcessorPaths.path.collect { "${it.groupId.text()}:${it.artifactId.text()}".toString() }
-            artifacts.contains("org.projectlombok:lombok")
-            artifacts.contains("io.micronaut:micronaut-inject-java")
-
             // make sure lombok is before inject-java or it won't work
             artifacts.indexOf("org.projectlombok:lombok") < artifacts.indexOf("io.micronaut:micronaut-inject-java")
         }
-
-        with(project.dependencies.dependency.find { it.artifactId.text() == "lombok" }) {
-            scope.text() == 'provided'
-            groupId.text() == 'org.projectlombok'
-        }
+        verifier.hasDependency("org.projectlombok", "lombok", "provided")
     }
 
     void 'micronaut-graal dependency is added because it is in the parent pom'() {
