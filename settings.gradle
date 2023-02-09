@@ -9,8 +9,14 @@ pluginManagement {
     }
 }
 
+buildscript {
+    dependencies {
+        classpath 'org.antlr:antlr4-runtime:4.8-1!!'
+    }
+}
+
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.3.18'
+    id 'io.micronaut.build.shared.settings' version '5.4.5'
 }
 
 rootProject.name = 'micronaut-starter'
