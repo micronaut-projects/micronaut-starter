@@ -22,6 +22,7 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
+    public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
     public static final String GROUP_ID_MICRONAUT_TRACING = "io.micronaut.tracing";
@@ -42,6 +43,11 @@ public final class MicronautDependencyUtils {
     @NonNull
     public static Dependency.Builder awsDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_AWS);
+    }
+
+    @NonNull
+    public static Dependency.Builder gcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GCP);
     }
 
     @NonNull
