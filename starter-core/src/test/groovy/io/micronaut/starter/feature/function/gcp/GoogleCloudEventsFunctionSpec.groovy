@@ -1,7 +1,10 @@
 package io.micronaut.starter.feature.function.gcp
 
 import io.micronaut.starter.BeanContextSpec
+import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires
@@ -9,17 +12,32 @@ import spock.lang.Requires
 @Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
 
-    void 'test readme.md with feature google-cloud-function contains links to micronaut docs'() {
+    void 'test dependencies for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
         when:
-        Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
+        String template = new BuildBuilder(beanContext, buildTool)
+                .applicationType(ApplicationType.FUNCTION)
+                .features(['google-cloud-function-cloudevents'])
+                .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
+
+        then:
+        verifyAll {
+            verifier.hasDependency('io.micronaut.gcp', 'micronaut-gcp-function-cloudevents')
+            verifier.hasDependency('io.micronaut.serde', 'micronaut-serde-api')
+        }
+
+        where:
+        buildTool << [BuildTool.GRADLE, BuildTool.MAVEN]
+    }
+
+    void 'test readme.md and function for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
+        when:
+        Options options = new Options(Language.JAVA, TestFramework.JUNIT, buildTool, JdkVersion.JDK_8)
         def output = generate(ApplicationType.FUNCTION, options, ['google-cloud-function-cloudevents'])
-        def build = output['build.gradle']
         def function = output['src/main/java/example/micronaut/Function.java']
         def readme = output['README.md']
 
         then:
-        build
-        build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function-cloudevents")')
         function
         function.contains('extends GoogleCloudEventsFunction')
         readme
@@ -35,5 +53,8 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
         then:
         // make sure we didn't add docs more than once
         !readme.contains('## Feature google-cloud-function-cloudevents documentation')
+
+        where:
+        buildTool << [BuildTool.GRADLE, BuildTool.MAVEN]
     }
 }
