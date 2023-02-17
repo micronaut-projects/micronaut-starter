@@ -46,7 +46,6 @@ import static io.micronaut.starter.build.Repository.micronautRepositories;
 public class Maven implements BuildFeature {
     protected static final String WRAPPER_JAR = ".mvn/wrapper/maven-wrapper.jar";
     protected static final String WRAPPER_PROPS = ".mvn/wrapper/maven-wrapper.properties";
-    protected static final String WRAPPER_DOWNLOADER = ".mvn/wrapper/MavenWrapperDownloader.java";
     protected static final String MAVEN_PREFIX = "maven/";
 
     protected final MavenBuildCreator dependencyResolver;
@@ -79,7 +78,6 @@ public class Maven implements BuildFeature {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         generatorContext.addTemplate("mavenWrapperJar", new BinaryTemplate(Template.ROOT, WRAPPER_JAR, classLoader.getResource(MAVEN_PREFIX + WRAPPER_JAR)));
         generatorContext.addTemplate("mavenWrapperProperties", new URLTemplate(Template.ROOT, WRAPPER_PROPS, classLoader.getResource(MAVEN_PREFIX + WRAPPER_PROPS)));
-        generatorContext.addTemplate("mavenWrapperDownloader", new URLTemplate(Template.ROOT, WRAPPER_DOWNLOADER, classLoader.getResource(MAVEN_PREFIX + WRAPPER_DOWNLOADER)));
         generatorContext.addTemplate("mavenWrapper", new URLTemplate(Template.ROOT, "mvnw", classLoader.getResource(MAVEN_PREFIX + "mvnw"), true));
         generatorContext.addTemplate("mavenWrapperBat", new URLTemplate(Template.ROOT, "mvnw.bat", classLoader.getResource(MAVEN_PREFIX + "mvnw.cmd"), false));
 
