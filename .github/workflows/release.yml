@@ -32,17 +32,17 @@ jobs:
           GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-#      - name: Publish to Maven Central
-#        env:
-#          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-#          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-#          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-#          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-#          GPG_FILE: ${{ secrets.GPG_FILE }}
-#          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-#          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-#          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-#        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
+      - name: Publish to Maven Central
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          GPG_FILE: ${{ secrets.GPG_FILE }}
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+        run: echo $GPG_FILE | base64 -d > secring.gpg && ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository docs
       - name: Upload CLI Zip
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -260,87 +260,87 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew sdkMajorRelease --no-daemon
-#  gcr:
-#    name: Deploy to Cloud Run
-#    runs-on: ubuntu-latest
-#    needs: [build]
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#        with:
-#          token: ${{ secrets.GH_TOKEN }}
-#      - name: Set the current release version
-#        id: release_version
-#        run: |
-#          release_version=${GITHUB_REF:11}
-#          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-#          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-#      - name: Run Tests
-#        run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
-#        env:
-#          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-#          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-#          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-#      - name: Build Docker image
-#        run: |
-#          ./gradlew starter-web-netty:dockerBuildNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
-#      - name: Authenticate into Google Cloud Platform
-#        uses: google-github-actions/setup-gcloud@v0.2.1
-#        with:
-#          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#      - name: Configure Docker to use Google Cloud Platform
-#        run: "gcloud auth configure-docker --quiet"
-#      - name: Push image to Google Cloud Container Registry
-#        run: |
-#          ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
-#      - name: Deploy to Cloud Run
-#        env:
-#          release_version: ${{ steps.release_version.outputs.release_version }}
-#        run: |
-#          gcloud components install beta --quiet
-#          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
-#          version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
-#          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
-#  analytics:
-#    name: Release Analytics Job
-#    runs-on: ubuntu-latest
-#    needs: [build]
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v3
-#        with:
-#          token: ${{ secrets.GH_TOKEN }}
-#      - name: Set the current release version
-#        id: release_version
-#        run: |
-#          release_version=${GITHUB_REF:11}
-#          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-#          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
-#      - name: Authenticate into Google Cloud Platform
-#        uses: google-github-actions/setup-gcloud@v0.2.1
-#        with:
-#          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
-#          service_account_key: ${{ secrets.GCLOUD_AUTH }}
-#      - name: Configure Docker to use Google Cloud Platform
-#        run: "gcloud auth configure-docker --quiet"
-#      - name: Run Tests
-#        run: ./gradlew starter-analytics-postgres:test
-#        env:
-#          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-#          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-#          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-#      - name: Build Docker image
-#        run:
-#          ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}
-#        env:
-#          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
-#          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
-#          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
-#      - name: Deploy to Cloud Run
-#        run: |
-#          gcloud components install beta --quiet
-#          gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
+  gcr:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Set the current release version
+        id: release_version
+        run: |
+          release_version=${GITHUB_REF:11}
+          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
+      - name: Run Tests
+        run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: Build Docker image
+        run: |
+          ./gradlew starter-web-netty:dockerBuildNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
+      - name: Authenticate into Google Cloud Platform
+        uses: google-github-actions/setup-gcloud@v0.2.1
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Configure Docker to use Google Cloud Platform
+        run: "gcloud auth configure-docker --quiet"
+      - name: Push image to Google Cloud Container Registry
+        run: |
+          ./gradlew starter-web-netty:dockerPushNative -PdockerImageName="gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }}"
+      - name: Deploy to Cloud Run
+        env:
+          release_version: ${{ steps.release_version.outputs.release_version }}
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy micronaut-starter-latest --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+          version="$(echo "${release_version//./}" | tr '[A-Z]' '[a-z]')"
+          gcloud beta run deploy "micronaut-starter-$version" --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --update-env-vars=HOSTNAME="launch.micronaut.io",GITHUB_OAUTH_APP_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }},GITHUB_OAUTH_APP_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }} --platform managed --allow-unauthenticated --service-account=${{ secrets.GCLOUD_EMAIL }}
+  analytics:
+    name: Release Analytics Job
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+      - name: Set the current release version
+        id: release_version
+        run: |
+          release_version=${GITHUB_REF:11}
+          sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
+      - name: Authenticate into Google Cloud Platform
+        uses: google-github-actions/setup-gcloud@v0.2.1
+        with:
+          service_account_email: ${{ secrets.GCLOUD_EMAIL }}
+          service_account_key: ${{ secrets.GCLOUD_AUTH }}
+      - name: Configure Docker to use Google Cloud Platform
+        run: "gcloud auth configure-docker --quiet"
+      - name: Run Tests
+        run: ./gradlew starter-analytics-postgres:test
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: Build Docker image
+        run:
+          ./gradlew jib --image=gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }}
+        env:
+          GRADLE_ENTERPRISE_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GRADLE_ENTERPRISE_CACHE_USERNAME: ${{ secrets.GRADLE_ENTERPRISE_CACHE_USERNAME }}
+          GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud components install beta --quiet
+          gcloud beta run deploy micronaut-starter-analytics --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/micronaut-starter-analytics:${{ steps.release_version.outputs.release_version }} --project ${{ secrets.GCLOUD_PROJECT }} --region  us-central1 --platform managed --service-account=${{ secrets.GCLOUD_EMAIL }}
 
   homebrew:
     name: Update Homebrew cask
