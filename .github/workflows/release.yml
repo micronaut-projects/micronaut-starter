@@ -114,7 +114,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -164,7 +164,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -210,7 +210,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Build Native Image
         shell: powershell
-        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
