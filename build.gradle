@@ -1,4 +1,3 @@
 plugins {
     id "io.micronaut.internal.starter.aggregator"
-    id "io.micronaut.build.internal.dependency-updates"
 }

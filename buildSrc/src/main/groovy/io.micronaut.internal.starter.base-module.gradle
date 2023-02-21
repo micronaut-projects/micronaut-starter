@@ -23,10 +23,6 @@ configurations.all {
                 details.useVersion(spockVersion)
             }
         }
-        dependencySubstitution {
-            substitute(module("org.codehaus.groovy:groovy"))
-                    .using(module("org.apache.groovy:groovy:$groovyVersion"))
-        }
     }
 }
 
@@ -40,6 +36,5 @@ dependencies {
     testImplementation("org.apache.groovy:groovy:$groovyVersion")
     testImplementation("org.spockframework:spock-core:$spockVersion") {
         exclude group: "org.apache.groovy", module: "groovy-all"
-        exclude group: 'org.codehaus.groovy'
     }
 }

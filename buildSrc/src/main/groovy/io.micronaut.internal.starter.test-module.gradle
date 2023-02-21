@@ -9,9 +9,3 @@ dependencies {
 tasks.withType(Test).configureEach {
     forkEvery = 10
 }
-
-// resolves build failures described by
-// https://blog.solidsoft.pl/2021/11/19/running-spock-with-unsupported-groovy-version-gradle-maven/
-tasks.withType(GroovyCompile).configureEach {
-    options.forkOptions.jvmArgs << '-Dspock.iKnowWhatImDoing.disableGroovyVersionCheck=true'
-}
