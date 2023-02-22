@@ -186,7 +186,7 @@ class DataR2dbcSpec extends ApplicationContextSpec implements CommandOutputFixtu
         BuildTool.GRADLE_KOTLIN | "sqlserver" | "SQL_SERVER"
         BuildTool.GRADLE        | "sqlserver" | "SQL_SERVER"
         BuildTool.MAVEN         | "oracle"    | "ORACLE"
-        BuildTool.MAVEN         | "oracle"    | "ORACLE"
+        BuildTool.GRADLE_KOTLIN | "oracle"    | "ORACLE"
         BuildTool.GRADLE        | "oracle"    | "ORACLE"
     }
 }
