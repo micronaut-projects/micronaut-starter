@@ -13,7 +13,6 @@ import spock.lang.Unroll
 import spock.util.environment.Jvm
 
 @Requires({ Jvm.current.isJava11Compatible()})
-@Retry // can fail on CI due to port binding race condition, so retry
 class CreateGoogleCloudFunctionCloudEventsSpec extends CommandSpec {
 
     @Override
