@@ -70,7 +70,7 @@ public class HttpSession implements Feature  {
         if (generatorContext.isFeaturePresent(RedisLettuce.class)) {
             configuration.put("micronaut.session.http.redis.enabled", true);
         }
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
+        generatorContext.addDependency(MicronautDependencyUtils.sessionDependency()
                 .artifactId("micronaut-session")
                 .compile());
     }

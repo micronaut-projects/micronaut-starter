@@ -58,7 +58,7 @@ class HttpSessionSpec extends ApplicationContextSpec implements CommandOutputFix
                 .render()
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-session")')
+        template.contains('implementation("io.micronaut.session:micronaut-session")')
 
         where:
         language << Language.values().toList()
@@ -75,7 +75,7 @@ class HttpSessionSpec extends ApplicationContextSpec implements CommandOutputFix
         then:
         template.contains("""
     <dependency>
-      <groupId>io.micronaut</groupId>
+      <groupId>io.micronaut.session</groupId>
       <artifactId>micronaut-session</artifactId>
       <scope>compile</scope>
     </dependency>
