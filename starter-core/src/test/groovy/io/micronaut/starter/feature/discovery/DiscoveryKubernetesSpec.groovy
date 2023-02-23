@@ -29,6 +29,7 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
                 .render()
 
         then:
+        template.contains('implementation("io.micronaut:micronaut-discovery-core")')
         template.contains('implementation("io.micronaut.kubernetes:micronaut-kubernetes-discovery-client")')
 
         where:
@@ -48,6 +49,13 @@ class DiscoveryKubernetesSpec extends ApplicationContextSpec implements CommandO
     <dependency>
       <groupId>io.micronaut.kubernetes</groupId>
       <artifactId>micronaut-kubernetes-discovery-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-discovery-core</artifactId>
       <scope>compile</scope>
     </dependency>
 """)

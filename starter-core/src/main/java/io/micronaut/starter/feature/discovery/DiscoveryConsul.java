@@ -23,7 +23,7 @@ import io.micronaut.starter.feature.consul.Consul;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryConsul implements DiscoveryFeature {
+public class DiscoveryConsul extends DiscoveryCore {
 
     private final Consul consul;
 
@@ -57,6 +57,7 @@ public class DiscoveryConsul implements DiscoveryFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getConfiguration().put("consul.client.registration.enabled", true);
+        applyCore(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.discovery")
                 .artifactId("micronaut-discovery-client")
