@@ -5,12 +5,30 @@ import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.BuildTestUtil
 import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires
+import spock.lang.Subject
 
 @Requires({ jvm.current.isJava11Compatible() })
 class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOutputFixture {
+
+    @Subject
+    GoogleCloudEventsFunction googleCloudEventsFunction = beanContext.getBean(GoogleCloudEventsFunction)
+
+    void "google-cloud-function-cloudevents supports function application type"() {
+        expect:
+        googleCloudEventsFunction.supports(ApplicationType.FUNCTION)
+    }
+
+    void "google-cloud-function-cloudevents does not support #applicationType application type"(ApplicationType applicationType) {
+        expect:
+        !googleCloudEventsFunction.supports(applicationType)
+
+        where:
+        applicationType << (ApplicationType.values() - ApplicationType.FUNCTION)
+    }
 
     void 'test dependencies for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
         when:
@@ -27,7 +45,7 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
         }
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
     void 'test readme.md and function for #buildTool build with feature google-cloud-function'(BuildTool buildTool) {
@@ -55,6 +73,6 @@ class GoogleCloudEventsFunctionSpec extends BeanContextSpec implements CommandOu
         !readme.contains('## Feature google-cloud-function-cloudevents documentation')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 }

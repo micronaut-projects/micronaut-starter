@@ -20,6 +20,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.function.gcp.template.cloudevents.*;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
@@ -29,7 +30,6 @@ import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 import java.util.Optional;
-
 
 /**
  * A feature for supporting Google CloudEvents Function.
@@ -44,6 +44,14 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
 
     private static final String MICRONAUT_GCP_FUNCTION_CLOUDEVENTS = "micronaut-gcp-function-cloudevents";
     private static final String MICRONAUT_SERDE_API = "micronaut-serde-api";
+    private static final Dependency DEPENDENCY_MICRONAUT_GCP_FUNCTION_CLOUDEVENTS = MicronautDependencyUtils.gcpDependency()
+            .artifactId(MICRONAUT_GCP_FUNCTION_CLOUDEVENTS)
+            .compile()
+            .build();
+    private static final Dependency DEPENDENCY_MICRONAUT_SERDE_API = MicronautDependencyUtils.serdeDependency()
+            .artifactId(MICRONAUT_SERDE_API)
+            .compile()
+            .build();
 
     private final GoogleCloudFunction googleCloudFunction;
 
@@ -64,15 +72,8 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
         Project project = generatorContext.getProject();
         String sourceFile = generatorContext.getSourcePath("/{packagePath}/Function");
         generatorContext.addTemplate("function", new RockerTemplate(sourceFile, sourceFileModel(generatorContext)));
-
-        generatorContext.addDependency(MicronautDependencyUtils.gcpDependency()
-            .compile()
-            .artifactId(MICRONAUT_GCP_FUNCTION_CLOUDEVENTS));
-        generatorContext.addDependency(MicronautDependencyUtils.serdeDependency()
-            .compile()
-            .artifactId(MICRONAUT_SERDE_API));
-
         applyTestTemplate(generatorContext, project, "Function");
+        addDependencies(generatorContext);
     }
 
     @Override
@@ -81,6 +82,7 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Google Cloud Function";
     }
@@ -144,6 +146,11 @@ public class GoogleCloudEventsFunction extends AbstractGoogleCloudFunction {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#cloudEventsFunctions";
+    }
+
+    protected void addDependencies(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_GCP_FUNCTION_CLOUDEVENTS);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_SERDE_API);
     }
 
     @NonNull
