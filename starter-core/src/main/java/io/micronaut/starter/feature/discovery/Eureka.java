@@ -17,11 +17,10 @@ package io.micronaut.starter.feature.discovery;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
-
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Eureka implements DiscoveryFeature {
+public class Eureka extends DiscoveryCore {
 
     @Override
     public String getName() {
@@ -40,6 +39,7 @@ public class Eureka implements DiscoveryFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        applyCore(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.discovery")
                 .artifactId("micronaut-discovery-client")

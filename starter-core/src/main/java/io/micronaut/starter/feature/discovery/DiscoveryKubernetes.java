@@ -22,7 +22,7 @@ import io.micronaut.starter.feature.k8s.KubernetesClient;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class DiscoveryKubernetes implements DiscoveryFeature {
+public class DiscoveryKubernetes extends DiscoveryCore {
 
     @NonNull
     @Override
@@ -44,6 +44,7 @@ public class DiscoveryKubernetes implements DiscoveryFeature {
     public void apply(GeneratorContext generatorContext) {
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode", "endpoint");
         generatorContext.getBootstrapConfiguration().put("kubernetes.client.discovery.mode-configuration.endpoint.watch.enabled", true);
+        applyCore(generatorContext);
         generatorContext.addDependency(Dependency.builder()
                 .groupId(KubernetesClient.MICRONAUT_KUBERNETES_GROUP_ID)
                 .artifactId("micronaut-kubernetes-discovery-client")

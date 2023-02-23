@@ -29,6 +29,7 @@ class EurekaSpec extends ApplicationContextSpec implements CommandOutputFixture 
                 .render()
 
         then:
+        template.contains('implementation("io.micronaut:micronaut-discovery-core")')
         template.contains('implementation("io.micronaut.discovery:micronaut-discovery-client")')
 
         where:
@@ -48,6 +49,13 @@ class EurekaSpec extends ApplicationContextSpec implements CommandOutputFixture 
     <dependency>
       <groupId>io.micronaut.discovery</groupId>
       <artifactId>micronaut-discovery-client</artifactId>
+      <scope>compile</scope>
+    </dependency>
+""")
+        template.contains("""
+    <dependency>
+      <groupId>io.micronaut</groupId>
+      <artifactId>micronaut-discovery-core</artifactId>
       <scope>compile</scope>
     </dependency>
 """)
