@@ -9,3 +9,12 @@ dependencies {
 tasks.withType(Test).configureEach {
     forkEvery = 10
 }
+
+tasks.withType(AbstractCompile).configureEach {
+    // This ugly fix is because `gradleTestKit()` is a special kind of dependency in Gradle
+    // which will bring in Groovy 3 (bundled in Gradle) and cannot be excluded/conflict resolved
+    // like other dependencies
+    classpath = classpath.filter {
+        !it.name.startsWith('groovy-3')
+    }
+}
