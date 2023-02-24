@@ -2,13 +2,22 @@ package io.micronaut.starter.feature.websocket
 
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
+import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import io.micronaut.starter.options.Language
 import spock.lang.PendingFeature
+import spock.lang.Shared
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixture {
+
+    @Shared
+    @Subject
+    Websocket websocket = beanContext.getBean(Websocket)
 
     @PendingFeature(reason = 'The Websocket feature is for Micronaut 4, and should be visible for Starter 4.0.0')
     void "Websocket feature is visible"() {
@@ -18,7 +27,7 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
     void 'test readme.md with feature websocket contains links to micronaut docs'() {
         when:
-        def output = generate(['websocket'])
+        def output = generate([Websocket.NAME])
         def readme = output["README.md"]
 
         then:
@@ -27,38 +36,27 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'test gradle websocket feature for language=#language'() {
+    void "test dependency added for websocket feature"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .features(['websocket'])
+        String template = new BuildBuilder(beanContext, buildTool)
+                .features([Websocket.NAME])
                 .render()
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        template.contains('implementation("io.micronaut:micronaut-websocket")')
+        verifier.hasDependency("io.micronaut", "micronaut-websocket", Scope.COMPILE)
 
         where:
-        language << Language.values().toList()
+        buildTool << BuildTool.values()
     }
 
     @Unroll
-    void 'test maven websocket feature for language=#language'() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .features(['websocket'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut</groupId>
-      <artifactId>micronaut-websocket</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
+    void "websocket supports #description application type"(ApplicationType applicationType, String description) {
+        expect:
+        websocket.supports(applicationType)
 
         where:
-        language << Language.values().toList()
+        applicationType << ApplicationType.values()
+        description = applicationType.name
     }
 }

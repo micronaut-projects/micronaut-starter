@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.websocket;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
@@ -25,6 +26,13 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Websocket implements Feature {
 
+    public static final String NAME = "websocket";
+
+    private static final Dependency DEPENDENCY_WEBSOCKET = MicronautDependencyUtils.coreDependency()
+            .artifactId("micronaut-websocket")
+            .compile()
+            .build();
+
     @Override
     public boolean isVisible() {
         return false;
@@ -32,7 +40,7 @@ public class Websocket implements Feature {
 
     @Override
     public String getName() {
-        return "websocket";
+        return NAME;
     }
 
     @Override
@@ -47,9 +55,7 @@ public class Websocket implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-websocket")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_WEBSOCKET);
     }
 
     @Override
