@@ -17,6 +17,7 @@ package io.micronaut.starter.feature.retry;
 
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
@@ -25,6 +26,13 @@ import jakarta.inject.Singleton;
 @Singleton
 public class Retry implements Feature {
 
+    public static final String NAME = "retry";
+
+    private static final Dependency DEPENDENCY_RETRY = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-retry")
+            .compile().build();
+
     @Override
     public boolean isVisible() {
         return false;
@@ -32,12 +40,12 @@ public class Retry implements Feature {
 
     @Override
     public String getName() {
-        return "retry";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "Retry";
+        return "Micronaut Retry";
     }
 
     @Override
@@ -47,9 +55,7 @@ public class Retry implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.coreDependency()
-                .artifactId("micronaut-retry")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_RETRY);
     }
 
     @Override
