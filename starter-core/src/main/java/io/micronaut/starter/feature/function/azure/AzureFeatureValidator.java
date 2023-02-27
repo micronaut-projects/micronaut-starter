@@ -38,12 +38,6 @@ public class AzureFeatureValidator implements FeatureValidator  {
             if (options.getBuildTool() == BuildTool.GRADLE_KOTLIN) {
                 throw new IllegalArgumentException("The Azure Gradle plugin currently does not support the Kotlin Gradle DSL.");
             }
-            switch (options.getJavaVersion()) {
-                case JDK_8: case JDK_11: case JDK_17:
-                    break;
-                default:
-                    throw new IllegalArgumentException("The Azure Functions runtime only supports Java 8, Java 11 or Java 11.");
-            }
         }
     }
 }

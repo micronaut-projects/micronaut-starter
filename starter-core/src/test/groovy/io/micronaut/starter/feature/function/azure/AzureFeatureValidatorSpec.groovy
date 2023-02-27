@@ -3,7 +3,11 @@ package io.micronaut.starter.feature.function.azure
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.build.dependencies.DefaultCoordinateResolver
 import io.micronaut.starter.feature.Feature
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -27,12 +31,9 @@ class AzureFeatureValidatorSpec extends Specification {
 
         where:
         [javaVersion, feature] << [
-                supportedVersionsByAzureFunction(),
+                JdkVersion.values(),
                 [new AzureHttpFunction(new DefaultCoordinateResolver()), new AzureRawFunction(new DefaultCoordinateResolver(), new AzureHttpFunction(new DefaultCoordinateResolver()))]
         ].combinations()
     }
 
-    static List<JdkVersion> supportedVersionsByAzureFunction() {
-        [JdkVersion.JDK_8, JdkVersion.JDK_11, JdkVersion.JDK_17]
-    }
 }
