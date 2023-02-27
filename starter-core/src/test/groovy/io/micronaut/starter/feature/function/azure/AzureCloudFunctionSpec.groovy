@@ -1,15 +1,24 @@
 package io.micronaut.starter.feature.function.azure
 
+
 import io.micronaut.core.version.SemanticVersion
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
+import spock.lang.PendingFeature
 import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
+    // PendingFeature doesn't work here, because "if every iteration of a data-driven test passes it will be reported as error"
+    // and apparently zero iterations means every iteration
+    @PendingFeature(reason = "This test won't execute until we add another Java version, e.g. `JdkVersion.JDK_19`")
     @Unroll("#jdkVersion not supported for #feature")
     void "verify for not supported JDK Versions by azure-function an IllegalArgumentException is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
@@ -24,6 +33,8 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
+                // TODO: this is an empty list until an unsupported JDK is added to JdkVersion,
+                //  and prevents test from executing with 'Data provider has no data' exception
                 ((JdkVersion.values() as List<JdkVersion>) - AzureFeatureValidatorSpec.supportedVersionsByAzureFunction()) as List<JdkVersion>,
                 ['azure-function']
         ].combinations()

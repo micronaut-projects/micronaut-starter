@@ -33,6 +33,6 @@ class AzureFeatureValidatorSpec extends Specification {
     }
 
     static List<JdkVersion> supportedVersionsByAzureFunction() {
-        [JdkVersion.JDK_8, JdkVersion.JDK_11]
+        [JdkVersion.JDK_8, JdkVersion.JDK_11, JdkVersion.JDK_17]
     }
 }
