@@ -35,12 +35,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public final class CoordinatesUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(CoordinatesUtils.class);
+public final class PomCoordinatesUtils {
+    private static final Logger LOG = LoggerFactory.getLogger(PomCoordinatesUtils.class);
 
     private static final String NODE_NAME_TEXT = "#text";
 
-    private CoordinatesUtils() {
+    private PomCoordinatesUtils() {
     }
 
     public static Map<String, Coordinate> readCoordinates(Stream<URL> urls) {

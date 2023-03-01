@@ -2,6 +2,7 @@ plugins {
     id "io.micronaut.internal.starter.published-module"
     id "io.micronaut.internal.starter.convention"
     id "io.micronaut.starter.rocker"
+    id "io.micronaut.internal.starter.coordinates"
 }
 
 sourceSets {
@@ -48,4 +49,3 @@ nohttp {
     source.exclude "**/genericPom.rocker.raw"
     source.exclude "**/multimodule.rocker.raw"
 }
-
