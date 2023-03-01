@@ -4,8 +4,8 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
 import io.micronaut.starter.options.Language
-import spock.lang.Unroll
 
 class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
 
@@ -19,12 +19,12 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         readme.contains("https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq")
     }
 
-    @Unroll
     void 'test gradle jooq feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
                 .features(['jooq'])
                 .language(language)
+                .jdkVersion(JdkVersion.JDK_11)
                 .render()
 
         then:
@@ -34,12 +34,12 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         language << Language.values().toList()
     }
 
-    @Unroll
     void 'test maven jooq feature for language=#language'() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
                 .features(['jooq'])
                 .language(language)
+                .jdkVersion(JdkVersion.JDK_11)
                 .render()
 
         then:
@@ -55,4 +55,19 @@ class JooqSpec extends ApplicationContextSpec  implements CommandOutputFixture {
         language << Language.values().toList()
     }
 
+    void "test jooq cannot be applied for #language with Java 8"() {
+        when:
+        new BuildBuilder(beanContext, BuildTool.GRADLE)
+                .features(['jooq'])
+                .language(language)
+                .jdkVersion(JdkVersion.JDK_8)
+                .render()
+
+        then:
+        IllegalArgumentException ex = thrown()
+        ex.message == "The selected feature jooq requires at latest Java 11"
+
+        where:
+        language << Language.values().toList()
+    }
 }
