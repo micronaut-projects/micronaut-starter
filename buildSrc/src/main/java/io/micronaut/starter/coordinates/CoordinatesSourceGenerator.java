@@ -85,14 +85,14 @@ public abstract class CoordinatesSourceGenerator extends DefaultTask {
         Path packageDirectory = outputDirectory.toPath().resolve(packageName.replace('.', '/'));
         getFileOperations().delete(outputDirectory);
         Files.createDirectories(packageDirectory);
-        try (PrintWriter writer = new PrintWriter(new FileWriter(new File(packageDirectory.toFile(), "CoordinatesUtils.java")))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(new File(packageDirectory.toFile(), "StarterCoordinates.java")))) {
             writer.println("package " + packageName + ";");
             writer.println();
             writer.println("import java.util.HashMap;");
             writer.println("import java.util.Map;");
             writer.println("import java.util.Collections;");
             writer.println();
-            writer.println("public class CoordinatesUtils {");
+            writer.println("public class StarterCoordinates {");
             writer.println("    public static final Map<String, Coordinate> ALL_COORDINATES;");
             Map<String, String> coordinatesMap = new LinkedHashMap<>();
             VersionCatalog versionCatalog = getVersionCatalog().get();

@@ -4,8 +4,8 @@ import io.micronaut.context.annotation.Replaces
 import io.micronaut.core.io.ResourceResolver
 import io.micronaut.starter.build.dependencies.Coordinate
 import io.micronaut.starter.build.dependencies.CoordinatesUtils
-import io.micronaut.starter.build.dependencies.PomCoordinatesUtils
 import io.micronaut.starter.build.dependencies.PomDependencyVersionResolver
+import io.micronaut.starter.build.dependencies.StarterCoordinates
 import jakarta.inject.Singleton
 
 @Replaces(PomDependencyVersionResolver.class)
@@ -15,8 +15,8 @@ class MultipleSourcesDependencyResolver implements PomDependencyVersionResolver 
 
     MultipleSourcesDependencyResolver(ResourceResolver resourceResolver) {
         Map<String, Coordinate> allCoordinates = new HashMap<>();
-        allCoordinates.putAll(CoordinatesUtils.ALL_COORDINATES);
-        allCoordinates.putAll(PomCoordinatesUtils.readCoordinates(resourceResolver.getResources("classpath:pom.xml")));
+        allCoordinates.putAll(StarterCoordinates.ALL_COORDINATES);
+        allCoordinates.putAll(CoordinatesUtils.readCoordinates(resourceResolver.getResources("classpath:pom.xml")));
         this.coordinates = Collections.unmodifiableMap(allCoordinates);
     }
     @Override

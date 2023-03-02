@@ -26,7 +26,7 @@ public class DefaultPomDependencyVersionResolver implements PomDependencyVersion
     /**
      * Initialize coordinates early to remove runtime dependencies on javax.xml.
      */
-    private static final Map<String, Coordinate> COORDINATES = CoordinatesUtils.ALL_COORDINATES;
+    private static final Map<String, Coordinate> COORDINATES = StarterCoordinates.ALL_COORDINATES;
 
     @Override
     @NonNull
