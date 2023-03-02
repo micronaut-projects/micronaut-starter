@@ -199,6 +199,7 @@ io.micronaut.starter.feature.tracing
 io.micronaut.starter.feature.validation
 io.micronaut.starter.feature.vertx
 io.micronaut.starter.feature.view
+io.micronaut.starter.feature.websocket
 io.micronaut.starter.feature.xml
 io.micronaut.starter.io
 io.micronaut.starter.netty
