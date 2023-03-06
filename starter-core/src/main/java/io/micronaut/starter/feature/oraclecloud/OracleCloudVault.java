@@ -15,18 +15,21 @@
  */
 package io.micronaut.starter.feature.oraclecloud;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import jakarta.inject.Singleton;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
 public class OracleCloudVault implements DistributedConfigFeature {
 
+    @NonNull
     @Override
     public String getName() {
         return "oracle-cloud-vault";
@@ -37,6 +40,7 @@ public class OracleCloudVault implements DistributedConfigFeature {
         return "Oracle Cloud Vault Distributed Configuration";
     }
 
+    @NonNull
     @Override
     public String getDescription() {
         return "Adds support for Distributed Configuration with Oracle Cloud Vault";
@@ -67,6 +71,6 @@ public class OracleCloudVault implements DistributedConfigFeature {
         Map<String, String> map = new HashMap<>();
         map.put("ocid", "");
         map.put("compartment-ocid", "");
-        bootstrapConfiguration.put("oci.vault.config.vaults", map);
+        bootstrapConfiguration.put("oci.vault.vaults", Collections.singletonList(map));
     }
 }

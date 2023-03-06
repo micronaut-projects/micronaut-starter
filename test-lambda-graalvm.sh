@@ -103,6 +103,33 @@ cdk destroy -f
 cd ../../..
 rm -rf starter-cli/temp
 
+
+############
+# | BUILD  | TYPE | RUNTIME  | FEATURES
+# | GRADLE | APP  | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http
+############
+
+./gradlew micronaut-cli:run --args="create-app -b gradle -f \"aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http\" temp" || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+cd starter-cli/temp
+
+./test-lambda.sh  || EXIT_STATUS=$? 
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  echo "❌ FAILED | GRADLE  | APP  | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http"
+  exit $EXIT_STATUS
+fi
+
+cd infra
+cdk destroy -f
+cd ../../..
+rm -rf starter-cli/temp
+
+
 ############
 # | BUILD  | TYPE     | RUNTIME  | FEATURES
 # | GRADLE | FUNCTION | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway
@@ -120,6 +147,31 @@ cd starter-cli/temp
 
 if [ $EXIT_STATUS -ne 0 ]; then
   echo "❌ FAILED | GRADLE  | FUNCTION  | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway"
+  exit $EXIT_STATUS
+fi
+
+cd infra
+cdk destroy -f
+cd ../../..
+rm -rf starter-cli/temp
+
+############
+# | BUILD  | TYPE     | RUNTIME  | FEATURES
+# | GRADLE | FUNCTION | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http
+############
+
+./gradlew micronaut-cli:run --args="create-function-app -b gradle -f \"aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http\" temp" || EXIT_STATUS=$?
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  exit $EXIT_STATUS
+fi
+
+cd starter-cli/temp
+
+./test-lambda.sh  || EXIT_STATUS=$? 
+
+if [ $EXIT_STATUS -ne 0 ]; then
+  echo "❌ FAILED | GRADLE  | FUNCTION  | PROVIDED | aws-lambda,aws-cdk,graalvm,amazon-api-gateway-http"
   exit $EXIT_STATUS
 fi
 

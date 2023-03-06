@@ -1,7 +1,7 @@
 plugins {
     id "io.micronaut.internal.starter.convention"
     id "com.github.johnrengelman.shadow"
-    id 'io.micronaut.application' 
+    alias(templateLibs.plugins.micronaut.application)
 }
 
 ext.publish = false
@@ -24,7 +24,7 @@ application {
 }
 
 tasks.named('dockerfileNative') {
-    baseImage("ghcr.io/graalvm/native-image:ol7-java11-22.2.0")
+    baseImage("ghcr.io/graalvm/native-image:ol7-java11-22.3.0")
 }
 
 tasks.named("dockerBuildNative") {

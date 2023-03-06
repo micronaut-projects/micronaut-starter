@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature {
+public class AwsLambdaScheduledEvent extends AwsLambdaEventFunctionFeature implements LambdaTrigger {
     public static final String NAME = "aws-lambda-scheduled-event";
 
     public AwsLambdaScheduledEvent(AwsLambda awsLambda) {

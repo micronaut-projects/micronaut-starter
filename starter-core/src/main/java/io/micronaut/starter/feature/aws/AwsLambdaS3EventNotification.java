@@ -20,7 +20,7 @@ import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsLambdaS3EventNotification extends AwsLambdaEventFunctionFeature {
+public class AwsLambdaS3EventNotification extends AwsLambdaEventFunctionFeature implements LambdaTrigger {
     public static final String NAME = "aws-lambda-s3-event-notification";
 
     public AwsLambdaS3EventNotification(AwsLambda awsLambda) {

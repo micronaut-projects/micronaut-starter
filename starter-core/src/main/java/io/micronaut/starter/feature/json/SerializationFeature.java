@@ -32,11 +32,6 @@ public interface SerializationFeature extends JsonFeature {
     String ARTIFACT_ID_MICRONAUT_JACKSON_CORE = "micronaut-jackson-core";
 
     @Override
-    default boolean isPreview() {
-        return true;
-    }
-
-    @Override
     default String getCategory() {
         return Category.API;
     }

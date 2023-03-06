@@ -26,6 +26,9 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
+import io.micronaut.starter.feature.architecture.Arm;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
+import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
@@ -46,6 +49,7 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Set;
@@ -64,17 +68,36 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
 
     private final ShadePlugin shadePlugin;
     private final AwsLambdaCustomRuntime customRuntime;
+    private final CpuArchitecture defaultCpuArchitecture;
 
-    public AwsLambda(ShadePlugin shadePlugin, AwsLambdaCustomRuntime customRuntime) {
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime) {
+        this(shadePlugin, customRuntime, new Arm());
+    }
+
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     Arm arm) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = arm;
+    }
+
+    @Inject
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86) {
+        this.shadePlugin = shadePlugin;
+        this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = x86;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(ShadePlugin.class)) {
-            featureContext.addFeature(shadePlugin);
-        }
+        featureContext.addFeatureIfNotPresent(ShadePlugin.class, shadePlugin);
+        featureContext.addFeatureIfNotPresent(CpuArchitecture.class, defaultCpuArchitecture);
         if (featureContext.isPresent(GraalVM.class) &&
                 (
                         featureContext.getBuildTool() == BuildTool.MAVEN ||

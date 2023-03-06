@@ -17,6 +17,9 @@ package io.micronaut.starter.feature.migration;
 
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.feature.migration.template.liquibaseChangelog;
+import io.micronaut.starter.feature.migration.template.liquibaseSchema;
+import io.micronaut.starter.template.RockerTemplate;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -50,9 +53,15 @@ public class Liquibase implements MigrationFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
+        generatorContext.addTemplate("liquibaseChangelog", new RockerTemplate("src/main/resources/db/liquibase-changelog.xml",
+                        liquibaseChangelog.template()));
+        generatorContext.addTemplate("liquibaseSchema", new RockerTemplate("src/main/resources/db/changelog/01-schema.xml",
+                        liquibaseSchema.template()));
         generatorContext.addDependency(Dependency.builder()
                 .groupId("io.micronaut.liquibase")
                 .artifactId("micronaut-liquibase")
                 .compile());
+        generatorContext.getConfiguration().addNested(
+                "liquibase.datasources.default.change-log", "classpath:db/liquibase-changelog.xml");
     }
 }

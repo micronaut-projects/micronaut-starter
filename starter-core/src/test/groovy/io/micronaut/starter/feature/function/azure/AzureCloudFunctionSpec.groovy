@@ -5,32 +5,17 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll("#jdkVersion not supported for #feature")
-    void "verify for not supported JDK Versions by azure-function an IllegalArgumentException is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
-        when:
-        generate(
-                applicationType,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [feature],
-        )
-        then:
-        thrown(IllegalArgumentException)
-
-        where:
-        [applicationType, jdkVersion, feature] << [
-                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                ((JdkVersion.values() as List<JdkVersion>) - AzureFeatureValidatorSpec.supportedVersionsByAzureFunction()) as List<JdkVersion>,
-                ['azure-function']
-        ].combinations()
-    }
-
-    @Unroll("#jdkVersion supported for #feature")
-    void "verify for supported JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    void "verify for all JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
         generate(
                 applicationType,
@@ -43,7 +28,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                AzureFeatureValidatorSpec.supportedVersionsByAzureFunction(),
+                JdkVersion.values(),
                 ['azure-function']
         ].combinations()
     }

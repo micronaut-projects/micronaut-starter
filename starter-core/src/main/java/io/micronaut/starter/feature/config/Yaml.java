@@ -15,26 +15,34 @@
  */
 package io.micronaut.starter.feature.config;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.FeaturePhase;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.YamlTemplate;
 import jakarta.inject.Singleton;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Function;
 
 @Singleton
 public class Yaml implements ConfigurationFeature, DefaultFeature {
-
-    public static final String EXTENSION = "yml";
+    public static final String NAME = "yaml";
+    private static final String EXTENSION = "yml";
+    private static final String YAML_GROUP_ID = "org.yaml";
+    private static final String SNAKEYAML_ARTIFACT_ID = "snakeyaml";
 
     @Override
+    @NonNull
     public String getName() {
-        return "yaml";
+        return NAME;
     }
 
     @Override
@@ -44,7 +52,46 @@ public class Yaml implements ConfigurationFeature, DefaultFeature {
 
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
-        return selectedFeatures.stream().noneMatch(f -> f instanceof ConfigurationFeature);
+        return selectedFeatures.stream().noneMatch(ConfigurationFeature.class::isInstance);
+    }
+
+    @Override
+    public void processSelectedFeatures(FeatureContext featureContext) {
+        // As a config feature, we're processed last, after the build tools.
+        // Add the `org.yaml:snakeyaml` dependency before that.
+
+        if (isVisible()) {
+            featureContext.addFeature(new Feature() {
+                @Override
+                @NonNull
+                public String getName() {
+                    return "yaml-build";
+                }
+
+                @Override
+                public boolean supports(ApplicationType applicationType) {
+                    return true;
+                }
+
+                @Override
+                public void apply(GeneratorContext generatorContext) {
+                    addDependencies(generatorContext);
+                }
+
+                private void addDependencies(GeneratorContext generatorContext) {
+                    Arrays.asList(
+                            snakeYamlDependency().runtime(),
+                            snakeYamlDependency().testRuntime()
+                    ).forEach(generatorContext::addDependency);
+                }
+            });
+        }
+    }
+
+    private static Dependency.Builder snakeYamlDependency() {
+        return Dependency.builder()
+                .groupId(YAML_GROUP_ID)
+                .artifactId(SNAKEYAML_ARTIFACT_ID);
     }
 
     @Override

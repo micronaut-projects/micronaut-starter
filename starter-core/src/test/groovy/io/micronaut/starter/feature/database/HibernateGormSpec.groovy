@@ -78,6 +78,7 @@ class HibernateGormSpec extends ApplicationContextSpec {
 
         then:
         ctx.configuration.containsKey("dataSource.url")
+        ctx.configuration.containsKey("dataSource.driver-class-name")
         ctx.configuration.containsKey("hibernate.hbm2ddl.auto")
         ctx.configuration.containsKey("hibernate.cache.queries")
     }
