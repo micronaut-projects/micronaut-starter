@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.feature.retry;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
@@ -34,11 +35,7 @@ public class Retry implements Feature {
             .compile().build();
 
     @Override
-    public boolean isVisible() {
-        return false;
-    }
-
-    @Override
+    @NonNull
     public String getName() {
         return NAME;
     }
