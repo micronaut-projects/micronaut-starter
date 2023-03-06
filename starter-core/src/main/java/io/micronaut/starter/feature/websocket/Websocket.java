@@ -34,11 +34,6 @@ public class Websocket implements Feature {
             .build();
 
     @Override
-    public boolean isVisible() {
-        return false;
-    }
-
-    @Override
     public String getName() {
         return NAME;
     }

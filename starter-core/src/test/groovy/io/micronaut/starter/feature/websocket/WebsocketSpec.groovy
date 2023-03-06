@@ -8,7 +8,6 @@ import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
-import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Subject
 import spock.lang.Unroll
@@ -18,12 +17,6 @@ class WebsocketSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Shared
     @Subject
     Websocket websocket = beanContext.getBean(Websocket)
-
-    @PendingFeature(reason = 'The Websocket feature is for Micronaut 4, and should be visible for Starter 4.0.0')
-    void "Websocket feature is visible"() {
-        expect:
-        beanContext.getBean(Websocket).isVisible()
-    }
 
     void 'test readme.md with feature websocket contains links to micronaut docs'() {
         when:
