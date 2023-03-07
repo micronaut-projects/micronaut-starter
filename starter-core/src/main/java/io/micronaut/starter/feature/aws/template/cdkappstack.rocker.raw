@@ -30,7 +30,7 @@ import software.constructs.IConstruct;
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
 }
-@if (features.contains("amazon-api-gateway") && features.contains("snapstart")) {
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url")) && features.contains("snapstart")) {
 import software.amazon.awscdk.services.lambda.Alias;
 import software.amazon.awscdk.services.lambda.Version;
 }
@@ -187,31 +187,42 @@ public class AppStack extends Stack {
 @if (features.contains("dynamodb")) {
         table.grantReadWriteData(function);
 }
-@if (functionId != null && apiId != null) {
-@if (features.contains("aws-lambda-function-url")) {
-        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
-                .authType(FunctionUrlAuthType.NONE)
-                .build());
-}
-@if (features.contains("amazon-api-gateway")) {
-    @if (features.contains("snapstart")) {
-        Version currentVersion = function.getCurrentVersion();
 
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url"))) {
+@if (features.contains("snapstart")) {
+        Version currentVersion = function.getCurrentVersion();
         Alias prodAlias = Alias.Builder.create(this, "ProdAlias")
                 .aliasName("Prod")
                 .version(currentVersion)
                 .build();
+}
+@if (features.contains("amazon-api-gateway")) {
+@if (features.contains("snapstart")) {
         LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
                 .handler(prodAlias)
                 .build();
-    } else {
+} else {
         LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
                 .handler(function)
                 .build();
-    }
+}
+}
+@if (features.contains("aws-lambda-function-url")) {
+@if (features.contains("snapstart")) {
+        FunctionUrl functionUrl = prodAlias.addFunctionUrl(FunctionUrlOptions.builder()
+} else {
+        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
+}
+                .authType(FunctionUrlAuthType.NONE)
+                .build());
 }
 @if (features.contains("amazon-api-gateway-http")) {
+@if (features.contains("snapstart")) {
+        HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", prodAlias)
+} else {
         HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", function)
+}
+
                 .payloadFormatVersion(VERSION_1_0)
                 .build();
         HttpApi api = HttpApi.Builder.create(this, "@(apiId)")

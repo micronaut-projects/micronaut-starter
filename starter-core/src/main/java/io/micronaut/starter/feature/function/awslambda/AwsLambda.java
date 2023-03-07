@@ -29,12 +29,9 @@ import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
-import io.micronaut.starter.feature.aws.AmazonApiGateway;
-import io.micronaut.starter.feature.aws.AmazonApiGatewayHttp;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
-import io.micronaut.starter.feature.aws.LambdaFunctionUrl;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -130,17 +127,14 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     protected boolean shouldAddSnapstartFeature(FeatureContext featureContext) {
-        if (featureContext.isPresent(LambdaFunctionUrl.class) ||
-                featureContext.isPresent(AmazonApiGatewayHttp.class) ||
-                featureContext.isPresent(GraalVM.class)) {
+        if (featureContext.isPresent(GraalVM.class)) {
             return false;
         }
-        Optional<Feature> featureOptional = featureContext.getFeature(CpuArchitecture.class);
-        if (!featureOptional.isPresent()) {
-            return true;
-        }
-        CpuArchitecture architecture = (CpuArchitecture) featureOptional.get();
-        return snapstart.supports(architecture);
+        return featureContext.getFeature(CpuArchitecture.class)
+                .filter(CpuArchitecture.class::isInstance)
+                .map(CpuArchitecture.class::cast)
+                .map(snapstart::supports)
+                .orElse(true);
     }
 
     @Override
