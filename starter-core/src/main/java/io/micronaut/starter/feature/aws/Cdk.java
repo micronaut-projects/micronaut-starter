@@ -135,7 +135,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
         String handler = resolveHandler(generatorContext);
         Language lang = Language.JAVA;
-            addAppStackTest(generatorContext, lang, handler);
+        addAppStackTest(generatorContext, lang, handler);
         //}
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
                 .orElse(defaultCpuArchitecture);
