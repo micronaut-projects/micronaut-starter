@@ -13,58 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.database;
+package io.micronaut.starter.feature.retry;
 
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
-import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.MinJdkFeature;
-import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
-
-import io.micronaut.starter.options.JdkVersion;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jooq implements Feature, MinJdkFeature {
+public class Retry implements Feature {
 
-    private final JdbcFeature jdbcFeature;
+    public static final String NAME = "retry";
 
-    public Jooq(JdbcFeature jdbcFeature) {
-        this.jdbcFeature = jdbcFeature;
+    private static final Dependency DEPENDENCY_RETRY = MicronautDependencyUtils
+            .coreDependency()
+            .artifactId("micronaut-retry")
+            .compile().build();
+
+    @Override
+    public boolean isVisible() {
+        return false;
     }
 
     @Override
     public String getName() {
-        return "jooq";
+        return NAME;
     }
 
     @Override
     public String getTitle() {
-        return "jOOQ";
+        return "Micronaut Retry";
     }
 
     @Override
     public String getDescription() {
-        return "Use the jOOQ fluent API for typesafe SQL query construction and execution";
-    }
-
-    @Override
-    public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(jdbcFeature);
-        }
+        return "Adds support for fallbacks or retries from operation failure.";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(Dependency.builder()
-                .groupId("io.micronaut.sql")
-                .artifactId("micronaut-jooq")
-                .compile());
+        generatorContext.addDependency(DEPENDENCY_RETRY);
     }
 
     @Override
@@ -73,18 +64,13 @@ public class Jooq implements Feature, MinJdkFeature {
     }
 
     @Override
-    public String getCategory() {
-        return Category.DATABASE;
-    }
-
-    @Override
     public String getMicronautDocumentation() {
-        return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq";
+        return "https://docs.micronaut.io/latest/guide/#retry";
     }
 
     @Override
-    @NonNull
-    public JdkVersion minJdk() {
-        return JdkVersion.JDK_11;
+    public String getCategory() {
+        return Category.API;
     }
+
 }

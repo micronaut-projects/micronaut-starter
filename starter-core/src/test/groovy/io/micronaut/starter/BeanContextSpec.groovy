@@ -11,5 +11,9 @@ abstract class BeanContextSpec extends Specification implements ProjectFixture, 
 
     @Shared
     @AutoCleanup
-    ApplicationContext beanContext = ApplicationContext.run()
+    ApplicationContext beanContext = ApplicationContext.run(getProperties())
+
+    Map<String, String> getProperties() {
+        return Collections.emptyMap();
+    }
 }
