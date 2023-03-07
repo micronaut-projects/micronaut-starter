@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,21 @@
  */
 package io.micronaut.starter.feature.database;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.MinJdkFeature;
 import io.micronaut.starter.feature.database.jdbc.JdbcFeature;
 
+import io.micronaut.starter.options.JdkVersion;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class Jooq implements Feature {
+public class Jooq implements Feature, MinJdkFeature {
 
     private final JdbcFeature jdbcFeature;
 
@@ -77,5 +80,11 @@ public class Jooq implements Feature {
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jooq";
+    }
+
+    @Override
+    @NonNull
+    public JdkVersion minJdk() {
+        return JdkVersion.JDK_11;
     }
 }
