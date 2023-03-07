@@ -136,7 +136,6 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         String handler = resolveHandler(generatorContext);
         Language lang = Language.JAVA;
         addAppStackTest(generatorContext, lang, handler);
-        //}
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
                 .orElse(defaultCpuArchitecture);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
