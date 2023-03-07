@@ -1,9 +1,7 @@
 package io.micronaut.starter.feature.aws
 
-
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.build.dependencies.CoordinateResolver
 import io.micronaut.starter.feature.architecture.Arm
 import io.micronaut.starter.feature.function.awslambda.AwsLambda
 import io.micronaut.starter.feature.graalvm.GraalVM
@@ -14,110 +12,88 @@ import io.micronaut.starter.options.Options
 
 class AwsSnapStartFeatureSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
-    CoordinateResolver resolver = beanContext.getBean(CoordinateResolver)
-
-    void 'SnapStart does not support ARM or Tracing #buildTool'() {
+    void 'SnapStart does not support ARM #buildTool'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, Arm.NAME])
-
+        String text = output['infra/src/main/java/example/micronaut/AppStack.java']
         then:
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.architecture(Architecture.X86_64)')
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.tracing(Tracing.DISABLED)')
+        text.contains('.architecture(Architecture.ARM_64)')
+
+        and:
+        !hasSnapStart(text)
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
-    void 'Function AppStack imports included for SnapStart #buildTool'() {
+    void 'Function AppStack imports included for SnapStart #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME])
+        String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
         then:
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Alias;')
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.CfnFunction;')
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Version;')
+        hasSnapStart(text)
+        text.contains('import software.amazon.awscdk.services.lambda.Alias;')
+        text.contains('import software.amazon.awscdk.services.lambda.CfnFunction;')
+        text.contains('import software.amazon.awscdk.services.lambda.Version;')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << graalVmAndCdkSupportedBuilds()
     }
 
-    void 'Function AppStack imports for SnapStart not included when using graalvm feature #buildTool'() {
+    void 'Function AppStack does not use SnapStart when using graalvm feature #buildTool'(BuildTool buildTool) {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, GraalVM.FEATURE_NAME_GRAALVM])
+        String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
         then:
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Alias;')
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.CfnFunction;')
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Version;')
+        !hasSnapStart(text)
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << graalVmAndCdkSupportedBuilds()
     }
 
     void 'Function AppStack with SnapStart is included for #buildTool'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
                 [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME])
+        String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
         then:
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.memorySize(2048)')
-
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains("""
-        IConstruct defaultChild = function.getNode().getDefaultChild();
-        if (defaultChild instanceof CfnFunction) {
-            CfnFunction cfnFunction = (CfnFunction) defaultChild;
-            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
-                    .applyOn("PublishedVersions")
-                    .build());
-        }
-""")
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('Version currentVersion = function.getCurrentVersion();')
-
-        output.'infra/src/main/java/example/micronaut/AppStack.java'.contains("""
-        Alias prodAlias = Alias.Builder.create(this, "ProdAlias")
-                .aliasName("Prod")
-                .version(currentVersion)
-                .build();
-        LambdaRestApi api = LambdaRestApi.Builder.create(this, "micronaut-function-api")
-                .handler(prodAlias)
-                .build();
-""")
+        text.contains('.memorySize(2048)')
+        hasSnapStart(text)
+        usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
-    void 'Function AppStack with SnapStart not included when using graalvm feature #buildTool'() {
+    void 'SnapStart is enabled by default even without a API Gateway #buildTool'() {
         when:
-        def output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
-                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME, AmazonApiGateway.NAME, GraalVM.FEATURE_NAME_GRAALVM])
+        Map<String, String> output = generate(ApplicationType.FUNCTION, new Options(Language.JAVA, buildTool),
+                [AwsLambda.FEATURE_NAME_AWS_LAMBDA, Cdk.NAME])
+        String text = output['infra/src/main/java/example/micronaut/AppStack.java']
 
         then:
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains("""
-        IConstruct defaultChild = function.getNode().getDefaultChild();
-        if (defaultChild instanceof CfnFunction) {
-            CfnFunction cfnFunction = (CfnFunction) defaultChild;
-            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
-                    .applyOn("PublishedVersions")
-                    .build());
-        }
-""")
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('Version currentVersion = function.getCurrentVersion();')
-
-        !output.'infra/src/main/java/example/micronaut/AppStack.java'.contains("""
-        Alias prodAlias = Alias.Builder.create(this, "ProdAlias")
-                .aliasName("Prod")
-                .version(currentVersion)
-                .build();
-        LambdaRestApi api = LambdaRestApi.Builder.create(this, "micronaut-function-api")
-                .handler(prodAlias)
-                .build();
-""")
+        hasSnapStart(text)
+        !usesApiGatewayToSnapStartVersionAlias(text)
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.values()
+    }
+
+    private static boolean hasSnapStart(String text) {
+        text.contains('cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()')
+    }
+
+    private static boolean usesApiGatewayToSnapStartVersionAlias(String text) {
+        text.contains('Alias prodAlias = Alias.Builder.create(this, "ProdAlias")')
+    }
+
+    private static List<BuildTool> graalVmAndCdkSupportedBuilds() {
+        BuildTool.values() - BuildTool.MAVEN
     }
 }

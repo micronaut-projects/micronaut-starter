@@ -23,14 +23,16 @@ import software.amazon.awscdk.services.dynamodb.Attribute;
 import software.amazon.awscdk.services.dynamodb.AttributeType;
 import software.amazon.awscdk.services.dynamodb.Table;
 }
+@if (features.contains("snapstart")) {
+import software.amazon.awscdk.services.lambda.CfnFunction;
+import software.constructs.IConstruct;
+}
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
-    @if (!features.contains("graalvm")) {
+}
+@if (features.contains("amazon-api-gateway") && features.contains("snapstart")) {
 import software.amazon.awscdk.services.lambda.Alias;
-import software.amazon.awscdk.services.lambda.CfnFunction;
 import software.amazon.awscdk.services.lambda.Version;
-import software.constructs.IConstruct;
-    }
 }
 @if (features.contains("amazon-api-gateway-http")) {
 import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
@@ -152,15 +154,13 @@ public class AppStack extends Stack {
                 .environment(environmentVariables)
                 .code(Code.fromAsset(functionPath()))
                 .timeout(Duration.seconds(10))
-@if (features.contains("amazon-api-gateway") && !features.contains("graalvm")) {
                 .memorySize(2048)
-                .tracing(Tracing.DISABLED)
                 .logRetention(RetentionDays.ONE_WEEK)
+@if (features.contains("snapstart")) {
+                .tracing(Tracing.DISABLED)
                 .architecture(Architecture.X86_64)
 } else {
-                .memorySize(512)
                 .tracing(Tracing.ACTIVE)
-                .logRetention(RetentionDays.ONE_WEEK)
     @if (architecture instanceof Arm) {
                 .architecture(Architecture.ARM_64)
     } else if (architecture instanceof X86) {
@@ -168,6 +168,15 @@ public class AppStack extends Stack {
     }
 }
                 .build();
+    @if (features.contains("snapstart")) {
+        IConstruct defaultChild = function.getNode().getDefaultChild();
+        if (defaultChild instanceof CfnFunction) {
+            CfnFunction cfnFunction = (CfnFunction) defaultChild;
+            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
+                .applyOn("PublishedVersions")
+                .build());
+        }
+    }
 }
 @if (features.contains("aws-alexa")) {
         function.addPermission("alexa-skills-kit-trigger", Permission.builder()
@@ -185,16 +194,7 @@ public class AppStack extends Stack {
                 .build());
 }
 @if (features.contains("amazon-api-gateway")) {
-    @if (!features.contains("graalvm")) {
-
-        IConstruct defaultChild = function.getNode().getDefaultChild();
-        if (defaultChild instanceof CfnFunction) {
-            CfnFunction cfnFunction = (CfnFunction) defaultChild;
-            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
-                    .applyOn("PublishedVersions")
-                    .build());
-        }
-
+    @if (features.contains("snapstart")) {
         Version currentVersion = function.getCurrentVersion();
 
         Alias prodAlias = Alias.Builder.create(this, "ProdAlias")

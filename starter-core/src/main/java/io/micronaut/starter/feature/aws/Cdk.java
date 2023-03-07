@@ -135,9 +135,9 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
         String handler = resolveHandler(generatorContext);
         Language lang = Language.JAVA;
-        generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
-                cdkappstacktest.template(generatorContext.getProject(), handler)));
-
+        //if (generatorContext.getBuildTool().isGradle()) {
+            addAppStackTest(generatorContext, lang, handler);
+        //}
         CpuArchitecture architecture = generatorContext.getFeatures().getFeature(CpuArchitecture.class)
                 .orElse(defaultCpuArchitecture);
         generatorContext.addTemplate("cdk-appstack", new RockerTemplate(INFRA_MODULE, lang.getSrcDir() + "/{packagePath}/AppStack.java",
@@ -160,6 +160,14 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
         });
 
         generatorContext.addHelpTemplate(new RockerWritable(cdkhelp.template(generatorContext.getBuildTool(), generatorContext.getFeatures().hasGraalvm(), INFRA_MODULE)));
+    }
+
+    protected void addAppStackTest(@NonNull GeneratorContext generatorContext,
+                                   @NonNull Language lang,
+                                   @NonNull String handler) {
+        generatorContext.addTemplate("cdk-appstacktest", new RockerTemplate(INFRA_MODULE, lang.getTestSrcDir() + "/{packagePath}/AppStackTest.java",
+                cdkappstacktest.template(generatorContext.getProject(), handler)));
+
     }
 
     @NonNull
