@@ -101,6 +101,10 @@ public class Options implements ConvertibleValues<Object> {
         return javaVersion;
     }
 
+    public Map<String, Object> getAdditionalOptions() {
+        return additionalOptions.asMap();
+    }
+
     public Options withLanguage(Language language) {
         return new Options(language, testFramework, buildTool, javaVersion, additionalOptions.asMap());
     }

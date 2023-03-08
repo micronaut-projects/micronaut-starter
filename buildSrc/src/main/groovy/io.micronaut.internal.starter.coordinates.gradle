@@ -1,0 +1,11 @@
+plugins {
+    id 'java'
+}
+
+def generateCoordinateUtils = tasks.register("generateCoordinateUtils", io.micronaut.starter.coordinates.CoordinatesSourceGenerator) {
+    packageName = "io.micronaut.starter.build.dependencies"
+    outputDirectory = layout.buildDirectory.dir("generated-sources/coordinates")
+    versionCatalog = project.extensions.getByType(VersionCatalogsExtension).named("templateLibs")
+}
+
+sourceSets.main.java.srcDir(generateCoordinateUtils)

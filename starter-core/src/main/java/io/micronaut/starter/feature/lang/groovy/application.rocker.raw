@@ -1,11 +1,12 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.feature.Features
+@import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 
-@args (Project project, Features features, String defaultEnvironment)
+@args (Project project, Features features, ApplicationRenderingContext context)
 
 package @project.getPackageName()
 
-@if (defaultEnvironment != null) {
+@if (context.isRequired()) {
 import io.micronaut.core.annotation.NonNull
 import io.micronaut.context.ApplicationContextBuilder
 import io.micronaut.context.ApplicationContextConfigurer
@@ -29,15 +30,8 @@ import io.swagger.v3.oas.annotations.info.*
 }
 @@CompileStatic
 class Application {
-@if (defaultEnvironment != null) {
-    @@ContextConfigurer
-    static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
-        @@Override
-        public void configure(@@NonNull ApplicationContextBuilder builder) {
-            builder.defaultEnvironments("@(defaultEnvironment)");
-        }
-    }
-}
+
+@with? (maybeContextConfig = context.getContextConfigurer()) { @maybeContextConfig }
     static void main(String[] args) {
         Micronaut.run(Application, args)
     }

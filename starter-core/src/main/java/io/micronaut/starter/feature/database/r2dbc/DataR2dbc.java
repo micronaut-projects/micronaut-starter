@@ -25,6 +25,7 @@ import io.micronaut.starter.feature.database.Data;
 import io.micronaut.starter.feature.database.DataFeature;
 import io.micronaut.starter.feature.database.DatabaseDriverFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 import java.util.LinkedHashMap;
@@ -57,17 +58,25 @@ public class DataR2dbc implements R2dbcFeature, DataFeature, TransactionalNotSup
     }
 
     @Override
-    public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
-        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
-        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
-        generatorContext.getConfiguration().putAll(getDatasourceConfig(dbFeature));
+    public int getOrder() {
+        return r2dbc.getOrder() - 1;
     }
 
     @Override
-    public Map<String, Object> getDatasourceConfig(DatabaseDriverFeature driverFeature) {
+    public void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_PROCESSOR);
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_DATA_R2DBC);
+
+        DatabaseDriverFeature dbFeature = generatorContext.getRequiredFeature(DatabaseDriverFeature.class);
+        generatorContext.getConfiguration().addNested(getDatasourceConfig(generatorContext, dbFeature));
+    }
+
+    @Override
+    public Map<String, Object> getDatasourceConfig(GeneratorContext generatorContext, DatabaseDriverFeature driverFeature) {
         Map<String, Object> conf = new LinkedHashMap<>();
-        conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
+        if (!generatorContext.isFeaturePresent(MigrationFeature.class)) {
+            conf.put("r2dbc.datasources.default.schema-generate", "CREATE_DROP");
+        }
         conf.put("r2dbc.datasources.default.dialect", driverFeature.getDataDialect());
         return conf;
     }

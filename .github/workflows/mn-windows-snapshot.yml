@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: powershell
-        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         shell: powershell
         run: ./mn.exe --version

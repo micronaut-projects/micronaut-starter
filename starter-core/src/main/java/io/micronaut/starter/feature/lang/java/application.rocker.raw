@@ -2,13 +2,14 @@
 @import io.micronaut.starter.feature.Feature
 @import io.micronaut.starter.feature.Features
 @import io.micronaut.starter.feature.dekorate.AbstractDekoratePlatformFeature
+@import io.micronaut.starter.feature.lang.ApplicationRenderingContext
 @import java.util.stream.Collectors
 
-@args (Project project, Features features, String defaultEnvironment)
+@args (Project project, Features features, ApplicationRenderingContext context)
 
 package @project.getPackageName();
 
-@if (defaultEnvironment != null) {
+@if (context.isRequired()) {
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.context.ApplicationContextBuilder;
 import io.micronaut.context.ApplicationContextConfigurer;
@@ -37,7 +38,7 @@ import io.dekorate.kubernetes.annotation.Probe;
 @if (features.contains("dekorate-prometheus")) {
 import io.dekorate.prometheus.annotation.EnableServiceMonitor;
 }
-@if (features.contains("dekorate-jeager")) {
+@if (features.contains("dekorate-jaeger")) {
 import io.dekorate.jaeger.annotation.EnableJaegerAgent;
 }
 @if (features.contains("dekorate-halkyon")) {
@@ -73,22 +74,15 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
 @if (features.contains("dekorate-prometheus")) {
 @@EnableServiceMonitor(port = "http", path="/prometheus")
 }
-@if (features.contains("dekorate-jeager")) {
+@if (features.contains("dekorate-jaeger")) {
 @@EnableJaegerAgent
 }
 @if (features.contains("dekorate-halkyon")) {
 @@HalkyonComponent(name = "@project.getName()")
 }
 public class Application {
-@if (defaultEnvironment != null) {
-    @@ContextConfigurer
-    public static class DefaultEnvironmentConfigurer implements ApplicationContextConfigurer {
-        @@Override
-        public void configure(@@NonNull ApplicationContextBuilder builder) {
-            builder.defaultEnvironments("@(defaultEnvironment)");
-        }
-    }
-}
+
+@with? (maybeContextConfig = context.getContextConfigurer()) { @maybeContextConfig }
     public static void main(String[] args) {
         Micronaut.run(Application.class, args);
     }

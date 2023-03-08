@@ -21,6 +21,7 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.RequireEagerSingletonInitializationFeature;
 import io.micronaut.starter.feature.database.TransactionalNotSupported;
 import io.micronaut.starter.feature.test.template.groovyJunit;
 import io.micronaut.starter.feature.test.template.koTest;
@@ -29,7 +30,6 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.TestFramework;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -67,8 +67,17 @@ public class GroovyApplication implements GroovyApplicationFeature {
     }
 
     protected RockerModel application(GeneratorContext generatorContext) {
-        String defaultEnvironment = generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
-        return application.template(generatorContext.getProject(), generatorContext.getFeatures(), defaultEnvironment);
+        String defaultEnvironment = getDefaultEnvironment(generatorContext);
+        boolean eagerInitSingleton = generatorContext.getFeatures().isFeaturePresent(RequireEagerSingletonInitializationFeature.class);
+        return application.template(
+                generatorContext.getProject(),
+                generatorContext.getFeatures(),
+                new GroovyApplicationRenderingContext(defaultEnvironment, eagerInitSingleton)
+        );
+    }
+
+    private static String getDefaultEnvironment(GeneratorContext generatorContext) {
+        return generatorContext.hasConfigurationEnvironment(Environment.DEVELOPMENT) ? Environment.DEVELOPMENT : null;
     }
 
     protected void addApplication(GeneratorContext generatorContext) {

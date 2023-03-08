@@ -9,6 +9,7 @@ import io.micronaut.starter.feature.database.jdbc.Hikari
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
 import spock.lang.Shared
 
 class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
@@ -18,12 +19,24 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     void 'test readme.md with feature crac contains links to micronaut docs'() {
         when:
-        def output = generate(['crac'])
+        def output = generate([Crac.NAME])
         def readme = output["README.md"]
 
         then:
         readme.contains("[Micronaut Support for CRaC (Coordinated Restore at Checkpoint) documentation](https://micronaut-projects.github.io/micronaut-crac/latest/guide)")
         readme.contains("[https://wiki.openjdk.org/display/CRaC](https://wiki.openjdk.org/display/CRaC)")
+    }
+
+    void "test singletons are eager for #language"(Language language) {
+        when:
+        def output = generate(ApplicationType.DEFAULT, new Options(language), [Crac.NAME])
+        def application = output[language.getSourcePath("/example/micronaut/Application")]
+
+        then:
+        application.contains(".eagerInitSingletons(true)")
+
+        where:
+        language << Language.values()
     }
 
     void "feature crac #desc for #applicationType"(ApplicationType applicationType) {

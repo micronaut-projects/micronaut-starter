@@ -1,0 +1,122 @@
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.options.BuildTool
+
+@args (
+String projectName,
+BuildTool buildTool,
+JdkVersion jdkVersion,
+Boolean graalVM
+)
+
+@if (graalVM) {
+image: ghcr.io/graalvm/graalvm-ce:ol8-java@jdkVersion.majorVersion()
+} else {
+image: eclipse-temurin:@jdkVersion.majorVersion()
+}
+
+variables:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+  MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+} else if (buildTool.isGradle()) {
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+}
+
+@if (buildTool.isGradle()) {
+before_script:
+  - GRADLE_USER_HOME="$(pwd)/.gradle"
+  - export GRADLE_USER_HOME
+}
+
+build:
+  stage: build
+@if (buildTool.equals(BuildTool.MAVEN)) {
+  script: ./mvnw $MAVEN_CLI_OPTS compile
+} else if (buildTool.isGradle()) {
+  script: ./gradlew --build-cache assemble
+}
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target
+      - .mvn
+} else if (buildTool.isGradle()) {
+      - build
+      - .gradle
+}
+
+test:
+  stage: test
+@if (buildTool.equals(BuildTool.MAVEN)) {
+  script: ./mvnw $MAVEN_CLI_OPTS verify
+} else if (buildTool.isGradle()) {
+  script: ./gradlew check
+}
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target
+      - .mvn
+} else if (buildTool.isGradle()) {
+      - build
+      - .gradle
+}
+
+package:
+  stage: deploy
+@if (buildTool.equals(BuildTool.MAVEN)) {
+  script: ./mvnw $MAVEN_CLI_OPTS package
+} else if (buildTool.isGradle()) {
+  script: ./gradlew build
+}
+  artifacts:
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target/@projectName-*.jar
+} else if (buildTool.isGradle()) {
+      - build/libs/@projectName-*-all.jar
+}
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target
+      - .mvn
+} else if (buildTool.isGradle()) {
+      - build
+      - .gradle
+}
+
+@if (graalVM) {
+build-native-image:
+  stage: deploy
+@if (buildTool.equals(BuildTool.MAVEN)) {
+  script: ./mvnw $MAVEN_CLI_OPTS package -Dpackaging=native-image
+} else if (buildTool.isGradle()) {
+  script: ./gradlew nativeCompile
+}
+  artifacts:
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target/@projectName
+} else if (buildTool.isGradle()) {
+      - build/native/nativeCompile/@projectName
+}
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+@if (buildTool.equals(BuildTool.MAVEN)) {
+      - target
+      - .mvn
+} else if (buildTool.isGradle()) {
+      - build
+      - .gradle
+}
+
+}
