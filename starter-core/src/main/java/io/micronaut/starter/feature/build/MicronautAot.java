@@ -86,7 +86,7 @@ public class MicronautAot implements Feature {
 
             generatorContext.addTemplate("aotJitProperties", new RockerTemplate("aot-jar.properties", aot.template("jar")));
             if (generatorContext.isFeaturePresent(GraalVM.class)) {
-                generatorContext.addTemplate("aotNativeProperties", new RockerTemplate("aot-native-image.properties", aot.template("jar")));
+                generatorContext.addTemplate("aotNativeProperties", new RockerTemplate("aot-native-image.properties", aot.template("native-image")));
             }
         }
     }
