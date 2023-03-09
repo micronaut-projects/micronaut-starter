@@ -40,6 +40,7 @@ import java.nio.file.Files
 import java.time.Duration
 
 abstract class CommandSpec extends Specification {
+    private static final String ENV_JAVA_HOME = "JAVA_HOME"
 
     @Shared
     @AutoCleanup
@@ -96,7 +97,10 @@ abstract class CommandSpec extends Specification {
         String[] args = command.split(" ")
         ProcessBuilder pb = new ProcessBuilder(args)
         Map<String, String> env = pb.environment()
-        env["JAVA_HOME"] = System.getenv("JAVA_HOME")
+        String javaHome = System.getenv(ENV_JAVA_HOME)
+        if (javaHome) {
+            env[ENV_JAVA_HOME] = javaHome
+        }
 
         Process process = pb.directory(dir).start()
 

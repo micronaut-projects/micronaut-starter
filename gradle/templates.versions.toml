@@ -38,7 +38,7 @@ json-bind = "2.0.0"
 jte-gradle-plugin= "2.2.6"
 jte-maven-plugin= "2.2.6"
 kotest = "4.2.5"
-kotlin = "1.6.10"
+kotlin = "1.6.21"
 log4j = "2.19.0"
 log4j-slf4j = "2.17.2"
 micronaut-aot = "1.1.0"
@@ -79,7 +79,7 @@ bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version
 camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
 gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
 gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
-gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise" }
+gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
 gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
 gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
 jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
