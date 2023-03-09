@@ -3,7 +3,7 @@ package io.micronaut.starter.api.features
 import io.micronaut.starter.api.RequestInfo
 import io.micronaut.starter.api.preview.PreviewController
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.function.gcp.GoogleCloudRawFunction
+import io.micronaut.starter.feature.function.gcp.GoogleCloudFunction
 import io.micronaut.starter.options.JdkVersion
 import io.micronaut.test.extensions.spock.annotation.MicronautTest
 import spock.lang.Requires
@@ -22,7 +22,7 @@ class GoogleCloudFunctionSpec extends Specification {
         def map = controller.previewApp(
                 ApplicationType.DEFAULT,
                 "test",
-                [GoogleCloudRawFunction.NAME],
+                [GoogleCloudFunction.NAME],
                 null,
                 null,
                 null,

@@ -24,4 +24,8 @@ public interface MicronautRuntimeFeature {
 
     @NonNull
     String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext);
+
+    default void addMicronautRuntimeBuildProperty(@NonNull GeneratorContext generatorContext) {
+        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+    }
 }

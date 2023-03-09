@@ -66,7 +66,7 @@ class CracSpec extends ApplicationContextSpec implements CommandOutputFixture {
         template.contains('implementation("io.micronaut.crac:micronaut-crac")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void "test maven crac feature adds dependency"() {

@@ -40,7 +40,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         settings.contains('}')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     void "io.micronaut.starter.feature.build.gradle.MicronautGradleEnterprise is not visible"() {
@@ -82,7 +82,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         output[".mvn/extensions.xml"] == null
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     void 'feature micronaut-gradle-enterprise creates a .mvn/gradle-enterprise dot xml file'() {

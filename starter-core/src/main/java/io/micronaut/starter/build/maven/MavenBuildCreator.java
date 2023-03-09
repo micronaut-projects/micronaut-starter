@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.order.OrderUtil;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.Repository;
 import io.micronaut.starter.build.dependencies.Coordinate;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyCoordinate;
@@ -33,13 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static io.micronaut.starter.build.Repository.micronautRepositories;
-
 @Singleton
 public class MavenBuildCreator {
 
     @NonNull
-    public MavenBuild create(GeneratorContext generatorContext) {
+    public MavenBuild create(GeneratorContext generatorContext, List<Repository> repositories) {
         List<MavenDependency> dependencies = MavenDependency.listOf(generatorContext);
         BuildProperties buildProperties = generatorContext.getBuildProperties();
         List<Coordinate> annotationProcessorsCoordinates = new ArrayList<>();
@@ -106,14 +105,9 @@ public class MavenBuildCreator {
                 dependencies,
                 buildProperties.getProperties(),
                 plugins,
-                getRepositories(),
+                MavenRepository.listOf(repositories),
                 combineAttribute,
                 testCombineAttribute,
                 generatorContext.getProfiles());
-    }
-
-    @NonNull
-    protected List<MavenRepository> getRepositories() {
-        return MavenRepository.listOf(micronautRepositories());
     }
 }

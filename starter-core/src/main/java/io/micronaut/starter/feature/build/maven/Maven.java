@@ -19,6 +19,8 @@ import com.fizzed.rocker.RockerModel;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.DefaultRepositoryResolver;
+import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.maven.MavenBuild;
 import io.micronaut.starter.build.maven.MavenBuildCreator;
 import io.micronaut.starter.build.maven.MavenRepository;
@@ -33,14 +35,13 @@ import io.micronaut.starter.template.RockerTemplate;
 import io.micronaut.starter.template.Template;
 import io.micronaut.starter.template.URLTemplate;
 import io.micronaut.starter.util.VersionInfo;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import io.micronaut.starter.feature.build.maven.templates.multimodule;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-
-import static io.micronaut.starter.build.Repository.micronautRepositories;
 
 @Singleton
 public class Maven implements BuildFeature {
@@ -49,9 +50,17 @@ public class Maven implements BuildFeature {
     protected static final String MAVEN_PREFIX = "maven/";
 
     protected final MavenBuildCreator dependencyResolver;
+    protected final RepositoryResolver repositoryResolver;
 
+    @Deprecated
     public Maven(MavenBuildCreator dependencyResolver) {
+        this(dependencyResolver, new DefaultRepositoryResolver());
+    }
+
+    @Inject
+    public Maven(MavenBuildCreator dependencyResolver, RepositoryResolver repositoryResolver) {
         this.dependencyResolver = dependencyResolver;
+        this.repositoryResolver = repositoryResolver;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class Maven implements BuildFeature {
         Collection<String> moduleNames = generatorContext.getModuleNames();
         if (moduleNames.size() > 1) {
             List<MavenRepository> mavenRepositories = VersionInfo.getMicronautVersion().endsWith("-SNAPSHOT") ?
-                    MavenRepository.listOf(micronautRepositories()) :
+                    MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)) :
                     null;
             generatorContext.addTemplate("multi-module-pom", new RockerTemplate(Template.ROOT, generatorContext.getBuildTool().getBuildFileName(), multimodule.template(mavenRepositories, generatorContext.getProject(), moduleNames)));
         }
@@ -89,7 +98,7 @@ public class Maven implements BuildFeature {
     }
 
     protected MavenBuild createBuild(GeneratorContext generatorContext) {
-        return dependencyResolver.create(generatorContext);
+        return dependencyResolver.create(generatorContext, repositoryResolver.resolveRepositories(generatorContext));
     }
 
     protected RockerModel pom(GeneratorContext generatorContext, MavenBuild mavenBuild) {

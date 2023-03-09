@@ -94,6 +94,6 @@ class FeatureSpec extends BeanContextSpec {
     }
 
     private static ApplicationType applicationTypeForFeature(Feature feature) {
-        (feature.name == LambdaFunctionUrl.NAME || feature instanceof AwsLambdaEventFunctionFeature) ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
+        feature.supports(ApplicationType.FUNCTION) ? ApplicationType.FUNCTION : ApplicationType.DEFAULT
     }
 }

@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.awslambdacustomruntime
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Issue
@@ -42,11 +43,7 @@ class AwsLambdaCustomRuntimeSpec extends ApplicationContextSpec  implements Comm
         readme.contains("./gradlew buildNativeLambda -Pmicronaut.runtime=lambda")
 
         where:
-        language << graalSupportedLanguages()
-    }
-
-    private List<Language> graalSupportedLanguages() {
-        Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll

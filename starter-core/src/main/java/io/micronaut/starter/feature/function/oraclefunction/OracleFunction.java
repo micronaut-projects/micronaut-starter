@@ -15,34 +15,25 @@
  */
 package io.micronaut.starter.feature.function.oraclefunction;
 
-import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.annotation.Primary;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
-import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
+import io.micronaut.starter.feature.function.FunctionFeature;
+import io.micronaut.starter.feature.function.FunctionFeatureCodeGenerator;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.feature.server.ServerFeature;
-import io.micronaut.starter.feature.server.template.groovyJunit;
-import io.micronaut.starter.feature.server.template.javaJunit;
-import io.micronaut.starter.feature.server.template.koTest;
-import io.micronaut.starter.feature.server.template.kotlinJunit;
-import io.micronaut.starter.feature.server.template.spock;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 @Primary
-public class OracleFunction extends AbstractFunctionFeature implements CloudFeature {
+public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature, FunctionFeature {
 
     private final SimpleLogging simpleLogging;
 
@@ -74,6 +65,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
+    @NonNull
     public String getName() {
         return "oracle-function-http";
     }
@@ -84,6 +76,7 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to Oracle Cloud Function";
     }
@@ -91,26 +84,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public boolean isVisible() {
         return false;
-    }
-
-    @Override
-    protected String getRunCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return "mvnw mn:run";
-        } else {
-            return "gradlew run";
-        }
-    }
-
-    @Override
-    protected String getBuildCommand(BuildTool buildTool) {
-        if (buildTool == BuildTool.MAVEN) {
-            return "mvnw clean package";
-        } else if (buildTool.isGradle()) {
-            return "gradlew clean assemble";
-        } else {
-            throw new IllegalStateException("Unsupported build tool");
-        }
     }
 
     @Override
@@ -122,33 +95,8 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     }
 
     @Override
-    protected RockerModel javaJUnitTemplate(Project project) {
-        return javaJunit.template(project, true);
-    }
-
-    @Override
-    protected RockerModel kotlinJUnitTemplate(Project project) {
-        return kotlinJunit.template(project, true);
-    }
-
-    @Override
-    protected RockerModel groovyJUnitTemplate(Project project) {
-        return groovyJunit.template(project, true);
-    }
-
-    @Override
-    protected RockerModel koTestTemplate(Project project) {
-        return koTest.template(project, true);
-    }
-
-    @Override
-    public RockerModel spockTemplate(Project project) {
-        return spock.template(project, true);
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.ORACLE;
+    protected FunctionFeatureCodeGenerator resolveFunctionFeatureCodeGenerator(GeneratorContext generatorContext) {
+        return new DefaultOracleFunctionFeatureCodeGenerator();
     }
 
     @Nullable

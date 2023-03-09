@@ -104,8 +104,6 @@ MavenBuild mavenBuild
 <!-- Remove when https://github.com/GoogleCloudPlatform/functions-framework-java/pull/32 is merged -->
 @dependency.template("io.micronaut.servlet", "micronaut-servlet-core", "compile", null, false, null)
 @dependency.template("io.micronaut", "micronaut-http-netty", "compile", null, false, null)
-    } else {
-@dependency.template("io.micronaut.gcp", "micronaut-gcp-function", "compile", null, false, null)
     }
 }
 @if (features.contains("azure-function")) {
@@ -137,16 +135,6 @@ MavenBuild mavenBuild
 @if (features.language().isGroovy()) {
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
 }
-}
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null, false, null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null, false, null)
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy-test", "test", null, false, null)
-}
-@if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null, false, null)
 }
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)

@@ -32,7 +32,7 @@ class AzureFeatureValidatorSpec extends Specification {
         where:
         [javaVersion, feature] << [
                 JdkVersion.values(),
-                [new AzureHttpFunction(new DefaultCoordinateResolver()), new AzureRawFunction(new DefaultCoordinateResolver(), new AzureHttpFunction(new DefaultCoordinateResolver()))]
+                [new AzureFunction(new AzureBuildPluginFeature(new DefaultCoordinateResolver(), new AzureReadmeFeature()))]
         ].combinations()
     }
 

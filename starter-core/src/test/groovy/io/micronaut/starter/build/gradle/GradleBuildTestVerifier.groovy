@@ -3,12 +3,8 @@ package io.micronaut.starter.build.gradle
 import io.micronaut.context.exceptions.ConfigurationException
 import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.build.dependencies.Scope
-import io.micronaut.starter.build.maven.MavenScope
 import io.micronaut.starter.options.Language
-import io.micronaut.starter.options.Options
 import io.micronaut.starter.options.TestFramework
-
-import java.util.stream.Stream
 
 class GradleBuildTestVerifier implements BuildTestVerifier {
 
@@ -68,5 +64,10 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     @Override
     boolean hasTestResourceDependencyWithGroupId(String expectedGroupId) {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    boolean hasBuildDependency(String id) {
+        return template.contains("id(\"" + id + "\")")
     }
 }

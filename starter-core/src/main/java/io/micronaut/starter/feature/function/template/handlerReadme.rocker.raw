@@ -5,13 +5,13 @@
 @import io.micronaut.starter.application.Project
 
 @args (
-Feature feature,
+HandlerClassFeature feature,
 ApplicationType applicationType,
 Project project,
 DocumentationLink documentationLink
 )
 
-@if (feature instanceof HandlerClassFeature && ((HandlerClassFeature) feature).handlerClass(applicationType, project) != null) {
+@if (feature.handlerClass(applicationType, project) != null) {
 
 ## Handler
 
@@ -21,6 +21,6 @@ DocumentationLink documentationLink
 
 }
 
-Handler: @(((HandlerClassFeature) feature).handlerClass(applicationType, project))
+Handler: @(feature.handlerClass(applicationType, project))
 
 }

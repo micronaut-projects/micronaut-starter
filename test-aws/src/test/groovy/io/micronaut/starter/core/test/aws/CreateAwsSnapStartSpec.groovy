@@ -59,7 +59,7 @@ class CreateAwsSnapStartSpec extends CommandSpec {
         [applicationType, lang, build, testFramework] << ApplicationTypeCombinations.combinations(
                 [ApplicationType.DEFAULT, ApplicationType.FUNCTION],
                 [Language.JAVA, Language.KOTLIN], // groovy not supported for GraalVM
-                [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN] // maven not supported for GraalVM
+                BuildTool.valuesGradle() // maven not supported for GraalVM
         )
     }
 

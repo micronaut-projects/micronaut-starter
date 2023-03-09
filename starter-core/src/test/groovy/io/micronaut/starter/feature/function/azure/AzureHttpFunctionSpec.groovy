@@ -21,41 +21,29 @@ class AzureHttpFunctionSpec extends BeanContextSpec  implements CommandOutputFix
         readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
     }
 
-    void 'test readme.md with feature azure-function contains links to docs'() {
+    void 'test readme.md with feature azure-function contains links to docs'(ApplicationType applicationType,
+                                                                             String micronautDocsUrl) {
         when:
         Options options = new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8)
-        def output = generate(ApplicationType.DEFAULT, options, ['azure-function'])
-        def readme = output["README.md"]
+        Map<String, String> output = generate(applicationType, options, ['azure-function'])
+        String readme = output["README.md"]
 
         then:
         readme
-        verifyAll {
-            readme.contains("# Micronaut and Azure Function")
-            readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions")
-            readme.contains("https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions")
-            readme.contains("https://docs.microsoft.com/azure")
-        }
-
-        when:
-        readme = readme.replaceFirst("# Micronaut and Azure Function","")
-        readme = readme.replaceFirst("## Feature azure-function documentation","")
-        readme = readme.replaceFirst("## Feature azure-function-http documentation","")
-
-        then:
-        verifyAll {
-            // make sure we didn't add anything more than once
-            !readme.contains("# Micronaut and Azure Function")
-            !readme.contains("## Feature azure-function documentation")
-            !readme.contains("## Feature azure-function-http documentation")
-        }
+        readme.count("# Micronaut and Azure Function") == 1
+        readme.count(micronautDocsUrl)== 1
+        readme.count("[https://docs.microsoft.com/azure](https://docs.microsoft.com/azure)") == 1
+        readme.count("## Feature azure-function documentation")  == 1
 
         and: 'Readme contains a link to the Gradle Plugin'
-        readme.contains("[Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions)")
+        readme.count("[Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions)") == 1
 
-        and: 'contains link to Azure CLI'
-        readme.contains('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)')
+        and: 'count link to Azure CLI'
+        readme.count('- [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/)') == 1
 
-        and: 'link to Azure Gradle Plugin'
-        readme.contains("The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).")
+        where:
+        applicationType          | micronautDocsUrl
+        ApplicationType.FUNCTION | 'https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#simpleAzureFunctions'
+        ApplicationType.DEFAULT  | 'https://micronaut-projects.github.io/micronaut-azure/latest/guide/index.html#azureHttpFunctions'
     }
 }

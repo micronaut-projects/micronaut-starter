@@ -16,17 +16,20 @@
 package io.micronaut.starter.feature.awslambdacustomruntime;
 
 import io.micronaut.context.exceptions.ConfigurationException;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
@@ -40,6 +43,10 @@ import jakarta.inject.Singleton;
 
 @Singleton
 public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
+    public static final Dependency DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws-custom-runtime")
+            .compile()
+            .build();
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
@@ -64,6 +71,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME;
     }
@@ -79,6 +87,7 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for deploying a Micronaut Function to a Custom AWS Lambda Runtime";
     }
@@ -96,6 +105,11 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
         if (generatorContext.getFeatures().isFeaturePresent(GraalVM.class)) {
             generatorContext.addHelpTemplate(new RockerWritable(awsCustomRuntimeReadme.template(generatorContext.getBuildTool())));
         }
+        addDependencies(generatorContext);
+    }
+
+    private void addDependencies(@NonNull GeneratorContext generatorContext) {
+        generatorContext.addDependency(DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
     }
 
     public boolean shouldGenerateMainClassForRuntime(GeneratorContext generatorContext) {

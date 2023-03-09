@@ -39,6 +39,7 @@ class GradleConfigurationSpec extends Specification {
         where:
         source      | phases                              || configuration
         Source.MAIN | [Phase.DEVELOPMENT]                 || GradleConfiguration.DEVELOPMENT_ONLY
+        Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION, Phase.PUBLIC_API]  || GradleConfiguration.API
         Source.MAIN | [Phase.RUNTIME, Phase.COMPILATION]  || GradleConfiguration.IMPLEMENTATION
         Source.MAIN | [Phase.RUNTIME]                     || GradleConfiguration.RUNTIME_ONLY
         Source.TEST | [Phase.RUNTIME]                     || GradleConfiguration.TEST_RUNTIME_ONLY

@@ -6,10 +6,13 @@ Project project,
 Features features,
 String runCommand,
 String buildCommand,
-boolean isFunction
+boolean isFunction,
+String entryPoint
 )
 
 # Micronaut and Google Cloud Function
+
+[Install the gcloud CLI](https://cloud.google.com/sdk/docs/install)
 
 @if(!isFunction){
 ## Running the function locally
@@ -38,11 +41,7 @@ $ cd @features.build().getJarDirectory()
 Now run:
 
 ```bash
-@if(isFunction){
-$ gcloud functions deploy @project.getName() --entry-point @if(project.getPackageName() != null){@(project.getPackageName()).}Function --runtime java11 --trigger-http
-} else {
-$ gcloud functions deploy @project.getName() --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java11 --trigger-http
-}
+$ gcloud functions deploy @project.getName() --entry-point @entryPoint --runtime java11 --trigger-http
 ```
 
 Choose unauthenticated access if you don't need auth.
@@ -57,4 +56,10 @@ You can then use this variable to test the function invocation:
 
 ```bash
 $ curl -i $YOUR_HTTP_TRIGGER_URL/@project.getPropertyName()
+```
+
+To delete your function:
+
+```bash
+$ gcloud functions delete @project.getName()
 ```

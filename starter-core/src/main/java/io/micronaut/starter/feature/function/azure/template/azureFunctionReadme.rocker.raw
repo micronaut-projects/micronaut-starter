@@ -23,12 +23,6 @@ BuildTool buildTool
 az login
 az account set -s <your subscription id>
 
-@if(buildTool == BuildTool.GRADLE) {
-## Build Tools
-
-The application's build uses [Azure Functions Plugin for Gradle](https://plugins.gradle.org/plugin/com.microsoft.azure.azurefunctions).
-}
-
 ## Running the function locally
 
 ```cmd

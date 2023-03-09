@@ -16,6 +16,7 @@
 package io.micronaut.starter.feature.function;
 
 import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
@@ -25,14 +26,10 @@ import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyCon
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
 import io.micronaut.starter.feature.json.SerializationFeature;
-import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerTemplate;
-import io.micronaut.starter.template.RockerWritable;
-
-import java.util.Optional;
 
 /**
  * Abstract function implementation.
@@ -45,7 +42,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     @Override
     public void apply(GeneratorContext generatorContext) {
         applyFunction(generatorContext, generatorContext.getApplicationType());
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addMicronautRuntimeBuildProperty(generatorContext);
     }
 
     protected RockerModel javaControllerTemplate(Project project, boolean useSerde) {
@@ -61,11 +58,6 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     }
 
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
-        BuildTool buildTool = generatorContext.getBuildTool();
-
-        readmeTemplate(generatorContext, generatorContext.getProject(), buildTool)
-            .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
-
         if (type == ApplicationType.DEFAULT) {
 
             final String className = StringUtils.capitalize(generatorContext.getProject().getPropertyName());
@@ -103,30 +95,16 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     }
 
     protected void applyTestTemplate(GeneratorContext generatorContext, Project project, String name) {
+        FunctionFeatureCodeGenerator functionFeatureCodeGenerator = resolveFunctionFeatureCodeGenerator(generatorContext);
         String testSource =  generatorContext.getTestSourcePath("/{packagePath}/" + name);
-        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(spockTemplate(project),
-                javaJUnitTemplate(project),
-                groovyJUnitTemplate(project),
-                kotlinJUnitTemplate(project),
-                koTestTemplate(project));
+        TestRockerModelProvider provider = new DefaultTestRockerModelProvider(functionFeatureCodeGenerator.spockTemplate(project),
+                functionFeatureCodeGenerator.javaJUnitTemplate(project),
+                functionFeatureCodeGenerator.groovyJUnitTemplate(project),
+                functionFeatureCodeGenerator.kotlinJUnitTemplate(project),
+                functionFeatureCodeGenerator.koTestTemplate(project));
         generatorContext.addTemplate("testFunction", testSource, provider);
     }
 
-    protected Optional<RockerModel> readmeTemplate(GeneratorContext generatorContext, Project project, BuildTool buildTool) {
-        return Optional.empty();
-    }
-
-    protected abstract String getRunCommand(BuildTool buildTool);
-
-    protected abstract String getBuildCommand(BuildTool buildTool);
-
-    protected abstract RockerModel javaJUnitTemplate(Project project);
-
-    protected abstract RockerModel kotlinJUnitTemplate(Project project);
-
-    protected abstract RockerModel groovyJUnitTemplate(Project project);
-
-    protected abstract RockerModel koTestTemplate(Project project);
-
-    public abstract RockerModel spockTemplate(Project project);
+    @NonNull
+    protected abstract FunctionFeatureCodeGenerator resolveFunctionFeatureCodeGenerator(@NonNull GeneratorContext generatorContext);
 }

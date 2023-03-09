@@ -28,6 +28,7 @@ public class Category {
     public static final String CICD                 = "CI/CD";
     public static final String CLIENT               = "Client";
     public static final String CLOUD                = "Cloud";
+    public static final String CHATBOTS             = "Chatbots";
     public static final String CONFIGURATION        = "Configuration";
     public static final String DATABASE             = "Database";
     public static final String DEV_TOOLS            = "Development Tools";

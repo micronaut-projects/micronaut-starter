@@ -18,9 +18,10 @@ package io.micronaut.starter.build.dependencies;
 import io.micronaut.core.annotation.NonNull;
 
 public final class MicronautDependencyUtils {
-
     public static final String GROUP_ID_MICRONAUT = "io.micronaut";
     public static final String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
+
+    public static final String GROUP_ID_MICRONAUT_CHATBOTS = "io.micronaut.chatbots";
     public static final String GROUP_ID_MICRONAUT_CRAC = "io.micronaut.crac";
     public static final String GROUP_ID_MICRONAUT_SERDE = "io.micronaut.serde";
     public static final String GROUP_ID_MICRONAUT_SECURITY = "io.micronaut.security";
@@ -33,6 +34,18 @@ public final class MicronautDependencyUtils {
     public static final String GROUP_ID_MICRONAUT_KOTLIN = "io.micronaut.kotlin";
 
     public static final String GROUP_ID_MICRONAUT_GROOVY = "io.micronaut.groovy";
+    public static final String GROUP_ID_MICRONAUT_GCP = "io.micronaut.gcp";
+
+    private MicronautDependencyUtils() {
+
+    }
+
+    @NonNull
+    public static Dependency.Builder chatbotsDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_CHATBOTS)
+                //.version("1.0.0-SNAPSHOT")
+                ;
+    }
 
     @NonNull
     public static Dependency.Builder coreDependency() {
@@ -97,5 +110,9 @@ public final class MicronautDependencyUtils {
 
     public static Dependency.Builder cracDependency() {
         return micronautDependency(GROUP_ID_MICRONAUT_CRAC);
+    }
+
+    public static Dependency.Builder gcpDependency() {
+        return micronautDependency(GROUP_ID_MICRONAUT_GCP);
     }
 }

@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.function.gcp
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.feature.other.ShadePlugin
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Requires
@@ -15,38 +16,34 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
 
     @Shared
     @Subject
-    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction()
+    GoogleCloudFunction googleCloudFunction = new GoogleCloudFunction(new ShadePlugin(), new GcpReadmeFeature())
 
-    void 'test readme.md with feature google-cloud-function contains links to docs'() {
+    void 'test readme.md with feature google-cloud-function contains links to docs'(Language language,
+                                                                                    ApplicationType applicationType,
+                                                                                    String micronautDocs) {
         when:
-        def output = generate(
-                ApplicationType.DEFAULT,
+        Map<String, String> output = generate(
+                applicationType,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_11),
                 ['google-cloud-function']
         )
-        def readme = output["README.md"]
+        String readme = output["README.md"]
 
         then:
         readme
-        verifyAll {
-            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions")
-            readme.contains("https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions")
-        }
+        readme.count(micronautDocs) == 1
+        readme.count("## Feature google-cloud-function documentation") == 1
+        readme.count("# Micronaut and Google Cloud Function") == 1
 
-        when:
-        readme = readme.replaceFirst("## Feature google-cloud-function documentation","")
-        readme = readme.replaceFirst("## Feature google-cloud-function-http documentation","")
-        readme = readme.replaceFirst("# Micronaut and Google Cloud Function","")
-
-        then:
-        verifyAll {
-            !readme.contains("## Feature google-cloud-function documentation")
-            !readme.contains("## Feature google-cloud-function-http documentation")
-            !readme.contains("# Micronaut and Google Cloud Function")
-        }
 
         where:
-        language << Language.values().toList()
+        language        | applicationType           | micronautDocs
+        Language.JAVA   | ApplicationType.DEFAULT   | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions"
+        Language.GROOVY | ApplicationType.DEFAULT   | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions"
+        Language.KOTLIN | ApplicationType.DEFAULT   | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions"
+        Language.JAVA   | ApplicationType.FUNCTION  | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simple"
+        Language.GROOVY | ApplicationType.FUNCTION  | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simple"
+        Language.KOTLIN | ApplicationType.FUNCTION  | "https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simple"
     }
 
     @Unroll
@@ -108,12 +105,6 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         !build.contains('implementation("io.micronaut.gcp:micronaut-gcp-function")')
         !build.contains('implementation("io.micronaut:micronaut-http-server-netty")')
         !build.contains('implementation("io.micronaut:micronaut-http-client")')
-
-        where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
     }
 
     @Unroll
@@ -137,7 +128,7 @@ class GoogleCloudFunctionSpec extends BeanContextSpec  implements CommandOutputF
         !output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
         output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
         output.containsKey(language.getDefaults().getTest().getSourcePath("/example/micronaut/Function", language))
-        readme?.contains("Micronaut and Google Cloud Function")
+        readme?.contains("Micronaut Google Cloud Function")
         readme?.contains(BuildTool.GRADLE.getJarDirectory())
 
         where:

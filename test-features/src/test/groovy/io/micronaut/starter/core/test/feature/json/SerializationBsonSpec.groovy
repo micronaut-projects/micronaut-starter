@@ -33,7 +33,7 @@ class SerializationBsonSpec extends CommandSpec {
         output?.contains("BUILD SUCCESS")
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 
     Path buildGradlePath(BuildTool buildTool) {

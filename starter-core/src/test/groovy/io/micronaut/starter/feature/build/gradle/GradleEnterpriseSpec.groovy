@@ -40,6 +40,6 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
         }
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 }

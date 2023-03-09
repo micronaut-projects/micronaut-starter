@@ -15,12 +15,14 @@
  */
 package io.micronaut.starter.feature.function.awslambda;
 
+import com.fizzed.rocker.RockerModel;
 import io.micronaut.context.env.Environment;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -40,7 +42,22 @@ import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
-import io.micronaut.starter.feature.function.awslambda.template.*;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJava;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerSpock;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerJava;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
@@ -49,30 +66,45 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
-
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, MicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
-    public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
-    public static final String REQUEST_HANDLER = "FunctionRequestHandler";
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
     private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile().build();
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws-api-proxy")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY_TEST = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws-api-proxy-test")
+            .compile()
+            .build();
 
     private final ShadePlugin shadePlugin;
     private final AwsLambdaCustomRuntime customRuntime;
     private final CpuArchitecture defaultCpuArchitecture;
     private final AwsLambdaSnapstart snapstart;
+
+    private final HandlerClassFeature defaultAwsLambdaHandlerProvider;
+    private final HandlerClassFeature functionAwsLambdaHandlerProvider;
 
     @Deprecated
     public AwsLambda(ShadePlugin shadePlugin,
@@ -88,6 +120,8 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = arm;
         this.snapstart = new AwsLambdaSnapstart();
+        this.defaultAwsLambdaHandlerProvider = new DefaultAwsLambdaHandlerProvider();
+        this.functionAwsLambdaHandlerProvider = new FunctionAwsLambdaHandlerProvider();
     }
 
     @Deprecated
@@ -98,18 +132,41 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     @Inject
+    @Deprecated
     public AwsLambda(ShadePlugin shadePlugin,
                      AwsLambdaCustomRuntime customRuntime,
                      X86 x86,
                      AwsLambdaSnapstart snapstart) {
+        this(shadePlugin,
+                customRuntime,
+                x86,
+                snapstart,
+                new DefaultAwsLambdaHandlerProvider(),
+                new FunctionAwsLambdaHandlerProvider());
+    }
+
+    @Inject
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86,
+                     AwsLambdaSnapstart snapstart,
+                     DefaultAwsLambdaHandlerProvider defaultAwsLambdaHandlerProvider,
+                     FunctionAwsLambdaHandlerProvider functionAwsLambdaHandlerProvider) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
         this.defaultCpuArchitecture = x86;
         this.snapstart = snapstart;
+        this.defaultAwsLambdaHandlerProvider = defaultAwsLambdaHandlerProvider;
+        this.functionAwsLambdaHandlerProvider = functionAwsLambdaHandlerProvider;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
+        Stream.of(defaultAwsLambdaHandlerProvider, functionAwsLambdaHandlerProvider)
+                .filter(f -> f.supports(featureContext.getApplicationType()))
+                .findFirst()
+                .ifPresent(f -> featureContext.addFeatureIfNotPresent(HandlerClassFeature.class, f));
+
         featureContext.addFeatureIfNotPresent(ShadePlugin.class, shadePlugin);
         featureContext.addFeatureIfNotPresent(CpuArchitecture.class, defaultCpuArchitecture);
         if (featureContext.isPresent(GraalVM.class) &&
@@ -163,11 +220,29 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
                 if (applicationType == FUNCTION) {
                     generatorContext.addDependency(AWS_LAMBDA_JAVA_EVENTS);
                 }
-                addHelpTemplate(generatorContext);
-                disableSecurityFilterInTestConfiguration(generatorContext);
             }
         }
+        addHelpTemplate(generatorContext);
+        disableSecurityFilterInTestConfiguration(generatorContext);
         generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addDependencies(generatorContext);
+    }
+
+    private void addDependencies(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getFeature(HandlerClassFeature.class)
+                .map(FunctionAwsLambdaHandlerProvider.class::isInstance)
+                .orElse(false)) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS);
+        }
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
+            if (generatorContext.hasFeature(GraalVM.class)) {
+                generatorContext.addDependency(AwsLambdaCustomRuntime.DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
+            }
+            if (generatorContext.getApplicationType() == DEFAULT) {
+                generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY);
+                generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY_TEST);
+            }
+        }
     }
 
     protected void addCode(@NonNull GeneratorContext generatorContext) {
@@ -186,8 +261,15 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     protected void addHelpTemplate(@NonNull GeneratorContext generatorContext) {
+        readmeTemplate(generatorContext)
+                .ifPresent(rockerModel -> generatorContext.addHelpTemplate(new RockerWritable(rockerModel)));
+    }
+
+    @NonNull
+    public Optional<RockerModel> readmeTemplate(@NonNull GeneratorContext generatorContext) {
         DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
-        generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
+        return generatorContext.getFeature(HandlerClassFeature.class)
+                .map(f -> HandlerClassFeature.readmeRockerModel(f, generatorContext, link));
     }
 
     protected void disableSecurityFilterInTestConfiguration(@NonNull GeneratorContext generatorContext) {
@@ -198,7 +280,10 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     boolean shouldGenerateSources(GeneratorContext generatorContext) {
-        return !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
+        return generatorContext.getFeature(HandlerClassFeature.class)
+                .map(p -> p instanceof DefaultAwsLambdaHandlerProvider || p instanceof  FunctionAwsLambdaHandlerProvider)
+                .orElse(false) &&
+                !generatorContext.getFeatures().isFeaturePresent(AwsAlexa.class);
     }
 
     private void addHomeControllerTest(GeneratorContext generatorContext, Project project) {
@@ -230,7 +315,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     private void addRequestHandler(GeneratorContext generatorContext, Project project) {
-        String awsLambdaRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + REQUEST_HANDLER);
+        String awsLambdaRequestHandlerFile = generatorContext.getSourcePath("/{packagePath}/" + FunctionAwsLambdaHandlerProvider.REQUEST_HANDLER);
         generatorContext.addTemplate("functionRequestHandler", awsLambdaRequestHandlerFile,
                 awsLambdaFunctionRequestHandlerJava.template(generatorContext.getFeatures(), project),
                 awsLambdaFunctionRequestHandlerKotlin.template(generatorContext.getFeatures(), project),
@@ -240,8 +325,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     @Override
     public boolean shouldApply(ApplicationType applicationType, Options options, Set<Feature> selectedFeatures) {
         return applicationType == FUNCTION &&
-                selectedFeatures.stream().filter(feature -> feature instanceof CloudFeature)
-                        .noneMatch(cloudFeature -> ((CloudFeature) cloudFeature).getCloud() != getCloud());
+                selectedFeatures.stream().noneMatch(FunctionFeature.class::isInstance);
     }
 
     @Override
@@ -257,18 +341,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda";
-    }
-
-    @Override
-    public String handlerClass(ApplicationType applicationType, Project project) {
-        switch (applicationType) {
-            case DEFAULT:
-                return MICRONAUT_LAMBDA_HANDLER;
-            case FUNCTION:
-                return project.getPackageName() + "." + REQUEST_HANDLER;
-            default:
-                return null;
-        }
     }
 
     @Override

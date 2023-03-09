@@ -19,9 +19,12 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.build.gradle.GradleDsl;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public enum BuildTool {
     GRADLE("build/libs", "build.gradle", "-*-all.jar", "Gradle (Groovy)"),
@@ -82,5 +85,11 @@ public enum BuildTool {
 
     public String getTitle() {
         return title;
+    }
+
+    public static List<BuildTool> valuesGradle() {
+        return Stream.of(BuildTool.values())
+                .filter(BuildTool::isGradle)
+                .collect(Collectors.toList());
     }
 }

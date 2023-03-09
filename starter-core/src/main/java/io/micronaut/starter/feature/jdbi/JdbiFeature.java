@@ -58,9 +58,7 @@ public class JdbiFeature implements Feature {
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(JdbcFeature.class)) {
-            featureContext.addFeature(jdbcFeature);
-        }
+        featureContext.addFeatureIfNotPresent(JdbcFeature.class, jdbcFeature);
     }
 
     @Override

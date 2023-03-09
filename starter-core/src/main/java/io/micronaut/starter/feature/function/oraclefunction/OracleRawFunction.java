@@ -15,20 +15,17 @@
  */
 package io.micronaut.starter.feature.function.oraclefunction;
 
-import com.fizzed.rocker.RockerModel;
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
+import io.micronaut.starter.feature.function.FunctionFeatureCodeGenerator;
+import io.micronaut.starter.feature.function.gcp.FunctionGcpFunctionFeatureCodeGenerator;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovy;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovyJunit;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionGroovySpock;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJava;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionJavaJunit;
 import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlin;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinJunit;
-import io.micronaut.starter.feature.function.oraclefunction.template.raw.oracleRawFunctionKotlinKoTest;
 import io.micronaut.starter.feature.logging.SimpleLogging;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
@@ -100,31 +97,6 @@ public class OracleRawFunction extends OracleFunction {
     }
 
     @Override
-    protected RockerModel javaJUnitTemplate(Project project) {
-        return oracleRawFunctionJavaJunit.template(project);
-    }
-
-    @Override
-    protected RockerModel groovyJUnitTemplate(Project project) {
-        return oracleRawFunctionGroovyJunit.template(project);
-    }
-
-    @Override
-    protected RockerModel kotlinJUnitTemplate(Project project) {
-        return oracleRawFunctionKotlinJunit.template(project);
-    }
-
-    @Override
-    public RockerModel spockTemplate(Project project) {
-        return oracleRawFunctionGroovySpock.template(project);
-    }
-
-    @Override
-    protected RockerModel koTestTemplate(Project project) {
-        return oracleRawFunctionKotlinKoTest.template(project);
-    }
-
-    @Override
     public boolean isVisible() {
         return true;
     }
@@ -139,5 +111,11 @@ public class OracleRawFunction extends OracleFunction {
     @Override
     public String getThirdPartyDocumentation() {
         return "https://docs.cloud.oracle.com/iaas/Content/Functions/Concepts/functionsoverview.htm";
+    }
+
+    @Override
+    @NonNull
+    protected FunctionFeatureCodeGenerator resolveFunctionFeatureCodeGenerator(@NonNull GeneratorContext generatorContext) {
+        return new FunctionGcpFunctionFeatureCodeGenerator();
     }
 }
