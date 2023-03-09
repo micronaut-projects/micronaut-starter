@@ -25,6 +25,7 @@ dependencies {
     implementation 'com.typesafe:config:1.4.1'
     implementation 'io.micronaut.testresources:micronaut-test-resources-build-tools:1.0.0'
     implementation 'org.apache.commons:commons-compress:1.21'
+    implementation "io.micronaut:micronaut-jackson-databind"
     testImplementation("org.apache.groovy:groovy-xml")
 }
 
@@ -44,8 +45,3 @@ rocker {
     postProcessing = ['io.micronaut.starter.rocker.WhitespaceProcessor']
 }
 
-nohttp {
-    source.exclude "**/pom.rocker.raw"
-    source.exclude "**/genericPom.rocker.raw"
-    source.exclude "**/multimodule.rocker.raw"
-}

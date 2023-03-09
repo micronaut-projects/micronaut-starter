@@ -18,8 +18,7 @@ package io.micronaut.starter.client.github.oauth;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
-
-import javax.validation.constraints.NotNull;
+import io.micronaut.core.annotation.NonNull;
 
 /**
  * @author Pavol Gressa
@@ -34,9 +33,9 @@ public class AccessToken {
 
     @JsonCreator
     public AccessToken(
-            @NotNull @JsonProperty("token_type") String tokenType,
-            @NotNull @JsonProperty("scope") String scope,
-            @NotNull @JsonProperty("access_token") String accessToken) {
+            @NonNull @JsonProperty("token_type") String tokenType,
+            @NonNull @JsonProperty("scope") String scope,
+            @NonNull @JsonProperty("access_token") String accessToken) {
         this.tokenType = tokenType;
         this.scope = scope;
         this.accessToken = accessToken;

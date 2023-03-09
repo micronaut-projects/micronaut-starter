@@ -28,4 +28,31 @@ foo = 123
 bar = [1, 2, {name = 'fox'}]
 '''
     }
+
+    def 'array table'() {
+        given:
+        def config = new Configuration('', '', '')
+        config.put('foo', [['buzz': 'bizz'], ['a': 'b', 'c': [['d': 'e'], ['f': 'g']], 'h': ['i': 'j'], 'k': ['l': 'm', 'n': 'o']]])
+
+        expect:
+        toml(config) == '''\
+
+[[foo]]
+buzz = 'bizz'
+
+[[foo]]
+a = 'b'
+h.i = 'j'
+
+[[foo.c]]
+d = 'e'
+
+[[foo.c]]
+f = 'g'
+
+[foo.k]
+l = 'm'
+n = 'o'
+'''
+    }
 }

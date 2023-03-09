@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.util;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.client.github.v3.GitHubRepository;
 import io.micronaut.starter.client.github.v3.GitHubUser;
@@ -24,7 +25,6 @@ import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.RemoteRefUpdate;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -51,10 +51,10 @@ public class GitHubUtil {
      * @throws IOException if the push to repo fails
      */
     public static void initAndPushToGitHubRepository(
-            @NotNull GitHubRepository repository,
-            @NotNull GitHubUser user,
-            @NotNull Path localPath,
-            @NotNull String authToken) throws IOException {
+            @NonNull GitHubRepository repository,
+            @NonNull GitHubUser user,
+            @NonNull Path localPath,
+            @NonNull String authToken) throws IOException {
         try {
             final String name = StringUtils.isEmpty(user.getName()) ? user.getLogin() : user.getName();
             final String email = StringUtils.isEmpty(user.getEmail()) ? user.getLogin() : user.getEmail();
