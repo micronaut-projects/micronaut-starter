@@ -38,7 +38,7 @@ import io.dekorate.kubernetes.annotation.Probe;
 @if (features.contains("dekorate-prometheus")) {
 import io.dekorate.prometheus.annotation.EnableServiceMonitor;
 }
-@if (features.contains("dekorate-jeager")) {
+@if (features.contains("dekorate-jaeger")) {
 import io.dekorate.jaeger.annotation.EnableJaegerAgent;
 }
 @if (features.contains("dekorate-halkyon")) {
@@ -74,7 +74,7 @@ import io.dekorate.halkyon.annotation.HalkyonComponent;
 @if (features.contains("dekorate-prometheus")) {
 @@EnableServiceMonitor(port = "http", path="/prometheus")
 }
-@if (features.contains("dekorate-jeager")) {
+@if (features.contains("dekorate-jaeger")) {
 @@EnableJaegerAgent
 }
 @if (features.contains("dekorate-halkyon")) {

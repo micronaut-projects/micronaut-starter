@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.Set;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -143,6 +144,13 @@ public class FeatureContext {
                 .filter(f -> exclusions.stream().noneMatch(e -> e.test(f)))
                 .map(Feature::getClass)
                 .anyMatch(feature::isAssignableFrom);
+    }
+
+    public Optional<Feature> getFeature(Class<? extends Feature> feature) {
+        return features.stream()
+                .filter(f -> exclusions.stream().noneMatch(e -> e.test(f)))
+                .filter(f -> feature.isAssignableFrom(f.getClass()))
+                .findFirst();
     }
 
     public void addFeatureIfNotPresent(Class<? extends Feature> featureClass, Feature feature) {

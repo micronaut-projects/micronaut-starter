@@ -6,7 +6,6 @@ datasources:
     #password: 'secret'
     driver-class-name: org.postgresql.Driver
     dialect: POSTGRES
-    schema-generate: NONE
 ---
 flyway:
   enabled: enabled

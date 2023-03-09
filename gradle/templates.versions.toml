@@ -1,0 +1,118 @@
+#
+# This version catalog contains all libraries and versions
+# which will be used in generated project files (via the
+# template engine). It is NOT intended to be used in our
+# build scripts (you should use the `libs.versions.toml`
+# file for that).
+# Entries which start with `bom-` will be assigned the `pom`
+# type in Maven.
+#
+
+[versions]
+agorapulse-gru = "1.2.5"
+agorapulse-micronaut-console = "2.0.1-micronaut-3.0"
+agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
+agorapulse-micronaut-worker = "1.2.2-micronaut-3.0"
+apigatewayv2 = "2.42.1-alpha.0"
+apigatewayv2-integrations = "2.44.0-alpha.0"
+asciidoctor-gradle-jvm = "3.3.2"
+asciidoctor-maven-plugin = "2.2.2"
+asciidoctorj = "2.5.5"
+asciidoctorj-diagram = "2.2.3"
+awaitility = "4.2.0"
+aws-java-events = "3.11.0"
+azure-functions-gradle-plugin = "1.8.2"
+azure-functions-maven-plugin = "1.21.0"
+bom-opentelemetry = "1.14.0-alpha"
+bpm-assert = "7.18.0"
+bpm-micronaut = "2.12.0"
+camunda-micronaut-client = "2.10.0"
+gradle-enterprise = "3.11.3"
+gradle-enterprise-maven-custom-data = "1.11.1"
+gradle-enterprise-maven-extension = "1.15.5"
+gradle-jrebel-plugin = "1.1.10"
+gradle-shadow-plugin = "7.1.2"
+jib-gradle-plugin = "2.8.0"
+jruby = "9.3.8.0"
+json-bind = "2.0.0"
+jte-gradle-plugin= "2.2.6"
+jte-maven-plugin= "2.2.6"
+kotest = "4.2.5"
+kotlin = "1.6.21"
+log4j = "2.19.0"
+log4j-slf4j = "2.17.2"
+micronaut-aot = "1.1.0"
+micronaut-build-plugins = "5.3.14"
+micronaut-gradle-plugin = "3.7.4"
+mockk = "1.9.3"
+protobuf-gradle-plugin = "0.8.15"
+rewrite-gradle-plugin = "5.12.0"
+rewrite-maven-plugin = "4.34.2"
+rewrite-micronaut = "1.15.1"
+rocker-gradle-plugin = "3.0.4"
+rocker-maven-plugin = "1.3.0"
+scram-client = "2.1"
+slf4j = "1.7.36"
+zeebe-micronaut-client = "1.11.0"
+
+[libraries]
+agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
+agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
+agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
+agorapulse-micronaut-worker = { module = "com.agorapulse:micronaut-worker", version.ref = "agorapulse-micronaut-worker" }
+apigatewayv2-alpha = { module = "software.amazon.awscdk:apigatewayv2-alpha", version.ref = "apigatewayv2" }
+apigatewayv2-integrations-alpha = { module = "software.amazon.awscdk:apigatewayv2-integrations-alpha", version.ref = "apigatewayv2-integrations" }
+asciidoctor-gradle-jvm = { module = "org.asciidoctor:asciidoctor-gradle-jvm", version.ref = "asciidoctor-gradle-jvm" }
+asciidoctor-maven-plugin = { module = "org.asciidoctor:asciidoctor-maven-plugin", version.ref = "asciidoctor-maven-plugin" }
+asciidoctorj = { module = "org.asciidoctor:asciidoctorj", version.ref = "asciidoctorj" }
+asciidoctorj-diagram = { module = "org.asciidoctor:asciidoctorj-diagram", version.ref = "asciidoctorj-diagram" }
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
+awaitility-groovy = { module = "org.awaitility:awaitility-groovy", version.ref = "awaitility" }
+awaitility-kotlin = { module = "org.awaitility:awaitility-kotlin", version.ref = "awaitility" }
+aws-java-events = { module = "com.amazonaws:aws-lambda-java-events", version.ref = "aws-java-events" }
+azure-functions-gradle-plugin = { module = "com.microsoft.azure:azure-functions-gradle-plugin", version.ref = "azure-functions-gradle-plugin" }
+azure-functions-maven-plugin = { module = "com.microsoft.azure:azure-functions-maven-plugin", version.ref = "azure-functions-maven-plugin" }
+bom-kotlin = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+bom-opentelemetry-instrumentation = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom-alpha", version.ref = "bom-opentelemetry" }
+bpm-assert = { module = "org.camunda.bpm:camunda-bpm-assert", version.ref = "bpm-assert" }
+bpm-micronaut = { module = "info.novatec:micronaut-camunda-bpm-feature", version.ref = "bpm-micronaut" }
+camunda-micronaut-client = { module = "info.novatec:micronaut-camunda-external-client-feature", version.ref = "camunda-micronaut-client" }
+gradle-enterprise = { module = "com.gradle:gradle-enterprise-gradle-plugin", version.ref = "gradle-enterprise" }
+gradle-enterprise-maven = { module = "com.gradle:gradle-enterprise-maven-extension", version.ref = "gradle-enterprise-maven-extension" }
+gradle-enterprise-maven-custom-data = { module = "com.gradle:common-custom-user-data-maven-extension", version.ref = "gradle-enterprise-maven-custom-data" }
+gradle-jrebel-plugin = { module = "gradle.plugin.org.zeroturnaround:gradle-jrebel-plugin", version.ref = "gradle-jrebel-plugin" }
+gradle-shadow-plugin = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow-plugin" }
+jib-gradle-plugin = { module = "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin", version.ref = "jib-gradle-plugin" }
+jruby = { module = "org.jruby:jruby", version.ref = "jruby" }
+json-bind = { module = "jakarta.json.bind:jakarta.json.bind-api", version.ref = "json-bind" }
+jte-gradle-plugin = { module = "gg.jte:jte-gradle-plugin", version.ref = "jte-gradle-plugin" }
+jte-maven-plugin = { module = "gg.jte:jte-maven-plugin", version.ref = "jte-maven-plugin" }
+kotest-assertions-core-jvm = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+kotest-runner-junit5-jvm = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotlin-allopen = { module = "org.jetbrains.kotlin:kotlin-allopen", version.ref = "kotlin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-noarg = { module = "org.jetbrains.kotlin:kotlin-noarg", version.ref = "kotlin" }
+log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
+log4j-over-slf4j = { module = "org.slf4j:log4j-over-slf4j", version.ref = "slf4j" }
+log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j-impl", version.ref = "log4j" }
+micronaut-aot = { module = "io.micronaut.aot:micronaut-aot-core", version.ref = "micronaut-aot" }
+micronaut-build-plugins = { module = "io.micronaut.build.internal:micronaut-gradle-plugins", version.ref = "micronaut-build-plugins" }
+micronaut-crac-plugin = { module = "io.micronaut.gradle:micronaut-crac-plugin", version.ref = "micronaut-gradle-plugin" }
+micronaut-gradle-plugin = { module = "io.micronaut.gradle:micronaut-gradle-plugin", version.ref = "micronaut-gradle-plugin" }
+micronaut-test-resources-plugin = { module = "io.micronaut.gradle:micronaut-test-resources-plugin", version.ref = "micronaut-gradle-plugin" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+protobuf-gradle-plugin = { module = "gradle.plugin.com.google.protobuf:protobuf-gradle-plugin", version.ref = "protobuf-gradle-plugin" }
+rewrite-gradle-plugin = { module = "org.openrewrite:plugin", version.ref = "rewrite-gradle-plugin" }
+rewrite-maven-plugin = { module = "org.openrewrite.maven:rewrite-maven-plugin", version.ref = "rewrite-maven-plugin" }
+rewrite-micronaut = { module = "org.openrewrite.recipe:rewrite-micronaut", version.ref = "rewrite-micronaut" }
+rocker-gradle-plugin = { module = "nu.studer:gradle-rocker-plugin", version.ref = "rocker-gradle-plugin" }
+rocker-maven-plugin = { module = "com.fizzed:rocker-maven-plugin", version.ref = "rocker-maven-plugin" }
+scram-client = { module = "com.ongres.scram:client", version.ref = "scram-client" }
+zeebe-micronaut-client = { module = "info.novatec:micronaut-zeebe-client-feature", version.ref = "zeebe-micronaut-client" }
+
+[plugins]
+# This is an exception to the rule!
+# We use the Gradle plugin both in generated projects and our own build
+# so we share the version here
+micronaut-application = { id = "io.micronaut.application", version.ref = "micronaut-gradle-plugin" }

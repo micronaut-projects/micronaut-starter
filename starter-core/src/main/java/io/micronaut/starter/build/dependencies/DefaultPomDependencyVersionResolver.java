@@ -17,19 +17,16 @@ package io.micronaut.starter.build.dependencies;
 
 import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
+
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Singleton
 public class DefaultPomDependencyVersionResolver implements PomDependencyVersionResolver {
     /**
      * Initialize coordinates early to remove runtime dependencies on javax.xml.
      */
-    private static final Map<String, Coordinate> COORDINATES =
-            CoordinatesUtils.readCoordinates(Stream.of(Thread.currentThread()
-                    .getContextClassLoader()
-                    .getResource("pom.xml")));
+    private static final Map<String, Coordinate> COORDINATES = StarterCoordinates.ALL_COORDINATES;
 
     @Override
     @NonNull
