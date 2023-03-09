@@ -120,19 +120,26 @@ class MicronautAotSpec extends ApplicationContextSpec implements CommandOutputFi
     void 'aot properties file is generated when aot feature is selected'() {
         given:
         def output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT])
+        String expected = getClass().getResource("/expected-aot-jar.properties").text
 
         expect:
         output.containsKey('aot-jar.properties')
+        output["aot-jar.properties"] == expected
         !output.containsKey('aot-native-image.properties')
     }
 
     void 'aot properties files are generated when aot and graalvm features are selected'() {
         given:
         def output = generate(DEFAULT, mavenAotOptions(), [MicronautAot.FEATURE_NAME_AOT, GraalVM.FEATURE_NAME_GRAALVM])
+        String expectedAotJar = getClass().getResource("/expected-aot-jar.properties").text
+        String expectedAotNativeImage = getClass().getResource("/expected-aot-native-image.properties").text
 
         expect:
         output.containsKey('aot-jar.properties')
+        output["aot-jar.properties"] == expectedAotJar
+
         output.containsKey('aot-native-image.properties')
+        output["aot-native-image.properties"] == expectedAotNativeImage
     }
 
     private String build(BuildTool buildTool, Language language) {
