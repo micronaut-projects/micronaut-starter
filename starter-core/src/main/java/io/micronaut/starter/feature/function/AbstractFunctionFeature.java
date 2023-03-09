@@ -24,6 +24,7 @@ import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.template.http.httpFunctionGroovyController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionJavaController;
 import io.micronaut.starter.feature.function.template.http.httpFunctionKotlinController;
+import io.micronaut.starter.feature.json.SerializationFeature;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Language;
@@ -47,16 +48,16 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
         generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
     }
 
-    protected RockerModel javaControllerTemplate(Project project) {
-        return httpFunctionJavaController.template(project);
+    protected RockerModel javaControllerTemplate(Project project, boolean useSerde) {
+        return httpFunctionJavaController.template(project, useSerde);
     }
 
-    protected RockerModel kotlinControllerTemplate(Project project) {
-        return httpFunctionKotlinController.template(project);
+    protected RockerModel kotlinControllerTemplate(Project project, boolean useSerde) {
+        return httpFunctionKotlinController.template(project, useSerde);
     }
 
-    protected RockerModel groovyControllerTemplate(Project project) {
-        return httpFunctionGroovyController.template(project);
+    protected RockerModel groovyControllerTemplate(Project project, boolean useSerde) {
+        return httpFunctionGroovyController.template(project, useSerde);
     }
 
     protected void applyFunction(GeneratorContext generatorContext, ApplicationType type) {
@@ -73,22 +74,23 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
             Language language = generatorContext.getLanguage();
             String sourceFile = generatorContext.getSourcePath("/{packagePath}/" + className + "Controller");
 
+            boolean serdeFeaturePresent = generatorContext.isFeaturePresent(SerializationFeature.class);
             switch (language) {
                 case GROOVY:
                     generatorContext.addTemplate("function", new RockerTemplate(
                             sourceFile,
-                            groovyControllerTemplate(project)));
+                            groovyControllerTemplate(project, serdeFeaturePresent)));
                     break;
                 case KOTLIN:
                     generatorContext.addTemplate("function", new RockerTemplate(
                             sourceFile,
-                            kotlinControllerTemplate(project)));
+                            kotlinControllerTemplate(project, serdeFeaturePresent)));
                     break;
                 case JAVA:
                 default:
                     generatorContext.addTemplate("function", new RockerTemplate(
                             sourceFile,
-                            javaControllerTemplate(project)));
+                            javaControllerTemplate(project, serdeFeaturePresent)));
                     break;
             }
 

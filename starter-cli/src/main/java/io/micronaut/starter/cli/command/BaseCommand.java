@@ -15,6 +15,7 @@
  */
 package io.micronaut.starter.cli.command;
 
+import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.starter.application.OperatingSystem;
@@ -23,6 +24,9 @@ import io.micronaut.starter.io.ConsoleOutput;
 import picocli.CommandLine.Mixin;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Spec;
+
+import java.io.PrintWriter;
+import java.util.Optional;
 
 import static io.micronaut.starter.application.OperatingSystem.LINUX;
 import static io.micronaut.starter.application.OperatingSystem.MACOS;
@@ -41,25 +45,25 @@ public class BaseCommand implements ConsoleOutput {
     protected CommonOptionsMixin commonOptions = new CommonOptionsMixin();
 
     public void out(String message) {
-        spec.commandLine().getOut().println(AUTO.string(message));
+        outWriter().ifPresent(writer -> writer.println(AUTO.string(message)));
     }
 
     public void err(String message) {
-        spec.commandLine().getErr().println(AUTO.string("@|bold,red | Error|@ " + message));
+        errWriter().ifPresent(writer -> writer.println(AUTO.string("@|bold,red | Error|@ " + message)));
     }
 
     public void warning(String message) {
-        spec.commandLine().getOut().println(AUTO.string("@|bold,red | Warning|@ " + message));
+        outWriter().ifPresent(writer -> writer.println(AUTO.string("@|bold,red | Warning|@ " + message)));
     }
 
     @Override
     public void green(String message) {
-        spec.commandLine().getOut().println(AUTO.string("@|bold,green " + message + "|@"));
+        outWriter().ifPresent(writer -> writer.println(AUTO.string("@|bold,green " + message + "|@")));
     }
 
     @Override
     public void red(String message) {
-        spec.commandLine().getOut().println(AUTO.string("@|bold,red " + message + "|@"));
+        outWriter().ifPresent(writer -> writer.println(AUTO.string("@|bold,red " + message + "|@")));
     }
 
     public boolean showStacktrace() {
@@ -86,5 +90,20 @@ public class BaseCommand implements ConsoleOutput {
             return SOLARIS;
         }
         return null;
+    }
+
+    @NonNull
+    public Optional<PrintWriter> outWriter() {
+        return getSpec().map(spec -> spec.commandLine().getOut());
+    }
+
+    @NonNull
+    public Optional<PrintWriter> errWriter() {
+        return getSpec().map(spec -> spec.commandLine().getErr());
+    }
+
+    @NonNull
+    public Optional<CommandSpec> getSpec() {
+        return Optional.ofNullable(spec);
     }
 }

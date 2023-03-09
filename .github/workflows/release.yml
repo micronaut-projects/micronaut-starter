@@ -13,13 +13,13 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - uses: gradle/wrapper-validation-action@v1
       - name: Set up JDK
-        uses: actions/setup-java@v3.5.1
+        uses: actions/setup-java@v3.9.0
         with:
           distribution: 'adopt'
           java-version: '8'
       - name: Set the current release version
         id: release_version
-        run: echo ::set-output name=release_version::${GITHUB_REF:11}
+        run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
       - name: Run pre-release
         uses: micronaut-projects/github-actions/pre-release@master
         env:
@@ -77,7 +77,7 @@ jobs:
         run: |
           echo "Setting new Micronaut snapshot version"
           sed -i "s/^micronautVersion.*$/micronautVersion\=${{ steps.post_release.outputs.next_version }}-SNAPSHOT/" gradle.properties
-      - uses: stefanzweifel/git-auto-commit-action@v4.15.1
+      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
         continue-on-error: true
         with:
           commit_message: Back Micronaut version to snapshot
@@ -99,7 +99,7 @@ jobs:
         run: |
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
@@ -114,7 +114,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -149,7 +149,7 @@ jobs:
         run: |
           release_version=${GITHUB_REF:11}
           sed -i -e "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Setup GraalVM CE
         uses: graalvm/setup-graalvm@v1
         with:
@@ -164,7 +164,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Package Build
@@ -210,7 +210,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
       - name: Build Native Image
         shell: powershell
-        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         run: ./mn.exe --version
       - name: Verify Create App (Powershell)
@@ -251,7 +251,7 @@ jobs:
         run: |
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: SDKMAN release
         env:
           GVM_SDKVENDOR_KEY: ${{ secrets.GVM_SDKVENDOR_KEY }}
@@ -274,7 +274,7 @@ jobs:
         run: |
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Run Tests
         run: ./gradlew starter-api:test starter-web-netty:test starter-gcp-function:shadowJar
         env:
@@ -316,7 +316,7 @@ jobs:
         run: |
           release_version=${GITHUB_REF:11}
           sed -i "s/^projectVersion.*$/projectVersion\=${release_version}/" gradle.properties
-          echo ::set-output name=release_version::${release_version}
+          echo "release_version=${release_version}" >> $GITHUB_OUTPUT
       - name: Authenticate into Google Cloud Platform
         uses: google-github-actions/setup-gcloud@v0.2.1
         with:
@@ -359,7 +359,7 @@ jobs:
         run: |
           s=$(sha256sum mn.zip | awk  '{ print $1 }')
           echo "SHA256 is: $s"
-          echo ::set-output name=sha::${s}
+          echo "sha=${s}" >> $GITHUB_OUTPUT
       - name: Update Cask file
         env:
           SHA: ${{ steps.sha.outputs.sha }}
@@ -367,7 +367,7 @@ jobs:
           sed -i -e "s/  version.*/  version '${GITHUB_REF:11}'/" Casks/micronaut.rb
           sed -i -e "s/sha256.*/sha256 '${SHA}'/" Casks/micronaut.rb
           cat Casks/micronaut.rb
-      - uses: stefanzweifel/git-auto-commit-action@v4.15.1
+      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: Update Micronaut cask to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build
@@ -417,7 +417,7 @@ jobs:
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '^\$version.*', "`$version = '$Version'" | Set-Content ./tools/chocolateyinstall.ps1
           (Get-Content ./tools/chocolateyinstall.ps1) -replace '  checksum\s+=.*', "  checksum      = '$SHA'" | Set-Content ./tools/chocolateyinstall.ps1
           Get-Content ./tools/chocolateyinstall.ps1
-          echo "::set-output name=nuget_version::$NugetVersion"
+          echo "nuget_version=$NugetVersion" >> $GITHUB_OUTPUT
       - name: Create package
         working-directory: chocolatey
         run: choco pack
@@ -428,7 +428,7 @@ jobs:
         run: |
           choco apikey --key $Env:API_KEY --source https://push.chocolatey.org/
           choco push micronaut.${{ steps.choco.outputs.nuget_version }}.nupkg --source https://push.chocolatey.org/ --force
-      - uses: stefanzweifel/git-auto-commit-action@v4.15.1
+      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: Bump Micronaut Chocolatey package to ${{ github.event.release.tag_name }}
           commit_user_name: micronaut-build

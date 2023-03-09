@@ -20,9 +20,15 @@ import io.micronaut.core.util.StringUtils;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.build.gradle.MicronautTestResourcesGradlePlugin;
+import io.micronaut.starter.feature.database.DatabaseDriverFeature;
+import io.micronaut.starter.feature.database.DatabaseDriverFeatureDependencies;
+import io.micronaut.starter.feature.database.HibernateReactiveFeature;
+import io.micronaut.starter.feature.database.r2dbc.R2dbc;
+import io.micronaut.starter.feature.migration.MigrationFeature;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -62,10 +68,22 @@ public class TestResources implements Feature {
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(MicronautTestResourcesGradlePlugin.builder().build());
+            if (isReactive(generatorContext)
+                    && generatorContext.isFeaturePresent(DatabaseDriverFeature.class)
+                    && !generatorContext.isFeaturePresent(MigrationFeature.class)) {
+                generatorContext.getFeature(DatabaseDriverFeature.class)
+                        .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
+                        .map(Dependency.Builder::testResourcesService)
+                        .ifPresent(generatorContext::addDependency);
+            }
         } else {
             BuildProperties buildProperties = generatorContext.getBuildProperties();
             buildProperties.put(MICRONAUT_TEST_RESOURCES_ENABLED, StringUtils.TRUE);
         }
+    }
+
+    private boolean isReactive(GeneratorContext generatorContext) {
+        return generatorContext.isFeaturePresent(HibernateReactiveFeature.class) || generatorContext.isFeaturePresent(R2dbc.class);
     }
 
     @Override

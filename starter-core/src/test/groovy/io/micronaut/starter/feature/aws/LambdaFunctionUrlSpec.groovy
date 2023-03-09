@@ -21,6 +21,7 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
     void 'aws-lambda-function-url feature is an instance of AwsApiFeature'() {
         expect:
         lambdaFunctionUrl instanceof AwsApiFeature
+        lambdaFunctionUrl instanceof LambdaTrigger
     }
 
     void "aws-lambda-function-url does not support #applicationType application type"(ApplicationType applicationType) {

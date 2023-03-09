@@ -2,7 +2,10 @@
 @import io.micronaut.starter.application.ApplicationType;
 @import io.micronaut.starter.options.BuildTool;
 @import io.micronaut.starter.feature.Features;
-@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
+@import io.micronaut.starter.feature.architecture.CpuArchitecture;
+@import io.micronaut.starter.feature.architecture.X86;
+@import io.micronaut.starter.feature.architecture.Arm;
+@args (Features features, Project project, BuildTool buildTool, ApplicationType applicationType, CpuArchitecture architecture, String codeModule, String artifactPath, String functionId, String apiId, String version, String handler, boolean nativeImage, boolean optimized)
 
 package @project.getPackageName();
 
@@ -14,19 +17,33 @@ import software.amazon.awscdk.CfnOutput;
 import software.amazon.awscdk.Duration;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
+import software.amazon.awscdk.services.lambda.Architecture;
 @if (features.contains("dynamodb")) {
 import software.amazon.awscdk.services.dynamodb.Attribute;
 import software.amazon.awscdk.services.dynamodb.AttributeType;
 import software.amazon.awscdk.services.dynamodb.Table;
 }
+@if (features.contains("snapstart")) {
+import software.amazon.awscdk.services.lambda.CfnFunction;
+import software.constructs.IConstruct;
+}
 @if (features.contains("amazon-api-gateway")) {
 import software.amazon.awscdk.services.apigateway.LambdaRestApi;
+}
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url")) && features.contains("snapstart")) {
+import software.amazon.awscdk.services.lambda.Alias;
+import software.amazon.awscdk.services.lambda.Version;
 }
 @if (features.contains("amazon-api-gateway-http")) {
 import software.amazon.awscdk.services.apigatewayv2.alpha.HttpApi;
 import software.amazon.awscdk.services.apigatewayv2.integrations.alpha.HttpLambdaIntegration;
 import static software.amazon.awscdk.services.apigatewayv2.alpha.PayloadFormatVersion.VERSION_1_0;
 }
+@if (features.contains("aws-alexa")) {
+import software.amazon.awscdk.services.iam.ServicePrincipal;
+import software.amazon.awscdk.services.lambda.Permission;
+}
+
 @if (features.contains("aws-lambda-scheduled-event")) {
 import software.amazon.awscdk.services.events.Rule;
 import software.amazon.awscdk.services.events.Schedule;
@@ -137,27 +154,75 @@ public class AppStack extends Stack {
                 .environment(environmentVariables)
                 .code(Code.fromAsset(functionPath()))
                 .timeout(Duration.seconds(10))
-                .memorySize(512)
-                .tracing(Tracing.ACTIVE)
+                .memorySize(2048)
                 .logRetention(RetentionDays.ONE_WEEK)
+@if (features.contains("snapstart")) {
+                .tracing(Tracing.DISABLED)
+                .architecture(Architecture.X86_64)
+} else {
+                .tracing(Tracing.ACTIVE)
+    @if (architecture instanceof Arm) {
+                .architecture(Architecture.ARM_64)
+    } else if (architecture instanceof X86) {
+                .architecture(Architecture.X86_64)
+    }
+}
                 .build();
+    @if (features.contains("snapstart")) {
+        IConstruct defaultChild = function.getNode().getDefaultChild();
+        if (defaultChild instanceof CfnFunction) {
+            CfnFunction cfnFunction = (CfnFunction) defaultChild;
+            cfnFunction.setSnapStart(CfnFunction.SnapStartProperty.builder()
+                .applyOn("PublishedVersions")
+                .build());
+        }
+    }
+}
+@if (features.contains("aws-alexa")) {
+        function.addPermission("alexa-skills-kit-trigger", Permission.builder()
+                .principal(new ServicePrincipal("alexa-appkit.amazon.com"))
+                .eventSourceToken("Replace-With-SKILL-ID")
+                .build());
 }
 @if (features.contains("dynamodb")) {
         table.grantReadWriteData(function);
 }
-@if (functionId != null && apiId != null) {
-@if (features.contains("aws-lambda-function-url")) {
-        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
-                .authType(FunctionUrlAuthType.NONE)
-                .build());
+
+@if ((features.contains("amazon-api-gateway") || features.contains("amazon-api-gateway-http") || features.contains("aws-lambda-function-url"))) {
+@if (features.contains("snapstart")) {
+        Version currentVersion = function.getCurrentVersion();
+        Alias prodAlias = Alias.Builder.create(this, "ProdAlias")
+                .aliasName("Prod")
+                .version(currentVersion)
+                .build();
 }
 @if (features.contains("amazon-api-gateway")) {
+@if (features.contains("snapstart")) {
+        LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
+                .handler(prodAlias)
+                .build();
+} else {
         LambdaRestApi api = LambdaRestApi.Builder.create(this, "@(apiId)")
                 .handler(function)
                 .build();
 }
+}
+@if (features.contains("aws-lambda-function-url")) {
+@if (features.contains("snapstart")) {
+        FunctionUrl functionUrl = prodAlias.addFunctionUrl(FunctionUrlOptions.builder()
+} else {
+        FunctionUrl functionUrl = function.addFunctionUrl(FunctionUrlOptions.builder()
+}
+                .authType(FunctionUrlAuthType.NONE)
+                .build());
+}
 @if (features.contains("amazon-api-gateway-http")) {
+@if (features.contains("snapstart")) {
+        HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", prodAlias)
+} else {
         HttpLambdaIntegration integration = HttpLambdaIntegration.Builder.create("HttpLambdaIntegration", function)
+}
+
                 .payloadFormatVersion(VERSION_1_0)
                 .build();
         HttpApi api = HttpApi.Builder.create(this, "@(apiId)")

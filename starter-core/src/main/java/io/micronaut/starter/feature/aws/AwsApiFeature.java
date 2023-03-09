@@ -15,5 +15,35 @@
  */
 package io.micronaut.starter.feature.aws;
 
-public interface AwsApiFeature extends AwsLambdaEventFeature {
+import io.micronaut.starter.application.ApplicationType;
+import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
+
+public interface AwsApiFeature extends AwsLambdaEventFeature, LambdaTrigger {
+    Dependency MICRONAUT_AWS_APIGATEWAY = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-aws-apigateway")
+            .compile()
+            .build();
+
+    @Override
+    default String getMicronautDocumentation() {
+        return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#amazonApiGateway";
+    }
+
+    @Override
+    default String getThirdPartyDocumentation() {
+        return "https://docs.aws.amazon.com/apigateway/";
+    }
+
+    @Override
+    default boolean supports(ApplicationType applicationType) {
+        return applicationType == ApplicationType.DEFAULT ||
+                applicationType == ApplicationType.FUNCTION;
+    }
+
+    @Override
+    default void apply(GeneratorContext generatorContext) {
+        generatorContext.addDependency(MICRONAUT_AWS_APIGATEWAY);
+    }
 }

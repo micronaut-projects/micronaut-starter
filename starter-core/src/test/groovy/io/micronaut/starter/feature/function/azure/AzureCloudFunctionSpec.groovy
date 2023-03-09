@@ -5,32 +5,17 @@ import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.fixture.CommandOutputFixture
-import io.micronaut.starter.options.*
+import io.micronaut.starter.options.BuildTool
+import io.micronaut.starter.options.JdkVersion
+import io.micronaut.starter.options.Language
+import io.micronaut.starter.options.Options
+import io.micronaut.starter.options.TestFramework
 import spock.lang.Unroll
 
 class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOutputFixture {
 
     @Unroll("#jdkVersion not supported for #feature")
-    void "verify for not supported JDK Versions by azure-function an IllegalArgumentException is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
-        when:
-        generate(
-                applicationType,
-                new Options(Language.JAVA, TestFramework.JUNIT, BuildTool.GRADLE, jdkVersion),
-                [feature],
-        )
-        then:
-        thrown(IllegalArgumentException)
-
-        where:
-        [applicationType, jdkVersion, feature] << [
-                [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                ((JdkVersion.values() as List<JdkVersion>) - AzureFeatureValidatorSpec.supportedVersionsByAzureFunction()) as List<JdkVersion>,
-                ['azure-function']
-        ].combinations()
-    }
-
-    @Unroll("#jdkVersion supported for #feature")
-    void "verify for supported JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
+    void "verify for all JDK Versions by azure-function no exception is thrown"(ApplicationType applicationType, JdkVersion jdkVersion, String feature) {
         when:
         generate(
                 applicationType,
@@ -43,7 +28,7 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         where:
         [applicationType, jdkVersion, feature] << [
                 [ApplicationType.FUNCTION, ApplicationType.DEFAULT],
-                AzureFeatureValidatorSpec.supportedVersionsByAzureFunction(),
+                JdkVersion.values(),
                 ['azure-function']
         ].combinations()
     }
@@ -134,46 +119,43 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
     }
 
     @Unroll
-    void 'test sources generated for azure function feature gradle and language=#language'(Language language,
-                                                                                           String extension,
-                                                                                           String srcDir,
-                                                                                           String testSrcDir) {
+    void 'test sources generated for azure function feature gradle and language=#language (using serde #useSerde)'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.GRADLE, JdkVersion.JDK_8),
-                ['azure-function']
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         def readme = output["README.md"]
 
         then:
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
-        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
-        output.get("$srcDir/example/micronaut/Function.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/FooController.$language.extension".toString())
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output.get("$language.srcDir/example/micronaut/Function.$language.extension".toString())
                 .contains(" AzureHttpFunction")
-        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
+        output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
+        output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
                 .contains("HttpRequestMessageBuilder")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 
     @Unroll
-    void 'test azure function feature for language=#language - maven'() {
+    void 'test azure function feature for language=#language (using serde #useSerde) - maven'(Language language, boolean useSerde) {
         when:
         def output = generate(
                 ApplicationType.DEFAULT,
                 new Options(language, TestFramework.JUNIT, BuildTool.MAVEN, JdkVersion.JDK_8),
-                ['azure-function']
+                ['azure-function'] + (useSerde ? ['serialization-jackson'] : [])
         )
         String build = output['pom.xml']
         def readme = output["README.md"]
@@ -183,21 +165,21 @@ class AzureCloudFunctionSpec extends ApplicationContextSpec implements CommandOu
         build.contains('<artifactId>azure-functions-java-library</artifactId>')
         !build.contains('<artifactId>micronaut-http-server-netty</artifactId>')
         !build.contains("<artifactId>maven-shade-plugin</artifactId>")
-        output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
+        output.containsKey("${language.srcDir}/example/micronaut/Application.${language.extension}".toString())
 
         readme?.contains("Micronaut and Azure Function")
         output.containsKey("host.json")
         output.containsKey("local.settings.json")
-        output.containsKey("$srcDir/example/micronaut/FooController.$extension".toString())
-        output.containsKey("$srcDir/example/micronaut/Function.$extension".toString())
-        output.containsKey("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
-        output.get("$testSrcDir/example/micronaut/FooFunctionTest.$extension".toString())
+        output.containsKey("$language.srcDir/example/micronaut/FooController.$language.extension".toString())
+        useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Serdeable")
+        !useSerde == output."${language.srcDir}/example/micronaut/FooController.${language.extension}".contains("@Introspected")
+
+        output.containsKey("$language.srcDir/example/micronaut/Function.$language.extension".toString())
+        output.containsKey("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
+        output.get("$language.testSrcDir/example/micronaut/FooFunctionTest.$language.extension".toString())
               .contains("HttpRequestMessageBuilder")
 
         where:
-        language << Language.values().toList()
-        extension << Language.extensions()
-        srcDir << Language.srcDirs()
-        testSrcDir << Language.testSrcDirs()
+        [language, useSerde] << [Language.values().toList(), [true, false]].combinations()
     }
 }

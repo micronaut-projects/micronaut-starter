@@ -1,0 +1,39 @@
+package example.micronaut;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+@@Entity
+@@Table(name = "book")
+public class Book {
+
+    @@Id
+    @@GeneratedValue(strategy = IDENTITY)
+    private Long id;
+
+    @@NotNull
+    @@Column(name = "title", nullable = false)
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+}

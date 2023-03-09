@@ -18,6 +18,21 @@ class FlywaySpec extends ApplicationContextSpec implements CommandOutputFixture 
         readme.contains("https://micronaut-projects.github.io/micronaut-flyway/latest/guide/index.html")
     }
 
+    void 'test feature flyway contains configuration'() {
+        when:
+        def output = generate(['flyway'])
+        def config = output["src/main/resources/application.yml"]
+
+        then:
+        config
+        config.contains("""
+flyway:
+  datasources:
+    default:
+      enabled: true
+""")
+    }
+
     void "test the dependency is added to the gradle build"() {
         when:
         String template = new BuildBuilder(beanContext, BuildTool.GRADLE)

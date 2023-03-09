@@ -48,7 +48,9 @@ public abstract class DataMongoFeature extends EaseTestingFeature implements Dat
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.getConfiguration().put(MONGODB_URI_CONFIGURATION_KEY, MONGODB_URI_CONFIGURATION_VALUE);
+        if (!generatorContext.getFeatures().isFeaturePresent(TestResources.class)) {
+            generatorContext.getConfiguration().put(MONGODB_URI_CONFIGURATION_KEY, MONGODB_URI_CONFIGURATION_VALUE);
+        }
 
         if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
             generatorContext.addDependency(Dependency.builder()

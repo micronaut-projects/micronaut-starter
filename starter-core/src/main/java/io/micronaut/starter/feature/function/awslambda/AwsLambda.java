@@ -26,8 +26,12 @@ import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
+import io.micronaut.starter.feature.architecture.Arm;
+import io.micronaut.starter.feature.architecture.CpuArchitecture;
+import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
+import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -46,8 +50,10 @@ import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
 
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
@@ -61,20 +67,51 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     public static final String REQUEST_HANDLER = "FunctionRequestHandler";
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
+    private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile().build();
 
     private final ShadePlugin shadePlugin;
     private final AwsLambdaCustomRuntime customRuntime;
+    private final CpuArchitecture defaultCpuArchitecture;
+    private final AwsLambdaSnapstart snapstart;
 
-    public AwsLambda(ShadePlugin shadePlugin, AwsLambdaCustomRuntime customRuntime) {
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime) {
+        this(shadePlugin, customRuntime, new X86(), new AwsLambdaSnapstart());
+    }
+
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     Arm arm) {
         this.shadePlugin = shadePlugin;
         this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = arm;
+        this.snapstart = new AwsLambdaSnapstart();
+    }
+
+    @Deprecated
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86) {
+        this(shadePlugin, customRuntime, x86, new AwsLambdaSnapstart());
+    }
+
+    @Inject
+    public AwsLambda(ShadePlugin shadePlugin,
+                     AwsLambdaCustomRuntime customRuntime,
+                     X86 x86,
+                     AwsLambdaSnapstart snapstart) {
+        this.shadePlugin = shadePlugin;
+        this.customRuntime = customRuntime;
+        this.defaultCpuArchitecture = x86;
+        this.snapstart = snapstart;
     }
 
     @Override
     public void processSelectedFeatures(FeatureContext featureContext) {
-        if (!featureContext.isPresent(ShadePlugin.class)) {
-            featureContext.addFeature(shadePlugin);
-        }
+        featureContext.addFeatureIfNotPresent(ShadePlugin.class, shadePlugin);
+        featureContext.addFeatureIfNotPresent(CpuArchitecture.class, defaultCpuArchitecture);
         if (featureContext.isPresent(GraalVM.class) &&
                 (
                         featureContext.getBuildTool() == BuildTool.MAVEN ||
@@ -83,9 +120,25 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
         ) {
             featureContext.addFeature(customRuntime);
         }
+
+        if (shouldAddSnapstartFeature(featureContext)) {
+            featureContext.addFeature(snapstart);
+        }
+    }
+
+    protected boolean shouldAddSnapstartFeature(FeatureContext featureContext) {
+        if (featureContext.isPresent(GraalVM.class)) {
+            return false;
+        }
+        return featureContext.getFeature(CpuArchitecture.class)
+                .filter(CpuArchitecture.class::isInstance)
+                .map(CpuArchitecture.class::cast)
+                .map(snapstart::supports)
+                .orElse(true);
     }
 
     @Override
+    @NonNull
     public String getName() {
         return FEATURE_NAME_AWS_LAMBDA;
     }
@@ -96,36 +149,52 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     }
 
     @Override
+    @NonNull
     public String getDescription() {
         return "Adds support for writing functions to deploy to AWS Lambda";
     }
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        Project project = generatorContext.getProject();
         if (shouldGenerateSources(generatorContext)) {
             ApplicationType applicationType = generatorContext.getApplicationType();
             if (applicationType == DEFAULT || applicationType == FUNCTION) {
-                if (applicationType == DEFAULT) {
-                    addHomeController(generatorContext, project);
-                    addHomeControllerTest(generatorContext, project);
-                } else {
-                    addRequestHandler(generatorContext, project);
-                    generatorContext.addDependency(Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile());
-                    if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ||
-                            !generatorContext.getFeatures().hasFeature(AwsLambdaEventFeature.class)) {
-                        addTest(generatorContext, project);
-                    }
+                addCode(generatorContext);
+                if (applicationType == FUNCTION) {
+                    generatorContext.addDependency(AWS_LAMBDA_JAVA_EVENTS);
                 }
-                DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
-                generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
-                if (generatorContext.getFeatures().hasFeature(SecurityFeature.class)) {
-                    ApplicationConfiguration test = generatorContext.getConfiguration(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
-                    test.put("micronaut.security.filter.enabled", false);
-                }
+                addHelpTemplate(generatorContext);
+                disableSecurityFilterInTestConfiguration(generatorContext);
             }
         }
         generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+    }
+
+    protected void addCode(@NonNull GeneratorContext generatorContext) {
+        Project project = generatorContext.getProject();
+        ApplicationType applicationType = generatorContext.getApplicationType();
+        if (applicationType == DEFAULT) {
+            addHomeController(generatorContext, project);
+            addHomeControllerTest(generatorContext, project);
+        } else if (applicationType == FUNCTION) {
+            addRequestHandler(generatorContext, project);
+            if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) ||
+                    !generatorContext.getFeatures().hasFeature(AwsLambdaEventFeature.class)) {
+                addTest(generatorContext, project);
+            }
+        }
+    }
+
+    protected void addHelpTemplate(@NonNull GeneratorContext generatorContext) {
+        DocumentationLink link = new DocumentationLink(LINK_TITLE, LINK_URL);
+        generatorContext.addHelpTemplate(new RockerWritable(readmeRockerModel(this, generatorContext, link)));
+    }
+
+    protected void disableSecurityFilterInTestConfiguration(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getFeatures().hasFeature(SecurityFeature.class)) {
+            ApplicationConfiguration test = generatorContext.getConfiguration(Environment.FUNCTION, ApplicationConfiguration.functionTestConfig());
+            test.put("micronaut.security.filter.enabled", false);
+        }
     }
 
     boolean shouldGenerateSources(GeneratorContext generatorContext) {

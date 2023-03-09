@@ -1,18 +1,25 @@
 @import io.micronaut.starter.application.ApplicationType
 @import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.Property
+@import io.micronaut.starter.build.dependencies.Dependency
 @import io.micronaut.starter.build.maven.MavenBuild
 @import io.micronaut.starter.build.maven.MavenDependency
-@import io.micronaut.starter.build.Property
-@import io.micronaut.starter.feature.build.maven.templates.dependency
-@import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.feature.Features
-@import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
-@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
-@import io.micronaut.starter.options.JdkVersion
-@import io.micronaut.starter.util.VersionInfo
+@import io.micronaut.starter.feature.build.maven.templates.dependency
 @import io.micronaut.starter.feature.database.Data
 @import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.DatabaseDriverFeature
+@import io.micronaut.starter.feature.database.DatabaseDriverFeatureDependencies
+@import io.micronaut.starter.feature.database.HibernateReactiveFeature
+@import io.micronaut.starter.feature.database.HibernateReactiveFeature
+@import io.micronaut.starter.feature.database.JpaFeature
 @import io.micronaut.starter.feature.database.r2dbc.R2dbc
+@import io.micronaut.starter.feature.github.workflows.docker.AbstractDockerRegistryWorkflow
+@import io.micronaut.starter.feature.messaging.SharedTestResourceFeature
+@import io.micronaut.starter.feature.migration.MigrationFeature
+@import io.micronaut.starter.feature.testresources.TestResources
+@import io.micronaut.starter.options.JdkVersion
+@import io.micronaut.starter.util.VersionInfo
 
 @args (
 ApplicationType applicationType,
@@ -166,24 +173,42 @@ MavenBuild mavenBuild
      || features.contains("jrebel")
      || features.contains("oracle-function")
      || features.contains("micronaut-aot")
+     || features.isFeaturePresent(TestResources.class)
      || features.isFeaturePresent(SharedTestResourceFeature.class)
-     || (features.isFeaturePresent(DatabaseDriverFeature.class) && !features.isFeaturePresent(Data.class))) {
+     || (features.isFeaturePresent(DatabaseDriverFeature.class)
+          && (!features.isFeaturePresent(Data.class)
+               || features.isFeaturePresent(HibernateReactiveFeature.class)
+               || features.isFeaturePresent(R2dbc.class)))
+) {
           <configuration>
 @if (features.isFeaturePresent(SharedTestResourceFeature.class)) {
             <shared>true</shared>
 }
-@if (features.isFeaturePresent(DatabaseDriverFeature.class) && !features.isFeaturePresent(Data.class)) {
+@if (features.isFeaturePresent(TestResources.class) &&
+    features.isFeaturePresent(DatabaseDriverFeature.class) &&
+     (!features.isFeaturePresent(Data.class) || features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+){
 @with? (String resourceName = features
     .getFeature(DatabaseDriverFeature.class)
     .flatMap(DatabaseDriverFeature::getDbType)
-    .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
+    .map(dbType -> features.isFeaturePresent(R2dbc.class) ? dbType.getR2dbcTestResourcesModuleName() : features.isFeaturePresent(HibernateReactiveFeature.class) ? dbType.getHibernateReactiveTestResourcesModuleName() : dbType.getJdbcTestResourcesModuleName())
     .orElse(null)) {
-            <classpathInference>false</classpathInference>
             <testResourcesDependencies>
               <dependency>
                 <groupId>io.micronaut.testresources</groupId>
                 <artifactId>micronaut-test-resources-@resourceName</artifactId>
               </dependency>
+@if ((features.isFeaturePresent(HibernateReactiveFeature.class) || features.isFeaturePresent(R2dbc.class))
+     && features.isFeaturePresent(DatabaseDriverFeature.class)
+     && !features.isFeaturePresent(MigrationFeature.class)
+) {
+@with? (Dependency driver = features.getFeature(DatabaseDriverFeature.class)
+                                                      .flatMap(DatabaseDriverFeatureDependencies::getJavaClientDependency)
+                                                      .map(Dependency.Builder::build)
+                                                      .orElse(null)) {
+@dependency.template(driver.getGroupId(), driver.getArtifactId(), null, null, false, null)
+}
+}
             </testResourcesDependencies>
 }
 }
