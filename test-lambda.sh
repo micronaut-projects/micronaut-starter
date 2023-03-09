@@ -1,6 +1,12 @@
 #!/bin/bash
 EXIT_STATUS=0
 
+JAVA_VER=$(java -version 2>&1 | sed -n ';s/.* version "\(.*\)\.\(.*\)\..*".*/\1\2/p;')
+if [[ "$JAVA_VER" != "110" ]]; then
+  echo test-lambda works only with Java 11
+  exit 1;
+fi
+
 rm -rf starter-cli/temp
 
 ############
