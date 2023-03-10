@@ -1,0 +1,45 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.agorapulse.slack.handlers.MicronautBoltEventHandler
+import com.slack.api.app_backend.events.payload.EventsApiPayload
+import com.slack.api.bolt.context.builtin.EventContext
+import com.slack.api.bolt.response.Response
+import com.slack.api.methods.MethodsClient
+import com.slack.api.methods.SlackApiException
+import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder
+import com.slack.api.model.event.ReactionAddedEvent
+import groovy.transform.CompileStatic
+import jakarta.inject.Singleton
+
+@@Singleton
+@@CompileStatic
+class ReactionHandler implements MicronautBoltEventHandler<ReactionAddedEvent> {
+
+    final Class<ReactionAddedEvent> eventType = ReactionAddedEvent
+
+    private final MethodsClient client
+
+    ReactionHandler(MethodsClient client) {
+        this.client = client
+    }
+
+    @@Override
+    Response apply(EventsApiPayload<ReactionAddedEvent> event, EventContext context) throws IOException, SlackApiException {
+        client.chatPostMessage { ChatPostMessageRequestBuilder m ->
+            m.channel(event.event.item.channel).text(
+                    "Thank you, <@@${event.event.user}> for your :${event.event.reaction}:"
+            )
+        }
+
+        return context.ack()
+    }
+
+}

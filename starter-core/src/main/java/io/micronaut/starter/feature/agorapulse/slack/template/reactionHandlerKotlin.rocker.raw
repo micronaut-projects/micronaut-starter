@@ -1,0 +1,35 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.agorapulse.slack.handlers.MicronautBoltEventHandler
+import com.slack.api.app_backend.events.payload.EventsApiPayload
+import com.slack.api.bolt.context.builtin.EventContext
+import com.slack.api.bolt.response.Response
+import com.slack.api.methods.MethodsClient
+import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder
+import com.slack.api.model.event.ReactionAddedEvent
+import jakarta.inject.Singleton
+
+@@Singleton
+class ReactionHandler(private val client: MethodsClient) : MicronautBoltEventHandler<ReactionAddedEvent> {
+
+    override fun getEventType(): Class<ReactionAddedEvent> {
+        return ReactionAddedEvent::class.java
+    }
+
+    override fun apply(event: EventsApiPayload<ReactionAddedEvent>, context: EventContext): Response {
+        client.chatPostMessage { m: ChatPostMessageRequestBuilder ->
+            m.channel(event.event.item.channel).text(
+                "Thank you, <@@${event.event.user}> for your :${event.event.reaction}:"
+            )
+        }
+        return context.ack()
+    }
+}

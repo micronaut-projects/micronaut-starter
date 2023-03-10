@@ -1,0 +1,25 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+
+private const val MESSAGE = "Hello"
+
+class MessageSenderTest : StringSpec({
+    "check post message" {
+        val sender = MessageSender(mockClient())
+
+        val response = sender.sendMessage(MESSAGE)
+
+        response?.channel shouldBe GENERAL_CHANNEL_ID
+        response?.message?.text shouldBe MESSAGE
+    }
+})

@@ -27,7 +27,7 @@ jobs:
           GRADLE_ENTERPRISE_CACHE_PASSWORD: ${{ secrets.GRADLE_ENTERPRISE_CACHE_PASSWORD }}
         run: ./gradlew micronaut-cli:shadowJar --no-daemon
       - name: Build Native Image
-        run: native-image --no-fallback -cp starter-cli/build/libs/micronaut-cli-*-all.jar
+        run: native-image --no-fallback --allow-incomplete-classpath -cp starter-cli/build/libs/micronaut-cli-*-all.jar
       - name: Verify Build
         run: ./mn --version
       - name: Verify Create App
@@ -41,7 +41,7 @@ jobs:
           cp ./LICENSE mn-linux-amd64-snapshot/
           zip -r mn-linux-amd64-snapshot.zip ./mn-linux-amd64-snapshot
       - name: Upload Snapshot
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.8.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.9.x'
         uses: actions/upload-artifact@v3
         with:
           name: mn-linux-amd64-snapshot

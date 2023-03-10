@@ -23,7 +23,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
                     .features(["micronaut-gradle-enterprise"])
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
-        String settings = settingsGradle.template(project, gradleBuild, []).render().toString()
+        String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
 
         then:
         settings.contains('pluginManagement {')

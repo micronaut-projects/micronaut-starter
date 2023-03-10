@@ -26,7 +26,7 @@ class GradleEnterpriseSpec extends ApplicationContextSpec implements CommandOutp
             .features(["gradle-enterprise"])
         Project project = builder.getProject()
         GradleBuild gradleBuild = (GradleBuild) builder.build(false)
-        String settings = settingsGradle.template(project, gradleBuild, []).render().toString()
+        String settings = settingsGradle.template(project, gradleBuild, false, []).render().toString()
         String expectedVersion = builder.beanContext.getBean(CoordinateResolver).resolve(GradleEnterprise.GRADLE_ENTERPRISE_ARTIFACT_ID).get().version
 
         then:

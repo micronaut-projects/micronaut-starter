@@ -28,7 +28,7 @@ jobs:
         run: ./gradlew micronaut-cli:copyShadowJar --no-daemon
       - name: Build Native Image
         shell: powershell
-        run: native-image.cmd --no-fallback -cp build/libs/cli.jar
+        run: native-image.cmd --no-fallback --allow-incomplete-classpath -cp build/libs/cli.jar
       - name: Verify Build (Powershell)
         shell: powershell
         run: ./mn.exe --version
@@ -47,7 +47,7 @@ jobs:
           Copy-Item "./LICENSE" -Destination "./mn-win-amd64-snapshot"
           Compress-Archive -Path "./mn-win-amd64-snapshot" -Update -DestinationPath ./mn-win-amd64-snapshot.zip
       - name: Publish artifact
-        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.8.x'
+        if: success() && github.event_name == 'push' && github.ref == 'refs/heads/3.9.x'
         uses: actions/upload-artifact@v3
         with:
           name: mn-win-amd64-snapshot

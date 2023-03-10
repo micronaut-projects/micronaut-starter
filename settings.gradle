@@ -4,13 +4,20 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id 'io.micronaut.application' version '3.7.0'
+        id 'io.micronaut.application' version '3.7.4'
         id 'com.microsoft.azure.azurefunctions' version '1.4.0'
     }
 }
 
+buildscript {
+    dependencies {
+        classpath 'org.antlr:antlr4-runtime:4.8-1!!'
+        classpath 'org.tomlj:tomlj:1.0.0!!'
+    }
+}
+
 plugins {
-    id 'io.micronaut.build.shared.settings' version '5.3.16'
+    id 'io.micronaut.build.shared.settings' version '5.4.8'
 }
 
 rootProject.name = 'micronaut-starter'
@@ -37,3 +44,11 @@ include 'test-utils'
 include 'test-cli'
 
 project(':starter-cli').name = "micronaut-cli"
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        templateLibs {
+            from(files("gradle/templates.versions.toml"))
+        }
+    }
+}

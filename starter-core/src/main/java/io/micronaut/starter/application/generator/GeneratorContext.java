@@ -250,6 +250,13 @@ public class GeneratorContext implements DependencyContext {
     }
 
     /**
+     * @return A map containing additional options
+     */
+    @NonNull public Map<String, Object> getAdditionalOptions() {
+        return options.getAdditionalOptions();
+    }
+
+    /**
      * @return The project
      */
     @NonNull public Project getProject() {
