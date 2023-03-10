@@ -62,6 +62,8 @@ io.micronaut.starter.feature.agorapulse.gru
 io.micronaut.starter.feature.agorapulse.gru.template
 io.micronaut.starter.feature.agorapulse.permissions
 io.micronaut.starter.feature.agorapulse.permissions.template
+io.micronaut.starter.feature.agorapulse.slack
+io.micronaut.starter.feature.agorapulse.slack.template
 io.micronaut.starter.feature.agorapulse.worker
 io.micronaut.starter.feature.agorapulse.worker.template
 io.micronaut.starter.feature.architecture
