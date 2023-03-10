@@ -1,0 +1,43 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project,
+String subdomain
+)
+
+# visit https://api.slack.com/apps to create new application
+display_information:
+  name: @project.getNaturalName()
+features:
+  bot_user:
+    display_name: @project.getNaturalName()
+    always_online: false
+  slash_commands:
+    - command: /@project.getName()
+      # npm install -g localtunnel
+      # lt -p 8080 -s @subdomain
+      url: https://@(subdomain).loca.lt/slack/events
+      description: @project.getNaturalName()
+      usage_hint: hello
+      should_escape: false
+oauth_config:
+  scopes:
+    user:
+      - reactions:read
+    bot:
+      - commands
+      - channels:read
+      - chat:write
+      - chat:write.public
+settings:
+  event_subscriptions:
+    request_url: https://@(subdomain).loca.lt/slack/events
+    user_events:
+      - reaction_added
+      - reaction_removed
+  interactivity:
+    is_enabled: true
+    request_url: https://@(subdomain).loca.lt/slack/events
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

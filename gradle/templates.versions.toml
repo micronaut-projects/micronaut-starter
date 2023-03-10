@@ -12,6 +12,7 @@
 agorapulse-gru = "1.2.5"
 agorapulse-micronaut-console = "2.0.1-micronaut-3.0"
 agorapulse-micronaut-permissions = "1.0.2-micronaut-3.0"
+agorapulse-micronaut-slack = "1.0.4-micronaut-3.0"
 agorapulse-micronaut-worker = "1.2.2-micronaut-3.0"
 apigatewayv2 = "2.42.1-alpha.0"
 apigatewayv2-integrations = "2.44.0-alpha.0"
@@ -59,6 +60,7 @@ zeebe-micronaut-client = "1.11.0"
 agorapulse-gru = { module = "com.agorapulse:gru-micronaut", version.ref = "agorapulse-gru" }
 agorapulse-micronaut-console = { module = "com.agorapulse:micronaut-console", version.ref = "agorapulse-micronaut-console" }
 agorapulse-micronaut-permissions = { module = "com.agorapulse:micronaut-permissions", version.ref = "agorapulse-micronaut-permissions" }
+agorapulse-micronaut-slack = { module = "com.agorapulse:micronaut-slack-http", version.ref = "agorapulse-micronaut-slack" }
 agorapulse-micronaut-worker = { module = "com.agorapulse:micronaut-worker", version.ref = "agorapulse-micronaut-worker" }
 apigatewayv2-alpha = { module = "software.amazon.awscdk:apigatewayv2-alpha", version.ref = "apigatewayv2" }
 apigatewayv2-integrations-alpha = { module = "software.amazon.awscdk:apigatewayv2-integrations-alpha", version.ref = "apigatewayv2-integrations" }
