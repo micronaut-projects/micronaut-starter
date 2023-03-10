@@ -1,5 +1,5 @@
 @import io.micronaut.starter.feature.build.gradle.GradleEnterpriseConfiguration
-@args (GradleEnterpriseConfiguration config, boolean buildCache)
+@args (GradleEnterpriseConfiguration config)
 <gradleEnterprise xmlns="https://www.gradle.com/gradle-enterprise-maven" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                           xsi:schemaLocation="https://www.gradle.com/gradle-enterprise-maven https://www.gradle.com/schema/gradle-enterprise-maven.xsd">
 @if (config.getServer() != null) {
@@ -23,16 +23,4 @@
     }
         <publish>ALWAYS</publish>
     </buildScan>
-@if (buildCache) {
-    <buildCache>
-        <remote>
-            <server>
-                <credentials>
-                    <username>${env.GRADLE_ENTERPRISE_CACHE_USERNAME}</username>
-                    <password>${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}</password>
-                </credentials>
-            </server>
-        </remote>
-    </buildCache>
-}
 </gradleEnterprise>

@@ -53,8 +53,7 @@ public class MicronautGradleEnterprise extends GradleEnterprise {
 
     @Override
     protected void applyMaven(GeneratorContext generatorContext, GradleEnterpriseConfiguration server) {
-        addMavenTemplate(generatorContext, EXTENSIONS_XML, extensionsRockerModel(generatorContext));
-        addMavenTemplate(generatorContext, GRADLE_ENTERPRISE_XML, io.micronaut.starter.feature.build.maven.templates.gradleEnterprise.template(server, true));
+        super.applyMaven(generatorContext, this);
         addMavenTemplate(generatorContext, GE_CUSTOM_USER_DATA_GROOVY, customData.template());
     }
 
