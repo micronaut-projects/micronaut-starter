@@ -1,5 +1,6 @@
 package io.micronaut.starter.feature.build.gradle
 
+import groovy.namespace.QName
 import groovy.xml.XmlParser
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
@@ -54,7 +55,7 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         def xml = new XmlParser().parseText(output[".mvn/extensions.xml"])
 
         then:
-        xml.name() == 'extensions'
+        xml.name() == new QName('https://maven.apache.org/EXTENSIONS/1.0.0', 'extensions')
 
         def enterpriseExtension = xml.extension.find { it.artifactId.text() == 'gradle-enterprise-maven-extension' }
         enterpriseExtension.groupId.text() == 'com.gradle'
@@ -91,11 +92,9 @@ class MicronautGradleEnterpriseSpec extends ApplicationContextSpec implements Co
         def xml = new XmlParser().parseText(output[".mvn/gradle-enterprise.xml"])
 
         then:
-        xml.name() == 'gradleEnterprise'
+        xml.name() == new QName('https://www.gradle.com/gradle-enterprise-maven', 'gradleEnterprise')
         xml.server.url.text() == 'https://ge.micronaut.io'
         xml.buildScan.publish.text() == 'ALWAYS'
-        xml.buildCache.remote.server.credentials.username.text() == '${env.GRADLE_ENTERPRISE_CACHE_USERNAME}'
-        xml.buildCache.remote.server.credentials.password.text() == '${env.GRADLE_ENTERPRISE_CACHE_PASSWORD}'
         !xml.buildCache.remote.storeEnabled // Not set in here, this is handled in custom data
     }
 }

@@ -7,13 +7,13 @@ gradleEnterprise {
 @if (config.allowTrustedServer() != null && config.allowTrustedServer()) {
      allowUntrustedServer = true
 }
-@if (config.getTermsOfServiceUrl() != null || config.getTermsOfServiceAgree() != null) {
+@if (config.getTermsOfServiceUrl() != null || config.aggreeWithTermsOfService() != null) {
     buildScan {
 @if (config.getTermsOfServiceUrl() != null) {
          termsOfServiceUrl = "@(config.getTermsOfServiceUrl())"
 }
-@if (config.getServer() == null && config.getTermsOfServiceAgree() != null) {
-         termsOfServiceAgree = "@(config.getTermsOfServiceAgree())"
+@if (config.getServer() == null && config.aggreeWithTermsOfService()) {
+         termsOfServiceAgree = "yes"
 }
     }
 }
