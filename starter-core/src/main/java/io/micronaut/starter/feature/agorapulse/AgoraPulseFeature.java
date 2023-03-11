@@ -105,4 +105,13 @@ public interface AgoraPulseFeature extends CommunityFeature {
         );
     }
 
+    static void addTestUtil(GeneratorContext generatorContext, String className, RockerModel rockerModel, String templateName) {
+        String testSrcDir = generatorContext.getLanguage().getTestSrcDir();
+        String extension = generatorContext.getLanguage().getExtension();
+        generatorContext.addTemplate(
+                templateName,
+                new RockerTemplate(testSrcDir + "/{packagePath}/" + className +  '.' + extension, rockerModel)
+        );
+    }
+
 }

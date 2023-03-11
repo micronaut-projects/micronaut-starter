@@ -1,0 +1,48 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName()
+}
+
+import com.agorapulse.gru.Gru
+import com.agorapulse.gru.TestDefinitionBuilder
+import com.slack.api.methods.MethodsClient
+import com.slack.api.model.Message
+import io.micronaut.context.annotation.Property
+import io.micronaut.test.annotation.MockBean
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest
+import jakarta.inject.Inject
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import java.util.concurrent.atomic.AtomicReference
+
+@@MicronautTest
+@@Property(name = "slack.signing-secret", value = GRU_TEST_SIGNING_SECRET)
+@@Property(name = "slack.bot-token", value = "")
+internal class ReactionHandlerGruTest {
+
+    private val lastMessage = AtomicReference<Message>()
+
+    @@Inject
+    lateinit var gru: Gru
+
+    @@MockBean(MethodsClient::class)
+    fun methodsClient(): MethodsClient {
+        return mockClient { newValue -> lastMessage.set(newValue) }
+    }
+
+    @@Test
+    fun testGet() {
+        gru.verify { test: TestDefinitionBuilder ->
+            slackEvent(
+                ReactionHandlerGruTest::class.java, test, "event.json"
+            )
+        }
+
+        assertEquals("Thank you, <@@U01V15Y3QPL> for your :eyes:", lastMessage.get().text)
+    }
+}

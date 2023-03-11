@@ -1,0 +1,45 @@
+@import io.micronaut.starter.application.Project
+
+@args (
+Project project
+)
+
+@if (project.getPackageName() != null) {
+package @project.getPackageName();
+}
+
+import com.slack.api.methods.MethodsClient;
+import com.slack.api.methods.SlackApiException;
+import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import com.slack.api.methods.response.conversations.ConversationsListResponse;
+import com.slack.api.model.Conversation;
+import jakarta.inject.Singleton;
+
+import java.io.IOException;
+import java.util.Optional;
+
+@@Singleton
+public class MessageSender {
+
+    private final MethodsClient methods;
+
+    public MessageSender(MethodsClient methods) {
+        this.methods = methods;
+    }
+
+    public Optional<ChatPostMessageResponse> sendMessage(String message) throws SlackApiException, IOException {
+        ConversationsListResponse conversations = methods.conversationsList(b -> b);
+        Optional<Conversation> generalChannel = conversations
+                .getChannels()
+                .stream()
+                .filter(Conversation::isGeneral)
+                .findAny();
+        if (generalChannel.isPresent()) {
+            return Optional.of(methods.chatPostMessage(m -> m.
+                    text(message).channel(generalChannel.get().getId())
+            ));
+        }
+        return Optional.empty();
+    }
+
+}

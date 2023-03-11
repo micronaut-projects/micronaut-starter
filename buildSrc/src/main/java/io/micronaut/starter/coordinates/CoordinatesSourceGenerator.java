@@ -98,7 +98,8 @@ public abstract class CoordinatesSourceGenerator extends DefaultTask {
             VersionCatalog versionCatalog = getVersionCatalog().get();
             writeDependencies(writer, coordinatesMap, versionCatalog, true);
             writeDependencies(writer, coordinatesMap, versionCatalog, false);
-            writer.println("    static {");
+            writer.println("");
+            writer.println("   static {");
             writer.println("        Map<String, Coordinate> coordinates = new HashMap<>();");
             for (Map.Entry<String, String> entry : coordinatesMap.entrySet()) {
                 writer.println("        coordinates.put(\"" + entry.getKey() + "\", " + entry.getValue() + ");");

@@ -31,7 +31,7 @@ public class GoogleCloudFunctionFeatureValidator implements FeatureValidator {
 
     @Override
     public void validatePreProcessing(Options options, ApplicationType applicationType, Set<Feature> features) {
-        if (features.stream().anyMatch(f -> f instanceof GoogleCloudFunction || f instanceof GoogleCloudRawFunction)) {
+        if (features.stream().anyMatch(f -> f instanceof AbstractGoogleCloudFunction)) {
             if (features.stream().anyMatch(f -> f instanceof GraalVM)) {
                 throw new IllegalArgumentException("Google Cloud Function is not supported for GraalVM. " +
                     "Consider Google Cloud Run for deploying GraalVM native images as docker containers.");
