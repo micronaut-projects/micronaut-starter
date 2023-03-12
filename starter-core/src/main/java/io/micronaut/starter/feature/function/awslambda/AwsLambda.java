@@ -53,7 +53,6 @@ import io.micronaut.starter.template.RockerWritable;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
-import java.util.Optional;
 import java.util.Set;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
