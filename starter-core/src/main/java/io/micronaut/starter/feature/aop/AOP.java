@@ -19,7 +19,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
-import io.micronaut.starter.build.dependencies.Priority;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.Feature;
 import jakarta.inject.Singleton;
@@ -27,14 +26,6 @@ import jakarta.inject.Singleton;
 @Singleton
 public class AOP implements Feature {
     public static final String NAME = "micronaut-aop";
-
-    private static final Dependency MICRONAUT_INJECT_JAVA_DEPENDENCY = MicronautDependencyUtils
-            .coreDependency()
-            .artifactId("micronaut-inject-java")
-            .annotationProcessor()
-            .versionProperty("micronaut.version")
-            .order(Priority.MICRONAUT_INJECT_JAVA.getOrder())
-            .build();
 
     private static final Dependency MICRONAUT_AOP_DEPENDENCY = MicronautDependencyUtils
             .coreDependency()
@@ -69,7 +60,6 @@ public class AOP implements Feature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MICRONAUT_INJECT_JAVA_DEPENDENCY);
         generatorContext.addDependency(MICRONAUT_AOP_DEPENDENCY);
     }
 

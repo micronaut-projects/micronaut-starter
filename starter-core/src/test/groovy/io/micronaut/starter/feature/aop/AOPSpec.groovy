@@ -45,7 +45,6 @@ class AOPSpec extends BeanContextSpec implements CommandOutputFixture {
         BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        verifier.hasAnnotationProcessor("io.micronaut", "micronaut-inject-java")
         verifier.hasDependency("io.micronaut", "micronaut-aop", Scope.COMPILE)
 
         where:
