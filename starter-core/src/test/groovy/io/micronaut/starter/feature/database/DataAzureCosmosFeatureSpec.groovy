@@ -1,9 +1,11 @@
 package io.micronaut.starter.feature.database
 
-import groovy.xml.XmlSlurper
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
+import io.micronaut.starter.build.dependencies.Scope
 import io.micronaut.starter.feature.Category
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
@@ -29,41 +31,24 @@ class DataAzureCosmosFeatureSpec extends ApplicationContextSpec implements Comma
     void "feature data-azure-cosmos properties validation"() {
         expect:
         for (applicationType in ApplicationType.values())
-            feature.supports(applicationType) == true
+            feature.supports(applicationType)
         feature.category == Category.DATABASE
         feature.name == 'data-azure-cosmos'
     }
 
-    void "test maven data-azure-cosmos feature adds dependency"() {
+    void "test #buildTool data-azure-cosmos feature adds dependency and annotation processor"(BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+        String template = new BuildBuilder(beanContext, buildTool)
                 .features(["data-azure-cosmos"])
                 .render()
-        template.count('''
-            <path>
-              <groupId>io.micronaut.data</groupId>
-              <artifactId>micronaut-data-processor</artifactId>
-              <version>${micronaut.data.version}</version>
-            </path>
-''') == 1
-        def pom = new XmlSlurper().parseText(template)
+        BuildTestVerifier verifier = BuildTestUtil.verifier(buildTool, template)
 
         then:
-        with(pom.dependencies.dependency.find { it.artifactId == "micronaut-data-azure-cosmos" }) {
-            scope.text() == 'compile'
-            groupId.text() == 'io.micronaut.data'
-        }
-    }
+        verifier.hasDependency("io.micronaut.data", "micronaut-data-azure-cosmos", Scope.COMPILE)
+        verifier.hasAnnotationProcessor("io.micronaut.data", "micronaut-data-document-processor")
 
-    void "test gradle data-azure-cosmos feature adds dependency"() {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(["data-azure-cosmos"])
-                .render()
-
-        then:
-        template.contains('implementation("io.micronaut.data:micronaut-data-azure-cosmos")')
-        template.contains('annotationProcessor("io.micronaut.data:micronaut-data-document-processor")')
+        where:
+        buildTool << BuildTool.values()
     }
 
     void "test data-azure-cosmos feature configuration"() {
