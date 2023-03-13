@@ -9,6 +9,10 @@ interface BuildTestVerifier {
 
     boolean hasAnnotationProcessor(String groupId, String artifactId)
 
+    boolean hasBom(String groupId, String artifactId, Scope scope)
+
+    boolean hasBom(String groupId, String artifactId, String scope)
+
     boolean hasDependency(String groupId, String artifactId, Scope scope)
 
     boolean hasDependency(String groupId, String artifactId, String scope)

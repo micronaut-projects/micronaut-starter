@@ -26,6 +26,19 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
+    boolean hasBom(String groupId, String artifactId, Scope scope) {
+        hasBom(groupId, artifactId, "")
+    }
+
+    @CompileDynamic
+    @Override
+    boolean hasBom(String expectedGroupId, String expectedArtifactId, String expectedScope) {
+        project.dependencyManagement.dependencies.dependency.findAll { it.artifactId.text() == expectedArtifactId }.any {
+            it.groupId.text() == expectedGroupId && it.type.text() == 'pom' && it.scope.text() == 'import'
+        }
+    }
+
+    @Override
     boolean hasDependency(String groupId, String artifactId, Scope scope) {
         Optional<String> mavenScopeString = MavenScope.of(scope).map(MavenScope::toString)
         if (!mavenScopeString.isPresent()){
