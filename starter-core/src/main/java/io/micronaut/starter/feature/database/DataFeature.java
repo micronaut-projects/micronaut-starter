@@ -30,12 +30,14 @@ import java.util.Map;
 public interface DataFeature extends OneOfFeature {
 
     String SCHEMA_GENERATE_KEY = "datasources.default.schema-generate";
-
-    Dependency.Builder DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
-            .artifactId("micronaut-data-processor")
-            .versionProperty("micronaut.data.version")
+    String MICRONAUT_DATA_VERSION = "micronaut.data.version";
+    String MICRONAUT_DATA_PROCESSOR_ARTIFACT = "micronaut-data-processor";
+    Dependency DEPENDENCY_MICRONAUT_DATA_PROCESSOR = MicronautDependencyUtils.dataDependency()
+            .artifactId(MICRONAUT_DATA_PROCESSOR_ARTIFACT)
+            .versionProperty(MICRONAUT_DATA_VERSION)
             .order(Priority.MICRONAUT_DATA_PROCESSOR.getOrder())
-            .annotationProcessor(true);
+            .annotationProcessor(true)
+            .build();
 
     @Override
     default Class<?> getFeatureClass() {
