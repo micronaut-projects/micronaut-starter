@@ -62,6 +62,8 @@ io.micronaut.starter.feature.agorapulse.gru
 io.micronaut.starter.feature.agorapulse.gru.template
 io.micronaut.starter.feature.agorapulse.permissions
 io.micronaut.starter.feature.agorapulse.permissions.template
+io.micronaut.starter.feature.agorapulse.slack
+io.micronaut.starter.feature.agorapulse.slack.template
 io.micronaut.starter.feature.agorapulse.worker
 io.micronaut.starter.feature.agorapulse.worker.template
 io.micronaut.starter.feature.architecture
@@ -115,6 +117,7 @@ io.micronaut.starter.feature.function.azure.template
 io.micronaut.starter.feature.function.azure.template.raw
 io.micronaut.starter.feature.function.gcp
 io.micronaut.starter.feature.function.gcp.template
+io.micronaut.starter.feature.function.gcp.template.cloudevents
 io.micronaut.starter.feature.function.gcp.template.raw
 io.micronaut.starter.feature.function.oraclefunction
 io.micronaut.starter.feature.function.oraclefunction.template
@@ -185,6 +188,7 @@ io.micronaut.starter.feature.reactive
 io.micronaut.starter.feature.reactor
 io.micronaut.starter.feature.redis
 io.micronaut.starter.feature.reloading
+io.micronaut.starter.feature.retry
 io.micronaut.starter.feature.rss
 io.micronaut.starter.feature.rxjava
 io.micronaut.starter.feature.security
@@ -199,6 +203,7 @@ io.micronaut.starter.feature.tracing
 io.micronaut.starter.feature.validation
 io.micronaut.starter.feature.vertx
 io.micronaut.starter.feature.view
+io.micronaut.starter.feature.websocket
 io.micronaut.starter.feature.xml
 io.micronaut.starter.io
 io.micronaut.starter.netty
