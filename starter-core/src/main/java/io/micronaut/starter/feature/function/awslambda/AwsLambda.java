@@ -30,17 +30,32 @@ import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;
 import io.micronaut.starter.feature.aws.AwsApiFeature;
+import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
-import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.DocumentationLink;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
-import io.micronaut.starter.feature.function.awslambda.template.*;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJava;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.awsLambdaFunctionRequestHandlerSpock;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovy;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerGroovyJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerJava;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerJavaJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKoTest;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlin;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerKotlinJunit;
+import io.micronaut.starter.feature.function.awslambda.template.homeControllerSpock;
 import io.micronaut.starter.feature.graalvm.GraalVM;
 import io.micronaut.starter.feature.other.ShadePlugin;
 import io.micronaut.starter.feature.security.SecurityFeature;
@@ -49,7 +64,6 @@ import io.micronaut.starter.options.DefaultTestRockerModelProvider;
 import io.micronaut.starter.options.Options;
 import io.micronaut.starter.options.TestRockerModelProvider;
 import io.micronaut.starter.template.RockerWritable;
-
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -59,7 +73,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
@@ -246,11 +260,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, CloudFeature,
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
     }
 
     @Override

@@ -26,8 +26,6 @@ import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
 import io.micronaut.starter.feature.function.azure.template.azurefunctions;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
@@ -50,7 +48,7 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements CloudFeature {
+public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature {
 
     public static final String NAME = "azure-function";
 
@@ -180,11 +178,6 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         } else {
             throw new IllegalStateException("Unsupported build tool");
         }
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
     }
 
     @Override

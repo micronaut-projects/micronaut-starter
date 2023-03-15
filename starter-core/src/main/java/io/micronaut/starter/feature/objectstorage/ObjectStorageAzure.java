@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.util.StringUtils;
-import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.azure.AzureCloudFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -27,17 +27,12 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageAzure implements ObjectStorageFeature {
+public class ObjectStorageAzure implements ObjectStorageFeature, AzureCloudFeature {
 
     @Override
     @NonNull
     public String getCloudProvider() {
         return StringUtils.capitalize(getCloud().name().toLowerCase());
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AZURE;
     }
 
     @Override

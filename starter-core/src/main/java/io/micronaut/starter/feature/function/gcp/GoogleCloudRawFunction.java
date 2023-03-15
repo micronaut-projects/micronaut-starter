@@ -21,7 +21,6 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.gcp.template.gcpFunctionReadme;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionGroovy;
 import io.micronaut.starter.feature.function.gcp.template.raw.gcpRawBackgroundFunctionJava;
@@ -162,11 +161,6 @@ public class GoogleCloudRawFunction extends AbstractGoogleCloudFunction {
     @Override
     public RockerModel spockTemplate(Project project) {
         return gcpRawFunctionSpock.template(project);
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
     }
 
     @Override

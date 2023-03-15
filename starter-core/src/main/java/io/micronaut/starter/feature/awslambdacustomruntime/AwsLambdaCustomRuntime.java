@@ -24,12 +24,11 @@ import io.micronaut.starter.feature.ApplicationFeature;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.Features;
+import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.awsCustomRuntimeReadme;
-import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeGroovy;
+import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeJava;
 import io.micronaut.starter.feature.awslambdacustomruntime.templates.functionLambdaRuntimeKotlin;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.FunctionFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.graalvm.GraalVM;
@@ -39,7 +38,7 @@ import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 
 @Singleton
-public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, CloudFeature {
+public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeature, AwsCloudFeature {
     public static final String MAIN_CLASS_NAME = "io.micronaut.function.aws.runtime.MicronautLambdaRuntime";
 
     public static final String FEATURE_NAME_AWS_LAMBDA_CUSTOM_RUNTIME = "aws-lambda-custom-runtime";
@@ -129,11 +128,6 @@ public class AwsLambdaCustomRuntime implements FunctionFeature, ApplicationFeatu
     @Override
     public String getCategory() {
         return Category.SERVERLESS;
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.AWS;
     }
 
     @Override
