@@ -17,7 +17,7 @@ package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.oraclefunction.OracleCloudFeature;
 import io.micronaut.starter.feature.oraclecloud.OracleCloudSdk;
 import jakarta.inject.Singleton;
 
@@ -28,7 +28,7 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageOracleCloud implements ObjectStorageFeature {
+public class ObjectStorageOracleCloud implements ObjectStorageFeature, OracleCloudFeature {
 
     private final OracleCloudSdk oracleCloudSdk;
 
@@ -40,11 +40,6 @@ public class ObjectStorageOracleCloud implements ObjectStorageFeature {
     @NonNull
     public String getCloudProvider() {
         return "Oracle Cloud";
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.ORACLE;
     }
 
     @Override

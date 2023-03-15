@@ -20,11 +20,9 @@ import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
-public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements CloudFeature, MicronautRuntimeFeature {
+public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, MicronautRuntimeFeature {
     private final ShadePlugin shadePlugin;
 
     public AbstractGoogleCloudFunction(ShadePlugin shadePlugin) {
@@ -36,11 +34,6 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
         if (!featureContext.isPresent(ShadePlugin.class)) {
             featureContext.addFeature(shadePlugin);
         }
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
     }
 
     @Override

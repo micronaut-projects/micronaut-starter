@@ -16,7 +16,7 @@
 package io.micronaut.starter.feature.objectstorage;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.gcp.GcpCloudFeature;
 import jakarta.inject.Singleton;
 
 /**
@@ -26,17 +26,12 @@ import jakarta.inject.Singleton;
  * @since 3.7.0
  */
 @Singleton
-public class ObjectStorageGcp implements ObjectStorageFeature {
+public class ObjectStorageGcp implements ObjectStorageFeature, GcpCloudFeature {
 
     @Override
     @NonNull
     public String getCloudProvider() {
         return getCloud().name();
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.GCP;
     }
 
     @Override

@@ -24,8 +24,6 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
-import io.micronaut.starter.feature.function.Cloud;
-import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.oraclefunction.template.projectFnFunc;
 import io.micronaut.starter.feature.logging.Logback;
 import io.micronaut.starter.feature.logging.SimpleLogging;
@@ -37,12 +35,11 @@ import io.micronaut.starter.feature.server.template.kotlinJunit;
 import io.micronaut.starter.feature.server.template.spock;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.template.RockerTemplate;
-
 import jakarta.inject.Singleton;
 
 @Singleton
 @Primary
-public class OracleFunction extends AbstractFunctionFeature implements CloudFeature {
+public class OracleFunction extends AbstractFunctionFeature implements OracleCloudFeature {
 
     private final SimpleLogging simpleLogging;
 
@@ -144,11 +141,6 @@ public class OracleFunction extends AbstractFunctionFeature implements CloudFeat
     @Override
     public RockerModel spockTemplate(Project project) {
         return spock.template(project, true);
-    }
-
-    @Override
-    public Cloud getCloud() {
-        return Cloud.ORACLE;
     }
 
     @Nullable

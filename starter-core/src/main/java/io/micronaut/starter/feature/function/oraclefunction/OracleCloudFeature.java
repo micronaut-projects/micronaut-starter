@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature.aws;
+package io.micronaut.starter.feature.function.oraclefunction;
 
-import io.micronaut.starter.feature.Feature;
+import io.micronaut.starter.feature.function.Cloud;
+import io.micronaut.starter.feature.function.CloudFeature;
 
+public interface OracleCloudFeature extends CloudFeature {
 
-/**
- * Marker interface for AWS related features.
- */
-public interface AwsFeature extends Feature, AwsCloudFeature {
-    String GROUP_ID_MICRONAUT_AWS = "io.micronaut.aws";
-    String GROUP_ID_AWS_SDK_V2 = "software.amazon.awssdk";
+    @Override
+    default Cloud getCloud() {
+        return Cloud.ORACLE;
+    }
 }
