@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,15 @@
 package io.micronaut.starter.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.starter.feature.Feature;
 
-import java.util.Collections;
 import java.util.List;
 
-public interface Repository {
+/**
+ * Marker interface for a feature which requires an specific repository;
+ */
+public interface RequiresRepository extends Feature {
 
     @NonNull
-    String getId();
-
-    @NonNull
-    String getUrl();
-
-    default boolean isSnapshot() {
-        return false;
-    }
-
-    /**
-     * @deprecated Use {@link RepositoryResolver} instead.
-     * @return Empty list.
-     */
-    @Deprecated
-    static List<Repository> micronautRepositories() {
-        return Collections.emptyList();
-    }
+    List<Repository> getRepositories();
 }
