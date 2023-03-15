@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.gcp.secretsmanager;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.distributedconfig.DistributedConfigFeature;
 import io.micronaut.starter.feature.gcp.GcpFeature;
 import jakarta.inject.Singleton;
@@ -50,8 +51,7 @@ public class GoogleSecretManager extends GcpFeature implements DistributedConfig
 
     @NonNull
     private Dependency.Builder gcpSecretManagerDependency() {
-        return Dependency.builder()
-                .groupId("io.micronaut.gcp")
+        return MicronautDependencyUtils.gcpDependency()
                 .artifactId("micronaut-gcp-secret-manager")
                 .compile();
     }
