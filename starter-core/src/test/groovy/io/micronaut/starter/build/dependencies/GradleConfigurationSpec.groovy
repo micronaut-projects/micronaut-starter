@@ -7,7 +7,7 @@ import spock.lang.Specification
 
 class GradleConfigurationSpec extends Specification {
 
-    void "GradleConfiguration::toString() returns the gradle configuration '#expected'"(GradleConfiguration gradleConfiguration, String expected) {
+    void "GradleConfiguration::toString() returns the gradle configuration '#expected'"() {
         expect:
         expected == gradleConfiguration.toString()
 
