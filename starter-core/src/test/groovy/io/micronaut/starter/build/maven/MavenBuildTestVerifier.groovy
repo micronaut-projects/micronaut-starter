@@ -60,6 +60,11 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
         micronautPlugin.configuration.testResourcesDependencies.dependency.find { it.groupId.text() == expectedGroupId }
     }
 
+    @Override
+    boolean hasBuildDependency(String id) {
+        throw new UnsupportedOperationException("Not implemented")
+    }
+
     @CompileDynamic
     @Override
     boolean hasDependency(String expectedGroupId, String expectedArtifactId, String expectedScope) {
