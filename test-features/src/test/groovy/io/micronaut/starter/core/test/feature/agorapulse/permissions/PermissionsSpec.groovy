@@ -52,7 +52,7 @@ class PermissionsSpec extends CommandSpec {
 
         where:
         [buildTool, language, testFramework, applicationType] << [
-                [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN],
+                BuildTool.valuesGradle(),
                 Language.values(),
                 TestFramework.values(),
                 ApplicationType.values(),

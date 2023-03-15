@@ -33,7 +33,7 @@ class DynamoDbSpec extends ApplicationContextSpec implements CommandOutputFixtur
         template.contains('implementation("software.amazon.awssdk:dynamodb")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test #buildTool dynamodb feature for language=#language with GraalVM'(Language language, BuildTool buildTool) {

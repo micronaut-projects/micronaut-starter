@@ -61,6 +61,6 @@ class GruHttpSpec extends ApplicationContextSpec {
         }
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN, BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 }
