@@ -3,6 +3,7 @@ package io.micronaut.starter.feature.elasticsearch
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.generator.GeneratorContext
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import io.micronaut.starter.options.Language
@@ -80,7 +81,7 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
         template.contains('implementation("org.apache.logging.log4j:log4j-core:')
 
         where:
-        language << Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
@@ -108,6 +109,6 @@ class ElasticsearchSpec extends ApplicationContextSpec  implements CommandOutput
       <version>''')
 
         where:
-        language << Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 }

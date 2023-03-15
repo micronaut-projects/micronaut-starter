@@ -127,11 +127,8 @@ class GraalVMSpec extends ApplicationContextSpec implements CommandOutputFixture
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         where:
-        language << supportedLanguages()
-        extension << supportedLanguages()*.extension
+        language << GraalVMFeatureValidator.supportedLanguages()
+        extension << GraalVMFeatureValidator.supportedLanguages()*.extension
     }
 
-    private List<Language> supportedLanguages() {
-        Language.values().toList() - Language.GROOVY
-    }
 }

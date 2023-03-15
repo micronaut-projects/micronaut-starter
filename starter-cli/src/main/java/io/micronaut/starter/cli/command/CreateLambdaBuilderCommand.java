@@ -186,7 +186,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
     protected Language[] languagesForDeployment(LambdaDeployment deployment) {
         return deployment == LambdaDeployment.NATIVE_EXECUTABLE ?
                 Stream.of(Language.values())
-                        .filter(graalVMFeatureValidator::supports)
+                        .filter(GraalVMFeatureValidator::supports)
                         .toArray(Language[]::new) :
                 Language.values();
     }
