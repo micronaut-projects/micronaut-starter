@@ -42,12 +42,6 @@ dependencies {
     @dependency.template("io.micronaut.azure", "micronaut-azure-function", "implementation", null, false)
     }
 }
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-    @dependency.template("io.micronaut.aws", "micronaut-function-aws", "implementation", null, false)
-}
-@if (features.contains("aws-lambda-custom-runtime")) {
-    @dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "implementation", null, false)
-}
 @if (features.language().isKotlin()) {
     @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtimeOnly", null, false)
 }
