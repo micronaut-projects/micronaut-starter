@@ -61,7 +61,7 @@ class MavenBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
-    boolean hasBuildDependency(String id) {
+    boolean hasBuildPlugin(String id) {
         throw new UnsupportedOperationException("Not implemented")
     }
 

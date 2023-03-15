@@ -27,5 +27,5 @@ interface BuildTestVerifier {
 
     boolean hasTestResourceDependencyWithGroupId(String expectedGroupId)
 
-    boolean hasBuildDependency(String id)
+    boolean hasBuildPlugin(String id)
 }

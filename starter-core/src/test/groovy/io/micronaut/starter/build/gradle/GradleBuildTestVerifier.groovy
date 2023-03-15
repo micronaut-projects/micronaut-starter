@@ -85,7 +85,7 @@ class GradleBuildTestVerifier implements BuildTestVerifier {
     }
 
     @Override
-    boolean hasBuildDependency(String id) {
+    boolean hasBuildPlugin(String id) {
         return template.contains("id(\"" + id + "\")")
     }
 }
