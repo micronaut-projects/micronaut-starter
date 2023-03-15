@@ -34,6 +34,7 @@ import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
+import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -74,7 +75,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, HandlerClassFeature, MicronautRuntimeFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, HandlerClassFeature, AwsMicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
@@ -195,7 +196,7 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                 disableSecurityFilterInTestConfiguration(generatorContext);
             }
         }
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addMicronautRuntimeBuildProperty(generatorContext);
         addDependencies(generatorContext);
     }
 
@@ -306,15 +307,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
             default:
                 return null;
         }
-    }
-
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            return "lambda";
-        }
-        return generatorContext.getFeatures().contains("graalvm") ? "lambda_provided" : "lambda_java";
     }
 }
 

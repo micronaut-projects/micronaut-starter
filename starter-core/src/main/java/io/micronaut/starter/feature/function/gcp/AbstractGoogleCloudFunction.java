@@ -15,14 +15,11 @@
  */
 package io.micronaut.starter.feature.function.gcp;
 
-import io.micronaut.core.annotation.NonNull;
-import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.other.ShadePlugin;
 
-public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, MicronautRuntimeFeature {
+public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeature implements GcpCloudFeature, GcpMicronautRuntimeFeature {
     private final ShadePlugin shadePlugin;
 
     public AbstractGoogleCloudFunction(ShadePlugin shadePlugin) {
@@ -34,11 +31,5 @@ public abstract class AbstractGoogleCloudFunction extends AbstractFunctionFeatur
         if (!featureContext.isPresent(ShadePlugin.class)) {
             featureContext.addFeature(shadePlugin);
         }
-    }
-
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        return "google_function";
     }
 }

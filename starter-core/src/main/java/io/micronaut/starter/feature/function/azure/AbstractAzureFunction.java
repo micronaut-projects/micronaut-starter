@@ -48,7 +48,7 @@ import java.util.Optional;
  * @author graemerocher
  * @since 1.0.0
  */
-public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature {
+public abstract class AbstractAzureFunction extends AbstractFunctionFeature implements AzureCloudFeature, AzureMicronautRuntimeFeature {
 
     public static final String NAME = "azure-function";
 
@@ -178,11 +178,5 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
         } else {
             throw new IllegalStateException("Unsupported build tool");
         }
-    }
-
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        return "azure_function";
     }
 }
