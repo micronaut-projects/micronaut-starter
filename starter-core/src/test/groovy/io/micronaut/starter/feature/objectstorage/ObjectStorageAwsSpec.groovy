@@ -38,7 +38,7 @@ class ObjectStorageAwsSpec extends ApplicationContextSpec implements CommandOutp
         template.contains('implementation("io.micronaut.objectstorage:micronaut-object-storage-aws")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven object-storage-aws feature for language=#language'(Language language) {

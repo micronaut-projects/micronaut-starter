@@ -46,6 +46,6 @@ class LambdaFunctionUrlSpec extends ApplicationContextSpec implements CommandOut
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 }

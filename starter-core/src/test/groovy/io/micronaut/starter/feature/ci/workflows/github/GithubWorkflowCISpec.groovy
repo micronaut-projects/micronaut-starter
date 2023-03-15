@@ -54,6 +54,6 @@ class GithubWorkflowCISpec extends BeanContextSpec implements CommandOutputFixtu
         workflow.contains("actions/upload-artifact@v3.1.0")
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+        buildTool << BuildTool.valuesGradle()
     }
 }
