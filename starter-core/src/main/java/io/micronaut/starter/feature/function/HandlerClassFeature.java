@@ -23,13 +23,13 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.function.template.handlerReadme;
+import io.micronaut.starter.feature.aws.AwsFeature;
 
 /**
  * Interface to be implemented by features which require the user to define a Handler Class. e.g. {@link io.micronaut.starter.feature.function.awslambda.AwsLambda}
  * @author Sergio del Amo
  */
-public interface HandlerClassFeature {
-
+public interface HandlerClassFeature extends Feature, AwsFeature {
     /**
      *
      * @param feature Feature
@@ -37,13 +37,18 @@ public interface HandlerClassFeature {
      * @param documentationLink A link to documentation
      * @return a Rocker Model
      */
-    default RockerModel readmeRockerModel(@NonNull Feature feature,
+    static RockerModel readmeRockerModel(@NonNull HandlerClassFeature feature,
                                           @NonNull GeneratorContext generatorContext,
                                           @Nullable DocumentationLink documentationLink) {
         return handlerReadme.template(feature,
                 generatorContext.getApplicationType(),
                 generatorContext.getProject(),
                 documentationLink);
+    }
+
+    @NonNull
+    default String handlerClass(@NonNull GeneratorContext generatorContext) {
+        return handlerClass(generatorContext.getApplicationType(), generatorContext.getProject());
     }
 
     /**
