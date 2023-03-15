@@ -401,4 +401,8 @@ public class GeneratorContext implements DependencyContext {
     public Collection<Profile> getProfiles() {
         return profiles;
     }
+
+    public <T extends Feature> boolean hasFeature(Class<T> featureClass) {
+        return getFeature(featureClass).isPresent();
+    }
 }
