@@ -22,6 +22,7 @@ import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.dependencies.Dependency;
+import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
@@ -34,6 +35,7 @@ import io.micronaut.starter.feature.aws.AwsApiFeature;
 import io.micronaut.starter.feature.aws.AwsCloudFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaEventFeature;
 import io.micronaut.starter.feature.aws.AwsLambdaSnapstart;
+import io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature;
 import io.micronaut.starter.feature.awsalexa.AwsAlexa;
 import io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime;
 import io.micronaut.starter.feature.config.ApplicationConfiguration;
@@ -76,7 +78,7 @@ import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
 
 @Singleton
-public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, MicronautRuntimeFeature {
+public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, MicronautRuntimeFeature, AwsMicronautRuntimeFeature {
 
     public static final String FEATURE_NAME_AWS_LAMBDA = "aws-lambda";
     public static final String MICRONAUT_LAMBDA_HANDLER = "io.micronaut.function.aws.proxy.MicronautLambdaHandler";
@@ -84,6 +86,20 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     private static final String LINK_TITLE = "AWS Lambda Handler";
     private static final String LINK_URL = "https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html";
     private static final Dependency AWS_LAMBDA_JAVA_EVENTS = Dependency.builder().lookupArtifactId("aws-lambda-java-events").compile().build();
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws-api-proxy")
+            .compile()
+            .build();
+
+    private static final Dependency DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY_TEST = MicronautDependencyUtils.awsDependency()
+            .artifactId("micronaut-function-aws-api-proxy-test")
+            .compile()
+            .build();
 
     private final ShadePlugin shadePlugin;
     private final AwsLambdaCustomRuntime customRuntime;
@@ -211,7 +227,21 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
                 disableSecurityFilterInTestConfiguration(generatorContext);
             }
         }
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addMicronautRuntimeBuildProperty(generatorContext);
+        addDependencies(generatorContext);
+    }
+
+    private void addDependencies(@NonNull GeneratorContext generatorContext) {
+        if (generatorContext.getApplicationType() == ApplicationType.FUNCTION) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS);
+        }
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.getApplicationType() == DEFAULT) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY);
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_FUNCTION_AWS_API_PROXY_TEST);
+        }
+        if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.hasFeature(GraalVM.class)) {
+            generatorContext.addDependency(AwsLambdaCustomRuntime.DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
+        }
     }
 
     protected void addCode(@NonNull GeneratorContext generatorContext) {
@@ -303,15 +333,6 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
     @Override
     public String getMicronautDocumentation() {
         return "https://micronaut-projects.github.io/micronaut-aws/latest/guide/index.html#lambda";
-    }
-
-    @Override
-    @NonNull
-    public String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-            return "lambda";
-        }
-        return generatorContext.getFeatures().contains("graalvm") ? "lambda_provided" : "lambda_java";
     }
 }
 

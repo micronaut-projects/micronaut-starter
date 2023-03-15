@@ -45,7 +45,7 @@ public abstract class AbstractFunctionFeature implements FunctionFeature, Micron
     @Override
     public void apply(GeneratorContext generatorContext) {
         applyFunction(generatorContext, generatorContext.getApplicationType());
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addMicronautRuntimeBuildProperty(generatorContext);
     }
 
     protected RockerModel javaControllerTemplate(Project project, boolean useSerde) {

@@ -88,7 +88,7 @@ public class OracleRawFunction extends OracleFunction {
             }
 
             if (generatorContext.getBuildTool() == BuildTool.MAVEN) {
-                generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+                addMicronautRuntimeBuildProperty(generatorContext);
                 generatorContext.getBuildProperties().put("jib.docker.tag", "${project.version}");
                 generatorContext.getBuildProperties().put("exec.mainClass", "com.fnproject.fn.runtime.EntryPoint");
                 generatorContext.getBuildProperties().put("jib.docker.image", "[REGION].ocir.io/[TENANCY]/[REPO]/${project.artifactId}");
