@@ -1,10 +1,10 @@
 package io.micronaut.starter.build
 
+import groovy.xml.XmlParser
 import io.micronaut.context.annotation.Requires
 import io.micronaut.starter.BeanContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
-import io.micronaut.starter.feature.Feature
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.BuildTool
 import jakarta.inject.Singleton
@@ -15,7 +15,7 @@ class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFix
         Collections.singletonMap("spec.name", "RequiresMavenLocalSpec")
     }
 
-    void "build contains mavenLocal() repository if the feature implements RequiresMavenLocal"(BuildTool buildTool) {
+    void "Gradle build contains mavenLocal() repository if the feature implements RequiresMavenLocal"(BuildTool buildTool) {
         when:
         String template = new BuildBuilder(beanContext, buildTool)
                 .features(["maven-local-feature"])
@@ -26,6 +26,20 @@ class RequiresMavenLocalSpec extends BeanContextSpec implements CommandOutputFix
 
         where:
         buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]
+    }
+
+    void "Maven build contains mavenLocal() repository if the feature implements RequiresMavenLocal"() {
+        when:
+        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
+                .features(["maven-local-feature"])
+                .render()
+
+        def pom = new XmlParser().parseText(template)
+
+        then:
+        with(pom.repositories.repository.find { it.id.text() == "local" }) {
+            url.text() == '${user.home}/.m2/repository/'
+        }
     }
 
     @Requires(property = "spec.name", value = "RequiresMavenLocalSpec")
