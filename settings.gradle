@@ -28,9 +28,7 @@ include 'starter-api'
 include 'starter-web-netty'
 include 'starter-web-servlet'
 
-if (JavaVersion.current() == JavaVersion.VERSION_1_8) {
-    include 'starter-azure-function'
-}
+include 'starter-azure-function'
 include 'starter-gcp-function'
 include 'starter-aws-lambda'
 include 'starter-analytics-postgres'
