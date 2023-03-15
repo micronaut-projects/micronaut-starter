@@ -233,6 +233,10 @@ public final class Dependency {
             return scope(Scope.COMPILE);
         }
 
+        public Builder api() {
+            return scope(Scope.API);
+        }
+
         public Builder compileOnly() {
             return scope(Scope.COMPILE_ONLY);
         }
