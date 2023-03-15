@@ -55,7 +55,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('.logRetention(RetentionDays.ONE_WEEK)')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
     void 'architecture defaults to X86 for  #buildTool'() {
@@ -67,7 +67,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
         output.'infra/src/main/java/example/micronaut/AppStack.java'.contains('import software.amazon.awscdk.services.lambda.Architecture;')
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
 
@@ -89,7 +89,7 @@ class CdkFeatureSpec extends ApplicationContextSpec implements CommandOutputFixt
 """)
 
         where:
-        buildTool << [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN , BuildTool.MAVEN]
+        buildTool << BuildTool.values()
     }
 
     void "dependencies are added for cdk to infra project for #buildTool"() {

@@ -6,6 +6,7 @@ import io.micronaut.starter.application.ApplicationType
 import io.micronaut.starter.feature.MicronautRuntimeFeature
 import io.micronaut.starter.feature.build.gradle.Gradle
 import io.micronaut.starter.feature.coherence.CoherenceFeature
+import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
 import spock.lang.Shared
@@ -194,7 +195,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
 
         where:
         // Graalvm feature doesn't work with Groovy
-        language << Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
@@ -337,8 +338,8 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         output.containsKey("${language.srcDir}/example/micronaut/Application.${extension}".toString())
 
         where:
-        language << graalSupportedLanguages()
-        extension << graalSupportedLanguages()*.extension
+        language << GraalVMFeatureValidator.supportedLanguages()
+        extension << GraalVMFeatureValidator.supportedLanguages()*.extension
     }
 
     @Unroll
@@ -394,8 +395,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         !template.contains('implementation("io.micronaut:micronaut-http-client")')
 
         where:
-        // Graalvm feature doesn't work with Groovy
-        language << Language.values() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
@@ -444,11 +444,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
 
         where:
         applicationType << [ApplicationType.DEFAULT, ApplicationType.FUNCTION]
-        language << graalSupportedLanguages()
-    }
-
-    private List<Language> graalSupportedLanguages() {
-        Language.values().toList() - Language.GROOVY
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
@@ -491,7 +487,7 @@ tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative"
         build.contains('<artifactId>micronaut-http-client</artifactId>')
 
         where:
-        language << graalSupportedLanguages()
+        language << GraalVMFeatureValidator.supportedLanguages()
     }
 
     @Unroll
