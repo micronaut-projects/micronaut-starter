@@ -20,7 +20,9 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.DependencyContextImpl;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.DefaultRepositoryResolver;
 import io.micronaut.starter.build.Property;
+import io.micronaut.starter.build.RepositoryResolver;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
 import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.DependencyContext;
@@ -68,8 +70,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static io.micronaut.starter.build.Repository.micronautRepositories;
-
 @Singleton
 public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     public static final String INFRA_MODULE = "infra";
@@ -77,6 +77,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
     private static final String MAIN_CLASS_NAME = "Main";
     private final CpuArchitecture defaultCpuArchitecture;
     private final DependencyContext dependencyContext;
+    private final RepositoryResolver repositoryResolver;
 
     @Deprecated
     public Cdk(CoordinateResolver coordinateResolver) {
@@ -88,13 +89,22 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                Arm arm) {
         this.defaultCpuArchitecture = arm;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
+        this.repositoryResolver = new DefaultRepositoryResolver();
+    }
+
+    @Deprecated
+    public Cdk(CoordinateResolver coordinateResolver,
+               X86 x86) {
+        this(coordinateResolver, x86, new DefaultRepositoryResolver());
     }
 
     @Inject
     public Cdk(CoordinateResolver coordinateResolver,
-               X86 x86) {
+               X86 x86,
+               RepositoryResolver repositoryResolver) {
         this.defaultCpuArchitecture = x86;
         this.dependencyContext = new DependencyContextImpl(coordinateResolver);
+        this.repositoryResolver = repositoryResolver;
     }
 
     @Override
@@ -247,7 +257,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 dependencies,
                 properties,
                 plugins,
-                MavenRepository.listOf(micronautRepositories()),
+                MavenRepository.listOf(repositoryResolver.resolveRepositories(generatorContext)),
                 MavenCombineAttribute.APPEND,
                 MavenCombineAttribute.APPEND,
                 Collections.emptyList());
@@ -263,7 +273,7 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
                 GradleDependency.listOf(dependencyContext, generatorContext, useVersionCatalog()),
                 plugins,
                 GradleRepository.listOf(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY),
-                        micronautRepositories()));
+                        repositoryResolver.resolveRepositories(generatorContext)));
     }
 
     /**

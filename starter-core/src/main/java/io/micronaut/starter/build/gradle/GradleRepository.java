@@ -46,9 +46,9 @@ public class GradleRepository implements Writable  {
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        String content = getGradleDsl() == GradleDsl.KOTLIN ?
+        String content = (getGradleDsl() == GradleDsl.KOTLIN ?
                 "maven(\"" + getUrl() + "\")" :
-                "maven { url \"" + getUrl() + "\" }";
+                "maven { url \"" + getUrl() + "\" }") + "\n";
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));
     }
 
