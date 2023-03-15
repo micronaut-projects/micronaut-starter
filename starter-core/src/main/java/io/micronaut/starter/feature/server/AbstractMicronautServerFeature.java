@@ -27,7 +27,7 @@ public abstract class AbstractMicronautServerFeature implements ServerFeature, M
                 .artifactId("micronaut-http-validation")
                 .versionProperty("micronaut.version")
                 .annotationProcessor());
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+        addMicronautRuntimeBuildProperty(generatorContext);
         doApply(generatorContext);
     }
 
