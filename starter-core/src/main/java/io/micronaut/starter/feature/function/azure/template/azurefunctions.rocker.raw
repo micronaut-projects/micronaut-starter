@@ -1,0 +1,29 @@
+@import io.micronaut.starter.application.Project
+@import io.micronaut.starter.build.gradle.GradleDsl;
+
+@args (
+Project project, GradleDsl dsl
+)
+@if(dsl == GradleDsl.KOTLIN) {
+azurefunctions {
+  resourceGroup = "java-functions-group"
+  appName = "@project.getName()"
+  pricingTier = "Consumption"
+  setRuntime(closureOf<com.microsoft.azure.gradle.configuration.GradleRuntimeConfig> {
+    os("linux")
+  })
+  localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+}
+@if(dsl == GradleDsl.GROOVY) {
+azurefunctions {
+    resourceGroup = "java-functions-group"
+    appName = "@project.getName()"
+    pricingTier = "Consumption"
+    region = "westus"
+    runtime {
+        os = "linux"
+    }
+    localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
+}
+}

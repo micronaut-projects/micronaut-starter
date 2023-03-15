@@ -22,12 +22,14 @@ import io.micronaut.starter.application.Project;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.BuildProperties;
 import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.maven.MavenPlugin;
 import io.micronaut.starter.feature.function.AbstractFunctionFeature;
 import io.micronaut.starter.feature.function.Cloud;
 import io.micronaut.starter.feature.function.CloudFeature;
 import io.micronaut.starter.feature.function.azure.template.azureFunctionMavenPlugin;
+import io.micronaut.starter.feature.function.azure.template.azurefunctions;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionGroovyJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionJavaJunit;
 import io.micronaut.starter.feature.function.azure.template.raw.azureRawFunctionKoTest;
@@ -92,6 +94,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.microsoft.azure.azurefunctions")
                     .lookupArtifactId("azure-functions-gradle-plugin")
+                    .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY))))
                     .build());
         } else if (buildTool == BuildTool.MAVEN) {
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
