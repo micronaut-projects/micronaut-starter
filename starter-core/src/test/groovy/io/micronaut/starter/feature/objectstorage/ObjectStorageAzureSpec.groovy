@@ -37,7 +37,7 @@ class ObjectStorageAzureSpec extends ApplicationContextSpec implements CommandOu
         template.contains('implementation("io.micronaut.objectstorage:micronaut-object-storage-azure")')
 
         where:
-        [language, buildTool] << [Language.values().toList(), [BuildTool.GRADLE, BuildTool.GRADLE_KOTLIN]].combinations()
+        [language, buildTool] << [Language.values().toList(), BuildTool.valuesGradle()].combinations()
     }
 
     void 'test maven object-storage-azure feature for language=#language'(Language language) {
