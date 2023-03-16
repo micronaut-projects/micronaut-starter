@@ -27,7 +27,6 @@ import io.micronaut.starter.feature.Category;
 import io.micronaut.starter.feature.DefaultFeature;
 import io.micronaut.starter.feature.Feature;
 import io.micronaut.starter.feature.FeatureContext;
-import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.architecture.Arm;
 import io.micronaut.starter.feature.architecture.CpuArchitecture;
 import io.micronaut.starter.feature.architecture.X86;

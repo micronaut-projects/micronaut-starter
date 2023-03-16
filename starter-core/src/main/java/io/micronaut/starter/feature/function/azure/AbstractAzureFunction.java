@@ -92,7 +92,7 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("com.microsoft.azure.azurefunctions")
                     .lookupArtifactId("azure-functions-gradle-plugin")
-                    .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY))))
+                    .extension(new RockerWritable(azurefunctions.template(generatorContext.getProject(), generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), javaVersionValue(generatorContext).orElse("null"))))
                     .build());
         } else if (buildTool == BuildTool.MAVEN) {
             String mavenPluginArtifactId = "azure-functions-maven-plugin";
@@ -115,11 +115,25 @@ public abstract class AbstractAzureFunction extends AbstractFunctionFeature impl
 
     @NonNull
     private Optional<String> javaVersionValue(GeneratorContext generatorContext) {
+        if (generatorContext.getBuildTool().isGradle()) {
+            switch (generatorContext.getJdkVersion()) {
+                case JDK_8:
+                    return Optional.of("Java 8");
+                case JDK_11:
+                    return Optional.of("Java 11");
+                case JDK_17:
+                    return Optional.of("Java 17");
+                default:
+                    return Optional.empty();
+            }
+        }
         switch (generatorContext.getJdkVersion()) {
             case JDK_8:
                 return Optional.of("8");
             case JDK_11:
                 return Optional.of("11");
+            case JDK_17:
+                return Optional.of("17");
             default:
                 return Optional.empty();
         }
