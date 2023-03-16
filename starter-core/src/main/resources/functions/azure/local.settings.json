@@ -2,6 +2,20 @@
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "java"
+    "FUNCTIONS_WORKER_RUNTIME": "java",
+    "CosmosDBDatabaseName": "",
+    "CosmosDBCollectionName": "",
+    "AzureWebJobsCosmosDBConnectionString": "",
+    "AzureWebJobsEventGridOutputBindingTopicUriString": "",
+    "AzureWebJobsEventGridOutputBindingTopicKeyString": "",
+    "AzureWebJobsEventHubSender": "",
+    "AzureWebJobsEventHubSender_2": "",
+    "BrokerList": "",
+    "ConfluentCloudUsername": "",
+    "ConfluentCloudPassword": "",
+    "AzureWebJobsServiceBus": "",
+    "SBTopicName": "",
+    "SBTopicSubName": "",
+    "SBQueueName": ""
   }
 }
