@@ -30,10 +30,16 @@ import java.util.stream.Collectors;
 public class GradleRepository implements Writable  {
     private final GradleDsl gradleDsl;
     private final String url;
+    private final boolean isSnapshot;
 
     public GradleRepository(GradleDsl gradleDsl, String url) {
+        this(gradleDsl, url, false);
+    }
+
+    public GradleRepository(GradleDsl gradleDsl, String url, boolean isSnapshot) {
         this.gradleDsl = gradleDsl;
         this.url = url;
+        this.isSnapshot = isSnapshot;
     }
 
     public String getUrl() {
@@ -46,10 +52,16 @@ public class GradleRepository implements Writable  {
 
     @Override
     public void write(OutputStream outputStream) throws IOException {
-        String content = (getGradleDsl() == GradleDsl.KOTLIN ?
-                "maven(\"" + getUrl() + "\")" :
-                "maven { url \"" + getUrl() + "\" }") + "\n";
+        String content = (getGradleDsl() == GradleDsl.KOTLIN ? kotlinDslRepository() : groovyDslRepository());
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private String kotlinDslRepository() {
+        return "maven(\"" + getUrl() + "\")" + (isSnapshot ? " {\n    mavenContent { snapshotsOnly() }\n}" : "") + "\n";
+    }
+
+    private String groovyDslRepository() {
+        return "maven { url \"" + getUrl() + "\"" + (isSnapshot ? "\n    mavenContent { snapshotsOnly() }\n" : " ") + "}\n";
     }
 
     @NonNull
@@ -62,7 +74,7 @@ public class GradleRepository implements Writable  {
                     if (it instanceof MavenLocal) {
                         return new GradleMavenLocal(gradleDsl, it.getUrl());
                     }
-                    return new GradleRepository(gradleDsl, it.getUrl());
+                    return new GradleRepository(gradleDsl, it.getUrl(), it.isSnapshot());
                 }).collect(Collectors.toList());
     }
 }
