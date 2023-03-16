@@ -57,6 +57,6 @@ public interface HandlerClassFeature extends Feature, AwsFeature {
      * @param project Project
      * @return The handler class
      */
-    @Nullable
+    @NonNull
     String handlerClass(@NonNull ApplicationType applicationType, @NonNull Project project);
 }

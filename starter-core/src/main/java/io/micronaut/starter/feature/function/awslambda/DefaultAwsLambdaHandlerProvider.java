@@ -43,7 +43,7 @@ public class DefaultAwsLambdaHandlerProvider implements HandlerClassFeature {
     }
 
     @Override
-    @Nullable
+    @NonNull
     public String handlerClass(ApplicationType applicationType, Project project) {
         return MICRONAUT_LAMBDA_HANDLER;
     }

@@ -11,16 +11,10 @@ Project project,
 DocumentationLink documentationLink
 )
 
-@if (feature.handlerClass(applicationType, project) != null) {
-
 ## Handler
-
-@if (documentationLink != null) {
-
-[@documentationLink.getTitle()](@documentationLink.getUrl())
-
-}
 
 Handler: @(feature.handlerClass(applicationType, project))
 
+@if (documentationLink != null) {
+[@documentationLink.getTitle()](@documentationLink.getUrl())
 }

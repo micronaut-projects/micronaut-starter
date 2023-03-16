@@ -43,7 +43,7 @@ public class FunctionAwsLambdaHandlerProvider implements HandlerClassFeature {
     }
 
     @Override
-    @Nullable
+    @NonNull
     public String handlerClass(@NonNull ApplicationType applicationType, @NonNull Project project) {
         return project.getPackageName() + "." + REQUEST_HANDLER;
     }
