@@ -151,7 +151,7 @@ public class CreateLambdaBuilderCommand extends BuilderCommand {
         return getEnumOption(
                 versions,
                 jdkVersion -> Integer.toString(jdkVersion.majorVersion()),
-                versions.length > 0 ? versions[0] : JdkVersion.DEFAULT_OPTION,
+                versions.length > 0 ? versions[0] : JdkVersion.JDK_11,
                 reader
         );
     }
