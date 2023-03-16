@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.feature;
+package io.micronaut.starter.feature.function.azure;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.feature.MicronautRuntimeFeature;
 
-public interface MicronautRuntimeFeature {
-
-    String PROPERTY_MICRONAUT_RUNTIME = "micronaut.runtime";
-
+public interface AzureMicronautRuntimeFeature extends MicronautRuntimeFeature {
+    @Override
     @NonNull
-    String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext);
-
-    default void addMicronautRuntimeBuildProperty(@NonNull GeneratorContext generatorContext) {
-        generatorContext.getBuildProperties().put(PROPERTY_MICRONAUT_RUNTIME, resolveMicronautRuntime(generatorContext));
+    default String resolveMicronautRuntime(@NonNull GeneratorContext generatorContext) {
+        return "azure_function";
     }
 }

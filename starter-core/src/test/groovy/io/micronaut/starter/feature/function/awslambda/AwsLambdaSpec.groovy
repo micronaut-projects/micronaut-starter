@@ -3,9 +3,9 @@ package io.micronaut.starter.feature.function.awslambda
 import io.micronaut.starter.ApplicationContextSpec
 import io.micronaut.starter.BuildBuilder
 import io.micronaut.starter.application.ApplicationType
+import io.micronaut.starter.build.BuildTestUtil
+import io.micronaut.starter.build.BuildTestVerifier
 import io.micronaut.starter.feature.MicronautRuntimeFeature
-import io.micronaut.starter.feature.build.gradle.Gradle
-import io.micronaut.starter.feature.coherence.CoherenceFeature
 import io.micronaut.starter.feature.graalvm.GraalVMFeatureValidator
 import io.micronaut.starter.fixture.CommandOutputFixture
 import io.micronaut.starter.options.*
@@ -91,38 +91,58 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'test gradle aws-lambda feature for language=#language'(Language language) {
+    void "'aws-lambda feature is default feature for function  and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .features(['aws-lambda'])
-                .language(language)
-                .applicationType(ApplicationType.FUNCTION)
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, language, [])
 
         then:
-        template.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
+        !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
+        verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
 
         where:
         language << Language.values()
+        buildTool << BuildTool.values()
+    }
+
+    @Unroll
+    void "aws-lambda dependencies for aws-lambda function and #language and #buildTool"(Language language, BuildTool buildTool) {
+        when:
+        BuildTestVerifier verifier = verifier(buildTool, language, ['aws-lambda'])
+
+        then:
+        !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
+        verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
+
+        where:
+        language << Language.values()
+        buildTool << BuildTool.values()
+    }
+
+    private BuildTestVerifier verifier(BuildTool buildTool,
+                            Language language,
+                            List<String> features,
+                            ApplicationType applicationType = ApplicationType.FUNCTION) {
+        String template = template(buildTool, language, features, applicationType)
+        BuildTestUtil.verifier(buildTool, template)
+    }
+
+    private String template(BuildTool buildTool,
+                            Language language,
+                            List<String> features,
+                            ApplicationType applicationType = ApplicationType.FUNCTION) {
+        new BuildBuilder(beanContext, buildTool)
+                .features(features)
+                .language(language)
+                .applicationType(applicationType)
+                .render()
     }
 
     @Unroll
     void 'aws-lambda feature is default feature for function and language=#language'(Language language) {
         when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .applicationType(ApplicationType.FUNCTION)
-                .render()
+        String template = template(BuildTool.MAVEN, language, [])
 
         then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-        and:
         template.contains('''\
       <plugin>
         <groupId>io.micronaut.build</groupId>
@@ -135,62 +155,35 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     }
 
     @Unroll
-    void 'function with maven and aws-lambda feature for language=#language'(Language language) {
-        when:
-        String template = new BuildBuilder(beanContext, BuildTool.MAVEN)
-                .language(language)
-                .applicationType(ApplicationType.FUNCTION)
-                .features(['aws-lambda'])
-                .render()
-
-        then:
-        template.contains("""
-    <dependency>
-      <groupId>io.micronaut.aws</groupId>
-      <artifactId>micronaut-function-aws</artifactId>
-      <scope>compile</scope>
-    </dependency>
-""")
-
-        where:
-        language << Language.values()
-    }
-
-    @Unroll
     void 'function with gradle and feature aws-lambda for language=#language'() {
         when:
-        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .applicationType(ApplicationType.FUNCTION)
-                .features(['aws-lambda'])
-                .render()
+        String build = template(BuildTool.GRADLE, language, ['aws-lambda'])
 
         then:
-        build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
-        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
-        !build.contains('implementation "io.micronaut:micronaut-http-client"')
-
-        and:
         build.contains('runtime("lambda_java")')
 
         where:
         language << Language.values().toList()
     }
 
-    void 'function with gradle, with features aws-lambda and graalvm for language=#language'() {
+    @Unroll
+    void "aws-lambda dependencies for aws-lambda, graalvm function and #language and #buildTool"(Language language, BuildTool buildTool) {
         when:
-        String build = new BuildBuilder(beanContext, BuildTool.GRADLE)
-                .language(language)
-                .applicationType(ApplicationType.FUNCTION)
-                .features(['aws-lambda', 'graalvm'])
-                .render()
+        BuildTestVerifier verifier = verifier(buildTool, language, ['aws-lambda', 'graalvm'])
 
         then:
-        build.contains('implementation("io.micronaut.aws:micronaut-function-aws")')
-        !build.contains('implementation "io.micronaut:micronaut-http-server-netty"')
-        !build.contains('implementation "io.micronaut:micronaut-http-client"')
+        !verifier.hasDependency('io.micronaut', 'micronaut-http-server-netty')
+        verifier.hasDependency('io.micronaut.aws', 'micronaut-function-aws')
 
-        and:
+        where:
+        [language, buildTool] << [GraalVMFeatureValidator.supportedLanguages(), BuildTool.values()].combinations()
+    }
+
+    void 'function with gradle, with features aws-lambda and graalvm for language=#language'() {
+        when:
+        String build = template(BuildTool.GRADLE, language, ['aws-lambda', 'graalvm'])
+
+        then:
         build.contains('runtime("lambda_provided")')
 
         where:
@@ -201,7 +194,7 @@ class AwsLambdaSpec extends ApplicationContextSpec implements CommandOutputFixtu
     @Unroll
     void 'files with gradle and feature aws-lambda for language=#language'() {
         when:
-        def output = generate(
+        Map<String, String> output = generate(
                 ApplicationType.FUNCTION,
                 new Options(language, BuildTool.GRADLE),
                 ['aws-lambda']

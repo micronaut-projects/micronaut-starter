@@ -138,16 +138,6 @@ MavenBuild mavenBuild
 @dependency.template("io.micronaut.openapi", "micronaut-openapi", "compile", null, false, null)
 }
 }
-@if (applicationType == ApplicationType.FUNCTION && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws", "compile", null, false, null)
-}
-@if (applicationType == ApplicationType.DEFAULT && features.contains("aws-lambda")) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy", "compile", null, false, null)
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-api-proxy-test", "test", null, false, null)
-}
-@if (features.contains("aws-lambda-custom-runtime") || (features.contains("aws-lambda") && features.contains("graalvm"))) {
-@dependency.template("io.micronaut.aws", "micronaut-function-aws-custom-runtime", "compile", null, false, null)
-}
 @if (features.language().isKotlin()) {
 @dependency.template("com.fasterxml.jackson.module", "jackson-module-kotlin", "runtime", null, false, null)
 }
