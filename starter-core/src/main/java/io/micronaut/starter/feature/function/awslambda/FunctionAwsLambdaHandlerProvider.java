@@ -16,7 +16,6 @@
 package io.micronaut.starter.feature.function.awslambda;
 
 import io.micronaut.core.annotation.NonNull;
-import io.micronaut.core.annotation.Nullable;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.Project;
 import io.micronaut.starter.feature.function.HandlerClassFeature;
