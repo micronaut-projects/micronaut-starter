@@ -54,7 +54,9 @@ import io.micronaut.starter.feature.build.gradle.templates.useJunitPlatform;
 import io.micronaut.starter.feature.build.maven.templates.execMavenPlugin;
 import io.micronaut.starter.feature.build.maven.templates.genericPom;
 import io.micronaut.starter.feature.build.maven.templates.mavenCompilerPlugin;
+import io.micronaut.starter.feature.function.HandlerClassFeature;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
+import io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider;
 import io.micronaut.starter.options.BuildTool;
 import io.micronaut.starter.options.Language;
 import io.micronaut.starter.template.RockerTemplate;
@@ -180,11 +182,9 @@ public class Cdk implements MultiProjectFeature, InfrastructureAsCodeFeature {
 
     @NonNull
     private String resolveHandler(@NonNull GeneratorContext generatorContext) {
-        if (generatorContext.getFeatures().hasFeature(AwsApiFeature.class) &&
-                generatorContext.getApplicationType() == ApplicationType.DEFAULT) {
-            return AwsLambda.MICRONAUT_LAMBDA_HANDLER;
-        }
-        return generatorContext.getProject().getPackageName() + "." + AwsLambda.REQUEST_HANDLER;
+        return generatorContext.getFeature(HandlerClassFeature.class)
+                .map(f -> f.handlerClass(generatorContext))
+                .orElse(DefaultAwsLambdaHandlerProvider.MICRONAUT_LAMBDA_HANDLER);
     }
 
     private void populateDependencies(GeneratorContext generatorContext) {
