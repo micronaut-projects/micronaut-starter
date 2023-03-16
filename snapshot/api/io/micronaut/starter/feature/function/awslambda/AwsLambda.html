@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/awslambda/AwsLambda.html" target="_top">Frames</a></li>
@@ -107,14 +107,14 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html" title="interface in io.micronaut.starter.feature.function">HandlerClassFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></dd>
+<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/aws/AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/aws/AwsMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsMicronautRuntimeFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></dd>
 </dl>
 <hr>
 <br>
 <pre>@Singleton
 public class <span class="typeNameLabel">AwsLambda</span>
 extends java.lang.Object
-implements <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html" title="interface in io.micronaut.starter.feature.function">HandlerClassFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></pre>
+implements <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html" title="interface in io.micronaut.starter.feature">DefaultFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/aws/AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/aws/AwsMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsMicronautRuntimeFeature</a></pre>
 </li>
 </ul>
 </div>
@@ -197,7 +197,17 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#AwsLambda-io.micronaut.starter.feature.other.ShadePlugin-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-io.micronaut.starter.feature.architecture.X86-io.micronaut.starter.feature.aws.AwsLambdaSnapstart-">AwsLambda</a></span>(<a href="../../../../../../io/micronaut/starter/feature/other/ShadePlugin.html" title="class in io.micronaut.starter.feature.other">ShadePlugin</a>&nbsp;shadePlugin,
          <a href="../../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;customRuntime,
          <a href="../../../../../../io/micronaut/starter/feature/architecture/X86.html" title="class in io.micronaut.starter.feature.architecture">X86</a>&nbsp;x86,
-         <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart)</code>&nbsp;</td>
+         <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#AwsLambda-io.micronaut.starter.feature.other.ShadePlugin-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-io.micronaut.starter.feature.architecture.X86-io.micronaut.starter.feature.aws.AwsLambdaSnapstart-io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider-io.micronaut.starter.feature.function.awslambda.FunctionAwsLambdaHandlerProvider-">AwsLambda</a></span>(<a href="../../../../../../io/micronaut/starter/feature/other/ShadePlugin.html" title="class in io.micronaut.starter.feature.other">ShadePlugin</a>&nbsp;shadePlugin,
+         <a href="../../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;customRuntime,
+         <a href="../../../../../../io/micronaut/starter/feature/architecture/X86.html" title="class in io.micronaut.starter.feature.architecture">X86</a>&nbsp;x86,
+         <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart,
+         <a href="../../../../../../io/micronaut/starter/feature/function/awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">DefaultAwsLambdaHandlerProvider</a>&nbsp;defaultAwsLambdaHandlerProvider,
+         <a href="../../../../../../io/micronaut/starter/feature/function/awslambda/FunctionAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">FunctionAwsLambdaHandlerProvider</a>&nbsp;functionAwsLambdaHandlerProvider)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -239,48 +249,39 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getCategory--">getCategory</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getCloud--">getCloud</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getDescription--">getDescription</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getMicronautDocumentation--">getMicronautDocumentation</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getName--">getName</a></span>()</code>
 <div class="block">The name of the feature.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#getTitle--">getTitle</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#handlerClass-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-">handlerClass</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-            <a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</code>&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>java.util.Optional&lt;com.fizzed.rocker.RockerModel&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-">readmeTemplate</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#shouldAddSnapstartFeature-io.micronaut.starter.feature.FeatureContext-">shouldAddSnapstartFeature</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/AwsLambda.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-">shouldApply</a></span>(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
            <a href="../../../../../../io/micronaut/starter/options/Options.html" title="class in io.micronaut.starter.options">Options</a>&nbsp;options,
@@ -318,11 +319,25 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Func
 <code>getDescription</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.HandlerClassFeature">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.aws.AwsCloudFeature">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.function.<a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html" title="interface in io.micronaut.starter.feature.function">HandlerClassFeature</a></h3>
-<code><a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html#readmeRockerModel-io.micronaut.starter.feature.Feature-io.micronaut.starter.application.generator.GeneratorContext-io.micronaut.starter.feature.function.DocumentationLink-">readmeRockerModel</a></code></li>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.aws.<a href="../../../../../../io/micronaut/starter/feature/aws/AwsCloudFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsCloudFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/aws/AwsCloudFeature.html#getCloud--">getCloud</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.aws.AwsMicronautRuntimeFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.aws.<a href="../../../../../../io/micronaut/starter/feature/aws/AwsMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.aws">AwsMicronautRuntimeFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/aws/AwsMicronautRuntimeFeature.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.MicronautRuntimeFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html#addMicronautRuntimeBuildProperty-io.micronaut.starter.application.generator.GeneratorContext-">addMicronautRuntimeBuildProperty</a></code></li>
 </ul>
 </li>
 </ul>
@@ -426,6 +441,21 @@ public&nbsp;AwsLambda(<a href="../../../../../../io/micronaut/starter/feature/ot
 <a name="AwsLambda-io.micronaut.starter.feature.other.ShadePlugin-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-io.micronaut.starter.feature.architecture.X86-io.micronaut.starter.feature.aws.AwsLambdaSnapstart-">
 <!--   -->
 </a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AwsLambda</h4>
+<pre>@Inject
+ @Deprecated
+public&nbsp;AwsLambda(<a href="../../../../../../io/micronaut/starter/feature/other/ShadePlugin.html" title="class in io.micronaut.starter.feature.other">ShadePlugin</a>&nbsp;shadePlugin,
+                                      <a href="../../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;customRuntime,
+                                      <a href="../../../../../../io/micronaut/starter/feature/architecture/X86.html" title="class in io.micronaut.starter.feature.architecture">X86</a>&nbsp;x86,
+                                      <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</li>
+</ul>
+<a name="AwsLambda-io.micronaut.starter.feature.other.ShadePlugin-io.micronaut.starter.feature.awslambdacustomruntime.AwsLambdaCustomRuntime-io.micronaut.starter.feature.architecture.X86-io.micronaut.starter.feature.aws.AwsLambdaSnapstart-io.micronaut.starter.feature.function.awslambda.DefaultAwsLambdaHandlerProvider-io.micronaut.starter.feature.function.awslambda.FunctionAwsLambdaHandlerProvider-">
+<!--   -->
+</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AwsLambda</h4>
@@ -433,7 +463,9 @@ public&nbsp;AwsLambda(<a href="../../../../../../io/micronaut/starter/feature/ot
 public&nbsp;AwsLambda(<a href="../../../../../../io/micronaut/starter/feature/other/ShadePlugin.html" title="class in io.micronaut.starter.feature.other">ShadePlugin</a>&nbsp;shadePlugin,
                          <a href="../../../../../../io/micronaut/starter/feature/awslambdacustomruntime/AwsLambdaCustomRuntime.html" title="class in io.micronaut.starter.feature.awslambdacustomruntime">AwsLambdaCustomRuntime</a>&nbsp;customRuntime,
                          <a href="../../../../../../io/micronaut/starter/feature/architecture/X86.html" title="class in io.micronaut.starter.feature.architecture">X86</a>&nbsp;x86,
-                         <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart)</pre>
+                         <a href="../../../../../../io/micronaut/starter/feature/aws/AwsLambdaSnapstart.html" title="class in io.micronaut.starter.feature.aws">AwsLambdaSnapstart</a>&nbsp;snapstart,
+                         <a href="../../../../../../io/micronaut/starter/feature/function/awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">DefaultAwsLambdaHandlerProvider</a>&nbsp;defaultAwsLambdaHandlerProvider,
+                         <a href="../../../../../../io/micronaut/starter/feature/function/awslambda/FunctionAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda">FunctionAwsLambdaHandlerProvider</a>&nbsp;functionAwsLambdaHandlerProvider)</pre>
 </li>
 </ul>
 </li>
@@ -573,6 +605,17 @@ public&nbsp;java.lang.String&nbsp;getDescription()</pre>
                                <a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
 </li>
 </ul>
+<a name="readmeTemplate-io.micronaut.starter.application.generator.GeneratorContext-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>readmeTemplate</h4>
+<pre>@NonNull
+public&nbsp;java.util.Optional&lt;com.fizzed.rocker.RockerModel&gt;&nbsp;readmeTemplate(@NonNull
+                                                                                 <a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
+</li>
+</ul>
 <a name="disableSecurityFilterInTestConfiguration-io.micronaut.starter.application.generator.GeneratorContext-">
 <!--   -->
 </a>
@@ -628,23 +671,10 @@ public&nbsp;java.lang.String&nbsp;getDescription()</pre>
 </dl>
 </li>
 </ul>
-<a name="getCloud--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCloud</h4>
-<pre>public&nbsp;<a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a>&nbsp;getCloud()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html#getCloud--">getCloud</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code></dd>
-</dl>
-</li>
-</ul>
 <a name="getMicronautDocumentation--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getMicronautDocumentation</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getMicronautDocumentation()</pre>
@@ -653,40 +683,6 @@ public&nbsp;java.lang.String&nbsp;getDescription()</pre>
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#getMicronautDocumentation--">getMicronautDocumentation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns a link to Micronaut documentation about the feature. eg. https://micronaut-projects.github.io/micronaut-cache/latest/guide/index.html#hazelcast</dd>
-</dl>
-</li>
-</ul>
-<a name="handlerClass-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>handlerClass</h4>
-<pre>public&nbsp;java.lang.String&nbsp;handlerClass(<a href="../../../../../../io/micronaut/starter/application/ApplicationType.html" title="enum in io.micronaut.starter.application">ApplicationType</a>&nbsp;applicationType,
-                                     <a href="../../../../../../io/micronaut/starter/application/Project.html" title="class in io.micronaut.starter.application">Project</a>&nbsp;project)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html#handlerClass-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.application.Project-">handlerClass</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/HandlerClassFeature.html" title="interface in io.micronaut.starter.feature.function">HandlerClassFeature</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>applicationType</code> - Type of application</dd>
-<dd><code>project</code> - Project</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The handler class</dd>
-</dl>
-</li>
-</ul>
-<a name="resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>resolveMicronautRuntime</h4>
-<pre>@NonNull
-public&nbsp;java.lang.String&nbsp;resolveMicronautRuntime(@NonNull
-                                                         <a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -718,7 +714,7 @@ public&nbsp;java.lang.String&nbsp;resolveMicronautRuntime(@NonNull
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/awslambda/DefaultAwsLambdaHandlerProvider.html" title="class in io.micronaut.starter.feature.function.awslambda"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/awslambda/AwsLambda.html" target="_top">Frames</a></li>

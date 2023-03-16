@@ -142,10 +142,14 @@ implements <a href="../../../../../../io/micronaut/starter/feature/build/BuildFe
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#MAVEN_PREFIX">MAVEN_PREFIX</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../../io/micronaut/starter/build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#repositoryResolver">repositoryResolver</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#WRAPPER_JAR">WRAPPER_JAR</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#WRAPPER_PROPS">WRAPPER_PROPS</a></span></code>&nbsp;</td>
 </tr>
@@ -171,7 +175,13 @@ implements <a href="../../../../../../io/micronaut/starter/feature/build/BuildFe
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#Maven-io.micronaut.starter.build.maven.MavenBuildCreator-">Maven</a></span>(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#Maven-io.micronaut.starter.build.maven.MavenBuildCreator-">Maven</a></span>(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/build/maven/Maven.html#Maven-io.micronaut.starter.build.maven.MavenBuildCreator-io.micronaut.starter.build.RepositoryResolver-">Maven</a></span>(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver,
+     <a href="../../../../../../io/micronaut/starter/build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a>&nbsp;repositoryResolver)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -324,10 +334,19 @@ implements <a href="../../../../../../io/micronaut/starter/feature/build/BuildFe
 <a name="dependencyResolver">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>dependencyResolver</h4>
 <pre>protected final&nbsp;<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a> dependencyResolver</pre>
+</li>
+</ul>
+<a name="repositoryResolver">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>repositoryResolver</h4>
+<pre>protected final&nbsp;<a href="../../../../../../io/micronaut/starter/build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a> repositoryResolver</pre>
 </li>
 </ul>
 </li>
@@ -341,10 +360,23 @@ implements <a href="../../../../../../io/micronaut/starter/feature/build/BuildFe
 <a name="Maven-io.micronaut.starter.build.maven.MavenBuildCreator-">
 <!--   -->
 </a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Maven</h4>
+<pre>@Deprecated
+public&nbsp;Maven(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</li>
+</ul>
+<a name="Maven-io.micronaut.starter.build.maven.MavenBuildCreator-io.micronaut.starter.build.RepositoryResolver-">
+<!--   -->
+</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Maven</h4>
-<pre>public&nbsp;Maven(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver)</pre>
+<pre>@Inject
+public&nbsp;Maven(<a href="../../../../../../io/micronaut/starter/build/maven/MavenBuildCreator.html" title="class in io.micronaut.starter.build.maven">MavenBuildCreator</a>&nbsp;dependencyResolver,
+                     <a href="../../../../../../io/micronaut/starter/build/RepositoryResolver.html" title="interface in io.micronaut.starter.build">RepositoryResolver</a>&nbsp;repositoryResolver)</pre>
 </li>
 </ul>
 </li>

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudEventsFunction.html" title="class in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/gcp/AbstractGoogleCloudFunction.html" target="_top">Frames</a></li>
@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></dd>
+<dd>io.micronaut.core.naming.Described, io.micronaut.core.naming.Named, io.micronaut.core.order.Ordered, <a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/FunctionFeature.html" title="interface in io.micronaut.starter.feature.function">FunctionFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpMicronautRuntimeFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -122,7 +122,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public abstract class <span class="typeNameLabel">AbstractGoogleCloudFunction</span>
 extends <a href="../../../../../../io/micronaut/starter/feature/function/AbstractFunctionFeature.html" title="class in io.micronaut.starter.feature.function">AbstractFunctionFeature</a>
-implements <a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></pre>
+implements <a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a>, <a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpMicronautRuntimeFeature</a></pre>
 </li>
 </ul>
 </div>
@@ -181,19 +181,11 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Clou
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/AbstractGoogleCloudFunction.html#getCloud--">getCloud</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/AbstractGoogleCloudFunction.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></span>(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</code>
 <div class="block">If this method is called for a given feature then that feature was explicitly selected
  or was included by default as a result of <a href="../../../../../../io/micronaut/starter/feature/DefaultFeature.html#shouldApply-io.micronaut.starter.application.ApplicationType-io.micronaut.starter.options.Options-java.util.Set-"><code>DefaultFeature.shouldApply(ApplicationType, io.micronaut.starter.options.Options, java.util.Set)</code></a>.</div>
 </td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../io/micronaut/starter/feature/function/gcp/AbstractGoogleCloudFunction.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></span>(<a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -209,6 +201,27 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Clou
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.gcp.GcpCloudFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.function.gcp.<a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpCloudFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html#getCloud--">getCloud</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.gcp.GcpMicronautRuntimeFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.function.gcp.<a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpMicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature.function.gcp">GcpMicronautRuntimeFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpMicronautRuntimeFeature.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.MicronautRuntimeFeature">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;io.micronaut.starter.feature.<a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></h3>
+<code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html#addMicronautRuntimeBuildProperty-io.micronaut.starter.application.generator.GeneratorContext-">addMicronautRuntimeBuildProperty</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.io.micronaut.starter.feature.function.FunctionFeature">
@@ -265,7 +278,7 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Clou
 <a name="processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>processSelectedFeatures</h4>
 <pre>public&nbsp;void&nbsp;processSelectedFeatures(<a href="../../../../../../io/micronaut/starter/feature/FeatureContext.html" title="class in io.micronaut.starter.feature">FeatureContext</a>&nbsp;featureContext)</pre>
@@ -283,34 +296,6 @@ implements <a href="../../../../../../io/micronaut/starter/feature/function/Clou
 <dd><code><a href="../../../../../../io/micronaut/starter/feature/Feature.html#processSelectedFeatures-io.micronaut.starter.feature.FeatureContext-">processSelectedFeatures</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/Feature.html" title="interface in io.micronaut.starter.feature">Feature</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>featureContext</code> - The feature context</dd>
-</dl>
-</li>
-</ul>
-<a name="getCloud--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCloud</h4>
-<pre>public&nbsp;<a href="../../../../../../io/micronaut/starter/feature/function/Cloud.html" title="enum in io.micronaut.starter.feature.function">Cloud</a>&nbsp;getCloud()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html#getCloud--">getCloud</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/function/CloudFeature.html" title="interface in io.micronaut.starter.feature.function">CloudFeature</a></code></dd>
-</dl>
-</li>
-</ul>
-<a name="resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>resolveMicronautRuntime</h4>
-<pre>@NonNull
-public&nbsp;java.lang.String&nbsp;resolveMicronautRuntime(@NonNull
-                                                         <a href="../../../../../../io/micronaut/starter/application/generator/GeneratorContext.html" title="class in io.micronaut.starter.application.generator">GeneratorContext</a>&nbsp;generatorContext)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html#resolveMicronautRuntime-io.micronaut.starter.application.generator.GeneratorContext-">resolveMicronautRuntime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../io/micronaut/starter/feature/MicronautRuntimeFeature.html" title="interface in io.micronaut.starter.feature">MicronautRuntimeFeature</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -342,7 +327,7 @@ public&nbsp;java.lang.String&nbsp;resolveMicronautRuntime(@NonNull
 <div class="subNav">
 <ul class="navList">
 <li>Prev&nbsp;Class</li>
-<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GoogleCloudEventsFunction.html" title="class in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../../io/micronaut/starter/feature/function/gcp/GcpCloudFeature.html" title="interface in io.micronaut.starter.feature.function.gcp"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?io/micronaut/starter/feature/function/gcp/AbstractGoogleCloudFunction.html" target="_top">Frames</a></li>
