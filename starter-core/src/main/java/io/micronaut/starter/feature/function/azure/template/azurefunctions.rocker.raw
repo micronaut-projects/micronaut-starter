@@ -1,9 +1,7 @@
 @import io.micronaut.starter.application.Project
 @import io.micronaut.starter.build.gradle.GradleDsl;
 
-@args (
-Project project, GradleDsl dsl
-)
+@args (Project project, GradleDsl dsl, String javaVersion)
 @if(dsl == GradleDsl.KOTLIN) {
 azurefunctions {
   resourceGroup = "java-functions-group"
@@ -11,6 +9,9 @@ azurefunctions {
   pricingTier = "Consumption"
   setRuntime(closureOf<com.microsoft.azure.gradle.configuration.GradleRuntimeConfig> {
     os("linux")
+@if(javaVersion != null) {
+    javaVersion("@javaVersion")
+}
   })
   localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
@@ -23,6 +24,9 @@ azurefunctions {
     region = "westus"
     runtime {
         os = "linux"
+@if(javaVersion != null) {
+       javaVersion = "@javaVersion"
+}
     }
     localDebug = "transport=dt_socket,server=y,suspend=n,address=5005"
 }
