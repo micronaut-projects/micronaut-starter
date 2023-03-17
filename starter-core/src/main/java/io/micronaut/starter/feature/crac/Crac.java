@@ -18,6 +18,7 @@ package io.micronaut.starter.feature.crac;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
+import io.micronaut.starter.build.dependencies.Dependency;
 import io.micronaut.starter.build.dependencies.MicronautDependencyUtils;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.feature.Category;
@@ -29,6 +30,11 @@ import jakarta.inject.Singleton;
 public class Crac implements RequireEagerSingletonInitializationFeature {
 
     public static final String NAME = "crac";
+
+    public static final Dependency DEPENDENCY_MICRONAUT_CRAC = MicronautDependencyUtils.cracDependency()
+            .artifactId("micronaut-crac")
+            .compile()
+            .build();
 
     @Override
     @NonNull
@@ -74,7 +80,7 @@ public class Crac implements RequireEagerSingletonInitializationFeature {
 
     @Override
     public void apply(GeneratorContext generatorContext) {
-        generatorContext.addDependency(MicronautDependencyUtils.cracDependency().artifactId("micronaut-crac").compile());
+        generatorContext.addDependency(DEPENDENCY_MICRONAUT_CRAC);
         if (generatorContext.getBuildTool().isGradle()) {
             generatorContext.addBuildPlugin(GradlePlugin.builder()
                     .id("io.micronaut.crac")

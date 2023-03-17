@@ -75,6 +75,7 @@ import java.util.stream.Stream;
 
 import static io.micronaut.starter.application.ApplicationType.DEFAULT;
 import static io.micronaut.starter.application.ApplicationType.FUNCTION;
+import static io.micronaut.starter.feature.crac.Crac.DEPENDENCY_MICRONAUT_CRAC;
 
 @Singleton
 public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeature, AwsMicronautRuntimeFeature {
@@ -240,6 +241,10 @@ public class AwsLambda implements FunctionFeature, DefaultFeature, AwsCloudFeatu
         }
         if (generatorContext.getBuildTool() == BuildTool.MAVEN && generatorContext.hasFeature(GraalVM.class)) {
             generatorContext.addDependency(AwsLambdaCustomRuntime.DEPENDENCY_AWS_FUNCTION_AWS_CUSTOM_RUNTIME);
+        }
+
+        if (generatorContext.hasFeature(AwsLambdaSnapstart.class)) {
+            generatorContext.addDependency(DEPENDENCY_MICRONAUT_CRAC);
         }
     }
 
