@@ -121,6 +121,7 @@ public class GradleBuild {
     public String renderSettingsPluginsManagement() {
         List<GradleRepository> repos = plugins.stream()
                 .flatMap(plugin -> plugin.getPluginsManagementRepositories().stream())
+                .distinct()
                 .collect(Collectors.toList());
         if (CollectionUtils.isEmpty(repos)) {
             return "";

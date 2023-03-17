@@ -52,6 +52,34 @@ public class GradleRepository implements Writable  {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        GradleRepository that = (GradleRepository) o;
+
+        if (isSnapshot != that.isSnapshot) {
+            return false;
+        }
+        if (gradleDsl != that.gradleDsl) {
+            return false;
+        }
+        return url != null ? url.equals(that.url) : that.url == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = gradleDsl != null ? gradleDsl.hashCode() : 0;
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        result = 31 * result + (isSnapshot ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public void write(OutputStream outputStream) throws IOException {
         String content = (getGradleDsl() == GradleDsl.KOTLIN ? kotlinDslRepository() : groovyDslRepository());
         outputStream.write(content.getBytes(StandardCharsets.UTF_8));

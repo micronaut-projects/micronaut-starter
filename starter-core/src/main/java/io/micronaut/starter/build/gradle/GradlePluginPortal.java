@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 public class GradlePluginPortal extends GradleRepository {
     public GradlePluginPortal() {
-        super(GradleDsl.KOTLIN, null);
+        super(GradleDsl.KOTLIN, "https://plugins.gradle.org");
     }
 
     public GradlePluginPortal(GradleDsl gradleDsl, String url) {

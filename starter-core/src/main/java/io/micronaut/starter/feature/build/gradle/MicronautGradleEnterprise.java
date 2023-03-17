@@ -21,8 +21,12 @@ import io.micronaut.starter.build.gradle.GradleFile;
 import io.micronaut.starter.build.gradle.GradleMavenCentral;
 import io.micronaut.starter.build.gradle.GradlePlugin;
 import io.micronaut.starter.build.gradle.GradlePluginPortal;
+import io.micronaut.starter.build.gradle.GradleRepository;
 import io.micronaut.starter.feature.build.maven.templates.customData;
 import jakarta.inject.Singleton;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Singleton
 public class MicronautGradleEnterprise extends GradleEnterprise {
@@ -39,6 +43,7 @@ public class MicronautGradleEnterprise extends GradleEnterprise {
     }
 
     @Override
+    @NonNull
     public String getTitle() {
         return "Micronaut Gradle Enterprise";
     }
@@ -61,12 +66,16 @@ public class MicronautGradleEnterprise extends GradleEnterprise {
 
     @Override
     protected GradlePlugin gradlePlugin(GradleEnterpriseConfiguration configuration) {
-        return GradlePlugin.builder()
+        GradlePlugin.Builder builder = GradlePlugin.builder()
                 .gradleFile(GradleFile.SETTINGS)
                 .id(GRADLE_PLUGIN_ID_MICRONAUT_GRADLE_ENTERPRISE)
-                .lookupArtifactId(ARTIFACT_ID_MICRONAUT_GRADLE_PLUGINS)
-                .pluginsManagementRepository(new GradlePluginPortal())
-                .pluginsManagementRepository(new GradleMavenCentral())
-                .build();
+                .lookupArtifactId(ARTIFACT_ID_MICRONAUT_GRADLE_PLUGINS);
+        pluginsManagementRepositories().forEach(builder::pluginsManagementRepository);
+        return builder.build();
+    }
+
+    @NonNull
+    protected List<GradleRepository> pluginsManagementRepositories() {
+        return Arrays.asList(new GradlePluginPortal(), new GradleMavenCentral());
     }
 }
