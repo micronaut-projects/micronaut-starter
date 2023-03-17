@@ -70,7 +70,7 @@ public abstract class CreateCommand extends BaseCommand implements Callable<Inte
     protected boolean listFeatures;
 
     @ReflectiveAccess
-    @Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target")
+    @Option(names = {"--jdk", "--java-version"}, description = "The JDK version the project should target. Possible values: ${COMPLETION-CANDIDATES}", completionCandidates = JdkVersionCandidates.class)
     protected Integer javaVersion;
 
     protected final ContextFactory contextFactory;
