@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class WritableUtils {
@@ -29,6 +30,10 @@ public final class WritableUtils {
     private static final Logger LOG = LoggerFactory.getLogger(WritableUtils.class);
 
     private WritableUtils() {
+    }
+
+    public static String renderWritable(Writable writable, int indentationSpaces) {
+        return renderWritableList(Collections.singletonList(writable), indentationSpaces);
     }
 
     public static String renderWritableList(List<Writable> writableList, int indentationSpaces) {

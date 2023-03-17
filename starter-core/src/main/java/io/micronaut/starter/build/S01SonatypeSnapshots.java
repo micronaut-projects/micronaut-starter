@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2022 original authors
+ * Copyright 2017-2023 original authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.micronaut.starter.build.gradle;
+package io.micronaut.starter.build;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
+import io.micronaut.core.annotation.NonNull;
 
-public class GradleMavenCentral extends GradleRepository {
-
-    public GradleMavenCentral() {
-        this(GradleDsl.KOTLIN, "");
-    }
-
-    public GradleMavenCentral(GradleDsl gradleDsl, String url) {
-        super(gradleDsl, url);
+public class S01SonatypeSnapshots implements Repository {
+    @Override
+    @NonNull
+    public String getId() {
+        return "s01-sonatype-snapshots";
     }
 
     @Override
-    public void write(OutputStream outputStream) throws IOException {
-        outputStream.write("mavenCentral()\n".getBytes(StandardCharsets.UTF_8));
+    @NonNull
+    public String getUrl() {
+        return "https://s01.oss.sonatype.org/content/repositories/snapshots/";
+    }
+
+    @Override
+    public boolean isSnapshot() {
+        return true;
     }
 }
