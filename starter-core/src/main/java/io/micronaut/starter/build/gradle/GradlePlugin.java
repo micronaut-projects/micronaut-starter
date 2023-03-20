@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class GradlePlugin implements BuildPlugin {
@@ -187,6 +188,11 @@ public class GradlePlugin implements BuildPlugin {
             this.artifactId = artifactId;
             this.requiresLookup = true;
             return this;
+        }
+
+        @NonNull
+        public Optional<String> getArtifiactId()  {
+            return Optional.ofNullable(artifactId);
         }
 
         @NonNull

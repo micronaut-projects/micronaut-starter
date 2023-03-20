@@ -16,12 +16,18 @@
 package io.micronaut.starter.feature.build;
 
 import io.micronaut.core.annotation.NonNull;
+import io.micronaut.core.version.SemanticVersion;
 import io.micronaut.starter.application.ApplicationType;
 import io.micronaut.starter.application.generator.GeneratorContext;
 import io.micronaut.starter.build.Property;
+import io.micronaut.starter.build.S01SonatypeSnapshots;
 import io.micronaut.starter.build.dependencies.Coordinate;
+import io.micronaut.starter.build.dependencies.CoordinateResolver;
+import io.micronaut.starter.build.dependencies.DefaultPomDependencyVersionResolver;
 import io.micronaut.starter.build.gradle.GradleDsl;
 import io.micronaut.starter.build.gradle.GradlePlugin;
+import io.micronaut.starter.build.gradle.GradlePluginPortal;
+import io.micronaut.starter.build.gradle.GradleRepository;
 import io.micronaut.starter.feature.MicronautRuntimeFeature;
 import io.micronaut.starter.feature.build.gradle.Dockerfile;
 import io.micronaut.starter.feature.build.gradle.MicronautApplicationGradlePlugin;
@@ -32,6 +38,7 @@ import io.micronaut.starter.feature.database.r2dbc.R2dbc;
 import io.micronaut.starter.feature.function.awslambda.AwsLambda;
 import io.micronaut.starter.feature.messaging.SharedTestResourceFeature;
 import io.micronaut.starter.feature.testresources.DbType;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 import java.util.Optional;
@@ -40,6 +47,17 @@ import static io.micronaut.starter.feature.graalvm.GraalVM.FEATURE_NAME_GRAALVM;
 
 @Singleton
 public class MicronautBuildPlugin implements BuildPluginFeature {
+    protected final CoordinateResolver coordinateResolver;
+
+    @Deprecated
+    public MicronautBuildPlugin() {
+        this(new DefaultPomDependencyVersionResolver());
+    }
+
+    @Inject
+    public MicronautBuildPlugin(CoordinateResolver coordinateResolver) {
+        this.coordinateResolver = coordinateResolver;
+    }
 
     @Override
     @NonNull
@@ -50,9 +68,44 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
     @Override
     public void apply(GeneratorContext generatorContext) {
         if (generatorContext.getBuildTool().isGradle()) {
-            generatorContext.addBuildPlugin(shouldApplyMicronautApplicationGradlePlugin(generatorContext) ?
-                    micronautGradleApplicationPluginBuilder(generatorContext).build() :
-                    micronautLibraryGradlePlugin(generatorContext));
+            generatorContext.addBuildPlugin(gradlePlugin(generatorContext));
+        }
+    }
+
+    @NonNull
+    protected GradlePlugin gradlePlugin(@NonNull GeneratorContext generatorContext) {
+        GradlePlugin.Builder builder = null;
+        if (shouldApplyMicronautApplicationGradlePlugin(generatorContext)) {
+            builder = micronautGradleApplicationPluginBuilder(generatorContext).builder();
+        } else {
+            builder = micronautLibraryGradlePluginBuilder(generatorContext);
+        }
+        if (shouldAddRepositoriesForSnapshots(builder)) {
+            builder.pluginsManagementRepository(new GradlePluginPortal())
+                    .pluginsManagementRepository(GradleRepository.of(generatorContext.getBuildTool().getGradleDsl().orElse(GradleDsl.GROOVY), new S01SonatypeSnapshots()));
+        }
+        return builder.build();
+    }
+
+    public boolean shouldAddRepositoriesForSnapshots(GradlePlugin.Builder builder) {
+        Optional<String> artifactIdOptional = builder.getArtifiactId();
+        if (!artifactIdOptional.isPresent()) {
+            return false;
+        }
+        String artifactId = artifactIdOptional.get();
+        Optional<Coordinate> coordinateOptional = coordinateResolver.resolve(artifactId);
+        if (!coordinateOptional.isPresent()) {
+            return false;
+        }
+        Coordinate coordinate = coordinateOptional.get();
+        if (coordinate.getVersion() == null) {
+            return false;
+        }
+        try {
+            SemanticVersion semanticVersion = new SemanticVersion(coordinate.getVersion());
+            return semanticVersion.getVersion().endsWith("-SNAPSHOT");
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 
@@ -135,8 +188,19 @@ public class MicronautBuildPlugin implements BuildPluginFeature {
         return Optional.empty();
     }
 
+    /**
+     *
+     * @deprecated Not used Generator Context
+     * @param generatorContext Generator Context
+     * @return Micronaut Library Gradle Plugin
+     */
+    @Deprecated
     protected GradlePlugin micronautLibraryGradlePlugin(GeneratorContext generatorContext) {
-        return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).build();
+        return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).builder().build();
+    }
+
+    protected GradlePlugin.Builder micronautLibraryGradlePluginBuilder(GeneratorContext generatorContext) {
+        return micronautGradleApplicationPluginBuilder(generatorContext, MicronautApplicationGradlePlugin.Builder.LIBRARY).builder();
     }
 
     private static boolean shouldApplyMicronautApplicationGradlePlugin(GeneratorContext generatorContext) {
