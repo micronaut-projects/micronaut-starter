@@ -156,7 +156,7 @@ public class Gradle implements BuildFeature {
     }
 
     @NonNull
-    protected static List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
+    protected List<Property> gradleProperties(@NonNull GeneratorContext generatorContext) {
         return generatorContext.getBuildProperties().getProperties().stream()
                 .filter(p -> p.getKey() == null || !p.getKey().equals(MicronautRuntimeFeature.PROPERTY_MICRONAUT_RUNTIME)) // It is set via the DSL
                 .collect(Collectors.toList());
